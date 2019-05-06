@@ -1,0 +1,405 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "A2BCD: Asynchronous Acceleration with Optimal Complexity",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rylIAsCqYm"
+        },
+        "abstract": "In this paper, we propose the Asynchronous Accelerated Nonuniform Randomized Block Coordinate Descent algorithm (A2BCD). We prove A2BCD converges linearly to a solution of the convex minimization problem at the same rate as NU_ACDM, so long as the maximum delay is not too large. This is the first asynchronous Nesterov-accelerated algorithm that attains any provable speedup. Moreover, we then prove that these algorithms both have optimal complexity. Asynchronous algorithms complete much faster iterations, and A2BCD has optimal complexity. Hence we observe in experiments that A2BCD is the top-performing coordinate descent algorithm, converging up to 4 \u2212 5\u00d7 faster than NU_ACDM on some data sets in terms of wall-clock time. To motivate our theory and proof techniques, we also derive and analyze a continuous-time analogue of our algorithm and prove it converges at the same rate."
+    },
+    "keywords": [
+        {
+            "term": "convex minimization",
+            "url": "https://en.wikipedia.org/wiki/convex_minimization"
+        },
+        {
+            "term": "convergence rate",
+            "url": "https://en.wikipedia.org/wiki/convergence_rate"
+        },
+        {
+            "term": "ordinary differential equation",
+            "url": "https://en.wikipedia.org/wiki/ordinary_differential_equation"
+        },
+        {
+            "term": "identically distributed",
+            "url": "https://en.wikipedia.org/wiki/identically_distributed"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "variance reduction",
+            "url": "https://en.wikipedia.org/wiki/variance_reduction"
+        }
+    ],
+    "abbreviations": {
+        "ODE": "ordinary differential equation",
+        "IID": "identically distributed",
+        "Xk": "xk+1 \u2208 span{IC"
+    },
+    "highlights": [
+        "We propose and prove the convergence of the Asynchronous Accelerated Nonuniform Randomized Block Coordinate Descent algorithm (A2BCD), the first asynchronous Nesterovaccelerated algorithm that achieves optimal complexity",
+        "Linear and sublinear convergence results were proven for asynchronous RBCD Liu & Wright (2015); <a class=\"ref-link\" id=\"cLiu_et+al_2014_a\" href=\"#rLiu_et+al_2014_a\">Liu et al (2014</a>); <a class=\"ref-link\" id=\"cAvron_et+al_2014_a\" href=\"#rAvron_et+al_2014_a\">Avron et al (2014</a>), and similar was proven for asynchronous SGD Recht et al (2011), and variance reduction algorithms <a class=\"ref-link\" id=\"cReddi_et+al_2015_a\" href=\"#rReddi_et+al_2015_a\">Reddi et al (2015</a>); <a class=\"ref-link\" id=\"cLeblond_et+al_2017_a\" href=\"#rLeblond_et+al_2017_a\">Leblond et al (2017</a>); Mania et al (2015); Huo & Huang (2016), and primal-dual algorithms <a class=\"ref-link\" id=\"cCombettes_2018_a\" href=\"#rCombettes_2018_a\">Combettes & Eckstein (2018</a>)",
+        "In Lian et al (2018), an asynchronous decentralized SGD was proposed with the same optimal sublinear convergence rate as SGD and linear speedup with respect to the number of workers",
+        "In Dutta et al (2018), authors prove convergence results for asynchronous SGD that highlight the tradeoff between faster iterations and iteration complexity",
+        "We prove that A2BCD has optimal complexity to within a constant factor over a fairly general class of randomized block coordinate descent algorithms"
+    ],
+    "key_statements": [
+        "We propose and prove the convergence of the Asynchronous Accelerated Nonuniform Randomized Block Coordinate Descent algorithm (A2BCD), the first asynchronous Nesterovaccelerated algorithm that achieves optimal complexity",
+        "Linear and sublinear convergence results were proven for asynchronous RBCD Liu & Wright (2015); <a class=\"ref-link\" id=\"cLiu_et+al_2014_a\" href=\"#rLiu_et+al_2014_a\">Liu et al (2014</a>); <a class=\"ref-link\" id=\"cAvron_et+al_2014_a\" href=\"#rAvron_et+al_2014_a\">Avron et al (2014</a>), and similar was proven for asynchronous SGD Recht et al (2011), and variance reduction algorithms <a class=\"ref-link\" id=\"cReddi_et+al_2015_a\" href=\"#rReddi_et+al_2015_a\">Reddi et al (2015</a>); <a class=\"ref-link\" id=\"cLeblond_et+al_2017_a\" href=\"#rLeblond_et+al_2017_a\">Leblond et al (2017</a>); Mania et al (2015); Huo & Huang (2016), and primal-dual algorithms <a class=\"ref-link\" id=\"cCombettes_2018_a\" href=\"#rCombettes_2018_a\">Combettes & Eckstein (2018</a>)",
+        "In Lian et al (2018), an asynchronous decentralized SGD was proposed with the same optimal sublinear convergence rate as SGD and linear speedup with respect to the number of workers",
+        "In Dutta et al (2018), authors prove convergence results for asynchronous SGD that highlight the tradeoff between faster iterations and iteration complexity",
+        "We prove that A2BCD has optimal complexity to within a constant factor over a fairly general class of randomized block coordinate descent algorithms",
+        "We derive a second-order ordinary differential equation (ODE), which is the continuous-time limit of A2BCD. This extends the ordinary differential equation found in <a class=\"ref-link\" id=\"cSu_et+al_2014_a\" href=\"#rSu_et+al_2014_a\">Su et al (2014</a>) to an asynchronous accelerated algorithm minimizing a strongly convex function. We prove this ordinary differential equation linearly converges to a solution with the same rate as A2BCD\u2019s, without needing to resort to the restarting techniques"
+    ],
+    "summary": [
+        "We propose and prove the convergence of the Asynchronous Accelerated Nonuniform Randomized Block Coordinate Descent algorithm (A2BCD), the first asynchronous Nesterovaccelerated algorithm that achieves optimal complexity.",
+        "A2BCD can be used as an asynchronous Nesterov-accelerated finite-sum algorithm.",
+        "N i=1 descent Li/\u03c3 method ln(1/ )), Allen-Zhu which can et al (201\u221a5) be up to n (NU_ACDM) can further decrease the times faster than accelerated RBCD, complexity since some",
+        "Our A2BCD algorithm generalizes NU_ACDM to the asynchronous-parallel case.",
+        "There has been renewed interest in asynchronous algorithms with random block coordinate updates.",
+        "We prove that A2BCD has optimal complexity to within a constant factor over a fairly general class of randomized block coordinate descent algorithms.",
+        "Since asynchronous algorithms complete faster iterations, and A2BCD has optimal complexity, we expect A2BCD to be faster than all existing coordinate descent algorithms.",
+        "We are only aware of one previous and one contemporaneous attempt at proving convergence results for asynchronous Nesterov-accelerated algorithms.",
+        "We claim that our results are the first-ever analysis of asynchronous Nesterov-accelerated algorithms that attains a speedup.",
+        "This extends the ODE found in <a class=\"ref-link\" id=\"cSu_et+al_2014_a\" href=\"#rSu_et+al_2014_a\">Su et al (2014</a>) to an asynchronous accelerated algorithm minimizing a strongly convex function.",
+        "Asynchronous Accelerated Randomized Block Coordinate Descent (A2BCD).",
+        "Nesterov-accelerated methods have been proposed and discovered in many settings <a class=\"ref-link\" id=\"cNesterov_1983_a\" href=\"#rNesterov_1983_a\">Nesterov (1983</a>); <a class=\"ref-link\" id=\"cTseng_2008_a\" href=\"#rTseng_2008_a\">Tseng (2008</a>); <a class=\"ref-link\" id=\"cNesterov_2012_a\" href=\"#rNesterov_2012_a\">Nesterov (2012</a>); <a class=\"ref-link\" id=\"cLin_et+al_2014_a\" href=\"#rLin_et+al_2014_a\">Lin et al (2014</a>); <a class=\"ref-link\" id=\"cLu_2014_a\" href=\"#rLu_2014_a\">Lu & Xiao (2014</a>); <a class=\"ref-link\" id=\"cShalev-Shwartz_2016_a\" href=\"#rShalev-Shwartz_2016_a\">Shalev-Shwartz & Zhang (2016</a>); <a class=\"ref-link\" id=\"cAllen-Zhu_2017_a\" href=\"#rAllen-Zhu_2017_a\">Allen-Zhu (2017</a>), including for coordinate descent algorithmsbtlhoactk per iteration), and incremental algorithms use 1 function gradient \u2207fi(x) per iteration).",
+        "In Xiao et al (2017) authors propose a novel asynchronous catalyst-accelerated Lin et al (2015) primal-dual algorithmic framework to solve regularized ERM problems.",
+        "Nodes randomly select a coordinate block according to equation 2.1, calculate the corresponding block gradient, and use it to apply an update to the shared solution vectors.",
+        "Nodes in synchronous NU_ACDM implementation must wait until all nodes apply their computed gradients before they can start the iteration, but the asynchronous algorithms compute with the most up-to-date information available.",
+        "Acceleration doesn\u2019t result in a significantly better convergence rate, and A2BCD and async-RBCD both outperform sync-NU_ACDM since they complete faster iterations at similar complexity.",
+        "Efficient Accelerated Coordinate Descent Methods and Faster Algorithms for Solving Linear Systems.",
+        "Zhimin Peng, Yangyang Xu, Ming Yan, and Wotao Yin. On the Convergence of Asynchronous Parallel Iteration with Unbounded Delays."
+    ],
+    "headline": "We propose the Asynchronous Accelerated Nonuniform Randomized Block Coordinate Descent algorithm",
+    "reference_links": [
+        {
+            "id": "Allen-Zhu_2017_a",
+            "entry": "Zeyuan Allen-Zhu. Katyusha: The First Direct Acceleration of Stochastic Gradient Methods. In Proceedings of the 49th Annual ACM SIGACT Symposium on Theory of Computing, STOC 2017, pp. 1200\u20131205, New York, NY, USA, 2017. ACM.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allen-Zhu%2C%20Zeyuan%20Katyusha%3A%20The%20First%20Direct%20Acceleration%20of%20Stochastic%20Gradient%20Methods%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allen-Zhu%2C%20Zeyuan%20Katyusha%3A%20The%20First%20Direct%20Acceleration%20of%20Stochastic%20Gradient%20Methods%202017"
+        },
+        {
+            "id": "Allen-Zhu_2016_a",
+            "entry": "Zeyuan Allen-Zhu and Elad Hazan. Optimal Black-Box Reductions Between Optimization Objectives. arXiv:1603.05642, March 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.05642"
+        },
+        {
+            "id": "Allen-Zhu_et+al_1512_a",
+            "entry": "Zeyuan Allen-Zhu, Zheng Qu, Peter Richt\u00e1rik, and Yang Yuan. Even Faster Accelerated Coordinate Descent Using Non-Uniform Sampling. arXiv:1512.09103, December 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.09103"
+        },
+        {
+            "id": "Arjevani_2017_a",
+            "entry": "Yossi Arjevani. Limitations on Variance-Reduction and Acceleration Schemes for Finite Sums Optimization. In Advances in Neural Information Processing Systems 30, pp. 3540\u20133549. Curran Associates, Inc., 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjevani%2C%20Yossi%20Limitations%20on%20Variance-Reduction%20and%20Acceleration%20Schemes%20for%20Finite%20Sums%20Optimization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjevani%2C%20Yossi%20Limitations%20on%20Variance-Reduction%20and%20Acceleration%20Schemes%20for%20Finite%20Sums%20Optimization%202017"
+        },
+        {
+            "id": "Avron_et+al_2014_a",
+            "entry": "H. Avron, A. Druinsky, and A. Gupta. Revisiting asynchronous linear solvers: Provable convergence rate through randomization. In Parallel and Distributed Processing Symposium, 2014 IEEE 28th International, pp. 198\u2013207, May 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Avron%2C%20H.%20Druinsky%2C%20A.%20Gupta%2C%20A.%20Revisiting%20asynchronous%20linear%20solvers%3A%20Provable%20convergence%20rate%20through%20randomization%202014-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Avron%2C%20H.%20Druinsky%2C%20A.%20Gupta%2C%20A.%20Revisiting%20asynchronous%20linear%20solvers%3A%20Provable%20convergence%20rate%20through%20randomization%202014-05"
+        },
+        {
+            "id": "Bertsekas_1983_a",
+            "entry": "Dimitri P. Bertsekas. Distributed asynchronous computation of fixed points. Mathematical Programming, 27(1):107\u2013120, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertsekas%2C%20Dimitri%20P.%20Distributed%20asynchronous%20computation%20of%20fixed%20points%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bertsekas%2C%20Dimitri%20P.%20Distributed%20asynchronous%20computation%20of%20fixed%20points%201983"
+        },
+        {
+            "id": "Bertsekas_1997_a",
+            "entry": "Dimitri P. Bertsekas and John N. Tsitsiklis. Parallel and Distributed Computation: Numerical Methods. Athena Scientific, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertsekas%2C%20Dimitri%20P.%20Tsitsiklis%2C%20John%20N.%20Parallel%20and%20Distributed%20Computation%3A%20Numerical%20Methods%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bertsekas%2C%20Dimitri%20P.%20Tsitsiklis%2C%20John%20N.%20Parallel%20and%20Distributed%20Computation%3A%20Numerical%20Methods%201997"
+        },
+        {
+            "id": "Cannelli_et+al_2017_a",
+            "entry": "Loris Cannelli, Francisco Facchinei, Vyacheslav Kungurtsev, and Gesualdo Scutari. Asynchronous Parallel Algorithms for Nonconvex Big-Data Optimization. Part II: Complexity and Numerical Results. arXiv:1701.04900, January 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.04900"
+        },
+        {
+            "id": "Chih-Chung_2011_a",
+            "entry": "Chih-Chung Chang and Chih-Jen Lin. LIBSVM: A Library for Support Vector Machines. ACM Trans. Intell. Syst. Technol., 2(3):27:1\u201327:27, May 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChihChung%20Chang%20and%20ChihJen%20Lin%20LIBSVM%20A%20Library%20for%20Support%20Vector%20Machines%20ACM%20Trans%20Intell%20Syst%20Technol%20232712727%20May%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=ChihChung%20Chang%20and%20ChihJen%20Lin%20LIBSVM%20A%20Library%20for%20Support%20Vector%20Machines%20ACM%20Trans%20Intell%20Syst%20Technol%20232712727%20May%202011"
+        },
+        {
+            "id": "Chazan_1969_a",
+            "entry": "D. Chazan and W. Miranker. Chaotic relaxation. Linear Algebra and its Applications, 2(2):199\u2013222, April 1969.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chazan%2C%20D.%20Miranker%2C%20W.%20Chaotic%20relaxation%201969-04",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chazan%2C%20D.%20Miranker%2C%20W.%20Chaotic%20relaxation%201969-04"
+        },
+        {
+            "id": "Combettes_2018_a",
+            "entry": "Patrick L. Combettes and Jonathan Eckstein. Asynchronous block-iterative primal-dual decomposition methods for monotone inclusions. Mathematical Programming, 168(1-2):645\u2013672, March 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Combettes%2C%20Patrick%20L.%20Eckstein%2C%20Jonathan%20Asynchronous%20block-iterative%20primal-dual%20decomposition%20methods%20for%20monotone%20inclusions%202018-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Combettes%2C%20Patrick%20L.%20Eckstein%2C%20Jonathan%20Asynchronous%20block-iterative%20primal-dual%20decomposition%20methods%20for%20monotone%20inclusions%202018-03"
+        },
+        {
+            "id": "Davis_1601_a",
+            "entry": "Damek Davis. SMART: The stochastic monotone aggregated root-finding algorithm. arXiv:1601.00698, January 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1601.00698"
+        },
+        {
+            "id": "Dutta_et+al_2018_a",
+            "entry": "Sanghamitra Dutta, Gauri Joshi, Soumyadip Ghosh, Parijat Dube, and Priya Nagpurkar. Slow and Stale Gradients Can Win the Race: Error-Runtime Trade-offs in Distributed SGD. arXiv:1803.01113 [cs, stat], March 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01113"
+        },
+        {
+            "id": "Fang_et+al_2018_a",
+            "entry": "Cong Fang, Yameng Huang, and Zhouchen Lin. Accelerating Asynchronous Algorithms for Convex Optimization by Momentum Compensation. arXiv:1802.09747 [cs, math], February 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09747"
+        },
+        {
+            "id": "Hannah_2017_a",
+            "entry": "Robert Hannah and Wotao Yin. More Iterations per Second, Same Quality \u2013 Why Asynchronous Algorithms may Drastically Outperform Traditional Ones. arXiv:1708.05136, August 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.05136"
+        },
+        {
+            "id": "Hannah_2017_b",
+            "entry": "Robert Hannah and Wotao Yin. On Unbounded Delays in Asynchronous Parallel Fixed-Point Algorithms. Journal of Scientific Computing, pp. 1\u201328, December 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hannah%2C%20Robert%20Yin%2C%20Wotao%20On%20Unbounded%20Delays%20in%20Asynchronous%20Parallel%20Fixed-Point%20Algorithms%202017-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hannah%2C%20Robert%20Yin%2C%20Wotao%20On%20Unbounded%20Delays%20in%20Asynchronous%20Parallel%20Fixed-Point%20Algorithms%202017-12"
+        },
+        {
+            "id": "Huo_1604_a",
+            "entry": "Zhouyuan Huo and Heng Huang. Asynchronous Stochastic Gradient Descent with Variance Reduction for Non-Convex Optimization. arXiv:1604.03584, April 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.03584"
+        },
+        {
+            "id": "Johnstone_2018_a",
+            "entry": "Patrick R. Johnstone and Jonathan Eckstein. Projective Splitting with Forward Steps: Asynchronous and Block-Iterative Operator Splitting. arXiv:1803.07043 [cs, math], March 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.07043"
+        },
+        {
+            "id": "Lan_1507_a",
+            "entry": "Guanghui Lan and Yi Zhou. An optimal randomized incremental gradient method. arXiv:1507.02000, July 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.02000"
+        },
+        {
+            "id": "Leblond_et+al_2017_a",
+            "entry": "R\u00e9mi Leblond, Fabian Pedregosa, and Simon Lacoste-Julien. ASAGA: Asynchronous Parallel SAGA. In Proceedings of the 20th International Conference on Artificial Intelligence and Statistics, pp. 46\u201354, April 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leblond%2C%20R%C3%A9mi%20Pedregosa%2C%20Fabian%20Lacoste-Julien%2C%20Simon%20ASAGA%3A%20Asynchronous%20Parallel%20SAGA%202017-04",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leblond%2C%20R%C3%A9mi%20Pedregosa%2C%20Fabian%20Lacoste-Julien%2C%20Simon%20ASAGA%3A%20Asynchronous%20Parallel%20SAGA%202017-04"
+        },
+        {
+            "id": "Lee_2013_a",
+            "entry": "Y. T. Lee and A. Sidford. Efficient Accelerated Coordinate Descent Methods and Faster Algorithms for Solving Linear Systems. In 2013 IEEE 54th Annual Symposium on Foundations of Computer Science, pp. 147\u2013156, October 2013a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Y.T.%20Sidford%2C%20A.%20Efficient%20Accelerated%20Coordinate%20Descent%20Methods%20and%20Faster%20Algorithms%20for%20Solving%20Linear%20Systems%202013-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Y.T.%20Sidford%2C%20A.%20Efficient%20Accelerated%20Coordinate%20Descent%20Methods%20and%20Faster%20Algorithms%20for%20Solving%20Linear%20Systems%202013-10"
+        },
+        {
+            "id": "Lee_1305_a",
+            "entry": "Yin Tat Lee and Aaron Sidford. Efficient Accelerated Coordinate Descent Methods and Faster Algorithms for Solving Linear Systems. arXiv:1305.1922, May 2013b.",
+            "arxiv_url": "https://arxiv.org/pdf/1305.1922"
+        },
+        {
+            "id": "Lian_et+al_2018_a",
+            "entry": "Xiangru Lian, Wei Zhang, Ce Zhang, and Ji Liu. Asynchronous Decentralized Parallel Stochastic Gradient Descent. In International Conference on Machine Learning, pp. 3043\u20133052, July 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lian%2C%20Xiangru%20Zhang%2C%20Wei%20Zhang%2C%20Ce%20Liu%2C%20Ji%20Asynchronous%20Decentralized%20Parallel%20Stochastic%20Gradient%20Descent%202018-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lian%2C%20Xiangru%20Zhang%2C%20Wei%20Zhang%2C%20Ce%20Liu%2C%20Ji%20Asynchronous%20Decentralized%20Parallel%20Stochastic%20Gradient%20Descent%202018-07"
+        },
+        {
+            "id": "Lin_et+al_1506_a",
+            "entry": "Hongzhou Lin, Julien Mairal, and Zaid Harchaoui. A Universal Catalyst for First-Order Optimization. arXiv:1506.02186, June 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02186"
+        },
+        {
+            "id": "Lin_et+al_2014_a",
+            "entry": "Qihang Lin, Zhaosong Lu, and Lin Xiao. An Accelerated Proximal Coordinate Gradient Method and its Application to Regularized Empirical Risk Minimization. arXiv:1407.1296, July 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1407.1296"
+        },
+        {
+            "id": "Liu_2015_a",
+            "entry": "J. Liu and S. Wright. Asynchronous stochastic coordinate descent: Parallelism and convergence properties. SIAM Journal on Optimization, 25(1):351\u2013376, January 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20J.%20Wright%2C%20S.%20Asynchronous%20stochastic%20coordinate%20descent%3A%20Parallelism%20and%20convergence%20properties%202015-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20J.%20Wright%2C%20S.%20Asynchronous%20stochastic%20coordinate%20descent%3A%20Parallelism%20and%20convergence%20properties%202015-01"
+        },
+        {
+            "id": "Liu_et+al_2014_a",
+            "entry": "Ji Liu, Steve Wright, Christopher Re, Victor Bittorf, and Srikrishna Sridhar. An Asynchronous Parallel Stochastic Coordinate Descent Algorithm. In International Conference on Machine Learning, pp. 469\u2013477, January 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ji%20Wright%2C%20Steve%20Re%2C%20Christopher%20Bittorf%2C%20Victor%20An%20Asynchronous%20Parallel%20Stochastic%20Coordinate%20Descent%20Algorithm%202014-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ji%20Wright%2C%20Steve%20Re%2C%20Christopher%20Bittorf%2C%20Victor%20An%20Asynchronous%20Parallel%20Stochastic%20Coordinate%20Descent%20Algorithm%202014-01"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Tianyi Liu, Shiyang Li, Jianping Shi, Enlu Zhou, and Tuo Zhao. Towards Understanding Acceleration Tradeoff between Momentum and Asynchrony in Nonconvex Stochastic Optimization. In Advances in Neural Information Processing Systems 32. Curran Associates, Inc., 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Tianyi%20Li%2C%20Shiyang%20Shi%2C%20Jianping%20Zhou%2C%20Enlu%20Towards%20Understanding%20Acceleration%20Tradeoff%20between%20Momentum%20and%20Asynchrony%20in%20Nonconvex%20Stochastic%20Optimization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Tianyi%20Li%2C%20Shiyang%20Shi%2C%20Jianping%20Zhou%2C%20Enlu%20Towards%20Understanding%20Acceleration%20Tradeoff%20between%20Momentum%20and%20Asynchrony%20in%20Nonconvex%20Stochastic%20Optimization%202018"
+        },
+        {
+            "id": "Lu_2014_a",
+            "entry": "Zhaosong Lu and Lin Xiao. On the complexity analysis of randomized block-coordinate descent methods. Mathematical Programming, 152(1-2):615\u2013642, August 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lu%2C%20Zhaosong%20Xiao%2C%20Lin%20On%20the%20complexity%20analysis%20of%20randomized%20block-coordinate%20descent%20methods%202014-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lu%2C%20Zhaosong%20Xiao%2C%20Lin%20On%20the%20complexity%20analysis%20of%20randomized%20block-coordinate%20descent%20methods%202014-08"
+        },
+        {
+            "id": "Luo_1992_a",
+            "entry": "Z. Q. Luo and P. Tseng. On the convergence of the coordinate descent method for convex differentiable minimization. Journal of Optimization Theory and Applications, 72(1):7\u201335, January 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20Z.Q.%20Tseng%2C%20P.%20On%20the%20convergence%20of%20the%20coordinate%20descent%20method%20for%20convex%20differentiable%20minimization%201992-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20Z.Q.%20Tseng%2C%20P.%20On%20the%20convergence%20of%20the%20coordinate%20descent%20method%20for%20convex%20differentiable%20minimization%201992-01"
+        },
+        {
+            "id": "Luo_1993_a",
+            "entry": "Zhi-Quan Luo and Paul Tseng. On the convergence rate of dual ascent methods for linearly constrained convex minimization. Mathematics of Operations Research, 18(4):846\u2013867, November 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20Zhi-Quan%20Tseng%2C%20Paul%20On%20the%20convergence%20rate%20of%20dual%20ascent%20methods%20for%20linearly%20constrained%20convex%20minimization%201993-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20Zhi-Quan%20Tseng%2C%20Paul%20On%20the%20convergence%20rate%20of%20dual%20ascent%20methods%20for%20linearly%20constrained%20convex%20minimization%201993-11"
+        },
+        {
+            "id": "Mania_et+al_1507_a",
+            "entry": "Horia Mania, Xinghao Pan, Dimitris Papailiopoulos, Benjamin Recht, Kannan Ramchandran, and Michael I. Jordan. Perturbed Iterate Analysis for Asynchronous Stochastic Optimization. arXiv:1507.06970, July 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.06970"
+        },
+        {
+            "id": "Nesterov_2012_a",
+            "entry": "Y. Nesterov. Efficiency of coordinate descent methods on huge-scale optimization problems. SIAM Journal on Optimization, 22(2):341\u2013362, January 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nesterov%2C%20Y.%20Efficiency%20of%20coordinate%20descent%20methods%20on%20huge-scale%20optimization%20problems%202012-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nesterov%2C%20Y.%20Efficiency%20of%20coordinate%20descent%20methods%20on%20huge-scale%20optimization%20problems%202012-01"
+        },
+        {
+            "id": "Nesterov_1983_a",
+            "entry": "Yurii Nesterov. A method of solving a convex programming problem with convergence rate O (1/k2). In Soviet Mathematics Doklady, volume 27, pp. 372\u2013376, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nesterov%2C%20Yurii%20A%20method%20of%20solving%20a%20convex%20programming%20problem%20with%20convergence%20rate%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nesterov%2C%20Yurii%20A%20method%20of%20solving%20a%20convex%20programming%20problem%20with%20convergence%20rate%201983"
+        },
+        {
+            "id": "Nesterov_2013_a",
+            "entry": "Yurii Nesterov. Introductory Lectures on Convex Optimization: A Basic Course. Springer Science & Business Media, December 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nesterov%2C%20Yurii%20Introductory%20Lectures%20on%20Convex%20Optimization%3A%20A%20Basic%20Course%202013-12"
+        },
+        {
+            "id": "Peng_et+al_2016_a",
+            "entry": "Z. Peng, Y. Xu, M. Yan, and W. Yin. ARock: An Algorithmic Framework for Asynchronous Parallel Coordinate Updates. SIAM Journal on Scientific Computing, 38(5):A2851\u2013A2879, January 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Z.%20Xu%2C%20Y.%20Yan%2C%20M.%20Yin%2C%20W.%20ARock%3A%20An%20Algorithmic%20Framework%20for%20Asynchronous%20Parallel%20Coordinate%20Updates%202016-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Z.%20Xu%2C%20Y.%20Yan%2C%20M.%20Yin%2C%20W.%20ARock%3A%20An%20Algorithmic%20Framework%20for%20Asynchronous%20Parallel%20Coordinate%20Updates%202016-01"
+        },
+        {
+            "id": "Peng_et+al_0000_a",
+            "entry": "Zhimin Peng, Tianyu Wu, Yangyang Xu, Ming Yan, and Wotao Yin. Coordinate friendly structures, algorithms and applications. Annals of Mathematical Sciences and Applications, 1(1):57\u2013119, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Zhimin%20Wu%2C%20Tianyu%20Xu%2C%20Yangyang%20Yan%2C%20Ming%20Coordinate%20friendly%20structures%2C%20algorithms%20and%20applications",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Zhimin%20Wu%2C%20Tianyu%20Xu%2C%20Yangyang%20Yan%2C%20Ming%20Coordinate%20friendly%20structures%2C%20algorithms%20and%20applications"
+        },
+        {
+            "id": "Peng_et+al_2016_b",
+            "entry": "Zhimin Peng, Yangyang Xu, Ming Yan, and Wotao Yin. On the Convergence of Asynchronous Parallel Iteration with Unbounded Delays. arXiv:1612.04425 [cs, math, stat], December 2016c.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.04425"
+        },
+        {
+            "id": "Recht_et+al_2011_a",
+            "entry": "Benjamin Recht, Christopher Re, Stephen Wright, and Feng Niu. Hogwild!: A lock-free approach to parallelizing stochastic gradient descent. In Advances in Neural Information Processing Systems 24, pp. 693\u2013701, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Recht%2C%20Benjamin%20Re%2C%20Christopher%20Wright%2C%20Stephen%20Niu%2C%20Feng%20Hogwild%21%3A%20A%20lock-free%20approach%20to%20parallelizing%20stochastic%20gradient%20descent%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Recht%2C%20Benjamin%20Re%2C%20Christopher%20Wright%2C%20Stephen%20Niu%2C%20Feng%20Hogwild%21%3A%20A%20lock-free%20approach%20to%20parallelizing%20stochastic%20gradient%20descent%202011"
+        },
+        {
+            "id": "Reddi_et+al_2015_a",
+            "entry": "Sashank J. Reddi, Ahmed Hefny, Suvrit Sra, Barnab\u00e1s P\u00f3czos, and Alex Smola. On Variance Reduction in Stochastic Gradient Descent and its Asynchronous Variants. arXiv:1506.06840, June 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.06840"
+        },
+        {
+            "id": "Roux_et+al_2012_a",
+            "entry": "Nicolas L. Roux, Mark Schmidt, and Francis R. Bach. A Stochastic Gradient Method with an Exponential Convergence _Rate for Finite Training Sets. In Advances in Neural Information Processing Systems 25, pp. 2663\u20132671. Curran Associates, Inc., 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roux%2C%20Nicolas%20L.%20Schmidt%2C%20Mark%20Bach%2C%20Francis%20R.%20A%20Stochastic%20Gradient%20Method%20with%20an%20Exponential%20Convergence%20_Rate%20for%20Finite%20Training%20Sets%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roux%2C%20Nicolas%20L.%20Schmidt%2C%20Mark%20Bach%2C%20Francis%20R.%20A%20Stochastic%20Gradient%20Method%20with%20an%20Exponential%20Convergence%20_Rate%20for%20Finite%20Training%20Sets%202012"
+        },
+        {
+            "id": "Shalev-Shwartz_2016_a",
+            "entry": "Shai Shalev-Shwartz and Tong Zhang. Accelerated proximal stochastic dual coordinate ascent for regularized loss minimization. Mathematical Programming, 155(1-2):105\u2013145, January 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shalev-Shwartz%2C%20Shai%20Zhang%2C%20Tong%20Accelerated%20proximal%20stochastic%20dual%20coordinate%20ascent%20for%20regularized%20loss%20minimization%202016-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shalev-Shwartz%2C%20Shai%20Zhang%2C%20Tong%20Accelerated%20proximal%20stochastic%20dual%20coordinate%20ascent%20for%20regularized%20loss%20minimization%202016-01"
+        },
+        {
+            "id": "Su_et+al_2014_a",
+            "entry": "Weijie Su, Stephen Boyd, and Emmanuel Candes. A Differential Equation for Modeling Nesterov\u2019s Accelerated Gradient Method: Theory and Insights. In Advances in Neural Information Processing Systems 27, pp. 2510\u20132518. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Su%2C%20Weijie%20Boyd%2C%20Stephen%20Candes%2C%20Emmanuel%20A%20Differential%20Equation%20for%20Modeling%20Nesterov%E2%80%99s%20Accelerated%20Gradient%20Method%3A%20Theory%20and%20Insights%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Su%2C%20Weijie%20Boyd%2C%20Stephen%20Candes%2C%20Emmanuel%20A%20Differential%20Equation%20for%20Modeling%20Nesterov%E2%80%99s%20Accelerated%20Gradient%20Method%3A%20Theory%20and%20Insights%202014"
+        },
+        {
+            "id": "Sun_et+al_2017_a",
+            "entry": "Tao Sun, Robert Hannah, and Wotao Yin. Asynchronous Coordinate Descent under More Realistic Assumptions. In Advances in Neural Information Processing Systems 30, pp. 6183\u20136191. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Tao%20Hannah%2C%20Robert%20Yin%2C%20Wotao%20Asynchronous%20Coordinate%20Descent%20under%20More%20Realistic%20Assumptions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sun%2C%20Tao%20Hannah%2C%20Robert%20Yin%2C%20Wotao%20Asynchronous%20Coordinate%20Descent%20under%20More%20Realistic%20Assumptions%202017"
+        },
+        {
+            "id": "Tseng_1991_a",
+            "entry": "P. Tseng. On the rate of convergence of a partially asynchronous gradient projection algorithm. SIAM Journal on Optimization, 1(4):603\u2013619, November 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tseng%2C%20P.%20On%20the%20rate%20of%20convergence%20of%20a%20partially%20asynchronous%20gradient%20projection%20algorithm%201991-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tseng%2C%20P.%20On%20the%20rate%20of%20convergence%20of%20a%20partially%20asynchronous%20gradient%20projection%20algorithm%201991-11"
+        },
+        {
+            "id": "Tseng_et+al_1990_a",
+            "entry": "P. Tseng, D. Bertsekas, and J. Tsitsiklis. Partially asynchronous, parallel algorithms for network flow and other problems. SIAM Journal on Control and Optimization, 28(3):678\u2013710, March 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tseng%2C%20P.%20Bertsekas%2C%20D.%20Tsitsiklis%2C%20J.%20Partially%20asynchronous%2C%20parallel%20algorithms%20for%20network%20flow%20and%20other%20problems%201990-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tseng%2C%20P.%20Bertsekas%2C%20D.%20Tsitsiklis%2C%20J.%20Partially%20asynchronous%2C%20parallel%20algorithms%20for%20network%20flow%20and%20other%20problems%201990-03"
+        },
+        {
+            "id": "Tseng_2008_a",
+            "entry": "Paul Tseng. On accelerated proximal gradient methods for convex-concave optimization. Department of Mathematics, University of Washington, Tech. Rep., 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tseng%2C%20Paul%20On%20accelerated%20proximal%20gradient%20methods%20for%20convex-concave%20optimization%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tseng%2C%20Paul%20On%20accelerated%20proximal%20gradient%20methods%20for%20convex-concave%20optimization%202008"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Lin Xiao, Adams Wei Yu, Qihang Lin, and Weizhu Chen. DSCOVR: Randomized Primal-Dual Block Coordinate Algorithms for Asynchronous Distributed Optimization. arXiv:1710.05080, October 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.05080"
+        },
+        {
+            "id": "Zhou_et+al_2018_a",
+            "entry": "Zhengyuan Zhou, Panayotis Mertikopoulos, Nicholas Bambos, Peter Glynn, Yinyu Ye, Li-Jia Li, and Li Fei-Fei. Distributed Asynchronous Optimization with Unbounded Delays: How Slow Can You Go? In International Conference on Machine Learning, pp. 5970\u20135979, July 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Zhengyuan%20Mertikopoulos%2C%20Panayotis%20Bambos%2C%20Nicholas%20Glynn%2C%20Peter%20Distributed%20Asynchronous%20Optimization%20with%20Unbounded%20Delays%3A%20How%20Slow%20Can%20You%20Go%3F%202018-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Zhengyuan%20Mertikopoulos%2C%20Panayotis%20Bambos%2C%20Nicholas%20Glynn%2C%20Peter%20Distributed%20Asynchronous%20Optimization%20with%20Unbounded%20Delays%3A%20How%20Slow%20Can%20You%20Go%3F%202018-07"
+        },
+        {
+            "id": "In_2017_a",
+            "entry": "In tuning for general problems, there are theoretical reasons why it is difficult to attain acceleration without some prior knowledge of \u03c3, the strong convexity modulus Arjevani (2017). Ideally \u03c3 is pre-specified for instance in a regularization term. If the Lipschitz constants Li cannot be calculated directly (which is rarely the case for the classic dual problem of empirical risk minimization objectives), the line-search method discussed in Roux et al. (2012) Section 4 can be used.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20tuning%20for%20general%20problems%20there%20are%20theoretical%20reasons%20why%20it%20is%20difficult%20to%20attain%20acceleration%20without%20some%20prior%20knowledge%20of%20%CF%83%20the%20strong%20convexity%20modulus%20Arjevani%202017%20Ideally%20%CF%83%20is%20prespecified%20for%20instance%20in%20a%20regularization%20term%20If%20the%20Lipschitz%20constants%20Li%20cannot%20be%20calculated%20directly%20which%20is%20rarely%20the%20case%20for%20the%20classic%20dual%20problem%20of%20empirical%20risk%20minimization%20objectives%20the%20linesearch%20method%20discussed%20in%20Roux%20et%20al%202012%20Section%204%20can%20be%20used",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20tuning%20for%20general%20problems%20there%20are%20theoretical%20reasons%20why%20it%20is%20difficult%20to%20attain%20acceleration%20without%20some%20prior%20knowledge%20of%20%CF%83%20the%20strong%20convexity%20modulus%20Arjevani%202017%20Ideally%20%CF%83%20is%20prespecified%20for%20instance%20in%20a%20regularization%20term%20If%20the%20Lipschitz%20constants%20Li%20cannot%20be%20calculated%20directly%20which%20is%20rarely%20the%20case%20for%20the%20classic%20dual%20problem%20of%20empirical%20risk%20minimization%20objectives%20the%20linesearch%20method%20discussed%20in%20Roux%20et%20al%202012%20Section%204%20can%20be%20used"
+        },
+        {
+            "id": "As_2013_a",
+            "entry": "As mentioned in Section 5, authors in Lee & Sidford (2013a) proposed a linear transformation of an accelerated RBCD scheme that results in sparse coordinate updates. Our proposed algorithm can be given a similar efficient implementation. We may eliminate xk from A2BCD, and derive the equivalent iteration below: yk+1 vk+1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=As%20mentioned%20in%20Section%205%20authors%20in%20Lee%20%20Sidford%202013a%20proposed%20a%20linear%20transformation%20of%20an%20accelerated%20RBCD%20scheme%20that%20results%20in%20sparse%20coordinate%20updates%20Our%20proposed%20algorithm%20can%20be%20given%20a%20similar%20efficient%20implementation%20We%20may%20eliminate%20xk%20from%20A2BCD%20and%20derive%20the%20equivalent%20iteration%20below%20yk1%20vk1",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=As%20mentioned%20in%20Section%205%20authors%20in%20Lee%20%20Sidford%202013a%20proposed%20a%20linear%20transformation%20of%20an%20accelerated%20RBCD%20scheme%20that%20results%20in%20sparse%20coordinate%20updates%20Our%20proposed%20algorithm%20can%20be%20given%20a%20similar%20efficient%20implementation%20We%20may%20eliminate%20xk%20from%20A2BCD%20and%20derive%20the%20equivalent%20iteration%20below%20yk1%20vk1"
+        },
+        {
+            "id": "Proof_2017_a",
+            "entry": "Proof. See Hannah & Yin (2017a).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Proof%20See%20Hannah%20%26%20Yin%202017"
+        },
+        {
+            "id": "Proof_2012_a",
+            "entry": "Proof. Our strategy is to separately analyze terms that appear in the traditional analysis of Nesterov (2012), and the terms that result from asynchronicity. We first prove equation B.8:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Proof%20Our%20strategy%20is%20to%20separately%20analyze%20terms%20that%20appear%20in%20the%20traditional%20analysis%20of%20Nesterov%202012%20and%20the%20terms%20that%20result%20from%20asynchronicity%20We%20first%20prove%20equation%20B8"
+        },
+        {
+            "id": "Much_2012_a",
+            "entry": "Much like Nesterov (2012), we need a f (xk) term in the Lyapunov function (see the middle of page 357). However we additionally need to consider asynchronicity when analyzing the growth of this term. Again terms due to asynchronicity are emboldened.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Much%20like%20Nesterov%202012%20we%20need%20a%20f%20xk%20term%20in%20the%20Lyapunov%20function%20see%20the%20middle%20of%20page%20357%20However%20we%20additionally%20need%20to%20consider%20asynchronicity%20when%20analyzing%20the%20growth%20of%20this%20term%20Again%20terms%20due%20to%20asynchronicity%20are%20emboldened",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Much%20like%20Nesterov%202012%20we%20need%20a%20f%20xk%20term%20in%20the%20Lyapunov%20function%20see%20the%20middle%20of%20page%20357%20However%20we%20additionally%20need%20to%20consider%20asynchronicity%20when%20analyzing%20the%20growth%20of%20this%20term%20Again%20terms%20due%20to%20asynchronicity%20are%20emboldened"
+        },
+        {
+            "id": "1",
+            "entry": "1. We now analyze the coefficient of \u03c4 j=1 yk+1\u2212j \u2212 yk\u2212j",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20now%20analyze%20the%20coefficient%20of%20%CF%84%20j1%20yk1j%20%20ykj"
+        },
+        {
+            "id": "1",
+            "entry": "1. Hence the proof is complete. x which is clearly \u03c3-strongly convex and Li-Lipschitz on Rb. From Lemma 8 of Lan & Zhou (2015), we know that this function has unique minimizer",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hence%20the%20proof%20is%20complete%20x%20which%20is%20clearly%20%CF%83strongly%20convex%20and%20LiLipschitz%20on%20Rb%20From%20Lemma%208%20of%20Lan%20%20Zhou%202015%20we%20know%20that%20this%20function%20has%20unique%20minimizer",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hence%20the%20proof%20is%20complete%20x%20which%20is%20clearly%20%CF%83strongly%20convex%20and%20LiLipschitz%20on%20Rb%20From%20Lemma%208%20of%20Lan%20%20Zhou%202015%20we%20know%20that%20this%20function%20has%20unique%20minimizer"
+        },
+        {
+            "id": "\u2207if_2013_b",
+            "entry": "\u2207if is supported on the ith block, hence why all the other indices are 0. The patten of nonzeros in A means that the gradient will have at most 1 more nonzero on the ith block (see Nesterov (2013)).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=if%20is%20supported%20on%20the%20ith%20block%20hence%20why%20all%20the%20other%20indices%20are%200%20The%20patten%20of%20nonzeros%20in%20A%20means%20that%20the%20gradient%20will%20have%20at%20most%201%20more%20nonzero%20on%20the%20ith%20block%20see%20Nesterov%202013"
+        },
+        {
+            "id": "Under_2019_d",
+            "entry": "Under review as a conference paper at ICLR 2019 now essentially matches the one in Theorem 3 in Section 3. While this result is stronger, it increases the complexity of the proof substantially. So in the interests of space and simplicity, we do not prove this stronger result.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Under%20review%20as%20a%20conference%20paper%20at%20ICLR%202019%20now%20essentially%20matches%20the%20one%20in%20Theorem%203%20in%20Section%203%20While%20this%20result%20is%20stronger%20it%20increases%20the%20complexity%20of%20the%20proof%20substantially%20So%20in%20the%20interests%20of%20space%20and%20simplicity%20we%20do%20not%20prove%20this%20stronger%20result"
+        }
+    ]
+}

@@ -1,0 +1,434 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PAY LESS ATTENTION WITH LIGHTWEIGHT AND DYNAMIC CONVOLUTIONS",
+        "author": "Felix Wu, Cornell University",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkVhlh09tX"
+        },
+        "journal": "Furthermore",
+        "abstract": "Self-attention is a useful mechanism to build generative models for language and images. It determines the importance of context elements by comparing each element to the current time step. In this paper, we show that a very lightweight convolution can perform competitively to the best reported self-attention results. Next, we introduce dynamic convolutions which are simpler and more efficient than self-attention. We predict separate convolution kernels based solely on the current time-step in order to determine the importance of context elements. The number of operations required by this approach scales linearly in the input length, whereas self-attention is quadratic. Experiments on large-scale machine translation, language modeling and abstractive summarization show that dynamic convolutions improve over strong self-attention models. On the WMT\u201914 English-German test set dynamic convolutions achieve a new state of the art of 29.7 BLEU.1"
+    },
+    "keywords": [
+        {
+            "term": "byte pair encoding",
+            "url": "https://en.wikipedia.org/wiki/byte_pair_encoding"
+        },
+        {
+            "term": "time step",
+            "url": "https://en.wikipedia.org/wiki/time_step"
+        },
+        {
+            "term": "language modeling",
+            "url": "https://en.wikipedia.org/wiki/language_modeling"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "RNN": "recurrent neural networks",
+        "GLU": "gated linear unit",
+        "BPE": "byte pair encoding",
+        "EnFr": "English to French",
+        "AAN": "averaged attention networks"
+    },
+    "highlights": [
+        "There has been much recent progress in sequence modeling through recurrent neural networks (RNN; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al 2015</a></a>; Wu et al 2016), convolutional networks (CNN; <a class=\"ref-link\" id=\"cKalchbrenner_et+al_2016_a\" href=\"#rKalchbrenner_et+al_2016_a\"><a class=\"ref-link\" id=\"cKalchbrenner_et+al_2016_a\" href=\"#rKalchbrenner_et+al_2016_a\">Kalchbrenner et al 2016</a></a>; <a class=\"ref-link\" id=\"cGehring_et+al_2016_a\" href=\"#rGehring_et+al_2016_a\"><a class=\"ref-link\" id=\"cGehring_et+al_2016_a\" href=\"#rGehring_et+al_2016_a\">Gehring et al 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cKaiser_et+al_2017_a\" href=\"#rKaiser_et+al_2017_a\"><a class=\"ref-link\" id=\"cKaiser_et+al_2017_a\" href=\"#rKaiser_et+al_2017_a\">Kaiser et al 2017</a></a>) and self-attention models (<a class=\"ref-link\" id=\"cPaulus_et+al_2017_a\" href=\"#rPaulus_et+al_2017_a\"><a class=\"ref-link\" id=\"cPaulus_et+al_2017_a\" href=\"#rPaulus_et+al_2017_a\">Paulus et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a></a>)",
+        "Attention assigns context elements attention weights which define a weighted sum over context representations (<a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a>; <a class=\"ref-link\" id=\"cSukhbaatar_et+al_2015_a\" href=\"#rSukhbaatar_et+al_2015_a\">Sukhbaatar et al, 2015</a>; <a class=\"ref-link\" id=\"cChorowski_et+al_2015_a\" href=\"#rChorowski_et+al_2015_a\">Chorowski et al, 2015</a>; <a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a>)",
+        "Dynamic convolutions build on lightweight convolutions by predicting a different convolution kernel at every time-step",
+        "BLEU on WMT En-Fr; the state of the art is based on self-attention (<a class=\"ref-link\" id=\"cOtt_et+al_2018_a\" href=\"#rOtt_et+al_2018_a\">Ott et al, 2018</a>). This is despite the simplicity of LightConv which operates with a very small number of fixed weights over all time steps whereas self-attention computes dot-products with all context elements at every time-step",
+        "We presented lightweight convolutions which perform competitively to the best reported results in the literature despite their simplicity",
+        "Dynamic convolutions build on lightweight convolutions by predicting a different kernel at every time-step, similar to the attention weights computed by self-attention"
+    ],
+    "key_statements": [
+        "There has been much recent progress in sequence modeling through recurrent neural networks (RNN; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al 2015</a></a>; Wu et al 2016), convolutional networks (CNN; <a class=\"ref-link\" id=\"cKalchbrenner_et+al_2016_a\" href=\"#rKalchbrenner_et+al_2016_a\"><a class=\"ref-link\" id=\"cKalchbrenner_et+al_2016_a\" href=\"#rKalchbrenner_et+al_2016_a\">Kalchbrenner et al 2016</a></a>; <a class=\"ref-link\" id=\"cGehring_et+al_2016_a\" href=\"#rGehring_et+al_2016_a\"><a class=\"ref-link\" id=\"cGehring_et+al_2016_a\" href=\"#rGehring_et+al_2016_a\">Gehring et al 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cKaiser_et+al_2017_a\" href=\"#rKaiser_et+al_2017_a\"><a class=\"ref-link\" id=\"cKaiser_et+al_2017_a\" href=\"#rKaiser_et+al_2017_a\">Kaiser et al 2017</a></a>) and self-attention models (<a class=\"ref-link\" id=\"cPaulus_et+al_2017_a\" href=\"#rPaulus_et+al_2017_a\"><a class=\"ref-link\" id=\"cPaulus_et+al_2017_a\" href=\"#rPaulus_et+al_2017_a\">Paulus et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a></a>)",
+        "Attention assigns context elements attention weights which define a weighted sum over context representations (<a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a>; <a class=\"ref-link\" id=\"cSukhbaatar_et+al_2015_a\" href=\"#rSukhbaatar_et+al_2015_a\">Sukhbaatar et al, 2015</a>; <a class=\"ref-link\" id=\"cChorowski_et+al_2015_a\" href=\"#rChorowski_et+al_2015_a\">Chorowski et al, 2015</a>; <a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a>)",
+        "Different to self-attention, lightweight convolutions reuse the same weights for context elements, regardless of the current time-step",
+        "Dynamic convolutions build on lightweight convolutions by predicting a different convolution kernel at every time-step",
+        "BLEU on WMT En-Fr; the state of the art is based on self-attention (<a class=\"ref-link\" id=\"cOtt_et+al_2018_a\" href=\"#rOtt_et+al_2018_a\">Ott et al, 2018</a>). This is despite the simplicity of LightConv which operates with a very small number of fixed weights over all time steps whereas self-attention computes dot-products with all context elements at every time-step",
+        "We presented lightweight convolutions which perform competitively to the best reported results in the literature despite their simplicity",
+        "Dynamic convolutions build on lightweight convolutions by predicting a different kernel at every time-step, similar to the attention weights computed by self-attention",
+        "We are excited about the future of dynamic convolutions and plan to apply them to other tasks such as question answering and computer vision where inputs are even larger than the tasks we considered in this paper.\n8An earlier version of this paper erroneously compared to <a class=\"ref-link\" id=\"cGehrmann_et+al_2018_a\" href=\"#rGehrmann_et+al_2018_a\">Gehrmann et al (2018</a>), their setup is based on the full-text CNN-DailyMail whereas we use the more common entity-anonymized version"
+    ],
+    "summary": [
+        "There has been much recent progress in sequence modeling through recurrent neural networks (RNN; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al 2015</a></a>; Wu et al 2016), convolutional networks (CNN; <a class=\"ref-link\" id=\"cKalchbrenner_et+al_2016_a\" href=\"#rKalchbrenner_et+al_2016_a\"><a class=\"ref-link\" id=\"cKalchbrenner_et+al_2016_a\" href=\"#rKalchbrenner_et+al_2016_a\">Kalchbrenner et al 2016</a></a>; <a class=\"ref-link\" id=\"cGehring_et+al_2016_a\" href=\"#rGehring_et+al_2016_a\"><a class=\"ref-link\" id=\"cGehring_et+al_2016_a\" href=\"#rGehring_et+al_2016_a\">Gehring et al 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cKaiser_et+al_2017_a\" href=\"#rKaiser_et+al_2017_a\"><a class=\"ref-link\" id=\"cKaiser_et+al_2017_a\" href=\"#rKaiser_et+al_2017_a\">Kaiser et al 2017</a></a>) and self-attention models (<a class=\"ref-link\" id=\"cPaulus_et+al_2017_a\" href=\"#rPaulus_et+al_2017_a\"><a class=\"ref-link\" id=\"cPaulus_et+al_2017_a\" href=\"#rPaulus_et+al_2017_a\">Paulus et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a></a>).",
+        "Self-attention has been formulated as content-based where attention weights are computed by comparing the current time-step to all elements in the context (Figure 1a).",
+        "Different to self-attention, lightweight convolutions reuse the same weights for context elements, regardless of the current time-step.",
+        "Self-attention requires a quadratic number of operations in the sentence length to compute attention weights, while the computation of dynamic kernels for DynamicConv scales linearly in the sequence length.",
+        "The model computes a distribution over vocabulary V by transforming the decoder output via a linear layer with weights W V \u2208 Rd\u00d7V followed by softmax normalization.",
+        "LightConv and DynamicConv are identical to Transformer Big, except that self-attention modules are swapped with either fixed or dynamic convolutions.",
+        "We report results on four benchmarks: For WMT English to German (EnDe) we replicate the setup of <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al (2017</a>), based on WMT\u201916 training data with 4.5M sentence pairs, we validate on newstest2013 and test on newstest2014.3 The vocabulary is a 32K joint source and target byte pair encoding (BPE; <a class=\"ref-link\" id=\"cSennrich_et+al_2016_a\" href=\"#rSennrich_et+al_2016_a\">Sennrich et al 2016</a>).",
+        "Table 1 shows that LightConv performs very competitively and only trails the state of the art result by 0.1 BLEU on WMT En-Fr; the state of the art is based on self-attention (<a class=\"ref-link\" id=\"cOtt_et+al_2018_a\" href=\"#rOtt_et+al_2018_a\">Ott et al, 2018</a>).",
+        "This is despite the simplicity of LightConv which operates with a very small number of fixed weights over all time steps whereas self-attention computes dot-products with all context elements at every time-step.",
+        "The self-attention baseline on this dataset is the best reported result in the literature (Table 2).7 LightConv outperforms this baseline by 0.4 BLEU and DynamicConv improves by 0.8 BLEU.",
+        "We replace self-attention blocks with non-separable convolutions (CNN) with kernel size 3 and input/output dimension d = 1024.",
+        "Dynamic convolutions (DynamicConv) achieve the same validation accuracy as self-attention with slightly fewer parameters and at 20% higher inference speed.",
+        "Table 5 shows that LightConv outperforms the self-attention baseline as well as comparable previous work and DynamicConv performs even better.",
+        "Dynamic convolutions build on lightweight convolutions by predicting a different kernel at every time-step, similar to the attention weights computed by self-attention.",
+        "Our experiments show that lightweight convolutions can outperform a strong self-attention baseline on WMT\u201917 Chinese-English translation, IWSLT\u201914 German-English translation and CNNDailyMail summarization.",
+        "On Billion word language modeling we achieve comparable results to self-attention.",
+        "The dynamic weights are a function of the current time-step only rather than the entire context"
+    ],
+    "headline": "We show that a very lightweight convolution can perform competitively to the best reported self-attention results",
+    "reference_links": [
+        {
+            "id": "Ahmed_et+al_2017_a",
+            "entry": "Karim Ahmed, Nitish Shirish Keskar, and Richard Socher. Weighted transformer network for machine translation. arxiv, abs/1711.02132, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.02132"
+        },
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv, abs/1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In Proc. of ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Celikyilmaz_et+al_2018_a",
+            "entry": "Asli Celikyilmaz, Antoine Bosselut, Xiaodong He, and Yejin Choi. Deep communicating agents for abstractive summarization. In Proc. of NAACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Celikyilmaz%2C%20Asli%20Bosselut%2C%20Antoine%20He%2C%20Xiaodong%20Choi%2C%20Yejin%20Deep%20communicating%20agents%20for%20abstractive%20summarization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Celikyilmaz%2C%20Asli%20Bosselut%2C%20Antoine%20He%2C%20Xiaodong%20Choi%2C%20Yejin%20Deep%20communicating%20agents%20for%20abstractive%20summarization%202018"
+        },
+        {
+            "id": "Chelba_et+al_2013_a",
+            "entry": "Ciprian Chelba, Tomas Mikolov, Mike Schuster, Qi Ge, Thorsten Brants, Phillipp Koehn, and Tony Robinson. One billion word benchmark for measuring progress in statistical language modeling. arXiv, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chelba%2C%20Ciprian%20Mikolov%2C%20Tomas%20Schuster%2C%20Mike%20Ge%2C%20Qi%20One%20billion%20word%20benchmark%20for%20measuring%20progress%20in%20statistical%20language%20modeling%202013"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Mia Xu Chen, Orhan Firat, Ankur Bapna, Melvin Johnson, Wolfgang Macherey, George Foster, Llion Jones, Niki Parmar, Mike Schuster, Zhifeng Chen, Yonghui Wu, and Macduff Hughes. The best of both worlds: Combining recent advances in neural machine translation. arxiv, abs/1804.09849, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.09849"
+        },
+        {
+            "id": "Chen_et+al_2015_a",
+            "entry": "Yu-hsin Chen, Ignacio Lopez-Moreno, Tara N Sainath, Mirko Visontai, Raziel Alvarez, and Carolina Parada. Locally-connected and convolutional neural networks for small footprint speaker recognition. In Proc. of Interspeech, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Yu-hsin%20Lopez-Moreno%2C%20Ignacio%20Sainath%2C%20Tara%20N.%20Visontai%2C%20Mirko%20Locally-connected%20and%20convolutional%20neural%20networks%20for%20small%20footprint%20speaker%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Yu-hsin%20Lopez-Moreno%2C%20Ignacio%20Sainath%2C%20Tara%20N.%20Visontai%2C%20Mirko%20Locally-connected%20and%20convolutional%20neural%20networks%20for%20small%20footprint%20speaker%20recognition%202015"
+        },
+        {
+            "id": "Chollet_2017_a",
+            "entry": "Franois Chollet. Xception: Deep learning with depthwise separable convolutions. In Proc. of CVPR, pp. 1800\u20131807, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chollet%2C%20Franois%20Xception%3A%20Deep%20learning%20with%20depthwise%20separable%20convolutions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chollet%2C%20Franois%20Xception%3A%20Deep%20learning%20with%20depthwise%20separable%20convolutions%202017"
+        },
+        {
+            "id": "Chorowski_et+al_2015_a",
+            "entry": "Jan Chorowski, Dzmitry Bahdanau, Dmitriy Serdyuk, KyungHyun Cho, and Yoshua Bengio. Attention-based models for speech recognition. arXiv, abs/1506.07503, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.07503"
+        },
+        {
+            "id": "Dauphin_et+al_2017_a",
+            "entry": "Yann N. Dauphin, Angela Fan, Michael Auli, and David Grangier. Language modeling with gated convolutional networks. In Proc. of ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dauphin%2C%20Yann%20N.%20Fan%2C%20Angela%20Auli%2C%20Michael%20Grangier%2C%20David%20Language%20modeling%20with%20gated%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dauphin%2C%20Yann%20N.%20Fan%2C%20Angela%20Auli%2C%20Michael%20Grangier%2C%20David%20Language%20modeling%20with%20gated%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Deng_et+al_2018_a",
+            "entry": "Yuntian Deng, Yoon Kim, Justin Chiu, Demi Guo, and Alexander M Rush. Latent alignment and variational attention. arXiv, abs/1807.03756, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.03756"
+        },
+        {
+            "id": "Edunov_et+al_2018_a",
+            "entry": "Sergey Edunov, Myle Ott, Michael Auli, David Grangier, and Marc\u2019Aurelio Ranzato. Classical structured prediction losses for sequence to sequence learning. In Proc. of NAACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Classical%20structured%20prediction%20losses%20for%20sequence%20to%20sequence%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Classical%20structured%20prediction%20losses%20for%20sequence%20to%20sequence%20learning%202018"
+        },
+        {
+            "id": "Elbayad_et+al_2018_a",
+            "entry": "Maha Elbayad, Laurent Besacier, and Jakob Verbeek. Pervasive attention: 2d convolutional neural networks for sequence-to-sequence prediction. arXiv, abs/1808.03867, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.03867"
+        },
+        {
+            "id": "Fan_et+al_2017_a",
+            "entry": "Angela Fan, David Grangier, and Michael Auli. Controllable abstractive summarization. arXiv, abs/1711.05217, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.05217"
+        },
+        {
+            "id": "Gehring_et+al_2016_a",
+            "entry": "Jonas Gehring, Michael Auli, David Grangier, and Yann N Dauphin. A Convolutional Encoder Model for Neural Machine Translation. arXiv, abs/1611.02344, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02344"
+        },
+        {
+            "id": "Gehring_et+al_2017_a",
+            "entry": "Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N Dauphin. Convolutional Sequence to Sequence Learning. In Proc. of ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20Sequence%20to%20Sequence%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20Sequence%20to%20Sequence%20Learning%202017"
+        },
+        {
+            "id": "Gehrmann_et+al_2018_a",
+            "entry": "Sebastian Gehrmann, Yuntian Deng, and Alexander M Rush. Bottom-up abstractive summarization. arXiv, abs/1808.10792, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.10792"
+        },
+        {
+            "id": "Gong_et+al_2018_a",
+            "entry": "Jingjing Gong, Xipeng Qiu, Xinchi Chen, Dong Liang, and Xuanjing Huang. Convolutional interaction network for natural language inference. In Proc. of EMNLP, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gong%2C%20Jingjing%20Qiu%2C%20Xipeng%20Chen%2C%20Xinchi%20Liang%2C%20Dong%20Convolutional%20interaction%20network%20for%20natural%20language%20inference%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gong%2C%20Jingjing%20Qiu%2C%20Xipeng%20Chen%2C%20Xinchi%20Liang%2C%20Dong%20Convolutional%20interaction%20network%20for%20natural%20language%20inference%202018"
+        },
+        {
+            "id": "Grave_et+al_2016_a",
+            "entry": "Edouard Grave, Armand Joulin, Moustapha Cisse, David Grangier, and Herve Jegou. Efficient softmax approximation for gpus. arXiv, abs/1609.04309, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.04309"
+        },
+        {
+            "id": "Gu_et+al_2018_a",
+            "entry": "Jiatao Gu, James Bradbury, Caiming Xiong, Victor O.K. Li, and Richard Socher. Non-autoregressive neural machine translation. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=B1l8BtlCb.",
+            "url": "https://openreview.net/forum?id=B1l8BtlCb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Jiatao%20Bradbury%2C%20James%20Xiong%2C%20Caiming%20Li%2C%20Victor%20O.K.%20Non-autoregressive%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Guo_et+al_2019_a",
+            "entry": "Junliang Guo, Xu Tan, Di He, Tao Qin, Linli Xu, and Tie-Yan Liu. Non-autoregressive neural machine translation with enhanced decoder input. AAAI, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Junliang%20Tan%2C%20Xu%20He%2C%20Di%20Qin%2C%20Tao%20Non-autoregressive%20neural%20machine%20translation%20with%20enhanced%20decoder%20input%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Junliang%20Tan%2C%20Xu%20He%2C%20Di%20Qin%2C%20Tao%20Non-autoregressive%20neural%20machine%20translation%20with%20enhanced%20decoder%20input%202019"
+        },
+        {
+            "id": "Hassan_et+al_2018_a",
+            "entry": "Hany Hassan, Anthony Aue, Chang Chen, Vishal Chowdhary, Jonathan Clark, Christian Federmann, Xuedong Huang, Marcin Junczys-Dowmunt, Will Lewis, Mu Li, Shujie Liu, Tie-Yan Liu, Renqian Luo, Arul Menezes, Tao Qin, Frank Seide, Xu Tan, Fei Tian, Lijun Wu, Shuangzhi Wu, Yingce Xia, Dongdong Zhang, Zhirui Zhang, and Ming Zhou. Achieving human parity on automatic chinese to english news translation. arXiv, abs/1803.05567, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05567"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep Residual Learning for Image Recognition. In Proc. of CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20Residual%20Learning%20for%20Image%20Recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20Residual%20Learning%20for%20Image%20Recognition%202015"
+        },
+        {
+            "id": "Hermann_et+al_2015_a",
+            "entry": "Karl Moritz Hermann, Tomas Kocisky, Edward Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and Phil Blunsom. Teaching machines to read and comprehend. In Proc. of NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hermann%2C%20Karl%20Moritz%20Kocisky%2C%20Tomas%20Grefenstette%2C%20Edward%20Espeholt%2C%20Lasse%20Teaching%20machines%20to%20read%20and%20comprehend%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hermann%2C%20Karl%20Moritz%20Kocisky%2C%20Tomas%20Grefenstette%2C%20Edward%20Espeholt%2C%20Lasse%20Teaching%20machines%20to%20read%20and%20comprehend%202015"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Jozefowicz_et+al_2016_a",
+            "entry": "Rafal Jozefowicz, Oriol Vinyals, Mike Schuster, Noam Shazeer, and Yonghui Wu. Exploring the limits of language modeling. arXiv, abs/1602.02410, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02410"
+        },
+        {
+            "id": "Kaiser_et+al_2017_a",
+            "entry": "Lukasz Kaiser, Aidan N. Gomez, and Francois Chollet. Depthwise separable convolutions for neural machine translation. arXiv, abs/1706.03059, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.03059"
+        },
+        {
+            "id": "Kaiser_et+al_2018_a",
+            "entry": "Lukasz Kaiser, Samy Bengio, Aurko Roy, Ashish Vaswani, Niki Parmar, Jakob Uszkoreit, and Noam Shazeer. Fast decoding in sequence models using discrete latent variables. In Proceedings of the 35th International Conference on Machine Learning (ICML), volume 80, pp. 2390\u20132399, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiser%2C%20Lukasz%20Bengio%2C%20Samy%20Roy%2C%20Aurko%20Vaswani%2C%20Ashish%20Fast%20decoding%20in%20sequence%20models%20using%20discrete%20latent%20variables%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiser%2C%20Lukasz%20Bengio%2C%20Samy%20Roy%2C%20Aurko%20Vaswani%2C%20Ashish%20Fast%20decoding%20in%20sequence%20models%20using%20discrete%20latent%20variables%202018"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2016_a",
+            "entry": "Nal Kalchbrenner, Lasse Espeholt, Karen Simonyan, Aaron van den Oord, Alex Graves, and Koray Kavukcuoglu. Neural Machine Translation in Linear Time. arXiv, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nal%20Kalchbrenner%20Lasse%20Espeholt%20Karen%20Simonyan%20Aaron%20van%20den%20Oord%20Alex%20Graves%20and%20Koray%20Kavukcuoglu%20Neural%20Machine%20Translation%20in%20Linear%20Time%20arXiv%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nal%20Kalchbrenner%20Lasse%20Espeholt%20Karen%20Simonyan%20Aaron%20van%20den%20Oord%20Alex%20Graves%20and%20Koray%20Kavukcuoglu%20Neural%20Machine%20Translation%20in%20Linear%20Time%20arXiv%202016"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A Method for Stochastic Optimization. In Proc. of ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20Method%20for%20Stochastic%20Optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20Method%20for%20Stochastic%20Optimization%202015"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proc. of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Jason Lee, Elman Mansimov, and Kyunghyun Cho. Deterministic non-autoregressive neural sequence modeling by iterative refinement. arXiv, abs/1802.06901, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06901"
+        },
+        {
+            "id": "Li_et+al_2019_a",
+            "entry": "Zhuohan Li, Di He, Fei Tian, Tao Qin, Liwei Wang, and Tie-Yan Liu. Hint-based training for non-autoregressive translation, 2019. URL https://openreview.net/forum?id=r1gGpjActQ.",
+            "url": "https://openreview.net/forum?id=r1gGpjActQ"
+        },
+        {
+            "id": "Chin-Yew_2004_a",
+            "entry": "Chin-Yew Lin. Rouge: A package for automatic evaluation of summaries. In Workshop on Text Summarization Branches Out, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChinYew%20Lin%20Rouge%20A%20package%20for%20automatic%20evaluation%20of%20summaries%20In%20Workshop%20on%20Text%20Summarization%20Branches%20Out%202004"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Peter J. Liu, Mohammad Saleh, Etienne Pot, Ben Goodrich, Ryan Sepassi, Lukasz Kaiser, and Noam Shazeer. Generating wikipedia by summarizing long sequences. arXiv, abs/1801.10198, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.10198"
+        },
+        {
+            "id": "Loshchilov_2016_a",
+            "entry": "Ilya Loshchilov and Frank Hutter. SGDR: Stochastic Gradient Descent with Warm Restarts. arXiv, abs/1608.03983, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.03983"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher Manning. Effective approaches to attention-based neural machine translation. In Proc. of EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015"
+        },
+        {
+            "id": "Nallapati_et+al_2016_a",
+            "entry": "Ramesh Nallapati, Bowen Zhou, Caglar Gulcehre, Bing Xiang, et al. Abstractive text summarization using sequence-to-sequence rnns and beyond. In Proc. of CONLL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nallapati%2C%20Ramesh%20Zhou%2C%20Bowen%20Gulcehre%2C%20Caglar%20Xiang%2C%20Bing%20Abstractive%20text%20summarization%20using%20sequence-to-sequence%20rnns%20and%20beyond%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nallapati%2C%20Ramesh%20Zhou%2C%20Bowen%20Gulcehre%2C%20Caglar%20Xiang%2C%20Bing%20Abstractive%20text%20summarization%20using%20sequence-to-sequence%20rnns%20and%20beyond%202016"
+        },
+        {
+            "id": "Ott_et+al_2018_a",
+            "entry": "Myle Ott, Sergey Edunov, David Grangier, and Michael Auli. Scaling neural machine translation. In Proc. of WMT, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ott%2C%20Myle%20Edunov%2C%20Sergey%20Grangier%2C%20David%20Auli%2C%20Michael%20Scaling%20neural%20machine%20translation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ott%2C%20Myle%20Edunov%2C%20Sergey%20Grangier%2C%20David%20Auli%2C%20Michael%20Scaling%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Pascanu_et+al_2013_a",
+            "entry": "Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. On the difficulty of training recurrent neural networks. In Proc. of ICML, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Paulus_et+al_2017_a",
+            "entry": "Romain Paulus, Caiming Xiong, and Richard Socher. A deep reinforced model for abstractive summarization. arXiv, abs/1705.04304, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.04304"
+        },
+        {
+            "id": "Pereyra_et+al_2017_a",
+            "entry": "Gabriel Pereyra, George Tucker, Jan Chorowski, Lukasz Kaiser, and Geoffrey E. Hinton. Regularizing neural networks by penalizing confident output distributions. In Proc. of ICLR Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pereyra%2C%20Gabriel%20Tucker%2C%20George%20Chorowski%2C%20Jan%20Kaiser%2C%20Lukasz%20Regularizing%20neural%20networks%20by%20penalizing%20confident%20output%20distributions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pereyra%2C%20Gabriel%20Tucker%2C%20George%20Chorowski%2C%20Jan%20Kaiser%2C%20Lukasz%20Regularizing%20neural%20networks%20by%20penalizing%20confident%20output%20distributions%202017"
+        },
+        {
+            "id": "Press_2017_a",
+            "entry": "Ofir Press and Lior Wolf. Using the output embedding to improve language models. In Proc. of EACL 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Press%2C%20Ofir%20Wolf%2C%20Lior%20Using%20the%20output%20embedding%20to%20improve%20language%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Press%2C%20Ofir%20Wolf%2C%20Lior%20Using%20the%20output%20embedding%20to%20improve%20language%20models%202017"
+        },
+        {
+            "id": "See_et+al_2017_a",
+            "entry": "Abigail See, Peter J Liu, and Christopher D Manning. Get to the point: Summarization with pointergenerator networks. In Proc. of ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=See%2C%20Abigail%20Liu%2C%20Peter%20J.%20Manning%2C%20Christopher%20D.%20Get%20to%20the%20point%3A%20Summarization%20with%20pointergenerator%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=See%2C%20Abigail%20Liu%2C%20Peter%20J.%20Manning%2C%20Christopher%20D.%20Get%20to%20the%20point%3A%20Summarization%20with%20pointergenerator%20networks%202017"
+        },
+        {
+            "id": "Sennrich_et+al_2016_a",
+            "entry": "Rico Sennrich, Barry Haddow, and Alexandra Birch. Neural machine translation of rare words with subword units. In Proc. of ACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202016"
+        },
+        {
+            "id": "Shaw_et+al_2018_a",
+            "entry": "Peter Shaw, Jakob Uszkoreit, and Ashish Vaswani. Self-attention with relative position representations. In Proc. of NAACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shaw%2C%20Peter%20Uszkoreit%2C%20Jakob%20Vaswani%2C%20Ashish%20Self-attention%20with%20relative%20position%20representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shaw%2C%20Peter%20Uszkoreit%2C%20Jakob%20Vaswani%2C%20Ashish%20Self-attention%20with%20relative%20position%20representations%202018"
+        },
+        {
+            "id": "Shazeer_et+al_2017_a",
+            "entry": "Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-of-experts layer. In Proc. of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shazeer%2C%20Noam%20Mirhoseini%2C%20Azalia%20Maziarz%2C%20Krzysztof%20Davis%2C%20Andy%20Outrageously%20large%20neural%20networks%3A%20The%20sparsely-gated%20mixture-of-experts%20layer%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shazeer%2C%20Noam%20Mirhoseini%2C%20Azalia%20Maziarz%2C%20Krzysztof%20Davis%2C%20Andy%20Outrageously%20large%20neural%20networks%3A%20The%20sparsely-gated%20mixture-of-experts%20layer%202017"
+        },
+        {
+            "id": "Shen_et+al_2018_a",
+            "entry": "Dinghan Shen, Martin Renqiang Min, Yitong Li, and Lawrence Carin. Learning context-sensitive convolutional filters for text processing. In Proc. of EMNLP, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Dinghan%20Min%2C%20Martin%20Renqiang%20Li%2C%20Yitong%20Carin%2C%20Lawrence%20Learning%20context-sensitive%20convolutional%20filters%20for%20text%20processing%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Dinghan%20Min%2C%20Martin%20Renqiang%20Li%2C%20Yitong%20Carin%2C%20Lawrence%20Learning%20context-sensitive%20convolutional%20filters%20for%20text%20processing%202018"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Tao Shen, Tianyi Zhou, Guodong Long, Jing Jiang, Shirui Pan, and Chengqi Zhang. Disan: Directional self-attention network for rnn/cnn-free language understanding. arXiv, abs/1709.04696, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.04696"
+        },
+        {
+            "id": "Shen_et+al_0000_a",
+            "entry": "Tao Shen, Tianyi Zhou, Guodong Long, Jing Jiang, and Chengqi Zhang. Bi-directional block selfattention for fast and memory-efficient sequence modeling. arXiv, abs/1804.00857, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00857"
+        },
+        {
+            "id": "Shen_et+al_0000_b",
+            "entry": "Tao Shen, Tianyi Zhou, Guodong Long, Jing Jiang, and Chengqi Zhang. Fast directional selfattention mechanism. arXiv, abs/1805.00912, 2018c.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.00912"
+        },
+        {
+            "id": "Sifre_2014_a",
+            "entry": "Laurent Sifre. Rigid-motion scattering for image classification. Ph.D. thesis section 6.2, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sifre%2C%20Laurent%20Rigid-motion%20scattering%20for%20image%20classification%202014"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2015_a",
+            "entry": "Sainbayar Sukhbaatar, arthur szlam, Jason Weston, and Rob Fergus. End-to-end memory networks. In Proc. of NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sukhbaatar%2C%20Sainbayar%20arthur%20szlam%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sukhbaatar%2C%20Sainbayar%20arthur%20szlam%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015"
+        },
+        {
+            "id": "Sutskever_et+al_2013_a",
+            "entry": "Ilya Sutskever, James Martens, George E. Dahl, and Geoffrey E. Hinton. On the importance of initialization and momentum in deep learning. In ICML, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20E.%20Hinton%2C%20Geoffrey%20E.%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to Sequence Learning with Neural Networks. In Proc. of NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20Sequence%20Learning%20with%20Neural%20Networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20Sequence%20Learning%20with%20Neural%20Networks%202014"
+        },
+        {
+            "id": "Szegedy_et+al_2015_a",
+            "entry": "Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, and Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. arXiv, abs/1512.00567, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.00567"
+        },
+        {
+            "id": "Yaniv_2014_a",
+            "entry": "Yaniv Taigman, Ming Yang, Marc\u2019Aurelio Ranzato, and Lior Wolf. Deepface: Closing the gap to human-level performance in face verification. In Proc. of CVPR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yaniv%20Taigman%2C%20Ming%20Yang%2C%20Marc%E2%80%99Aurelio%20Ranzato%20Wolf%2C%20Lior%20Deepface%3A%20Closing%20the%20gap%20to%20human-level%20performance%20in%20face%20verification%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yaniv%20Taigman%2C%20Ming%20Yang%2C%20Marc%E2%80%99Aurelio%20Ranzato%20Wolf%2C%20Lior%20Deepface%3A%20Closing%20the%20gap%20to%20human-level%20performance%20in%20face%20verification%202014"
+        },
+        {
+            "id": "Tang_et+al_2018_a",
+            "entry": "Gongbo Tang, Mathias Mller, Annette Rios, and Rico Sennrich. Why self-attention? a targeted evaluation of neural machine translation architectures. In Proc. of EMNLP, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Gongbo%20Mller%2C%20Mathias%20Rios%2C%20Annette%20Sennrich%2C%20Rico%20Why%20self-attention%3F%20a%20targeted%20evaluation%20of%20neural%20machine%20translation%20architectures%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Gongbo%20Mller%2C%20Mathias%20Rios%2C%20Annette%20Sennrich%2C%20Rico%20Why%20self-attention%3F%20a%20targeted%20evaluation%20of%20neural%20machine%20translation%20architectures%202018"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention Is All You Need. In Proc. of NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20Lukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20Is%20All%20You%20Need%20In%20Proc%20of%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20Lukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20Is%20All%20You%20Need%20In%20Proc%20of%20NIPS%202017"
+        },
+        {
+            "id": "Wan_et+al_2013_a",
+            "entry": "Li Wan, Matthew Zeiler, Sixin Zhang, Yann Le Cun, and Rob Fergus. Regularization of neural networks using dropconnect. In Proc. of ICML, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wan%2C%20Li%20Zeiler%2C%20Matthew%20Zhang%2C%20Sixin%20Cun%2C%20Yann%20Le%20Regularization%20of%20neural%20networks%20using%20dropconnect%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wan%2C%20Li%20Zeiler%2C%20Matthew%20Zhang%2C%20Sixin%20Cun%2C%20Yann%20Le%20Regularization%20of%20neural%20networks%20using%20dropconnect%202013"
+        },
+        {
+            "id": "Wang_2018_a",
+            "entry": "Zhengyang Wang and Shuiwang Ji. Smoothed dilated convolutions for improved dense prediction. In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining, pp. 2486\u20132495. ACM, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Zhengyang%20Ji%2C%20Shuiwang%20Smoothed%20dilated%20convolutions%20for%20improved%20dense%20prediction%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Zhengyang%20Ji%2C%20Shuiwang%20Smoothed%20dilated%20convolutions%20for%20improved%20dense%20prediction%202018"
+        },
+        {
+            "id": "Wu_et+al_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, et al. Google\u2019s Neural Machine Translation System: Bridging the Gap between Human and Machine Translation. arXiv, abs/1609.08144, 2016. Biao Zhang, Deyi Xiong, and Jinsong Su. Accelerating neural transformer via an average attention network. arXiv, abs/1805.00631, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        }
+    ]
+}

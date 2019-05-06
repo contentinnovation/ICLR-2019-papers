@@ -1,0 +1,248 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "RECURRENT EXPERIENCE REPLAY IN DISTRIBUTED REINFORCEMENT LEARNING",
+        "author": "Steven Kapturowski, Georg Ostrovski, John Quan, Remi Munos, Will Dabney DeepMind, London, UK {skapturowski,ostrovski,johnquan,munos,wdabney}@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=r1lyTjAqYX"
+        },
+        "abstract": "Building on the recent successes of distributed training of RL agents, in this paper we investigate the training of RNN-based RL agents from distributed prioritized experience replay. We study the effects of parameter lag resulting in representational drift and recurrent state staleness and empirically derive an improved training strategy. Using a single network architecture and fixed set of hyperparameters, the resulting agent, Recurrent Replay Distributed DQN, quadruples the previous state of the art on Atari-57, and matches the state of the art on DMLab-30. It is the first agent to exceed human-level performance in 52 of the 57 Atari games."
+    },
+    "keywords": [
+        {
+            "term": "backpropagation through time",
+            "url": "https://en.wikipedia.org/wiki/backpropagation_through_time"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "markov decision process",
+            "url": "https://en.wikipedia.org/wiki/markov_decision_process"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "RL": "Reinforcement Learning",
+        "RNNs": "recurrent neural networks",
+        "BPTT": "backpropagation through time",
+        "DQN": "Deep Q-Networks",
+        "ALE": "Arcade Learning Environment",
+        "R2D2+": "R2D2 version for DMLab only"
+    },
+    "highlights": [
+        "Reinforcement Learning (RL) has seen a rejuvenation of research interest recently due to repeated successes in solving challenging problems such as reaching human-level play on Atari 2600 games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>), beating the world champion in the game of Go (<a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>), and playing competitive 5-player DOTA (OpenAI, 2018b)",
+        "There are many approaches to Reinforcement Learning in POMDPs, we focus on using recurrent neural networks (RNNs) with backpropagation through time (BPTT) (<a class=\"ref-link\" id=\"cWerbos_1990_a\" href=\"#rWerbos_1990_a\">Werbos, 1990</a>) to learn a representation that disambiguates the true state of the POMDP",
+        "We propose a new agent, the Recurrent Replay Distributed Deep Q-Networks (R2D2), and use it to study the interplay between recurrent state, experience replay, and distributed training",
+        "Zero state initialization was often used in previous works (<a class=\"ref-link\" id=\"cHausknecht_2015_a\" href=\"#rHausknecht_2015_a\">Hausknecht & Stone, 2015</a>; <a class=\"ref-link\" id=\"cGruslys_et+al_2018_a\" href=\"#rGruslys_et+al_2018_a\">Gruslys et al, 2018</a>), we have found that it leads to misestimated action-values, especially in the early states of replayed sequences",
+        "Without burn-in, updates through backpropagation through time to these early time steps with poorly estimated outputs seem to give rise to destructive updates and hinder the network\u2019s ability to recover from sub-optimal initial recurrent states. This suggests that either the context-dependent recurrent state should be stored along with the trajectory in replay, or an initial part of replayed sequences should be reserved for burn-in, to allow the recurrent neural networks to rely on its recurrent state and exploit long-term temporal dependencies, and the two techniques can be combined beneficially",
+        "We have observed that the underlying problems of representational drift and recurrent state staleness are potentially exacerbated in the distributed setting, highlighting the importance of robustness to these effects through an adequate training strategy of the recurrent neural networks"
+    ],
+    "key_statements": [
+        "Reinforcement Learning (RL) has seen a rejuvenation of research interest recently due to repeated successes in solving challenging problems such as reaching human-level play on Atari 2600 games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>), beating the world champion in the game of Go (<a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>), and playing competitive 5-player DOTA (OpenAI, 2018b)",
+        "The earliest of these successes leveraged experience replay for data efficiency and stacked a fixed number of consecutive frames to overcome the partial observability in Atari 2600 games",
+        "In this paper we investigate the training of recurrent neural networks with experience replay",
+        "Our work is set within the Reinforcement Learning (RL) framework (<a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\">Sutton & Barto, 1998</a>), in which an agent interacts with an environment to maximize the sum of discounted, \u03b3 \u2208 [0, 1), rewards",
+        "We model the environment as a Partially Observable Markov Decision Process (POMDP) given by the tuple (S, A, T , R, \u03a9, O) (<a class=\"ref-link\" id=\"cMonahan_1982_a\" href=\"#rMonahan_1982_a\">Monahan, 1982</a>; <a class=\"ref-link\" id=\"cJaakkola_et+al_1995_a\" href=\"#rJaakkola_et+al_1995_a\">Jaakkola et al, 1995</a>; <a class=\"ref-link\" id=\"cKaelbling_et+al_1998_a\" href=\"#rKaelbling_et+al_1998_a\">Kaelbling et al, 1998</a>)",
+        "The underlying Markov Decision Process (MDP) is defined by (S, A, T , R), where S is the set of states, A the set of actions, T a transition function mapping state-actions to probability distributions over states, and R : S \u00d7 A \u2192 R is the reward function",
+        "There are many approaches to Reinforcement Learning in POMDPs, we focus on using recurrent neural networks (RNNs) with backpropagation through time (BPTT) (<a class=\"ref-link\" id=\"cWerbos_1990_a\" href=\"#rWerbos_1990_a\">Werbos, 1990</a>) to learn a representation that disambiguates the true state of the POMDP",
+        "We propose a new agent, the Recurrent Replay Distributed Deep Q-Networks (R2D2), and use it to study the interplay between recurrent state, experience replay, and distributed training",
+        "Zero state initialization was often used in previous works (<a class=\"ref-link\" id=\"cHausknecht_2015_a\" href=\"#rHausknecht_2015_a\">Hausknecht & Stone, 2015</a>; <a class=\"ref-link\" id=\"cGruslys_et+al_2018_a\" href=\"#rGruslys_et+al_2018_a\">Gruslys et al, 2018</a>), we have found that it leads to misestimated action-values, especially in the early states of replayed sequences",
+        "Without burn-in, updates through backpropagation through time to these early time steps with poorly estimated outputs seem to give rise to destructive updates and hinder the network\u2019s ability to recover from sub-optimal initial recurrent states. This suggests that either the context-dependent recurrent state should be stored along with the trajectory in replay, or an initial part of replayed sequences should be reserved for burn-in, to allow the recurrent neural networks to rely on its recurrent state and exploit long-term temporal dependencies, and the two techniques can be combined beneficially",
+        "We have observed that the underlying problems of representational drift and recurrent state staleness are potentially exacerbated in the distributed setting, highlighting the importance of robustness to these effects through an adequate training strategy of the recurrent neural networks"
+    ],
+    "summary": [
+        "Reinforcement Learning (RL) has seen a rejuvenation of research interest recently due to repeated successes in solving challenging problems such as reaching human-level play on Atari 2600 games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>), beating the world champion in the game of Go (<a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>), and playing competitive 5-player DOTA (OpenAI, 2018b).",
+        "<a class=\"ref-link\" id=\"cHausknecht_2015_a\" href=\"#rHausknecht_2015_a\"><a class=\"ref-link\" id=\"cHausknecht_2015_a\" href=\"#rHausknecht_2015_a\">Hausknecht & Stone (2015</a></a>) combined DQN with an LSTM by storing sequences in replay and initializing the recurrent state to zero during training.",
+        "The second strategy on the other hand avoids the problem of finding a suitable initial state, but creates a number of practical, computational, and algorithmic issues due to varying and potentially environment-dependent sequence length, and higher variance of network updates because of the highly correlated nature of states in a trajectory when compared to training on randomly sampled batches of experience tuples.",
+        "<a class=\"ref-link\" id=\"cHausknecht_2015_a\" href=\"#rHausknecht_2015_a\"><a class=\"ref-link\" id=\"cHausknecht_2015_a\" href=\"#rHausknecht_2015_a\">Hausknecht & Stone (2015</a></a>) observed little difference between the two strategies for empirical agent performance on a set of Atari games, and opted for the simpler zero start state strategy.",
+        "We hypothesize that while the zero start state strategy may suffice in the mostly fully observable Atari domain, it prevents a recurrent network from learning actual long-term dependencies in more memory-critical domains.",
+        "We will compare the Qvalues produced by the network on sampled replay sequences when unrolled using one of these strategies and the Q-values produced when using the true stored recurrent states at each step.",
+        "We conclude the section with the observation that both stored state and burn-in strategy provide substantial advantages over the naive zero state training strategy, in terms of measures of the effect of representation drift and recurrent state staleness, and empirical performance.",
+        "Different from the state-of-the-art IMPALA architecture (<a class=\"ref-link\" id=\"cEspeholt_et+al_2018_a\" href=\"#rEspeholt_et+al_2018_a\">Espeholt et al, 2018</a>), the R2D2 agent uses the same set of hyper-parameters here as on Atari.",
+        "For this we select the Atari game MS.PACMAN, on which R2D2 shows state-of-the-art performance despite the game being virtually fully observable, and the DMLab task EMSTM WATERMAZE, which strongly requires the use of memory.",
+        "This is evidence that the zero start state strategy, used in past RNN-based agents with replay, limits the agent\u2019s ability to learn to make use of its memory.",
+        "We have observed that the underlying problems of representational drift and recurrent state staleness are potentially exacerbated in the distributed setting, highlighting the importance of robustness to these effects through an adequate training strategy of the RNN.",
+        "Taking a broader view on our empirical results, we note that scaling up of RL agents through parallelization and distributed training allows them to benefit from huge experience throughput and achieve ever-increasing results over broad simulated task suites such as Atari-57 and DMLab-30."
+    ],
+    "headline": "Building on the recent successes of distributed training of Reinforcement Learning agents, in this paper we investigate the training of recurrent neural networks-based Reinforcement Learning agents from distributed prioritized experience replay",
+    "reference_links": [
+        {
+            "id": "Beattie_et+al_2016_a",
+            "entry": "Charles Beattie, Joel Z Leibo, Denis Teplyashin, Tom Ward, Marcus Wainwright, Heinrich Kuttler, Andrew Lefrancq, Simon Green, V\u0131ctor Valdes, Amir Sadik, et al. DeepMind Lab. arXiv preprint arXiv:1612.03801, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.03801"
+        },
+        {
+            "id": "Bellemare_et+al_2013_a",
+            "entry": "Marc G Bellemare, Yavar Naddaf, Joel Veness, and Michael Bowling. The Arcade Learning Environment: an evaluation platform for general agents. Journal of Artificial Intelligence Research, 47:253\u2013279, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20G.%20Naddaf%2C%20Yavar%20Veness%2C%20Joel%20Bowling%2C%20Michael%20The%20Arcade%20Learning%20Environment%3A%20an%20evaluation%20platform%20for%20general%20agents%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20G.%20Naddaf%2C%20Yavar%20Veness%2C%20Joel%20Bowling%2C%20Michael%20The%20Arcade%20Learning%20Environment%3A%20an%20evaluation%20platform%20for%20general%20agents%202013"
+        },
+        {
+            "id": "Dabney_et+al_2018_a",
+            "entry": "Will Dabney, Georg Ostrovski, David Silver, and Remi Munos. Implicit quantile networks for distributional reinforcement learning. In Jennifer Dy and Andreas Krause (eds.), Proceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pp. 1096\u20131105, Stockholmsmssan, Stockholm Sweden, 10\u201315 Jul 2018. PMLR.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dabney%2C%20Will%20Ostrovski%2C%20Georg%20Silver%2C%20David%20Munos%2C%20Remi%20Implicit%20quantile%20networks%20for%20distributional%20reinforcement%20learning%202018-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dabney%2C%20Will%20Ostrovski%2C%20Georg%20Silver%2C%20David%20Munos%2C%20Remi%20Implicit%20quantile%20networks%20for%20distributional%20reinforcement%20learning%202018-07"
+        },
+        {
+            "id": "Espeholt_et+al_2018_a",
+            "entry": "Lasse Espeholt, Hubert Soyer, Remi Munos, Karen Simonyan, Volodymir Mnih, Tom Ward, Yotam Doron, Vlad Firoiu, Tim Harley, Iain Dunning, et al. Impala: Scalable distributed deep-rl with importance weighted actor-learner architectures. arXiv preprint arXiv:1802.01561, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01561"
+        },
+        {
+            "id": "Gruslys_et+al_2018_a",
+            "entry": "Audrunas Gruslys, Will Dabney, Mohammad Gheshlaghi Azar, Bilal Piot, Marc Bellemare, and Remi Munos. The reactor: A fast and sample-efficient actor-critic agent for reinforcement learning. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=rkHVZWZAZ.",
+            "url": "https://openreview.net/forum?id=rkHVZWZAZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gruslys%2C%20Audrunas%20Dabney%2C%20Will%20Azar%2C%20Mohammad%20Gheshlaghi%20Piot%2C%20Bilal%20The%20reactor%3A%20A%20fast%20and%20sample-efficient%20actor-critic%20agent%20for%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Hausknecht_2015_a",
+            "entry": "Matthew Hausknecht and Peter Stone. Deep recurrent Q-learning for partially observable MDPs. CoRR, abs/1507.06527, 7(1), 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.06527"
+        },
+        {
+            "id": "Hessel_et+al_2018_a",
+            "entry": "Matteo Hessel, Joseph Modayil, Hado Van Hasselt, Tom Schaul, Georg Ostrovski, Will Dabney, Dan Horgan, Bilal Piot, Mohammad Azar, and David Silver. Rainbow: combining improvements in deep reinforcement learning. In Proceedings of the AAAI Conference on Artificial Intelligence, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hessel%2C%20Matteo%20Modayil%2C%20Joseph%20Hasselt%2C%20Hado%20Van%20Schaul%2C%20Tom%20Rainbow%3A%20combining%20improvements%20in%20deep%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hessel%2C%20Matteo%20Modayil%2C%20Joseph%20Hasselt%2C%20Hado%20Van%20Schaul%2C%20Tom%20Rainbow%3A%20combining%20improvements%20in%20deep%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Hessel_et+al_0000_a",
+            "entry": "Matteo Hessel, Hubert Soyer, Lasse Espeholt, Wojciech Czarnecki, Simon Schmitt, and Hado van Hasselt. Multi-task deep reinforcement learning with popart. arXiv preprint arXiv:1809.04474, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.04474"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Horgan_et+al_2018_a",
+            "entry": "Dan Horgan, John Quan, David Budden, Gabriel Barth-Maron, Matteo Hessel, Hado Van Hasselt, and David Silver. Distributed prioritized experience replay. arXiv preprint arXiv:1803.00933, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00933"
+        },
+        {
+            "id": "Jaakkola_et+al_1995_a",
+            "entry": "Tommi Jaakkola, Satinder P Singh, and Michael I Jordan. Reinforcement learning algorithm for partially observable markov decision problems. In Advances in neural information processing systems, pp. 345\u2013352, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jaakkola%2C%20Tommi%20Singh%2C%20Satinder%20P.%20Jordan%2C%20Michael%20I.%20Reinforcement%20learning%20algorithm%20for%20partially%20observable%20markov%20decision%20problems%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jaakkola%2C%20Tommi%20Singh%2C%20Satinder%20P.%20Jordan%2C%20Michael%20I.%20Reinforcement%20learning%20algorithm%20for%20partially%20observable%20markov%20decision%20problems%201995"
+        },
+        {
+            "id": "Jaderberg_et+al_2018_a",
+            "entry": "Max Jaderberg, Wojciech M Czarnecki, Iain Dunning, Luke Marris, Guy Lever, Antonio Garcia Castaneda, Charles Beattie, Neil C Rabinowitz, Ari S Morcos, Avraham Ruderman, et al. Humanlevel performance in first-person multiplayer games with population-based deep reinforcement learning. arXiv preprint arXiv:1807.01281, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.01281"
+        },
+        {
+            "id": "Kaelbling_et+al_1998_a",
+            "entry": "Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99\u2013134, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaelbling%2C%20Leslie%20Pack%20Littman%2C%20Michael%20L.%20Cassandra%2C%20Anthony%20R.%20Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaelbling%2C%20Leslie%20Pack%20Littman%2C%20Michael%20L.%20Cassandra%2C%20Anthony%20R.%20Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains%201998"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Lin_1993_a",
+            "entry": "Long-Ji Lin. Reinforcement learning for robots using neural networks. Technical report, CarnegieMellon Univ Pittsburgh PA School of Computer Science, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Long-Ji%20Reinforcement%20learning%20for%20robots%20using%20neural%20networks%201993"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International conference on machine learning, pp. 1928\u20131937, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Monahan_1982_a",
+            "entry": "George E Monahan. State of the arta survey of partially observable markov decision processes: theory, models, and algorithms. Management Science, 28(1):1\u201316, 1982.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monahan%2C%20George%20E.%20State%20of%20the%20arta%20survey%20of%20partially%20observable%20markov%20decision%20processes%3A%20theory%2C%20models%2C%20and%20algorithms%201982",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monahan%2C%20George%20E.%20State%20of%20the%20arta%20survey%20of%20partially%20observable%20markov%20decision%20processes%3A%20theory%2C%20models%2C%20and%20algorithms%201982"
+        },
+        {
+            "id": "Openai_2018_a",
+            "entry": "OpenAI. Learning dexterous in-hand manipulation. arXiv preprint: arxiv:1808.00177, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.00177"
+        },
+        {
+            "id": "Five_2018_a",
+            "entry": "OpenAI. OpenAI Five. https://blog.openai.com/openai-five/, 2018b.",
+            "url": "https://blog.openai.com/openai-five/"
+        },
+        {
+            "id": "Pohlen_et+al_2018_a",
+            "entry": "Tobias Pohlen, Bilal Piot, Todd Hester, Mohammad Gheshlaghi, Dan Horgan, David Budden, Gabriel Barth-Maron, Hado Van Hasselt, John Quan, Mel Vecerik, Matteo Hessel, Remi Munos, and Olivier Pietquin. Observe and look further: Achieving consistent performance on atari. arXiv preprint: arxiv:1805.11593, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11593"
+        },
+        {
+            "id": "Schaul_et+al_2016_a",
+            "entry": "Tom Schaul, John Quan, Ioannis Antonoglou, and David Silver. Prioritized experience replay. In Proceedings of the International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schaul%2C%20Tom%20Quan%2C%20John%20Antonoglou%2C%20Ioannis%20Silver%2C%20David%20Prioritized%20experience%20replay%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schaul%2C%20Tom%20Quan%2C%20John%20Antonoglou%2C%20Ioannis%20Silver%2C%20David%20Prioritized%20experience%20replay%202016"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Sutton_1988_a",
+            "entry": "Richard S. Sutton. Learning to predict by the methods of temporal differences. Machine Learning, 3(1):9\u201344, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Learning%20to%20predict%20by%20the%20methods%20of%20temporal%20differences%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20Richard%20S.%20Learning%20to%20predict%20by%20the%20methods%20of%20temporal%20differences%201988"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S. Sutton and Andrew G. Barto. Reinforcement Learning: An Introduction. MIT Press, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20Learning%3A%20An%20Introduction%201998"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Hado van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double Qlearning. In Proceedings of the AAAI Conference on Artificial Intelligence, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20Hasselt%2C%20Hado%20Guez%2C%20Arthur%20Silver%2C%20David%20Deep%20reinforcement%20learning%20with%20double%20Qlearning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20Hasselt%2C%20Hado%20Guez%2C%20Arthur%20Silver%2C%20David%20Deep%20reinforcement%20learning%20with%20double%20Qlearning%202016"
+        },
+        {
+            "id": "Van_et+al_2017_a",
+            "entry": "Harm van Seijen, Mehdi Fatemi, Joshua Romoff, Romain Laroche, Tavian Barnes, and Jeffrey Tsang. Hybrid reward architecture for reinforcement learning. In Advances in Neural Information Processing Systems, pp. 5392\u20135402, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20Seijen%2C%20Harm%20Fatemi%2C%20Mehdi%20Romoff%2C%20Joshua%20Laroche%2C%20Romain%20Hybrid%20reward%20architecture%20for%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20Seijen%2C%20Harm%20Fatemi%2C%20Mehdi%20Romoff%2C%20Joshua%20Laroche%2C%20Romain%20Hybrid%20reward%20architecture%20for%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Ziyu Wang, Tom Schaul, Matteo Hessel, Hado van Hasselt, Marc Lanctot, and Nando de Freitas. Dueling network architectures for deep reinforcement learning. In Proceedings of the International Conference on Machine Learning (ICML), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Ziyu%20Schaul%2C%20Tom%20Hessel%2C%20Matteo%20van%20Hasselt%2C%20Hado%20Dueling%20network%20architectures%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Ziyu%20Schaul%2C%20Tom%20Hessel%2C%20Matteo%20van%20Hasselt%2C%20Hado%20Dueling%20network%20architectures%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Watkins_1992_a",
+            "entry": "Christopher JCH Watkins and Peter Dayan. Q-learning. Machine Learning, 8(3):279\u2013292, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christopher%20JCH%20Watkins%20and%20Peter%20Dayan%20Qlearning%20Machine%20Learning%2083279292%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christopher%20JCH%20Watkins%20and%20Peter%20Dayan%20Qlearning%20Machine%20Learning%2083279292%201992"
+        },
+        {
+            "id": "Werbos_1990_a",
+            "entry": "Paul J Werbos. Backpropagation through time: what it does and how to do it. Proceedings of the IEEE, 78(10):1550\u20131560, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Werbos%2C%20Paul%20J.%20Backpropagation%20through%20time%3A%20what%20it%20does%20and%20how%20to%20do%20it%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Werbos%2C%20Paul%20J.%20Backpropagation%20through%20time%3A%20what%20it%20does%20and%20how%20to%20do%20it%201990"
+        }
+    ]
+}

@@ -1,0 +1,546 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "IMPROVING SEQUENCE-TO-SEQUENCE LEARNING VIA OPTIMAL TRANSPORT",
+        "author": "Liqun Chen, Yizhe Zhang, Ruiyi Zhang, Chenyang Tao, Zhe Gan, Haichao Zhang, Bai Li, Dinghan Shen, Changyou Chen, Lawrence Carin",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1xtAjR5tX"
+        },
+        "abstract": "Sequence-to-sequence models are commonly trained via maximum likelihood estimation (MLE). However, standard MLE training considers a word-level objective, predicting the next word given the previous ground-truth partial sentence. This procedure focuses on modeling local syntactic patterns, and may fail to capture long-range semantic structure. We present a novel solution to alleviate these issues. Our approach imposes global sequence-level guidance via new supervision based on optimal transport, enabling the overall characterization and preservation of semantic features. We further show that this method can be understood as a Wasserstein gradient flow trying to match our model to the ground truth sequence distribution. Extensive experiments are conducted to validate the utility of the proposed approach, showing consistent improvements over a wide variety of NLP tasks, including machine translation, abstractive text summarization, and image captioning."
+    },
+    "keywords": [
+        {
+            "term": "text summarization",
+            "url": "https://en.wikipedia.org/wiki/text_summarization"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "ground truth",
+            "url": "https://en.wikipedia.org/wiki/ground_truth"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "optimal transport",
+            "url": "https://en.wikipedia.org/wiki/optimal_transport"
+        },
+        {
+            "term": "text generation",
+            "url": "https://en.wikipedia.org/wiki/text_generation"
+        },
+        {
+            "term": "Maximum likelihood estimation",
+            "url": "https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"
+        }
+    ],
+    "abbreviations": {
+        "MLE": "Maximum likelihood estimation",
+        "RL": "reinforcement learning",
+        "OT": "optimal transport",
+        "SBM": "soft bipartite matching",
+        "LSTM": "Long Short-Term Memory",
+        "WGF": "Wasserstein gradient flows",
+        "WMD": "word mover\u2019s distance",
+        "GANs": "generative adversarial networks",
+        "MMD": "maximum mean discrepancy",
+        "GMNT": "Google\u2019s Neural Machine Translation"
+    },
+    "highlights": [
+        "Sequence-to-sequence (Seq2Seq) models are widely used in various natural language processing tasks, such as machine translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; <a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\"><a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\">Cho et al, 2014</a></a>; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>), text summarization (<a class=\"ref-link\" id=\"cChopra_et+al_2016_a\" href=\"#rChopra_et+al_2016_a\"><a class=\"ref-link\" id=\"cChopra_et+al_2016_a\" href=\"#rChopra_et+al_2016_a\">Chopra et al, 2016</a></a>; <a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\"><a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\">Rush et al, 2015</a></a>) and image captioning (<a class=\"ref-link\" id=\"cVinyals_et+al_2015_a\" href=\"#rVinyals_et+al_2015_a\"><a class=\"ref-link\" id=\"cVinyals_et+al_2015_a\" href=\"#rVinyals_et+al_2015_a\">Vinyals et al, 2015</a></a>; <a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\"><a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\">Xu et al, 2015</a></a>)",
+        "The optimal transport distance is introduced as a regularization term to the Maximum likelihood estimation training loss. Our model can be interpreted as approximate Wasserstein gradient flows, learning to approximately match the sequence distribution induced by the generator and a target data distribution. In order to demonstrate the versatility of the proposed method, we conduct extensive empirical evaluations on three tasks: machine translation, text summarization, and image captioning.\n2 SEMANTIC MATCHING WITH OPTIMAL TRANSPORT",
+        "We use a relatively simple Seq2Seq model in our experiments to demonstrate the versatility of the proposed optimal transport method",
+        "This work is motivated by the major deficiency in training Seq2Seq models: that the Maximum likelihood estimation training loss does not operate at sequence-level",
+        "Inspired by soft bipartite matching, we propose the usage of optimal transport as a sequence-level loss to improve Seq2Seq learning",
+        "By applying this new method to machine translation, text summarization, and image captioning, we demonstrate that our proposed model can be used to help improve the performance compared to strong baselines"
+    ],
+    "key_statements": [
+        "Sequence-to-sequence (Seq2Seq) models are widely used in various natural language processing tasks, such as machine translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; <a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\"><a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\">Cho et al, 2014</a></a>; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>), text summarization (<a class=\"ref-link\" id=\"cChopra_et+al_2016_a\" href=\"#rChopra_et+al_2016_a\"><a class=\"ref-link\" id=\"cChopra_et+al_2016_a\" href=\"#rChopra_et+al_2016_a\">Chopra et al, 2016</a></a>; <a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\"><a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\">Rush et al, 2015</a></a>) and image captioning (<a class=\"ref-link\" id=\"cVinyals_et+al_2015_a\" href=\"#rVinyals_et+al_2015_a\"><a class=\"ref-link\" id=\"cVinyals_et+al_2015_a\" href=\"#rVinyals_et+al_2015_a\">Vinyals et al, 2015</a></a>; <a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\"><a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\">Xu et al, 2015</a></a>)",
+        "Seq2Seq models are based on an encoder-decoder architecture, with an encoder mapping a source sequence into a latent vector, and a decoder translating the latent vector into a target sequence",
+        "We present a novel Seq2Seq learning scheme that leverages optimal transport (OT) to construct sequence-level loss",
+        "The optimal transport distance is introduced as a regularization term to the Maximum likelihood estimation training loss. Our model can be interpreted as approximate Wasserstein gradient flows, learning to approximately match the sequence distribution induced by the generator and a target data distribution. In order to demonstrate the versatility of the proposed method, we conduct extensive empirical evaluations on three tasks: machine translation, text summarization, and image captioning.\n2 SEMANTIC MATCHING WITH OPTIMAL TRANSPORT",
+        "We propose to use the recently introduced Inexact Proximal point method for Optimal Transport (IPOT) algorithm to compute the optimal transport matrix T\u2217, the optimal transport distance (Xie et al, 2018)",
+        "Sequence-level optimal transport-matching loss To pass on the model belief to the optimal transport loss, we use the mean word embedding predicted by the model, given by zt = ET wt, where E \u2208 RV \u00d7d is the word embedding matrix, V is the vocabulary size and d is the dimension for the embedding vector",
+        "We propose to combine the optimal transport loss with the de facto likelihood loss LMLE, which gives us the final training objective: L = LMLE + \u03b3Lseq, where \u03b3 > 0 is a hyper-parameter to be tuned",
+        "Our work employs optimal transport for mesoscopic sequence-to-sequence models, presenting an efficient IPOT-based implementation to enable end-to-end learning for general cost functions",
+        "We use a relatively simple Seq2Seq model in our experiments to demonstrate the versatility of the proposed optimal transport method",
+        "This work is motivated by the major deficiency in training Seq2Seq models: that the Maximum likelihood estimation training loss does not operate at sequence-level",
+        "Inspired by soft bipartite matching, we propose the usage of optimal transport as a sequence-level loss to improve Seq2Seq learning",
+        "By applying this new method to machine translation, text summarization, and image captioning, we demonstrate that our proposed model can be used to help improve the performance compared to strong baselines",
+        "We believe the proposed method is a general framework, and will be useful to other sequence generation tasks as well, such as conversational response generation (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>; Zhang et al, 2018c), which is left as future work"
+    ],
+    "summary": [
+        "Sequence-to-sequence (Seq2Seq) models are widely used in various natural language processing tasks, such as machine translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; <a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\"><a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\">Cho et al, 2014</a></a>; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>), text summarization (<a class=\"ref-link\" id=\"cChopra_et+al_2016_a\" href=\"#rChopra_et+al_2016_a\"><a class=\"ref-link\" id=\"cChopra_et+al_2016_a\" href=\"#rChopra_et+al_2016_a\">Chopra et al, 2016</a></a>; <a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\"><a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\">Rush et al, 2015</a></a>) and image captioning (<a class=\"ref-link\" id=\"cVinyals_et+al_2015_a\" href=\"#rVinyals_et+al_2015_a\"><a class=\"ref-link\" id=\"cVinyals_et+al_2015_a\" href=\"#rVinyals_et+al_2015_a\">Vinyals et al, 2015</a></a>; <a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\"><a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\">Xu et al, 2015</a></a>).",
+        "The goal of a Seq2Seq model is to optimize this encoder-decoder network to generate sequences close to the target.",
+        "We present a novel Seq2Seq learning scheme that leverages optimal transport (OT) to construct sequence-level loss.",
+        "(i) A new sequence-level training algorithm based on optimal transport is proposed for Seq2Seq learning.",
+        "Our model can be interpreted as approximate Wasserstein gradient flows, learning to approximately match the sequence distribution induced by the generator and a target data distribution.",
+        "We propose to use the recently introduced Inexact Proximal point method for Optimal Transport (IPOT) algorithm to compute the OT matrix T\u2217, the OT distance (Xie et al, 2018).",
+        "Sequence-level OT-matching loss To pass on the model belief to the OT loss, we use the mean word embedding predicted by the model, given by zt = ET wt, where E \u2208 RV \u00d7d is the word embedding matrix, V is the vocabulary size and d is the dimension for the embedding vector.",
+        "Based on the sequence embeddings Sr and Sg, we can compute the sequence-level OT loss between ground-truth and model prediction using the IPOT algorithm described above for different Seq2Seq tasks: Lseq IPOT(Sg, Sr) .",
+        "To further justify the use of our approach, we explain how our model approximately learns to match the ground-truth sequence distribution.",
+        "The optimal generator in a Seq2Seq model learns a distribution \u03bc\u2217(x) that matches pd(x).",
+        "Our work employs OT for mesoscopic sequence-to-sequence models, presenting an efficient IPOT-based implementation to enable end-to-end learning for general cost functions.",
+        "To construct such a loss, <a class=\"ref-link\" id=\"cFedus_et+al_2018_a\" href=\"#rFedus_et+al_2018_a\">Fedus et al (2018</a>); <a class=\"ref-link\" id=\"cGuo_et+al_2018_a\" href=\"#rGuo_et+al_2018_a\">Guo et al (2018</a>); <a class=\"ref-link\" id=\"cLin_et+al_2017_a\" href=\"#rLin_et+al_2017_a\">Lin et al (2017</a>); <a class=\"ref-link\" id=\"cYu_et+al_2017_a\" href=\"#rYu_et+al_2017_a\">Yu et al (2017</a>) combine the policy-gradient algorithm with the original GAN training procedure, while <a class=\"ref-link\" id=\"cChen_et+al_2018_b\" href=\"#rChen_et+al_2018_b\">Chen et al (2018b</a>); <a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\">Zhang et al (2017</a>) uses a so-called feature mover distance and maximum mean discrepancy (MMD) to match features of real and generated sentences, respectively.",
+        "We apply different combinations of Lcopy and Lseq to fine-tune the pre-trained GNMT model (<a class=\"ref-link\" id=\"cLuong_et+al_2018_a\" href=\"#rLuong_et+al_2018_a\">Luong et al, 2018</a>) and the results are summarized in Table 1 and 2.",
+        "Inspired by soft bipartite matching, we propose the usage of optimal transport as a sequence-level loss to improve Seq2Seq learning.",
+        "By applying this new method to machine translation, text summarization, and image captioning, we demonstrate that our proposed model can be used to help improve the performance compared to strong baselines.",
+        "We believe the proposed method is a general framework, and will be useful to other sequence generation tasks as well, such as conversational response generation (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\"><a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a></a>; Zhang et al, 2018c), which is left as future work"
+    ],
+    "headline": "We present a novel solution to alleviate these issues",
+    "reference_links": [
+        {
+            "id": "Amari_1985_a",
+            "entry": "Shun-ichi Amari. Differential-geometrical methods in statistics, volume 28. Springer Science & Business Media, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-ichi%20Differential-geometrical%20methods%20in%20statistics%2C%20volume%2028%201985"
+        },
+        {
+            "id": "Ambrosio_et+al_2005_a",
+            "entry": "Luigi Ambrosio, Nicola Gigli, and Giuseppe Savare. Gradient flows: in metric spaces and in the space of probability measures. 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ambrosio%2C%20Luigi%20Gigli%2C%20Nicola%20Savare%2C%20Giuseppe%20Gradient%20flows%3A%20in%20metric%20spaces%20and%20in%20the%20space%20of%20probability%20measures%202005"
+        },
+        {
+            "id": "Anderson_et+al_2018_a",
+            "entry": "Peter Anderson, Xiaodong He, Chris Buehler, Damien Teney, Mark Johnson, Stephen Gould, and Lei Zhang. Bottom-up and top-down attention for image captioning and visual question answering. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anderson%2C%20Peter%20He%2C%20Xiaodong%20Buehler%2C%20Chris%20Teney%2C%20Damien%20Bottom-up%20and%20top-down%20attention%20for%20image%20captioning%20and%20visual%20question%20answering%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anderson%2C%20Peter%20He%2C%20Xiaodong%20Buehler%2C%20Chris%20Teney%2C%20Damien%20Bottom-up%20and%20top-down%20attention%20for%20image%20captioning%20and%20visual%20question%20answering%202018"
+        },
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein generative adversarial networks. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Chintala%2C%20Soumith%20Bottou%2C%20Leon%20Wasserstein%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjovsky%2C%20Martin%20Chintala%2C%20Soumith%20Bottou%2C%20Leon%20Wasserstein%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Bahdanau_et+al_2017_a",
+            "entry": "Dzmitry Bahdanau, Philemon Brakel, Kelvin Xu, Anirudh Goyal, Ryan Lowe, Joelle Pineau, Aaron Courville, and Yoshua Bengio. An actor-critic algorithm for sequence prediction. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Brakel%2C%20Philemon%20Xu%2C%20Kelvin%20Goyal%2C%20Anirudh%20An%20actor-critic%20algorithm%20for%20sequence%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Brakel%2C%20Philemon%20Xu%2C%20Kelvin%20Goyal%2C%20Anirudh%20An%20actor-critic%20algorithm%20for%20sequence%20prediction%202017"
+        },
+        {
+            "id": "Banerjee_2005_a",
+            "entry": "Satanjeev Banerjee and Alon Lavie. Meteor: An automatic metric for mt evaluation with improved correlation with human judgments. In ACL Workshop, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Banerjee%2C%20Satanjeev%20Lavie%2C%20Alon%20Meteor%3A%20An%20automatic%20metric%20for%20mt%20evaluation%20with%20improved%20correlation%20with%20human%20judgments%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Banerjee%2C%20Satanjeev%20Lavie%2C%20Alon%20Meteor%3A%20An%20automatic%20metric%20for%20mt%20evaluation%20with%20improved%20correlation%20with%20human%20judgments%202005"
+        },
+        {
+            "id": "Bengio_et+al_2015_a",
+            "entry": "Samy Bengio, Oriol Vinyals, Navdeep Jaitly, and Noam Shazeer. Scheduled sampling for sequence prediction with recurrent neural networks. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Vinyals%2C%20Oriol%20Jaitly%2C%20Navdeep%20Shazeer%2C%20Noam%20Scheduled%20sampling%20for%20sequence%20prediction%20with%20recurrent%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Vinyals%2C%20Oriol%20Jaitly%2C%20Navdeep%20Shazeer%2C%20Noam%20Scheduled%20sampling%20for%20sequence%20prediction%20with%20recurrent%20neural%20networks%202015"
+        },
+        {
+            "id": "Boyd_2004_a",
+            "entry": "Stephen Boyd and Lieven Vandenberghe. Convex optimization. Cambridge university press, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boyd%2C%20Stephen%20Vandenberghe%2C%20Lieven%20Convex%20optimization%202004"
+        },
+        {
+            "id": "Cettolo_et+al_2015_a",
+            "entry": "Mauro Cettolo, Jan Niehues, Sebastian Stuker, Luisa Bentivogli, Roldano Cattoni, and Marcello Federico. The IWSLT 2015 evaluation campaign. In IWSLT 2015, International Workshop on Spoken Language Translation, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mauro%20Cettolo%20Jan%20Niehues%20Sebastian%20Stuker%20Luisa%20Bentivogli%20Roldano%20Cattoni%20and%20Marcello%20Federico%20The%20IWSLT%202015%20evaluation%20campaign%20In%20IWSLT%202015%20International%20Workshop%20on%20Spoken%20Language%20Translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mauro%20Cettolo%20Jan%20Niehues%20Sebastian%20Stuker%20Luisa%20Bentivogli%20Roldano%20Cattoni%20and%20Marcello%20Federico%20The%20IWSLT%202015%20evaluation%20campaign%20In%20IWSLT%202015%20International%20Workshop%20on%20Spoken%20Language%20Translation%202015"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Changyou Chen, Ruiyi Zhang, Wenlin Wang, Bai Li, and Liqun Chen. A unified particleoptimization framework for scalable bayesian sampling. In UAI, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Changyou%20Zhang%2C%20Ruiyi%20Wang%2C%20Wenlin%20Li%2C%20Bai%20A%20unified%20particleoptimization%20framework%20for%20scalable%20bayesian%20sampling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Changyou%20Zhang%2C%20Ruiyi%20Wang%2C%20Wenlin%20Li%2C%20Bai%20A%20unified%20particleoptimization%20framework%20for%20scalable%20bayesian%20sampling%202018"
+        },
+        {
+            "id": "Chen_et+al_2018_b",
+            "entry": "Liqun Chen, Shuyang Dai, Chenyang Tao, Haichao Zhang, Zhe Gan, Dinghan Shen, Yizhe Zhang, Guoyin Wang, Ruiyi Zhang, and Lawrence Carin. Adversarial text generation via feature-mover\u2019s distance. In NeurIPS, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Liqun%20Dai%2C%20Shuyang%20Tao%2C%20Chenyang%20Zhang%2C%20Haichao%20Adversarial%20text%20generation%20via%20feature-mover%E2%80%99s%20distance%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Liqun%20Dai%2C%20Shuyang%20Tao%2C%20Chenyang%20Zhang%2C%20Haichao%20Adversarial%20text%20generation%20via%20feature-mover%E2%80%99s%20distance%202018"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical machine translation. In EMNLP, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20Merrienboer%2C%20Bart%20Van%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder-decoder%20for%20statistical%20machine%20translation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cho%2C%20Kyunghyun%20Merrienboer%2C%20Bart%20Van%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder-decoder%20for%20statistical%20machine%20translation%202014"
+        },
+        {
+            "id": "Chopra_et+al_2016_a",
+            "entry": "Sumit Chopra, Michael Auli, and Alexander M Rush. Abstractive sentence summarization with attentive recurrent neural networks. In NAACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chopra%2C%20Sumit%20Auli%2C%20Michael%20Rush%2C%20Alexander%20M.%20Abstractive%20sentence%20summarization%20with%20attentive%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chopra%2C%20Sumit%20Auli%2C%20Michael%20Rush%2C%20Alexander%20M.%20Abstractive%20sentence%20summarization%20with%20attentive%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Katy_2014_a",
+            "entry": "Katy Craig (ed.). The exponential formula for the Wasserstein metric. PhD thesis, The State University of New Jersey, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Katy%20Craig%20ed%20The%20exponential%20formula%20for%20the%20Wasserstein%20metric%20PhD%20thesis%20The%20State%20University%20of%20New%20Jersey%202014"
+        },
+        {
+            "id": "Cuturi_2013_a",
+            "entry": "Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. In NIPS, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cuturi%2C%20Marco%20Sinkhorn%20distances%3A%20Lightspeed%20computation%20of%20optimal%20transport%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cuturi%2C%20Marco%20Sinkhorn%20distances%3A%20Lightspeed%20computation%20of%20optimal%20transport%202013"
+        },
+        {
+            "id": "Fedus_et+al_2018_a",
+            "entry": "William Fedus, Ian Goodfellow, and Andrew M Dai. MaskGAN: Better text generation via filling in the. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fedus%2C%20William%20Goodfellow%2C%20Ian%20Dai%2C%20Andrew%20M.%20MaskGAN%3A%20Better%20text%20generation%20via%20filling%20in%20the%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fedus%2C%20William%20Goodfellow%2C%20Ian%20Dai%2C%20Andrew%20M.%20MaskGAN%3A%20Better%20text%20generation%20via%20filling%20in%20the%202018"
+        },
+        {
+            "id": "Gan_et+al_2017_a",
+            "entry": "Zhe Gan, Chuang Gan, Xiaodong He, Yunchen Pu, Kenneth Tran, Jianfeng Gao, Lawrence Carin, and Li Deng. Semantic compositional networks for visual captioning. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gan%2C%20Zhe%20Gan%2C%20Chuang%20He%2C%20Xiaodong%20Pu%2C%20Yunchen%20Semantic%20compositional%20networks%20for%20visual%20captioning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gan%2C%20Zhe%20Gan%2C%20Chuang%20He%2C%20Xiaodong%20Pu%2C%20Yunchen%20Semantic%20compositional%20networks%20for%20visual%20captioning%202017"
+        },
+        {
+            "id": "Genevay_et+al_2018_a",
+            "entry": "Aude Genevay, Gabriel Peyre, and Marco Cuturi. Learning generative models with sinkhorn divergences. In AISTATS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Genevay%2C%20Aude%20Peyre%2C%20Gabriel%20Cuturi%2C%20Marco%20Learning%20generative%20models%20with%20sinkhorn%20divergences%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Genevay%2C%20Aude%20Peyre%2C%20Gabriel%20Cuturi%2C%20Marco%20Learning%20generative%20models%20with%20sinkhorn%20divergences%202018"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20NIPS%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20NIPS%202014"
+        },
+        {
+            "id": "Goodfellow_et+al_2016_a",
+            "entry": "Ian Goodfellow, Yoshua Bengio, Aaron Courville, and Yoshua Bengio. Deep learning, volume 1. MIT press Cambridge, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Bengio%2C%20Yoshua%20Deep%20learning%2C%20volume%201%202016"
+        },
+        {
+            "id": "Graff_et+al_2003_a",
+            "entry": "David Graff, Junbo Kong, Ke Chen, and Kazuaki Maeda. English gigaword. Linguistic Data Consortium, Philadelphia, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graff%2C%20David%20Kong%2C%20Junbo%20Chen%2C%20Ke%20Maeda%2C%20Kazuaki%20English%20gigaword%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graff%2C%20David%20Kong%2C%20Junbo%20Chen%2C%20Ke%20Maeda%2C%20Kazuaki%20English%20gigaword%202003"
+        },
+        {
+            "id": "Gu_et+al_2016_a",
+            "entry": "Jiatao Gu, Zhengdong Lu, Hang Li, and Victor OK Li. Incorporating copying mechanism in sequence-to-sequence learning. In ACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Jiatao%20Lu%2C%20Zhengdong%20Li%2C%20Hang%20Li%2C%20Victor%20O.K.%20Incorporating%20copying%20mechanism%20in%20sequence-to-sequence%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Jiatao%20Lu%2C%20Zhengdong%20Li%2C%20Hang%20Li%2C%20Victor%20O.K.%20Incorporating%20copying%20mechanism%20in%20sequence-to-sequence%20learning%202016"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of Wasserstein GANs. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20Wasserstein%20GANs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20Wasserstein%20GANs%202017"
+        },
+        {
+            "id": "Guo_et+al_2018_a",
+            "entry": "Jiaxian Guo, Sidi Lu, Han Cai, Weinan Zhang, Yong Yu, and Jun Wang. Long text generation via adversarial training with leaked information. In AAAI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Jiaxian%20Lu%2C%20Sidi%20Cai%2C%20Han%20Zhang%2C%20Weinan%20Long%20text%20generation%20via%20adversarial%20training%20with%20leaked%20information%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Jiaxian%20Lu%2C%20Sidi%20Cai%2C%20Han%20Zhang%2C%20Weinan%20Long%20text%20generation%20via%20adversarial%20training%20with%20leaked%20information%202018"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Computation, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Huang_et+al_2016_a",
+            "entry": "Gao Huang, Chuan Guo, Matt J Kusner, Yu Sun, Fei Sha, and Kilian Q Weinberger. Supervised word mover\u2019s distance. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Guo%2C%20Chuan%20Kusner%2C%20Matt%20J.%20Sun%2C%20Yu%20Supervised%20word%20mover%E2%80%99s%20distance%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Guo%2C%20Chuan%20Kusner%2C%20Matt%20J.%20Sun%2C%20Yu%20Supervised%20word%20mover%E2%80%99s%20distance%202016"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Qiuyuan Huang, Zhe Gan, Asli Celikyilmaz, Dapeng Wu, Jianfeng Wang, and Xiaodong He. Hierarchically structured reinforcement learning for topically coherent visual story generation. arXiv preprint arXiv:1805.08191, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.08191"
+        },
+        {
+            "id": "Huszr_2015_a",
+            "entry": "Ferenc Huszr. How (not) to train your generative model: scheduled sampling, likelihood, adversary? In arXiv:1511.05101, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05101"
+        },
+        {
+            "id": "Jang_et+al_2016_a",
+            "entry": "Eric Jang, Shixiang Gu, and Ben Poole. Categorical reparameterization with Gumbel-softmax. In arXiv:1611.01144, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01144"
+        },
+        {
+            "id": "Karpathy_2015_a",
+            "entry": "Andrej Karpathy and Li Fei-Fei. Deep visual-semantic alignments for generating image descriptions. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karpathy%2C%20Andrej%20Fei-Fei%2C%20Li%20Deep%20visual-semantic%20alignments%20for%20generating%20image%20descriptions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karpathy%2C%20Andrej%20Fei-Fei%2C%20Li%20Deep%20visual-semantic%20alignments%20for%20generating%20image%20descriptions%202015"
+        },
+        {
+            "id": "Kuhn_1955_a",
+            "entry": "Harold W Kuhn. The Hungarian method for the assignment problem. Naval research logistics quarterly, 1955.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kuhn%2C%20Harold%20W.%20The%20Hungarian%20method%20for%20the%20assignment%20problem%201955",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kuhn%2C%20Harold%20W.%20The%20Hungarian%20method%20for%20the%20assignment%20problem%201955"
+        },
+        {
+            "id": "Kusner_et+al_2015_a",
+            "entry": "Matt Kusner, Yu Sun, Nicholas Kolkin, and Kilian Weinberger. From word embeddings to document distances. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kusner%2C%20Matt%20Sun%2C%20Yu%20Kolkin%2C%20Nicholas%20Weinberger%2C%20Kilian%20From%20word%20embeddings%20to%20document%20distances%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kusner%2C%20Matt%20Sun%2C%20Yu%20Kolkin%2C%20Nicholas%20Weinberger%2C%20Kilian%20From%20word%20embeddings%20to%20document%20distances%202015"
+        },
+        {
+            "id": "Lamb_et+al_2016_a",
+            "entry": "Alex Lamb, Anirudh Goyal ALIAS PARTH GOYAL, Ying Zhang, Saizheng Zhang, Aaron C Courville, and Yoshua Bengio. Professor forcing: A new algorithm for training recurrent networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lamb%2C%20Alex%20GOYAL%2C%20Anirudh%20Goyal%20A.L.I.A.S.P.A.R.T.H.%20Zhang%2C%20Ying%20Zhang%2C%20Saizheng%20Professor%20forcing%3A%20A%20new%20algorithm%20for%20training%20recurrent%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lamb%2C%20Alex%20GOYAL%2C%20Anirudh%20Goyal%20A.L.I.A.S.P.A.R.T.H.%20Zhang%2C%20Ying%20Zhang%2C%20Saizheng%20Professor%20forcing%3A%20A%20new%20algorithm%20for%20training%20recurrent%20networks%202016"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Jiwei Li, Will Monroe, Tianlin Shi, Alan Ritter, and Dan Jurafsky. Adversarial learning for neural dialogue generation. In EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Jiwei%20Monroe%2C%20Will%20Shi%2C%20Tianlin%20Ritter%2C%20Alan%20Adversarial%20learning%20for%20neural%20dialogue%20generation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Jiwei%20Monroe%2C%20Will%20Shi%2C%20Tianlin%20Ritter%2C%20Alan%20Adversarial%20learning%20for%20neural%20dialogue%20generation%202017"
+        },
+        {
+            "id": "Li_2018_a",
+            "entry": "W. Li and G. Montufar. Natural gradient via optimal transport. arXiv preprint arXiv:1803.07033, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.07033"
+        },
+        {
+            "id": "Chin-Yew_2004_a",
+            "entry": "Chin-Yew Lin. Rouge: A package for automatic evaluation of summaries. Text Summarization Branches Out, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChinYew%20Lin%20Rouge%20A%20package%20for%20automatic%20evaluation%20of%20summaries%20Text%20Summarization%20Branches%20Out%202004"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Kevin Lin, Dianqi Li, Xiaodong He, Zhengyou Zhang, and Ming-Ting Sun. Adversarial ranking for language generation. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Kevin%20Li%2C%20Dianqi%20He%2C%20Xiaodong%20Zhang%2C%20Zhengyou%20Adversarial%20ranking%20for%20language%20generation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Kevin%20Li%2C%20Dianqi%20He%2C%20Xiaodong%20Zhang%2C%20Zhengyou%20Adversarial%20ranking%20for%20language%20generation%202017"
+        },
+        {
+            "id": "Lin_et+al_2014_a",
+            "entry": "Tsung-Yi Lin, Michael Maire, Serge Belongie, James Hays, Pietro Perona, Deva Ramanan, Piotr Dollar, and C Lawrence Zitnick. Microsoft COCO: Common objects in context. In ECCV, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=TsungYi%20Lin%20Michael%20Maire%20Serge%20Belongie%20James%20Hays%20Pietro%20Perona%20Deva%20Ramanan%20Piotr%20Dollar%20and%20C%20Lawrence%20Zitnick%20Microsoft%20COCO%20Common%20objects%20in%20context%20In%20ECCV%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=TsungYi%20Lin%20Michael%20Maire%20Serge%20Belongie%20James%20Hays%20Pietro%20Perona%20Deva%20Ramanan%20Piotr%20Dollar%20and%20C%20Lawrence%20Zitnick%20Microsoft%20COCO%20Common%20objects%20in%20context%20In%20ECCV%202014"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Hao Liu, Yihao Feng, Yi Mao, Dengyong Zhou, Jian Peng, and Qiang Liu. Action-depedent control variates for policy optimization via stein\u2019s identity. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Hao%20Feng%2C%20Yihao%20Mao%2C%20Yi%20Zhou%2C%20Dengyong%20Action-depedent%20control%20variates%20for%20policy%20optimization%20via%20stein%E2%80%99s%20identity%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Hao%20Feng%2C%20Yihao%20Mao%2C%20Yi%20Zhou%2C%20Dengyong%20Action-depedent%20control%20variates%20for%20policy%20optimization%20via%20stein%E2%80%99s%20identity%202018"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Siqi Liu, Zhenhai Zhu, Ning Ye, Sergio Guadarrama, and Kevin Murphy. Improved image captioning via policy gradient optimization of spider. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Siqi%20Zhu%2C%20Zhenhai%20Ye%2C%20Ning%20Guadarrama%2C%20Sergio%20Improved%20image%20captioning%20via%20policy%20gradient%20optimization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Siqi%20Zhu%2C%20Zhenhai%20Ye%2C%20Ning%20Guadarrama%2C%20Sergio%20Improved%20image%20captioning%20via%20policy%20gradient%20optimization%202017"
+        },
+        {
+            "id": "Lu_et+al_2017_a",
+            "entry": "Jiasen Lu, Caiming Xiong, Devi Parikh, and Richard Socher. Knowing when to look: Adaptive attention via a visual sentinel for image captioning. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lu%2C%20Jiasen%20Xiong%2C%20Caiming%20Parikh%2C%20Devi%20Socher%2C%20Richard%20Knowing%20when%20to%20look%3A%20Adaptive%20attention%20via%20a%20visual%20sentinel%20for%20image%20captioning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lu%2C%20Jiasen%20Xiong%2C%20Caiming%20Parikh%2C%20Devi%20Socher%2C%20Richard%20Knowing%20when%20to%20look%3A%20Adaptive%20attention%20via%20a%20visual%20sentinel%20for%20image%20captioning%202017"
+        },
+        {
+            "id": "Luise_et+al_2018_a",
+            "entry": "Giulia Luise, Alessandro Rudi, Massimiliano Pontil, and Carlo Ciliberto. Differential properties of sinkhorn approximation for learning with wasserstein distance. arXiv:1805.11897, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11897"
+        },
+        {
+            "id": "Luong_et+al_0000_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher D Manning. Effective approaches to attentionbased neural machine translation. arXiv:1508.04025, 2015a.",
+            "arxiv_url": "https://arxiv.org/pdf/1508.04025"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Thang Luong, Hieu Pham, and Christopher D Manning. Bilingual word representations with monolingual quality in mind. In Proceedings of the 1st Workshop on Vector Space Modeling for Natural Language Processing, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Bilingual%20word%20representations%20with%20monolingual%20quality%20in%20mind%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Bilingual%20word%20representations%20with%20monolingual%20quality%20in%20mind%202015"
+        },
+        {
+            "id": "Luong_et+al_2018_a",
+            "entry": "Thang Luong, Eugene Brevdo, and Rui Zhao. Neural machine translation (seq2seq) tutorial, 2018. URL https://github.com/tensorflow/nmt.",
+            "url": "https://github.com/tensorflow/nmt",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thang%20Luong%20Eugene%20Brevdo%20and%20Rui%20Zhao%20Neural%20machine%20translation%20seq2seq%20tutorial%202018%20URL%20httpsgithubcomtensorflownmt"
+        },
+        {
+            "id": "Maddison_2017_a",
+            "entry": "Chris J Maddison, Andriy Mnih, and Yee Whye Teh. The concrete distribution: A continuous relaxation of discrete random variables. ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20Chris%20J.%20Mnih%2C%20Andriy%20and%20Yee%20Whye%20Teh.%20The%20concrete%20distribution%3A%20A%20continuous%20relaxation%20of%20discrete%20random%20variables%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20Chris%20J.%20Mnih%2C%20Andriy%20and%20Yee%20Whye%20Teh.%20The%20concrete%20distribution%3A%20A%20continuous%20relaxation%20of%20discrete%20random%20variables%202017"
+        },
+        {
+            "id": "Over_et+al_2007_a",
+            "entry": "Paul Over, Hoa Dang, and Donna Harman. DUC in context. Information Processing & Management, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Over%2C%20Paul%20Dang%2C%20Hoa%20Harman%2C%20Donna%20DUC%20in%20context%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Over%2C%20Paul%20Dang%2C%20Hoa%20Harman%2C%20Donna%20DUC%20in%20context%202007"
+        },
+        {
+            "id": "Papineni_et+al_2002_a",
+            "entry": "Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. BLEU: a method for automatic evaluation of machine translation. In ACL, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20BLEU%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20BLEU%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher Manning. Glove: Global vectors for word representation. In EMNLP, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014"
+        },
+        {
+            "id": "Peyre_2017_a",
+            "entry": "Gabriel Peyre, Marco Cuturi, et al. Computational optimal transport. Technical report, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peyre%2C%20Gabriel%20Cuturi%2C%20Marco%20Computational%20optimal%20transport%202017"
+        },
+        {
+            "id": "Ranzato_et+al_2016_a",
+            "entry": "Marc\u2019Aurelio Ranzato, Sumit Chopra, Michael Auli, and Wojciech Zaremba. Sequence level training with recurrent neural networks. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ranzato%2C%20Marc%E2%80%99Aurelio%20Chopra%2C%20Sumit%20Auli%2C%20Michael%20Zaremba%2C%20Wojciech%20Sequence%20level%20training%20with%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ranzato%2C%20Marc%E2%80%99Aurelio%20Chopra%2C%20Sumit%20Auli%2C%20Michael%20Zaremba%2C%20Wojciech%20Sequence%20level%20training%20with%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Rennie_et+al_2017_a",
+            "entry": "Steven J Rennie, Etienne Marcheret, Youssef Mroueh, Jarret Ross, and Vaibhava Goel. Self-critical sequence training for image captioning. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rennie%2C%20Steven%20J.%20Marcheret%2C%20Etienne%20Mroueh%2C%20Youssef%20Ross%2C%20Jarret%20Self-critical%20sequence%20training%20for%20image%20captioning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rennie%2C%20Steven%20J.%20Marcheret%2C%20Etienne%20Mroueh%2C%20Youssef%20Ross%2C%20Jarret%20Self-critical%20sequence%20training%20for%20image%20captioning%202017"
+        },
+        {
+            "id": "Rubner_et+al_2000_a",
+            "entry": "Yossi Rubner, Carlo Tomasi, and Leonidas J Guibas. The earth mover\u2019s distance as a metric for image retrieval. IJCV, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubner%2C%20Yossi%20Tomasi%2C%20Carlo%20Guibas%2C%20Leonidas%20J.%20The%20earth%20mover%E2%80%99s%20distance%20as%20a%20metric%20for%20image%20retrieval%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rubner%2C%20Yossi%20Tomasi%2C%20Carlo%20Guibas%2C%20Leonidas%20J.%20The%20earth%20mover%E2%80%99s%20distance%20as%20a%20metric%20for%20image%20retrieval%202000"
+        },
+        {
+            "id": "Rush_et+al_2015_a",
+            "entry": "Alexander M Rush, Sumit Chopra, and Jason Weston. A neural attention model for abstractive sentence summarization. In EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015"
+        },
+        {
+            "id": "Salimans_et+al_2018_a",
+            "entry": "Tim Salimans, Han Zhang, Alec Radford, and Dimitris Metaxas. Improving GANs using optimal transport. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Zhang%2C%20Han%20Radford%2C%20Alec%20Metaxas%2C%20Dimitris%20Improving%20GANs%20using%20optimal%20transport%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Zhang%2C%20Han%20Radford%2C%20Alec%20Metaxas%2C%20Dimitris%20Improving%20GANs%20using%20optimal%20transport%202018"
+        },
+        {
+            "id": "See_et+al_2017_a",
+            "entry": "Abigail See, Peter J Liu, and Christopher D Manning. Get to the point: summarization with pointergenerator networks. ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=See%2C%20Abigail%20Liu%2C%20Peter%20J.%20Manning%2C%20Christopher%20D.%20Get%20to%20the%20point%3A%20summarization%20with%20pointergenerator%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=See%2C%20Abigail%20Liu%2C%20Peter%20J.%20Manning%2C%20Christopher%20D.%20Get%20to%20the%20point%3A%20summarization%20with%20pointergenerator%20networks%202017"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20NIPS%202017"
+        },
+        {
+            "id": "Ramakrishna_2015_a",
+            "entry": "Ramakrishna Vedantam, C Lawrence Zitnick, and Devi Parikh. Cider: Consensus-based image description evaluation. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramakrishna%20Vedantam%2C%20C.Lawrence%20Zitnick%20Parikh%2C%20Devi%20Cider%3A%20Consensus-based%20image%20description%20evaluation.%20In%20CVPR%202015"
+        },
+        {
+            "id": "Villani_2008_a",
+            "entry": "Cedric Villani. Optimal Transport: Old and New. Grundlehren der mathematischen Wissenschaften. Springer, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Villani%2C%20Cedric%20Optimal%20Transport%3A%20Old%20and%20New.%20Grundlehren%20der%20mathematischen%20Wissenschaften%202008"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan. Show and tell: A neural image caption generator. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Li Wang, Junlin Yao, Yunzhe Tao, Li Zhong, Wei Liu, and Qiang Du. A reinforced topic-aware convolutional sequence-to-sequence model for abstractive text summarization. IJCAI, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Li%20Yao%2C%20Junlin%20Tao%2C%20Yunzhe%20Zhong%2C%20Li%20A%20reinforced%20topic-aware%20convolutional%20sequence-to-sequence%20model%20for%20abstractive%20text%20summarization%202018"
+        },
+        {
+            "id": "Wang_2018_b",
+            "entry": "Xin Wang, Wenhu Chen, Yuan-Fang Wang, and William Yang Wang. No metrics are perfect: Adversarial reward learning for visual storytelling. In ACL, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Xin%20Wenhu%20Chen%2C%20Yuan-Fang%20Wang%2C%20and%20William%20Yang%20Wang.%20No%20metrics%20are%20perfect%3A%20Adversarial%20reward%20learning%20for%20visual%20storytelling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Xin%20Wenhu%20Chen%2C%20Yuan-Fang%20Wang%2C%20and%20William%20Yang%20Wang.%20No%20metrics%20are%20perfect%3A%20Adversarial%20reward%20learning%20for%20visual%20storytelling%202018"
+        },
+        {
+            "id": "Wiseman_2016_a",
+            "entry": "Sam Wiseman and Alexander M Rush. Sequence-to-sequence learning as beam-search optimization. In EMNLP, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wiseman%2C%20Sam%20Rush%2C%20Alexander%20M.%20Sequence-to-sequence%20learning%20as%20beam-search%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wiseman%2C%20Sam%20Rush%2C%20Alexander%20M.%20Sequence-to-sequence%20learning%20as%20beam-search%20optimization%202016"
+        },
+        {
+            "id": "Wu_et+al_2016_a",
+            "entry": "Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, et al. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. arXiv:1609.08144, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        },
+        {
+            "id": "Xie_2018_a",
+            "entry": "Yujia Xie, Xiangfeng Wang, Ruijia Wang, and Hongyuan Zha. A fast proximal point method for Wasserstein distance. In arXiv:1802.04307, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04307"
+        },
+        {
+            "id": "Xu_et+al_2018_a",
+            "entry": "Hongteng Xu, Wenlin Wang, Wei Liu, and Lawrence Carin. Distilled Wasserstein learning for word embedding and topic modeling. In NeurIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Hongteng%20Wang%2C%20Wenlin%20Liu%2C%20Wei%20Carin%2C%20Lawrence%20Distilled%20Wasserstein%20learning%20for%20word%20embedding%20and%20topic%20modeling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Hongteng%20Wang%2C%20Wenlin%20Liu%2C%20Wei%20Carin%2C%20Lawrence%20Distilled%20Wasserstein%20learning%20for%20word%20embedding%20and%20topic%20modeling%202018"
+        },
+        {
+            "id": "Xu_et+al_2015_a",
+            "entry": "Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron C Courville, Ruslan Salakhutdinov, Richard S Zemel, and Yoshua Bengio. Show, attend and tell: Neural image caption generation with visual attention. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kelvin%20Xu%20Jimmy%20Ba%20Ryan%20Kiros%20Kyunghyun%20Cho%20Aaron%20C%20Courville%20Ruslan%20Salakhutdinov%20Richard%20S%20Zemel%20and%20Yoshua%20Bengio%20Show%20attend%20and%20tell%20Neural%20image%20caption%20generation%20with%20visual%20attention%20In%20ICML%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kelvin%20Xu%20Jimmy%20Ba%20Ryan%20Kiros%20Kyunghyun%20Cho%20Aaron%20C%20Courville%20Ruslan%20Salakhutdinov%20Richard%20S%20Zemel%20and%20Yoshua%20Bengio%20Show%20attend%20and%20tell%20Neural%20image%20caption%20generation%20with%20visual%20attention%20In%20ICML%202015"
+        },
+        {
+            "id": "You_et+al_2016_a",
+            "entry": "Quanzeng You, Hailin Jin, Zhaowen Wang, Chen Fang, and Jiebo Luo. Image captioning with semantic attention. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=You%2C%20Quanzeng%20Jin%2C%20Hailin%20Wang%2C%20Zhaowen%20Fang%2C%20Chen%20Image%20captioning%20with%20semantic%20attention%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=You%2C%20Quanzeng%20Jin%2C%20Hailin%20Wang%2C%20Zhaowen%20Fang%2C%20Chen%20Image%20captioning%20with%20semantic%20attention%202016"
+        },
+        {
+            "id": "Yu_et+al_2017_a",
+            "entry": "Lantao Yu, Weinan Zhang, Jun Wang, and Yong Yu. SeqGAN: Sequence generative adversarial nets with policy gradient. In AAAI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Lantao%20Zhang%2C%20Weinan%20Wang%2C%20Jun%20Yu%2C%20Yong%20SeqGAN%3A%20Sequence%20generative%20adversarial%20nets%20with%20policy%20gradient.%20In%20AAAI%202017"
+        },
+        {
+            "id": "Zhang_et+al_0000_a",
+            "entry": "Ruiyi Zhang, Changyou Chen, Zhe Gan, Wenlin Wang, Liqun Chen, Dinghan Shen, Guoyin Wang, and Lawrence Carin. Sequence generation with guider network. arXiv preprint arXiv:1811.00696, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1811.00696"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Ruiyi Zhang, Changyou Chen, Chunyuan Li, and Lawrence Carin. Policy optimization as wasserstein gradient flows. In ICML, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Ruiyi%20Chen%2C%20Changyou%20Li%2C%20Chunyuan%20Carin%2C%20Lawrence%20Policy%20optimization%20as%20wasserstein%20gradient%20flows%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Ruiyi%20Chen%2C%20Changyou%20Li%2C%20Chunyuan%20Carin%2C%20Lawrence%20Policy%20optimization%20as%20wasserstein%20gradient%20flows%202018"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Yizhe Zhang, Zhe Gan, Kai Fan, Zhi Chen, Ricardo Henao, Dinghan Shen, and Lawrence Carin. Adversarial feature matching for text generation. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Yizhe%20Gan%2C%20Zhe%20Fan%2C%20Kai%20Chen%2C%20Zhi%20Adversarial%20feature%20matching%20for%20text%20generation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Yizhe%20Gan%2C%20Zhe%20Fan%2C%20Kai%20Chen%2C%20Zhi%20Adversarial%20feature%20matching%20for%20text%20generation%202017"
+        },
+        {
+            "id": "Zhang_et+al_2018_b",
+            "entry": "Yizhe Zhang, Michel Galley, Jianfeng Gao, Zhe Gan, Xiujun Li, Chris Brockett, and Bill Dolan. Generating informative and diverse conversational responses via adversarial information maximization. In NeurIPS, 2018c.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Yizhe%20Galley%2C%20Michel%20Gao%2C%20Jianfeng%20Gan%2C%20Zhe%20Generating%20informative%20and%20diverse%20conversational%20responses%20via%20adversarial%20information%20maximization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Yizhe%20Galley%2C%20Michel%20Gao%2C%20Jianfeng%20Gan%2C%20Zhe%20Generating%20informative%20and%20diverse%20conversational%20responses%20via%20adversarial%20information%20maximization%202018"
+        }
+    ]
+}

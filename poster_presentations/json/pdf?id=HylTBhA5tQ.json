@@ -1,0 +1,308 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "THE LIMITATIONS OF ADVERSARIAL TRAINING AND THE BLIND-SPOT ATTACK",
+        "author": "Huan Zhang, Hongge Chen, Zhao Song, Duane Boning, Inderjit Dhillon, Cho-Jui Hsieh, 1UCLA, Los Angeles, CA 90095 2MIT, Cambridge, MA 02139 3UT Austin, Austin, TX 78712 huan@huan-zhang.com, chenhg@mit.edu, zhaos@utexas.edu boning@mtl.mit.edu, inderjit@cs.utexas.edu, chohsieh@cs.ucla.edu \u2217Huan Zhang and Hongge Chen contributed equally to this work",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HylTBhA5tQ"
+        },
+        "abstract": "The adversarial training procedure proposed by Madry et al. (2018) is one of the most effective methods to defend against adversarial examples in deep neural networks (DNNs). In our paper, we shed some lights on the practicality and the hardness of adversarial training by showing that the effectiveness (robustness on test set) of adversarial training has a strong correlation with the distance between a test point and the manifold of training data embedded by the network. Test examples that are relatively far away from this manifold are more likely to be vulnerable to adversarial attacks. Consequentially, an adversarial training based defense is susceptible to a new class of attacks, the \u201cblind-spot attack\u201d, where the input images reside in \u201cblind-spots\u201d (low density regions) of the empirical distribution of training data but is still on the ground-truth data manifold. For MNIST, we found that these blind-spots can be easily found by simply scaling and shifting image pixel values. Most importantly, for large datasets with high dimensional and complex data manifold (CIFAR, ImageNet, etc), the existence of blind-spots in adversarial training makes defending on any valid test examples difficult due to the curse of dimensionality and the scarcity of training data. Additionally, we find that blind-spots also exist on provable defenses including (<a class=\"ref-link\" id=\"cKolter_2018_a\" href=\"#rKolter_2018_a\">Kolter & Wong, 2018</a>) and (<a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\">Sinha et al., 2018</a>) because these trainable robustness certificates can only be practically optimized on a limited set of training data."
+    },
+    "keywords": [
+        {
+            "term": "effective method",
+            "url": "https://en.wikipedia.org/wiki/effective_method"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "new class",
+            "url": "https://en.wikipedia.org/wiki/new_class"
+        },
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "high dimensional",
+            "url": "https://en.wikipedia.org/wiki/high_dimensional"
+        },
+        {
+            "term": "kernel density estimation",
+            "url": "https://en.wikipedia.org/wiki/kernel_density_estimation"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "deep neural networks",
+        "PGD": "projected gradient descent",
+        "SQ": "statistical query",
+        "KDE": "kernel density estimation",
+        "C&W\u2019s": "Carlini & Wagner\u2019s"
+    },
+    "highlights": [
+        "Since the discovery of adversarial examples in deep neural networks (DNNs) (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a>), adversarial training under the robustness optimization framework (<a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al, 2018</a>; <a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\">Sinha et al, 2018</a>) has become one of the most effective methods to defend against adversarial examples",
+        "We propose a few simple transformations, that do not noticeably affect the accuracy of adversarially trained MNIST and Fashion MNIST models, but these models become vulnerable to adversarial attacks on these sets of transformed input images",
+        "We observe that the effectiveness of adversarial training is highly correlated with the characteristics of the dataset, and data points that are far enough from the distribution of training data are prone to adversarial attacks despite adversarial training",
+        "We defined a new class of attacks called \u201cblind-spot attack\u201d and proposed a simple scale-and-shift scheme for conducting blind-spot attacks on adversarially trained MNIST and Fashion MNIST datasets with high success rates",
+        "Our findings suggest that adversarial training can be challenging due to the prevalence of blind-spots in high dimensional datasets"
+    ],
+    "key_statements": [
+        "Since the discovery of adversarial examples in deep neural networks (DNNs) (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a>), adversarial training under the robustness optimization framework (<a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al, 2018</a>; <a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\">Sinha et al, 2018</a>) has become one of the most effective methods to defend against adversarial examples",
+        "A recent attack proposed by <a class=\"ref-link\" id=\"cSong_et+al_2018_a\" href=\"#rSong_et+al_2018_a\">Song et al (2018</a>) shows that adversarial training can be defeated when the input image is produced by a generative model rather than selected directly from the test examples",
+        "For MNIST and Fashion MNIST datasets, most test images are close to the training data and very good robustness is observed on these points",
+        "We propose a few simple transformations, that do not noticeably affect the accuracy of adversarially trained MNIST and Fashion MNIST models, but these models become vulnerable to adversarial attacks on these sets of transformed input images",
+        "To verify the correlation between the effectiveness of adversarial training and how close a test point is to the manifold of training dataset, we need to propose a reasonable distance metric between a test example and a set of training examples",
+        "We average the embedding space distance of k nearest neighbors of xj in the training dataset. This simple metric is non-parametric and we found that the results are not sensitive to the selection of k; for naturally trained and adversarially trained feature extractors, the distance metrics obtained by different feature extractors reveal very similar correlations with the effectiveness of adversarial training.\n3.2",
+        "Inspired by our findings of the negative correlation between the effectiveness of adversarial training and the distance between a test image and training dataset, we identify a new class of adversarial attacks called \u201cblind-spot attacks\u201d, where we find input images that are \u201cfar enough\u201d from any existing training examples such that:",
+        "For the MNIST dataset which <a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al (2018</a>), <a class=\"ref-link\" id=\"cKolter_2018_a\" href=\"#rKolter_2018_a\">Kolter & Wong (2018</a>) and <a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\">Sinha et al (2018</a>) demonstrate the strongest defense results so far, we propose a simple transformation to find the blind-spots in these models",
+        "We found that with appropriate \u03b1 and \u03b2 the accuracy of MNIST and Fashion-MNIST models barely decreases; the model has enough generalization capability for this set of slightly transformed images, yet their adversarial examples can be found",
+        "We found that Carlini & Wagner\u2019s attacks generally find adversarial examples with smaller perturbations than projected gradient descent (PGD)",
+        "We observe that the effectiveness of adversarial training is highly correlated with the characteristics of the dataset, and data points that are far enough from the distribution of training data are prone to adversarial attacks despite adversarial training",
+        "We defined a new class of attacks called \u201cblind-spot attack\u201d and proposed a simple scale-and-shift scheme for conducting blind-spot attacks on adversarially trained MNIST and Fashion MNIST datasets with high success rates",
+        "Our findings suggest that adversarial training can be challenging due to the prevalence of blind-spots in high dimensional datasets"
+    ],
+    "summary": [
+        "Since the discovery of adversarial examples in deep neural networks (DNNs) (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a></a>), adversarial training under the robustness optimization framework (<a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\"><a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al, 2018</a></a>; <a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\"><a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\">Sinha et al, 2018</a></a>) has become one of the most effective methods to defend against adversarial examples.",
+        "A recent attack proposed by <a class=\"ref-link\" id=\"cSong_et+al_2018_a\" href=\"#rSong_et+al_2018_a\">Song et al (2018</a>) shows that adversarial training can be defeated when the input image is produced by a generative model rather than selected directly from the test examples.",
+        "For MNIST and Fashion MNIST datasets, most test images are close to the training data and very good robustness is observed on these points.",
+        "Our paper complements those existing findings by showing the strong correlation between the effectiveness of adversarial defenses and the distance between training data and test points.",
+        "Inspired by our findings of the negative correlation between the effectiveness of adversarial training and the distance between a test image and training dataset, we identify a new class of adversarial attacks called \u201cblind-spot attacks\u201d, where we find input images that are \u201cfar enough\u201d from any existing training examples such that:",
+        "Adversarial training cannot provide good robustness properties on these images, and we can find their adversarial examples with small distortions using a simple gradient based attack.",
+        "For the MNIST dataset which <a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al (2018</a>), <a class=\"ref-link\" id=\"cKolter_2018_a\" href=\"#rKolter_2018_a\">Kolter & Wong (2018</a>) and <a class=\"ref-link\" id=\"cSinha_et+al_2018_a\" href=\"#rSinha_et+al_2018_a\">Sinha et al (2018</a>) demonstrate the strongest defense results so far, we propose a simple transformation to find the blind-spots in these models.",
+        "In this set of experiments, we build a connection between attack success rate on adversarially trained models and the distance between a test example and the whole training set.",
+        "As we can observe in all three figures, most successful attacks in test sets for adversarially trained networks concentrate on the right hand side of the distance distribution, and the success rates tend to grow when the distance is increasing.",
+        "The strong correlation between attack success rates and the distance from a test point to the training dataset supports our hypothesis that adversarial training tends to fail on test points that are far enough from the training data distribution.",
+        "Fashion-MNIST is the dataset with the strongest defense as measured by the attack success rates on test set, and its K-L divergence is the smallest.",
+        "The adversarially trained model classifies these slightly scaled and shifted images very well, with test accuracy equivalent to the original test set.",
+        "We defined a new class of attacks called \u201cblind-spot attack\u201d and proposed a simple scale-and-shift scheme for conducting blind-spot attacks on adversarially trained MNIST and Fashion MNIST datasets with high success rates.",
+        "Our findings suggest that adversarial training can be challenging due to the prevalence of blind-spots in high dimensional datasets"
+    ],
+    "headline": "For MNIST, we found that these blind-spots can be found by scaling and shifting image pixel values",
+    "reference_links": [
+        {
+            "id": "Athalye_2017_a",
+            "entry": "Anish Athalye and Ilya Sutskever. Synthesizing robust adversarial examples. arXiv preprint arXiv:1707.07397, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.07397"
+        },
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Bubeck_0000_a",
+            "entry": "S\u00e9bastien Bubeck, Yin Tat Lee, Eric Price, and Ilya Razenshteyn. Adversarial examples from cryptographic pseudo-random generators. arXiv preprint arXiv:1811.06418, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1811.06418"
+        },
+        {
+            "id": "Bubeck_0000_b",
+            "entry": "S\u00e9bastien Bubeck, Eric Price, and Ilya Razenshteyn. Adversarial examples from computational constraints. arXiv preprint arXiv:1805.10204, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10204"
+        },
+        {
+            "id": "Buckman_et+al_2018_a",
+            "entry": "Jacob Buckman, Aurko Roy, Colin Raffel, and Ian Goodfellow. Thermometer encoding: One hot way to resist adversarial examples. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Buckman%2C%20Jacob%20Roy%2C%20Aurko%20Raffel%2C%20Colin%20Goodfellow%2C%20Ian%20Thermometer%20encoding%3A%20One%20hot%20way%20to%20resist%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Buckman%2C%20Jacob%20Roy%2C%20Aurko%20Raffel%2C%20Colin%20Goodfellow%2C%20Ian%20Thermometer%20encoding%3A%20One%20hot%20way%20to%20resist%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Carlini_2017_a",
+            "entry": "Nicholas Carlini and David Wagner. Towards evaluating the robustness of neural networks. In 2017 IEEE Symposium on Security and Privacy (SP), pp. 39\u201357. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017"
+        },
+        {
+            "id": "Cullina_et+al_2018_a",
+            "entry": "Daniel Cullina, Arjun Nitin Bhagoji, and Prateek Mittal. Pac-learning in the presence of evasion adversaries. arXiv preprint arXiv:1806.01471, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01471"
+        },
+        {
+            "id": "Dhillon_et+al_2018_a",
+            "entry": "Guneet S Dhillon, Kamyar Azizzadenesheli, Zachary C Lipton, Jeremy Bernstein, Jean Kossaifi, Aran Khanna, and Anima Anandkumar. Stochastic activation pruning for robust adversarial defense. arXiv preprint arXiv:1803.01442, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01442"
+        },
+        {
+            "id": "Dvijotham_et+al_2018_a",
+            "entry": "Krishnamurthy Dvijotham, Robert Stanforth, Sven Gowal, Timothy Mann, and Pushmeet Kohli. A dual approach to scalable verification of deep networks. UAI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dvijotham%2C%20Krishnamurthy%20Stanforth%2C%20Robert%20Gowal%2C%20Sven%20Mann%2C%20Timothy%20A%20dual%20approach%20to%20scalable%20verification%20of%20deep%20networks%202018"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples (2014). arXiv preprint arXiv:1412.6572.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Guo_et+al_2017_a",
+            "entry": "Chuan Guo, Mayank Rana, Moustapha Cisse, and Laurens van der Maaten. Countering adversarial images using input transformations. arXiv preprint arXiv:1711.00117, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00117"
+        },
+        {
+            "id": "Hein_2017_a",
+            "entry": "Matthias Hein and Maksym Andriushchenko. Formal guarantees on the robustness of a classifier against adversarial manipulation. In Advances in Neural Information Processing Systems (NIPS), pp. 2266\u20132276, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hein%2C%20Matthias%20Andriushchenko%2C%20Maksym%20Formal%20guarantees%20on%20the%20robustness%20of%20a%20classifier%20against%20adversarial%20manipulation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hein%2C%20Matthias%20Andriushchenko%2C%20Maksym%20Formal%20guarantees%20on%20the%20robustness%20of%20a%20classifier%20against%20adversarial%20manipulation%202017"
+        },
+        {
+            "id": "Houben_et+al_2013_a",
+            "entry": "Sebastian Houben, Johannes Stallkamp, Jan Salmen, Marc Schlipsing, and Christian Igel. Detection of traffic signs in real-world images: The German Traffic Sign Detection Benchmark. In International Joint Conference on Neural Networks, number 1288, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houben%2C%20Sebastian%20Stallkamp%2C%20Johannes%20Salmen%2C%20Jan%20Schlipsing%2C%20Marc%20Detection%20of%20traffic%20signs%20in%20real-world%20images%3A%20The%20German%20Traffic%20Sign%20Detection%20Benchmark%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houben%2C%20Sebastian%20Stallkamp%2C%20Johannes%20Salmen%2C%20Jan%20Schlipsing%2C%20Marc%20Detection%20of%20traffic%20signs%20in%20real-world%20images%3A%20The%20German%20Traffic%20Sign%20Detection%20Benchmark%202013"
+        },
+        {
+            "id": "Hu_et+al_2014_a",
+            "entry": "Junlin Hu, Jiwen Lu, and Yap-Peng Tan. Discriminative deep metric learning for face verification in the wild. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 1875\u20131882, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Junlin%20Lu%2C%20Jiwen%20Tan%2C%20Yap-Peng%20Discriminative%20deep%20metric%20learning%20for%20face%20verification%20in%20the%20wild%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Junlin%20Lu%2C%20Jiwen%20Tan%2C%20Yap-Peng%20Discriminative%20deep%20metric%20learning%20for%20face%20verification%20in%20the%20wild%202014"
+        },
+        {
+            "id": "Hu_et+al_2015_a",
+            "entry": "Junlin Hu, Jiwen Lu, and Yap-Peng Tan. Deep transfer metric learning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 325\u2013333, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Junlin%20Lu%2C%20Jiwen%20Tan%2C%20Yap-Peng%20Deep%20transfer%20metric%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Junlin%20Lu%2C%20Jiwen%20Tan%2C%20Yap-Peng%20Deep%20transfer%20metric%20learning%202015"
+        },
+        {
+            "id": "Kolter_2018_a",
+            "entry": "J Zico Kolter and Eric Wong. Provable defenses against adversarial examples via the convex outer adversarial polytope. ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kolter%2C%20J.Zico%20Wong%2C%20Eric%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kolter%2C%20J.Zico%20Wong%2C%20Eric%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018"
+        },
+        {
+            "id": "Kurakin_et+al_2016_a",
+            "entry": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial machine learning at scale. arXiv preprint arXiv:1611.01236, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01236"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Xuanqing Liu, Minhao Cheng, Huan Zhang, and Cho-Jui Hsieh. Towards robust neural networks via random self-ensemble. ECCV, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Xuanqing%20Cheng%2C%20Minhao%20Zhang%2C%20Huan%20Hsieh%2C%20Cho-Jui%20Towards%20robust%20neural%20networks%20via%20random%20self-ensemble%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Xuanqing%20Cheng%2C%20Minhao%20Zhang%2C%20Huan%20Hsieh%2C%20Cho-Jui%20Towards%20robust%20neural%20networks%20via%20random%20self-ensemble%202018"
+        },
+        {
+            "id": "Ma_et+al_2018_a",
+            "entry": "Xingjun Ma, Bo Li, Yisen Wang, Sarah M Erfani, Sudanthi Wijewickrema, Michael E Houle, Grant Schoenebeck, Dawn Song, and James Bailey. Characterizing adversarial subspaces using local intrinsic dimensionality. arXiv preprint arXiv:1801.02613, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.02613"
+        },
+        {
+            "id": "Van_2008_a",
+            "entry": "Laurens van der Maaten and Geoffrey Hinton. Visualizing data using t-sne. Journal of machine learning research, 9(Nov):2579\u20132605, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-sne%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-sne%202008"
+        },
+        {
+            "id": "Madry_et+al_2018_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. ICLR, arXiv preprint arXiv:1706.06083, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06083"
+        },
+        {
+            "id": "Mahloujifar_et+al_2018_a",
+            "entry": "Saeed Mahloujifar, Dimitrios I Diochnos, and Mohammad Mahmoody. The curse of concentration in robust learning: Evasion and poisoning attacks from concentration of measure. arXiv preprint arXiv:1809.03063, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.03063"
+        },
+        {
+            "id": "Mcinnes_2018_a",
+            "entry": "Leland McInnes and John Healy. Umap: Uniform manifold approximation and projection for dimension reduction. arXiv preprint arXiv:1802.03426, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03426"
+        },
+        {
+            "id": "Papernot_et+al_2016_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Xi Wu, Somesh Jha, and Ananthram Swami. Distillation as a defense to adversarial perturbations against deep neural networks. In 2016 IEEE Symposium on Security and Privacy (SP), pp. 582\u2013597. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Raghunathan_et+al_2018_a",
+            "entry": "Aditi Raghunathan, Jacob Steinhardt, and Percy Liang. Certified defenses against adversarial examples. arXiv preprint arXiv:1801.09344, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.09344"
+        },
+        {
+            "id": "Samangouei_et+al_2018_a",
+            "entry": "Pouya Samangouei, Maya Kabkab, and Rama Chellappa. Defense-GAN: Protecting classifiers against adversarial attacks using generative models. arXiv preprint arXiv:1805.06605, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.06605"
+        },
+        {
+            "id": "Schmidt_et+al_2018_a",
+            "entry": "Ludwig Schmidt, Shibani Santurkar, Dimitris Tsipras, Kunal Talwar, and Aleksander Madry. Adversarially robust generalization requires more data. NIPS, pp. 5019\u20135031, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidt%2C%20Ludwig%20Santurkar%2C%20Shibani%20Tsipras%2C%20Dimitris%20Talwar%2C%20Kunal%20Adversarially%20robust%20generalization%20requires%20more%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidt%2C%20Ludwig%20Santurkar%2C%20Shibani%20Tsipras%2C%20Dimitris%20Talwar%2C%20Kunal%20Adversarially%20robust%20generalization%20requires%20more%20data%202018"
+        },
+        {
+            "id": "Scott_2015_a",
+            "entry": "David W Scott. Multivariate density estimation: theory, practice, and visualization. John Wiley & Sons, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scott%2C%20David%20W.%20Multivariate%20density%20estimation%3A%20theory%2C%20practice%2C%20and%20visualization%202015"
+        },
+        {
+            "id": "Singh_et+al_2018_a",
+            "entry": "Gagandeep Singh, Timon Gehr, Matthew Mirman, Markus P\u00fcschel, and Martin Vechev. Fast and effective robustness certification. In Advances in Neural Information Processing Systems, pp. 10825\u201310836, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singh%2C%20Gagandeep%20Gehr%2C%20Timon%20Mirman%2C%20Matthew%20P%C3%BCschel%2C%20Markus%20Fast%20and%20effective%20robustness%20certification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singh%2C%20Gagandeep%20Gehr%2C%20Timon%20Mirman%2C%20Matthew%20P%C3%BCschel%2C%20Markus%20Fast%20and%20effective%20robustness%20certification%202018"
+        },
+        {
+            "id": "Sinha_et+al_2018_a",
+            "entry": "Aman Sinha, Hongseok Namkoong, and John Duchi. Certifying some distributional robustness with principled adversarial training. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Duchi%2C%20John%20Certifying%20some%20distributional%20robustness%20with%20principled%20adversarial%20training%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Duchi%2C%20John%20Certifying%20some%20distributional%20robustness%20with%20principled%20adversarial%20training%202018"
+        },
+        {
+            "id": "Song_et+al_2017_a",
+            "entry": "Yang Song, Taesup Kim, Sebastian Nowozin, Stefano Ermon, and Nate Kushman. Pixeldefend: Leveraging generative models to understand and defend against adversarial examples. arXiv preprint arXiv:1710.10766, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10766"
+        },
+        {
+            "id": "Song_et+al_2018_a",
+            "entry": "Yang Song, Rui Shu, Nate Kushman, and Stefano Ermon. Generative adversarial examples. arXiv preprint arXiv:1805.07894, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07894"
+        },
+        {
+            "id": "Su_et+al_2018_a",
+            "entry": "Dong Su, Huan Zhang, Hongge Chen, Jinfeng Yi, Pin-Yu Chen, and Yupeng Gao. Is robustness the cost of accuracy?\u2013a comprehensive study on the robustness of 18 deep image classification models. In Proceedings of the European Conference on Computer Vision (ECCV), pp. 631\u2013648, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Su%2C%20Dong%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Yi%2C%20Jinfeng%20Is%20robustness%20the%20cost%20of%20accuracy%3F%E2%80%93a%20comprehensive%20study%20on%20the%20robustness%20of%2018%20deep%20image%20classification%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Su%2C%20Dong%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Yi%2C%20Jinfeng%20Is%20robustness%20the%20cost%20of%20accuracy%3F%E2%80%93a%20comprehensive%20study%20on%20the%20robustness%20of%2018%20deep%20image%20classification%20models%202018"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tram_et+al_2018_a",
+            "entry": "Florian Tram\u00e8r, Alexey Kurakin, Nicolas Papernot, Ian Goodfellow, Dan Boneh, and Patrick McDaniel. Ensemble adversarial training: Attacks and defenses. In International Conference on Learning Representations (ICLR), 2018. https://arxiv.org/abs/1705.07204.",
+            "url": "https://arxiv.org/abs/1705.07204",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07204"
+        },
+        {
+            "id": "Tsipras_et+al_2019_a",
+            "entry": "Dimitris Tsipras, Shibani Santurkar, Logan Engstrom, Alexander Turner, and Aleksander Madry. Robustness may be at odds with accuracy. ICLR, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tsipras%2C%20Dimitris%20Santurkar%2C%20Shibani%20Engstrom%2C%20Logan%20Turner%2C%20Alexander%20and%20Aleksander%20Madry.%20Robustness%20may%20be%20at%20odds%20with%20accuracy%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tsipras%2C%20Dimitris%20Santurkar%2C%20Shibani%20Engstrom%2C%20Logan%20Turner%2C%20Alexander%20and%20Aleksander%20Madry.%20Robustness%20may%20be%20at%20odds%20with%20accuracy%202019"
+        },
+        {
+            "id": "Weng_et+al_2018_a",
+            "entry": "Tsui-Wei Weng, Huan Zhang, Hongge Chen, Zhao Song, Cho-Jui Hsieh, Duane Boning, Inderjit S Dhillon, and Luca Daniel. Towards fast computation of certified robustness for relu networks. ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weng%2C%20Tsui-Wei%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Song%2C%20Zhao%20Towards%20fast%20computation%20of%20certified%20robustness%20for%20relu%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weng%2C%20Tsui-Wei%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Song%2C%20Zhao%20Towards%20fast%20computation%20of%20certified%20robustness%20for%20relu%20networks%202018"
+        },
+        {
+            "id": "Wong_et+al_2018_a",
+            "entry": "Eric Wong, Frank Schmidt, Jan Hendrik Metzen, and J Zico Kolter. Scaling provable adversarial defenses. NIPS, pp. 8410\u20138419, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Published as a conference paper at ICLR 2019 Chaowei Xiao, Bo Li, Jun-Yan Zhu, Warren He, Mingyan Liu, and Dawn Song. Generating adversarial examples with adversarial networks. arXiv preprint arXiv:1801.02610, 2018. Cihang Xie, Jianyu Wang, Zhishuai Zhang, Zhou Ren, and Alan Yuille. Mitigating adversarial effects through randomization. arXiv preprint arXiv:1711.01991, 2017. Weilin Xu, David Evans, and Yanjun Qi. Feature squeezing: Detecting adversarial examples in deep neural networks. arXiv preprint arXiv:1704.01155, 2017. Huan Zhang, Tsui-Wei Weng, Pin-Yu Chen, Cho-Jui Hsieh, and Luca Daniel. Efficient neural network robustness certification with general activation functions. In Advances in Neural Information Processing Systems (NIPS), dec 2018. Tianhang Zheng, Changyou Chen, and Kui Ren. Distributionally adversarial attack. arXiv preprint arXiv:1808.05537, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.02610"
+        }
+    ]
+}

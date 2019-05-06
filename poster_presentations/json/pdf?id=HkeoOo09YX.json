@@ -1,0 +1,520 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "META-LEARNING FOR STOCHASTIC GRADIENT MCMC",
+        "author": "Wenbo Gong, Yingzhen Li, Jos\u00e9 Miguel Hern\u00e1ndez-Lobato, 1University of Cambridge 2Microsoft Research Cambridge {wg,jmh,}@cam.ac.uk, Yingzhen.Li@microsoft.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkeoOo09YX"
+        },
+        "abstract": "Stochastic gradient Markov chain Monte Carlo (SG-MCMC) has become increasingly popular for simulating posterior samples in large-scale Bayesian modeling. However, existing SG-MCMC schemes are not tailored to any specific probabilistic model, even a simple modification of the underlying dynamical system requires significant physical intuition. This paper presents the first meta-learning algorithm that allows automated design for the underlying continuous dynamics of an SG-MCMC sampler. The learned sampler generalizes Hamiltonian dynamics with state-dependent drift and diffusion, enabling fast traversal and efficient exploration of energy landscapes. Experiments validate the proposed approach on learning tasks with Bayesian fully connected neural networks, Bayesian convolutional neural networks and Bayesian recurrent neural networks, showing that the learned sampler out-performs generic, hand-designed SG-MCMC algorithms, and generalizes to different datasets and larger architectures."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "bayesian inference",
+            "url": "https://en.wikipedia.org/wiki/bayesian_inference"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "hamiltonian monte carlo",
+            "url": "https://en.wikipedia.org/wiki/Hamiltonian_Monte_Carlo"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "convolutional neural networks",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_networks"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "multi-layer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptron"
+        },
+        {
+            "term": "stochastic differential equation",
+            "url": "https://en.wikipedia.org/wiki/stochastic_differential_equation"
+        },
+        {
+            "term": "markov chain",
+            "url": "https://en.wikipedia.org/wiki/markov_chain"
+        },
+        {
+            "term": "MCMC",
+            "url": "https://en.wikipedia.org/wiki/MCMC"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        },
+        {
+            "term": "bayesian neural network",
+            "url": "https://en.wikipedia.org/wiki/bayesian_neural_network"
+        }
+    ],
+    "abbreviations": {
+        "SDE": "stochastic differential equation",
+        "SGD": "stochastic gradient descent",
+        "RNN": "recurrent neural network",
+        "RealNVP": "real-valued non-volume preserving",
+        "NT": "network architecture generalization",
+        "AF": "activation function generalization",
+        "Data": "dataset generalization",
+        "MLP": "multi-layer perceptron",
+        "NLL": "negative test log-likelihood",
+        "CNNs": "convolutional neural networks"
+    },
+    "highlights": [
+        "There is a resurgence of research interests in Bayesian deep learning (<a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\"><a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\">Graves, 2011</a></a>; <a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\"><a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\">Blundell et al, 2015</a></a>; Hern\u00e1ndez-Lobato & Adams, 2015; <a class=\"ref-link\" id=\"cHernandez-Lobato_et+al_2016_a\" href=\"#rHernandez-Lobato_et+al_2016_a\"><a class=\"ref-link\" id=\"cHernandez-Lobato_et+al_2016_a\" href=\"#rHernandez-Lobato_et+al_2016_a\">Hernandez-Lobato et al, 2016</a></a>; <a class=\"ref-link\" id=\"cGal_2016_a\" href=\"#rGal_2016_a\"><a class=\"ref-link\" id=\"cGal_2016_a\" href=\"#rGal_2016_a\">Gal & Ghahramani, 2016</a></a>; <a class=\"ref-link\" id=\"cRitter_et+al_2018_a\" href=\"#rRitter_et+al_2018_a\"><a class=\"ref-link\" id=\"cRitter_et+al_2018_a\" href=\"#rRitter_et+al_2018_a\">Ritter et al, 2018</a></a>), which applies Bayesian inference to neural networks for better uncertainty estimation",
+        "SG-MCMC has the same computational complexity as many stochastic optimization algorithms, making it highly scalable for sampling posterior distributions of neural network weights conditioned on big datasets",
+        "Our goal is to learn an SG-MCMC sampler that can later be transferred to sample from different Bayesian neural network posterior distributions, which will typically have different dimensionality and include tens of thousands of random variables",
+        "We have presented a meta-learning algorithm that can learn an SG-MCMC sampler on simpler tasks and generalizes to more complicated densities in high dimensions",
+        "Experiments on Bayesian multi-layer perceptron, Bayesian convolutional neural networks and Bayesian recurrent neural network confirmed the strong generalization of the trained sampler to the long-time horizon as well as across datasets and network architectures",
+        "The automated design of generic MCMC algorithms that might not be derived from continuous Markov processes remains an open challenge"
+    ],
+    "key_statements": [
+        "There is a resurgence of research interests in Bayesian deep learning (<a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\"><a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\">Graves, 2011</a></a>; <a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\"><a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\">Blundell et al, 2015</a></a>; Hern\u00e1ndez-Lobato & Adams, 2015; <a class=\"ref-link\" id=\"cHernandez-Lobato_et+al_2016_a\" href=\"#rHernandez-Lobato_et+al_2016_a\"><a class=\"ref-link\" id=\"cHernandez-Lobato_et+al_2016_a\" href=\"#rHernandez-Lobato_et+al_2016_a\">Hernandez-Lobato et al, 2016</a></a>; <a class=\"ref-link\" id=\"cGal_2016_a\" href=\"#rGal_2016_a\"><a class=\"ref-link\" id=\"cGal_2016_a\" href=\"#rGal_2016_a\">Gal & Ghahramani, 2016</a></a>; <a class=\"ref-link\" id=\"cRitter_et+al_2018_a\" href=\"#rRitter_et+al_2018_a\"><a class=\"ref-link\" id=\"cRitter_et+al_2018_a\" href=\"#rRitter_et+al_2018_a\">Ritter et al, 2018</a></a>), which applies Bayesian inference to neural networks for better uncertainty estimation",
+        "Inventing novel dynamics for SG-MCMC requires significant mathematical work to ensure the sampler\u2019s stationary distribution is the target distribution, which is less friendly to practitioners",
+        "Many of these algorithms are designed as a generic sampling procedure, and the associated physical mechanism might not be best suited for sampling neural network weights",
+        "This paper aims to automate the SG-MCMC proposal design by introducing meta-learning techniques (<a class=\"ref-link\" id=\"cSchmidhuber_1987_a\" href=\"#rSchmidhuber_1987_a\">Schmidhuber, 1987</a>; <a class=\"ref-link\" id=\"cBengio_et+al_1992_a\" href=\"#rBengio_et+al_1992_a\">Bengio et al, 1992</a>; <a class=\"ref-link\" id=\"cNaik_1992_a\" href=\"#rNaik_1992_a\">Naik & Mammone, 1992</a>; Thrun & Pratt, 1998)",
+        "SG-MCMC has the same computational complexity as many stochastic optimization algorithms, making it highly scalable for sampling posterior distributions of neural network weights conditioned on big datasets",
+        "Our goal is to learn an SG-MCMC sampler that can later be transferred to sample from different Bayesian neural network posterior distributions, which will typically have different dimensionality and include tens of thousands of random variables",
+        "We have presented a meta-learning algorithm that can learn an SG-MCMC sampler on simpler tasks and generalizes to more complicated densities in high dimensions",
+        "Experiments on Bayesian multi-layer perceptron, Bayesian convolutional neural networks and Bayesian recurrent neural network confirmed the strong generalization of the trained sampler to the long-time horizon as well as across datasets and network architectures",
+        "Future work will focus on better designs for both the sampler and the meta-learning procedure",
+        "The automated design of generic MCMC algorithms that might not be derived from continuous Markov processes remains an open challenge"
+    ],
+    "summary": [
+        "There is a resurgence of research interests in Bayesian deep learning (<a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\"><a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\">Graves, 2011</a></a>; <a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\"><a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\">Blundell et al, 2015</a></a>; Hern\u00e1ndez-Lobato & Adams, 2015; <a class=\"ref-link\" id=\"cHernandez-Lobato_et+al_2016_a\" href=\"#rHernandez-Lobato_et+al_2016_a\"><a class=\"ref-link\" id=\"cHernandez-Lobato_et+al_2016_a\" href=\"#rHernandez-Lobato_et+al_2016_a\">Hernandez-Lobato et al, 2016</a></a>; <a class=\"ref-link\" id=\"cGal_2016_a\" href=\"#rGal_2016_a\"><a class=\"ref-link\" id=\"cGal_2016_a\" href=\"#rGal_2016_a\">Gal & Ghahramani, 2016</a></a>; <a class=\"ref-link\" id=\"cRitter_et+al_2018_a\" href=\"#rRitter_et+al_2018_a\"><a class=\"ref-link\" id=\"cRitter_et+al_2018_a\" href=\"#rRitter_et+al_2018_a\">Ritter et al, 2018</a></a>), which applies Bayesian inference to neural networks for better uncertainty estimation.",
+        "SG-MCMC has the same computational complexity as many stochastic optimization algorithms, making it highly scalable for sampling posterior distributions of neural network weights conditioned on big datasets.",
+        "Our aim is to design an appropriate parameterization of D(z) and Q(z), so that the sampler can be trained on simple tasks with a meta-learning procedure, and generalize to more complicated densities.",
+        "Another challenge is to design a meta-learning procedure for the sampler to encourage faster convergence and low bias on test tasks.",
+        "Our proposed sampler architecture further generalizes SG-Riemannian-HMC as it decouples the design of D(z) and Q(z) matrices, and the detailed functional form of these two matrices are learned from data.",
+        "Li & Turner (2018) presented an initial attempt to meta-learn an approximate inference algorithm, which combined the stochastic gradient and the Gaussian noise with a neural network.",
+        "Our goal is to learn an SG-MCMC sampler that can later be transferred to sample from different Bayesian neural network posterior distributions, which will typically have different dimensionality and include tens of thousands of random variables.",
+        "We first consider sampling Gaussian variables to demonstrate fast convergence and low bias of the meta sampler.",
+        "Results are visualized on the left panel of Figure 2, showing that the meta sampler both converges much faster and achieves lower bias compared to SGHMC.",
+        "The effective sample size2 for SGHMC and NNSGHMC are 22 and 59, again indicating better efficiency of the meta sampler.",
+        "Architecture generalization (NT) In this test we use the trained sampler to draw samples from the posterior distribution of a 2-hidden layer MLP with 40 units and ReLU activations.",
+        "Following the setup of BNN MNIST experiments, we test our algorithm on convolutional neural networks (CNNs) for CIFAR-10 (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky, 2009</a>) classification, again with three generalization tasks (NT, AF and Data).",
+        "Figure 5 shows that the meta sampler achieves the fastest learning at the first 10 epochs, and continues to have better performance in both test accuracy and NLL.",
+        "The meta sampler successfully generalizes to the other three datasets, demonstrating faster convergence than SGHMC consistently, and better final performance on Muse.",
+        "We have presented a meta-learning algorithm that can learn an SG-MCMC sampler on simpler tasks and generalizes to more complicated densities in high dimensions.",
+        "Experiments on Bayesian MLPs, Bayesian CNNs and Bayesian RNNs confirmed the strong generalization of the trained sampler to the long-time horizon as well as across datasets and network architectures.",
+        "The automated design of generic MCMC algorithms that might not be derived from continuous Markov processes remains an open challenge"
+    ],
+    "headline": "This paper presents the first meta-learning algorithm that allows automated design for the underlying continuous dynamics of an SG-MCMC sampler",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2015_a",
+            "entry": "Mart\u00edn Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Man\u00e9, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Vi\u00e9gas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-scale machine learning on heterogeneous systems, 2015. URL https://www.tensorflow.org/. Software available from tensorflow.org.",
+            "url": "https://www.tensorflow.org/"
+        },
+        {
+            "id": "Ahn_et+al_2012_a",
+            "entry": "Sungjin Ahn, Anoop Korattikara, and Max Welling. Bayesian posterior sampling via stochastic gradient fisher scoring. arXiv preprint arXiv:1206.6380, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1206.6380"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, and Nando de Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, pp. 3981\u20133989, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Martin_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and L\u00e9on Bottou. Wasserstein generative adversarial networks. In International Conference on Machine Learning, pp. 214\u2013223, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martin%20Arjovsky%2C%20Soumith%20Chintala%20Bottou%2C%20L%C3%A9on%20Wasserstein%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martin%20Arjovsky%2C%20Soumith%20Chintala%20Bottou%2C%20L%C3%A9on%20Wasserstein%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Beal_2003_a",
+            "entry": "Matthew James Beal. Variational algorithms for approximate Bayesian inference. PhD thesis, University College London, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Beal%2C%20Matthew%20James%20Variational%20algorithms%20for%20approximate%20Bayesian%20inference%202003"
+        },
+        {
+            "id": "Bengio_et+al_1992_a",
+            "entry": "Samy Bengio, Yoshua Bengio, Jocelyn Cloutier, and Jan Gecsei. On the optimization of a synaptic learning rule. In Conference on Optimality in Biological and Artificial Networks, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992"
+        },
+        {
+            "id": "Binkowski_et+al_2018_a",
+            "entry": "Miko\u0142aj Binkowski, Dougal J Sutherland, Michael Arbel, and Arthur Gretton. Demystifying mmd gans. arXiv preprint arXiv:1801.01401, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01401"
+        },
+        {
+            "id": "Blundell_et+al_2015_a",
+            "entry": "Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural network. In International Conference on Machine Learning, pp. 1613\u20131622, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blundell%2C%20Charles%20Cornebise%2C%20Julien%20Kavukcuoglu%2C%20Koray%20Wierstra%2C%20Daan%20Weight%20uncertainty%20in%20neural%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blundell%2C%20Charles%20Cornebise%2C%20Julien%20Kavukcuoglu%2C%20Koray%20Wierstra%2C%20Daan%20Weight%20uncertainty%20in%20neural%20network%202015"
+        },
+        {
+            "id": "Brochu_et+al_2010_a",
+            "entry": "Eric Brochu, Vlad M Cora, and Nando De Freitas. A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning. arXiv preprint arXiv:1012.2599, 2010.",
+            "arxiv_url": "https://arxiv.org/pdf/1012.2599"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Changyou Chen, David Carlson, Zhe Gan, Chunyuan Li, and Lawrence Carin. Bridging the gap between stochastic gradient MCMC and stochastic optimization. In Artificial Intelligence and Statistics, pp. 1051\u20131060, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Changyou%20Carlson%2C%20David%20Gan%2C%20Zhe%20Li%2C%20Chunyuan%20Bridging%20the%20gap%20between%20stochastic%20gradient%20MCMC%20and%20stochastic%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Changyou%20Carlson%2C%20David%20Gan%2C%20Zhe%20Li%2C%20Chunyuan%20Bridging%20the%20gap%20between%20stochastic%20gradient%20MCMC%20and%20stochastic%20optimization%202016"
+        },
+        {
+            "id": "Chen_et+al_2014_a",
+            "entry": "Tianqi Chen, Emily Fox, and Carlos Guestrin. Stochastic gradient Hamiltonian Monte Carlo. In International Conference on Machine Learning, pp. 1683\u20131691, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Tianqi%20Fox%2C%20Emily%20Guestrin%2C%20Carlos%20Stochastic%20gradient%20Hamiltonian%20Monte%20Carlo%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Tianqi%20Fox%2C%20Emily%20Guestrin%2C%20Carlos%20Stochastic%20gradient%20Hamiltonian%20Monte%20Carlo%202014"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Yutian Chen, Matthew W Hoffman, Sergio G\u00f3mez Colmenarejo, Misha Denil, Timothy P Lillicrap, Matt Botvinick, and Nando Freitas. Learning to learn without gradient descent by gradient descent. In International Conference on Machine Learning, pp. 748\u2013756, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Yutian%20Hoffman%2C%20Matthew%20W.%20Colmenarejo%2C%20Sergio%20G%C3%B3mez%20Denil%2C%20Misha%20Learning%20to%20learn%20without%20gradient%20descent%20by%20gradient%20descent%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Yutian%20Hoffman%2C%20Matthew%20W.%20Colmenarejo%2C%20Sergio%20G%C3%B3mez%20Denil%2C%20Misha%20Learning%20to%20learn%20without%20gradient%20descent%20by%20gradient%20descent%202017"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merri\u00ebnboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using RNN encoder-decoder for statistical machine translation. arXiv preprint arXiv:1406.1078, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1406.1078"
+        },
+        {
+            "id": "Chwialkowski_et+al_2016_a",
+            "entry": "Kacper Chwialkowski, Heiko Strathmann, and Arthur Gretton. A kernel test of goodness of fit. In International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chwialkowski%2C%20Kacper%20Strathmann%2C%20Heiko%20Gretton%2C%20Arthur%20A%20kernel%20test%20of%20goodness%20of%20fit%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chwialkowski%2C%20Kacper%20Strathmann%2C%20Heiko%20Gretton%2C%20Arthur%20A%20kernel%20test%20of%20goodness%20of%20fit%202016"
+        },
+        {
+            "id": "Deisenroth_2011_a",
+            "entry": "Marc Deisenroth and Carl E Rasmussen. Pilco: A model-based and data-efficient approach to policy search. In International Conference on machine learning, pp. 465\u2013472, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011"
+        },
+        {
+            "id": "Depeweg_et+al_2017_a",
+            "entry": "Stefan Depeweg, Jos\u00e9 Miguel Hern\u00e1ndez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Learning and policy search in stochastic dynamical systems with Bayesian neural networks. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Depeweg%2C%20Stefan%20Hern%C3%A1ndez-Lobato%2C%20Jos%C3%A9%20Miguel%20Doshi-Velez%2C%20Finale%20Udluft%2C%20Steffen%20Learning%20and%20policy%20search%20in%20stochastic%20dynamical%20systems%20with%20Bayesian%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Depeweg%2C%20Stefan%20Hern%C3%A1ndez-Lobato%2C%20Jos%C3%A9%20Miguel%20Doshi-Velez%2C%20Finale%20Udluft%2C%20Steffen%20Learning%20and%20policy%20search%20in%20stochastic%20dynamical%20systems%20with%20Bayesian%20neural%20networks%202017"
+        },
+        {
+            "id": "Ding_et+al_2014_a",
+            "entry": "Nan Ding, Youhan Fang, Ryan Babbush, Changyou Chen, Robert D Skeel, and Hartmut Neven. Bayesian sampling using stochastic gradient thermostats. In Advances in Neural Information Processing Systems, pp. 3203\u20133211, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ding%2C%20Nan%20Fang%2C%20Youhan%20Babbush%2C%20Ryan%20Chen%2C%20Changyou%20Bayesian%20sampling%20using%20stochastic%20gradient%20thermostats%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ding%2C%20Nan%20Fang%2C%20Youhan%20Babbush%2C%20Ryan%20Chen%2C%20Changyou%20Bayesian%20sampling%20using%20stochastic%20gradient%20thermostats%202014"
+        },
+        {
+            "id": "Dinh_et+al_2014_a",
+            "entry": "Laurent Dinh, David Krueger, and Yoshua Bengio. NICE: Non-linear independent components estimation. arXiv preprint arXiv:1410.8516, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1410.8516"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio. Density estimation using Real NVP. In International Conference on Learning Representations, 2017. URL https://openreview.net/forum?id=HkpbnH9lx.",
+            "url": "https://openreview.net/forum?id=HkpbnH9lx",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20Laurent%20Sohl-Dickstein%2C%20Jascha%20Bengio%2C%20Samy%20Density%20estimation%20using%20Real%20NVP%202017"
+        },
+        {
+            "id": "Duan_et+al_2016_a",
+            "entry": "Yan Duan, John Schulman, Xi Chen, Peter L Bartlett, Ilya Sutskever, and Pieter Abbeel. Rl 2: Fast reinforcement learning via slow reinforcement learning. arXiv preprint arXiv:1611.02779, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02779"
+        },
+        {
+            "id": "Duane_et+al_1987_a",
+            "entry": "Simon Duane, Anthony D Kennedy, Brian J Pendleton, and Duncan Roweth. Hybrid Monte Carlo. Physics letters B, 195(2):216\u2013222, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simon%20Duane%20Anthony%20D%20Kennedy%20Brian%20J%20Pendleton%20and%20Duncan%20Roweth%20Hybrid%20Monte%20Carlo%20Physics%20letters%20B%201952216222%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simon%20Duane%20Anthony%20D%20Kennedy%20Brian%20J%20Pendleton%20and%20Duncan%20Roweth%20Hybrid%20Monte%20Carlo%20Physics%20letters%20B%201952216222%201987"
+        },
+        {
+            "id": "Feinman_et+al_2017_a",
+            "entry": "Reuben Feinman, Ryan R Curtin, Saurabh Shintre, and Andrew B Gardner. Detecting adversarial samples from artifacts. arXiv preprint arXiv:1703.00410, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00410"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-Agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning, pp. 1126\u20131135, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-Agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-Agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. In International Conference on Machine Learning, pp. 1050\u20131059, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20Bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20Bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Gan_et+al_2017_a",
+            "entry": "Zhe Gan, Chunyuan Li, Changyou Chen, Yunchen Pu, Qinliang Su, and Lawrence Carin. Scalable Bayesian learning of Recurrent neural networks for language modeling. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 321\u2013331, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gan%2C%20Zhe%20Li%2C%20Chunyuan%20Chen%2C%20Changyou%20Pu%2C%20Yunchen%20Scalable%20Bayesian%20learning%20of%20Recurrent%20neural%20networks%20for%20language%20modeling%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gan%2C%20Zhe%20Li%2C%20Chunyuan%20Chen%2C%20Changyou%20Pu%2C%20Yunchen%20Scalable%20Bayesian%20learning%20of%20Recurrent%20neural%20networks%20for%20language%20modeling%202017"
+        },
+        {
+            "id": "Girolami_2011_a",
+            "entry": "Mark Girolami and Ben Calderhead. Riemann manifold Langevin and Hamiltonian Monte Carlo methods. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 73(2): 123\u2013214, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Girolami%2C%20Mark%20Calderhead%2C%20Ben%20Riemann%20manifold%20Langevin%20and%20Hamiltonian%20Monte%20Carlo%20methods%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Girolami%2C%20Mark%20Calderhead%2C%20Ben%20Riemann%20manifold%20Langevin%20and%20Hamiltonian%20Monte%20Carlo%20methods%202011"
+        },
+        {
+            "id": "Gorham_2015_a",
+            "entry": "Jackson Gorham and Lester Mackey. Measuring sample quality with Stein\u2019s method. In Advances in Neural Information Processing Systems, pp. 226\u2013234, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gorham%2C%20Jackson%20Mackey%2C%20Lester%20Measuring%20sample%20quality%20with%20Stein%E2%80%99s%20method%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gorham%2C%20Jackson%20Mackey%2C%20Lester%20Measuring%20sample%20quality%20with%20Stein%E2%80%99s%20method%202015"
+        },
+        {
+            "id": "Graves_2011_a",
+            "entry": "Alex Graves. Practical variational inference for neural networks. In Advances in Neural Information Processing Systems, pp. 2348\u20132356, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Practical%20variational%20inference%20for%20neural%20networks%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Practical%20variational%20inference%20for%20neural%20networks%202011"
+        },
+        {
+            "id": "Hernandez-Lobato_et+al_2016_a",
+            "entry": "Jose Hernandez-Lobato, Yingzhen Li, Mark Rowland, Thang Bui, Daniel Hernandez-Lobato, and Richard Turner. Black-box Alpha divergence minimization. In International Conference on Machine Learning, pp. 1511\u20131520, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hernandez-Lobato%2C%20Jose%20Li%2C%20Yingzhen%20Rowland%2C%20Mark%20Bui%2C%20Thang%20Black-box%20Alpha%20divergence%20minimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hernandez-Lobato%2C%20Jose%20Li%2C%20Yingzhen%20Rowland%2C%20Mark%20Bui%2C%20Thang%20Black-box%20Alpha%20divergence%20minimization%202016"
+        },
+        {
+            "id": "Hern_2015_a",
+            "entry": "Jos\u00e9 Miguel Hern\u00e1ndez-Lobato and Ryan Adams. Probabilistic backpropagation for scalable learning of Bayesian neural networks. In International Conference on Machine Learning, pp. 1861\u20131869, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hern%C3%A1ndez-Lobato%2C%20Jos%C3%A9%20Miguel%20Adams%2C%20Ryan%20Probabilistic%20backpropagation%20for%20scalable%20learning%20of%20Bayesian%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hern%C3%A1ndez-Lobato%2C%20Jos%C3%A9%20Miguel%20Adams%2C%20Ryan%20Probabilistic%20backpropagation%20for%20scalable%20learning%20of%20Bayesian%20neural%20networks%202015"
+        },
+        {
+            "id": "Jordan_et+al_1999_a",
+            "entry": "Michael I Jordan, Zoubin Ghahramani, Tommi S Jaakkola, and Lawrence K Saul. An introduction to variational methods for graphical models. Machine Learning, 37(2):183\u2013233, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jordan%2C%20Michael%20I.%20Ghahramani%2C%20Zoubin%20Jaakkola%2C%20Tommi%20S.%20Saul%2C%20Lawrence%20K.%20An%20introduction%20to%20variational%20methods%20for%20graphical%20models%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jordan%2C%20Michael%20I.%20Ghahramani%2C%20Zoubin%20Jaakkola%2C%20Tommi%20S.%20Saul%2C%20Lawrence%20K.%20An%20introduction%20to%20variational%20methods%20for%20graphical%20models%201999"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Technical report, Citeseer, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Levy_et+al_2018_a",
+            "entry": "Daniel Levy, Matt D. Hoffman, and Jascha Sohl-Dickstein. Generalizing Hamiltonian Monte Carlo with neural networks. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=B1n8LexRZ.",
+            "url": "https://openreview.net/forum?id=B1n8LexRZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levy%2C%20Daniel%20Hoffman%2C%20Matt%20D.%20Sohl-Dickstein%2C%20Jascha%20Generalizing%20Hamiltonian%20Monte%20Carlo%20with%20neural%20networks%202018"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Chun-Liang Li, Wei-Cheng Chang, Yu Cheng, Yiming Yang, and Barnab\u00e1s P\u00f3czos. Mmd gan: Towards deeper understanding of moment matching network. In Advances in Neural Information Processing Systems, pp. 2203\u20132213, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Chun-Liang%20Chang%2C%20Wei-Cheng%20Cheng%2C%20Yu%20Yang%2C%20Yiming%20Mmd%20gan%3A%20Towards%20deeper%20understanding%20of%20moment%20matching%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Chun-Liang%20Chang%2C%20Wei-Cheng%20Cheng%2C%20Yu%20Yang%2C%20Yiming%20Mmd%20gan%3A%20Towards%20deeper%20understanding%20of%20moment%20matching%20network%202017"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Chunyuan Li, Changyou Chen, David Carlson, and Lawrence Carin. Preconditioned stochastic gradient Langevin dynamics for deep neural networks. In Proceedings of the Thirtieth AAAI Conference on Artificial Intelligence, pp. 1788\u20131794. AAAI Press, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Chunyuan%20Chen%2C%20Changyou%20Carlson%2C%20David%20Carin%2C%20Lawrence%20Preconditioned%20stochastic%20gradient%20Langevin%20dynamics%20for%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Chunyuan%20Chen%2C%20Changyou%20Carlson%2C%20David%20Carin%2C%20Lawrence%20Preconditioned%20stochastic%20gradient%20Langevin%20dynamics%20for%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Li_et+al_2016_b",
+            "entry": "Chunyuan Li, Andrew Stevens, Changyou Chen, Yunchen Pu, Zhe Gan, and Lawrence Carin. Learning weight uncertainty with stochastic gradient MCMC for shape classification. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 5666\u20135675, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Chunyuan%20Stevens%2C%20Andrew%20Chen%2C%20Changyou%20Pu%2C%20Yunchen%20Learning%20weight%20uncertainty%20with%20stochastic%20gradient%20MCMC%20for%20shape%20classification%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Chunyuan%20Stevens%2C%20Andrew%20Chen%2C%20Changyou%20Pu%2C%20Yunchen%20Learning%20weight%20uncertainty%20with%20stochastic%20gradient%20MCMC%20for%20shape%20classification%202016"
+        },
+        {
+            "id": "Li_2017_b",
+            "entry": "Ke Li and Jitendra Malik. Learning to optimize. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Ke%20Malik%2C%20Jitendra%20Learning%20to%20optimize%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Ke%20Malik%2C%20Jitendra%20Learning%20to%20optimize%202017"
+        },
+        {
+            "id": "Li_2017_c",
+            "entry": "Yingzhen Li and Yarin Gal. Dropout inference in Bayesian neural networks with Alpha-divergences. In International Conference on Machine Learning, pp. 2052\u20132061, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yingzhen%20Gal%2C%20Yarin%20Dropout%20inference%20in%20Bayesian%20neural%20networks%20with%20Alpha-divergences%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yingzhen%20Gal%2C%20Yarin%20Dropout%20inference%20in%20Bayesian%20neural%20networks%20with%20Alpha-divergences%202017"
+        },
+        {
+            "id": "Li_2018_a",
+            "entry": "Yingzhen Li and Richard E. Turner. Gradient estimators for implicit models. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=SJi9WOeRb.",
+            "url": "https://openreview.net/forum?id=SJi9WOeRb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yingzhen%20Turner%2C%20Richard%20E.%20Gradient%20estimators%20for%20implicit%20models%202018"
+        },
+        {
+            "id": "Lin_1993_a",
+            "entry": "Long-Ji Lin. Reinforcement learning for robots using neural networks. Technical report, CarnegieMellon Univ Pittsburgh PA School of Computer Science, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Long-Ji%20Reinforcement%20learning%20for%20robots%20using%20neural%20networks%201993"
+        },
+        {
+            "id": "Liu_2016_a",
+            "entry": "Qiang Liu and Dilin Wang. Stein variational gradient descent: A general purpose bayesian inference algorithm. In Advances In Neural Information Processing Systems, pp. 2378\u20132386, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Qiang%20Wang%2C%20Dilin%20Stein%20variational%20gradient%20descent%3A%20A%20general%20purpose%20bayesian%20inference%20algorithm%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Qiang%20Wang%2C%20Dilin%20Stein%20variational%20gradient%20descent%3A%20A%20general%20purpose%20bayesian%20inference%20algorithm%202016"
+        },
+        {
+            "id": "Liu_et+al_2016_b",
+            "entry": "Qiang Liu, Jason Lee, and Michael Jordan. A kernelized Stein discrepancy for goodness-of-fit tests. In International Conference on Machine Learning, pp. 276\u2013284, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Qiang%20Lee%2C%20Jason%20Jordan%2C%20Michael%20A%20kernelized%20Stein%20discrepancy%20for%20goodness-of-fit%20tests%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Qiang%20Lee%2C%20Jason%20Jordan%2C%20Michael%20A%20kernelized%20Stein%20discrepancy%20for%20goodness-of-fit%20tests%202016"
+        },
+        {
+            "id": "Louizos_2017_a",
+            "entry": "Christos Louizos and Max Welling. Multiplicative normalizing flows for variational Bayesian neural networks. In International Conference on Machine Learning, pp. 2218\u20132227, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Welling%2C%20Max%20Multiplicative%20normalizing%20flows%20for%20variational%20Bayesian%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Welling%2C%20Max%20Multiplicative%20normalizing%20flows%20for%20variational%20Bayesian%20neural%20networks%202017"
+        },
+        {
+            "id": "Ma_et+al_2015_a",
+            "entry": "Yi-An Ma, Tianqi Chen, and Emily Fox. A complete recipe for stochastic gradient MCMC. In Advances in Neural Information Processing Systems, pp. 2917\u20132925, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ma%2C%20Yi-An%20Chen%2C%20Tianqi%20Fox%2C%20Emily%20A%20complete%20recipe%20for%20stochastic%20gradient%20MCMC%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ma%2C%20Yi-An%20Chen%2C%20Tianqi%20Fox%2C%20Emily%20A%20complete%20recipe%20for%20stochastic%20gradient%20MCMC%202015"
+        },
+        {
+            "id": "Naik_1992_a",
+            "entry": "Devang K Naik and RJ Mammone. Meta-neural networks that learn by learning. In Neural Networks, 1992. IJCNN., International Joint Conference on, volume 1, pp. 437\u2013442. IEEE, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Naik%2C%20Devang%20K.%20Mammone%2C%20R.J.%20Meta-neural%20networks%20that%20learn%20by%20learning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Naik%2C%20Devang%20K.%20Mammone%2C%20R.J.%20Meta-neural%20networks%20that%20learn%20by%20learning%201992"
+        },
+        {
+            "id": "Neal_2011_a",
+            "entry": "Radford M Neal et al. MCMC using Hamiltonian dynamics. Handbook of Markov Chain Monte Carlo, 2(11), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20MCMC%20using%20Hamiltonian%20dynamics.%20Handbook%20of%20Markov%20Chain%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neal%2C%20Radford%20M.%20MCMC%20using%20Hamiltonian%20dynamics.%20Handbook%20of%20Markov%20Chain%202011"
+        },
+        {
+            "id": "Nguyen_et+al_2018_a",
+            "entry": "Cuong V. Nguyen, Yingzhen Li, Thang D. Bui, and Richard E. Turner. Variational continual learning. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=BkQqq0gRb.",
+            "url": "https://openreview.net/forum?id=BkQqq0gRb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Cuong%20V.%20Li%2C%20Yingzhen%20Bui%2C%20Thang%20D.%20Turner%2C%20Richard%20E.%20Variational%20continual%20learning%202018"
+        },
+        {
+            "id": "Pasarica_2010_a",
+            "entry": "Cristian Pasarica and Andrew Gelman. Adaptively scaling the Metropolis algorithm using expected squared jumped distance. Statistica Sinica, pp. 343\u2013364, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pasarica%2C%20Cristian%20Gelman%2C%20Andrew%20Adaptively%20scaling%20the%20Metropolis%20algorithm%20using%20expected%20squared%20jumped%20distance%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pasarica%2C%20Cristian%20Gelman%2C%20Andrew%20Adaptively%20scaling%20the%20Metropolis%20algorithm%20using%20expected%20squared%20jumped%20distance%202010"
+        },
+        {
+            "id": "Patterson_2013_a",
+            "entry": "Sam Patterson and Yee Whye Teh. Stochastic gradient Riemannian Langevin dynamics on the probability simplex. In Advances in Neural Information Processing Systems, pp. 3102\u20133110, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Patterson%2C%20Sam%20Teh%2C%20Yee%20Whye%20Stochastic%20gradient%20Riemannian%20Langevin%20dynamics%20on%20the%20probability%20simplex%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Patterson%2C%20Sam%20Teh%2C%20Yee%20Whye%20Stochastic%20gradient%20Riemannian%20Langevin%20dynamics%20on%20the%20probability%20simplex%202013"
+        },
+        {
+            "id": "Ranganath_et+al_2014_a",
+            "entry": "Rajesh Ranganath, Sean Gerrish, and David Blei. Black box variational inference. In Artificial Intelligence and Statistics, pp. 814\u2013822, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ranganath%2C%20Rajesh%20Gerrish%2C%20Sean%20Blei%2C%20David%20Black%20box%20variational%20inference%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ranganath%2C%20Rajesh%20Gerrish%2C%20Sean%20Blei%2C%20David%20Black%20box%20variational%20inference%202014"
+        },
+        {
+            "id": "Ravi_2017_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202017"
+        },
+        {
+            "id": "Ritter_et+al_2018_a",
+            "entry": "Hippolyt Ritter, Aleksandar Botev, and David Barber. A scalable Laplace approximation for neural networks. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=Skdvd2xAZ.",
+            "url": "https://openreview.net/forum?id=Skdvd2xAZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ritter%2C%20Hippolyt%20Botev%2C%20Aleksandar%20Barber%2C%20David%20A%20scalable%20Laplace%20approximation%20for%20neural%20networks%202018"
+        },
+        {
+            "id": "Salimans_et+al_2015_a",
+            "entry": "Tim Salimans, Diederik Kingma, and Max Welling. Markov chain Monte Carlo and variational inference: Bridging the gap. In International Conference on Machine Learning, pp. 1218\u20131226, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20Welling%2C%20Max%20Markov%20chain%20Monte%20Carlo%20and%20variational%20inference%3A%20Bridging%20the%20gap%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20Welling%2C%20Max%20Markov%20chain%20Monte%20Carlo%20and%20variational%20inference%3A%20Bridging%20the%20gap%202015"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Metalearning with memory-augmented neural networks. In International Conference on Machine Learning, pp. 1842\u20131850, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016"
+        },
+        {
+            "id": "Schmidhuber_1987_a",
+            "entry": "J\u00fcrgen Schmidhuber. Evolutionary principles in self-referential learning, or on learning how to learn: the meta-meta-... hook. PhD thesis, Technische Universit\u00e4t M\u00fcnchen, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Evolutionary%20principles%20in%20self-referential%20learning%2C%20or%20on%20learning%20how%20to%20learn%3A%20the%20meta-meta-%201987"
+        },
+        {
+            "id": "Shi_et+al_2012_a",
+            "entry": "Jianghong Shi, Tianqi Chen, Ruoshi Yuan, Bo Yuan, and Ping Ao. Relation of a new interpretation of stochastic differential equations to ito process. Journal of Statistical Physics, 148(3):579\u2013590, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shi%2C%20Jianghong%20Chen%2C%20Tianqi%20Yuan%2C%20Ruoshi%20Yuan%2C%20Bo%20Relation%20of%20a%20new%20interpretation%20of%20stochastic%20differential%20equations%20to%20ito%20process%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shi%2C%20Jianghong%20Chen%2C%20Tianqi%20Yuan%2C%20Ruoshi%20Yuan%2C%20Bo%20Relation%20of%20a%20new%20interpretation%20of%20stochastic%20differential%20equations%20to%20ito%20process%202012"
+        },
+        {
+            "id": "Snoek_et+al_2012_a",
+            "entry": "Jasper Snoek, Hugo Larochelle, and Ryan P Adams. Practical Bayesian optimization of machine learning algorithms. In Advances in Neural Information Processing Systems, pp. 2951\u20132959, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snoek%2C%20Jasper%20Larochelle%2C%20Hugo%20Adams%2C%20Ryan%20P.%20Practical%20Bayesian%20optimization%20of%20machine%20learning%20algorithms%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snoek%2C%20Jasper%20Larochelle%2C%20Hugo%20Adams%2C%20Ryan%20P.%20Practical%20Bayesian%20optimization%20of%20machine%20learning%20algorithms%202012"
+        },
+        {
+            "id": "Song_et+al_2017_a",
+            "entry": "Jiaming Song, Shengjia Zhao, and Stefano Ermon. A-NICE-MC: Adversarial training for MCMC. In Advances in Neural Information Processing Systems, pp. 5146\u20135156, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Song%2C%20Jiaming%20Zhao%2C%20Shengjia%20Ermon%2C%20Stefano%20A-NICE-MC%3A%20Adversarial%20training%20for%20MCMC%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Song%2C%20Jiaming%20Zhao%2C%20Shengjia%20Ermon%2C%20Stefano%20A-NICE-MC%3A%20Adversarial%20training%20for%20MCMC%202017"
+        },
+        {
+            "id": "Springenberg_et+al_2016_a",
+            "entry": "Jost Tobias Springenberg, Aaron Klein, Stefan Falkner, and Frank Hutter. Bayesian optimization with robust Bayesian neural networks. In Advances in Neural Information Processing Systems (NIPS), pp. 4134\u20134142, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springenberg%2C%20Jost%20Tobias%20Klein%2C%20Aaron%20Falkner%2C%20Stefan%20Hutter%2C%20Frank%20Bayesian%20optimization%20with%20robust%20Bayesian%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Springenberg%2C%20Jost%20Tobias%20Klein%2C%20Aaron%20Falkner%2C%20Stefan%20Hutter%2C%20Frank%20Bayesian%20optimization%20with%20robust%20Bayesian%20neural%20networks%202016"
+        },
+        {
+            "id": "Stein_1972_a",
+            "entry": "Charles M Stein. A bound for the error in the normal approximation to the distribution of a sum of dependent random variables. In Proceedings of the Sixth Berkeley Symposium on Mathematical Statistics and Probability, Volume 2: Probability Theory, pp. 583\u2013602, 1972.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stein%2C%20Charles%20M.%20A%20bound%20for%20the%20error%20in%20the%20normal%20approximation%20to%20the%20distribution%20of%20a%20sum%20of%20dependent%20random%20variables%201972",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stein%2C%20Charles%20M.%20A%20bound%20for%20the%20error%20in%20the%20normal%20approximation%20to%20the%20distribution%20of%20a%20sum%20of%20dependent%20random%20variables%201972"
+        },
+        {
+            "id": "Stein_1981_a",
+            "entry": "Charles M Stein. Estimation of the mean of a multivariate normal distribution. The Annals of Statistics, pp. 1135\u20131151, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stein%2C%20Charles%20M.%20Estimation%20of%20the%20mean%20of%20a%20multivariate%20normal%20distribution%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stein%2C%20Charles%20M.%20Estimation%20of%20the%20mean%20of%20a%20multivariate%20normal%20distribution%201981"
+        },
+        {
+            "id": "Neal_2011_b",
+            "entry": "Neal et al. (2011) showed that in practice, simple Euler discretization for HMC simulation might cause divergence, therefore advanced discretization schemes such as Leapfrog and modified Euler are recommended. We use modified Euler discretization in our implementation of SGHMC and the meta sampler, resulting in the following update: pt+1 = (1 \u2212 \u03b7C )pt \u2212 \u03b7\u2207U (\u03b8t) + t, \u03b8t+1 = \u03b8t + \u03b7pt+1, (17)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%20showed%20that%20in%20practice%2C%20simple%20Euler%20discretization%20for%20HMC%20simulation%20might%20cause%20divergence%2C%20therefore%20advanced%20discretization%20schemes%20such%20as%20Leapfrog%20and%20modified%20Euler%20are%20recommended.%20We%20use%20modified%20Euler%20discretization%20in%20our%20implementation%20of%20SGHMC%20and%20the%20meta%20sampler%2C%20resulting%20in%20the%20following%20update%3A%20pt%2B1%20%3D%202011"
+        },
+        {
+            "id": "For_2018_a",
+            "entry": "For a distribution q(\u03b8) that is implicitly defined by a generative procedure, the density q(\u03b8) is often intractable. Li & Turner (2018) derived the Stein gradient estimator that estimates G = (\u2207\u03b81 log q(\u03b81), \u00b7 \u00b7 \u00b7 \u2207\u03b8K log q(\u03b8K ))T on samples \u03b81,..., \u03b8K \u223c q(\u03b8). There are two different ways to derive this gradient estimator, here we briefly introduce one of them, and refer the readers to Li & Turner (2018) for details.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20a%20distribution%20q%CE%B8%20that%20is%20implicitly%20defined%20by%20a%20generative%20procedure%20the%20density%20q%CE%B8%20is%20often%20intractable%20Li%20%20Turner%202018%20derived%20the%20Stein%20gradient%20estimator%20that%20estimates%20G%20%20%CE%B81%20log%20q%CE%B81%20%20%20%20%CE%B8K%20log%20q%CE%B8K%20T%20on%20samples%20%CE%B81%20%CE%B8K%20%20q%CE%B8%20There%20are%20two%20different%20ways%20to%20derive%20this%20gradient%20estimator%20here%20we%20briefly%20introduce%20one%20of%20them%20and%20refer%20the%20readers%20to%20Li%20%20Turner%202018%20for%20details",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20a%20distribution%20q%CE%B8%20that%20is%20implicitly%20defined%20by%20a%20generative%20procedure%20the%20density%20q%CE%B8%20is%20often%20intractable%20Li%20%20Turner%202018%20derived%20the%20Stein%20gradient%20estimator%20that%20estimates%20G%20%20%CE%B81%20log%20q%CE%B81%20%20%20%20%CE%B8K%20log%20q%CE%B8K%20T%20on%20samples%20%CE%B81%20%CE%B8K%20%20q%CE%B8%20There%20are%20two%20different%20ways%20to%20derive%20this%20gradient%20estimator%20here%20we%20briefly%20introduce%20one%20of%20them%20and%20refer%20the%20readers%20to%20Li%20%20Turner%202018%20for%20details"
+        },
+        {
+            "id": "Mackey_1972_a",
+            "entry": "We start by introducing Stein\u2019s identity (Stein, 1972; 1981; Gorham & Mackey, 2015; Liu et al., 2016). Let h: Rd\u00d71 \u2192 Rd \u00d71 be a differentiable multivariate test function which maps \u03b8 to a column vector h(\u03b8) = [h1(\u03b8), h2(\u03b8),..., hd (\u03b8)]T. One can use integration by parts to show the following Stein\u2019s identity when a boundary condition lim||\u03b8||\u2192\u221e q(\u03b8)h(\u03b8) = 0 is assumed for the test function: Eq[h(\u03b8)\u2207\u03b8 log q(\u03b8)T + \u2207\u03b8 h(\u03b8)] = 0, \u2207\u03b8 h(\u03b8) = (\u2207\u03b8 h1(\u03b8), \u00b7 \u00b7 \u00b7, \u2207\u03b8 hd (\u03b8))T \u2208 Rd \u00d7d. (23)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mackey%20We%20start%20by%20introducing%20Stein%E2%80%99s%20identity%201972",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mackey%20We%20start%20by%20introducing%20Stein%E2%80%99s%20identity%201972"
+        },
+        {
+            "id": "This_2018_b",
+            "entry": "This boundary condition holds for almost any test function if q has sufficiently fast-decaying tails (e.g. Gaussian tails). Li & Turner (2018) proposed the Stein gradient estimator for \u2207\u03b8 log q(\u03b8) by inverting a Monte Carlo (MC) version of Stein\u2019s identity (23): 1 \u2212 K HG \u2248 \u2207\u03b8 h, H = h(\u03b81), \u00b7 \u00b7 \u00b7, h(\u03b8K ) \u2208 Rd \u00d7K, 1 \u2207\u03b8 h = K",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=This%20boundary%20condition%20holds%20for%20almost%20any%20test%20function%20if%20q%20has%20sufficiently%20fastdecaying%20tails%20eg%20Gaussian%20tails%20Li%20%20Turner%202018%20proposed%20the%20Stein%20gradient%20estimator%20for%20%CE%B8%20log%20q%CE%B8%20by%20inverting%20a%20Monte%20Carlo%20MC%20version%20of%20Steins%20identity%2023%201%20%20K%20HG%20%20%CE%B8%20h%20H%20%20h%CE%B81%20%20%20%20h%CE%B8K%20%20%20Rd%20K%201%20%CE%B8%20h%20%20K",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=This%20boundary%20condition%20holds%20for%20almost%20any%20test%20function%20if%20q%20has%20sufficiently%20fastdecaying%20tails%20eg%20Gaussian%20tails%20Li%20%20Turner%202018%20proposed%20the%20Stein%20gradient%20estimator%20for%20%CE%B8%20log%20q%CE%B8%20by%20inverting%20a%20Monte%20Carlo%20MC%20version%20of%20Steins%20identity%2023%201%20%20K%20HG%20%20%CE%B8%20h%20H%20%20h%CE%B81%20%20%20%20h%CE%B8K%20%20%20Rd%20K%201%20%CE%B8%20h%20%20K"
+        },
+        {
+            "id": "Here_2016_a",
+            "entry": "Here \u03b8k(j) denotes the jth element of vector \u03b8k. One can show that the RBF kernel satisfies Stein\u2019s identity (Liu et al., 2016). In this case h(\u03b8) = K(\u03b8, \u00b7), d = +\u221e and by the reproducing kernel property, h(\u03b8)Th(\u03b8 ) = K(\u03b8, \u00b7), K(\u03b8, \u00b7) H = K(\u03b8, \u03b8 ). Li & Turner (2018) also show that the Stein gradient estimator can be obtained by minimizing a Monte Carlo estimate of the kernelized Stein discrepancy (Chwialkowski et al., 2016; Liu et al., 2016).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Here%20%CE%B8kj%20denotes%20the%20jth%20element%20of%20vector%20%CE%B8k%20One%20can%20show%20that%20the%20RBF%20kernel%20satisfies%20Steins%20identity%20Liu%20et%20al%202016%20In%20this%20case%20h%CE%B8%20%20K%CE%B8%20%20d%20%20%20and%20by%20the%20reproducing%20kernel%20property%20h%CE%B8Th%CE%B8%20%20%20K%CE%B8%20%20K%CE%B8%20%20H%20%20K%CE%B8%20%CE%B8%20%20Li%20%20Turner%202018%20also%20show%20that%20the%20Stein%20gradient%20estimator%20can%20be%20obtained%20by%20minimizing%20a%20Monte%20Carlo%20estimate%20of%20the%20kernelized%20Stein%20discrepancy%20Chwialkowski%20et%20al%202016%20Liu%20et%20al%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Here%20%CE%B8kj%20denotes%20the%20jth%20element%20of%20vector%20%CE%B8k%20One%20can%20show%20that%20the%20RBF%20kernel%20satisfies%20Steins%20identity%20Liu%20et%20al%202016%20In%20this%20case%20h%CE%B8%20%20K%CE%B8%20%20d%20%20%20and%20by%20the%20reproducing%20kernel%20property%20h%CE%B8Th%CE%B8%20%20%20K%CE%B8%20%20K%CE%B8%20%20H%20%20K%CE%B8%20%CE%B8%20%20Li%20%20Turner%202018%20also%20show%20that%20the%20Stein%20gradient%20estimator%20can%20be%20obtained%20by%20minimizing%20a%20Monte%20Carlo%20estimate%20of%20the%20kernelized%20Stein%20discrepancy%20Chwialkowski%20et%20al%202016%20Liu%20et%20al%202016"
+        }
+    ]
+}

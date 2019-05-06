@@ -1,0 +1,502 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "NEURAL LOGIC MACHINES",
+        "author": "Honghua Dong, Jiayuan Mao, Tian Lin, Chong Wang, Lihong Li, and Denny Zhou, 1 ITCS, IIIS, Tsinghua University {dhh, mjy,}@mails.tsinghua.edu.cn 2 Google Inc. {tianlin,lihong,dennyzhou}@google.com 3 ByteDance Inc. chong.wang@bytedance.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1xY-hRctX"
+        },
+        "abstract": "We propose the Neural Logic Machine (NLM), a neural-symbolic architecture for both inductive learning and logic reasoning. NLMs exploit the power of both neural networks\u2014as function approximators, and logic programming\u2014as a symbolic processor for objects with properties, relations, logic connectives, and quantifiers. After being trained on small-scale tasks (such as sorting short arrays), NLMs can recover lifted rules, and generalize to large-scale tasks (such as sorting longer arrays). In our experiments, NLMs achieve perfect generalization in a number of tasks, from relational reasoning tasks on the family tree and general graphs, to decision making tasks including sorting arrays, finding shortest paths, and playing the blocks world. Most of these tasks are hard to accomplish for neural networks or inductive logic programming alone. 1"
+    },
+    "keywords": [
+        {
+            "term": "block world",
+            "url": "https://en.wikipedia.org/wiki/block_world"
+        },
+        {
+            "term": "Connectionism",
+            "url": "https://en.wikipedia.org/wiki/Connectionism"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "multi-layer perceptrons",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptrons"
+        },
+        {
+            "term": "Neural Turing Machine",
+            "url": "https://en.wikipedia.org/wiki/Neural_Turing_Machine"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "first-order logic",
+            "url": "https://en.wikipedia.org/wiki/first-order_logic"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        },
+        {
+            "term": "knowledge base",
+            "url": "https://en.wikipedia.org/wiki/knowledge_base"
+        },
+        {
+            "term": "Inductive logic programming",
+            "url": "https://en.wikipedia.org/wiki/Inductive_logic_programming"
+        },
+        {
+            "term": "logic programming",
+            "url": "https://en.wikipedia.org/wiki/logic_programming"
+        }
+    ],
+    "abbreviations": {
+        "NLM": "NEURAL LOGIC MACHINES",
+        "ILP": "Inductive logic programming",
+        "NLMs": "Neural Logic Machines",
+        "FOL": "first-order logic",
+        "MLP": "multi-layer perceptrons",
+        "DNC": "Differentiable Neural Computer",
+        "MDP": "Markov Decision Process",
+        "KB": "knowledge base",
+        "GCNs": "Graph convolution networks",
+        "NTM": "Neural Turing Machine"
+    },
+    "highlights": [
+        "Deep learning has achieved great success in various applications such as speech recognition (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a></a>), image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), machine translation (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; Wu et al, 2016; Vaswani et al, 2017), and game playing (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>)",
+        "We propose Neural Logic Machines (NLMs) to address the aforementioned challenges",
+        "In Section 3 we evaluate the effectiveness of NEURAL LOGIC MACHINES on a broad set of tasks ranging from relational reasoning to decision making",
+        "We propose a novel neural-symbolic architecture called Neural Logic Machines (NLMs) which can conduct first-order logic deduction",
+        "The maximum depth of the NEURAL LOGIC MACHINES is a hyperparameter to be specified for individual problems",
+        "Unlike Inductive logic programming methods that learn a set of rules in an explainable format, the learned rules of NEURAL LOGIC MACHINES are implicitly encoded as weights of the neural networks"
+    ],
+    "key_statements": [
+        "Deep learning has achieved great success in various applications such as speech recognition (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a></a>), image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), machine translation (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; Wu et al, 2016; Vaswani et al, 2017), and game playing (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>)",
+        "We propose Neural Logic Machines (NLMs) to address the aforementioned challenges",
+        "In Section 3 we evaluate the effectiveness of NEURAL LOGIC MACHINES on a broad set of tasks ranging from relational reasoning to decision making",
+        "We further show that NEURAL LOGIC MACHINES can efficiently realize a partial set of Horn clauses",
+        "We show that NEURAL LOGIC MACHINES trained using small-sized instances can generalize to large-sized instances",
+        "While NEURAL LOGIC MACHINES can scale up to complex rules, the number of objects/entities or relations should be bounded as a small value (e.g., < 1000), since all predicates are represented as tensors",
+        "We propose a novel neural-symbolic architecture called Neural Logic Machines (NLMs) which can conduct first-order logic deduction",
+        "Empirical evaluations show that our method is able to learn the underlying logical rules from small-scale tasks, and generalize to large-scale tasks",
+        "The maximum depth of the NEURAL LOGIC MACHINES is a hyperparameter to be specified for individual problems",
+        "Unlike Inductive logic programming methods that learn a set of rules in an explainable format, the learned rules of NEURAL LOGIC MACHINES are implicitly encoded as weights of the neural networks"
+    ],
+    "summary": [
+        "Deep learning has achieved great success in various applications such as speech recognition (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a></a>), image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), machine translation (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; Wu et al, 2016; Vaswani et al, 2017), and game playing (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>).",
+        "Given a set of base predicates, grounded on a set of objects, NLMs sequentially apply first-order rules to draw conclusions, such as a property about an object.",
+        "We present different modules of our neural operators by making analogies to a set of essential meta-rules in symbolic logic systems.",
+        "Our neural implementation of boolean logic rules is a lifted neural module that uniformly applies to any grounding entries (x1 \u00b7 \u00b7 \u00b7 xr) in the output tensor pU .",
+        "The expansion meta-rule (Eq 3) for a set of C r-ary predicates, represented by a [mr, C]-shaped tensor, introduces a new and distinct variable xr+1.",
+        "The reduction meta-rule (Eq 4) for a set of C (r + 1)-ary predicates, represented by a [mr+1, C]shaped tensor, eliminates the variable xr+1 via quantifiers.",
+        "For each object pair (x, y), the output U -grounding tensor of predicates is computed by intra-group computation Oi(2)(x, y) = MLP(Concat(Ii(2)(x, y), Ii(2)(y, x)); \u03b8i(2)), and the output shape is [m, m \u2212 1, Ci(2)].",
+        "Given the training dataset containing pairs of, NLMs can induce lifted rules that entail the conclusions and generalize w.r.t. the number of objects during testing.",
+        "For \u2202ILP, we take the grounded probability of the \u201ctarget\u201d predicate as the output; for an NLM with D layers, we take the corresponding group of output predicates at the last layer to represent unary predicates, while for relation prediction we use tensor OD(2) to represent binary predicates) and classify the property or relation with a linear layer.",
+        "For both MemNN and NLM, we apply a shared MLP on the output relational predicates of each pair of objects OD(2)(x, y) and compute an action score s(x, y).",
+        "Our method can deal with more complex tasks such as the blocks world which requires using a large number of intermediate predicates, while \u2202ILP fails to search in such a large space.",
+        "NLMs are general neural architectures for learning lifted rules from only input-output pairs.",
+        "While NLMs can scale up to complex rules, the number of objects/entities or relations should be bounded as a small value (e.g., < 1000), since all predicates are represented as tensors.",
+        "This work removes such restrictions and introduces a neural architecture to capture lifted rules defined on any set of objects.",
+        "The goal of our paper is to introduce a neural architecture which learns lifted rules and handle relational data with multiple orders.",
+        "Extracting human-readable rules from NLMs would be a meaningful future direction"
+    ],
+    "headline": "We propose the Neural Logic Machine, a neural-symbolic architecture for both inductive learning and logic reasoning",
+    "reference_links": [
+        {
+            "id": "Andreas_et+al_2016_a",
+            "entry": "Jacob Andreas, Marcus Rohrbach, Trevor Darrell, and Dan Klein. Neural module networks. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacob%20Andreas%20Marcus%20Rohrbach%20Trevor%20Darrell%20and%20Dan%20Klein%20Neural%20module%20networks%20In%20CVPR%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jacob%20Andreas%20Marcus%20Rohrbach%20Trevor%20Darrell%20and%20Dan%20Klein%20Neural%20module%20networks%20In%20CVPR%202016"
+        },
+        {
+            "id": "Andreas_et+al_2017_a",
+            "entry": "Jacob Andreas, Dan Klein, and Sergey Levine. Modular multitask reinforcement learning with policy sketches. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andreas%2C%20Jacob%20Klein%2C%20Dan%20Levine%2C%20Sergey%20Modular%20multitask%20reinforcement%20learning%20with%20policy%20sketches%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andreas%2C%20Jacob%20Klein%2C%20Dan%20Levine%2C%20Sergey%20Modular%20multitask%20reinforcement%20learning%20with%20policy%20sketches%202017"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Bengio_et+al_2009_a",
+            "entry": "Yoshua Bengio, J\u00e9r\u00f4me Louradour, Ronan Collobert, and Jason Weston. Curriculum learning. In ICML, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Louradour%2C%20J%C3%A9r%C3%B4me%20Collobert%2C%20Ronan%20Weston%2C%20Jason%20Curriculum%20learning%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Louradour%2C%20J%C3%A9r%C3%B4me%20Collobert%2C%20Ronan%20Weston%2C%20Jason%20Curriculum%20learning%202009"
+        },
+        {
+            "id": "Bruna_et+al_2014_a",
+            "entry": "Joan Bruna, Wojciech Zaremba, Arthur Szlam, and Yann LeCun. Spectral networks and locally connected networks on graphs. In ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bruna%2C%20Joan%20Zaremba%2C%20Wojciech%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Spectral%20networks%20and%20locally%20connected%20networks%20on%20graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bruna%2C%20Joan%20Zaremba%2C%20Wojciech%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Spectral%20networks%20and%20locally%20connected%20networks%20on%20graphs%202014"
+        },
+        {
+            "id": "Bunel_et+al_2018_a",
+            "entry": "Rudy R Bunel, Matthew Hausknecht, Jacob Devlin, Rishabh Singh, and Pushmeet Kohli. Leveraging grammar and reinforcement learning for neural program synthesis. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bunel%2C%20Rudy%20R.%20Hausknecht%2C%20Matthew%20Devlin%2C%20Jacob%20Singh%2C%20Rishabh%20Leveraging%20grammar%20and%20reinforcement%20learning%20for%20neural%20program%20synthesis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bunel%2C%20Rudy%20R.%20Hausknecht%2C%20Matthew%20Devlin%2C%20Jacob%20Singh%2C%20Rishabh%20Leveraging%20grammar%20and%20reinforcement%20learning%20for%20neural%20program%20synthesis%202018"
+        },
+        {
+            "id": "Cai_et+al_2017_a",
+            "entry": "Jonathon Cai, Richard Shin, and Dawn Song. Making neural programming architectures generalize via recursion. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cai%2C%20Jonathon%20Shin%2C%20Richard%20Song%2C%20Dawn%20Making%20neural%20programming%20architectures%20generalize%20via%20recursion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cai%2C%20Jonathon%20Shin%2C%20Richard%20Song%2C%20Dawn%20Making%20neural%20programming%20architectures%20generalize%20via%20recursion%202017"
+        },
+        {
+            "id": "Campero_et+al_2018_a",
+            "entry": "Andres Campero, Aldo Pareja, Tim Klinger, Josh Tenenbaum, and Sebastian Riedel. Logical rule induction and theory learning using neural theorem proving. arXiv:1809.02193, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.02193"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Xinyun Chen, Chang Liu, and Dawn Song. Towards synthesizing complex programs from inputoutput examples. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xinyun%20Liu%2C%20Chang%20Song%2C%20Dawn%20Towards%20synthesizing%20complex%20programs%20from%20inputoutput%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xinyun%20Liu%2C%20Chang%20Song%2C%20Dawn%20Towards%20synthesizing%20complex%20programs%20from%20inputoutput%20examples%202018"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Wang-Zhou Dai, Qiu-Ling Xu, Yang Yu, and Zhi-Hua Zhou. Tunneling neural perception and logic reasoning through abductive learning. arXiv:1802.01173, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01173"
+        },
+        {
+            "id": "Dantsin_et+al_2001_a",
+            "entry": "Evgeny Dantsin, Thomas Eiter, Georg Gottlob, and Andrei Voronkov. Complexity and expressive power of logic programming. ACM CSUR, 33:374\u2013425, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dantsin%2C%20Evgeny%20Eiter%2C%20Thomas%20Gottlob%2C%20Georg%20Voronkov%2C%20Andrei%20Complexity%20and%20expressive%20power%20of%20logic%20programming%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dantsin%2C%20Evgeny%20Eiter%2C%20Thomas%20Gottlob%2C%20Georg%20Voronkov%2C%20Andrei%20Complexity%20and%20expressive%20power%20of%20logic%20programming%202001"
+        },
+        {
+            "id": "Defferrard_et+al_2016_a",
+            "entry": "Micha\u00ebl Defferrard, Xavier Bresson, and Pierre Vandergheynst. Convolutional neural networks on graphs with fast localized spectral filtering. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Defferrard%2C%20Micha%C3%ABl%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Defferrard%2C%20Micha%C3%ABl%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016"
+        },
+        {
+            "id": "Denil_et+al_2017_a",
+            "entry": "Misha Denil, Sergio G\u00f3mez Colmenarejo, Serkan Cabi, David Saxton, and Nando de Freitas. Programmable agents. arXiv:1706.06383, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06383"
+        },
+        {
+            "id": "Devlin_et+al_2017_a",
+            "entry": "Jacob Devlin, Jonathan Uesato, Surya Bhupatiraju, Rishabh Singh, Abdel-rahman Mohamed, and Pushmeet Kohli. Robustfill: Neural program learning under noisy i/o. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20i/o%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20i/o%202017"
+        },
+        {
+            "id": "Diuk_et+al_2008_a",
+            "entry": "Carlos Diuk, Andre Cohen, and Michael L Littman. An object-oriented representation for efficient reinforcement learning. In ICML, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Diuk%2C%20Carlos%20Cohen%2C%20Andre%20Littman%2C%20Michael%20L.%20An%20object-oriented%20representation%20for%20efficient%20reinforcement%20learning%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Diuk%2C%20Carlos%20Cohen%2C%20Andre%20Littman%2C%20Michael%20L.%20An%20object-oriented%20representation%20for%20efficient%20reinforcement%20learning%202008"
+        },
+        {
+            "id": "Evans_2018_a",
+            "entry": "Richard Evans and Edward Grefenstette. Learning explanatory rules from noisy data. JAIR, 61:1\u201364, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Evans%2C%20Richard%20Grefenstette%2C%20Edward%20Learning%20explanatory%20rules%20from%20noisy%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Evans%2C%20Richard%20Grefenstette%2C%20Edward%20Learning%20explanatory%20rules%20from%20noisy%20data%202018"
+        },
+        {
+            "id": "Fodor_1990_a",
+            "entry": "Jerry Fodor and Brian P McLaughlin. Connectionism and the problem of systematicity: Why smolensky\u2019s solution doesn\u2019t work. Cognition, 35(2):183\u2013204, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fodor%2C%20Jerry%20McLaughlin%2C%20Brian%20P.%20Connectionism%20and%20the%20problem%20of%20systematicity%3A%20Why%20smolensky%E2%80%99s%20solution%20doesn%E2%80%99t%20work%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fodor%2C%20Jerry%20McLaughlin%2C%20Brian%20P.%20Connectionism%20and%20the%20problem%20of%20systematicity%3A%20Why%20smolensky%E2%80%99s%20solution%20doesn%E2%80%99t%20work%201990"
+        },
+        {
+            "id": "Fodor_1988_a",
+            "entry": "Jerry A Fodor and Zenon W Pylyshyn. Connectionism and cognitive architecture: A critical analysis. Cognition, 28(1-2):3\u201371, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fodor%2C%20Jerry%20A.%20Pylyshyn%2C%20Zenon%20W.%20Connectionism%20and%20cognitive%20architecture%3A%20A%20critical%20analysis%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fodor%2C%20Jerry%20A.%20Pylyshyn%2C%20Zenon%20W.%20Connectionism%20and%20cognitive%20architecture%3A%20A%20critical%20analysis%201988"
+        },
+        {
+            "id": "Friedman_et+al_1999_a",
+            "entry": "Nir Friedman, Lise Getoor, Daphne Koller, and Avi Pfeffer. Learning probabilistic relational models. In IJCAI, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Friedman%2C%20Nir%20Getoor%2C%20Lise%20Koller%2C%20Daphne%20Pfeffer%2C%20Avi%20Learning%20probabilistic%20relational%20models%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Friedman%2C%20Nir%20Getoor%2C%20Lise%20Koller%2C%20Daphne%20Pfeffer%2C%20Avi%20Learning%20probabilistic%20relational%20models%201999"
+        },
+        {
+            "id": "Garnelo_et+al_2016_a",
+            "entry": "Marta Garnelo, Kai Arulkumaran, and Murray Shanahan. Towards deep symbolic reinforcement learning. arXiv:1609.05518, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.05518"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S Schoenholz, Patrick F Riley, Oriol Vinyals, and George E Dahl. Neural message passing for quantum chemistry. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017"
+        },
+        {
+            "id": "Graves_et+al_2014_a",
+            "entry": "Alex Graves, Greg Wayne, and Ivo Danihelka. Neural turing machines. arXiv:1410.5401, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1410.5401"
+        },
+        {
+            "id": "Graves_et+al_2016_a",
+            "entry": "Alex Graves, Greg Wayne, Malcolm Reynolds, Tim Harley, Ivo Danihelka, Agnieszka GrabskaBarwinska, Sergio G\u00f3mez Colmenarejo, Edward Grefenstette, Tiago Ramalho, John Agapiou, et al. Hybrid computing using a neural network with dynamic external memory. Nature, 538(7626):471, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Wayne%2C%20Greg%20Reynolds%2C%20Malcolm%20Harley%2C%20Tim%20Hybrid%20computing%20using%20a%20neural%20network%20with%20dynamic%20external%20memory%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Wayne%2C%20Greg%20Reynolds%2C%20Malcolm%20Harley%2C%20Tim%20Hybrid%20computing%20using%20a%20neural%20network%20with%20dynamic%20external%20memory%202016"
+        },
+        {
+            "id": "Gupta_1992_a",
+            "entry": "Naresh Gupta and Dana S Nau. On the complexity of blocks-world planning. Artif. Intell., 56(2-3): 223\u2013254, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gupta%2C%20Naresh%20Nau%2C%20Dana%20S.%20On%20the%20complexity%20of%20blocks-world%20planning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gupta%2C%20Naresh%20Nau%2C%20Dana%20S.%20On%20the%20complexity%20of%20blocks-world%20planning%201992"
+        },
+        {
+            "id": "Hadley_1994_a",
+            "entry": "Robert F Hadley. Systematicity in connectionist language learning. Mind Lang., 9(3):273\u2013287, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hadley%2C%20Robert%20F.%20Systematicity%20in%20connectionist%20language%20learning%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hadley%2C%20Robert%20F.%20Systematicity%20in%20connectionist%20language%20learning%201994"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "Geoffrey Hinton, Li Deng, Dong Yu, George E Dahl, Abdel-rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara N Sainath, et al. Deep neural networks for acoustic modeling in speech recognition: The shared views of four research groups. Signal Process., 29(6):82\u201397, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Deng%2C%20Li%20Yu%2C%20Dong%20Dahl%2C%20George%20E.%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%3A%20The%20shared%20views%20of%20four%20research%20groups%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20Deng%2C%20Li%20Yu%2C%20Dong%20Dahl%2C%20George%20E.%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%3A%20The%20shared%20views%20of%20four%20research%20groups%202012"
+        },
+        {
+            "id": "Horn_1951_a",
+            "entry": "Alfred Horn. On sentences which are true of direct unions of algebras. J. Symbolic Logic, 16(1): 14\u201321, 1951.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Horn%2C%20Alfred%20On%20sentences%20which%20are%20true%20of%20direct%20unions%20of%20algebras%201951",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Horn%2C%20Alfred%20On%20sentences%20which%20are%20true%20of%20direct%20unions%20of%20algebras%201951"
+        },
+        {
+            "id": "Hu_2011_a",
+            "entry": "Yuxiao Hu and Giuseppe De Giacomo. Generalized planning: Synthesizing plans that work for multiple environments. In IJCAI, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Yuxiao%20Giacomo%2C%20Giuseppe%20De%20Generalized%20planning%3A%20Synthesizing%20plans%20that%20work%20for%20multiple%20environments%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Yuxiao%20Giacomo%2C%20Giuseppe%20De%20Generalized%20planning%3A%20Synthesizing%20plans%20that%20work%20for%20multiple%20environments%202011"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Laurens van der Maaten, and Kilian Q Weinberger. Densely connected convolutional networks. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Jansen_2012_a",
+            "entry": "Peter A Jansen and Scott Watter. Strong systematicity through sensorimotor conceptual grounding: an unsupervised, developmental approach to connectionist sentence processing. Connect. Sci., 24 (1):25\u201355, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jansen%2C%20Peter%20A.%20Watter%2C%20Scott%20Strong%20systematicity%20through%20sensorimotor%20conceptual%20grounding%3A%20an%20unsupervised%2C%20developmental%20approach%20to%20connectionist%20sentence%20processing%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jansen%2C%20Peter%20A.%20Watter%2C%20Scott%20Strong%20systematicity%20through%20sensorimotor%20conceptual%20grounding%3A%20an%20unsupervised%2C%20developmental%20approach%20to%20connectionist%20sentence%20processing%202012"
+        },
+        {
+            "id": "Jim_et+al_2019_a",
+            "entry": "Sergio Jim\u00e9nez, Javier Segovia-Aguas, and Anders Jonsson. A review of generalized planning. The Knowledge Engineering Review, 34, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jim%C3%A9nez%2C%20Sergio%20Segovia-Aguas%2C%20Javier%20Jonsson%2C%20Anders%20A%20review%20of%20generalized%20planning%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jim%C3%A9nez%2C%20Sergio%20Segovia-Aguas%2C%20Javier%20Jonsson%2C%20Anders%20A%20review%20of%20generalized%20planning%202019"
+        },
+        {
+            "id": "Kaiser_2016_a",
+            "entry": "\u0141ukasz Kaiser and Ilya Sutskever. Neural gpus learn algorithms. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiser%2C%20%C5%81ukasz%20Sutskever%2C%20Ilya%20Neural%20gpus%20learn%20algorithms%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiser%2C%20%C5%81ukasz%20Sutskever%2C%20Ilya%20Neural%20gpus%20learn%20algorithms%202016"
+        },
+        {
+            "id": "Kansky_et+al_2017_a",
+            "entry": "Ken Kansky, Tom Silver, David A M\u00e9ly, Mohamed Eldawy, Miguel L\u00e1zaro-Gredilla, Xinghua Lou, Nimrod Dorfman, Szymon Sidor, Scott Phoenix, and Dileep George. Schema networks: Zero-shot transfer with a generative causal model of intuitive physics. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kansky%2C%20Ken%20Silver%2C%20Tom%20M%C3%A9ly%2C%20David%20A.%20Eldawy%2C%20Mohamed%20Schema%20networks%3A%20Zero-shot%20transfer%20with%20a%20generative%20causal%20model%20of%20intuitive%20physics%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kansky%2C%20Ken%20Silver%2C%20Tom%20M%C3%A9ly%2C%20David%20A.%20Eldawy%2C%20Mohamed%20Schema%20networks%3A%20Zero-shot%20transfer%20with%20a%20generative%20causal%20model%20of%20intuitive%20physics%202017"
+        },
+        {
+            "id": "Kersting_et+al_2000_a",
+            "entry": "Kristian Kersting, Luc De Raedt, and Stefan Kramer. Interpreting bayesian logic programs. In AAAI-2000 Workshop on Learning Statistical Models from Relational Data, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kersting%2C%20Kristian%20Raedt%2C%20Luc%20De%20Kramer%2C%20Stefan%20Interpreting%20bayesian%20logic%20programs.%20In%20AAAI-2000%20Workshop%20on%20Learning%20Statistical%20Models%20from%20Relational%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kersting%2C%20Kristian%20Raedt%2C%20Luc%20De%20Kramer%2C%20Stefan%20Interpreting%20bayesian%20logic%20programs.%20In%20AAAI-2000%20Workshop%20on%20Learning%20Statistical%20Models%20from%20Relational%202000"
+        },
+        {
+            "id": "Kimmig_et+al_2012_a",
+            "entry": "Angelika Kimmig, Stephen Bach, Matthias Broecheler, Bert Huang, and Lise Getoor. A short introduction to probabilistic soft logic. In NIPS Workshop on Probabilistic Programming: Foundations and Applications, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kimmig%2C%20Angelika%20Bach%2C%20Stephen%20Broecheler%2C%20Matthias%20Huang%2C%20Bert%20A%20short%20introduction%20to%20probabilistic%20soft%20logic%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kimmig%2C%20Angelika%20Bach%2C%20Stephen%20Broecheler%2C%20Matthias%20Huang%2C%20Bert%20A%20short%20introduction%20to%20probabilistic%20soft%20logic%202012"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kipf_2017_a",
+            "entry": "Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-supervised%20classification%20with%20graph%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-supervised%20classification%20with%20graph%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In NIPS, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, L\u00e9on Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proc. IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel. Gated graph sequence neural networks. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yujia%20Tarlow%2C%20Daniel%20Brockschmidt%2C%20Marc%20Zemel%2C%20Richard%20Gated%20graph%20sequence%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yujia%20Tarlow%2C%20Daniel%20Brockschmidt%2C%20Marc%20Zemel%2C%20Richard%20Gated%20graph%20sequence%20neural%20networks%202016"
+        },
+        {
+            "id": "Lin_et+al_2014_a",
+            "entry": "Dianhuan Lin, Eyal Dechter, Kevin Ellis, Joshua B Tenenbaum, and Stephen H Muggleton. Bias reformulation for one-shot function induction. In ECAI, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Dianhuan%20Dechter%2C%20Eyal%20Ellis%2C%20Kevin%20Tenenbaum%2C%20Joshua%20B.%20Bias%20reformulation%20for%20one-shot%20function%20induction%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Dianhuan%20Dechter%2C%20Eyal%20Ellis%2C%20Kevin%20Tenenbaum%2C%20Joshua%20B.%20Bias%20reformulation%20for%20one-shot%20function%20induction%202014"
+        },
+        {
+            "id": "Lippi_2009_a",
+            "entry": "Marco Lippi and Paolo Frasconi. Prediction of protein \u03b2-residue contacts by markov logic networks with grounding-specific weights. Bioinformatics, 25(18):2326\u20132333, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lippi%2C%20Marco%20Frasconi%2C%20Paolo%20Prediction%20of%20protein%20%CE%B2-residue%20contacts%20by%20markov%20logic%20networks%20with%20grounding-specific%20weights%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lippi%2C%20Marco%20Frasconi%2C%20Paolo%20Prediction%20of%20protein%20%CE%B2-residue%20contacts%20by%20markov%20logic%20networks%20with%20grounding-specific%20weights%202009"
+        },
+        {
+            "id": "Maier_1988_a",
+            "entry": "David Maier and David S. Warren. Computing with Logic: Logic Programming with Prolog. Benjamin-Cummings Publishing Co., Inc., Redwood City, CA, USA, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maier%2C%20David%20Warren%2C%20David%20S.%20Computing%20with%20Logic%3A%20Logic%20Programming%20with%20Prolog%201988"
+        },
+        {
+            "id": "Manhaeve_et+al_2018_a",
+            "entry": "Robin Manhaeve, Sebastijan Dumancic, Angelika Kimmig, Thomas Demeester, and Luc De Raedt. Deepproblog: Neural probabilistic logic programming. In NeurIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Robin%20Manhaeve%20Sebastijan%20Dumancic%20Angelika%20Kimmig%20Thomas%20Demeester%20and%20Luc%20De%20Raedt%20Deepproblog%20Neural%20probabilistic%20logic%20programming%20In%20NeurIPS%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Robin%20Manhaeve%20Sebastijan%20Dumancic%20Angelika%20Kimmig%20Thomas%20Demeester%20and%20Luc%20De%20Raedt%20Deepproblog%20Neural%20probabilistic%20logic%20programming%20In%20NeurIPS%202018"
+        },
+        {
+            "id": "Mascharka_et+al_2018_a",
+            "entry": "David Mascharka, Philip Tran, Ryan Soklaski, and Arjun Majumdar. Transparency by design: Closing the gap between performance and interpretability in visual reasoning. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mascharka%2C%20David%20Tran%2C%20Philip%20Soklaski%2C%20Ryan%20Majumdar%2C%20Arjun%20Transparency%20by%20design%3A%20Closing%20the%20gap%20between%20performance%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mascharka%2C%20David%20Tran%2C%20Philip%20Soklaski%2C%20Ryan%20Majumdar%2C%20Arjun%20Transparency%20by%20design%3A%20Closing%20the%20gap%20between%20performance%202018"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg, and Demis Hassabis. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, 02 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Muggleton_1991_a",
+            "entry": "Stephen Muggleton. Inductive logic programming. New Gener. Comput., 8(4):295\u2013318, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Muggleton%2C%20Stephen%20Inductive%20logic%20programming%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Muggleton%2C%20Stephen%20Inductive%20logic%20programming%201991"
+        },
+        {
+            "id": "Muggleton_1996_a",
+            "entry": "Stephen Muggleton. Stochastic logic programs. Advances in Inductive Logic Programming, 32: 254\u2013264, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Muggleton%2C%20Stephen%20Stochastic%20logic%20programs%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Muggleton%2C%20Stephen%20Stochastic%20logic%20programs%201996"
+        },
+        {
+            "id": "Neelakantan_et+al_2016_a",
+            "entry": "Arvind Neelakantan, Quoc V Le, and Ilya Sutskever. Neural programmer: Inducing latent programs with gradient descent. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neelakantan%2C%20Arvind%20Le%2C%20Quoc%20V.%20Sutskever%2C%20Ilya%20Neural%20programmer%3A%20Inducing%20latent%20programs%20with%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neelakantan%2C%20Arvind%20Le%2C%20Quoc%20V.%20Sutskever%2C%20Ilya%20Neural%20programmer%3A%20Inducing%20latent%20programs%20with%20gradient%20descent%202016"
+        },
+        {
+            "id": "Nilsson_1982_a",
+            "entry": "Nils J Nilsson. Principles of Artificial Intelligence. Springer Science & Business Media, 1982.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nilsson%2C%20Nils%20J.%20Principles%20of%20Artificial%20Intelligence%201982"
+        },
+        {
+            "id": "Parisotto_et+al_2017_a",
+            "entry": "Emilio Parisotto, Abdel-rahman Mohamed, Rishabh Singh, Lihong Li, Dengyong Zhou, and Pushmeet Kohli. Neuro-symbolic program synthesis. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202017"
+        },
+        {
+            "id": "Pasula_et+al_2007_a",
+            "entry": "Hanna M Pasula, Luke S Zettlemoyer, and Leslie Pack Kaelbling. Learning symbolic models of stochastic domains. JAIR, 29:309\u2013352, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pasula%2C%20Hanna%20M.%20Zettlemoyer%2C%20Luke%20S.%20Kaelbling%2C%20Leslie%20Pack%20Learning%20symbolic%20models%20of%20stochastic%20domains%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pasula%2C%20Hanna%20M.%20Zettlemoyer%2C%20Luke%20S.%20Kaelbling%2C%20Leslie%20Pack%20Learning%20symbolic%20models%20of%20stochastic%20domains%202007"
+        },
+        {
+            "id": "Reed_2016_a",
+            "entry": "Scott Reed and Nando De Freitas. Neural programmer-interpreters. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scott%20Reed%20and%20Nando%20De%20Freitas%20Neural%20programmerinterpreters%20In%20ICLR%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scott%20Reed%20and%20Nando%20De%20Freitas%20Neural%20programmerinterpreters%20In%20ICLR%202016"
+        },
+        {
+            "id": "Richardson_2006_a",
+            "entry": "Matthew Richardson and Pedro Domingos. Markov logic networks. Mach. Learn., 62(1-2):107\u2013136, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Richardson%2C%20Matthew%20Domingos%2C%20Pedro%20Markov%20logic%20networks%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Richardson%2C%20Matthew%20Domingos%2C%20Pedro%20Markov%20logic%20networks%202006"
+        },
+        {
+            "id": "Rocktaeschel_2017_a",
+            "entry": "Tim Rockt\u00e4schel and Sebastian Riedel. End-to-end differentiable proving. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rockt%C3%A4schel%2C%20Tim%20Riedel%2C%20Sebastian%20End-to-end%20differentiable%20proving%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rockt%C3%A4schel%2C%20Tim%20Riedel%2C%20Sebastian%20End-to-end%20differentiable%20proving%202017"
+        },
+        {
+            "id": "Santoro_et+al_2017_a",
+            "entry": "Adam Santoro, David Raposo, David G Barrett, Mateusz Malinowski, Razvan Pascanu, Peter Battaglia, and Tim Lillicrap. A simple neural network module for relational reasoning. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Raposo%2C%20David%20Barrett%2C%20David%20G.%20Malinowski%2C%20Mateusz%20A%20simple%20neural%20network%20module%20for%20relational%20reasoning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Raposo%2C%20David%20Barrett%2C%20David%20G.%20Malinowski%2C%20Mateusz%20A%20simple%20neural%20network%20module%20for%20relational%20reasoning%202017"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Srivastava_et+al_2011_a",
+            "entry": "Siddharth Srivastava, Neil Immerman, and Shlomo Zilberstein. A new representation and associated algorithms for generalized planning. Artif. Intell., 175(2):615\u2013647, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Siddharth%20Immerman%2C%20Neil%20Zilberstein%2C%20Shlomo%20A%20new%20representation%20and%20associated%20algorithms%20for%20generalized%20planning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Siddharth%20Immerman%2C%20Neil%20Zilberstein%2C%20Shlomo%20A%20new%20representation%20and%20associated%20algorithms%20for%20generalized%20planning%202011"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2015_a",
+            "entry": "Sainbayar Sukhbaatar, arthur szlam, Jason Weston, and Rob Fergus. End-to-end memory networks. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sukhbaatar%2C%20Sainbayar%20arthur%20szlam%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sukhbaatar%2C%20Sainbayar%20arthur%20szlam%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015"
+        },
+        {
+            "id": "Sun_et+al_2018_a",
+            "entry": "Shao-Hua Sun, Hyeonwoo Noh, Sriram Somasundaram, and Joseph Lim. Neural program synthesis from diverse demonstration videos. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Shao-Hua%20Noh%2C%20Hyeonwoo%20Somasundaram%2C%20Sriram%20Lim%2C%20Joseph%20Neural%20program%20synthesis%20from%20diverse%20demonstration%20videos%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sun%2C%20Shao-Hua%20Noh%2C%20Hyeonwoo%20Somasundaram%2C%20Sriram%20Lim%2C%20Joseph%20Neural%20program%20synthesis%20from%20diverse%20demonstration%20videos%202018"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S Sutton and Andrew G Barto. Reinforcement learning: An introduction, volume 1. MIT press Cambridge, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20learning%3A%20An%20introduction%2C%20volume%201%201998"
+        },
+        {
+            "id": "Otterlo_2009_a",
+            "entry": "Martijn Van Otterlo. The Logic of Adaptive Behavior. IOS Press, 2009. Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Otterlo%2C%20Martijn%20Van%20The%20Logic%20of%20Adaptive%20Behavior%202009"
+        },
+        {
+            "id": "Kaiser_2017_a",
+            "entry": "Kaiser, and Illia Polosukhin. Attention is all you need. In NIPS, 2017. Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer networks. In NIPS, 2015. Jason Weston, Antoine Bordes, Sumit Chopra, Alexander M Rush, Bart van Merri\u00ebnboer, Armand",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiser%20Polosukhin%2C%20Illia%20Attention%20is%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiser%20Polosukhin%2C%20Illia%20Attention%20is%202017"
+        }
+    ]
+}

@@ -1,0 +1,167 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "GENERATING HIGH FIDELITY IMAGES WITH SUBSCALE PIXEL NETWORKS AND MULTIDIMENSIONAL UPSCALING",
+        "author": "Jacob Menick, DeepMind jmenick@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HylzTiC5Km"
+        },
+        "abstract": "The unconditional generation of high fidelity images is a longstanding benchmark for testing the performance of image decoders. Autoregressive image models have been able to generate small images unconditionally, but the extension of these methods to large images where fidelity can be more readily assessed has remained an open problem. Among the major challenges are the capacity to encode the vast previous context and the sheer difficulty of learning a distribution that preserves both global semantic coherence and exactness of detail. To address the former challenge, we propose the Subscale Pixel Network (SPN), a conditional decoder architecture that generates an image as a sequence of sub-images of equal size. The SPN compactly captures image-wide spatial dependencies and requires a fraction of the memory and the computation required by other fully autoregressive models. To address the latter challenge, we propose to use Multidimensional Upscaling to grow an image in both size and depth via intermediate stages utilising distinct SPNs. We evaluate SPNs on the unconditional generation of CelebAHQ of size 256 and of ImageNet from size 32 to 256. We achieve state-of-the-art likelihood results in multiple settings, set up new benchmark results in previously unexplored settings and are able to generate very high fidelity large scale samples on the basis of both datasets."
+    },
+    "keywords": [
+        {
+            "term": "maximum likelihood estimation",
+            "url": "https://en.wikipedia.org/wiki/maximum_likelihood_estimation"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "SPN": "Subscale Pixel Network",
+        "MLE": "maximum likelihood estimation"
+    },
+    "highlights": [
+        "A successful generative model has two core aspects: it produces targets that have high fidelity and it generalizes well on held-out data",
+        "MULTIDIMENSIONAL UPSCALING WITH Subscale Pixel Network As seen in Section 2.3, the Subscale Pixel Network naturally serves as a size-upscaling network when the first slice of the input tensor is initialized with with an externally generated subimage",
+        "We demonstrate experimentally that our model is capable of high fidelity samples at high resolution, producing unconditional CelebA-HQ samples of quality better than the Glow model (<a class=\"ref-link\" id=\"cKingma_2018_a\" href=\"#rKingma_2018_a\">Kingma & Dhariwal, 2018</a>) and improving the maximum likelihood estimation scores",
+        "The problem of whether it is possible to learn the distribution of complex natural images and attain high sample fidelity has been a long-standing one in the tradition of generative models",
+        "The Subscale Pixel Network and Multidimensional Upscaling model that we introduce accomplishes a large step towards solving this problem, by attaining both state-of-the-art maximum likelihood estimation scores on large-scale images from complex domains such as CelebAHQ-256 and ImageNet-128 and by being able to generate high fidelity full 8-bit samples from the resulting learnt distributions without alterations to the sampling process",
+        "The generated samples show an unprecedented amount of semantic coherence and exactness of details even at the large scale size of full 8-bit 128 \u00d7 128 and 256 \u00d7 256 images"
+    ],
+    "key_statements": [
+        "A successful generative model has two core aspects: it produces targets that have high fidelity and it generalizes well on held-out data",
+        "MULTIDIMENSIONAL UPSCALING WITH Subscale Pixel Network As seen in Section 2.3, the Subscale Pixel Network naturally serves as a size-upscaling network when the first slice of the input tensor is initialized with with an externally generated subimage",
+        "We demonstrate experimentally that our model is capable of high fidelity samples at high resolution, producing unconditional CelebA-HQ samples of quality better than the Glow model (<a class=\"ref-link\" id=\"cKingma_2018_a\" href=\"#rKingma_2018_a\">Kingma & Dhariwal, 2018</a>) and improving the maximum likelihood estimation scores",
+        "We find that Subscale Pixel Network hurts in this low-resolution setting with S = 2 and even further with S = 4",
+        "We show in Table 3 that the achieved maximum likelihood estimation scores are a significant improvement over previously reported scores",
+        "The problem of whether it is possible to learn the distribution of complex natural images and attain high sample fidelity has been a long-standing one in the tradition of generative models",
+        "The Subscale Pixel Network and Multidimensional Upscaling model that we introduce accomplishes a large step towards solving this problem, by attaining both state-of-the-art maximum likelihood estimation scores on large-scale images from complex domains such as CelebAHQ-256 and ImageNet-128 and by being able to generate high fidelity full 8-bit samples from the resulting learnt distributions without alterations to the sampling process",
+        "The generated samples show an unprecedented amount of semantic coherence and exactness of details even at the large scale size of full 8-bit 128 \u00d7 128 and 256 \u00d7 256 images"
+    ],
+    "summary": [
+        "A successful generative model has two core aspects: it produces targets that have high fidelity and it generalizes well on held-out data.",
+        "The SPN is an independent image decoder with an implicit size upscaling mechanism, but it can be used as an explicit size upscaling network by initializing the first slice of the SPN input at sampling time with one generated separately during step (a).",
+        "We extensively evaluate the performance of SPN and the size and depth upscaling methods both quantitatively and from a fidelity perspective on two unconditional image generation benchmarks, CelebAHQ-256 and ImageNet of various sizes up to 256.",
+        "Analogous to the multi-scale ordering, and depicted in 3(b), we can perform size upscaling explicitly, by training a single slice decoder on subimages and generate the first slice of a subscale ordering from the single slice decoder itself.",
+        "The same SPN that captures the subscale ordering can act simultaneously as a full-blown image model as well as a size upscaling model if initialized with the outputs of a single-slice decoder.",
+        "A separate formulation of size upscaling is the Parallel Multi-Scale (<a class=\"ref-link\" id=\"cReed_et+al_2017_a\" href=\"#rReed_et+al_2017_a\">Reed et al, 2017</a>) ordering where the pixels in an image are doubled at every stage by distinct neural networks and are generated in parallel without sequentiality (3(c)).",
+        "Using a conventional generation ordering, models such as PixelRNN, PixelCNN and Image Transformer (<a class=\"ref-link\" id=\"cParmar_et+al_2018_a\" href=\"#rParmar_et+al_2018_a\">Parmar et al, 2018</a>) construct a representation of the generated context for each dimension of each pixel.",
+        "3.4 MULTIDIMENSIONAL UPSCALING WITH SPN As seen in Section 2.3, the SPN naturally serves as a size-upscaling network when the first slice of the input tensor is initialized with with an externally generated subimage.",
+        "Figure 5 gives 128 \u00d7 128 8-bit ImageNet samples for both the setting of depth upscaling only and of complete multidimensional upscaling.",
+        "The problem of whether it is possible to learn the distribution of complex natural images and attain high sample fidelity has been a long-standing one in the tradition of generative models.",
+        "The SPN and Multidimensional Upscaling model that we introduce accomplishes a large step towards solving this problem, by attaining both state-of-the-art MLE scores on large-scale images from complex domains such as CelebAHQ-256 and ImageNet-128 and by being able to generate high fidelity full 8-bit samples from the resulting learnt distributions without alterations to the sampling process.",
+        "The generated samples show an unprecedented amount of semantic coherence and exactness of details even at the large scale size of full 8-bit 128 \u00d7 128 and 256 \u00d7 256 images."
+    ],
+    "headline": "To address the former challenge, we propose the Subscale Pixel Network, a conditional decoder architecture that generates an image as a sequence of sub-images of equal size",
+    "reference_links": [
+        {
+            "id": "Arora_2017_a",
+            "entry": "Sanjeev Arora and Yi Zhang. Do gans actually learn the distribution? an empirical study. CoRR, abs/1706.08224, 2017. URL http://arxiv.org/abs/1706.08224.",
+            "url": "http://arxiv.org/abs/1706.08224",
+            "arxiv_url": "https://arxiv.org/pdf/1706.08224"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Xi Chen, Nikhil Mishra, Mostafa Rohaninejad, and Pieter Abbeel. Pixelsnail: An improved autoregressive generative model. CoRR, abs/1712.09763, 2017. URL http://arxiv.org/abs/1712.09763.",
+            "url": "http://arxiv.org/abs/1712.09763",
+            "arxiv_url": "https://arxiv.org/pdf/1712.09763"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2016_a",
+            "entry": "Nal Kalchbrenner, Aaron van den Oord, Karen Simonyan, Ivo Danihelka, Oriol Vinyals, Alex Graves, and Koray Kavukcuoglu. Video pixel networks. CoRR, abs/1610.00527, 2016. URL http://arxiv.org/abs/1610.00527.",
+            "url": "http://arxiv.org/abs/1610.00527",
+            "arxiv_url": "https://arxiv.org/pdf/1610.00527"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2018_a",
+            "entry": "Nal Kalchbrenner, Erich Elsen, Karen Simonyan, Seb Noury, Norman Casagrande, Edward Lockhart, Florian Stimberg, Aaron van den Oord, Sander Dieleman, and Koray Kavukcuoglu. Efficient neural audio synthesis. CoRR, abs/1802.08435, 2018. URL http://arxiv.org/abs/1802.08435.",
+            "url": "http://arxiv.org/abs/1802.08435",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08435"
+        },
+        {
+            "id": "Karras_et+al_2017_a",
+            "entry": "Tero Karras, Timo Aila, Samuli Laine, and Jaakko Lehtinen. Progressive growing of gans for improved quality, stability, and variation. CoRR, abs/1710.10196, 2017. URL http://arxiv.org/abs/1710.10196.",
+            "url": "http://arxiv.org/abs/1710.10196",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10196"
+        },
+        {
+            "id": "Kingma_2018_a",
+            "entry": "Diederik P. Kingma and Prafulla Dhariwal. Glow: Generative flow with invertible 1x1 convolutions. CoRR, abs/1807.03039, 2018. URL https://arxiv.org/abs/1807.03039.",
+            "url": "https://arxiv.org/abs/1807.03039",
+            "arxiv_url": "https://arxiv.org/pdf/1807.03039"
+        },
+        {
+            "id": "Kolesnikov_2016_a",
+            "entry": "Alexander Kolesnikov and Christoph H. Lampert. Deep probabilistic modeling of natural images using a pyramid decomposition. CoRR, abs/1612.08185, 2016a. URL http://arxiv.org/abs/1612.08185.",
+            "url": "http://arxiv.org/abs/1612.08185",
+            "arxiv_url": "https://arxiv.org/pdf/1612.08185"
+        },
+        {
+            "id": "Kolesnikov_2016_b",
+            "entry": "Alexander Kolesnikov and Christoph H. Lampert. Deep probabilistic modeling of natural images using a pyramid decomposition. CoRR, abs/1612.08185, 2016b. URL http://arxiv.org/abs/1612.08185.",
+            "url": "http://arxiv.org/abs/1612.08185",
+            "arxiv_url": "https://arxiv.org/pdf/1612.08185"
+        },
+        {
+            "id": "Mescheder_2018_a",
+            "entry": "Lars M. Mescheder. On the convergence properties of GAN training. CoRR, abs/1801.04406, 2018. URL http://arxiv.org/abs/1801.04406.",
+            "url": "http://arxiv.org/abs/1801.04406",
+            "arxiv_url": "https://arxiv.org/pdf/1801.04406"
+        },
+        {
+            "id": "Parmar_et+al_2018_a",
+            "entry": "Niki Parmar, Ashish Vaswani, Jakob Uszkoreit, Lukasz Kaiser, Noam Shazeer, and Alexander Ku. Image transformer. CoRR, abs/1802.05751, 2018. URL http://arxiv.org/abs/1802.05751.",
+            "url": "http://arxiv.org/abs/1802.05751",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05751"
+        },
+        {
+            "id": "Reed_et+al_2017_a",
+            "entry": "Scott E. Reed, Aaron van den Oord, Nal Kalchbrenner, Sergio Gomez Colmenarejo, Ziyu Wang, Dan Belov, and Nando de Freitas. Parallel multiscale autoregressive density estimation. CoRR, abs/1703.03664, 2017. URL http://arxiv.org/abs/1703.03664.",
+            "url": "http://arxiv.org/abs/1703.03664",
+            "arxiv_url": "https://arxiv.org/pdf/1703.03664"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew W. Senior, and Koray Kavukcuoglu. Wavenet: A generative model for raw audio. CoRR, abs/1609.03499, 2016a. URL http://arxiv.org/abs/1609.03499.",
+            "url": "http://arxiv.org/abs/1609.03499",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Van_et+al_2016_b",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, and Koray Kavukcuoglu. Pixel recurrent neural networks. CoRR, abs/1601.06759, 2016b. URL http://arxiv.org/abs/1601.06759.",
+            "url": "http://arxiv.org/abs/1601.06759",
+            "arxiv_url": "https://arxiv.org/pdf/1601.06759"
+        },
+        {
+            "id": "Van_et+al_2016_c",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, Oriol Vinyals, Lasse Espeholt, Alex Graves, and Koray Kavukcuoglu. Conditional image generation with pixelcnn decoders. CoRR, abs/1606.05328, 2016c. URL http://arxiv.org/abs/1606.05328.",
+            "url": "http://arxiv.org/abs/1606.05328",
+            "arxiv_url": "https://arxiv.org/pdf/1606.05328"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. CoRR, abs/1706.03762, 2017. URL http://arxiv.org/abs/1706.03762.",
+            "url": "http://arxiv.org/abs/1706.03762",
+            "arxiv_url": "https://arxiv.org/pdf/1706.03762"
+        },
+        {
+            "id": "Vaswani_et+al_2018_a",
+            "entry": "Ashish Vaswani, Samy Bengio, Eugene Brevdo, Francois Chollet, Aidan N. Gomez, Stephan Gouws, Llion Jones, Lukasz Kaiser, Nal Kalchbrenner, Niki Parmar, Ryan Sepassi, Noam Shazeer, and Jakob Uszkoreit. Tensor2tensor for neural machine translation. CoRR, abs/1803.07416, 2018. URL http://arxiv.org/abs/1803.07416.",
+            "url": "http://arxiv.org/abs/1803.07416",
+            "arxiv_url": "https://arxiv.org/pdf/1803.07416"
+        },
+        {
+            "id": "Wu_et+al_2016_a",
+            "entry": "Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V. Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, Jeff Klingner, Apurva Shah, Melvin Johnson, Xiaobing Liu, Lukasz Kaiser, Stephan Gouws, Yoshikiyo Kato, Taku Kudo, Hideto Kazawa, Keith Stevens, George Kurian, Nishant Patil, Wei Wang, Cliff Young, Jason Smith, Jason Riesa, Alex Rudnick, Oriol Vinyals, Greg Corrado, Macduff Hughes, and Jeffrey Dean. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. CoRR, abs/1609.08144, 2016. URL http://arxiv.org/abs/1609.08144.",
+            "url": "http://arxiv.org/abs/1609.08144",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        }
+    ]
+}

@@ -1,0 +1,374 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "EVALUATING ROBUSTNESS OF NEURAL NETWORKS WITH MIXED INTEGER PROGRAMMING",
+        "author": "Vincent Tjeng, Kai Xiao, Russ Tedrake Massachusetts Institute of Technology {vtjeng, kaix, russt}@mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyGIdiRqtm"
+        },
+        "abstract": "Neural networks trained only to optimize for training accuracy can often be fooled by adversarial examples \u2014 slightly perturbed inputs misclassified with high confidence. Verification of networks enables us to gauge their vulnerability to such adversarial examples. We formulate verification of piecewise-linear neural networks as a mixed integer program. On a representative task of finding minimum adversarial distortions, our verifier is two to three orders of magnitude quicker than the state-of-the-art. We achieve this computational speedup via tight formulations for non-linearities, as well as a novel presolve algorithm that makes full use of all information available. The computational speedup allows us to verify properties on convolutional and residual networks with over 100,000 ReLUs \u2014 several orders of magnitude more than networks previously verified by any complete verifier. In particular, we determine for the first time the exact adversarial accuracy of an MNIST classifier to perturbations with bounded l\u221e norm = 0.1: for this classifier, we find an adversarial example for 4.38% of samples, and a certificate of robustness to norm-bounded perturbations for the remainder. Across all robust training procedures and network architectures considered, and for both the MNIST and CIFAR-10 datasets, we are able to certify more samples than the state-of-the-art and find more adversarial examples than a strong first-order attack."
+    },
+    "keywords": [
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "Satisfiability Modulo Theories",
+            "url": "https://en.wikipedia.org/wiki/Satisfiability_Modulo_Theories"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "CNNA",
+            "url": "https://en.wikipedia.org/wiki/CNNA"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "MILP": "mixed-integer linear programming",
+        "SMT": "Satisfiability Modulo Theories",
+        "IA": "INTERVAL ARITHMETIC",
+        "LP": "LINEAR PROGRAMMING",
+        "PGD": "Projected Gradient Descent"
+    },
+    "highlights": [
+        "Neural networks trained only to optimize for training accuracy have been shown to be vulnerable to adversarial examples: perturbed inputs that are very similar to some regular input but for which the output is radically different (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a></a>)",
+        "This paper presents an efficient complete verifier for piecewise-linear neural networks",
+        "Our improvements can be combined with other optimizations in solving mixed-integer linear programming",
+        "<a class=\"ref-link\" id=\"cBunel_et+al_2018_a\" href=\"#rBunel_et+al_2018_a\">Bunel et al (2018</a>) discusses splitting on the input domain, producing two sub-mixed-integer linear programming where the input in each sub-mixed-integer linear programming is restricted to be from a half of the input domain",
+        "Splitting on the input domain could be useful where the split selected tightens bounds sufficiently to significantly reduce the number of unstable ReLUs that need to be considered in each sub-mixed-integer linear programming",
+        "As previously discussed, taking advantage of locally stable ReLUs speeds up verification; network verifiability could be improved during training via a regularizer that increases the number of locally stable ReLUs"
+    ],
+    "key_statements": [
+        "Neural networks trained only to optimize for training accuracy have been shown to be vulnerable to adversarial examples: perturbed inputs that are very similar to some regular input but for which the output is radically different (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a>)",
+        "There is a large body of work proposing defense methods to produce classifiers that are more robust to adversarial examples",
+        "We present an efficient implementation of a mixed-integer linear programming (MILP) verifier for properties of piecewise-linear feed-forward neural networks",
+        "We demonstrate that, despite considering the full combinatorial nature of the network, our verifier can succeed at evaluating the robustness of larger neural networks, including those with convolutional and residual layers",
+        "The general problem of verification is to determine whether some property P on the output of a neural network holds for all input in a bounded input domain C \u2286 Rm",
+        "Networks trained to be robust are identified by a prefix corresponding to the method used to approximate the worst-case loss: LPd5 when the dual of a linear program is used, as in <a class=\"ref-link\" id=\"cKolter_2017_a\" href=\"#rKolter_2017_a\">Kolter & Wong (2017</a>); SDPd when the dual of a semidefinite relaxation is used, as in <a class=\"ref-link\" id=\"cRaghunathan_et+al_2018_a\" href=\"#rRaghunathan_et+al_2018_a\">Raghunathan et al (2018</a>); and Adv when adversarial examples generated via Projected Gradient Descent (PGD) are used, as in <a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al (2018</a>)",
+        "Our mixed-integer linear programming approach implements three key optimizations: we use progressive tightening, make use of the information provided by the restricted input domain G(x), and use asymmetric bounds in the ReLU formulation in Equation 6",
+        "We compare the number of samples for which we successfully find adversarial examples to the number for Projected Gradient Descent, a strong first-order attack",
+        "We successfully find an adversarial example for every test sample that Projected Gradient Descent finds an adversarial example for",
+        "We found that Projected Gradient Descent is far more likely to miss for some test sample if the minimum adversarial distortion for that sample is close to ; this observation is discussed in more depth in Appendix G",
+        "This paper presents an efficient complete verifier for piecewise-linear neural networks",
+        "Our improvements can be combined with other optimizations in solving mixed-integer linear programming",
+        "<a class=\"ref-link\" id=\"cBunel_et+al_2018_a\" href=\"#rBunel_et+al_2018_a\">Bunel et al (2018</a>) discusses splitting on the input domain, producing two sub-mixed-integer linear programming where the input in each sub-mixed-integer linear programming is restricted to be from a half of the input domain",
+        "Splitting on the input domain could be useful where the split selected tightens bounds sufficiently to significantly reduce the number of unstable ReLUs that need to be considered in each sub-mixed-integer linear programming",
+        "As previously discussed, taking advantage of locally stable ReLUs speeds up verification; network verifiability could be improved during training via a regularizer that increases the number of locally stable ReLUs"
+    ],
+    "summary": [
+        "Neural networks trained only to optimize for training accuracy have been shown to be vulnerable to adversarial examples: perturbed inputs that are very similar to some regular input but for which the output is radically different (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a></a>).",
+        "We determine for the first time the exact adversarial accuracy for MNIST classifiers to perturbations with bounded l\u221e norm .",
+        "Incomplete verifiers for evaluating network robustness employ a range of techniques, including duality (<a class=\"ref-link\" id=\"cDvijotham_et+al_2018_a\" href=\"#rDvijotham_et+al_2018_a\">Dvijotham et al, 2018</a>; <a class=\"ref-link\" id=\"cKolter_2017_a\" href=\"#rKolter_2017_a\">Kolter & Wong, 2017</a>; <a class=\"ref-link\" id=\"cRaghunathan_et+al_2018_a\" href=\"#rRaghunathan_et+al_2018_a\">Raghunathan et al, 2018</a>), layer-by-layer approximations of the adversarial polytope (<a class=\"ref-link\" id=\"cXiang_et+al_2018_a\" href=\"#rXiang_et+al_2018_a\">Xiang et al, 2018</a>), discretizing the search space (Huang et al, 2017), abstract interpretation (<a class=\"ref-link\" id=\"cGehr_et+al_2018_a\" href=\"#rGehr_et+al_2018_a\">Gehr et al, 2018</a>), bounding the local Lipschitz constant (<a class=\"ref-link\" id=\"cWeng_et+al_2018_a\" href=\"#rWeng_et+al_2018_a\"><a class=\"ref-link\" id=\"cWeng_et+al_2018_a\" href=\"#rWeng_et+al_2018_a\">Weng et al, 2018</a></a>), or bounding the activation of the ReLU with linear functions (<a class=\"ref-link\" id=\"cWeng_et+al_2018_a\" href=\"#rWeng_et+al_2018_a\"><a class=\"ref-link\" id=\"cWeng_et+al_2018_a\" href=\"#rWeng_et+al_2018_a\">Weng et al, 2018</a></a>).",
+        "Networks trained to be robust are identified by a prefix corresponding to the method used to approximate the worst-case loss: LPd5 when the dual of a linear program is used, as in <a class=\"ref-link\" id=\"cKolter_2017_a\" href=\"#rKolter_2017_a\">Kolter & Wong (2017</a>); SDPd when the dual of a semidefinite relaxation is used, as in <a class=\"ref-link\" id=\"cRaghunathan_et+al_2018_a\" href=\"#rRaghunathan_et+al_2018_a\">Raghunathan et al (2018</a>); and Adv when adversarial examples generated via Projected Gradient Descent (PGD) are used, as in <a class=\"ref-link\" id=\"cMadry_et+al_2018_a\" href=\"#rMadry_et+al_2018_a\">Madry et al (2018</a>).",
+        "Our MILP approach implements three key optimizations: we use progressive tightening, make use of the information provided by the restricted input domain G(x), and use asymmetric bounds in the ReLU formulation in Equation 6.",
+        "None of the four other MILP-based complete verifiers implement progressive tightening or use the restricted input domain, and only <a class=\"ref-link\" id=\"cFischetti_2018_a\" href=\"#rFischetti_2018_a\">Fischetti & Jo (2018</a>) uses asymmetric bounds.",
+        "We use our verifier to determine the adversarial accuracy of classifiers trained by a range of robust training procedures on the MNIST and CIFAR-10 datasets.",
+        "Table 2 presents the test error and estimates of the adversarial error for these classifiers.7 For MNIST, we verified a range of networks trained to be robust to attacks with bounded l\u221e norm = 0.1, as well as networks trained to be robust to larger attacks of = 0.2, 0.3 and 0.4.",
+        "For Adv-MLPB and LPd-CNNA, running our verifier over the full test set takes approximately 10 hours on 8 CPUs \u2014 the same order of magnitude as the time to train each network on a single GPU.",
+        "7As mentioned in Section 2, complete verifiers will obtain either a valid adversarial example or a certificate of robustness for every input given enough time.",
+        "We do not always have a guarantee of robustness or a valid adversarial example for every test sample since we terminate the optimization at 1200s to provide a better picture of how our verifier performs within reasonable time limits.",
+        "Splitting on the input domain could be useful where the split selected tightens bounds sufficiently to significantly reduce the number of unstable ReLUs that need to be considered in each sub-MILP."
+    ],
+    "headline": "We determine for the first time the exact adversarial accuracy of an MNIST classifier to perturbations with bounded l\u221e norm = 0.1: for this classifier, we find an adversarial example for 4.38% of samples, and a certificate of robustness to norm-bounded perturbations for the remainder",
+    "reference_links": [
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. In Proceedings of the 35th International Conference on Machine Learning, pp. 274\u2013283, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Bastani_et+al_2016_a",
+            "entry": "Osbert Bastani, Yani Ioannou, Leonidas Lampropoulos, Dimitrios Vytiniotis, Aditya Nori, and Antonio Criminisi. Measuring neural net robustness with constraints. In Advances in Neural Information Processing Systems, pp. 2613\u20132621, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bastani%2C%20Osbert%20Ioannou%2C%20Yani%20Lampropoulos%2C%20Leonidas%20Vytiniotis%2C%20Dimitrios%20Measuring%20neural%20net%20robustness%20with%20constraints%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bastani%2C%20Osbert%20Ioannou%2C%20Yani%20Lampropoulos%2C%20Leonidas%20Vytiniotis%2C%20Dimitrios%20Measuring%20neural%20net%20robustness%20with%20constraints%202016"
+        },
+        {
+            "id": "Bezanson_et+al_2017_a",
+            "entry": "Jeff Bezanson, Alan Edelman, Stefan Karpinski, and Viral B Shah. Julia: A fresh approach to numerical computing. SIAM Review, 59(1):65\u201398, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bezanson%2C%20Jeff%20Edelman%2C%20Alan%20Karpinski%2C%20Stefan%20Shah%2C%20Viral%20B.%20Julia%3A%20A%20fresh%20approach%20to%20numerical%20computing%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bezanson%2C%20Jeff%20Edelman%2C%20Alan%20Karpinski%2C%20Stefan%20Shah%2C%20Viral%20B.%20Julia%3A%20A%20fresh%20approach%20to%20numerical%20computing%202017"
+        },
+        {
+            "id": "Boyd_2004_a",
+            "entry": "Stephen Boyd and Lieven Vandenberghe. Convex Optimization. Cambridge University Press, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boyd%2C%20Stephen%20Vandenberghe%2C%20Lieven%20Convex%20Optimization%202004"
+        },
+        {
+            "id": "Bunel_et+al_2018_a",
+            "entry": "Rudy Bunel, Ilker Turkaslan, Philip HS Torr, Pushmeet Kohli, and Pawan K Mudigonda. A unified view of piecewise linear neural network verification. In Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bunel%2C%20Rudy%20Turkaslan%2C%20Ilker%20Torr%2C%20Philip%20H.S.%20Kohli%2C%20Pushmeet%20A%20unified%20view%20of%20piecewise%20linear%20neural%20network%20verification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bunel%2C%20Rudy%20Turkaslan%2C%20Ilker%20Torr%2C%20Philip%20H.S.%20Kohli%2C%20Pushmeet%20A%20unified%20view%20of%20piecewise%20linear%20neural%20network%20verification%202018"
+        },
+        {
+            "id": "Carlini_0000_a",
+            "entry": "Nicholas Carlini and David Wagner. Adversarial examples are not easily detected: Bypassing ten detection methods. In Proceedings of the 10th ACM Workshop on Artificial Intelligence and Security, pp. 3\u201314, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Adversarial%20examples%20are%20not%20easily%20detected%3A%20Bypassing%20ten%20detection%20methods",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Adversarial%20examples%20are%20not%20easily%20detected%3A%20Bypassing%20ten%20detection%20methods"
+        },
+        {
+            "id": "Carlini_2017_a",
+            "entry": "Nicholas Carlini and David Wagner. Towards evaluating the robustness of neural networks. In Security and Privacy (SP), 2017 IEEE Symposium on, pp. 39\u201357. IEEE, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017"
+        },
+        {
+            "id": "Carlini_et+al_2017_b",
+            "entry": "Nicholas Carlini, Guy Katz, Clark Barrett, and David L Dill. Ground-truth adversarial examples. arXiv preprint arXiv:1709.10207, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.10207"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Pin-Yu Chen, Yash Sharma, Huan Zhang, Jinfeng Yi, and Cho-Jui Hsieh. EAD: elastic-net attacks to deep neural networks via adversarial examples. In AAAI Conference on Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Pin-Yu%20Sharma%2C%20Yash%20Zhang%2C%20Huan%20Yi%2C%20Jinfeng%20EAD%3A%20elastic-net%20attacks%20to%20deep%20neural%20networks%20via%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Pin-Yu%20Sharma%2C%20Yash%20Zhang%2C%20Huan%20Yi%2C%20Jinfeng%20EAD%3A%20elastic-net%20attacks%20to%20deep%20neural%20networks%20via%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Dunning_et+al_2017_a",
+            "entry": "Iain Dunning, Joey Huchette, and Miles Lubin. Jump: A modeling language for mathematical optimization. SIAM Review, 59(2):295\u2013320, 2017. doi: 10.1137/15M1020575.",
+            "crossref": "https://dx.doi.org/10.1137/15M1020575",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1137/15M1020575"
+        },
+        {
+            "id": "Dvijotham_et+al_2018_a",
+            "entry": "Krishnamurthy Dvijotham, Robert Stanforth, Sven Gowal, Timothy Mann, and Pushmeet Kohli. A dual approach to scalable verification of deep networks. In Conference on Uncertainty in Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dvijotham%2C%20Krishnamurthy%20Stanforth%2C%20Robert%20Gowal%2C%20Sven%20Mann%2C%20Timothy%20A%20dual%20approach%20to%20scalable%20verification%20of%20deep%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dvijotham%2C%20Krishnamurthy%20Stanforth%2C%20Robert%20Gowal%2C%20Sven%20Mann%2C%20Timothy%20A%20dual%20approach%20to%20scalable%20verification%20of%20deep%20networks%202018"
+        },
+        {
+            "id": "Fischetti_2018_a",
+            "entry": "Matteo Fischetti and Jason Jo. Deep neural networks and mixed integer linear optimization. Constraints, 23(3):296\u2013309, July 2018. ISSN 1383-7133. doi: 10.1007/s10601-018-9285-6. URL https://doi.org/10.1007/s10601-018-9285-6.",
+            "crossref": "https://dx.doi.org/10.1007/s10601-018-9285-6",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s10601-018-9285-6"
+        },
+        {
+            "id": "Forrest_et+al_2018_a",
+            "entry": "John Forrest, Ted Ralphs, Stefan Vigerske, LouHafer, Bjarni Kristjansson, jpfasano, EdwinStraver, Miles Lubin, Haroldo Gambini Santos, rlougee, and et al. coin-or/cbc: Version 2.9.9. Jul 2018. doi: 10.5281/zenodo.1317566.",
+            "crossref": "https://dx.doi.org/10.5281/zenodo.1317566",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.5281/zenodo.1317566"
+        },
+        {
+            "id": "Gehr_et+al_2018_a",
+            "entry": "Timon Gehr, Matthew Mirman, Dana Drachsler-Cohen, Petar Tsankov, Swarat Chaudhuri, and Martin Vechev. Ai 2: Safety and robustness certification of neural networks with abstract interpretation. In Security and Privacy (SP), 2018 IEEE Symposium on, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gehr%2C%20Timon%20Mirman%2C%20Matthew%20Drachsler-Cohen%2C%20Dana%20Tsankov%2C%20Petar%20Ai%202%3A%20Safety%20and%20robustness%20certification%20of%20neural%20networks%20with%20abstract%20interpretation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gehr%2C%20Timon%20Mirman%2C%20Matthew%20Drachsler-Cohen%2C%20Dana%20Tsankov%2C%20Petar%20Ai%202%3A%20Safety%20and%20robustness%20certification%20of%20neural%20networks%20with%20abstract%20interpretation%202018"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20J.%20Shlens%2C%20Jonathon%20Szegedy%2C%20Christian%20Explaining%20and%20harnessing%20adversarial%20examples%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20J.%20Shlens%2C%20Jonathon%20Szegedy%2C%20Christian%20Explaining%20and%20harnessing%20adversarial%20examples%202015"
+        },
+        {
+            "id": "Gurobi_2017_a",
+            "entry": "Gurobi. Gurobi guidelines for numerical issues, 2017. URL http://files.gurobi.com/ Numerics.pdf.",
+            "url": "http://files.gurobi.com/Numerics.pdf"
+        },
+        {
+            "id": "Inc._2017_a",
+            "entry": "Inc. Gurobi Optimization. Gurobi optimizer reference manual, 2017. URL http://www.gurobi.com.",
+            "url": "http://www.gurobi.com"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20networks%20with%20pruning%2C%20trained%20quantization%20and%20huffman%20coding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20networks%20with%20pruning%2C%20trained%20quantization%20and%20huffman%20coding%202016"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hein_2017_a",
+            "entry": "Matthias Hein and Maksym Andriushchenko. Formal guarantees on the robustness of a classifier against adversarial manipulation. In Advances in Neural Information Processing Systems, pp. 2263\u20132273, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hein%2C%20Matthias%20Andriushchenko%2C%20Maksym%20Formal%20guarantees%20on%20the%20robustness%20of%20a%20classifier%20against%20adversarial%20manipulation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hein%2C%20Matthias%20Andriushchenko%2C%20Maksym%20Formal%20guarantees%20on%20the%20robustness%20of%20a%20classifier%20against%20adversarial%20manipulation%202017"
+        },
+        {
+            "id": "Huchette_2017_a",
+            "entry": "Joey Huchette and Juan Pablo Vielma. Nonconvex piecewise linear functions: Advanced formulations and simple modeling tools. arXiv preprint arXiv:1708.00050, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.00050"
+        },
+        {
+            "id": "Sergey_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Proceedings of the 32nd International Conference on Machine Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%202015"
+        },
+        {
+            "id": "Kolter_2017_a",
+            "entry": "J Zico Kolter and Eric Wong. Provable defenses against adversarial examples via the convex outer adversarial polytope. In Proceedings of the 35th International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kolter%2C%20J.Zico%20Wong%2C%20Eric%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kolter%2C%20J.Zico%20Wong%2C%20Eric%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202017"
+        },
+        {
+            "id": "Lomuscio_2017_a",
+            "entry": "Alessio Lomuscio and Lalit Maganti. An approach to reachability analysis for feed-forward ReLU neural networks. arXiv preprint arXiv:1706.07351, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07351"
+        },
+        {
+            "id": "Madry_et+al_2018_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018"
+        },
+        {
+            "id": "Makhorin_2012_a",
+            "entry": "Andrew Makhorin. GLPK - GNU Linear Programming kit, Jun 2012. URL https://www.gnu.org/software/glpk/.",
+            "url": "https://www.gnu.org/software/glpk/"
+        },
+        {
+            "id": "Moore_et+al_2009_a",
+            "entry": "Ramon E Moore, R Baker Kearfott, and Michael J Cloud. Introduction to Interval Analysis. SIAM, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moore%2C%20Ramon%20E.%20Kearfott%2C%20R.Baker%20Cloud%2C%20Michael%20J.%20Introduction%20to%20Interval%20Analysis%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moore%2C%20Ramon%20E.%20Kearfott%2C%20R.Baker%20Cloud%2C%20Michael%20J.%20Introduction%20to%20Interval%20Analysis%202009"
+        },
+        {
+            "id": "Papernot_et+al_2016_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Xi Wu, Somesh Jha, and Ananthram Swami. Distillation as a defense to adversarial perturbations against deep neural networks. In Security and Privacy (SP), 2016 IEEE Symposium on, pp. 582\u2013597. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Raghunathan_et+al_2018_a",
+            "entry": "Aditi Raghunathan, Jacob Steinhardt, and Percy Liang. Certified defenses against adversarial examples. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghunathan%2C%20Aditi%20Steinhardt%2C%20Jacob%20Liang%2C%20Percy%20Certified%20defenses%20against%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghunathan%2C%20Aditi%20Steinhardt%2C%20Jacob%20Liang%2C%20Percy%20Certified%20defenses%20against%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Scheibler_et+al_2015_a",
+            "entry": "Karsten Scheibler, Leonore Winterer, Ralf Wimmer, and Bernd Becker. Towards verification of artificial neural networks. In MBMV, pp. 30\u201340, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scheibler%2C%20Karsten%20Winterer%2C%20Leonore%20Wimmer%2C%20Ralf%20Becker%2C%20Bernd%20Towards%20verification%20of%20artificial%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scheibler%2C%20Karsten%20Winterer%2C%20Leonore%20Wimmer%2C%20Ralf%20Becker%2C%20Bernd%20Towards%20verification%20of%20artificial%20neural%20networks%202015"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. The Journal of Machine Learning Research, 15(1):1929\u20131958, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Szegedy_et+al_2014_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. In International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20Bruna%2C%20Joan%20Intriguing%20properties%20of%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20Bruna%2C%20Joan%20Intriguing%20properties%20of%20neural%20networks%202014"
+        },
+        {
+            "id": "Vielma_2015_a",
+            "entry": "Juan Pablo Vielma. Mixed integer linear programming formulation techniques. SIAM Review, 57(1): 3\u201357, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vielma%2C%20Juan%20Pablo%20Mixed%20integer%20linear%20programming%20formulation%20techniques%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vielma%2C%20Juan%20Pablo%20Mixed%20integer%20linear%20programming%20formulation%20techniques%202015"
+        },
+        {
+            "id": "Weng_et+al_2018_a",
+            "entry": "Tsui-Wei Weng, Huan Zhang, Hongge Chen, Zhao Song, Cho-Jui Hsieh, Duane Boning, Inderjit S Dhillon, and Luca Daniel. Towards fast computation of certified robustness for ReLU networks. In Proceedings of the 35th International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weng%2C%20Tsui-Wei%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Song%2C%20Zhao%20Towards%20fast%20computation%20of%20certified%20robustness%20for%20ReLU%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weng%2C%20Tsui-Wei%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Song%2C%20Zhao%20Towards%20fast%20computation%20of%20certified%20robustness%20for%20ReLU%20networks%202018"
+        },
+        {
+            "id": "Wong_et+al_2018_a",
+            "entry": "Eric Wong, Frank Schmidt, Jan Hendrik Metzen, and J Zico Kolter. Scaling provable adversarial defenses. In Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018"
+        },
+        {
+            "id": "Xiang_et+al_2018_a",
+            "entry": "Weiming Xiang, Hoang-Dung Tran, and Taylor T. Johnson. Output reachable set estimation and verification for multi-layer neural networks. IEEE Transactions on Neural Networks and Learning Systems (TNNLS), March 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiang%2C%20Weiming%20Tran%2C%20Hoang-Dung%20Johnson%2C%20Taylor%20T.%20Output%20reachable%20set%20estimation%20and%20verification%20for%20multi-layer%20neural%20networks%202018-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiang%2C%20Weiming%20Tran%2C%20Hoang-Dung%20Johnson%2C%20Taylor%20T.%20Output%20reachable%20set%20estimation%20and%20verification%20for%20multi-layer%20neural%20networks%202018-03"
+        },
+        {
+            "id": "This_2015_b",
+            "entry": "This formulation for rectified linearities is sharp (Vielma, 2015) if we have no further information about x. This is the case since relaxing the integrality constraint on a leads to (x, y) being restricted to an area that is the convex hull of y = max(x, 0). However, if x is an affine expression x = wT z + b, the formulation is no longer sharp, and we can add more constraints using bounds we have on z to improve the problem formulation.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=This%20formulation%20for%20rectified%20linearities%20is%20sharp%20Vielma%202015%20if%20we%20have%20no%20further%20information%20about%20x%20This%20is%20the%20case%20since%20relaxing%20the%20integrality%20constraint%20on%20a%20leads%20to%20x%20y%20being%20restricted%20to%20an%20area%20that%20is%20the%20convex%20hull%20of%20y%20%20maxx%200%20However%20if%20x%20is%20an%20affine%20expression%20x%20%20wT%20z%20%20b%20the%20formulation%20is%20no%20longer%20sharp%20and%20we%20can%20add%20more%20constraints%20using%20bounds%20we%20have%20on%20z%20to%20improve%20the%20problem%20formulation",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=This%20formulation%20for%20rectified%20linearities%20is%20sharp%20Vielma%202015%20if%20we%20have%20no%20further%20information%20about%20x%20This%20is%20the%20case%20since%20relaxing%20the%20integrality%20constraint%20on%20a%20leads%20to%20x%20y%20being%20restricted%20to%20an%20area%20that%20is%20the%20convex%20hull%20of%20y%20%20maxx%200%20However%20if%20x%20is%20an%20affine%20expression%20x%20%20wT%20z%20%20b%20the%20formulation%20is%20no%20longer%20sharp%20and%20we%20can%20add%20more%20constraints%20using%20bounds%20we%20have%20on%20z%20to%20improve%20the%20problem%20formulation"
+        },
+        {
+            "id": "FULL_2018_a",
+            "entry": "FULL considers the full subtree Gv and does not relax any integer constraints. The upper and lower bound on v is determined by maximizing and minimizing the value of v in Mv respectively. FULL is also used in Cheng et al. (2017) and Fischetti & Jo (2018).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=FULL%20considers%20the%20full%20subtree%20Gv%20and%20does%20not%20relax%20any%20integer%20constraints%20The%20upper%20and%20lower%20bound%20on%20v%20is%20determined%20by%20maximizing%20and%20minimizing%20the%20value%20of%20v%20in%20Mv%20respectively%20FULL%20is%20also%20used%20in%20Cheng%20et%20al%202017%20and%20Fischetti%20%20Jo%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=FULL%20considers%20the%20full%20subtree%20Gv%20and%20does%20not%20relax%20any%20integer%20constraints%20The%20upper%20and%20lower%20bound%20on%20v%20is%20determined%20by%20maximizing%20and%20minimizing%20the%20value%20of%20v%20in%20Mv%20respectively%20FULL%20is%20also%20used%20in%20Cheng%20et%20al%202017%20and%20Fischetti%20%20Jo%202018"
+        },
+        {
+            "id": "Nevertheless_2017_a",
+            "entry": "Nevertheless, contrary to what is asserted in Cheng et al. (2017), we can terminate solves early and still obtain useful bounds. For example, to determine an upper bound on v, we set the objective of Mv to be to maximize the value of v. As the solve process proceeds, we obtain progressively better certified upper bounds on the maximum value of v. We can thus terminate the solve process and extract the best upper bound found at any time, using this upper bound as a valid (but possibly loose) bound on the value of v.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nevertheless%20contrary%20to%20what%20is%20asserted%20in%20Cheng%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nevertheless%20contrary%20to%20what%20is%20asserted%20in%20Cheng%202017"
+        },
+        {
+            "id": "IA_2009_a",
+            "entry": "IA selects VI to be the parents of v. In other words, bounds on v are determined solely by considering the bounds on the variables in the previous layer. We note that this is simply interval arithmetic Moore et al. (2009).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=IA%20selects%20VI%20to%20be%20the%20parents%20of%20v%20In%20other%20words%20bounds%20on%20v%20are%20determined%20solely%20by%20considering%20the%20bounds%20on%20the%20variables%20in%20the%20previous%20layer%20We%20note%20that%20this%20is%20simply%20interval%20arithmetic%20Moore%20et%20al%202009"
+        },
+        {
+            "id": "\u2013_2018_b",
+            "entry": "\u2013 MLP-2\u00d7[20] and MLP-3\u00d7[20] are the MNIST classifiers in Weng et al. (2018), and can be found at https://github.com/huanzhang12/ CertifiedReLURobustness.",
+            "url": "https://github.com/huanzhang12/CertifiedReLURobustness",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MLP220%20and%20MLP320%20are%20the%20MNIST%20classifiers%20in%20Weng%20et%20al%202018%20and%20can%20be%20found%20at%20httpsgithubcomhuanzhang12%20CertifiedReLURobustness"
+        },
+        {
+            "id": "\u2013_2018_c",
+            "entry": "\u2013 LPd-CNNB is the large MNIST classifier for = 0.1 in Wong et al. (2018), and can be found at https://github.com/locuslab/convex_adversarial/blob/master/models_scaled/mnist_large_0_1.pth.",
+            "url": "https://github.com/locuslab/convex_adversarial/blob/master/models_scaled/mnist_large_0_1.pth",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LPdCNNB%20is%20the%20large%20MNIST%20classifier%20for%20%2001%20in%20Wong%20et%20al%202018%20and%20can%20be%20found%20at%20httpsgithubcomlocuslabconvexadversarialblobmastermodelsscaledmnistlarge01pth"
+        },
+        {
+            "id": "\u2013_2017_a",
+            "entry": "\u2013 LPd-CNNA is the MNIST classifier in Kolter & Wong (2017), and can be found at https://github.com/locuslab/convex_adversarial/blob/master/models/mnist.pth.",
+            "url": "https://github.com/locuslab/convex_adversarial/blob/master/models/mnist.pth"
+        },
+        {
+            "id": "\u2013_2018_d",
+            "entry": "\u2013 SDPd-MLP-1\u00d7[500] is the classifier in Raghunathan et al. (2018).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=SDPdMLP1500%20is%20the%20classifier%20in%20Raghunathan%20et%20al%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=SDPdMLP1500%20is%20the%20classifier%20in%20Raghunathan%20et%20al%202018"
+        },
+        {
+            "id": "\u2013_0000_b",
+            "entry": "\u2013 LPd-CNNA was trained with the code available at https://github.com/locuslab/convex_adversarial at commit 4e9377f. Parameters selected were batch size=20, starting epsilon=0.01, epochs=200, seed=0.",
+            "url": "https://github.com/locuslab/convex_adversarial",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LPdCNNA%20was%20trained%20with%20the%20code%20available%20at%20httpsgithubcomlocuslabconvexadversarial%20at%20commit%204e9377f%20Parameters%20selected%20were%20batch%20size20%20starting%20epsilon001%20epochs200%20seed0"
+        },
+        {
+            "id": "\u2013_2018_e",
+            "entry": "\u2013 LPd-CNNB is the large MNIST classifier for = 0.3 in Wong et al. (2018), and can be found at https://github.com/locuslab/convex_adversarial/blob/master/models_scaled/mnist_large_0_3.pth.",
+            "url": "https://github.com/locuslab/convex_adversarial/blob/master/models_scaled/mnist_large_0_3.pth",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LPdCNNB%20is%20the%20large%20MNIST%20classifier%20for%20%2003%20in%20Wong%20et%20al%202018%20and%20can%20be%20found%20at%20httpsgithubcomlocuslabconvexadversarialblobmastermodelsscaledmnistlarge03pth"
+        },
+        {
+            "id": "\u2013_2018_f",
+            "entry": "\u2013 LPd-CNNA is the small CIFAR classifier in Wong et al. (2018), courtesy of the authors.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LPdCNNA%20is%20the%20small%20CIFAR%20classifier%20in%20Wong%20et%20al%202018%20courtesy%20of%20the%20authors",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LPdCNNA%20is%20the%20small%20CIFAR%20classifier%20in%20Wong%20et%20al%202018%20courtesy%20of%20the%20authors"
+        },
+        {
+            "id": "\u2013_2018_g",
+            "entry": "\u2013 LPd-RES is the resnet CIFAR classifier in Wong et al. (2018), and can be found at https://github.com/locuslab/convex_adversarial/",
+            "url": "https://github.com/locuslab/convex_adversarial/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LPdRES%20is%20the%20resnet%20CIFAR%20classifier%20in%20Wong%20et%20al%202018%20and%20can%20be%20found%20at%20httpsgithubcomlocuslabconvexadversarial"
+        },
+        {
+            "id": "We_2017_c",
+            "entry": "We construct the MILP models in Julia (Bezanson et al., 2017) using JuMP (Dunning et al., 2017), with the model solved by the commercial solver Gurobi 7.5.2 (Gurobi Optimization, 2017). All experiments were run on a KVM virtual machine with 8 virtual CPUs running on shared hardware, with Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz processors, and 8GB of RAM.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20construct%20the%20MILP%20models%20in%20Julia%20Bezanson%20et%20al%202017%20using%20JuMP%20Dunning%20et%20al%202017%20with%20the%20model%20solved%20by%20the%20commercial%20solver%20Gurobi%20752%20Gurobi%20Optimization%202017%20All%20experiments%20were%20run%20on%20a%20KVM%20virtual%20machine%20with%208%20virtual%20CPUs%20running%20on%20shared%20hardware%20with%20IntelR%20XeonR%20CPU%20E52630%20v4%20%20220GHz%20processors%20and%208GB%20of%20RAM",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20construct%20the%20MILP%20models%20in%20Julia%20Bezanson%20et%20al%202017%20using%20JuMP%20Dunning%20et%20al%202017%20with%20the%20model%20solved%20by%20the%20commercial%20solver%20Gurobi%20752%20Gurobi%20Optimization%202017%20All%20experiments%20were%20run%20on%20a%20KVM%20virtual%20machine%20with%208%20virtual%20CPUs%20running%20on%20shared%20hardware%20with%20IntelR%20XeonR%20CPU%20E52630%20v4%20%20220GHz%20processors%20and%208GB%20of%20RAM"
+        },
+        {
+            "id": "To_2012_a",
+            "entry": "To give a sense for how our verifier performs with other solvers, we ran a comparison with the Cbc (Forrest et al., 2018) and GLPK (Makhorin, 2012) solvers, two open-source MILP solvers.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=To%20give%20a%20sense%20for%20how%20our%20verifier%20performs%20with%20other%20solvers%20we%20ran%20a%20comparison%20with%20the%20Cbc%20Forrest%20et%20al%202018%20and%20GLPK%20Makhorin%202012%20solvers%20two%20opensource%20MILP%20solvers",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=To%20give%20a%20sense%20for%20how%20our%20verifier%20performs%20with%20other%20solvers%20we%20ran%20a%20comparison%20with%20the%20Cbc%20Forrest%20et%20al%202018%20and%20GLPK%20Makhorin%202012%20solvers%20two%20opensource%20MILP%20solvers"
+        }
+    ]
+}

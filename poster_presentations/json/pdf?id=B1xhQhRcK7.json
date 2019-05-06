@@ -1,0 +1,435 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "RIGOROUS AGENT EVALUATION: AN ADVERSARIAL",
+        "author": "APPROACH TO UNCOVER CATASTROPHIC FAILURES",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1xhQhRcK7"
+        },
+        "abstract": "This paper addresses the problem of evaluating learning systems in safety critical domains such as autonomous driving, where failures can have catastrophic consequences. We focus on two problems: searching for scenarios when learned agents fail and assessing their probability of failure. The standard method for agent evaluation in reinforcement learning, Vanilla Monte Carlo, can miss failures entirely, leading to the deployment of unsafe agents. We demonstrate this is an issue for current agents, where even matching the compute used for training is sometimes insufficient for evaluation. To address this shortcoming, we draw upon the rare event probability estimation literature and propose an adversarial evaluation approach. Our approach focuses evaluation on adversarially chosen situations, while still providing unbiased estimates of failure probabilities. The key difficulty is in identifying these adversarial situations \u2013 since failures are rare there is little signal to drive optimization. To solve this we propose a continuation approach that learns failure modes in related but less robust agents. Our approach also allows reuse of data already collected for training the agent. We demonstrate the efficacy of adversarial evaluation on two standard domains: humanoid control and simulated driving. Experimental results show that our methods can find catastrophic failures and estimate failures rates of agents multiple orders of magnitude faster than standard evaluation schemes, in minutes to hours rather than days."
+    },
+    "keywords": [
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "failure mode",
+            "url": "https://en.wikipedia.org/wiki/failure_mode"
+        },
+        {
+            "term": "Importance sampling",
+            "url": "https://en.wikipedia.org/wiki/Importance_sampling"
+        }
+    ],
+    "abbreviations": {
+        "VMC": "vanilla Monte Carlo estimator",
+        "PR": "prioritized replay",
+        "DND": "Differentiable Neural Dictionary",
+        "IS": "Importance sampling"
+    },
+    "highlights": [
+        "How can we ensure machine learning systems do not make catastrophic mistakes? While machine learning systems have shown impressive results across a variety of domains (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>), they may fail badly on particular inputs, often in unexpected ways (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a></a>)",
+        "Our work on reliability is in part motivated by research on adversarial examples, which highlights the fact that machine learning systems that perform very well on average may perform extremely poorly on particular adversarial inputs, often in surprising ways (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a>)",
+        "Our aims share similarities to recent proposals for testing components of autonomous vehicle systems (<a class=\"ref-link\" id=\"cShalev-Shwartz_et+al_2017_a\" href=\"#rShalev-Shwartz_et+al_2017_a\">Shalev-Shwartz et al, 2017</a>; Dreossi et al, 2017; <a class=\"ref-link\" id=\"cTian_et+al_2018_a\" href=\"#rTian_et+al_2018_a\">Tian et al, 2018</a>; <a class=\"ref-link\" id=\"cPei_et+al_2017_a\" href=\"#rPei_et+al_2017_a\">Pei et al, 2017</a>). We believe these approaches are complementary and should be developed in parallel: these works focus on components-level specifications while here, we focus on testing the entire agent end-to-end for system-level specifications",
+        "We argued that standard approaches to evaluating RL agents are highly inefficient in detecting rare, catastrophic failures, which can create a false sense of safety",
+        "We believe the approach and results here strongly demonstrate that adversarial testing can play an important role in assessing and improving agents, but are only scratching the surface",
+        "We hope this work lays the groundwork for future research into evaluating and developing robust, deployable agents"
+    ],
+    "key_statements": [
+        "How can we ensure machine learning systems do not make catastrophic mistakes? While machine learning systems have shown impressive results across a variety of domains (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>), they may fail badly on particular inputs, often in unexpected ways (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a></a>)",
+        "Consider a self-driving car company that decides that the cost of a single accident where the car is at fault outweighs the benefits of 100 million miles of faultless operation",
+        "To achieve reasonable confidence that the car crashes with probability below 1e\u20138, the manufacturer would need to test-drive the car for at least 1e8 miles, which may be prohibitively expensive",
+        "To overcome the above-mentioned problems, we develop a novel adversarial evaluation approach",
+        "We introduce a continuation approach to learning a failure probability predictor (AVF), which estimates the probability the agent fails given some initial conditions",
+        "We describe a continuation approach for learning failure probability predictors even when failures are rare",
+        "We find failures with 198 and 3100 times fewer samples respectively",
+        "In Section 4.1, we show that even on relatively cheap simulated environments, the cost of simulating environments dominates costs of evaluating neural networks.\n1 To minimize jargon, we omit standard conditions on the spaces and functions that permit the use of the language of probabilities.\n2.1",
+        "Our solutions build on the certainty equivalence approach (<a class=\"ref-link\" id=\"cTurnovsky_1976_a\" href=\"#rTurnovsky_1976_a\">Turnovsky, 1976</a>): First, we describe how f\u2217 could be leveraged",
+        "We adopt a simple procedure: sample n initial conditions from PX , pick the initial condition from this set where f is the largest, and run an experiment from the found initial condition. We repeat this process with new sampled initial conditions until we find a catastrophic failure",
+        "For sampling from Qf , we propose to use the rejection sampling method (Section 1.2.2, <a class=\"ref-link\" id=\"cBucklew_2004_a\" href=\"#rBucklew_2004_a\">Bucklew 2004</a>) with the proposal distribution chosen to be PX : First, X \u223c PX is chosen, which is accepted by probability f 1/2(X)",
+        "To increase the robustness of the sampling procedure against errors introduced by f = f\u2217, we introduce a \u201chyperparameter\u201d \u03b1 > 0 so that qf is redefined to be proportional to f \u03b1",
+        "We propose a continuation approach to learning AVFs, where we learn f from a family of related agents that fail more often",
+        "We propose learning f from agents that were seen earlier on in training",
+        "We provide a simple toy example to discuss in what ways we rely on this, and in what ways we do not",
+        "If failure modes of the test policy of interest look nothing like the failure modes observed in the related agents, the continuation approach is insufficient",
+        "We note that on Humanoid, for the vanilla Monte Carlo estimator adversary to have over a 95% chance of detecting a single failure, we would require over 300, 000 episodes, exceeding the cost of training, which used less than 300, 000 episodes3",
+        "Evaluation is often run for much less time than training, and in these cases, the naive approach would very often lead to the mistaken impression that such failure modes do not exist",
+        "The continuation approach is essential - obtaining enough failures to fit a useful proposal distribution requires learning from a family of weaker agents.\n4.2",
+        "While failure search merely requires the adversary to identify a single failure, efficient risk estimation requires the adversary to sample from most possible failures.\n4Here, p was measured separately by running the vanilla Monte Carlo estimator estimator for 5e6 episodes on Driving and 2e7 episodes on Humanoid, so that 2 standard errors lies within 5% relative error on Driving, and 20% on Humanoid.\n4.3",
+        "In the event of a tie, we report the expected failure probability when selecting from the tied agents randomly",
+        "Our work on reliability is in part motivated by research on adversarial examples, which highlights the fact that machine learning systems that perform very well on average may perform extremely poorly on particular adversarial inputs, often in surprising ways (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a>)",
+        "Most work on adversarial examples has focused on Lp norm balls in the image domain",
+        "Many recent papers have questioned the practical value of norm ball robustness (<a class=\"ref-link\" id=\"cGilmer_et+al_2018_a\" href=\"#rGilmer_et+al_2018_a\">Gilmer et al, 2018</a>; <a class=\"ref-link\" id=\"cEngstrom_et+al_2017_a\" href=\"#rEngstrom_et+al_2017_a\">Engstrom et al, 2017</a>; <a class=\"ref-link\" id=\"cSchott_et+al_2018_a\" href=\"#rSchott_et+al_2018_a\">Schott et al, 2018</a>)",
+        "Our aims share similarities to recent proposals for testing components of autonomous vehicle systems (<a class=\"ref-link\" id=\"cShalev-Shwartz_et+al_2017_a\" href=\"#rShalev-Shwartz_et+al_2017_a\">Shalev-Shwartz et al, 2017</a>; Dreossi et al, 2017; <a class=\"ref-link\" id=\"cTian_et+al_2018_a\" href=\"#rTian_et+al_2018_a\">Tian et al, 2018</a>; <a class=\"ref-link\" id=\"cPei_et+al_2017_a\" href=\"#rPei_et+al_2017_a\">Pei et al, 2017</a>). We believe these approaches are complementary and should be developed in parallel: these works focus on components-level specifications while here, we focus on testing the entire agent end-to-end for system-level specifications",
+        "Our approach is different from previous works in that, to better reflect the practicalities of RL tasks, we explicitly separate controllable randomness from randomness that is neither controllable, nor observable. This has implications on the form of the minimum-variance proposal distribution",
+        "In a recent paper, extending Janson et al (2018), <a class=\"ref-link\" id=\"cSchmerling_2017_a\" href=\"#rSchmerling_2017_a\">Schmerling & Pavone (2017</a>) proposed to use an adaptive mixture importance sampling algorithm to quantify the collision probability for an LQR controller with EKF state estimation applied to non-linear systems with a full rigid-body collision model",
+        "While in this work we primarily focus on agent evaluation, rather than training, we note recent work on safe reinforcement learning",
+        "We argued that standard approaches to evaluating RL agents are highly inefficient in detecting rare, catastrophic failures, which can create a false sense of safety",
+        "We believe the approach and results here strongly demonstrate that adversarial testing can play an important role in assessing and improving agents, but are only scratching the surface",
+        "We hope this work lays the groundwork for future research into evaluating and developing robust, deployable agents"
+    ],
+    "summary": [
+        "How can we ensure machine learning systems do not make catastrophic mistakes? While machine learning systems have shown impressive results across a variety of domains (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>), they may fail badly on particular inputs, often in unexpected ways (<a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2013_a\" href=\"#rSzegedy_et+al_2013_a\">Szegedy et al, 2013</a></a>).",
+        "We introduce a continuation approach to learning a failure probability predictor (AVF), which estimates the probability the agent fails given some initial conditions.",
+        "We assume that the experimenter who performs the reliability assessment can run an experiment with the trained agent given some initial condition x \u2208 X , the outcome of which is a random failure indicator C = c(x, Z) where Z \u223c PZ for some probability distribution PZ over some set Z and where c : X \u00d7 Z \u2192 {0, 1}.",
+        "Algorithms that search for failures, which we will call adversaries, can specify initial conditions x, observe the outcome C of running the agent on x and return as soon as C = 1.",
+        "The naive adversary evaluates the agent on samples from PX until observing a failure.",
+        "The failure probability estimation method uses importance sampling (IS) (e.g., Section 4.2, Bucklew",
+        "We note that on Humanoid, for the VMC adversary to have over a 95% chance of detecting a single failure, we would require over 300, 000 episodes, exceeding the cost of training, which used less than 300, 000 episodes3.",
+        "The continuation approach is essential - obtaining enough failures to fit a useful proposal distribution requires learning from a family of weaker agents.",
+        "A concern is that if the AVF underestimates the failure probability of certain initial conditions, the risk estimator will have high variance, and with limited samples, often underestimate the true failure probability.",
+        "Because the AVF is trained on weaker agents, it typically over-estimates failure probabilities.",
+        "Unlike previous work on adversarial examples in reinforcement learning (<a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a>; <a class=\"ref-link\" id=\"cLin_et+al_2017_a\" href=\"#rLin_et+al_2017_a\">Lin et al, 2017</a>), we do not allow adversaries to generate inputs outside the distribution on which the agent is trained.",
+        "We hope the domains and problem formulations presented here drive research on adversarial examples beyond norm balls, and towards training and testing models consistent with global specifications.",
+        "In a recent paper, extending Janson et al (2018), <a class=\"ref-link\" id=\"cSchmerling_2017_a\" href=\"#rSchmerling_2017_a\">Schmerling & Pavone (2017</a>) proposed to use an adaptive mixture importance sampling algorithm to quantify the collision probability for an LQR controller with EKF state estimation applied to non-linear systems with a full rigid-body collision model.",
+        "We argued that standard approaches to evaluating RL agents are highly inefficient in detecting rare, catastrophic failures, which can create a false sense of safety.",
+        "We hope this work lays the groundwork for future research into evaluating and developing robust, deployable agents"
+    ],
+    "headline": "This paper addresses the problem of evaluating learning systems in safety critical domains such as autonomous driving, where failures can have catastrophic consequences",
+    "reference_links": [
+        {
+            "id": "Achiam_et+al_2017_a",
+            "entry": "Joshua Achiam, David Held, Aviv Tamar, and Pieter Abbeel. Constrained policy optimization. arXiv preprint arXiv:1705.10528, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10528"
+        },
+        {
+            "id": "Altman_1999_a",
+            "entry": "Eitan Altman. Constrained Markov decision processes, volume 7. CRC Press, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Altman%2C%20Eitan%20Constrained%20Markov%20decision%20processes%2C%20volume%207%201999"
+        },
+        {
+            "id": "Audibert_2011_a",
+            "entry": "Jean-Yves Audibert, Olivier Catoni, et al. Robust linear least squares regression. The Annals of Statistics, 39(5):2766\u20132794, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Audibert%2C%20Jean-Yves%20Catoni%2C%20Olivier%20Robust%20linear%20least%20squares%20regression%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Audibert%2C%20Jean-Yves%20Catoni%2C%20Olivier%20Robust%20linear%20least%20squares%20regression%202011"
+        },
+        {
+            "id": "Barth-Maron_et+al_2018_a",
+            "entry": "Gabriel Barth-Maron, Matthew W Hoffman, David Budden, Will Dabney, Dan Horgan, Alistair Muldal, Nicolas Heess, and Timothy Lillicrap. Distributed distributional deterministic policy gradients. arXiv preprint arXiv:1804.08617, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.08617"
+        },
+        {
+            "id": "Beattie_et+al_2016_a",
+            "entry": "Charles Beattie, Joel Z Leibo, Denis Teplyashin, Tom Ward, Marcus Wainwright, Heinrich Kuttler, Andrew Lefrancq, Simon Green, V\u0131ctor Valdes, Amir Sadik, et al. Deepmind lab. arXiv preprint arXiv:1612.03801, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.03801"
+        },
+        {
+            "id": "Berkenkamp_et+al_2017_a",
+            "entry": "Felix Berkenkamp, Matteo Turchetta, Angela Schoellig, and Andreas Krause. Safe model-based reinforcement learning with stability guarantees. In Advances in Neural Information Processing Systems, pp. 908\u2013918, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Berkenkamp%2C%20Felix%20Turchetta%2C%20Matteo%20Schoellig%2C%20Angela%20Krause%2C%20Andreas%20Safe%20model-based%20reinforcement%20learning%20with%20stability%20guarantees%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Berkenkamp%2C%20Felix%20Turchetta%2C%20Matteo%20Schoellig%2C%20Angela%20Krause%2C%20Andreas%20Safe%20model-based%20reinforcement%20learning%20with%20stability%20guarantees%202017"
+        },
+        {
+            "id": "Brown_et+al_2018_a",
+            "entry": "Tom B Brown, Nicholas Carlini, Chiyuan Zhang, Catherine Olsson, Paul Christiano, and Ian Goodfellow. Unrestricted adversarial examples. arXiv preprint arXiv:1809.08352, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.08352"
+        },
+        {
+            "id": "Brownlees_et+al_2015_a",
+            "entry": "Christian Brownlees, Emilien Joly, Gabor Lugosi, et al. Empirical risk minimization for heavy-tailed losses. The Annals of Statistics, 43(6):2507\u20132536, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brownlees%2C%20Christian%20Joly%2C%20Emilien%20Lugosi%2C%20Gabor%20Empirical%20risk%20minimization%20for%20heavy-tailed%20losses%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brownlees%2C%20Christian%20Joly%2C%20Emilien%20Lugosi%2C%20Gabor%20Empirical%20risk%20minimization%20for%20heavy-tailed%20losses%202015"
+        },
+        {
+            "id": "Bucklew_2004_a",
+            "entry": "James Antonio Bucklew. Introduction to Rare Event Simulation. Springer New York, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bucklew%2C%20James%20Antonio%20Introduction%20to%20Rare%20Event%20Simulation%202004"
+        },
+        {
+            "id": "Chow_et+al_2018_a",
+            "entry": "Yinlam Chow, Ofir Nachum, Edgar Duenez-Guzman, and Mohammad Ghavamzadeh. A lyapunovbased approach to safe reinforcement learning. arXiv preprint arXiv:1805.07708, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07708"
+        },
+        {
+            "id": "Engstrom_et+al_2017_a",
+            "entry": "Logan Engstrom, Dimitris Tsipras, Ludwig Schmidt, and Aleksander Madry. A rotation and a translation suffice: Fooling cnns with simple transformations. arXiv preprint arXiv:1712.02779, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.02779"
+        },
+        {
+            "id": "Espeholt_et+al_2018_a",
+            "entry": "Lasse Espeholt, Hubert Soyer, Remi Munos, Karen Simonyan, Volodymir Mnih, Tom Ward, Yotam Doron, Vlad Firoiu, Tim Harley, Iain Dunning, et al. Impala: Scalable distributed deep-rl with importance weighted actor-learner architectures. arXiv preprint arXiv:1802.01561, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01561"
+        },
+        {
+            "id": "Frank_et+al_2008_a",
+            "entry": "Jordan Frank, Shie Mannor, and Doina Precup. Reinforcement learning in the presence of rare events. In ICML, pp. 336\u2013343, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frank%2C%20Jordan%20Mannor%2C%20Shie%20Precup%2C%20Doina%20Reinforcement%20learning%20in%20the%20presence%20of%20rare%20events%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frank%2C%20Jordan%20Mannor%2C%20Shie%20Precup%2C%20Doina%20Reinforcement%20learning%20in%20the%20presence%20of%20rare%20events%202008"
+        },
+        {
+            "id": "Garc_2015_a",
+            "entry": "Javier Garc\u0131a and Fernando Fernandez. A comprehensive survey on safe reinforcement learning. Journal of Machine Learning Research, 16:1437\u20131480, 2015. URL http://jmlr.org/papers/v16/garcia15a.html.",
+            "url": "http://jmlr.org/papers/v16/garcia15a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garc%C4%B1a%2C%20Javier%20Fernandez%2C%20Fernando%20A%20comprehensive%20survey%20on%20safe%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Gilmer_et+al_2018_a",
+            "entry": "Justin Gilmer, Ryan P Adams, Ian Goodfellow, David Andersen, and George E Dahl. Motivating the rules of the game for adversarial example research. arXiv preprint arXiv:1807.06732, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.06732"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. arXiv preprint arXiv:1412.6572, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Horgan_et+al_2018_a",
+            "entry": "Dan Horgan, John Quan, David Budden, Gabriel Barth-Maron, Matteo Hessel, Hado Van Hasselt, and David Silver. Distributed prioritized experience replay. arXiv preprint arXiv:1803.00933, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00933"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Sandy Huang, Nicolas Papernot, Ian Goodfellow, Yan Duan, and Pieter Abbeel. Adversarial attacks on neural network policies. arXiv preprint arXiv:1702.02284, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.02284"
+        },
+        {
+            "id": "Jaderberg_et+al_2017_a",
+            "entry": "Max Jaderberg, Valentin Dalibard, Simon Osindero, Wojciech M Czarnecki, Jeff Donahue, Ali Razavi, Oriol Vinyals, Tim Green, Iain Dunning, Karen Simonyan, et al. Population based training of neural networks. arXiv preprint arXiv:1711.09846, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09846"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Li_et+al_2013_a",
+            "entry": "Wentao Li, Zhiqiang Tan, and Rong Chen. Two-stage importance sampling with mixture proposals. Journal of the American Statistical Association, 108(504):1350\u20131365, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Wentao%20Tan%2C%20Zhiqiang%20Chen%2C%20Rong%20Two-stage%20importance%20sampling%20with%20mixture%20proposals%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Wentao%20Tan%2C%20Zhiqiang%20Chen%2C%20Rong%20Two-stage%20importance%20sampling%20with%20mixture%20proposals%202013"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Yen-Chen Lin, Zhang-Wei Hong, Yuan-Hong Liao, Meng-Li Shih, Ming-Yu Liu, and Min Sun. Tactics of adversarial attack on deep reinforcement learning agents. arXiv preprint arXiv:1703.06748, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.06748"
+        },
+        {
+            "id": "Madry_et+al_2017_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. arXiv preprint arXiv:1706.06083, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06083"
+        },
+        {
+            "id": "Mandlekar_et+al_2017_a",
+            "entry": "Ajay Mandlekar, Yuke Zhu, Animesh Garg, Li Fei-Fei, and Silvio Savarese. Adversarially robust policy learning: Active construction of physically-plausible perturbations. In IROS, pp. 3932\u2013 3939. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mandlekar%2C%20Ajay%20Zhu%2C%20Yuke%20Garg%2C%20Animesh%20Fei-Fei%2C%20Li%20Adversarially%20robust%20policy%20learning%3A%20Active%20construction%20of%20physically-plausible%20perturbations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mandlekar%2C%20Ajay%20Zhu%2C%20Yuke%20Garg%2C%20Animesh%20Fei-Fei%2C%20Li%20Adversarially%20robust%20policy%20learning%3A%20Active%20construction%20of%20physically-plausible%20perturbations%202017"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International conference on machine learning, pp. 1928\u20131937, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Moldovan_2012_a",
+            "entry": "Teodor Mihai Moldovan and Pieter Abbeel. Safe exploration in markov decision processes. arXiv preprint arXiv:1205.4810, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1205.4810"
+        },
+        {
+            "id": "Neufeld_et+al_2014_a",
+            "entry": "James. Neufeld, Andras Gyorgy, Dale Schuurmans, and Csaba Szepesvari. Adaptive Monte Carlo via bandit allocation. In ICML, pp. 1944\u20131952, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neufeld%2C%20James%20Gyorgy%2C%20Andras%20Schuurmans%2C%20Dale%20Szepesvari%2C%20Csaba%20Adaptive%20Monte%20Carlo%20via%20bandit%20allocation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neufeld%2C%20James%20Gyorgy%2C%20Andras%20Schuurmans%2C%20Dale%20Szepesvari%2C%20Csaba%20Adaptive%20Monte%20Carlo%20via%20bandit%20allocation%202014"
+        },
+        {
+            "id": "Kelly_et+al_2018_a",
+            "entry": "Matthew O\u2019 Kelly, Aman Sinha, Hongseok Namkoong, Russ Tedrake, and John C Duchi. Scalable end-to-end autonomous vehicle testing via rare-event simulation. In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and R. Garnett (eds.), Advances in Neural Information Processing Systems 31, pp. 9827\u20139838. Curran Associates, Inc., 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kelly%2C%20Matthew%20O.%E2%80%99%20Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Tedrake%2C%20Russ%20Scalable%20end-to-end%20autonomous%20vehicle%20testing%20via%20rare-event%20simulation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kelly%2C%20Matthew%20O.%E2%80%99%20Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Tedrake%2C%20Russ%20Scalable%20end-to-end%20autonomous%20vehicle%20testing%20via%20rare-event%20simulation%202018"
+        },
+        {
+            "id": "Pei_et+al_2017_a",
+            "entry": "Kexin Pei, Yinzhi Cao, Junfeng Yang, and Suman Jana. Deepxplore: Automated whitebox testing of deep learning systems. In Proceedings of the 26th Symposium on Operating Systems Principles, pp. 1\u201318. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pei%2C%20Kexin%20Cao%2C%20Yinzhi%20Yang%2C%20Junfeng%20Jana%2C%20Suman%20Deepxplore%3A%20Automated%20whitebox%20testing%20of%20deep%20learning%20systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pei%2C%20Kexin%20Cao%2C%20Yinzhi%20Yang%2C%20Junfeng%20Jana%2C%20Suman%20Deepxplore%3A%20Automated%20whitebox%20testing%20of%20deep%20learning%20systems%202017"
+        },
+        {
+            "id": "Peng_et+al_2017_a",
+            "entry": "Xue Bin Peng, Marcin Andrychowicz, Wojciech Zaremba, and Pieter Abbeel. Sim-to-real transfer of robotic control with dynamics randomization. CoRR, abs/1710.06537, 2017. URL http://arxiv.org/abs/1710.06537.",
+            "url": "http://arxiv.org/abs/1710.06537",
+            "arxiv_url": "https://arxiv.org/pdf/1710.06537"
+        },
+        {
+            "id": "Pinto_et+al_2017_a",
+            "entry": "Lerrel Pinto, Marcin Andrychowicz, Peter Welinder, Wojciech Zaremba, and Pieter Abbeel. Asymmetric actor critic for image-based robot learning. CoRR, abs/1710.06542, 2017. URL http://arxiv.org/abs/1710.06542.",
+            "url": "http://arxiv.org/abs/1710.06542",
+            "arxiv_url": "https://arxiv.org/pdf/1710.06542"
+        },
+        {
+            "id": "Pritzel_et+al_2017_a",
+            "entry": "Alexander Pritzel, Benigno Uria, Sriram Srinivasan, Adria Puigdomenech, Oriol Vinyals, Demis Hassabis, Daan Wierstra, and Charles Blundell. Neural episodic control. arXiv preprint arXiv:1703.01988, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01988"
+        },
+        {
+            "id": "Rubino_2009_a",
+            "entry": "Gerardo Rubino and Bruno Tuffin (eds.). Rare Event Simulation using Monte Carlo Methods. John Wiley & Sons, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubino%2C%20Gerardo%20Bruno%20Tuffin%20%28eds.%29.%20Rare%20Event%20Simulation%20using%20Monte%20Carlo%20Methods%202009"
+        },
+        {
+            "id": "Rubinstein_1997_a",
+            "entry": "Reuven Y Rubinstein. Optimization of computer simulation models with rare events. European Journal of Operational Research, 99(1):89\u2013112, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubinstein%2C%20Reuven%20Y.%20Optimization%20of%20computer%20simulation%20models%20with%20rare%20events%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rubinstein%2C%20Reuven%20Y.%20Optimization%20of%20computer%20simulation%20models%20with%20rare%20events%201997"
+        },
+        {
+            "id": "Rubinstein_2017_a",
+            "entry": "Reuven Y. Rubinstein and Dirk P. Kroese. Simulation and the Monte Carlo method. Wiley, 3 edition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubinstein%2C%20Reuven%20Y.%20Kroese%2C%20Dirk%20P.%20Simulation%20and%20the%20Monte%20Carlo%20method%202017"
+        },
+        {
+            "id": "Schmerling_2017_a",
+            "entry": "Edward Schmerling and Marco Pavone. Evaluating trajectory collision probability through adaptive importance sampling for safe motion planning. In Robotics: Science and Systems 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmerling%2C%20Edward%20Pavone%2C%20Marco%20Evaluating%20trajectory%20collision%20probability%20through%20adaptive%20importance%20sampling%20for%20safe%20motion%20planning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmerling%2C%20Edward%20Pavone%2C%20Marco%20Evaluating%20trajectory%20collision%20probability%20through%20adaptive%20importance%20sampling%20for%20safe%20motion%20planning%202017"
+        },
+        {
+            "id": "Schott_et+al_2018_a",
+            "entry": "Lukas Schott, Jonas Rauber, Wieland Brendel, and Matthias Bethge. Robust perception through analysis by synthesis. arXiv preprint arXiv:1805.09190, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09190"
+        },
+        {
+            "id": "Shalev-Shwartz_et+al_2017_a",
+            "entry": "Shai Shalev-Shwartz, Shaked Shammah, and Amnon Shashua. On a formal model of safe and scalable self-driving cars. arXiv preprint arXiv:1708.06374, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.06374"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Song_et+al_2018_a",
+            "entry": "Yang Song, Rui Shu, Nate Kushman, and Stefano Ermon. Generative adversarial examples. arXiv preprint arXiv:1805.07894, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07894"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tassa_et+al_2018_a",
+            "entry": "Yuval Tassa, Yotam Doron, Alistair Muldal, Tom Erez, Yazhe Li, Diego de Las Casas, David Budden, Abbas Abdolmaleki, Josh Merel, Andrew Lefrancq, et al. Deepmind control suite. arXiv preprint arXiv:1801.00690, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.00690"
+        },
+        {
+            "id": "Tian_et+al_2018_a",
+            "entry": "Yuchi Tian, Kexin Pei, Suman Jana, and Baishakhi Ray. Deeptest: Automated testing of deepneural-network-driven autonomous cars. In Proceedings of the 40th International Conference on Software Engineering, pp. 303\u2013314. ACM, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tian%2C%20Yuchi%20Pei%2C%20Kexin%20Jana%2C%20Suman%20Ray%2C%20Baishakhi%20Deeptest%3A%20Automated%20testing%20of%20deepneural-network-driven%20autonomous%20cars%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tian%2C%20Yuchi%20Pei%2C%20Kexin%20Jana%2C%20Suman%20Ray%2C%20Baishakhi%20Deeptest%3A%20Automated%20testing%20of%20deepneural-network-driven%20autonomous%20cars%202018"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 5026\u2013 5033. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Turnovsky_1976_a",
+            "entry": "Stephen J. Turnovsky. Optimal stabilization policies for stochastic linear systems: The case of correlated multiplicative and additive disturbances. The Review of Economic Studies, 43(1):191\u2013 194, 1976. doi: 10.2307/2296614. URL http://dx.doi.org/10.2307/2296614.",
+            "crossref": "https://dx.doi.org/10.2307/2296614",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.2307/2296614"
+        },
+        {
+            "id": "Valiant_1984_a",
+            "entry": "Leslie G Valiant. A theory of the learnable. Communications of the ACM, 27(11):1134\u20131142, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Valiant%2C%20Leslie%20G.%20A%20theory%20of%20the%20learnable%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Valiant%2C%20Leslie%20G.%20A%20theory%20of%20the%20learnable%201984"
+        },
+        {
+            "id": "Berg_et+al_2011_a",
+            "entry": "Jur Van Den Berg, Pieter Abbeel, and Ken Goldberg. Lqg-mp: Optimized path planning for robots with motion uncertainty and imperfect state information. The International Journal of Robotics Research, 30(7):895\u2013913, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Berg%2C%20Jur%20Van%20Den%20Abbeel%2C%20Pieter%20Goldberg%2C%20Ken%20Lqg-mp%3A%20Optimized%20path%20planning%20for%20robots%20with%20motion%20uncertainty%20and%20imperfect%20state%20information%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Berg%2C%20Jur%20Van%20Den%20Abbeel%2C%20Pieter%20Goldberg%2C%20Ken%20Lqg-mp%3A%20Optimized%20path%20planning%20for%20robots%20with%20motion%20uncertainty%20and%20imperfect%20state%20information%202011"
+        },
+        {
+            "id": "Vecer_et+al_2017_a",
+            "entry": "Matej Vecer\u0131k, Todd Hester, Jonathan Scholz, Fumin Wang, Olivier Pietquin, Bilal Piot, Nicolas Heess, Thomas Rothorl, Thomas Lampe, and Martin A Riedmiller. Leveraging demonstrations for deep reinforcement learning on robotics problems with sparse rewards. CoRR, abs/1707.08817, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.08817"
+        },
+        {
+            "id": "Webb_et+al_2019_a",
+            "entry": "Stefan Webb, Tom Rainforth, Yee Whye Teh, and M. Pawan Kumar. Statistical verification of neural networks. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=S1xcx3C5FX.",
+            "url": "https://openreview.net/forum?id=S1xcx3C5FX",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Webb%2C%20Stefan%20Rainforth%2C%20Tom%20Teh%2C%20Yee%20Whye%20Kumar%2C%20M.Pawan%20Statistical%20verification%20of%20neural%20networks%202019"
+        },
+        {
+            "id": "Wymann_et+al_2000_a",
+            "entry": "Bernhard Wymann, Eric Espie, Christophe Guionneau, Christos Dimitrakakis, Remi Coulom, and Andrew Sumner. Torcs, the open racing car simulator. Software available at http://torcs.sourceforge.net, 4:6, 2000.",
+            "url": "http://torcs.sourceforge.net",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wymann%2C%20Bernhard%20Espie%2C%20Eric%20Guionneau%2C%20Christophe%20Dimitrakakis%2C%20Christos%20Torcs%2C%20the%20open%20racing%20car%20simulator%202000"
+        },
+        {
+            "id": "Zhu_et+al_2018_a",
+            "entry": "Yuke Zhu, Ziyu Wang, Josh Merel, Andrei A. Rusu, Tom Erez, Serkan Cabi, Saran Tunyasuvunakool, Janos Kramar, Raia Hadsell, Nando de Freitas, and Nicolas Heess. Reinforcement and imitation learning for diverse visuomotor skills. CoRR, abs/1802.09564, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09564"
+        },
+        {
+            "id": "The_1984_a",
+            "entry": "The standard justification for this approach is that with high probability, the empirical risk is close to the true expected risk (Valiant, 1984). If 0 \u2264 (\u00b7) \u2264 a, then Hoeffding\u2019s inequality yields",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20standard%20justification%20for%20this%20approach%20is%20that%20with%20high%20probability%20the%20empirical%20risk%20is%20close%20to%20the%20true%20expected%20risk%20Valiant%201984%20If%200%20%20%20%20a%20then%20Hoeffdings%20inequality%20yields"
+        },
+        {
+            "id": "In_2018_a",
+            "entry": "In many commonly studied settings, such as classification with the 0 \u2212 1 loss, or reinforcement learning with [0, 1]-bounded rewards and fixed episode lengths (Tassa et al., 2018; Beattie et al., 2016), these bounds guarantee fairly good efficiency. However, for very heavy-tailed losses, these bounds become very weak. Ensuring a constant additive error requires n = O(a2), and error up to a constant multiple of a still requires n = O(a) examples. Using the self-driving car example from Section 1, consider a car going on many 1-mile-long trips. Due to the extremely negative rewards associated with crashes, achieving a fixed error bound of requires 1016 more trips than would otherwise be necessary if negative rewards for crashes were bounded to the same range as normal operation.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20many%20commonly%20studied%20settings%20such%20as%20classification%20with%20the%200%20%201%20loss%20or%20reinforcement%20learning%20with%200%201bounded%20rewards%20and%20fixed%20episode%20lengths%20Tassa%20et%20al%202018%20Beattie%20et%20al%202016%20these%20bounds%20guarantee%20fairly%20good%20efficiency%20However%20for%20very%20heavytailed%20losses%20these%20bounds%20become%20very%20weak%20Ensuring%20a%20constant%20additive%20error%20requires%20n%20%20Oa2%20and%20error%20up%20to%20a%20constant%20multiple%20of%20a%20still%20requires%20n%20%20Oa%20examples%20Using%20the%20selfdriving%20car%20example%20from%20Section%201%20consider%20a%20car%20going%20on%20many%201milelong%20trips%20Due%20to%20the%20extremely%20negative%20rewards%20associated%20with%20crashes%20achieving%20a%20fixed%20error%20bound%20of%20requires%201016%20more%20trips%20than%20would%20otherwise%20be%20necessary%20if%20negative%20rewards%20for%20crashes%20were%20bounded%20to%20the%20same%20range%20as%20normal%20operation",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20many%20commonly%20studied%20settings%20such%20as%20classification%20with%20the%200%20%201%20loss%20or%20reinforcement%20learning%20with%200%201bounded%20rewards%20and%20fixed%20episode%20lengths%20Tassa%20et%20al%202018%20Beattie%20et%20al%202016%20these%20bounds%20guarantee%20fairly%20good%20efficiency%20However%20for%20very%20heavytailed%20losses%20these%20bounds%20become%20very%20weak%20Ensuring%20a%20constant%20additive%20error%20requires%20n%20%20Oa2%20and%20error%20up%20to%20a%20constant%20multiple%20of%20a%20still%20requires%20n%20%20Oa%20examples%20Using%20the%20selfdriving%20car%20example%20from%20Section%201%20consider%20a%20car%20going%20on%20many%201milelong%20trips%20Due%20to%20the%20extremely%20negative%20rewards%20associated%20with%20crashes%20achieving%20a%20fixed%20error%20bound%20of%20requires%201016%20more%20trips%20than%20would%20otherwise%20be%20necessary%20if%20negative%20rewards%20for%20crashes%20were%20bounded%20to%20the%20same%20range%20as%20normal%20operation"
+        },
+        {
+            "id": "Intuitively_2015_a",
+            "entry": "Intuitively, because very costly events may occur with a small probability, random sampling is unlikely to detect these failure modes unless we use a very large number of random samples. Note that for an agent with probability p of failure, limp\u21920+(1 \u2212 p)c/p = e\u2212c. Thus, for small p, even with 1/p experiments, there is a > 35% chance the empirical estimate will detect no failures at all, even though for a sufficiently catastrophic failure, this could dominate the overall expected risk. While the exact bound on the error in the empirical estimate may depend on the particular estimator and concentration inequalities being used (Brownlees et al., 2015; Audibert et al., 2011), any approach relying solely on uninformed random sampling will face similar issues.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Intuitively%20because%20very%20costly%20events%20may%20occur%20with%20a%20small%20probability%2C%20random%20sampling%20is%20unlikely%20to%20detect%20these%20failure%20modes%20unless%20we%20use%20a%20very%20large%20number%20of%20random%20samples.%20Note%20that%20for%20an%20agent%20with%20probability%20p%20of%20failure%2C%20limp%E2%86%920%2B%281%20%E2%88%92%20p%29c/p%20%3D%20e%E2%88%92c.%20Thus%2C%20for%20small%20p%2C%20even%20with%201/p%20experiments%2C%20there%20is%20a%20%3E%2035%25%20chance%20the%20empirical%20estimate%20will%20detect%20no%20failures%20at%20all%2C%20even%20though%20for%20a%20sufficiently%20catastrophic%20failure%2C%20this%20could%20dominate%20the%20overall%20expected%20risk.%20While%20the%20exact%20bound%20on%20the%20error%20in%20the%20empirical%20estimate%20may%20depend%20on%20the%20particular%20estimator%20and%20concentration%20inequalities%20being%20used%20%28Brownlees%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Intuitively%20because%20very%20costly%20events%20may%20occur%20with%20a%20small%20probability%2C%20random%20sampling%20is%20unlikely%20to%20detect%20these%20failure%20modes%20unless%20we%20use%20a%20very%20large%20number%20of%20random%20samples.%20Note%20that%20for%20an%20agent%20with%20probability%20p%20of%20failure%2C%20limp%E2%86%920%2B%281%20%E2%88%92%20p%29c/p%20%3D%20e%E2%88%92c.%20Thus%2C%20for%20small%20p%2C%20even%20with%201/p%20experiments%2C%20there%20is%20a%20%3E%2035%25%20chance%20the%20empirical%20estimate%20will%20detect%20no%20failures%20at%20all%2C%20even%20though%20for%20a%20sufficiently%20catastrophic%20failure%2C%20this%20could%20dominate%20the%20overall%20expected%20risk.%20While%20the%20exact%20bound%20on%20the%20error%20in%20the%20empirical%20estimate%20may%20depend%20on%20the%20particular%20estimator%20and%20concentration%20inequalities%20being%20used%20%28Brownlees%202015"
+        },
+        {
+            "id": "For_2000_a",
+            "entry": "For the Driving domain, we use the TORCS 3D car racing game (Wymann et al., 2000) with settings corresponding to the \u201cFast car, no bots\u201d setting in Mnih et al. (2016). At each step, the agent receives an 15-dimensional observation vector summarizing its position, velocity, and the local geometry of the track. The agent receives a reward proportional to its velocity along the center of the track at its current position, while collisions with a wall terminate the episode and provide a large negative reward.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20the%20Driving%20domain%20we%20use%20the%20TORCS%203D%20car%20racing%20game%20Wymann%20et%20al%202000%20with%20settings%20corresponding%20to%20the%20Fast%20car%20no%20bots%20setting%20in%20Mnih%20et%20al%202016%20At%20each%20step%20the%20agent%20receives%20an%2015dimensional%20observation%20vector%20summarizing%20its%20position%20velocity%20and%20the%20local%20geometry%20of%20the%20track%20The%20agent%20receives%20a%20reward%20proportional%20to%20its%20velocity%20along%20the%20center%20of%20the%20track%20at%20its%20current%20position%20while%20collisions%20with%20a%20wall%20terminate%20the%20episode%20and%20provide%20a%20large%20negative%20reward",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20the%20Driving%20domain%20we%20use%20the%20TORCS%203D%20car%20racing%20game%20Wymann%20et%20al%202000%20with%20settings%20corresponding%20to%20the%20Fast%20car%20no%20bots%20setting%20in%20Mnih%20et%20al%202016%20At%20each%20step%20the%20agent%20receives%20an%2015dimensional%20observation%20vector%20summarizing%20its%20position%20velocity%20and%20the%20local%20geometry%20of%20the%20track%20The%20agent%20receives%20a%20reward%20proportional%20to%20its%20velocity%20along%20the%20center%20of%20the%20track%20at%20its%20current%20position%20while%20collisions%20with%20a%20wall%20terminate%20the%20episode%20and%20provide%20a%20large%20negative%20reward"
+        },
+        {
+            "id": "For_2018_b",
+            "entry": "For the Humanoid domain, we use the Humanoid Stand task from Tassa et al. (2018). At each step, the agent receives a 67-dimensional observation vector summarizing its joint angles and velocities, and the locations of various joints in Cartesian coordinates. The agent receives a reward proportional to its head height. If the head height is below 0.7m, the episode is terminated and the agent receives a large negative reward.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20the%20Humanoid%20domain%20we%20use%20the%20Humanoid%20Stand%20task%20from%20Tassa%20et%20al%202018%20At%20each%20step%20the%20agent%20receives%20a%2067dimensional%20observation%20vector%20summarizing%20its%20joint%20angles%20and%20velocities%20and%20the%20locations%20of%20various%20joints%20in%20Cartesian%20coordinates%20The%20agent%20receives%20a%20reward%20proportional%20to%20its%20head%20height%20If%20the%20head%20height%20is%20below%2007m%20the%20episode%20is%20terminated%20and%20the%20agent%20receives%20a%20large%20negative%20reward",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20the%20Humanoid%20domain%20we%20use%20the%20Humanoid%20Stand%20task%20from%20Tassa%20et%20al%202018%20At%20each%20step%20the%20agent%20receives%20a%2067dimensional%20observation%20vector%20summarizing%20its%20joint%20angles%20and%20velocities%20and%20the%20locations%20of%20various%20joints%20in%20Cartesian%20coordinates%20The%20agent%20receives%20a%20reward%20proportional%20to%20its%20head%20height%20If%20the%20head%20height%20is%20below%2007m%20the%20episode%20is%20terminated%20and%20the%20agent%20receives%20a%20large%20negative%20reward"
+        },
+        {
+            "id": "On_2018_c",
+            "entry": "On Driving, we use an asynchronous batched implementation of Advantage Actor-Critic, using a V-trace correction, following Espeholt et al. (2018). We use Population-Based Training, and evolve the learning rate and entropy cost weights Jaderberg et al. (2017), with a population size of 5. Each learner is trained for 1e9 actor steps, which takes 4 hours distributed over 100 CPU workers and a single GPU learner. Since episodes are at most 3600 steps, this equates to roughly 270e3 episodes per learner, and 1.3e6 episodes for the entire population. At test time, we take the most likely predicted action, rather than sampling, as we found it decreased the failure probability by roughly half. Additionally, we used a hand-crafted form of adversarial training by training on a more difficult distribution of track shapes, with sharper turns than the original distribution, since this decreased failure probability roughly 20-fold.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=On%20Driving%20we%20use%20an%20asynchronous%20batched%20implementation%20of%20Advantage%20ActorCritic%20using%20a%20Vtrace%20correction%20following%20Espeholt%20et%20al%202018%20We%20use%20PopulationBased%20Training%20and%20evolve%20the%20learning%20rate%20and%20entropy%20cost%20weights%20Jaderberg%20et%20al%202017%20with%20a%20population%20size%20of%205%20Each%20learner%20is%20trained%20for%201e9%20actor%20steps%20which%20takes%204%20hours%20distributed%20over%20100%20CPU%20workers%20and%20a%20single%20GPU%20learner%20Since%20episodes%20are%20at%20most%203600%20steps%20this%20equates%20to%20roughly%20270e3%20episodes%20per%20learner%20and%2013e6%20episodes%20for%20the%20entire%20population%20At%20test%20time%20we%20take%20the%20most%20likely%20predicted%20action%20rather%20than%20sampling%20as%20we%20found%20it%20decreased%20the%20failure%20probability%20by%20roughly%20half%20Additionally%20we%20used%20a%20handcrafted%20form%20of%20adversarial%20training%20by%20training%20on%20a%20more%20difficult%20distribution%20of%20track%20shapes%20with%20sharper%20turns%20than%20the%20original%20distribution%20since%20this%20decreased%20failure%20probability%20roughly%2020fold",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=On%20Driving%20we%20use%20an%20asynchronous%20batched%20implementation%20of%20Advantage%20ActorCritic%20using%20a%20Vtrace%20correction%20following%20Espeholt%20et%20al%202018%20We%20use%20PopulationBased%20Training%20and%20evolve%20the%20learning%20rate%20and%20entropy%20cost%20weights%20Jaderberg%20et%20al%202017%20with%20a%20population%20size%20of%205%20Each%20learner%20is%20trained%20for%201e9%20actor%20steps%20which%20takes%204%20hours%20distributed%20over%20100%20CPU%20workers%20and%20a%20single%20GPU%20learner%20Since%20episodes%20are%20at%20most%203600%20steps%20this%20equates%20to%20roughly%20270e3%20episodes%20per%20learner%20and%2013e6%20episodes%20for%20the%20entire%20population%20At%20test%20time%20we%20take%20the%20most%20likely%20predicted%20action%20rather%20than%20sampling%20as%20we%20found%20it%20decreased%20the%20failure%20probability%20by%20roughly%20half%20Additionally%20we%20used%20a%20handcrafted%20form%20of%20adversarial%20training%20by%20training%20on%20a%20more%20difficult%20distribution%20of%20track%20shapes%20with%20sharper%20turns%20than%20the%20original%20distribution%20since%20this%20decreased%20failure%20probability%20roughly%2020fold"
+        },
+        {
+            "id": "On_2018_d",
+            "entry": "On Humanoid, we use a D4PG agent, using the same hyperparameters as Barth-Maron et al. (2018). The agent is trained for 4e6 learner steps, which corresponds to between 250e6 and 300e6 actor steps, which takes 8 hours distributed over 32 CPU workers and a single GPU learner. Since episodes are at most 1000 steps, this equates to roughly 275e3 episodes. We use different exploration rates on actors, as in Horgan et al. (2018), with noise drawn from a normal distribution with standard deviation \u03c3 evenly spaced from 0.0 to 0.4. We additionally use demonstrations from the agent described in the previous section, which was used for defining the initial pose distribution, following Vecer\u0131k et al. (2017). In particular, we use 1000 demonstration trajectories, and use demonstration data for half of each batch to update both the critic and policy networks. This results in a roughly 4-fold improvement in the failure rate.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=On%20Humanoid%20we%20use%20a%20D4PG%20agent%20using%20the%20same%20hyperparameters%20as%20BarthMaron%20et%20al%202018%20The%20agent%20is%20trained%20for%204e6%20learner%20steps%20which%20corresponds%20to%20between%20250e6%20and%20300e6%20actor%20steps%20which%20takes%208%20hours%20distributed%20over%2032%20CPU%20workers%20and%20a%20single%20GPU%20learner%20Since%20episodes%20are%20at%20most%201000%20steps%20this%20equates%20to%20roughly%20275e3%20episodes%20We%20use%20different%20exploration%20rates%20on%20actors%20as%20in%20Horgan%20et%20al%202018%20with%20noise%20drawn%20from%20a%20normal%20distribution%20with%20standard%20deviation%20%CF%83%20evenly%20spaced%20from%2000%20to%2004%20We%20additionally%20use%20demonstrations%20from%20the%20agent%20described%20in%20the%20previous%20section%20which%20was%20used%20for%20defining%20the%20initial%20pose%20distribution%20following%20Vecer%C4%B1k%20et%20al%202017%20In%20particular%20we%20use%201000%20demonstration%20trajectories%20and%20use%20demonstration%20data%20for%20half%20of%20each%20batch%20to%20update%20both%20the%20critic%20and%20policy%20networks%20This%20results%20in%20a%20roughly%204fold%20improvement%20in%20the%20failure%20rate",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=On%20Humanoid%20we%20use%20a%20D4PG%20agent%20using%20the%20same%20hyperparameters%20as%20BarthMaron%20et%20al%202018%20The%20agent%20is%20trained%20for%204e6%20learner%20steps%20which%20corresponds%20to%20between%20250e6%20and%20300e6%20actor%20steps%20which%20takes%208%20hours%20distributed%20over%2032%20CPU%20workers%20and%20a%20single%20GPU%20learner%20Since%20episodes%20are%20at%20most%201000%20steps%20this%20equates%20to%20roughly%20275e3%20episodes%20We%20use%20different%20exploration%20rates%20on%20actors%20as%20in%20Horgan%20et%20al%202018%20with%20noise%20drawn%20from%20a%20normal%20distribution%20with%20standard%20deviation%20%CF%83%20evenly%20spaced%20from%2000%20to%2004%20We%20additionally%20use%20demonstrations%20from%20the%20agent%20described%20in%20the%20previous%20section%20which%20was%20used%20for%20defining%20the%20initial%20pose%20distribution%20following%20Vecer%C4%B1k%20et%20al%202017%20In%20particular%20we%20use%201000%20demonstration%20trajectories%20and%20use%20demonstration%20data%20for%20half%20of%20each%20batch%20to%20update%20both%20the%20critic%20and%20policy%20networks%20This%20results%20in%20a%20roughly%204fold%20improvement%20in%20the%20failure%20rate"
+        },
+        {
+            "id": "When_2014_a",
+            "entry": "When constructing the training datasets, we ignore the beginning of training during which the agent fails very frequently. This amounts to using the last 150, 000 episodes of data on Driving and last 200, 000 on Humanoid. To include information about the training iteration of the agent, we simply include a single real value, the current training iteration divided by the maximum number of training iterations. Similarly, for noise applied to the policy, we include the amount of noise divided by the maximum amount of noise. These are all concatenated before applying the MLP. We train both AVF models to minimize the cross-entropy loss, with the Adam optimizer (Kingma & Ba, 2014), for 20, 000 and 40, 000 iterations on Driving and Humanoid respectively, which requires 4.5 and 50 minutes respectively on a single GPU.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=When%20constructing%20the%20training%20datasets%20we%20ignore%20the%20beginning%20of%20training%20during%20which%20the%20agent%20fails%20very%20frequently%20This%20amounts%20to%20using%20the%20last%20150%20000%20episodes%20of%20data%20on%20Driving%20and%20last%20200%20000%20on%20Humanoid%20To%20include%20information%20about%20the%20training%20iteration%20of%20the%20agent%20we%20simply%20include%20a%20single%20real%20value%20the%20current%20training%20iteration%20divided%20by%20the%20maximum%20number%20of%20training%20iterations%20Similarly%20for%20noise%20applied%20to%20the%20policy%20we%20include%20the%20amount%20of%20noise%20divided%20by%20the%20maximum%20amount%20of%20noise%20These%20are%20all%20concatenated%20before%20applying%20the%20MLP%20We%20train%20both%20AVF%20models%20to%20minimize%20the%20crossentropy%20loss%20with%20the%20Adam%20optimizer%20Kingma%20%20Ba%202014%20for%2020%20000%20and%2040%20000%20iterations%20on%20Driving%20and%20Humanoid%20respectively%20which%20requires%2045%20and%2050%20minutes%20respectively%20on%20a%20single%20GPU",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=When%20constructing%20the%20training%20datasets%20we%20ignore%20the%20beginning%20of%20training%20during%20which%20the%20agent%20fails%20very%20frequently%20This%20amounts%20to%20using%20the%20last%20150%20000%20episodes%20of%20data%20on%20Driving%20and%20last%20200%20000%20on%20Humanoid%20To%20include%20information%20about%20the%20training%20iteration%20of%20the%20agent%20we%20simply%20include%20a%20single%20real%20value%20the%20current%20training%20iteration%20divided%20by%20the%20maximum%20number%20of%20training%20iterations%20Similarly%20for%20noise%20applied%20to%20the%20policy%20we%20include%20the%20amount%20of%20noise%20divided%20by%20the%20maximum%20amount%20of%20noise%20These%20are%20all%20concatenated%20before%20applying%20the%20MLP%20We%20train%20both%20AVF%20models%20to%20minimize%20the%20crossentropy%20loss%20with%20the%20Adam%20optimizer%20Kingma%20%20Ba%202014%20for%2020%20000%20and%2040%20000%20iterations%20on%20Driving%20and%20Humanoid%20respectively%20which%20requires%2045%20and%2050%20minutes%20respectively%20on%20a%20single%20GPU"
+        },
+        {
+            "id": "On_2017_b",
+            "entry": "On Driving, the AVF architecture uses a 4-layer MLP with 32 hidden units per layer and a single output, with a sigmoid activation to convert the output to a probability. On Humanoid, since failures of the most robust agents are very rare, we use a simplified Differentiable Neural Dictionary architecture (Pritzel et al., 2017) to more effectively leverage the limited number of positive training examples. In particular, to classify an input x, the model first retrieves the K = 32 nearest neighbors and their corresponding labels (xi, yi) from the training set. The final prediction is then a weighted average (b + i:yi=1 wi)/(2b + i wi), where b is a learned pseudocount, which allows the model to make uncertain predictions when all weights are close to 0. To compute weights wi, each point is embedded by a 1-layer MLP f into 16 dimensions, and the weight of each neighbor is computed wi = \u03ba(f (x), f (xi)), where \u03ba is a Gaussian kernel, \u03ba(x, y) = exp(",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=On%20Driving%20the%20AVF%20architecture%20uses%20a%204layer%20MLP%20with%2032%20hidden%20units%20per%20layer%20and%20a%20single%20output%20with%20a%20sigmoid%20activation%20to%20convert%20the%20output%20to%20a%20probability%20On%20Humanoid%20since%20failures%20of%20the%20most%20robust%20agents%20are%20very%20rare%20we%20use%20a%20simplified%20Differentiable%20Neural%20Dictionary%20architecture%20Pritzel%20et%20al%202017%20to%20more%20effectively%20leverage%20the%20limited%20number%20of%20positive%20training%20examples%20In%20particular%20to%20classify%20an%20input%20x%20the%20model%20first%20retrieves%20the%20K%20%2032%20nearest%20neighbors%20and%20their%20corresponding%20labels%20xi%20yi%20from%20the%20training%20set%20The%20final%20prediction%20is%20then%20a%20weighted%20average%20b%20%20iyi1%20wi2b%20%20i%20wi%20where%20b%20is%20a%20learned%20pseudocount%20which%20allows%20the%20model%20to%20make%20uncertain%20predictions%20when%20all%20weights%20are%20close%20to%200%20To%20compute%20weights%20wi%20each%20point%20is%20embedded%20by%20a%201layer%20MLP%20f%20into%2016%20dimensions%20and%20the%20weight%20of%20each%20neighbor%20is%20computed%20wi%20%20%CE%BAf%20x%20f%20xi%20where%20%CE%BA%20is%20a%20Gaussian%20kernel%20%CE%BAx%20y%20%20exp"
+        }
+    ]
+}

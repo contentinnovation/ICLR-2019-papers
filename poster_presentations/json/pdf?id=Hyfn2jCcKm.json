@@ -1,0 +1,291 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "SOLVING THE RUBIK\u2019S CUBE WITH APPROXIMATE POLICY ITERATION",
+        "author": "Stephen McAleer, Department of Statistics University of California, Irvine smcaleer@uci.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Hyfn2jCcKm"
+        },
+        "abstract": "Recently, Approximate Policy Iteration (API) algorithms have achieved superhuman proficiency in two-player zero-sum games such as Go, Chess, and Shogi without human data. These API algorithms iterate between two policies: a slow policy (tree search), and a fast policy (a neural network). In these two-player games, a reward is always received at the end of the game. However, the Rubik\u2019s Cube has only a single solved state, and episodes are not guaranteed to terminate. This poses a major problem for these API algorithms since they rely on the reward received at the end of the game. We introduce Autodidactic Iteration: an API algorithm that overcomes the problem of sparse rewards by training on a distribution of states that allows the reward to propagate from the goal state to states farther away. Autodidactic Iteration is able to learn how to solve the Rubik\u2019s Cube without relying on human data. Our algorithm is able to solve 100% of randomly scrambled cubes while achieving a median solve length of 30 moves \u2014 less than or equal to solvers that employ human domain knowledge."
+    },
+    "keywords": [
+        {
+            "term": "breadth-first search",
+            "url": "https://en.wikipedia.org/wiki/breadth-first_search"
+        },
+        {
+            "term": "policy iteration",
+            "url": "https://en.wikipedia.org/wiki/policy_iteration"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "tree search",
+            "url": "https://en.wikipedia.org/wiki/tree_search"
+        },
+        {
+            "term": "rubiks cube",
+            "url": "https://en.wikipedia.org/wiki/rubiks_cube"
+        },
+        {
+            "term": "function approximation",
+            "url": "https://en.wikipedia.org/wiki/function_approximation"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "API": "Approximate Policy Iteration",
+        "RL": "Reinforcement Learning",
+        "ADI": "Autodidactic Iteration",
+        "IDA*": "Iterative Deepening A*",
+        "BFS": "breadth-first search",
+        "At": "are updated: Wst"
+    },
+    "highlights": [
+        "The Rubik\u2019s Cube is a classic combination game that poses unique and interesting challenges for AI and machine learning",
+        "breadth-first search removes any trivial cycles in the path such as a move followed by its inverse, but it improves solution lengths by finding a slightly more efficient path between states that are within 3 moves of each other",
+        "DeepCube is based on similar principles as AlphaZero and ExIt, these methods receive their reward when the game reaches a terminal state, which is guaranteed to occur given enough play time",
+        "DeepCube addresses this by selecting a state distribution for the training set that allows the reward to be propagated from the terminal state to other states",
+        "The Rubik\u2019s Cube can be thought of as a classical planning problem. Such as Dijkstra\u2019s algorithm, would require an infeasible amount of memory to work on environments a state space as large as the Rubik\u2019s Cube, we show that Dual Policy Iteration can find a solution path in such an environment",
+        "Many machine learning algorithms do not reason about problems but instead use pattern recognition to perform tasks that are intuitive to humans, such as object recognition"
+    ],
+    "key_statements": [
+        "The Rubik\u2019s Cube is a classic combination game that poses unique and interesting challenges for AI and machine learning",
+        "\u0398 \u2190 train \u03b8\u2190\u03b8 until iterations = M ; a solution is presented by <a class=\"ref-link\" id=\"cBoyan_1995_a\" href=\"#rBoyan_1995_a\">Boyan & Moore (1995</a>), who only train the approximate value function on a subset of support states, whose value has been explicitly computed via tree search or similar methods",
+        "We employ an asynchronous Monte Carlo Tree Search augmented with our trained neural network f\u03b8 to solve the cube from a given starting state s0",
+        "Because of its general-purpose nature, it often finds a longer solution compared to the other solvers",
+        "We compare DeepCube against Naive DeepCube to determine the benefit of performing the breadth-first search on our MCTS tree",
+        "We find that the breadth-first search has a slight, but consistent, performance gain over the MCTS path (\u22123 median solution length)",
+        "breadth-first search removes any trivial cycles in the path such as a move followed by its inverse, but it improves solution lengths by finding a slightly more efficient path between states that are within 3 moves of each other",
+        "We instead evaluate the optimality of solutions found by DeepCube by comparing it to Korf on cubes closer to solution",
+        "DeepCube performs much more consistently for close cubes compared to Kociemba, and it almost matches the performance of Korf",
+        "The median solve length for both DeepCube and Korf is 13 moves, and DeepCube matches the optimal path found by Korf in 74% of cases",
+        "DeepCube seems to have trouble with a small selection of the cubes that results in several solutions being longer than 15 moves",
+        "Note that Korf has one outlier that is above 15 moves",
+        "Our MCTS algorithm expands an average of only 7,823 nodes with a maximum of 24,175 expanded nodes on the longest running sample. This is why DeepCube is able to solve fully scrambled cubes much faster than Korf. This small amount of nodes explored means that the algorithm can potentially be more efficient with an implementation that better exploits parallel processing",
+        "DeepCube is based on similar principles as AlphaZero and ExIt, these methods receive their reward when the game reaches a terminal state, which is guaranteed to occur given enough play time",
+        "DeepCube addresses this by selecting a state distribution for the training set that allows the reward to be propagated from the terminal state to other states",
+        "The Rubik\u2019s Cube can be thought of as a classical planning problem. Such as Dijkstra\u2019s algorithm, would require an infeasible amount of memory to work on environments a state space as large as the Rubik\u2019s Cube, we show that Dual Policy Iteration can find a solution path in such an environment",
+        "Many machine learning algorithms do not reason about problems but instead use pattern recognition to perform tasks that are intuitive to humans, such as object recognition",
+        "DeepCube is able to teach itself how to reason in order to solve a complex environment with only one positive reward state using pure reinforcement learning"
+    ],
+    "summary": [
+        "The Rubik\u2019s Cube is a classic combination game that poses unique and interesting challenges for AI and machine learning.",
+        "With the Rubik\u2019s Cube, on the other hand, approximating the value function is very difficult because even a naive monte-carlo approach would not work since it will never encounter the solved state.",
+        "Autodidactic Iteration is a DPI algorithm like AlphaZero and ExIt. since AlphaZero and ExIt cannot solve the Rubik\u2019s Cube, Autodidactic Iteration uses a state sampling procedure during training to prevent divergence of the value function and to ensure that the learning signal from the single reward state is propagated from the solved cube during training.",
+        "ADI is an iterative supervised learning procedure which trains a deep neural network f\u03b8(s) with parameters \u03b8 which takes an input state s and outputs a value and policy pair (v, p).",
+        "In each iteration of ADI, training samples for f\u03b8 are generated by starting from the solved cube.",
+        "It is important for the Rubik\u2019s Cube, since a naive state sampling will never include the solved state and the reward signal will not be learned by the value function.",
+        "ADI trains on states that are generated by starting from the solved cube and taking random actions.",
+        "\u0398 \u2190 train \u03b8\u2190\u03b8 until iterations = M ; a solution is presented by <a class=\"ref-link\" id=\"cBoyan_1995_a\" href=\"#rBoyan_1995_a\">Boyan & Moore (1995</a>), who only train the approximate value function on a subset of support states, whose value has been explicitly computed via tree search or similar methods.",
+        "We employ an asynchronous Monte Carlo Tree Search augmented with our trained neural network f\u03b8 to solve the cube from a given starting state s0.",
+        "Korf\u2019s algorithm will always find the optimal solution from any given starting state; but, since it is a heuristic tree search, it will often have to explore many different states and it will take a long time to compute a solution.",
+        "One is not guaranteed to find a terminal state in the Rubik\u2019s Cube environment and may only encounter rewards of -1, which does not provide enough information to solve the problem.",
+        "While AlphaZero and ExIt make use advanced tree-search algorithms to update the policy, DeepCube is able to find success using the faster and simpler depth-1 BFS.",
+        "Such as Dijkstra\u2019s algorithm, would require an infeasible amount of memory to work on environments a state space as large as the Rubik\u2019s Cube, we show that Dual Policy Iteration can find a solution path in such an environment."
+    ],
+    "headline": "We introduce Autodidactic Iteration: an Approximate Policy Iteration algorithm that overcomes the problem of sparse rewards by training on a distribution of states that allows the reward to propagate from the goal state to states farther away",
+    "reference_links": [
+        {
+            "id": "Anthony_et+al_2017_a",
+            "entry": "Thomas Anthony, Zheng Tian, and David Barber. Thinking fast and slow with deep learning and tree search, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anthony%2C%20Thomas%20Tian%2C%20Zheng%20Barber%2C%20David%20Thinking%20fast%20and%20slow%20with%20deep%20learning%20and%20tree%20search%202017"
+        },
+        {
+            "id": "Bagnell_2003_a",
+            "entry": "J. Andrew Bagnell and Jeff Schneider. Covariant policy search. In Proceedings of the 18th International Joint Conference on Artificial Intelligence, IJCAI\u201903, pp. 1019\u20131024, San Francisco, CA, USA, 2003. Morgan Kaufmann Publishers Inc. URL http://dl.acm.org/citation.cfm?id=1630659.1630805.",
+            "url": "http://dl.acm.org/citation.cfm?id=1630659.1630805",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bagnell%2C%20J.Andrew%20Schneider%2C%20Jeff%20Covariant%20policy%20search%202003"
+        },
+        {
+            "id": "Bagnell_et+al_2004_a",
+            "entry": "J Andrew Bagnell, Sham Kakade, Jeff Schneider, and Andrew Ng. Policy search by dynamic programming. In Advances in neural information processing systems, pp. 831\u2013838. NIPS, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bagnell%2C%20J.Andrew%20Kakade%2C%20Sham%20Schneider%2C%20Jeff%20and%20Andrew%20Ng.%20Policy%20search%20by%20dynamic%20programming%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bagnell%2C%20J.Andrew%20Kakade%2C%20Sham%20Schneider%2C%20Jeff%20and%20Andrew%20Ng.%20Policy%20search%20by%20dynamic%20programming%202004"
+        },
+        {
+            "id": "Baird_1995_a",
+            "entry": "Leemon Baird. Residual algorithms: Reinforcement learning with function approximation. In In Proceedings of the Twelfth International Conference on Machine Learning, pp. 30\u201337. Morgan Kaufmann, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baird%2C%20Leemon%20Residual%20algorithms%3A%20Reinforcement%20learning%20with%20function%20approximation%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baird%2C%20Leemon%20Residual%20algorithms%3A%20Reinforcement%20learning%20with%20function%20approximation%201995"
+        },
+        {
+            "id": "Baxter_2001_a",
+            "entry": "Jonathan Baxter and Peter L. Bartlett. Infinite-horizon policy-gradient estimation. J. Artif. Int. Res., 15(1):319\u2013350, November 2001. ISSN 1076-9757. URL http://dl.acm.org/citation.cfm?id=1622845.1622855.",
+            "url": "http://dl.acm.org/citation.cfm?id=1622845.1622855",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baxter%2C%20Jonathan%20Bartlett%2C%20Peter%20L.%20Infinite-horizon%20policy-gradient%20estimation%202001-11"
+        },
+        {
+            "id": "Bertsekas_1995_a",
+            "entry": "Dimitri Bertsekas and John Tsitsiklis. Neuro-dynamic programming: an overview. In Proceedings of the 34th IEEE Conference on, volume 1, pp. 560\u2013564. IEEE, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertsekas%2C%20Dimitri%20Tsitsiklis%2C%20John%20Neuro-dynamic%20programming%3A%20an%20overview%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bertsekas%2C%20Dimitri%20Tsitsiklis%2C%20John%20Neuro-dynamic%20programming%3A%20an%20overview%201995"
+        },
+        {
+            "id": "Bottou_2013_a",
+            "entry": "L\u00e9on Bottou. From machine learning to machine reasoning. Machine Learning, 94(2):133\u2013149, 2013. doi: 10.1007/s10994-013-5335-x.",
+            "crossref": "https://dx.doi.org/10.1007/s10994-013-5335-x",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s10994-013-5335-x"
+        },
+        {
+            "id": "Boyan_1995_a",
+            "entry": "Justin A. Boyan and Andrew W. Moore. Generalization in reinforcement learning: Safely approximating the value function. In G. Tesauro, D. S. Touretzky, and T. K. Leen (eds.), Advances in Neural Information Processing Systems 7, pp. 369\u2013376. MIT Press, 1995. URL http://papers.nips.cc/paper/",
+            "url": "http://papers.nips.cc/paper/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Boyan%2C%20Justin%20A.%20Moore%2C%20Andrew%20W.%20Generalization%20in%20reinforcement%20learning%3A%20Safely%20approximating%20the%20value%20function%201995"
+        },
+        {
+            "id": "Rubiks-Cube-Solver_2017_a",
+            "entry": "Rubiks-Cube-Solver, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=RubiksCubeSolver%202017"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "https://github.com/brownan/",
+            "url": "https://github.com/brownan/"
+        },
+        {
+            "id": "Brunetto_2017_a",
+            "entry": "Robert Brunetto and Otakar Trunda. Deep heuristic-learning in the rubik\u2019s cube domain: an experimental evaluation. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brunetto%2C%20Robert%20Trunda%2C%20Otakar%20Deep%20heuristic-learning%20in%20the%20rubik%E2%80%99s%20cube%20domain%3A%20an%20experimental%20evaluation%202017"
+        },
+        {
+            "id": "Culberson_1998_a",
+            "entry": "Joseph C Culberson and Jonathan Schaeffer. Pattern databases. Computational Intelligence, 14(3): 318\u2013334, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Culberson%2C%20Joseph%20C.%20Schaeffer%2C%20Jonathan%20Pattern%20databases%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Culberson%2C%20Joseph%20C.%20Schaeffer%2C%20Jonathan%20Pattern%20databases%201998"
+        },
+        {
+            "id": "Gordon_1995_a",
+            "entry": "Geoffrey J. Gordon. Stable function approximation in dynamic programming. Technical report, Pittsburgh, PA, USA, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gordon%2C%20Geoffrey%20J.%20Stable%20function%20approximation%20in%20dynamic%20programming%201995"
+        },
+        {
+            "id": "Hinton_et+al_2014_a",
+            "entry": "Geoffrey Hinton, Nitsh Srivastava, and Kevin Swersky. Overview of mini-batch gradient descent, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Srivastava%2C%20Nitsh%20Swersky%2C%20Kevin%20Overview%20of%20mini-batch%20gradient%20descent%202014"
+        },
+        {
+            "id": "Kakade_2001_a",
+            "entry": "Sham Kakade. A natural policy gradient. In Thomas G. Dietterich, Suzanna Becker, and Zoubin Ghahramani (eds.), Advances in Neural Information Processing Systems 14 (NIPS 2001), pp. 1531\u20131538. MIT Press, 2001. URL http://books.nips.cc/papers/files/nips14/ CN11.pdf.",
+            "url": "http://books.nips.cc/papers/files/nips14/CN11.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kakade%2C%20Sham%20A%20natural%20policy%20gradient%202001"
+        },
+        {
+            "id": "Kakade_2002_a",
+            "entry": "Sham Kakade and John Langford. Approximately optimal approximate reinforcement learning. In International Conference on Machine Learning. ICML, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kakade%2C%20Sham%20Langford%2C%20John%20Approximately%20optimal%20approximate%20reinforcement%20learning%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kakade%2C%20Sham%20Langford%2C%20John%20Approximately%20optimal%20approximate%20reinforcement%20learning%202002"
+        },
+        {
+            "id": "Kociemba_0000_a",
+            "entry": "Herbert Kociemba. Two-phase algorithm details. http://kociemba.org/math/imptwophase.htm.",
+            "url": "http://kociemba.org/math/imptwophase.htm"
+        },
+        {
+            "id": "Korf_1985_a",
+            "entry": "Richard E Korf. Depth-first iterative-deepening: An optimal admissible tree search. Artificial intelligence, 27(1):97\u2013109, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Korf%2C%20Richard%20E.%20Depth-first%20iterative-deepening%3A%20An%20optimal%20admissible%20tree%20search%201985",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Korf%2C%20Richard%20E.%20Depth-first%20iterative-deepening%3A%20An%20optimal%20admissible%20tree%20search%201985"
+        },
+        {
+            "id": "Korf_1997_a",
+            "entry": "Richard E. Korf. Finding optimal solutions to rubik\u2019s cube using pattern databases. In Proceedings of the Fourteenth National Conference on Artificial Intelligence and Ninth Conference on Innovative Applications of Artificial Intelligence, AAAI\u201997/IAAI\u201997, pp. 700\u2013705. AAAI Press, 1997. ISBN 0-262-51095-2. URL http://dl.acm.org/citation.cfm?id=1867406.1867515.",
+            "url": "http://dl.acm.org/citation.cfm?id=1867406.1867515",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Korf%2C%20Richard%20E.%20Finding%20optimal%20solutions%20to%20rubik%E2%80%99s%20cube%20using%20pattern%20databases%201997"
+        },
+        {
+            "id": "Kunkle_2007_a",
+            "entry": "Daniel Kunkle and Gene Cooperman. Twenty-six moves suffice for rubik\u2019s cube. In Proceedings of the 2007 International Symposium on Symbolic and Algebraic Computation, ISSAC \u201907, pp. 235\u2013 242, New York, NY, USA, 2007. ACM. ISBN 978-1-59593-743-8. doi: 10.1145/1277548.1277581. URL http://doi.acm.org/10.1145/1277548.1277581.",
+            "crossref": "https://dx.doi.org/10.1145/1277548.1277581",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/1277548.1277581"
+        },
+        {
+            "id": "Alessandro_2010_a",
+            "entry": "Alessandro Lazaric, Mohammad Ghavamzadeh, and R\u00e9mi Munos. Analysis of a classification-based policy iteration algorithm. In International Conference on Machine Learning, pp. 607\u2013614. ICML, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alessandro%20Lazaric%2C%20Mohammad%20Ghavamzadeh%20Munos%2C%20R%C3%A9mi%20Analysis%20of%20a%20classification-based%20policy%20iteration%20algorithm%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alessandro%20Lazaric%2C%20Mohammad%20Ghavamzadeh%20Munos%2C%20R%C3%A9mi%20Analysis%20of%20a%20classification-based%20policy%20iteration%20algorithm%202010"
+        },
+        {
+            "id": "Radu_2007_a",
+            "entry": "Silviu Radu. Rubik\u2019s cube can be solved in 34 quarter turns. http://cubezzz.dyndns.org/drupal/?q=node/view/92, Jul 2007.",
+            "url": "http://cubezzz.dyndns.org/drupal/?q=node/view/92"
+        },
+        {
+            "id": "Reid_1995_a",
+            "entry": "Michael Reid. Superflip requires 20 face turns. http://www.math.rwth-aachen.de/~Martin.Schoenert/Cube-Lovers/michael_reid__superflip_requires_20_face_turns.html, Jan 1995.",
+            "url": "http://www.math.rwth-aachen.de/~Martin.Schoenert/Cube-Lovers/michael_reid__superflip_requires_20_face_turns.html"
+        },
+        {
+            "id": "Rokicki_2010_a",
+            "entry": "Tomas Rokicki. Twenty-two moves suffice for rubik\u2019s cube R. The Mathematical Intelligencer, 32 (1):33\u201340, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rokicki%2C%20Tomas%20Twenty-two%20moves%20suffice%20for%20rubik%E2%80%99s%20cube%20R%202010"
+        },
+        {
+            "id": "Rokicki_2014_a",
+            "entry": "Tomas Rokicki. God\u2019s number is 26 in the quarter-turn metric. http://www.cube20.org/qtm/, Aug 2014.",
+            "url": "http://www.cube20.org/qtm/"
+        },
+        {
+            "id": "Rokicki_et+al_2014_b",
+            "entry": "Tomas Rokicki, Herbert Kociemba, Morley Davidson, and John Dethridge. The diameter of the rubik\u2019s cube group is twenty. SIAM Review, 56(4):645\u2013670, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rokicki%2C%20Tomas%20Kociemba%2C%20Herbert%20Davidson%2C%20Morley%20Dethridge%2C%20John%20The%20diameter%20of%20the%20rubik%E2%80%99s%20cube%20group%20is%20twenty%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rokicki%2C%20Tomas%20Kociemba%2C%20Herbert%20Davidson%2C%20Morley%20Dethridge%2C%20John%20The%20diameter%20of%20the%20rubik%E2%80%99s%20cube%20group%20is%20twenty%202014"
+        },
+        {
+            "id": "Rummery_1994_a",
+            "entry": "G. A. Rummery and M. Niranjan. On-line q-learning using connectionist systems. Technical report, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rummery%2C%20G.A.%20Niranjan%2C%20M.%20On-line%20q-learning%20using%20connectionist%20systems%201994"
+        },
+        {
+            "id": "Ruwix_0000_a",
+            "entry": "Ruwix. How to solve the rubik\u2019s cube - beginners method. https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/.",
+            "url": "https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/"
+        },
+        {
+            "id": "Scherrer_2014_a",
+            "entry": "Bruno Scherrer. Approximate policy iteration schemes: A comparison. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scherrer%2C%20Bruno%20Approximate%20policy%20iteration%20schemes%3A%20A%20comparison%202014"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, and Pieter Abbeel. Trust region policy optimization. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning - Volume 37, ICML\u201915, pp. 1889\u20131897. JMLR.org, 2015. URL http://dl.acm.org/citation.cfm?id=3045118.3045319.",
+            "url": "http://dl.acm.org/citation.cfm?id=3045118.3045319",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Moritz%2C%20Philipp%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Segal_2011_a",
+            "entry": "Richard B. Segal. On the scalability of parallel uct. In H. Jaap van den Herik, Hiroyuki Iida, and Aske Plaat (eds.), Computers and Games, pp. 36\u201347, Berlin, Heidelberg, 2011. Springer Berlin Heidelberg. ISBN 978-3-642-17928-0.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Segal%2C%20Richard%20B.%20On%20the%20scalability%20of%20parallel%20uct%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Segal%2C%20Richard%20B.%20On%20the%20scalability%20of%20parallel%20uct%202011"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Thomas Hubert, Julian Schrittwieser, Ioannis Antonoglou, Matthew Lai, Arthur Guez, Marc Lanctot, Laurent Sifre, Dharshan Kumaran, Thore Graepel, Timothy Lillicrap, Karen Simonyan, and Demis Hassabis. Mastering chess and shogi by self-play with a general reinforcement learning algorithm, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Hubert%2C%20Thomas%20Schrittwieser%2C%20Julian%20Antonoglou%2C%20Ioannis%20Mastering%20chess%20and%20shogi%20by%20self-play%20with%20a%20general%20reinforcement%20learning%20algorithm%202017"
+        },
+        {
+            "id": "Silver_et+al_0000_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, Yutian Chen, Timothy Lillicrap, Fan Hui, Laurent Sifre, George van den Driessche, Thore Graepel, and Demis Hassabis. Mastering the game of go without human knowledge. Nature, 550(7676):354\u2013359, 10 2017b. ISSN 0028-0836. doi: 10.1038/nature24270. URL http:https://doi.org/10.1038/nature24270.",
+            "crossref": "https://dx.doi.org/10.1038/nature24270",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/nature24270"
+        },
+        {
+            "id": "Silver_et+al_2017_b",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017c.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Smith_et+al_2016_a",
+            "entry": "Robert J Smith, Stephen Kelly, and Malcolm I Heywood. Discovering rubik\u2019s cube subgroups using coevolutionary gp: A five twist experiment. In Proceedings of the Genetic and Evolutionary Computation Conference 2016, pp. 789\u2013796. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20Robert%20J.%20Kelly%2C%20Stephen%20Heywood%2C%20Malcolm%20I.%20Discovering%20rubik%E2%80%99s%20cube%20subgroups%20using%20coevolutionary%20gp%3A%20A%20five%20twist%20experiment%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smith%2C%20Robert%20J.%20Kelly%2C%20Stephen%20Heywood%2C%20Malcolm%20I.%20Discovering%20rubik%E2%80%99s%20cube%20subgroups%20using%20coevolutionary%20gp%3A%20A%20five%20twist%20experiment%202016"
+        }
+    ]
+}

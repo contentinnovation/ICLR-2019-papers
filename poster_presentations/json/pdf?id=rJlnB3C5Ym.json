@@ -1,0 +1,453 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "RETHINKING THE VALUE OF NETWORK PRUNING",
+        "author": "Zhuang Liu, Mingjie Sun, Tinghui Zhou, Gao Huang, Trevor Darrell, 1University of California, Berkeley 2Tsinghua University",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJlnB3C5Ym"
+        },
+        "journal": "Fine",
+        "abstract": "Network pruning is widely used for reducing the heavy inference cost of deep models in low-resource settings. A typical pruning algorithm is a three-stage pipeline, i.e., training (a large model), pruning and fine-tuning. During pruning, according to a certain criterion, redundant weights are pruned and important weights are kept to best preserve the accuracy. In this work, we make several surprising observations which contradict common beliefs. For all state-of-the-art structured pruning algorithms we examined, fine-tuning a pruned model only gives comparable or worse performance than training that model with randomly initialized weights. For pruning algorithms which assume a predefined target network architecture, one can get rid of the full pipeline and directly train the target network from scratch. Our observations are consistent for multiple network architectures, datasets, and tasks, which imply that: 1) training a large, over-parameterized model is often not necessary to obtain an efficient final model, 2) learned \u201cimportant\u201d weights of the large model are typically not useful for the small pruned model, 3) the pruned architecture itself, rather than a set of inherited \u201cimportant\u201d weights, is more crucial to the efficiency in the final model, which suggests that in some cases pruning can be useful as an architecture search paradigm. Our results suggest the need for more careful baseline evaluations in future research on structured pruning methods. We also compare with the \u201cLottery Ticket Hypothesis\u201d (<a class=\"ref-link\" id=\"cFrankle_2019_a\" href=\"#rFrankle_2019_a\">Frankle & Carbin, 2019</a>), and find that with optimal learning rate, the \u201cwinning ticket\u201d initialization as used in <a class=\"ref-link\" id=\"cFrankle_2019_a\" href=\"#rFrankle_2019_a\">Frankle & Carbin (2019</a>) does not bring improvement over random initialization."
+    },
+    "keywords": [
+        {
+            "term": "fine tuning",
+            "url": "https://en.wikipedia.org/wiki/fine_tuning"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "network architecture",
+            "url": "https://en.wikipedia.org/wiki/network_architecture"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "FLOPs": "floating point operations"
+    },
+    "highlights": [
+        "Over-parameterization is a widely-recognized property of deep neural networks (<a class=\"ref-link\" id=\"cDenton_et+al_2014_a\" href=\"#rDenton_et+al_2014_a\">Denton et al, 2014</a>; <a class=\"ref-link\" id=\"cBa_2014_a\" href=\"#rBa_2014_a\">Ba & Caruana, 2014</a>), which leads to high computational cost and high memory footprint for inference",
+        "A typical procedure of network pruning consists of three stages: 1) train a large, over-parameterized model, 2) prune the trained large model according to a certain criterion, and 3) fine-tune the pruned model to regain the lost performance",
+        "We show that both of the beliefs mentioned above are not necessarily true for structured pruning methods, which prune at the levels of convolution channels or larger",
+        "In addition to high accuracy, training predefined target models from scratch has the following benefits over conventional network pruning procedures: a) since the model is smaller, we can train the model using less GPU memory and possibly faster than training the original large model; b) there is no need to implement the pruning criterion and procedure, which sometimes requires fine-tuning layer by layer (<a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a>) and/or needs to be customized for different network architectures (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a>); c) we avoid tuning additional hyper-parameters involved in the pruning procedure",
+        "Our results do support the viewpoint that automatic structured pruning finds efficient architectures in some cases"
+    ],
+    "key_statements": [
+        "Over-parameterization is a widely-recognized property of deep neural networks (<a class=\"ref-link\" id=\"cDenton_et+al_2014_a\" href=\"#rDenton_et+al_2014_a\">Denton et al, 2014</a>; <a class=\"ref-link\" id=\"cBa_2014_a\" href=\"#rBa_2014_a\">Ba & Caruana, 2014</a>), which leads to high computational cost and high memory footprint for inference",
+        "A typical procedure of network pruning consists of three stages: 1) train a large, over-parameterized model, 2) prune the trained large model according to a certain criterion, and 3) fine-tune the pruned model to regain the lost performance",
+        "We show that both of the beliefs mentioned above are not necessarily true for structured pruning methods, which prune at the levels of convolution channels or larger",
+        "The rest of the paper is organized as follows: in Section 2, we introduce background and some related works on network pruning; in Section 3, we describe our methodology for training the pruned model from scratch; in Section 4 we experiment on various pruning methods and show our main results for both pruning methods with predefined or automatically discovered target architectures; in Section 5, we discuss the value of automatic pruning methods in searching efficient network architectures; in Section 6 we discuss some implications and conclude the paper",
+        "Many methods have been proposed such as low-rank approximation of weights (<a class=\"ref-link\" id=\"cDenton_et+al_2014_a\" href=\"#rDenton_et+al_2014_a\">Denton et al, 2014</a>; <a class=\"ref-link\" id=\"cLebedev_et+al_2014_a\" href=\"#rLebedev_et+al_2014_a\">Lebedev et al, 2014</a>), weight quantization (<a class=\"ref-link\" id=\"cCourbariaux_et+al_2016_a\" href=\"#rCourbariaux_et+al_2016_a\">Courbariaux et al, 2016</a>; <a class=\"ref-link\" id=\"cRastegari_et+al_2016_a\" href=\"#rRastegari_et+al_2016_a\">Rastegari et al, 2016</a>), knowledge distillation (<a class=\"ref-link\" id=\"cHinton_et+al_2014_a\" href=\"#rHinton_et+al_2014_a\">Hinton et al, 2014</a>; <a class=\"ref-link\" id=\"cRomero_et+al_2015_a\" href=\"#rRomero_et+al_2015_a\">Romero et al, 2015</a>) and network pruning (<a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a>; <a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>), among which network pruning has gained notable attention due to their competitive performance and compatibility",
+        "We reveal a different and rather surprising characteristic of structured network pruning methods: fine-tuning the pruned model with inherited weights is not better than training it from scratch; the resulting pruned architectures are more likely to be what brings the benefit",
+        "We evaluate four predefined pruning methods, <a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al (2017</a>), <a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al (2017</a>), <a class=\"ref-link\" id=\"cHe_et+al_2017_b\" href=\"#rHe_et+al_2017_b\">He et al (2017b</a>), <a class=\"ref-link\" id=\"cHe_et+al_2018_a\" href=\"#rHe_et+al_2018_a\">He et al (2018a</a>), two automatic structured pruning methods, <a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al (2017</a>), Huang & Wang (2018), and one unstructured pruning method (<a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a>)",
+        "To accommodate the effects of different frameworks and training setups, we report the relative accuracy drop from the unpruned large model",
+        "Because all the network architectures we evaluated are fully-convolutional, for simplicity, we only prune weights in convolution layers here",
+        "While we have shown that, for structured pruning, the inherited weights in the pruned architecture are not better than random, the pruned architecture itself turns out to be what brings the efficiency benefits",
+        "In addition to high accuracy, training predefined target models from scratch has the following benefits over conventional network pruning procedures: a) since the model is smaller, we can train the model using less GPU memory and possibly faster than training the original large model; b) there is no need to implement the pruning criterion and procedure, which sometimes requires fine-tuning layer by layer (<a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a>) and/or needs to be customized for different network architectures (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a>); c) we avoid tuning additional hyper-parameters involved in the pruning procedure",
+        "Our results do support the viewpoint that automatic structured pruning finds efficient architectures in some cases",
+        "Even if pruning and fine-tuning fails to outperform the mentioned baselines in terms of accuracy, there are still some cases where using this conventional wisdom can be much faster than training from scratch: a) when a pre-trained large model is already given and little or no training budget is available; we note that pre-trained models can only be used when the method does not require modifications to the large model training process; b) there is a need to obtain multiple models of different sizes, or one does not know what the desirable size is, in which situations one can train a large model and prune it by different ratios"
+    ],
+    "summary": [
+        "Over-parameterization is a widely-recognized property of deep neural networks (<a class=\"ref-link\" id=\"cDenton_et+al_2014_a\" href=\"#rDenton_et+al_2014_a\"><a class=\"ref-link\" id=\"cDenton_et+al_2014_a\" href=\"#rDenton_et+al_2014_a\">Denton et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBa_2014_a\" href=\"#rBa_2014_a\"><a class=\"ref-link\" id=\"cBa_2014_a\" href=\"#rBa_2014_a\">Ba & Caruana, 2014</a></a>), which leads to high computational cost and high memory footprint for inference.",
+        "For structured pruning methods with autodiscovered target networks, training the pruned model from scratch can achieve comparable or even better performance than fine-tuning.",
+        "We reveal a different and rather surprising characteristic of structured network pruning methods: fine-tuning the pruned model with inherited weights is not better than training it from scratch; the resulting pruned architectures are more likely to be what brings the benefit.",
+        "We present our experimental results comparing training pruned models from scratch and fine-tuning from inherited weights, for both predefined and automatic (Figure 2) structured pruning, as well as a magnitude-based unstructured pruning method (<a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a>).",
+        "In Figure 3, we compare the parameter efficiency of architectures obtained by an automatic channel pruning method (Network Slimming (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>)), with a naive predefined pruning strategy that uniformly prunes the same percentage of channels in each layer.",
+        "For Network Slimming, we use the average number of channels in each layer stage from pruned architectures to construct a new set of architectures, and we call this approach \u201cGuided Pruning\u201d; for magnitude-based pruning, we analyze the sparsity patterns (Figure 4) in the pruned architectures, and apply them to construct a new set of sparse models, which we call \u201cGuided Sparsification\u201d.",
+        "In addition to high accuracy, training predefined target models from scratch has the following benefits over conventional network pruning procedures: a) since the model is smaller, we can train the model using less GPU memory and possibly faster than training the original large model; b) there is no need to implement the pruning criterion and procedure, which sometimes requires fine-tuning layer by layer (<a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a>) and/or needs to be customized for different network architectures (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>); c) we avoid tuning additional hyper-parameters involved in the pruning procedure.",
+        "Even if pruning and fine-tuning fails to outperform the mentioned baselines in terms of accuracy, there are still some cases where using this conventional wisdom can be much faster than training from scratch: a) when a pre-trained large model is already given and little or no training budget is available; we note that pre-trained models can only be used when the method does not require modifications to the large model training process; b) there is a need to obtain multiple models of different sizes, or one does not know what the desirable size is, in which situations one can train a large model and prune it by different ratios."
+    ],
+    "headline": "For all state-of-the-art structured pruning algorithms we examined, fine-tuning a pruned model only gives comparable or worse performance than training that model with randomly initialized weights",
+    "reference_links": [
+        {
+            "id": "Alvarez_2016_a",
+            "entry": "Jose M Alvarez and Mathieu Salzmann. Learning the number of neurons in deep networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez%2C%20Jose%20M.%20Salzmann%2C%20Mathieu%20Learning%20the%20number%20of%20neurons%20in%20deep%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alvarez%2C%20Jose%20M.%20Salzmann%2C%20Mathieu%20Learning%20the%20number%20of%20neurons%20in%20deep%20networks%202016"
+        },
+        {
+            "id": "Anwar_2016_a",
+            "entry": "Sajid Anwar and Wonyong Sung. Compact deep convolutional neural networks with coarse pruning. arXiv preprint arXiv:1610.09639, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.09639"
+        },
+        {
+            "id": "Ba_2014_a",
+            "entry": "Jimmy Ba and Rich Caruana. Do deep nets really need to be deep? In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ba%2C%20Jimmy%20Caruana%2C%20Rich%20Do%20deep%20nets%20really%20need%20to%20be%20deep%3F%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ba%2C%20Jimmy%20Caruana%2C%20Rich%20Do%20deep%20nets%20really%20need%20to%20be%20deep%3F%202014"
+        },
+        {
+            "id": "Baker_et+al_2017_a",
+            "entry": "Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architectures using reinforcement learning. ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baker%2C%20Bowen%20Gupta%2C%20Otkrist%20Naik%2C%20Nikhil%20Raskar%2C%20Ramesh%20Designing%20neural%20network%20architectures%20using%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baker%2C%20Bowen%20Gupta%2C%20Otkrist%20Naik%2C%20Nikhil%20Raskar%2C%20Ramesh%20Designing%20neural%20network%20architectures%20using%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Miguel_2018_a",
+            "entry": "Miguel A Carreira-Perpin\u00e1n and Yerlan Idelbayev. \u201cLearning-compression\u201d algorithms for neural net pruning. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miguel%20A%20CarreiraPerpin%C3%A1n%20and%20Yerlan%20Idelbayev%20Learningcompression%20algorithms%20for%20neural%20net%20pruning%20In%20CVPR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miguel%20A%20CarreiraPerpin%C3%A1n%20and%20Yerlan%20Idelbayev%20Learningcompression%20algorithms%20for%20neural%20net%20pruning%20In%20CVPR%202018"
+        },
+        {
+            "id": "Chin_et+al_2018_a",
+            "entry": "Ting-Wu Chin, Cha Zhang, and Diana Marculescu. Layer-compensated pruning for resourceconstrained convolutional neural networks. arXiv preprint arXiv:1810.00518, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.00518"
+        },
+        {
+            "id": "Courbariaux_et+al_2016_a",
+            "entry": "Matthieu Courbariaux, Itay Hubara, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Binarized neural networks: Training deep neural networks with weights and activations constrained to+ 1 or-1. arXiv preprint arXiv:1602.02830, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02830"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. Imagenet: A large-scale hierarchical image database. In CVPR, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Denton_et+al_2014_a",
+            "entry": "Emily L Denton, Wojciech Zaremba, Joan Bruna, Yann LeCun, and Rob Fergus. Exploiting linear structure within convolutional networks for efficient evaluation. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denton%2C%20Emily%20L.%20Zaremba%2C%20Wojciech%20Bruna%2C%20Joan%20LeCun%2C%20Yann%20Exploiting%20linear%20structure%20within%20convolutional%20networks%20for%20efficient%20evaluation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denton%2C%20Emily%20L.%20Zaremba%2C%20Wojciech%20Bruna%2C%20Joan%20LeCun%2C%20Yann%20Exploiting%20linear%20structure%20within%20convolutional%20networks%20for%20efficient%20evaluation%202014"
+        },
+        {
+            "id": "Frankle_2019_a",
+            "entry": "Jonathan Frankle and Michael Carbin. The lottery ticket hypothesis: Finding sparse, trainable neural networks. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=rJl-b3RcF7.",
+            "url": "https://openreview.net/forum?id=rJl-b3RcF7",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frankle%2C%20Jonathan%20Carbin%2C%20Michael%20The%20lottery%20ticket%20hypothesis%3A%20Finding%20sparse%2C%20trainable%20neural%20networks%202019"
+        },
+        {
+            "id": "Girshick_et+al_2014_a",
+            "entry": "Ross Girshick, Jeff Donahue, Trevor Darrell, and Jitendra Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In CVPR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Girshick%2C%20Ross%20Donahue%2C%20Jeff%20Darrell%2C%20Trevor%20Malik%2C%20Jitendra%20Rich%20feature%20hierarchies%20for%20accurate%20object%20detection%20and%20semantic%20segmentation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Girshick%2C%20Ross%20Donahue%2C%20Jeff%20Darrell%2C%20Trevor%20Malik%2C%20Jitendra%20Rich%20feature%20hierarchies%20for%20accurate%20object%20detection%20and%20semantic%20segmentation%202014"
+        },
+        {
+            "id": "Gordon_et+al_2018_a",
+            "entry": "Ariel Gordon, Elad Eban, Ofir Nachum, Bo Chen, Hao Wu, Tien-Ju Yang, and Edward Choi. Morphnet: Fast & simple resource-constrained structure learning of deep networks. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gordon%2C%20Ariel%20Eban%2C%20Elad%20Nachum%2C%20Ofir%20Chen%2C%20Bo%20Morphnet%3A%20Fast%20%26%20simple%20resource-constrained%20structure%20learning%20of%20deep%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gordon%2C%20Ariel%20Eban%2C%20Elad%20Nachum%2C%20Ofir%20Chen%2C%20Bo%20Morphnet%3A%20Fast%20%26%20simple%20resource-constrained%20structure%20learning%20of%20deep%20networks%202018"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Jeff Pool, John Tran, and William Dally. Learning both weights and connections for efficient neural network. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Xingyu Liu, Huizi Mao, Jing Pu, Ardavan Pedram, Mark A Horowitz, and William J Dally. Eie: efficient inference engine on compressed deep neural network. In Computer Architecture (ISCA), 2016 ACM/IEEE 43rd Annual International Symposium on, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20Eie%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20Eie%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016"
+        },
+        {
+            "id": "Han_et+al_2016_b",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. ICLR, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20networks%20with%20pruning%2C%20trained%20quantization%20and%20huffman%20coding%202016"
+        },
+        {
+            "id": "Hassibi_1993_a",
+            "entry": "Babak Hassibi and David G Stork. Second order derivatives for network pruning: Optimal brain surgeon. In NIPS, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hassibi%2C%20Babak%20Stork%2C%20David%20G.%20Second%20order%20derivatives%20for%20network%20pruning%3A%20Optimal%20brain%20surgeon%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hassibi%2C%20Babak%20Stork%2C%20David%20G.%20Second%20order%20derivatives%20for%20network%20pruning%3A%20Optimal%20brain%20surgeon%201993"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Kaiming He, Georgia Gkioxari, Piotr Doll\u00e1r, and Ross Girshick. Mask r-cnn. In ICCVs, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Doll%C3%A1r%20and%20Ross%20Girshick%20Mask%20rcnn%20In%20ICCVs%202017a",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Doll%C3%A1r%20and%20Ross%20Girshick%20Mask%20rcnn%20In%20ICCVs%202017a"
+        },
+        {
+            "id": "He_et+al_2018_a",
+            "entry": "Yang He, Guoliang Kang, Xuanyi Dong, Yanwei Fu, and Yi Yang. Soft filter pruning for accelerating deep convolutional neural networks. In IJCAI, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yang%20Kang%2C%20Guoliang%20Dong%2C%20Xuanyi%20Fu%2C%20Yanwei%20Soft%20filter%20pruning%20for%20accelerating%20deep%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yang%20Kang%2C%20Guoliang%20Dong%2C%20Xuanyi%20Fu%2C%20Yanwei%20Soft%20filter%20pruning%20for%20accelerating%20deep%20convolutional%20neural%20networks%202018"
+        },
+        {
+            "id": "He_et+al_2018_b",
+            "entry": "Yang He, Guoliang Kang, Xuanyi Dong, Yanwei Fu, and Yi Yang. Soft filter pruning for accelerating deep convolutional neural networks. https://github.com/he-y/soft-filter-pruning, 2018b.",
+            "url": "https://github.com/he-y/soft-filter-pruning"
+        },
+        {
+            "id": "He_et+al_2017_b",
+            "entry": "Yihui He, Xiangyu Zhang, and Jian Sun. Channel pruning for accelerating very deep neural networks. In ICCV, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "He_et+al_2018_c",
+            "entry": "Yihui He, Ji Lin, Zhijian Liu, Hanrui Wang, Li-Jia Li, and Song Han. Amc: Automl for model compression and acceleration on mobile devices. In ECCV, 2018c.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Lin%2C%20Ji%20Liu%2C%20Zhijian%20Wang%2C%20Hanrui%20Amc%3A%20Automl%20for%20model%20compression%20and%20acceleration%20on%20mobile%20devices%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Lin%2C%20Ji%20Liu%2C%20Zhijian%20Wang%2C%20Hanrui%20Amc%3A%20Automl%20for%20model%20compression%20and%20acceleration%20on%20mobile%20devices%202018"
+        },
+        {
+            "id": "Hinton_et+al_2014_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. NIPS Workshop, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Vinyals%2C%20Oriol%20Dean%2C%20Jeff%20Distilling%20the%20knowledge%20in%20a%20neural%20network%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20Vinyals%2C%20Oriol%20Dean%2C%20Jeff%20Distilling%20the%20knowledge%20in%20a%20neural%20network%202014"
+        },
+        {
+            "id": "Hu_et+al_2016_a",
+            "entry": "Hengyuan Hu, Rui Peng, Yu-Wing Tai, and Chi-Keung Tang. Network trimming: A data-driven neuron pruning approach towards efficient deep architectures. arXiv preprint arXiv:1607.03250, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.03250"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Laurens van der Maaten, and Kilian Q Weinberger. Densely connected convolutional networks. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Gao Huang, Shichen Liu, Laurens Van der Maaten, and Kilian Q Weinberger. Condensenet: An efficient densenet using learned group convolutions. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Shichen%20der%20Maaten%2C%20Laurens%20Van%20Weinberger%2C%20Kilian%20Q.%20Condensenet%3A%20An%20efficient%20densenet%20using%20learned%20group%20convolutions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Shichen%20der%20Maaten%2C%20Laurens%20Van%20Weinberger%2C%20Kilian%20Q.%20Condensenet%3A%20An%20efficient%20densenet%20using%20learned%20group%20convolutions%202018"
+        },
+        {
+            "id": "Huang_2018_b",
+            "entry": "Zehao Huang and Naiyan Wang. Data-driven sparse structure selection for deep neural networks. ECCV, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Zehao%20Wang%2C%20Naiyan%20Data-driven%20sparse%20structure%20selection%20for%20deep%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Zehao%20Wang%2C%20Naiyan%20Data-driven%20sparse%20structure%20selection%20for%20deep%20neural%20networks%202018"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Jia_et+al_2014_a",
+            "entry": "Yangqing Jia, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross Girshick, Sergio Guadarrama, and Trevor Darrell. Caffe: Convolutional architecture for fast feature embedding. In ACM Multimedia, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jia%2C%20Yangqing%20Shelhamer%2C%20Evan%20Donahue%2C%20Jeff%20Karayev%2C%20Sergey%20Caffe%3A%20Convolutional%20architecture%20for%20fast%20feature%20embedding%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jia%2C%20Yangqing%20Shelhamer%2C%20Evan%20Donahue%2C%20Jeff%20Karayev%2C%20Sergey%20Caffe%3A%20Convolutional%20architecture%20for%20fast%20feature%20embedding%202014"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Technical report, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Lebedev_2016_a",
+            "entry": "Vadim Lebedev and Victor Lempitsky. Fast convnets using group-wise brain damage. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lebedev%2C%20Vadim%20Lempitsky%2C%20Victor%20Fast%20convnets%20using%20group-wise%20brain%20damage%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lebedev%2C%20Vadim%20Lempitsky%2C%20Victor%20Fast%20convnets%20using%20group-wise%20brain%20damage%202016"
+        },
+        {
+            "id": "Lebedev_et+al_2014_a",
+            "entry": "Vadim Lebedev, Yaroslav Ganin, Maksim Rakhuba, Ivan Oseledets, and Victor Lempitsky. Speeding-up convolutional neural networks using fine-tuned cp-decomposition. ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lebedev%2C%20Vadim%20Ganin%2C%20Yaroslav%20Rakhuba%2C%20Maksim%20Oseledets%2C%20Ivan%20Speeding-up%20convolutional%20neural%20networks%20using%20fine-tuned%20cp-decomposition%202014"
+        },
+        {
+            "id": "Lecun_et+al_1990_a",
+            "entry": "Yann LeCun, John S Denker, and Sara A Solla. Optimal brain damage. In NIPS, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Denker%2C%20John%20S.%20Solla%2C%20Sara%20A.%20Optimal%20brain%20damage%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Denker%2C%20John%20S.%20Solla%2C%20Sara%20A.%20Optimal%20brain%20damage%201990"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, L\u00e9on Bottou, Yoshua Bengio, Patrick Haffner, et al. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. Pruning filters for efficient convnets. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Hao%20Kadav%2C%20Asim%20Durdanovic%2C%20Igor%20Samet%2C%20Hanan%20Pruning%20filters%20for%20efficient%20convnets%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Hao%20Kadav%2C%20Asim%20Durdanovic%2C%20Igor%20Samet%2C%20Hanan%20Pruning%20filters%20for%20efficient%20convnets%202017"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Ji Lin, Yongming Rao, Jiwen Lu, and Jie Zhou. Runtime neural pruning. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Ji%20Rao%2C%20Yongming%20Lu%2C%20Jiwen%20Zhou%2C%20Jie%20Runtime%20neural%20pruning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Ji%20Rao%2C%20Yongming%20Lu%2C%20Jiwen%20Zhou%2C%20Jie%20Runtime%20neural%20pruning%202017"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Hanxiao Liu, Karen Simonyan, Oriol Vinyals, Chrisantha Fernando, and Koray Kavukcuoglu. Hierarchical representations for efficient architecture search. ICLR, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Hanxiao%20Simonyan%2C%20Karen%20Vinyals%2C%20Oriol%20Fernando%2C%20Chrisantha%20Hierarchical%20representations%20for%20efficient%20architecture%20search%202018"
+        },
+        {
+            "id": "Liu_et+al_0000_a",
+            "entry": "Hanxiao Liu, Karen Simonyan, and Yiming Yang. Darts: Differentiable architecture search. arXiv preprint arXiv:1806.09055, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.09055"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Zhuang Liu, Jianguo Li, Zhiqiang Shen, Gao Huang, Shoumeng Yan, and Changshui Zhang. Learning efficient convolutional networks through network slimming. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017"
+        },
+        {
+            "id": "Long_et+al_2015_a",
+            "entry": "Jonathan Long, Evan Shelhamer, and Trevor Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Long%2C%20Jonathan%20Shelhamer%2C%20Evan%20Darrell%2C%20Trevor%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Long%2C%20Jonathan%20Shelhamer%2C%20Evan%20Darrell%2C%20Trevor%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015"
+        },
+        {
+            "id": "Louizos_et+al_2018_a",
+            "entry": "Christos Louizos, Max Welling, and Diederik P Kingma. Learning sparse neural networks through l_0 regularization. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Welling%2C%20Max%20Kingma%2C%20Diederik%20P.%20Learning%20sparse%20neural%20networks%20through%20l_0%20regularization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Welling%2C%20Max%20Kingma%2C%20Diederik%20P.%20Learning%20sparse%20neural%20networks%20through%20l_0%20regularization%202018"
+        },
+        {
+            "id": "Luo_et+al_2017_a",
+            "entry": "Jian-Hao Luo, Jianxin Wu, and Weiyao Lin. Thinet: A filter level pruning method for deep neural network compression. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20Jian-Hao%20Wu%2C%20Jianxin%20Lin%2C%20Weiyao%20Thinet%3A%20A%20filter%20level%20pruning%20method%20for%20deep%20neural%20network%20compression%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20Jian-Hao%20Wu%2C%20Jianxin%20Lin%2C%20Weiyao%20Thinet%3A%20A%20filter%20level%20pruning%20method%20for%20deep%20neural%20network%20compression%202017"
+        },
+        {
+            "id": "Mittal_et+al_2018_a",
+            "entry": "Deepak Mittal, Shweta Bhardwaj, Mitesh M Khapra, and Balaraman Ravindran. Recovering from random pruning: On the plasticity of deep convolutional neural networks. arXiv preprint arXiv:1801.10447, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.10447"
+        },
+        {
+            "id": "Molchanov_et+al_2017_a",
+            "entry": "Dmitry Molchanov, Arsenii Ashukha, and Dmitry Vetrov. Variational dropout sparsifies deep neural networks. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Molchanov%2C%20Dmitry%20Ashukha%2C%20Arsenii%20Vetrov%2C%20Dmitry%20Variational%20dropout%20sparsifies%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Molchanov%2C%20Dmitry%20Ashukha%2C%20Arsenii%20Vetrov%2C%20Dmitry%20Variational%20dropout%20sparsifies%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Molchanov_et+al_2016_a",
+            "entry": "Pavlo Molchanov, Stephen Tyree, Tero Karras, Timo Aila, and Jan Kautz. Pruning convolutional neural networks for resource efficient inference. arXiv preprint arXiv:1611.06440, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.06440"
+        },
+        {
+            "id": "Kingma_et+al_2015_a",
+            "entry": "Diederik P. Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. In NIPS Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPS%20Workshop%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPS%20Workshop%202017"
+        },
+        {
+            "id": "Pham_et+al_2018_a",
+            "entry": "Hieu Pham, Melody Y Guan, Barret Zoph, Quoc V Le, and Jeff Dean. Efficient neural architecture search via parameter sharing. ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pham%2C%20Hieu%20Guan%2C%20Melody%20Y.%20Zoph%2C%20Barret%20Le%2C%20Quoc%20V.%20Efficient%20neural%20architecture%20search%20via%20parameter%20sharing%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pham%2C%20Hieu%20Guan%2C%20Melody%20Y.%20Zoph%2C%20Barret%20Le%2C%20Quoc%20V.%20Efficient%20neural%20architecture%20search%20via%20parameter%20sharing%202018"
+        },
+        {
+            "id": "Rastegari_et+al_2016_a",
+            "entry": "Mohammad Rastegari, Vicente Ordonez, Joseph Redmon, and Ali Farhadi. Xnor-net: Imagenet classification using binary convolutional neural networks. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rastegari%2C%20Mohammad%20Ordonez%2C%20Vicente%20Redmon%2C%20Joseph%20Farhadi%2C%20Ali%20Xnor-net%3A%20Imagenet%20classification%20using%20binary%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rastegari%2C%20Mohammad%20Ordonez%2C%20Vicente%20Redmon%2C%20Joseph%20Farhadi%2C%20Ali%20Xnor-net%3A%20Imagenet%20classification%20using%20binary%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Ren_et+al_2015_a",
+            "entry": "Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun. Faster r-cnn: Towards real-time object detection with region proposal networks. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20r-cnn%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20r-cnn%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015"
+        },
+        {
+            "id": "Romero_et+al_2015_a",
+            "entry": "Adriana Romero, Nicolas Ballas, Samira Ebrahimi Kahou, Antoine Chassang, Carlo Gatta, and Yoshua Bengio. Fitnets: Hints for thin deep nets. ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Romero%2C%20Adriana%20Ballas%2C%20Nicolas%20Kahou%2C%20Samira%20Ebrahimi%20Chassang%2C%20Antoine%20Fitnets%3A%20Hints%20for%20thin%20deep%20nets%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Romero%2C%20Adriana%20Ballas%2C%20Nicolas%20Kahou%2C%20Samira%20Ebrahimi%20Chassang%2C%20Antoine%20Fitnets%3A%20Hints%20for%20thin%20deep%20nets%202015"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Zhiqiang Shen, Zhuang Liu, Jianguo Li, Yu-Gang Jiang, Yurong Chen, and Xiangyang Xue. Dsod: Learning deeply supervised object detectors from scratch. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Zhiqiang%20Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Jiang%2C%20Yu-Gang%20Dsod%3A%20Learning%20deeply%20supervised%20object%20detectors%20from%20scratch%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Zhiqiang%20Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Jiang%2C%20Yu-Gang%20Dsod%3A%20Learning%20deeply%20supervised%20object%20detectors%20from%20scratch%202017"
+        },
+        {
+            "id": "Simonyan_2015_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015"
+        },
+        {
+            "id": "Srinivas_2015_a",
+            "entry": "Suraj Srinivas and R Venkatesh Babu. Data-free parameter pruning for deep neural networks. BMVC, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srinivas%2C%20Suraj%20Babu%2C%20R.Venkatesh%20Data-free%20parameter%20pruning%20for%20deep%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srinivas%2C%20Suraj%20Babu%2C%20R.Venkatesh%20Data-free%20parameter%20pruning%20for%20deep%20neural%20networks%202015"
+        },
+        {
+            "id": "Suau_et+al_2018_a",
+            "entry": "Xavier Suau, Luca Zappella, Vinay Palakkode, and Nicholas Apostoloff. Principal filter analysis for guided network compression. arXiv preprint arXiv:1807.10585, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.10585"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Xin Wang, Fisher Yu, Zi-Yi Dou, and Joseph E Gonzalez. Skipnet: Learning dynamic routing in convolutional networks. arXiv preprint arXiv:1711.09485, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09485"
+        },
+        {
+            "id": "Wen_et+al_2016_a",
+            "entry": "Wei Wen, Chunpeng Wu, Yandan Wang, Yiran Chen, and Hai Li. Learning structured sparsity in deep neural networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Xie_2017_a",
+            "entry": "Lingxi Xie and Alan L Yuille. Genetic cnn. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lingxi%20Xie%20and%20Alan%20L%20Yuille%20Genetic%20cnn%20In%20ICCV%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lingxi%20Xie%20and%20Alan%20L%20Yuille%20Genetic%20cnn%20In%20ICCV%202017"
+        },
+        {
+            "id": "Xie_et+al_2017_b",
+            "entry": "Saining Xie, Ross Girshick, Piotr Doll\u00e1r, Zhuowen Tu, and Kaiming He. Aggregated residual transformations for deep neural networks. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xie%2C%20Saining%20Girshick%2C%20Ross%20Doll%C3%A1r%2C%20Piotr%20Tu%2C%20Zhuowen%20Aggregated%20residual%20transformations%20for%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xie%2C%20Saining%20Girshick%2C%20Ross%20Doll%C3%A1r%2C%20Piotr%20Tu%2C%20Zhuowen%20Aggregated%20residual%20transformations%20for%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Yang_et+al_2017_a",
+            "entry": "Jianwei Yang, Jiasen Lu, Dhruv Batra, and Devi Parikh. A faster pytorch implementation of faster r-cnn. https://github.com/jwyang/faster-rcnn.pytorch, 2017.",
+            "url": "https://github.com/jwyang/faster-rcnn.pytorch"
+        },
+        {
+            "id": "Ye_et+al_2018_a",
+            "entry": "Jianbo Ye, Xin Lu, Zhe Lin, and James Z Wang. Rethinking the smaller-norm-less-informative assumption in channel pruning of convolution layers. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ye%2C%20Jianbo%20Lu%2C%20Xin%20Lin%2C%20Zhe%20Wang%2C%20James%20Z.%20Rethinking%20the%20smaller-norm-less-informative%20assumption%20in%20channel%20pruning%20of%20convolution%20layers%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ye%2C%20Jianbo%20Lu%2C%20Xin%20Lin%2C%20Zhe%20Wang%2C%20James%20Z.%20Rethinking%20the%20smaller-norm-less-informative%20assumption%20in%20channel%20pruning%20of%20convolution%20layers%202018"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "Ruichi Yu, Ang Li, Chun-Fu Chen, Jui-Hsin Lai, Vlad I Morariu, Xintong Han, Mingfei Gao, ChingYung Lin, and Larry S Davis. Nisp: Pruning networks using neuron importance score propagation. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Ruichi%20Li%2C%20Ang%20Chen%2C%20Chun-Fu%20Lai%2C%20Jui-Hsin%20Nisp%3A%20Pruning%20networks%20using%20neuron%20importance%20score%20propagation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Ruichi%20Li%2C%20Ang%20Chen%2C%20Chun-Fu%20Lai%2C%20Jui-Hsin%20Nisp%3A%20Pruning%20networks%20using%20neuron%20importance%20score%20propagation%202018"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Hao Zhou, Jose M Alvarez, and Fatih Porikli. Less is more: Towards compact cnns. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Hao%20Alvarez%2C%20Jose%20M.%20Porikli%2C%20Fatih%20Less%20is%20more%3A%20Towards%20compact%20cnns%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Hao%20Alvarez%2C%20Jose%20M.%20Porikli%2C%20Fatih%20Less%20is%20more%3A%20Towards%20compact%20cnns%202016"
+        },
+        {
+            "id": "Zhu_2018_a",
+            "entry": "Michael Zhu and Suyog Gupta. To prune, or not to prune: exploring the efficacy of pruning for model compression. ICLR Workshop, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Michael%20Gupta%2C%20Suyog%20To%20prune%2C%20or%20not%20to%20prune%3A%20exploring%20the%20efficacy%20of%20pruning%20for%20model%20compression%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Michael%20Gupta%2C%20Suyog%20To%20prune%2C%20or%20not%20to%20prune%3A%20exploring%20the%20efficacy%20of%20pruning%20for%20model%20compression%202018"
+        },
+        {
+            "id": "Zoph_2017_a",
+            "entry": "Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zoph%2C%20Barret%20Le%2C%20Quoc%20V.%20Neural%20architecture%20search%20with%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zoph%2C%20Barret%20Le%2C%20Quoc%20V.%20Neural%20architecture%20search%20with%20reinforcement%20learning%202017"
+        }
+    ]
+}

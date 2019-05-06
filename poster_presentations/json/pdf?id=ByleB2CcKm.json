@@ -1,0 +1,307 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING PROCEDURAL ABSTRACTIONS AND EVALUATING DISCRETE LATENT TEMPORAL STRUCTURE",
+        "author": "Karan Goel Department of Computer Science Stanford University kgoel@cs.stanford.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ByleB2CcKm"
+        },
+        "abstract": "Clustering methods and latent variable models are often used as tools for pattern mining and discovery of latent structure in time-series data. In this work, we consider the problem of learning procedural abstractions from possibly highdimensional observational sequences, such as video demonstrations. Given a dataset of time-series, the goal is to identify the latent sequence of steps common to them and label each time-series with the temporal extent of these procedural steps. We introduce a hierarchical Bayesian model called PRISM that models the realization of a common procedure across multiple time-series, and can recover procedural abstractions without supervision. We also bring to light two characteristics ignored by traditional evaluation criteria when evaluating latent temporal labelings (temporal clusterings) \u2013 segment structure, and repeated structure \u2013 and develop new metrics tailored to their evaluation. We demonstrate that our metrics improve interpretability and ease of analysis for evaluation on benchmark time-series datasets. Results on benchmark and video datasets indicate that PRISM outperforms standard sequence models as well as state-of-the-art techniques in identifying procedural abstractions."
+    },
+    "keywords": [
+        {
+            "term": "PRISM",
+            "url": "https://en.wikipedia.org/wiki/PRISM"
+        },
+        {
+            "term": "linear dynamical system",
+            "url": "https://en.wikipedia.org/wiki/linear_dynamical_system"
+        },
+        {
+            "term": "Normalized Discounted Cumulative Gain",
+            "url": "https://en.wikipedia.org/wiki/Normalized_Discounted_Cumulative_Gain"
+        },
+        {
+            "term": "Gaussian mixture model",
+            "url": "https://en.wikipedia.org/wiki/Gaussian_mixture_model"
+        },
+        {
+            "term": "metrics",
+            "url": "https://en.wikipedia.org/wiki/metrics"
+        },
+        {
+            "term": "Hidden Markov Models",
+            "url": "https://en.wikipedia.org/wiki/Hidden_Markov_Models"
+        },
+        {
+            "term": "adjusted Rand index",
+            "url": "https://en.wikipedia.org/wiki/adjusted_Rand_index"
+        }
+    ],
+    "abbreviations": {
+        "NMI": "normalized mutual information",
+        "RSS": "repeated structure score",
+        "LASS": "label-agnostic segmentation score",
+        "SSS": "segment structure score",
+        "TSS": "temporal structure score",
+        "ARI": "adjusted Rand index",
+        "HMM": "Hidden Markov Models",
+        "HDP-HMM": "Hierarchical Dirichlet Process HMMs",
+        "SLDS": "Switching Linear Dynamical Systems",
+        "OSC": "Ordered Subspace Clustering",
+        "TSC": "Temporal SC",
+        "LRSC": "Low-Rank SC",
+        "SSC": "Sparse SC",
+        "SPATSC": "Spatial SC",
+        "NDCG": "Normalized Discounted Cumulative Gain",
+        "GMM": "Gaussian mixture model"
+    },
+    "highlights": [
+        "A fundamental problem in machine learning is the discovery of structure in unsupervised data",
+        "In Fig 6a, Sparse SC is worst on label-agnostic segmentation score-O since it heavily over-segments the time-series by introducing many transitions, while Temporal SC introduces far fewer transitions",
+        "We developed PRISM, a hierarchical Bayesian model to identify latent procedures in time-series data",
+        "Results on several datasets show that PRISM can be used to learn procedural abstractions more effectively than competing methods",
+        "We introduced new evaluation criteria for the problem of externally evaluating temporal clusterings",
+        "We hope to extend PRISM by incorporating richer observation models, and relaxing the assumption that a single strictly-ordered procedure is followed by all time-series"
+    ],
+    "key_statements": [
+        "A fundamental problem in machine learning is the discovery of structure in unsupervised data",
+        "In this work we are interested in uncovering the latent structure in procedural data \u2013 potentially high-dimensional observational time-series resulting from some latent sequence of events",
+        "There exists an enormous wealth of videos of procedures available and inferring the latent structure of such videos could be useful in a huge range of applications, from supporting search queries (\u201dfind all segments where someone jacks up the car\u201d) to adding to nascent work on learning from observation (<a class=\"ref-link\" id=\"cBorsa_et+al_2017_a\" href=\"#rBorsa_et+al_2017_a\">Borsa et al, 2017</a>; <a class=\"ref-link\" id=\"cStadie_et+al_2017_a\" href=\"#rStadie_et+al_2017_a\">Stadie et al, 2017</a>; <a class=\"ref-link\" id=\"cTorabi_et+al_2018_a\" href=\"#rTorabi_et+al_2018_a\">Torabi et al, 2018</a>) in which robots may be taught merely by observing a procedure performed in a video",
+        "Procedural learning is related to activity recognition and the broader field of latent temporal dynamical learning, but focuses on the simpler but still ubiquitous setting where the latent activity sequence is a fixed procedure",
+        "We identify at least two key aspects of temporal latent structure discovery that are not captured well with existing non-temporal metrics: segment structure, the temporal durations between transitions from one discrete latent state to another, and repeated structure, where a particular latent variable may appear in multiple segments",
+        "Instead we introduce a new generative Bayesian model (PRISM) for identifying procedural abstractions without supervision",
+        "The locations and sizes of the segments in ground-truth e.g. in Fig 3 we would like temporal clusterings that switch between primitives at exactly the time points t = 2, 4 with the same 3 segment structure",
+        "We describe a new evaluation criteria, called the repeated structure score (RSS) below",
+        "We have introduced several new metrics: (i) the repeated structure score systematically scores repeated structure; the label-agnostic segmentation score scores how well the transition structure is captured; the segment structure score provides a unified metric for assessing segment structure",
+        "As we show later in experiments, this structure can help PRISM outperform these methods, especially when the observations are noisy",
+        "In Fig 6a, Sparse SC is worst on label-agnostic segmentation score-O since it heavily over-segments the time-series by introducing many transitions, while Temporal SC introduces far fewer transitions",
+        "We find that normalized mutual information is highly sensitive to the number of clusters \u2013 Sparse SC only uses 2 clusters, which means it is heavily penalized by normalized mutual information, in spite of capturing some repeated structure",
+        "We evaluate the benefit of our approach on the JIGSAWS dataset (Gao et al, 2014), which consists of surgeons with varying skill demonstrating common procedures, such as suturing, needle-passing and knot-tying",
+        "We find that PRISM\u2019s performance is quite stable with respect to both \u2013 this holds as long as s is larger than the number of segments in ground-truth, and K is close to the true number of ground-truth clusters",
+        "We expect our method to perform worse on the Breakfast actions dataset, as it has no repeated structure, in which case our model has no advantages over this prior model, and uses a simpler observation model",
+        "We developed PRISM, a hierarchical Bayesian model to identify latent procedures in time-series data",
+        "Results on several datasets show that PRISM can be used to learn procedural abstractions more effectively than competing methods",
+        "We introduced new evaluation criteria for the problem of externally evaluating temporal clusterings",
+        "We hope to extend PRISM by incorporating richer observation models, and relaxing the assumption that a single strictly-ordered procedure is followed by all time-series",
+        "Links to code can be found in the Appendix"
+    ],
+    "summary": [
+        "A fundamental problem in machine learning is the discovery of structure in unsupervised data.",
+        "The locations and sizes of the segments in ground-truth e.g. in Fig 3 we would like temporal clusterings that switch between primitives at exactly the time points t = 2, 4 with the same 3 segment structure.",
+        "Existing metrics cannot score repeated or segment structure because they convert temporal clusterings to standard clusterings \u2013 a contingency matrix (<a class=\"ref-link\" id=\"cRosenberg_2007_a\" href=\"#rRosenberg_2007_a\">Rosenberg & Hirschberg, 2007</a>) \u2013 before evaluation.",
+        "We provide a single evaluation measure for temporal clusterings, the temporal structure score (TSS) that balances the RSS with the SSS.",
+        "We have argued the importance of evaluating repeated and segment structure correctly in temporal data.",
+        "The goal is to label the temporal structure present in each time-series while identi- \u03bb fying the common, latent procedure.",
+        "These papers typically assume a general setting where activities or latent tokens may be reused within or across multiple time-series but there is no onus on methods to discover this structure.",
+        "Procedure identification requires that methods return a common procedure in addition to the temporal clustering of each time-series.",
+        "Finding a common procedure P corresponds to finding temporal clusterings Ci for each time-series, such that P = P(C1) = P(C2) = \u00b7 \u00b7 \u00b7 = P(Cn).",
+        "In contrast to a Gaussian mixture model, PRISM shares statistical strength across time-series by using a structured prior over the local variables that generate each observation \u2013 amortizing the procedure across many timeseries.",
+        "Fig 6e shows the result of evaluating with just the RSS \u2013 we can clearly see that SpatSC is able to capture far more repeated structure than SHDP-HMM, which is unable to label segments from the same ground-truth label consistently.",
+        "We expect our method to perform worse on the Breakfast actions dataset, as it has no repeated structure, in which case our model has no advantages over this prior model, and uses a simpler observation model.",
+        "An example for the cpr procedure is shown in Fig 1 and illustrates that unlike <a class=\"ref-link\" id=\"cSener_2018_a\" href=\"#rSener_2018_a\">Sener & Yao (2018</a>)\u2019s method, PRISM can successfully recover repeated structure both within and across videos.",
+        "We developed PRISM, a hierarchical Bayesian model to identify latent procedures in time-series data.",
+        "We hope to extend PRISM by incorporating richer observation models, and relaxing the assumption that a single strictly-ordered procedure is followed by all time-series."
+    ],
+    "headline": "We introduce a hierarchical Bayesian model called PRISM that models the realization of a common procedure across multiple time-series, and can recover procedural abstractions without supervision",
+    "reference_links": [
+        {
+            "id": "Pattern_2016_a",
+            "entry": "Pattern Recognition (CVPR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pattern%20Recognition%20CVPR%202016"
+        },
+        {
+            "id": "Borsa_et+al_2017_a",
+            "entry": "Diana Borsa, Bilal Piot, Remi Munos, and Olivier Pietquin. Observational learning by reinforcement learning. arXiv preprint arXiv:1706.06617, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06617"
+        },
+        {
+            "id": "Chung_et+al_2004_a",
+            "entry": "Fu-Lai Chung, Tak-Chung Fu, Vincent Ng, and Robert WP Luk. An evolutionary approach to pattern-based time series segmentation. IEEE transactions on evolutionary computation, 8(5): 471\u2013489, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Fu-Lai%20Fu%2C%20Tak-Chung%20Ng%2C%20Vincent%20Luk%2C%20Robert%20W.P.%20An%20evolutionary%20approach%20to%20pattern-based%20time%20series%20segmentation%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Fu-Lai%20Fu%2C%20Tak-Chung%20Ng%2C%20Vincent%20Luk%2C%20Robert%20W.P.%20An%20evolutionary%20approach%20to%20pattern-based%20time%20series%20segmentation%202004"
+        },
+        {
+            "id": "Elhamifar_2013_a",
+            "entry": "Ehsan Elhamifar and Rene Vidal. Sparse subspace clustering: Algorithm, theory, and applications. IEEE Transactions on Pattern Analysis and Machine Intelligence, 35:2765\u20132781, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elhamifar%2C%20Ehsan%20Vidal%2C%20Rene%20Sparse%20subspace%20clustering%3A%20Algorithm%2C%20theory%2C%20and%20applications%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elhamifar%2C%20Ehsan%20Vidal%2C%20Rene%20Sparse%20subspace%20clustering%3A%20Algorithm%2C%20theory%2C%20and%20applications%202013"
+        },
+        {
+            "id": "Fox_et+al_2014_a",
+            "entry": "Bernard Fox, Michael C. Hughes, Erik B. Sudderth, and Michael I. Jordan. Joint modeling of multiple time series via the beta process with application to motion capture segmentation by emily. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Bernard%20Hughes%2C%20Michael%20C.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Joint%20modeling%20of%20multiple%20time%20series%20via%20the%20beta%20process%20with%20application%20to%20motion%20capture%20segmentation%20by%20emily%202014"
+        },
+        {
+            "id": "Fox_et+al_2008_a",
+            "entry": "Emily B. Fox, Erik B. Sudderth, Michael I. Jordan, and Alan S. Willsky. An hdp-hmm for systems with state persistence. In ICML, 2008a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Emily%20B.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Willsky%2C%20Alan%20S.%20An%20hdp-hmm%20for%20systems%20with%20state%20persistence%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fox%2C%20Emily%20B.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Willsky%2C%20Alan%20S.%20An%20hdp-hmm%20for%20systems%20with%20state%20persistence%202008"
+        },
+        {
+            "id": "Fox_et+al_2008_b",
+            "entry": "Emily B. Fox, Erik B. Sudderth, Michael I. Jordan, and Alan S. Willsky. Nonparametric bayesian learning of switching linear dynamical systems. In NIPS, 2008b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Emily%20B.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Willsky%2C%20Alan%20S.%20Nonparametric%20bayesian%20learning%20of%20switching%20linear%20dynamical%20systems%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fox%2C%20Emily%20B.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Willsky%2C%20Alan%20S.%20Nonparametric%20bayesian%20learning%20of%20switching%20linear%20dynamical%20systems%202008"
+        },
+        {
+            "id": "Fox_et+al_2009_a",
+            "entry": "Emily B. Fox, Erik B. Sudderth, Michael I. Jordan, and Alan S. Willsky. Sharing features among dynamical systems with beta processes. In NIPS, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Emily%20B.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Willsky%2C%20Alan%20S.%20Sharing%20features%20among%20dynamical%20systems%20with%20beta%20processes%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fox%2C%20Emily%20B.%20Sudderth%2C%20Erik%20B.%20Jordan%2C%20Michael%20I.%20Willsky%2C%20Alan%20S.%20Sharing%20features%20among%20dynamical%20systems%20with%20beta%20processes%202009"
+        },
+        {
+            "id": "Yixin_et+al_2014_a",
+            "entry": "Yixin Gao, S Swaroop Vedula, Carol E Reiley, Narges Ahmidi, Balakrishnan Varadarajan, Henry C Lin, Lingling Tao, Luca Zappella, Benjam\u0131n Bejar, David D Yuh, et al. Jhu-isi gesture and skill assessment working set (jigsaws): A surgical activity dataset for human motion modeling. In MICCAI Workshop: M2CAI, volume 3, pp. 3, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yixin%20Gao%2C%20S.Swaroop%20Vedula%20Reiley%2C%20Carol%20E.%20Ahmidi%2C%20Narges%20Varadarajan%2C%20Balakrishnan%20Jhu-isi%20gesture%20and%20skill%20assessment%20working%20set%20%28jigsaws%29%3A%20A%20surgical%20activity%20dataset%20for%20human%20motion%20modeling%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yixin%20Gao%2C%20S.Swaroop%20Vedula%20Reiley%2C%20Carol%20E.%20Ahmidi%2C%20Narges%20Varadarajan%2C%20Balakrishnan%20Jhu-isi%20gesture%20and%20skill%20assessment%20working%20set%20%28jigsaws%29%3A%20A%20surgical%20activity%20dataset%20for%20human%20motion%20modeling%202014"
+        },
+        {
+            "id": "Guo_et+al_2013_a",
+            "entry": "Yi Guo, Junbin Gao, and Feng Li. Spatial subspace clustering for hyperspectral data segmentation. In The Third International Conference on Digital Information Processing and Communications, pp. 180\u2013190. The Society of Digital Information and Wireless Communication, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Yi%20Gao%2C%20Junbin%20Li%2C%20Feng%20Spatial%20subspace%20clustering%20for%20hyperspectral%20data%20segmentation%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Yi%20Gao%2C%20Junbin%20Li%2C%20Feng%20Spatial%20subspace%20clustering%20for%20hyperspectral%20data%20segmentation%202013"
+        },
+        {
+            "id": "Hoai_2012_a",
+            "entry": "Minh Hoai and Fernando De la Torre. Maximum margin temporal clustering. In Artificial Intelligence and Statistics, pp. 520\u2013528, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoai%2C%20Minh%20la%20Torre%2C%20Fernando%20De%20Maximum%20margin%20temporal%20clustering%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoai%2C%20Minh%20la%20Torre%2C%20Fernando%20De%20Maximum%20margin%20temporal%20clustering%202012"
+        },
+        {
+            "id": "Johnson_2013_a",
+            "entry": "Matthew J Johnson and Alan S Willsky. Bayesian nonparametric hidden semi-markov models. Journal of Machine Learning Research, 14(Feb):673\u2013701, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Matthew%20J.%20Willsky%2C%20Alan%20S.%20Bayesian%20nonparametric%20hidden%20semi-markov%20models%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Matthew%20J.%20Willsky%2C%20Alan%20S.%20Bayesian%20nonparametric%20hidden%20semi-markov%20models%202013"
+        },
+        {
+            "id": "Killick_et+al_2012_a",
+            "entry": "Rebecca Killick, Paul Fearnhead, and Idris A Eckley. Optimal detection of changepoints with a linear computational cost. Journal of the American Statistical Association, 107(500):1590\u20131598, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Killick%2C%20Rebecca%20Fearnhead%2C%20Paul%20Eckley%2C%20Idris%20A.%20Optimal%20detection%20of%20changepoints%20with%20a%20linear%20computational%20cost%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Killick%2C%20Rebecca%20Fearnhead%2C%20Paul%20Eckley%2C%20Idris%20A.%20Optimal%20detection%20of%20changepoints%20with%20a%20linear%20computational%20cost%202012"
+        },
+        {
+            "id": "Krishnan_et+al_2015_a",
+            "entry": "Sanjay Krishnan, Animesh Garg, Sachin Patil, Colin Lea, Gregory D. Hager, Pieter Abbeel, and Kenneth Y. Goldberg. Transition state clustering: Unsupervised surgical trajectory segmentation for robot learning. I. J. Robotics Res., 36:1595\u20131618, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krishnan%2C%20Sanjay%20Garg%2C%20Animesh%20Patil%2C%20Sachin%20Lea%2C%20Colin%20Transition%20state%20clustering%3A%20Unsupervised%20surgical%20trajectory%20segmentation%20for%20robot%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krishnan%2C%20Sanjay%20Garg%2C%20Animesh%20Patil%2C%20Sachin%20Lea%2C%20Colin%20Transition%20state%20clustering%3A%20Unsupervised%20surgical%20trajectory%20segmentation%20for%20robot%20learning%202015"
+        },
+        {
+            "id": "Kuehne_et+al_2014_a",
+            "entry": "Hilde Kuehne, Ali Arslan, and Thomas Serre. The language of actions: Recovering the syntax and semantics of goal-directed human activities. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 780\u2013787, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kuehne%2C%20Hilde%20Arslan%2C%20Ali%20Serre%2C%20Thomas%20The%20language%20of%20actions%3A%20Recovering%20the%20syntax%20and%20semantics%20of%20goal-directed%20human%20activities%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kuehne%2C%20Hilde%20Arslan%2C%20Ali%20Serre%2C%20Thomas%20The%20language%20of%20actions%3A%20Recovering%20the%20syntax%20and%20semantics%20of%20goal-directed%20human%20activities%202014"
+        },
+        {
+            "id": "Li_et+al_2015_a",
+            "entry": "Sheng Li, Kang Li, and Yun Fu. Temporal subspace clustering for human motion segmentation. In Proceedings of the IEEE International Conference on Computer Vision, pp. 4453\u20134461, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Sheng%20Li%2C%20Kang%20Fu%2C%20Yun%20Temporal%20subspace%20clustering%20for%20human%20motion%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Sheng%20Li%2C%20Kang%20Fu%2C%20Yun%20Temporal%20subspace%20clustering%20for%20human%20motion%20segmentation%202015"
+        },
+        {
+            "id": "Linderman_et+al_2017_a",
+            "entry": "Scott Linderman, Matthew Johnson, Andrew Miller, Ryan Adams, David Blei, and Liam Paninski. Bayesian learning and inference in recurrent switching linear dynamical systems. In Artificial Intelligence and Statistics, pp. 914\u2013922, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Linderman%2C%20Scott%20Johnson%2C%20Matthew%20Miller%2C%20Andrew%20Adams%2C%20Ryan%20Bayesian%20learning%20and%20inference%20in%20recurrent%20switching%20linear%20dynamical%20systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Linderman%2C%20Scott%20Johnson%2C%20Matthew%20Miller%2C%20Andrew%20Adams%2C%20Ryan%20Bayesian%20learning%20and%20inference%20in%20recurrent%20switching%20linear%20dynamical%20systems%202017"
+        },
+        {
+            "id": "Meila_2007_a",
+            "entry": "Marina Meila. Comparing clusteringsan information based distance. Journal of multivariate analysis, 98(5):873\u2013895, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Meila%2C%20Marina%20Comparing%20clusteringsan%20information%20based%20distance%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Meila%2C%20Marina%20Comparing%20clusteringsan%20information%20based%20distance%202007"
+        },
+        {
+            "id": "Munkres_1957_a",
+            "entry": "James Munkres. Algorithms for the assignment and transportation problems. Journal of the society for industrial and applied mathematics, 5(1):32\u201338, 1957.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Munkres%2C%20James%20Algorithms%20for%20the%20assignment%20and%20transportation%20problems%201957",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Munkres%2C%20James%20Algorithms%20for%20the%20assignment%20and%20transportation%20problems%201957"
+        },
+        {
+            "id": "Rosenberg_2007_a",
+            "entry": "Andrew Rosenberg and Julia Hirschberg. V-measure: A conditional entropy-based external cluster evaluation measure. In Proceedings of the 2007 joint conference on empirical methods in natural language processing and computational natural language learning (EMNLP-CoNLL), 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rosenberg%2C%20Andrew%20Hirschberg%2C%20Julia%20V-measure%3A%20A%20conditional%20entropy-based%20external%20cluster%20evaluation%20measure%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rosenberg%2C%20Andrew%20Hirschberg%2C%20Julia%20V-measure%3A%20A%20conditional%20entropy-based%20external%20cluster%20evaluation%20measure%202007"
+        },
+        {
+            "id": "Sener_2018_a",
+            "entry": "Fadime Sener and Angela Yao. Unsupervised learning and segmentation of complex activities from video. arXiv preprint arXiv:1803.09490, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.09490"
+        },
+        {
+            "id": "Stadie_et+al_2017_a",
+            "entry": "Bradly C Stadie, Pieter Abbeel, and Ilya Sutskever. Third-person imitation learning. arXiv preprint arXiv:1703.01703, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01703"
+        },
+        {
+            "id": "Strehl_2002_a",
+            "entry": "Alexander Strehl and Joydeep Ghosh. Cluster ensembles\u2014a knowledge reuse framework for combining multiple partitions. Journal of machine learning research, 3(Dec):583\u2013617, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strehl%2C%20Alexander%20Ghosh%2C%20Joydeep%20Cluster%20ensembles%E2%80%94a%20knowledge%20reuse%20framework%20for%20combining%20multiple%20partitions%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Strehl%2C%20Alexander%20Ghosh%2C%20Joydeep%20Cluster%20ensembles%E2%80%94a%20knowledge%20reuse%20framework%20for%20combining%20multiple%20partitions%202002"
+        },
+        {
+            "id": "Teh_et+al_2005_a",
+            "entry": "Yee W Teh, Michael I Jordan, Matthew J Beal, and David M Blei. Sharing clusters among related groups: Hierarchical dirichlet processes. In Advances in neural information processing systems, pp. 1385\u20131392, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Teh%2C%20Yee%20W.%20Jordan%2C%20Michael%20I.%20Beal%2C%20Matthew%20J.%20Blei%2C%20David%20M.%20Sharing%20clusters%20among%20related%20groups%3A%20Hierarchical%20dirichlet%20processes%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Teh%2C%20Yee%20W.%20Jordan%2C%20Michael%20I.%20Beal%2C%20Matthew%20J.%20Blei%2C%20David%20M.%20Sharing%20clusters%20among%20related%20groups%3A%20Hierarchical%20dirichlet%20processes%202005"
+        },
+        {
+            "id": "Tierney_et+al_2014_a",
+            "entry": "Stephen Tierney, Junbin Gao, and Yi Guo. Subspace clustering for sequential data. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 1019\u20131026, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tierney%2C%20Stephen%20Gao%2C%20Junbin%20Guo%2C%20Yi%20Subspace%20clustering%20for%20sequential%20data%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tierney%2C%20Stephen%20Gao%2C%20Junbin%20Guo%2C%20Yi%20Subspace%20clustering%20for%20sequential%20data%202014"
+        },
+        {
+            "id": "Torabi_et+al_2018_a",
+            "entry": "Faraz Torabi, Garrett Warnell, and Peter Stone. Behavioral cloning from observation. arXiv preprint arXiv:1805.01954, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.01954"
+        },
+        {
+            "id": "Vidal_2014_a",
+            "entry": "Rene Vidal and Paolo Favaro. Low rank subspace clustering (lrsc). Pattern Recognition Letters, 43: 47\u201361, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vidal%2C%20Rene%20Favaro%2C%20Paolo%20Low%20rank%20subspace%20clustering%20%28lrsc%29.%20Pattern%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vidal%2C%20Rene%20Favaro%2C%20Paolo%20Low%20rank%20subspace%20clustering%20%28lrsc%29.%20Pattern%202014"
+        },
+        {
+            "id": "Vinh_et+al_2010_a",
+            "entry": "Nguyen Xuan Vinh, Julien Epps, and James Bailey. Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance. Journal of Machine Learning Research, 11(Oct):2837\u20132854, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinh%2C%20Nguyen%20Xuan%20Epps%2C%20Julien%20Bailey%2C%20James%20Information%20theoretic%20measures%20for%20clusterings%20comparison%3A%20Variants%2C%20properties%2C%20normalization%20and%20correction%20for%20chance%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinh%2C%20Nguyen%20Xuan%20Epps%2C%20Julien%20Bailey%2C%20James%20Information%20theoretic%20measures%20for%20clusterings%20comparison%3A%20Variants%2C%20properties%2C%20normalization%20and%20correction%20for%20chance%202010"
+        },
+        {
+            "id": "Wu_et+al_2015_a",
+            "entry": "Chenxia Wu, Jiemi Zhang, Silvio Savarese, and Ashutosh Saxena. Watch-n-patch: Unsupervised understanding of actions and relations. In Computer Vision and Pattern Recognition (CVPR), 2015 IEEE Conference on, pp. 4362\u20134370. IEEE, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Chenxia%20Zhang%2C%20Jiemi%20Savarese%2C%20Silvio%20Saxena%2C%20Ashutosh%20Watch-n-patch%3A%20Unsupervised%20understanding%20of%20actions%20and%20relations%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Chenxia%20Zhang%2C%20Jiemi%20Savarese%2C%20Silvio%20Saxena%2C%20Ashutosh%20Watch-n-patch%3A%20Unsupervised%20understanding%20of%20actions%20and%20relations%202015"
+        },
+        {
+            "id": "Yang_et+al_2013_a",
+            "entry": "Yang Yang, Imran Saleemi, and Mubarak Shah. Discovering motion primitives for unsupervised grouping and one-shot learning of human actions, gestures, and expressions. IEEE transactions on pattern analysis and machine intelligence, 35(7):1635\u20131648, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Yang%20Saleemi%2C%20Imran%20Shah%2C%20Mubarak%20Discovering%20motion%20primitives%20for%20unsupervised%20grouping%20and%20one-shot%20learning%20of%20human%20actions%2C%20gestures%2C%20and%20expressions%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Yang%20Saleemi%2C%20Imran%20Shah%2C%20Mubarak%20Discovering%20motion%20primitives%20for%20unsupervised%20grouping%20and%20one-shot%20learning%20of%20human%20actions%2C%20gestures%2C%20and%20expressions%202013"
+        },
+        {
+            "id": "Zhou_et+al_2008_a",
+            "entry": "Feng Zhou, Fernando De la Torre, and Jessica K. Hodgins. Aligned cluster analysis for temporal segmentation of human motion. 2008 8th IEEE International Conference on Automatic Face Gesture Recognition, pp. 1\u20137, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Feng%20la%20Torre%2C%20Fernando%20De%20Hodgins%2C%20Jessica%20K.%20Aligned%20cluster%20analysis%20for%20temporal%20segmentation%20of%20human%20motion%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Feng%20la%20Torre%2C%20Fernando%20De%20Hodgins%2C%20Jessica%20K.%20Aligned%20cluster%20analysis%20for%20temporal%20segmentation%20of%20human%20motion%202008"
+        },
+        {
+            "id": "Zhou_et+al_2013_a",
+            "entry": "Feng Zhou, Fernando De la Torre, and Jessica K. Hodgins. Hierarchical aligned cluster analysis for temporal clustering of human motion. IEEE Transactions on Pattern Analysis and Machine Intelligence, 35:582\u2013596, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Feng%20la%20Torre%2C%20Fernando%20De%20Hodgins%2C%20Jessica%20K.%20Hierarchical%20aligned%20cluster%20analysis%20for%20temporal%20clustering%20of%20human%20motion%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Feng%20la%20Torre%2C%20Fernando%20De%20Hodgins%2C%20Jessica%20K.%20Hierarchical%20aligned%20cluster%20analysis%20for%20temporal%20clustering%20of%20human%20motion%202013"
+        },
+        {
+            "id": "The_0000_a",
+            "entry": "The results presented for the evaluation criteria developed in this paper can be reproduced using code available at https://github.com/StanfordAI4HI/ICLR2019_evaluating_discrete_temporal_structure. The temporal clusterings predicted by each method, as well as ground-truth data is available at the link.",
+            "url": "https://github.com/StanfordAI4HI/ICLR2019_evaluating_discrete_temporal_structure",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20results%20presented%20for%20the%20evaluation%20criteria%20developed%20in%20this%20paper%20can%20be%20reproduced%20using%20code%20available%20at%20httpsgithubcomStanfordAI4HIICLR2019evaluatingdiscretetemporalstructure%20The%20temporal%20clusterings%20predicted%20by%20each%20method%20as%20well%20as%20groundtruth%20data%20is%20available%20at%20the%20link"
+        },
+        {
+            "id": "In_0000_b",
+            "entry": "In addition, an implementation of only the newly proposed temporal clustering evaluation criteria can be found at https://github.com/StanfordAI4HI/tclust-eval.",
+            "url": "https://github.com/StanfordAI4HI/tclust-eval"
+        }
+    ]
+}

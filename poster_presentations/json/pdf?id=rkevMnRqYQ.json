@@ -1,0 +1,253 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "A Survey of Semi-Supervised Learning Methods",
+        "author": "Nitin Namdeo Pise, Parag Kulkarni",
+        "date": 2009,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkevMnRqYQ",
+            "doi": "10.1109/cis.2008.204"
+        },
+        "journal": "2008 International Conference on Computational Intelligence and Security",
+        "abstract": "Reinforcement learning (RL) agents optimize only the features specified in a reward function and are indifferent to anything left out inadvertently. This means that we must not only specify what to do, but also the much larger space of what not to do. It is easy to forget these preferences, since these preferences are already satisfied in our environment. This motivates our key insight: when a robot is deployed in an environment that humans act in, the state of the environment is already optimized for what humans want. We can therefore use this implicit preference information from the state to fill in the blanks. We develop an algorithm based on Maximum Causal Entropy IRL and use it to evaluate the idea in a suite of proof-of-concept environments designed to show its properties. We find that information from the initial state can be used to infer both side effects that should be avoided as well as preferences for how the environment should be organized. Our code can be found at https://github.com/HumanCompatibleAI/rlsp."
+    },
+    "keywords": [
+        {
+            "term": "Markov decision process",
+            "url": "https://en.wikipedia.org/wiki/Markov_decision_process"
+        },
+        {
+            "term": "inverse reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/inverse_reinforcement_learning"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "reward function",
+            "url": "https://en.wikipedia.org/wiki/reward_function"
+        },
+        {
+            "term": "Deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/Deep_reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "RL": "Reinforcement learning",
+        "deep RL": "Deep reinforcement learning",
+        "IRL": "Inverse Reinforcement Learning",
+        "MDP": "Markov decision process",
+        "MCEIRL": "Maximum Causal Entropy IRL"
+    },
+    "highlights": [
+        "Deep reinforcement learning has been shown to succeed at a wide variety of complex tasks given a correctly specified reward function",
+        "We argue that there is an additional source of information that is potentially rather helpful, but that we have been ignoring far: The key insight of this paper is that when a robot is deployed in an environment that humans have been acting in, the state of the environment is already optimized for what humans want",
+        "We identify the state of the world at initialization as a source of information about human preferences. We leverage this insight to derive an algorithm, Reward Learning by Simulating the Past (RLSP), which infers reward from initial state based on a Maximum Causal Entropy (<a class=\"ref-link\" id=\"cZiebart_et+al_2010_a\" href=\"#rZiebart_et+al_2010_a\">Ziebart et al, 2010</a>) model of human behavior",
+        "We vary the value of T assumed by RLSP, and report the true return achieved by \u03c0RLSP obtained using the inferred reward and a fixed horizon for the robot to act",
+        "RLSP, that computes a MAP estimate of Alice\u2019s reward function",
+        "Our evaluation showed that information from the initial state can be used to successfully infer side effects to avoid as well as tasks to complete, though there are cases in which we cannot infer the relevant preferences"
+    ],
+    "key_statements": [
+        "Deep reinforcement learning has been shown to succeed at a wide variety of complex tasks given a correctly specified reward function",
+        "We argue that there is an additional source of information that is potentially rather helpful, but that we have been ignoring far: The key insight of this paper is that when a robot is deployed in an environment that humans have been acting in, the state of the environment is already optimized for what humans want",
+        "We identify the state of the world at initialization as a source of information about human preferences. We leverage this insight to derive an algorithm, Reward Learning by Simulating the Past (RLSP), which infers reward from initial state based on a Maximum Causal Entropy (<a class=\"ref-link\" id=\"cZiebart_et+al_2010_a\" href=\"#rZiebart_et+al_2010_a\">Ziebart et al, 2010</a>) model of human behavior",
+        "We vary the value of T assumed by RLSP, and report the true return achieved by \u03c0RLSP obtained using the inferred reward and a fixed horizon for the robot to act",
+        "RLSP, that computes a MAP estimate of Alice\u2019s reward function",
+        "Our evaluation showed that information from the initial state can be used to successfully infer side effects to avoid as well as tasks to complete, though there are cases in which we cannot infer the relevant preferences"
+    ],
+    "summary": [
+        "Deep reinforcement learning has been shown to succeed at a wide variety of complex tasks given a correctly specified reward function.",
+        "Since the robot has been deployed in a state that only contains unbroken vases, it can infer that while acting in the environment, Alice was using one of the relatively few policies that do not break vases, and so must have cared about keeping vases intact.",
+        "We leverage this insight to derive an algorithm, Reward Learning by Simulating the Past (RLSP), which infers reward from initial state based on a Maximum Causal Entropy (<a class=\"ref-link\" id=\"cZiebart_et+al_2010_a\" href=\"#rZiebart_et+al_2010_a\">Ziebart et al, 2010</a>) model of human behavior.",
+        "We demonstrate the properties and limitations of RLSP on a suite of proof-of-concept environments: we use it to avoid side effects, as well as to learn implicit preferences that require active action.",
+        "We aim to infer Alice\u2019s reward \u03b8 given an environment M\\r and the last state of the expert\u2019s trajectory s0.",
+        "The specified reward only has a positive weight on the purple door, while the true reward penalizes broken trains and vases.",
+        "The specified reward is zero: the robot must infer the task from the observed state.",
+        "Since our baselines don\u2019t care about the trajectory the human takes, they all perform as before: \u03c0spec walks over the vase, while \u03c0deviation and \u03c0reachability both avoid it.",
+        "In both room with vase and toy train, RLSP learns a smaller negative reward on broken vases when using a uniform prior.",
+        "This is because RLSP considers many more feasible trajectories when using a uniform prior, many of which do not give Alice a chance to break the vase, as in Room with far away vase in Section 5.2.",
+        "With known s\u2212T , RLSP overfits to the few consistent trajectories, which usually go over carpets, whereas with a uniform prior it considers many more trajectories that often don\u2019t go over carpets, and so it correctly infers a near-zero weight.",
+        "We see the same behavior as in Apple collection, where RLSP with a uniform prior learns a slightly smaller negative reward on the batteries, since it considers states s\u2212T where the battery was already gone.",
+        "We vary the value of T assumed by RLSP, and report the true return achieved by \u03c0RLSP obtained using the inferred reward and a fixed horizon for the robot to act.",
+        "The apples and batteries environments demonstrate that RLSP can learn preferences that require the robot to actively perform a task.",
+        "While we believe this is an important step forward, there is still much work to be done to make this accurate and practical"
+    ],
+    "headline": "We develop an algorithm based on Maximum Causal Entropy Inverse Reinforcement Learning and use it to evaluate the idea in a suite of proof-of-concept environments designed to show its properties",
+    "reference_links": [
+        {
+            "id": "Achiam_et+al_2018_a",
+            "entry": "Joshua Achiam, Harrison Edwards, Dario Amodei, and Pieter Abbeel. Variational option discovery algorithms. arXiv preprint arXiv:1807.10299, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.10299"
+        },
+        {
+            "id": "Amin_et+al_2017_a",
+            "entry": "Kareem Amin, Nan Jiang, and Satinder Singh. Repeated inverse reinforcement learning. In Advances in Neural Information Processing Systems, pages 1815\u20131824, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amin%2C%20Kareem%20Jiang%2C%20Nan%20Singh%2C%20Satinder%20Repeated%20inverse%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amin%2C%20Kareem%20Jiang%2C%20Nan%20Singh%2C%20Satinder%20Repeated%20inverse%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Amodei_et+al_2016_a",
+            "entry": "Dario Amodei, Chris Olah, Jacob Steinhardt, Paul Christiano, John Schulman, and Dan Mane. Concrete problems in ai safety. arXiv preprint arXiv:1606.06565, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06565"
+        },
+        {
+            "id": "Andreescu_2017_a",
+            "entry": "Oana Fabiana Andreescu. Static analysis of functional programs with an application to the frame problem in deductive verification. PhD thesis, Rennes 1, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andreescu%2C%20Oana%20Fabiana%20Static%20analysis%20of%20functional%20programs%20with%20an%20application%20to%20the%20frame%20problem%20in%20deductive%20verification%202017"
+        },
+        {
+            "id": "Andrychowicz_et+al_2017_a",
+            "entry": "Marcin Andrychowicz, Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, Peter Welinder, Bob McGrew, Josh Tobin, Pieter Abbeel, and Wojciech Zaremba. Hindsight experience replay. In Advances in Neural Information Processing Systems, pages 5048\u20135058, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Wolski%2C%20Filip%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Hindsight%20experience%20replay%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Wolski%2C%20Filip%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Hindsight%20experience%20replay%202017"
+        },
+        {
+            "id": "Armstrong_2017_a",
+            "entry": "Stuart Armstrong and Benjamin Levinstein. Low impact artificial intelligences. arXiv preprint arXiv:1705.10720, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10720"
+        },
+        {
+            "id": "Bahdanau_et+al_2018_a",
+            "entry": "Dzmitry Bahdanau, Felix Hill, Jan Leike, Edward Hughes, Pushmeet Kohli, and Edward Grefenstette. Learning to understand goal specifications by modelling reward. arXiv preprint arXiv:1806.01946, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01946"
+        },
+        {
+            "id": "Burda_et+al_2018_a",
+            "entry": "Yuri Burda, Harri Edwards, Deepak Pathak, Amos Storkey, Trevor Darrell, and Alexei A Efros. Large-scale study of curiosity-driven learning. arXiv preprint arXiv:1808.04355, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04355"
+        },
+        {
+            "id": "Christiano_et+al_2017_a",
+            "entry": "Paul F Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. Deep reinforcement learning from human preferences. In Advances in Neural Information Processing Systems, pages 4299\u20134307, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christiano%2C%20Paul%20F.%20Leike%2C%20Jan%20Brown%2C%20Tom%20Martic%2C%20Miljan%20Deep%20reinforcement%20learning%20from%20human%20preferences%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christiano%2C%20Paul%20F.%20Leike%2C%20Jan%20Brown%2C%20Tom%20Martic%2C%20Miljan%20Deep%20reinforcement%20learning%20from%20human%20preferences%202017"
+        },
+        {
+            "id": "Daniel_et+al_2014_a",
+            "entry": "Christian Daniel, Malte Viering, Jan Metz, Oliver Kroemer, and Jan Peters. Active reward learning. In Robotics: Science and Systems, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daniel%2C%20Christian%20Viering%2C%20Malte%20Metz%2C%20Jan%20Kroemer%2C%20Oliver%20Active%20reward%20learning%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Daniel%2C%20Christian%20Viering%2C%20Malte%20Metz%2C%20Jan%20Kroemer%2C%20Oliver%20Active%20reward%20learning%202014"
+        },
+        {
+            "id": "Edwards_et+al_2018_a",
+            "entry": "Ashley D Edwards, Himanshu Sahni, Yannick Schroeker, and Charles L Isbell. Imitating latent policies from observation. arXiv preprint arXiv:1805.07914, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07914"
+        },
+        {
+            "id": "Eysenbach_et+al_2018_a",
+            "entry": "Benjamin Eysenbach, Abhishek Gupta, Julian Ibarz, and Sergey Levine. Diversity is all you need: Learning skills without a reward function. arXiv preprint arXiv:1802.06070, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06070"
+        },
+        {
+            "id": "Finn_et+al_2016_a",
+            "entry": "Chelsea Finn, Sergey Levine, and Pieter Abbeel. Guided cost learning: Deep inverse optimal control via policy optimization. In International Conference on Machine Learning, pages 49\u201358, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Guided%20cost%20learning%3A%20Deep%20inverse%20optimal%20control%20via%20policy%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Guided%20cost%20learning%3A%20Deep%20inverse%20optimal%20control%20via%20policy%20optimization%202016"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Justin Fu, Katie Luo, and Sergey Levine. Learning robust rewards with adversarial inverse reinforcement learning. arXiv preprint arXiv:1710.11248, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.11248"
+        },
+        {
+            "id": "Hadfield-Menell_et+al_2017_a",
+            "entry": "Dylan Hadfield-Menell, Smitha Milli, Pieter Abbeel, Stuart J Russell, and Anca Dragan. Inverse reward design. In Advances in Neural Information Processing Systems, pages 6765\u20136774, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dylan%20HadfieldMenell%20Smitha%20Milli%20Pieter%20Abbeel%20Stuart%20J%20Russell%20and%20Anca%20Dragan%20Inverse%20reward%20design%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pages%2067656774%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dylan%20HadfieldMenell%20Smitha%20Milli%20Pieter%20Abbeel%20Stuart%20J%20Russell%20and%20Anca%20Dragan%20Inverse%20reward%20design%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pages%2067656774%202017"
+        },
+        {
+            "id": "Ho_2016_a",
+            "entry": "Jonathan Ho and Stefano Ermon. Generative adversarial imitation learning. In Advances in Neural Information Processing Systems, pages 4565\u20134573, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016"
+        },
+        {
+            "id": "Kaski_2018_a",
+            "entry": "Antti Kangasraasioand Samuel Kaski. Inverse reinforcement learning from summary data. Machine Learning, 107(8-10):1517\u20131535, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaski%2C%20Antti%20Kangasraasioand%20Samuel%20Inverse%20reinforcement%20learning%20from%20summary%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaski%2C%20Antti%20Kangasraasioand%20Samuel%20Inverse%20reinforcement%20learning%20from%20summary%20data%202018"
+        },
+        {
+            "id": "Knox_2009_a",
+            "entry": "W Bradley Knox and Peter Stone. Interactively shaping agents via human reinforcement: The tamer framework. In Proceedings of the fifth international conference on Knowledge capture, pages 9\u201316. ACM, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Knox%2C%20W.Bradley%20Stone%2C%20Peter%20Interactively%20shaping%20agents%20via%20human%20reinforcement%3A%20The%20tamer%20framework%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Knox%2C%20W.Bradley%20Stone%2C%20Peter%20Interactively%20shaping%20agents%20via%20human%20reinforcement%3A%20The%20tamer%20framework%202009"
+        },
+        {
+            "id": "Krakovna_et+al_2018_a",
+            "entry": "Victoria Krakovna, Laurent Orseau, Miljan Martic, and Shane Legg. Measuring and avoiding side effects using relative reachability. arXiv preprint arXiv:1806.01186, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01186"
+        },
+        {
+            "id": "Macglashan_et+al_2017_a",
+            "entry": "James MacGlashan, Mark K Ho, Robert Loftin, Bei Peng, David Roberts, Matthew E Taylor, and Michael L Littman. Interactive learning from policy-dependent human feedback. arXiv preprint arXiv:1701.06049, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.06049"
+        },
+        {
+            "id": "Nair_et+al_2018_a",
+            "entry": "Ashvin Nair, Vitchyr Pong, Murtaza Dalal, Shikhar Bahl, Steven Lin, and Sergey Levine. Visual reinforcement learning with imagined goals. arXiv preprint arXiv:1807.04742, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.04742"
+        },
+        {
+            "id": "Ramachandran_2007_a",
+            "entry": "Deepak Ramachandran and Eyal Amir. Bayesian inverse reinforcement learning. Urbana, 51(61801): 1\u20134, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramachandran%2C%20Deepak%20Amir%2C%20Eyal%20Bayesian%20inverse%20reinforcement%20learning%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ramachandran%2C%20Deepak%20Amir%2C%20Eyal%20Bayesian%20inverse%20reinforcement%20learning%202007"
+        },
+        {
+            "id": "Sadigh_et+al_2017_a",
+            "entry": "Dorsa Sadigh, Anca Dragan, Shankar Sastry, and Sanjit A Seshia. Active preference-based learning of reward functions. In Robotics: Science and Systems (RSS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sadigh%2C%20Dorsa%20Dragan%2C%20Anca%20Sastry%2C%20Shankar%20and%20Sanjit%20A%20Seshia.%20Active%20preference-based%20learning%20of%20reward%20functions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sadigh%2C%20Dorsa%20Dragan%2C%20Anca%20Sastry%2C%20Shankar%20and%20Sanjit%20A%20Seshia.%20Active%20preference-based%20learning%20of%20reward%20functions%202017"
+        },
+        {
+            "id": "Schaul_et+al_2015_a",
+            "entry": "Tom Schaul, Daniel Horgan, Karol Gregor, and David Silver. Universal value function approximators. In International Conference on Machine Learning, pages 1312\u20131320, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tom%20Schaul%20Daniel%20Horgan%20Karol%20Gregor%20and%20David%20Silver%20Universal%20value%20function%20approximators%20In%20International%20Conference%20on%20Machine%20Learning%20pages%2013121320%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tom%20Schaul%20Daniel%20Horgan%20Karol%20Gregor%20and%20David%20Silver%20Universal%20value%20function%20approximators%20In%20International%20Conference%20on%20Machine%20Learning%20pages%2013121320%202015"
+        },
+        {
+            "id": "Turner_2018_a",
+            "entry": "Alex Turner. Towards a new impact measure, 2018. https://www.alignmentforum.org/posts/yEa7kwoMpsBgaBCgb/towards-a-new-impact-measure, Last accessed on 2018-09-26.",
+            "url": "https://www.alignmentforum.org/posts/yEa7kwoMpsBgaBCgb/towards-a-new-impact-measure"
+        },
+        {
+            "id": "Warnell_et+al_2017_a",
+            "entry": "Garrett Warnell, Nicholas Waytowich, Vernon Lawhern, and Peter Stone. Deep tamer: Interactive agent shaping in high-dimensional state spaces. arXiv preprint arXiv:1709.10163, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.10163"
+        },
+        {
+            "id": "Wirth_et+al_2017_a",
+            "entry": "Christian Wirth, Riad Akrour, Gerhard Neumann, and Johannes Furnkranz. A Survey of PreferenceBased Reinforcement Learning Methods. Journal of Machine Learning Research, 18(136):1\u201346, 2017. ISSN 15337928. doi: 10.1109/CIS.2008.204. URL http://jmlr.org/papers/v18/16-634.html.",
+            "crossref": "https://dx.doi.org/10.1109/CIS.2008.204",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/CIS.2008.204"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "Tianhe Yu, Chelsea Finn, Annie Xie, Sudeep Dasari, Tianhao Zhang, Pieter Abbeel, and Sergey Levine. One-shot imitation from observing humans via domain-adaptive meta-learning. arXiv preprint arXiv:1802.01557, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01557"
+        },
+        {
+            "id": "Ziebart_et+al_2010_a",
+            "entry": "Brian D Ziebart, J Andrew Bagnell, and Anind K Dey. Modeling interaction via the principle of maximum causal entropy. 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ziebart%2C%20Brian%20D.%20Bagnell%2C%20J.Andrew%20Dey%2C%20Anind%20K.%20Modeling%20interaction%20via%20the%20principle%20of%20maximum%20causal%20entropy%202010"
+        },
+        {
+            "id": "This_2010_a",
+            "entry": "This is the gradient we will use in Appendix B, but a little more manipulation allows us to compare with the gradient in Ziebart et al. (2010). We reintroduce the terms that we cancelled above: T",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=This%20is%20the%20gradient%20we%20will%20use%20in%20Appendix%20B%20but%20a%20little%20more%20manipulation%20allows%20us%20to%20compare%20with%20the%20gradient%20in%20Ziebart%20et%20al%202010%20We%20reintroduce%20the%20terms%20that%20we%20cancelled%20above%20T"
+        },
+        {
+            "id": "Ziebart_2010_b",
+            "entry": "Ziebart et al. (2010) states that the gradient is given by the expert policy feature expectations minus the learned policy feature expectations, and in practice uses the feature expectations from demonstrations to approximate the expert policy feature expectations. Assuming we have N trajectories {\u03c4i}, the gradient would be",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ziebart%20states%20that%20the%20gradient%20is%20given%20by%20the%20expert%20policy%20feature%20expectations%20minus%20the%20learned%20policy%20feature%20expectations%2C%20and%20in%20practice%20uses%20the%20feature%20expectations%20from%20demonstrations%20to%20approximate%20the%20expert%20policy%20feature%20expectations.%20Assuming%20we%20have%20N%20trajectories%20%7B%CF%84i%7D%2C%20the%20gradient%20would%20be%202010"
+        },
+        {
+            "id": "F_2010_a",
+            "entry": "\u2212 F0(s0). This differs from the gradient in Ziebart et al. (2010) only in that it computes feature expectations from the observed starting state s0 instead of the MDP distribution over initial states p(s0).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=F0%28s0%20This%20differs%20from%20the%20gradient%20in%20Ziebart%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=F0%28s0%20This%20differs%20from%20the%20gradient%20in%20Ziebart%202010"
+        }
+    ]
+}

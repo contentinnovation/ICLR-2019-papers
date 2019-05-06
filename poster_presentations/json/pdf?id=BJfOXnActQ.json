@@ -1,0 +1,240 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO LEARN",
+        "author": "WITH CONDITIONAL CLASS DEPENDENCIES",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJfOXnActQ"
+        },
+        "abstract": "Neural networks can learn to extract statistical properties from data, but they seldom make use of structured information from the label space to help representation learning. For example \u201ccat\u201d and \u201cdog\u201d are closer than \u201ccat\u201d and \u201ctruck\u201d. Although some label structure can implicitly be obtained when training on huge amounts of data, in a few-shot learning context where little data is available, making explicit use of the label structure can inform the model to reshape the representation space to reflect a global sense of class dependencies. We propose a meta-learning framework, Conditional class-Aware Meta-Learning (CAML), that conditionally transforms feature representations based on a metric space that is trained to capture inter-class dependencies. This enables a conditional modulation of the feature representations of the base-learner to impose regularities informed by the label space. Experiments show that the conditional transformation in CAML leads to more disentangled representations and achieves competitive results on the miniImageNet benchmark."
+    },
+    "keywords": [
+        {
+            "term": "class structure",
+            "url": "https://en.wikipedia.org/wiki/class_structure"
+        },
+        {
+            "term": "meta level",
+            "url": "https://en.wikipedia.org/wiki/meta_level"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "CAML": "class-Aware Meta-Learning",
+        "MAML": "model-agnostic meta-learning",
+        "BN": "Batch Normalization",
+        "CBN": "Conditional Batch Normalization",
+        "LEO": "Latent Embedding Optimization",
+        "TADAM": "Task dependent adaptive metric"
+    },
+    "highlights": [
+        "The objective of classification is to train a model to categorize inputs into various classes",
+        "The contributions of this work are threefold: (i) We provide a meta-learning framework that makes use of structured class information in the form of a metric space to modulate representations in few-shot learning tasks; We introduce class-aware grouping to improve the statistical strength of few-shot learning tasks; We show experimentally that our proposed algorithm learns more disentangled representation and achieves competitive results on the miniImageNet benchmark",
+        "We further describe parameter sharing for Conditional Batch Normalization learning in Section 3.3.1, and class-aware grouping in Section 3.3.2 which provides more statistical strength for more effective few-shot learning",
+        "We propose Conditional class-Aware Meta-Learning (CAML) that incorporates class information by means of an embedding space to conditionally modulate representations of the base-learner",
+        "By conditionally transforming the intermediate representations of the base-learner, our goal is to reshape the representation with a global sense of class structure",
+        "Experiments reveal that the proposed conditional transformation can modulate the convolutional feature maps towards a more disentangled representation"
+    ],
+    "key_statements": [
+        "The objective of classification is to train a model to categorize inputs into various classes",
+        "The use of label structure might not be of prime importance when having access to huge amounts of data, such the full ImageNet dataset",
+        "We propose a meta-learning framework taking advantage of this class structure information, which is available in a number of applications",
+        "The contributions of this work are threefold: (i) We provide a meta-learning framework that makes use of structured class information in the form of a metric space to modulate representations in few-shot learning tasks; We introduce class-aware grouping to improve the statistical strength of few-shot learning tasks; We show experimentally that our proposed algorithm learns more disentangled representation and achieves competitive results on the miniImageNet benchmark",
+        "We start by describing the meta-learning formulation proposed by <a class=\"ref-link\" id=\"cVinyals_et+al_2016_a\" href=\"#rVinyals_et+al_2016_a\">Vinyals et al (2016</a>) and <a class=\"ref-link\" id=\"cRavi_2016_a\" href=\"#rRavi_2016_a\">Ravi & Larochelle (2016</a>), and review model-agnostic meta-learning (<a class=\"ref-link\" id=\"cFinn_et+al_2017_a\" href=\"#rFinn_et+al_2017_a\">Finn et al, 2017</a>), of which class-Aware Meta-Learning is an instance.\n2.1",
+        "The learning happens on two levels: (i) a meta-level model, or meta-learner, that learns across many tasks, and a base-level model, or base-learner, that operates within each specific task",
+        "A notable feature of the proposed method is that the model has a global sense of the label space through the embedding function f\u03c6 by mapping examples onto the semantically meaningful metric space",
+        "We further describe parameter sharing for Conditional Batch Normalization learning in Section 3.3.1, and class-aware grouping in Section 3.3.2 which provides more statistical strength for more effective few-shot learning",
+        "The results presented in Table 1 show that our proposed algorithm has comparable performance on the state-of-the-art miniImageNet 5-way 1-shot classification task, and competitive results on the 5-way 5-shot task",
+        "We propose Conditional class-Aware Meta-Learning (CAML) that incorporates class information by means of an embedding space to conditionally modulate representations of the base-learner",
+        "By conditionally transforming the intermediate representations of the base-learner, our goal is to reshape the representation with a global sense of class structure",
+        "Experiments reveal that the proposed conditional transformation can modulate the convolutional feature maps towards a more disentangled representation"
+    ],
+    "summary": [
+        "The objective of classification is to train a model to categorize inputs into various classes.",
+        "The contributions of this work are threefold: (i) We provide a meta-learning framework that makes use of structured class information in the form of a metric space to modulate representations in few-shot learning tasks; We introduce class-aware grouping to improve the statistical strength of few-shot learning tasks; We show experimentally that our proposed algorithm learns more disentangled representation and achieves competitive results on the miniImageNet benchmark.",
+        "As shown in Figure 1, the proposed Conditional class-Aware Meta-Learning (CAML) is composed of four components: an embedding function f\u03c6 that maps inputs to a metric space, a base-learner f\u03b8 that learns each individual task, an adaptation function fc that conditionally modulates the representations of",
+        "The embeddings on the metric space inform the base-learner f\u03b8 about the label structure which in turn helps disentangle representations from different classes.",
+        "In relation to other pre-training methods that use the meta-train classes to train a 64-way classifier, our use of the metric space imposes distance-based constraints to learn embeddings that follow semantically meaningful distance measures.",
+        "We turn to describing the conditionally transformed convolutional block, shown in Figure 2, which uses the metric space described in Section 3.2 to inform the base-learner about the label structure of a task.",
+        "Once we obtained the embedding function f\u03c6, we use two auxiliary networks, learned end-to-end together with the meta-learner, to predict the shift and scale factors of the convolutional feature map: \u03b3i,c =fc,\u03b3), \u03b2i,c =fc,\u03b2).",
+        "This is depicted in Figure 4 where the channel mean and variance are calculated for every group.This approach informs the base-learner about what to expect from the query examples at the class level through channel mean and variance, which provides more explicit guidance to the meta-learning procedure.",
+        "We use the metric space to represent class structure which facilitates the gradient-based meta learning towards better generalization.",
+        "This is compatible with our proposed approach that uses the metric space as concept-level representation to modulate intermediate features of the base-learner.",
+        "Unlike LEO (<a class=\"ref-link\" id=\"cRusu_et+al_2018_a\" href=\"#rRusu_et+al_2018_a\">Rusu et al, 2018</a>) that applies meta-learning on pre-trained representations, our meta-learner is able to effectively operate on the high-dimensional parameter space.",
+        "This means incorporating class dependencies in the form of a metric space can greatly facilitate gradient-based meta-learning.",
+        "We propose Conditional class-Aware Meta-Learning (CAML) that incorporates class information by means of an embedding space to conditionally modulate representations of the base-learner.",
+        "The proposed approach obtains competitive results with the current state-of-the-art performance on 5-way 1-shot and 5-shot miniImageNet benchmark"
+    ],
+    "headline": "We propose a meta-learning framework, Conditional class-Aware Meta-Learning, that conditionally transforms feature representations based on a metric space that is trained to capture inter-class dependencies",
+    "reference_links": [
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, and Nando de Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, pp. 3981\u20133989, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Bengio_et+al_1992_a",
+            "entry": "Samy Bengio, Yoshua Bengio, Jocelyn Cloutier, and Jan Gecsei. On the optimization of a synaptic learning rule. In Preprints Conf. Optimality in Artificial and Biological Neural Networks, pp. 6\u20138. Univ. of Texas, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992"
+        },
+        {
+            "id": "Caruana_1997_a",
+            "entry": "Rich Caruana. Multitask learning. Machine learning, 28(1):41\u201375, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Caruana%2C%20Rich%20Multitask%20learning%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Caruana%2C%20Rich%20Multitask%20learning%201997"
+        },
+        {
+            "id": "Vries_et+al_2017_a",
+            "entry": "Harm De Vries, Florian Strub, Jeremie Mary, Hugo Larochelle, Olivier Pietquin, and Aaron C Courville. Modulating early visual processing by language. In Advances in Neural Information Processing Systems, pp. 6594\u20136604, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vries%2C%20Harm%20De%20Strub%2C%20Florian%20Mary%2C%20Jeremie%20Larochelle%2C%20Hugo%20Modulating%20early%20visual%20processing%20by%20language%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vries%2C%20Harm%20De%20Strub%2C%20Florian%20Mary%2C%20Jeremie%20Larochelle%2C%20Hugo%20Modulating%20early%20visual%20processing%20by%20language%202017"
+        },
+        {
+            "id": "Dumoulin_et+al_2017_a",
+            "entry": "Vincent Dumoulin, Jonathon Shlens, and Manjunath Kudlur. A LEARNED REPRESENTATION FOR ARTISTIC STYLE. ICLR, 2017. URL https://arxiv.org/pdf/1610.07629.pdf.",
+            "url": "https://arxiv.org/pdf/1610.07629.pdf",
+            "arxiv_url": "https://arxiv.org/pdf/1610.07629"
+        },
+        {
+            "id": "Dumoulin_et+al_2018_a",
+            "entry": "Vincent Dumoulin, Ethan Perez, Nathan Schucher, Florian Strub, Harm de Vries, Aaron Courville, and Yoshua Bengio. Feature-wise transformations. Distill, 3(7):e11, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dumoulin%2C%20Vincent%20Perez%2C%20Ethan%20Schucher%2C%20Nathan%20Strub%2C%20Florian%20Feature-wise%20transformations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dumoulin%2C%20Vincent%20Perez%2C%20Ethan%20Schucher%2C%20Nathan%20Strub%2C%20Florian%20Feature-wise%20transformations%202018"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning, pp. 1126\u20131135, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Gidaris_2018_a",
+            "entry": "Spyros Gidaris and Nikos Komodakis. Dynamic few-shot visual learning without forgetting. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 4367\u20134375, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gidaris%2C%20Spyros%20Komodakis%2C%20Nikos%20Dynamic%20few-shot%20visual%20learning%20without%20forgetting%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gidaris%2C%20Spyros%20Komodakis%2C%20Nikos%20Dynamic%20few-shot%20visual%20learning%20without%20forgetting%202018"
+        },
+        {
+            "id": "Ha_et+al_2016_a",
+            "entry": "David Ha, Andrew Dai, and Quoc V Le. Hypernetworks. arXiv preprint arXiv:1609.09106, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.09106"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Koch_et+al_2015_a",
+            "entry": "Gregory Koch, Richard Zemel, and Ruslan Salakhutdinov. Siamese neural networks for one-shot image recognition. In ICML Deep Learning Workshop, volume 2, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koch%2C%20Gregory%20Zemel%2C%20Richard%20Salakhutdinov%2C%20Ruslan%20Siamese%20neural%20networks%20for%20one-shot%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koch%2C%20Gregory%20Zemel%2C%20Richard%20Salakhutdinov%2C%20Ruslan%20Siamese%20neural%20networks%20for%20one-shot%20image%20recognition%202015"
+        },
+        {
+            "id": "Li_2017_a",
+            "entry": "Ke Li and Jitendra Malik. Learning to optimize neural nets. arXiv preprint arXiv:1703.00441, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00441"
+        },
+        {
+            "id": "Mishra_et+al_2017_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. Meta-learning with temporal convolutions. arXiv preprint arXiv:1707.03141, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03141"
+        },
+        {
+            "id": "Mishra_et+al_2018_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. A simple neural attentive meta-learner. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mishra%2C%20Nikhil%20Rohaninejad%2C%20Mostafa%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20A%20simple%20neural%20attentive%20meta-learner%202018"
+        },
+        {
+            "id": "Mitchell_1993_a",
+            "entry": "Tom M Mitchell and Sebastian B Thrun. Explanation-based neural network learning for robot control. In Advances in neural information processing systems, pp. 287\u2013294, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mitchell%2C%20Tom%20M.%20Thrun%2C%20Sebastian%20B.%20Explanation-based%20neural%20network%20learning%20for%20robot%20control%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mitchell%2C%20Tom%20M.%20Thrun%2C%20Sebastian%20B.%20Explanation-based%20neural%20network%20learning%20for%20robot%20control%201993"
+        },
+        {
+            "id": "Munkhdalai_2017_a",
+            "entry": "Tsendsuren Munkhdalai and Hong Yu. Meta networks. arXiv preprint arXiv:1703.00837, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00837"
+        },
+        {
+            "id": "Munkhdalai_et+al_2018_a",
+            "entry": "Tsendsuren Munkhdalai, Xingdi Yuan, Soroush Mehri, and Adam Trischler. Rapid adaptation with conditionally shifted neurons. In International Conference on Machine Learning, pp. 3661\u20133670, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Munkhdalai%2C%20Tsendsuren%20Yuan%2C%20Xingdi%20Mehri%2C%20Soroush%20Trischler%2C%20Adam%20Rapid%20adaptation%20with%20conditionally%20shifted%20neurons%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Munkhdalai%2C%20Tsendsuren%20Yuan%2C%20Xingdi%20Mehri%2C%20Soroush%20Trischler%2C%20Adam%20Rapid%20adaptation%20with%20conditionally%20shifted%20neurons%202018"
+        },
+        {
+            "id": "Nichol_et+al_2018_a",
+            "entry": "Alex Nichol, Joshua Achiam, and John Schulman. On first-order meta-learning algorithms. CoRR, abs/1803.02999, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02999"
+        },
+        {
+            "id": "Oreshkin_et+al_2018_a",
+            "entry": "Boris N Oreshkin, Alexandre Lacoste, and Pau Rodriguez. Tadam: Task dependent adaptive metric for improved few-shot learning. arXiv preprint arXiv:1805.10123, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10123"
+        },
+        {
+            "id": "Perez_et+al_2017_a",
+            "entry": "Ethan Perez, Florian Strub, Harm De Vries, Vincent Dumoulin, and Aaron Courville. Film: Visual reasoning with a general conditioning layer. arXiv preprint arXiv:1709.07871, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07871"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Ren_et+al_2018_a",
+            "entry": "Mengye Ren, Eleni Triantafillou, Sachin Ravi, Jake Snell, Kevin Swersky, Joshua B Tenenbaum, Hugo Larochelle, and Richard S Zemel. Meta-learning for semi-supervised few-shot classification. arXiv preprint arXiv:1803.00676, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00676"
+        },
+        {
+            "id": "Rusu_et+al_2018_a",
+            "entry": "Andrei A Rusu, Dushyant Rao, Jakub Sygnowski, Oriol Vinyals, Razvan Pascanu, Simon Osindero, and Raia Hadsell. Meta-learning with latent embedding optimization. arXiv preprint arXiv:1807.05960, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.05960"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Meta-learning with memory-augmented neural networks. In International conference on machine learning, pp. 1842\u20131850, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Meta-learning%20with%20memory-augmented%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Meta-learning%20with%20memory-augmented%20neural%20networks%202016"
+        },
+        {
+            "id": "Schmidhuber_1987_a",
+            "entry": "Jurgen Schmidhuber. Evolutionary principles in self-referential learning. on learning now to learn: The meta-meta-meta...-hook. Diploma thesis, Technische Universitat Munchen, Germany, 14 May 1987. URL http://www.idsia.ch/\u0303juergen/diploma.html.",
+            "url": "http://www.idsia.ch/\u0303juergen/diploma.html"
+        },
+        {
+            "id": "Snell_et+al_2017_a",
+            "entry": "Jake Snell, Kevin Swersky, and Richard S. Zemel. Prototypical networks for few-shot learning. CoRR, abs/1703.05175, 2017. URL http://arxiv.org/abs/1703.05175.",
+            "url": "http://arxiv.org/abs/1703.05175",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05175"
+        },
+        {
+            "id": "Vilalta_2002_a",
+            "entry": "Ricardo Vilalta and Youssef Drissi. A perspective view and survey of meta-learning. Artificial Intelligence Review, 18(2):77\u201395, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vilalta%2C%20Ricardo%20Drissi%2C%20Youssef%20A%20perspective%20view%20and%20survey%20of%20meta-learning%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vilalta%2C%20Ricardo%20Drissi%2C%20Youssef%20A%20perspective%20view%20and%20survey%20of%20meta-learning%202002"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Charles Blundell, Tim Lillicrap, Daan Wierstra, et al. Matching networks for one shot learning. In Advances in Neural Information Processing Systems, pp. 3630\u20133638, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016"
+        },
+        {
+            "id": "Zhou_et+al_2018_a",
+            "entry": "Fengwei Zhou, Bin Wu, and Zhenguo Li. Deep meta-learning: Learning to learn in the concept space. arXiv preprint arXiv:1802.03596, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03596"
+        }
+    ]
+}

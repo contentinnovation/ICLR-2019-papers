@@ -1,0 +1,369 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING PROTEIN SEQUENCE EMBEDDINGS USING",
+        "author": "INFORMATION FROM STRUCTURE",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SygLehCqtm"
+        },
+        "abstract": "Inferring the structural properties of a protein from its amino acid sequence is a challenging yet important problem in biology. Structures are not known for the vast majority of protein sequences, but structure is critical for understanding function. Existing approaches for detecting structural similarity between proteins from sequence are unable to recognize and exploit structural patterns when sequences have diverged too far, limiting our ability to transfer knowledge between structurally related proteins. We newly approach this problem through the lens of representation learning. We introduce a framework that maps any protein sequence to a sequence of vector embeddings \u2014 one per amino acid position \u2014 that encode structural information. We train bidirectional long short-term memory (LSTM) models on protein sequences with a two-part feedback mechanism that incorporates information from (i) global structural similarity between proteins and (ii) pairwise residue contact maps for individual proteins. To enable learning from structural similarity information, we define a novel similarity measure between arbitrarylength sequences of vector embeddings based on a soft symmetric alignment (SSA) between them. Our method is able to learn useful position-specific embeddings despite lacking direct observations of position-level correspondence between sequences. We show empirically that our multi-task framework outperforms other sequence-based methods and even a top-performing structure-based alignment method when predicting structural similarity, our goal. Finally, we demonstrate that our learned embeddings can be transferred to other protein sequence problems, improving the state-of-the-art in transmembrane domain prediction. 1"
+    },
+    "keywords": [
+        {
+            "term": "transmembrane domains",
+            "url": "https://en.wikipedia.org/wiki/transmembrane_domains"
+        },
+        {
+            "term": "short term",
+            "url": "https://en.wikipedia.org/wiki/short_term"
+        },
+        {
+            "term": "long short-term memory",
+            "url": "https://en.wikipedia.org/wiki/long_short-term_memory"
+        },
+        {
+            "term": "structural similarity",
+            "url": "https://en.wikipedia.org/wiki/structural_similarity"
+        },
+        {
+            "term": "conditional random field",
+            "url": "https://en.wikipedia.org/wiki/conditional_random_field"
+        },
+        {
+            "term": "protein sequence",
+            "url": "https://en.wikipedia.org/wiki/protein_sequence"
+        },
+        {
+            "term": "protein data bank",
+            "url": "https://en.wikipedia.org/wiki/protein_data_bank"
+        },
+        {
+            "term": "amino acid sequence",
+            "url": "https://en.wikipedia.org/wiki/amino_acid_sequence"
+        },
+        {
+            "term": "SCOP",
+            "url": "https://en.wikipedia.org/wiki/SCOP"
+        }
+    ],
+    "abbreviations": {
+        "LSTM": "long short-term memory",
+        "SSA": "soft symmetric alignment",
+        "biLSTM": "bidirectional LSTM",
+        "NLI": "natural language inference",
+        "WMD": "Word Mover\u2019s Distance",
+        "Pfam": "protein families database",
+        "PDB": "protein data bank",
+        "UA": "uniform alignment",
+        "CRF": "conditional random field",
+        "TM": "transmembrane domains"
+    },
+    "highlights": [
+        "Proteins are linear chains of amino acid residues that fold into specific 3D conformations as a result of the physical properties of the amino acid sequence",
+        "We benchmark our method agains TMalign, a method for evaluating protein similarity based on alignments of protein structures",
+        "To benchmark our embedding vectors for this problem, we develop a conditional random field (CRF) model in which the propensity of each hidden state given the sequence of embedding vectors is defined by a single layer bidirectional LSTM with 150 units",
+        "We proposed a novel alignment approach to learning contextual sequence embeddings with weak supervision from a global similarity measure",
+        "One consideration of training using SCOP, is that we focus exclusively on single-domain protein sequences",
+        "This means that the highly contextual embeddings given by the bidirectional LSTM encoder to single domains may differ from embeddings for the same domain in a multi-domain sequence"
+    ],
+    "key_statements": [
+        "Proteins are linear chains of amino acid residues that fold into specific 3D conformations as a result of the physical properties of the amino acid sequence",
+        "Our ability to transfer knowledge between proteins with similar structures is limited. We address this problem by learning protein sequence embeddings using weak supervision from global structural similarity for the first time",
+        "We propose a soft symmetric alignment (SSA) mechanism \u2014 a symmetrization of the directional alignment commonly used in attention mechanisms",
+        "To allow the vector representations at each position to be functions of all surrounding amino acids, we structure the encoder as a stack of bidirectional long short-term memory followed by a linear layer projecting the outputs of the last bidirectional LSTM layer into the final embedding space (Appendix Figure 2)",
+        "Given the language model hidden states at each position, i, denoted as hiLM , and the 1-hot representation of the amino acid at those positions, xi, we introduce a learned linear transformation of these representations with ReLU non-linearity, hiinput = ReLU(W LM hiLM + W xxi + b), which is passed as input to the bidirectional LSTM sequence encoder",
+        "The primary task we consider for training the sequence embedding model with structural information is the prediction of global structural similarity between protein sequences as defined by shared membership in the SCOP hierarchy",
+        "In order to calculate the similarity of two amino acid sequences given that each has been encoded into a sequence of vector representations, z1...zn and z1...zm, we develop a soft symmetric alignment mechanism in which the similarity between two sequences is calculated based on their vector embeddings as\n1n m s = \u2212 A",
+        "We introduce a secondary task of within protein residue-residue contact prediction with the hypothesis that the fine-grained structural supervision provided by the observed contacts will improve the quality of the embeddings",
+        "We benchmark our method agains TMalign, a method for evaluating protein similarity based on alignments of protein structures",
+        "We find that our full soft symmetric alignment embedding model even outperforms TMalign, a method for comparing proteins based on their 3D structures, when predicting shared SCOP membership",
+        "We evaluate the individual model components on two tasks: structure similarity prediction on the ASTRAL 2.06 test set and 8-class secondary structure prediction on a 40% sequence identity filtered dataset containing 22,086 protein sequences from the protein data bank (PDB) [<a class=\"ref-link\" id=\"c37\" href=\"#r37\">37</a>], a repository of experimentally determined protein structures",
+        "We examine the extent to which LM hidden states capture all useful structural information by training soft symmetric alignment embedding models with less expressive power than our 3-layer bidirectional LSTM architecture (Appendix Table 5)",
+        "We find that the LM hidden states are not sufficient for high performance on the structural similarity task with linear, fully connected, and single layer bidirectional LSTM embedding models having lower accuracy, Pearson, and Spearman correlations than the 3-layer bidirectional LSTM on the ASTRAL 2.06 test set.\n4.3",
+        "We demonstrate the potential utility of our protein sequence embedding model for transfering structural information to other sequence prediction problems by leveraging our embedding model for transmembrane prediction",
+        "To benchmark our embedding vectors for this problem, we develop a conditional random field (CRF) model in which the propensity of each hidden state given the sequence of embedding vectors is defined by a single layer bidirectional LSTM with 150 units",
+        "We proposed a novel alignment approach to learning contextual sequence embeddings with weak supervision from a global similarity measure",
+        "One consideration of training using SCOP, is that we focus exclusively on single-domain protein sequences",
+        "This means that the highly contextual embeddings given by the bidirectional LSTM encoder to single domains may differ from embeddings for the same domain in a multi-domain sequence",
+        "Most methods that use HMM sequence profiles or position-specific scoring matrices could be augmented with our embeddings"
+    ],
+    "summary": [
+        "Proteins are linear chains of amino acid residues that fold into specific 3D conformations as a result of the physical properties of the amino acid sequence.",
+        "We describe the three components of our framework (Figure 1) in detail: (1) the specific choice of embedding model, a multi-layer bidirectional LSTM with additional inputs from a pretrained LSTM language model, (2) soft symmetric alignment and ordinal regression components for relating sequences of vector representations for pairs of proteins to their global structural similarity, and (3) the pairwise feature vectors and convolutional neural network design for residue-residue contact prediction.",
+        "The primary task we consider for training the sequence embedding model with structural information is the prediction of global structural similarity between protein sequences as defined by shared membership in the SCOP hierarchy.",
+        "In the following two sections, we describe how protein sequences are compared based on their sequences of vector embeddings using soft symmetric alignment and how this alignment score is used to predict the specific similarity class by taking advantage of the natural ordering of these classes in an ordinal regression framework.",
+        "We first evaluate the performance of our full SSA embedding model for predicting structural similarity between amino acid sequences using the SCOP dataset.",
+        "We find that our full SSA embedding model even outperforms TMalign, a method for comparing proteins based on their 3D structures, when predicting shared SCOP membership.",
+        "We treat each position of each sequence as an independent datapoint with features either given by the 100-d embedding vector or 1-hot encoding of the k-mer at that position and train a fully connected neural network (2 hidden layers, 1024 units each, ReLU activations) to predict the secondary structure class from the feature vector.",
+        "SCOP similarity classification results for SSA embedding models trained with and without LM hidden layer inputs shows that including the LM substantially improves performance, increasing accuracy from 0.898 to 0.938.",
+        "We examine the extent to which LM hidden states capture all useful structural information by training SSA embedding models with less expressive power than our 3-layer biLSTM architecture (Appendix Table 5).",
+        "We find that the LM hidden states are not sufficient for high performance on the structural similarity task with linear, fully connected, and single layer biLSTM embedding models having lower accuracy, Pearson, and Spearman correlations than the 3-layer biLSTM on the ASTRAL 2.06 test set.",
+        "This is a well studied problem in protein biology with methods generally consisting of HMMs with sophisticated, manually designed hidden state transition distributions and emission distributions including information about residue identity, amino acid frequencies from multiple sequence alignments, local structure, and chemical properties."
+    ],
+    "headline": "We introduce a framework that maps any protein sequence to a sequence of vector embeddings \u2014 one per amino acid position \u2014 that encode structural information",
+    "reference_links": [
+        {
+            "id": "1",
+            "entry": "[1] A G Murzin, S E Brenner, T Hubbard, and C Chothia. SCOP: a structural classification of proteins database for the investigation of sequences and structures. J. Mol. Biol., 247(4):536\u2013540, April 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murzin%2C%20A.G.%20Brenner%2C%20S.E.%20Hubbard%2C%20T.%20Chothia%2C%20C.%20SCOP%3A%20a%20structural%20classification%20of%20proteins%20database%20for%20the%20investigation%20of%20sequences%20and%20structures%201995-04",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Murzin%2C%20A.G.%20Brenner%2C%20S.E.%20Hubbard%2C%20T.%20Chothia%2C%20C.%20SCOP%3A%20a%20structural%20classification%20of%20proteins%20database%20for%20the%20investigation%20of%20sequences%20and%20structures%201995-04"
+        },
+        {
+            "id": "2",
+            "entry": "[2] L Holm and C Sander. Mapping the protein universe. Science, 273(5275):595\u2013603, August 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Holm%2C%20L.%20Sander%2C%20C.%20Mapping%20the%20protein%20universe%201996-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Holm%2C%20L.%20Sander%2C%20C.%20Mapping%20the%20protein%20universe%201996-08"
+        },
+        {
+            "id": "3",
+            "entry": "[3] Hin Hark Gan, Rebecca A Perlow, Sharmili Roy, Joy Ko, Min Wu, Jing Huang, Shixiang Yan, Angelo Nicoletta, Jonathan Vafai, Ding Sun, Lihua Wang, Joyce E Noah, Samuela Pasquali, and Tamar Schlick. Analysis of protein sequence/structure similarity relationships. Biophys. J., 83(5):2781\u20132791, November 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gan%2C%20Hin%20Hark%20Perlow%2C%20Rebecca%20A.%20Roy%2C%20Sharmili%20Ko%2C%20Joy%20Analysis%20of%20protein%20sequence/structure%20similarity%20relationships%202002-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gan%2C%20Hin%20Hark%20Perlow%2C%20Rebecca%20A.%20Roy%2C%20Sharmili%20Ko%2C%20Joy%20Analysis%20of%20protein%20sequence/structure%20similarity%20relationships%202002-11"
+        },
+        {
+            "id": "4",
+            "entry": "[4] S E Brenner, C Chothia, T J Hubbard, and A G Murzin. Understanding protein structure: using scop for fold interpretation. Methods Enzymol., 266:635\u2013643, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brenner%2C%20S.E.%20Chothia%2C%20C.%20Hubbard%2C%20T.J.%20Murzin%2C%20A.G.%20Understanding%20protein%20structure%3A%20using%20scop%20for%20fold%20interpretation%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brenner%2C%20S.E.%20Chothia%2C%20C.%20Hubbard%2C%20T.J.%20Murzin%2C%20A.G.%20Understanding%20protein%20structure%3A%20using%20scop%20for%20fold%20interpretation%201996"
+        },
+        {
+            "id": "5",
+            "entry": "[5] Naomi K Fox, Steven E Brenner, and John-Marc Chandonia. SCOPe: Structural classification of proteins\u2013 extended, integrating SCOP and ASTRAL data and classification of new structures. Nucleic Acids Res., 42 (Database issue):D304\u20139, January 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Naomi%20K.%20Brenner%2C%20Steven%20E.%20Chandonia%2C%20John-Marc%20SCOPe%3A%20Structural%20classification%20of%20proteins%E2%80%93%20extended%2C%20integrating%20SCOP%20and%20ASTRAL%20data%20and%20classification%20of%20new%20structures%202014-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fox%2C%20Naomi%20K.%20Brenner%2C%20Steven%20E.%20Chandonia%2C%20John-Marc%20SCOPe%3A%20Structural%20classification%20of%20proteins%E2%80%93%20extended%2C%20integrating%20SCOP%20and%20ASTRAL%20data%20and%20classification%20of%20new%20structures%202014-01"
+        },
+        {
+            "id": "6",
+            "entry": "[6] Y. Zhang and J. Skolnick. TM-align: a protein structure alignment algorithm based on the TM-score. Nucleic Acids Res., 33(7):2302\u20132309, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Y.%20Skolnick%2C%20J.%20TM-align%3A%20a%20protein%20structure%20alignment%20algorithm%20based%20on%20the%20TM-score%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Y.%20Skolnick%2C%20J.%20TM-align%3A%20a%20protein%20structure%20alignment%20algorithm%20based%20on%20the%20TM-score%202005"
+        },
+        {
+            "id": "7",
+            "entry": "[7] Ehsaneddin Asgari and Mohammad R. K. Mofrad. Continuous distributed representation of biological sequences for deep proteomics and genomics. PLOS ONE, 10(11):1\u201315, 11 2015. doi: 10.1371/journal. pone.0141287. URL https://doi.org/10.1371/journal.pone.0141287.",
+            "crossref": "https://dx.doi.org/10.1371/journal.pone.0141287",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1371/journal.pone.0141287"
+        },
+        {
+            "id": "8",
+            "entry": "[8] K. K. Yang, Z. Wu, C. N. Bedbrook, and F. H. Arnold. Learned protein embeddings for machine learning. Bioinformatics, 34(15):2642\u20132648, Aug 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20K.K.%20Wu%2C%20Z.%20Bedbrook%2C%20C.N.%20Arnold%2C%20F.H.%20Learned%20protein%20embeddings%20for%20machine%20learning%202018-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20K.K.%20Wu%2C%20Z.%20Bedbrook%2C%20C.N.%20Arnold%2C%20F.H.%20Learned%20protein%20embeddings%20for%20machine%20learning%202018-08"
+        },
+        {
+            "id": "9",
+            "entry": "[9] Quoc Le and Tomas Mikolov. Distributed representations of sentences and documents. In Eric P Xing and Tony Jebara, editors, Proceedings of the 31st International Conference on Machine Learning, volume 32 of Proceedings of Machine Learning Research, pages 1188\u20131196, Bejing, China, 2014. PMLR.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Quoc%20Le%20and%20Tomas%20Mikolov%20Distributed%20representations%20of%20sentences%20and%20documents%20In%20Eric%20P%20Xing%20and%20Tony%20Jebara%20editors%20Proceedings%20of%20the%2031st%20International%20Conference%20on%20Machine%20Learning%20volume%2032%20of%20Proceedings%20of%20Machine%20Learning%20Research%20pages%2011881196%20Bejing%20China%202014%20PMLR",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Quoc%20Le%20and%20Tomas%20Mikolov%20Distributed%20representations%20of%20sentences%20and%20documents%20In%20Eric%20P%20Xing%20and%20Tony%20Jebara%20editors%20Proceedings%20of%20the%2031st%20International%20Conference%20on%20Machine%20Learning%20volume%2032%20of%20Proceedings%20of%20Machine%20Learning%20Research%20pages%2011881196%20Bejing%20China%202014%20PMLR"
+        },
+        {
+            "id": "10",
+            "entry": "[10] Sanjeev Arora, Yingyu Liang, and Tengyu Ma. A simple but tough-to-beat baseline for sentence embeddings. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20simple%20but%20tough-to-beat%20baseline%20for%20sentence%20embeddings%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20simple%20but%20tough-to-beat%20baseline%20for%20sentence%20embeddings%202017"
+        },
+        {
+            "id": "11",
+            "entry": "[11] Ryan Kiros, Yukun Zhu, Ruslan R Salakhutdinov, Richard Zemel, Raquel Urtasun, Antonio Torralba, and Sanja Fidler. Skip-Thought vectors. In Advances in Neural Information Processing Systems, pages 3294\u20133302, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kiros%2C%20Ryan%20Zhu%2C%20Yukun%20Salakhutdinov%2C%20Ruslan%20R.%20Zemel%2C%20Richard%20Skip-Thought%20vectors%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kiros%2C%20Ryan%20Zhu%2C%20Yukun%20Salakhutdinov%2C%20Ruslan%20R.%20Zemel%2C%20Richard%20Skip-Thought%20vectors%202015"
+        },
+        {
+            "id": "12",
+            "entry": "[12] Felix Hill, Kyunghyun Cho, and Anna Korhonen. Learning distributed representations of sentences from unlabelled data. arXiv preprint arXiv:1602.03483, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.03483"
+        },
+        {
+            "id": "13",
+            "entry": "[13] Iain Melvin, Jason Weston, William Stafford Noble, and Christina Leslie. Detecting remote evolutionary relationships among proteins by large-scale semantic embedding. PLoS computational biology, 7(1): e1001047, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Melvin%2C%20Iain%20Weston%2C%20Jason%20Noble%2C%20William%20Stafford%20Leslie%2C%20Christina%20Detecting%20remote%20evolutionary%20relationships%20among%20proteins%20by%20large-scale%20semantic%20embedding%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Melvin%2C%20Iain%20Weston%2C%20Jason%20Noble%2C%20William%20Stafford%20Leslie%2C%20Christina%20Detecting%20remote%20evolutionary%20relationships%20among%20proteins%20by%20large-scale%20semantic%20embedding%202011"
+        },
+        {
+            "id": "14",
+            "entry": "[14] D. Ofer and M. Linial. ProFET: Feature engineering captures high-level protein functions. Bioinformatics, 31(21):3429\u20133436, Nov 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ofer%2C%20D.%20Linial%2C%20M.%20ProFET%3A%20Feature%20engineering%20captures%20high-level%20protein%20functions%202015-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ofer%2C%20D.%20Linial%2C%20M.%20ProFET%3A%20Feature%20engineering%20captures%20high-level%20protein%20functions%202015-11"
+        },
+        {
+            "id": "15",
+            "entry": "[15] Matthew Peters, Waleed Ammar, Chandra Bhagavatula, and Russell Power. Semi-supervised sequence tagging with bidirectional language models. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pages 1756\u20131765, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peters%2C%20Matthew%20Ammar%2C%20Waleed%20Bhagavatula%2C%20Chandra%20Power%2C%20Russell%20Semi-supervised%20sequence%20tagging%20with%20bidirectional%20language%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Matthew%20Ammar%2C%20Waleed%20Bhagavatula%2C%20Chandra%20Power%2C%20Russell%20Semi-supervised%20sequence%20tagging%20with%20bidirectional%20language%20models%202017"
+        },
+        {
+            "id": "16",
+            "entry": "[16] Matthew Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, and Luke Zettlemoyer. Deep contextualized word representations. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers), volume 1, pages 2227\u20132237, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peters%2C%20Matthew%20Neumann%2C%20Mark%20Iyyer%2C%20Mohit%20Gardner%2C%20Matt%20Deep%20contextualized%20word%20representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Matthew%20Neumann%2C%20Mark%20Iyyer%2C%20Mohit%20Gardner%2C%20Matt%20Deep%20contextualized%20word%20representations%202018"
+        },
+        {
+            "id": "17",
+            "entry": "[17] Samuel R Bowman, Gabor Angeli, Christopher Potts, and Christopher D. Manning. A large annotated corpus for learning natural language inference. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing (EMNLP). Association for Computational Linguistics, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowman%2C%20Samuel%20R.%20Angeli%2C%20Gabor%20Potts%2C%20Christopher%20Manning%2C%20Christopher%20D.%20A%20large%20annotated%20corpus%20for%20learning%20natural%20language%20inference%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowman%2C%20Samuel%20R.%20Angeli%2C%20Gabor%20Potts%2C%20Christopher%20Manning%2C%20Christopher%20D.%20A%20large%20annotated%20corpus%20for%20learning%20natural%20language%20inference%202015"
+        },
+        {
+            "id": "18",
+            "entry": "[18] Lili Mou, Zhao Meng, Rui Yan, Ge Li, Yan Xu, Lu Zhang, and Zhi Jin. How transferable are neural networks in NLP applications? In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, pages 479\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mou%2C%20Lili%20Meng%2C%20Zhao%20Yan%2C%20Rui%20Li%2C%20Ge%20How%20transferable%20are%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mou%2C%20Lili%20Meng%2C%20Zhao%20Yan%2C%20Rui%20Li%2C%20Ge%20How%20transferable%20are%20neural%20networks%202016"
+        },
+        {
+            "id": "19",
+            "entry": "[19] Alexis Conneau, Douwe Kiela, Holger Schwenk, Loic Barrault, and Antoine Bordes. Supervised learning of universal sentence representations from natural language inference data. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pages 670\u2013680, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conneau%2C%20Alexis%20Kiela%2C%20Douwe%20Schwenk%2C%20Holger%20Barrault%2C%20Loic%20Supervised%20learning%20of%20universal%20sentence%20representations%20from%20natural%20language%20inference%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conneau%2C%20Alexis%20Kiela%2C%20Douwe%20Schwenk%2C%20Holger%20Barrault%2C%20Loic%20Supervised%20learning%20of%20universal%20sentence%20representations%20from%20natural%20language%20inference%20data%202017"
+        },
+        {
+            "id": "20",
+            "entry": "[20] Tom\u00e1\u0161 Kocisk\u00fd, Karl Moritz Hermann, and Phil Blunsom. Learning bilingual word representations by marginalizing alignments. In Proceedings of ACL, pages 224\u2013229, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kocisk%C3%BD%2C%20Tom%C3%A1%C5%A1%20Hermann%2C%20Karl%20Moritz%20Blunsom%2C%20Phil%20Learning%20bilingual%20word%20representations%20by%20marginalizing%20alignments%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kocisk%C3%BD%2C%20Tom%C3%A1%C5%A1%20Hermann%2C%20Karl%20Moritz%20Blunsom%2C%20Phil%20Learning%20bilingual%20word%20representations%20by%20marginalizing%20alignments%202014"
+        },
+        {
+            "id": "21",
+            "entry": "[21] Chris Dyer, Victor Chahuneau, and Noah A Smith. A simple, fast, and effective reparameterization of ibm model 2. In Proceedings of NAACL-HLT, pages 644\u2013649, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dyer%2C%20Chris%20Chahuneau%2C%20Victor%20and%20Noah%20A%20Smith.%20A%20simple%2C%20fast%2C%20and%20effective%20reparameterization%20of%20ibm%20model%202%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dyer%2C%20Chris%20Chahuneau%2C%20Victor%20and%20Noah%20A%20Smith.%20A%20simple%2C%20fast%2C%20and%20effective%20reparameterization%20of%20ibm%20model%202%202013"
+        },
+        {
+            "id": "22",
+            "entry": "[22] Stephan Gouws, Yoshua Bengio, and Greg Corrado. BilBOWA: Fast bilingual distributed representations without word alignments. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 of Proceedings of Machine Learning Research, pages 748\u2013756, Lille, France, 2015. PMLR.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gouws%2C%20Stephan%20Bengio%2C%20Yoshua%20Corrado%2C%20Greg%20BilBOWA%3A%20Fast%20bilingual%20distributed%20representations%20without%20word%20alignments%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gouws%2C%20Stephan%20Bengio%2C%20Yoshua%20Corrado%2C%20Greg%20BilBOWA%3A%20Fast%20bilingual%20distributed%20representations%20without%20word%20alignments%202015"
+        },
+        {
+            "id": "23",
+            "entry": "[23] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "24",
+            "entry": "[24] Karl Moritz Hermann, Tom\u00e1\u0161 Kocisk\u00fd, Edward Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and Phil Blunsom. Teaching machines to read and comprehend. In Proceedings of the 28th International Conference on Neural Information Processing Systems, NIPS\u201915, pages 1693\u20131701, Cambridge, MA, USA, 2015. MIT Press.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karl%20Moritz%20Hermann%20Tom%C3%A1%C5%A1%20Kocisk%C3%BD%20Edward%20Grefenstette%20Lasse%20Espeholt%20Will%20Kay%20Mustafa%20Suleyman%20and%20Phil%20Blunsom%20Teaching%20machines%20to%20read%20and%20comprehend%20In%20Proceedings%20of%20the%2028th%20International%20Conference%20on%20Neural%20Information%20Processing%20Systems%20NIPS15%20pages%2016931701%20Cambridge%20MA%20USA%202015%20MIT%20Press",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karl%20Moritz%20Hermann%20Tom%C3%A1%C5%A1%20Kocisk%C3%BD%20Edward%20Grefenstette%20Lasse%20Espeholt%20Will%20Kay%20Mustafa%20Suleyman%20and%20Phil%20Blunsom%20Teaching%20machines%20to%20read%20and%20comprehend%20In%20Proceedings%20of%20the%2028th%20International%20Conference%20on%20Neural%20Information%20Processing%20Systems%20NIPS15%20pages%2016931701%20Cambridge%20MA%20USA%202015%20MIT%20Press"
+        },
+        {
+            "id": "25",
+            "entry": "[25] Rudolf Kadlec, Martin Schmid, Ondrej Bajgar, and Jan Kleindienst. Text understanding with the attention sum reader network. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics, pages 908\u2013918, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kadlec%2C%20Rudolf%20Schmid%2C%20Martin%20Bajgar%2C%20Ondrej%20Kleindienst%2C%20Jan%20Text%20understanding%20with%20the%20attention%20sum%20reader%20network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kadlec%2C%20Rudolf%20Schmid%2C%20Martin%20Bajgar%2C%20Ondrej%20Kleindienst%2C%20Jan%20Text%20understanding%20with%20the%20attention%20sum%20reader%20network%202016"
+        },
+        {
+            "id": "26",
+            "entry": "[26] Yiming Cui, Zhipeng Chen, Si Wei, Shijin Wang, Ting Liu, and Guoping Hu. Attention-over-attention neural networks for reading comprehension. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pages 593\u2013602, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cui%2C%20Yiming%20Chen%2C%20Zhipeng%20Wei%2C%20Si%20Wang%2C%20Shijin%20Attention-over-attention%20neural%20networks%20for%20reading%20comprehension%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cui%2C%20Yiming%20Chen%2C%20Zhipeng%20Wei%2C%20Si%20Wang%2C%20Shijin%20Attention-over-attention%20neural%20networks%20for%20reading%20comprehension%202017"
+        },
+        {
+            "id": "27",
+            "entry": "[27] Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi, and Hannaneh Hajishirzi. Bidirectional attention flow for machine comprehension. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Seo%2C%20Minjoon%20Kembhavi%2C%20Aniruddha%20Farhadi%2C%20Ali%20Hajishirzi%2C%20Hannaneh%20Bidirectional%20attention%20flow%20for%20machine%20comprehension%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Seo%2C%20Minjoon%20Kembhavi%2C%20Aniruddha%20Farhadi%2C%20Ali%20Hajishirzi%2C%20Hannaneh%20Bidirectional%20attention%20flow%20for%20machine%20comprehension%202017"
+        },
+        {
+            "id": "28",
+            "entry": "[28] Hua He and Jimmy Lin. Pairwise word interaction modeling with deep neural networks for semantic similarity measurement. In Proceedings of the 2016 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pages 937\u2013948, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Hua%20Lin%2C%20Jimmy%20Pairwise%20word%20interaction%20modeling%20with%20deep%20neural%20networks%20for%20semantic%20similarity%20measurement%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Hua%20Lin%2C%20Jimmy%20Pairwise%20word%20interaction%20modeling%20with%20deep%20neural%20networks%20for%20semantic%20similarity%20measurement%202016"
+        },
+        {
+            "id": "29",
+            "entry": "[29] Ankur P Parikh, Oscar T\u00e4ckstr\u00f6m, Dipanjan Das, and Jakob Uszkoreit. A decomposable attention model for natural language inference. arXiv preprint arXiv:1606.01933, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01933"
+        },
+        {
+            "id": "30",
+            "entry": "[30] John-Marc Chandonia, Naomi K Fox, and Steven E Brenner. SCOPe: Manual curation and artifact removal in the structural classification of proteins - extended database. J. Mol. Biol., 429(3):348\u2013355, February 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chandonia%2C%20John-Marc%20Fox%2C%20Naomi%20K.%20Brenner%2C%20Steven%20E.%20SCOPe%3A%20Manual%20curation%20and%20artifact%20removal%20in%20the%20structural%20classification%20of%20proteins%20-%20extended%20database%202017-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chandonia%2C%20John-Marc%20Fox%2C%20Naomi%20K.%20Brenner%2C%20Steven%20E.%20SCOPe%3A%20Manual%20curation%20and%20artifact%20removal%20in%20the%20structural%20classification%20of%20proteins%20-%20extended%20database%202017-02"
+        },
+        {
+            "id": "31",
+            "entry": "[31] S F Altschul, W Gish, W Miller, E W Myers, and D J Lipman. Basic local alignment search tool. J. Mol. Biol., 215(3):403\u2013410, October 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Altschul%2C%20S.F.%20Gish%2C%20W.%20Miller%2C%20W.%20Myers%2C%20E.W.%20Basic%20local%20alignment%20search%20tool%201990-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Altschul%2C%20S.F.%20Gish%2C%20W.%20Miller%2C%20W.%20Myers%2C%20E.W.%20Basic%20local%20alignment%20search%20tool%201990-10"
+        },
+        {
+            "id": "32",
+            "entry": "[32] S B Needleman and C D Wunsch. A general method applicable to the search for similarities in the amino acid sequence of two proteins. J. Mol. Biol., 48(3):443\u2013453, March 1970.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Needleman%2C%20S.B.%20Wunsch%2C%20C.D.%20A%20general%20method%20applicable%20to%20the%20search%20for%20similarities%20in%20the%20amino%20acid%20sequence%20of%20two%20proteins%201970-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Needleman%2C%20S.B.%20Wunsch%2C%20C.D.%20A%20general%20method%20applicable%20to%20the%20search%20for%20similarities%20in%20the%20amino%20acid%20sequence%20of%20two%20proteins%201970-03"
+        },
+        {
+            "id": "33",
+            "entry": "[33] R. D. Finn, J. Clements, and S. R. Eddy. HMMER web server: interactive sequence similarity searching. Nucleic Acids Res., 39(Web Server issue):29\u201337, Jul 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20R.D.%20Clements%2C%20J.%20Eddy%2C%20S.R.%20HMMER%20web%20server%3A%20interactive%20sequence%20similarity%20searching%202011-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20R.D.%20Clements%2C%20J.%20Eddy%2C%20S.R.%20HMMER%20web%20server%3A%20interactive%20sequence%20similarity%20searching%202011-07"
+        },
+        {
+            "id": "34",
+            "entry": "[34] J. Soding, A. Biegert, and A. N. Lupas. The HHpred interactive server for protein homology detection and structure prediction. Nucleic Acids Res., 33(Web Server issue):W244\u2013248, Jul 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Soding%2C%20J.%20Biegert%2C%20A.%20Lupas%2C%20A.N.%20The%20HHpred%20interactive%20server%20for%20protein%20homology%20detection%20and%20structure%20prediction%202005-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Soding%2C%20J.%20Biegert%2C%20A.%20Lupas%2C%20A.N.%20The%20HHpred%20interactive%20server%20for%20protein%20homology%20detection%20and%20structure%20prediction%202005-07"
+        },
+        {
+            "id": "35",
+            "entry": "[35] R. D. Finn, A. Bateman, J. Clements, P. Coggill, R. Y. Eberhardt, S. R. Eddy, A. Heger, K. Hetherington, L. Holm, J. Mistry, E. L. Sonnhammer, J. Tate, and M. Punta. Pfam: the protein families database. Nucleic Acids Res., 42(Database issue):D222\u2013230, Jan 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20R.D.%20Bateman%2C%20A.%20Clements%2C%20J.%20Coggill%2C%20P.%20Pfam%3A%20the%20protein%20families%20database%202014-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20R.D.%20Bateman%2C%20A.%20Clements%2C%20J.%20Coggill%2C%20P.%20Pfam%3A%20the%20protein%20families%20database%202014-01"
+        },
+        {
+            "id": "36",
+            "entry": "[36] Kai Sheng Tai, Richard Socher, and Christopher D Manning. Improved semantic representations from Tree-Structured long Short-Term memory networks. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing, pages 1556\u20131566, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tai%2C%20Kai%20Sheng%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Improved%20semantic%20representations%20from%20Tree-Structured%20long%20Short-Term%20memory%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tai%2C%20Kai%20Sheng%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Improved%20semantic%20representations%20from%20Tree-Structured%20long%20Short-Term%20memory%20networks%202015"
+        },
+        {
+            "id": "37",
+            "entry": "[37] Helen M. Berman, John Westbrook, Zukang Feng, Gary Gilliland, T. N. Bhat, Helge Weissig, Ilya N. Shindyalov, and Philip E. Bourne. The protein data bank. Nucleic Acids Research, 28(1):235\u2013242, 2000. doi: 10.1093/nar/28.1.235. URL http://dx.doi.org/10.1093/nar/28.1.235.",
+            "crossref": "https://dx.doi.org/10.1093/nar/28.1.235",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1093/nar/28.1.235"
+        },
+        {
+            "id": "38",
+            "entry": "[38] K. D. Tsirigos, C. Peters, N. Shu, L. Kall, and A. Elofsson. The TOPCONS web server for consensus prediction of membrane protein topology and signal peptides. Nucleic Acids Res., 43(W1):W401\u2013407, Jul 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tsirigos%2C%20K.D.%20Peters%2C%20C.%20Shu%2C%20N.%20Kall%2C%20L.%20The%20TOPCONS%20web%20server%20for%20consensus%20prediction%20of%20membrane%20protein%20topology%20and%20signal%20peptides%202015-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tsirigos%2C%20K.D.%20Peters%2C%20C.%20Shu%2C%20N.%20Kall%2C%20L.%20The%20TOPCONS%20web%20server%20for%20consensus%20prediction%20of%20membrane%20protein%20topology%20and%20signal%20peptides%202015-07"
+        },
+        {
+            "id": "39",
+            "entry": "[39] T J Hubbard, A G Murzin, S E Brenner, and C Chothia. SCOP: a structural classification of proteins database. Nucleic Acids Res., 25(1):236\u2013239, January 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubbard%2C%20T.J.%20Murzin%2C%20A.G.%20Brenner%2C%20S.E.%20Chothia%2C%20C.%20SCOP%3A%20a%20structural%20classification%20of%20proteins%20database%201997-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubbard%2C%20T.J.%20Murzin%2C%20A.G.%20Brenner%2C%20S.E.%20Chothia%2C%20C.%20SCOP%3A%20a%20structural%20classification%20of%20proteins%20database%201997-01"
+        },
+        {
+            "id": "40",
+            "entry": "[40] Joerg Schaarschmidt, Bohdan Monastyrskyy, Andriy Kryshtafovych, and Alexandre MJJ Bonvin. Assessment of contact predictions in casp12: Co-evolution and deep learning coming of age. Proteins: Structure, Function, and Bioinformatics, 86:51\u201366, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schaarschmidt%2C%20Joerg%20Monastyrskyy%2C%20Bohdan%20Kryshtafovych%2C%20Andriy%20Bonvin%2C%20Alexandre%20M.J.J.%20Assessment%20of%20contact%20predictions%20in%20casp12%3A%20Co-evolution%20and%20deep%20learning%20coming%20of%20age%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schaarschmidt%2C%20Joerg%20Monastyrskyy%2C%20Bohdan%20Kryshtafovych%2C%20Andriy%20Bonvin%2C%20Alexandre%20M.J.J.%20Assessment%20of%20contact%20predictions%20in%20casp12%3A%20Co-evolution%20and%20deep%20learning%20coming%20of%20age%202018"
+        },
+        {
+            "id": "41",
+            "entry": "[41] Sheng Wang, Siqi Sun, Zhen Li, Renyu Zhang, and Jinbo Xu. Accurate de novo prediction of protein contact map by ultra-deep learning model. PLoS computational biology, 13(1):e1005324, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Sheng%20Sun%2C%20Siqi%20Li%2C%20Zhen%20Zhang%2C%20Renyu%20Accurate%20de%20novo%20prediction%20of%20protein%20contact%20map%20by%20ultra-deep%20learning%20model%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Sheng%20Sun%2C%20Siqi%20Li%2C%20Zhen%20Zhang%2C%20Renyu%20Accurate%20de%20novo%20prediction%20of%20protein%20contact%20map%20by%20ultra-deep%20learning%20model%202017"
+        },
+        {
+            "id": "42",
+            "entry": "[42] Yang Liu, Perry Palmedo, Qing Ye, Bonnie Berger, and Jian Peng. Enhancing evolutionary couplings with deep convolutional neural networks. Cell systems, 6(1):65\u201374, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Yang%20Palmedo%2C%20Perry%20Ye%2C%20Qing%20Berger%2C%20Bonnie%20Enhancing%20evolutionary%20couplings%20with%20deep%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Yang%20Palmedo%2C%20Perry%20Ye%2C%20Qing%20Berger%2C%20Bonnie%20Enhancing%20evolutionary%20couplings%20with%20deep%20convolutional%20neural%20networks%202018"
+        },
+        {
+            "id": "43",
+            "entry": "[43] David T Jones, Tanya Singh, Tomasz Kosciolek, and Stuart Tetchner. Metapsicov: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding in proteins. Bioinformatics, 31(7):999\u20131006, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jones%2C%20David%20T.%20Singh%2C%20Tanya%20Kosciolek%2C%20Tomasz%20Tetchner%2C%20Stuart%20Metapsicov%3A%20combining%20coevolution%20methods%20for%20accurate%20prediction%20of%20contacts%20and%20long%20range%20hydrogen%20bonding%20in%20proteins%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jones%2C%20David%20T.%20Singh%2C%20Tanya%20Kosciolek%2C%20Tomasz%20Tetchner%2C%20Stuart%20Metapsicov%3A%20combining%20coevolution%20methods%20for%20accurate%20prediction%20of%20contacts%20and%20long%20range%20hydrogen%20bonding%20in%20proteins%202014"
+        },
+        {
+            "id": "44",
+            "entry": "[44] Sergey Ovchinnikov, Hetunandan Kamisetty, and David Baker. Robust and accurate prediction of residue\u2013 residue interactions across protein interfaces using evolutionary information. Elife, 3:e02030, 2014. ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ovchinnikov%2C%20Sergey%20Kamisetty%2C%20Hetunandan%20Baker%2C%20David%20Robust%20and%20accurate%20prediction%20of%20residue%E2%80%93%20residue%20interactions%20across%20protein%20interfaces%20using%20evolutionary%20information%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ovchinnikov%2C%20Sergey%20Kamisetty%2C%20Hetunandan%20Baker%2C%20David%20Robust%20and%20accurate%20prediction%20of%20residue%E2%80%93%20residue%20interactions%20across%20protein%20interfaces%20using%20evolutionary%20information%202014"
+        }
+    ]
+}

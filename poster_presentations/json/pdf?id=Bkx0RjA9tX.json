@@ -1,0 +1,408 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "GENERATIVE QUESTION ANSWERING: LEARNING TO ANSWER THE WHOLE QUESTION",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Bkx0RjA9tX"
+        },
+        "abstract": "Discriminative question answering models can overfit to superficial biases in datasets, because their loss function saturates when any clue makes the answer likely. We introduce generative models of the joint distribution of questions and answers, which are trained to explain the whole question, not just to answer it. Our question answering (QA) model is implemented by learning a prior over answers, and a conditional language model to generate the question given the answer\u2014allowing scalable and interpretable many-hop reasoning as the question is generated word-by-word. Our model achieves competitive performance with specialised discriminative models on the SQUAD and CLEVR benchmarks, indicating that it is a more general architecture for language understanding and reasoning than previous work. The model greatly improves generalisation both from biased training data and to adversarial testing data, achieving a new state-of-theart on ADVERSARIALSQUAD. We will release our code."
+    },
+    "keywords": [
+        {
+            "term": "question answering",
+            "url": "https://en.wikipedia.org/wiki/question_answering"
+        },
+        {
+            "term": "discriminative model",
+            "url": "https://en.wikipedia.org/wiki/discriminative_model"
+        },
+        {
+            "term": "language understanding",
+            "url": "https://en.wikipedia.org/wiki/language_understanding"
+        },
+        {
+            "term": "language model",
+            "url": "https://en.wikipedia.org/wiki/language_model"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "question word",
+            "url": "https://en.wikipedia.org/wiki/question_word"
+        },
+        {
+            "term": "wikipedia",
+            "url": "https://en.wikipedia.org/wiki/wikipedia"
+        },
+        {
+            "term": "loss function",
+            "url": "https://en.wikipedia.org/wiki/loss_function"
+        }
+    ],
+    "abbreviations": {
+        "QA": "question answering"
+    },
+    "highlights": [
+        "Question answering tasks are widely used for training and testing machine comprehension and reasoning (<a class=\"ref-link\" id=\"cRajpurkar_et+al_2016_a\" href=\"#rRajpurkar_et+al_2016_a\">Rajpurkar et al, 2016</a>; <a class=\"ref-link\" id=\"cJoshi_et+al_2017_a\" href=\"#rJoshi_et+al_2017_a\">Joshi et al, 2017</a>)",
+        "We argue that this over-fitting to biases is partly caused by discriminative loss functions, which saturate when simple correlations allow the question to be answered confidently, leaving no incentive for further learning on the example",
+        "We evaluate the ability of our model to perform multihop reasoning on the CLEVR dataset, which consists of images paired with automatically generated questions involving that test visual reasoning",
+        "We introduced a generative model for question answering, which leverages the greater amount of information in questions than answers to achieve high performance in both language comprehension and reasoning",
+        "Given the rapid progress made on discriminative question answering models in recent years, we believe there is significant potential for further improvements in generative question answering"
+    ],
+    "key_statements": [
+        "Question answering tasks are widely used for training and testing machine comprehension and reasoning (<a class=\"ref-link\" id=\"cRajpurkar_et+al_2016_a\" href=\"#rRajpurkar_et+al_2016_a\">Rajpurkar et al, 2016</a>; <a class=\"ref-link\" id=\"cJoshi_et+al_2017_a\" href=\"#rJoshi_et+al_2017_a\">Joshi et al, 2017</a>)",
+        "We argue that this over-fitting to biases is partly caused by discriminative loss functions, which saturate when simple correlations allow the question to be answered confidently, leaving no incentive for further learning on the example",
+        "We evaluate the ability of our model to perform multihop reasoning on the CLEVR dataset, which consists of images paired with automatically generated questions involving that test visual reasoning",
+        "We introduced a generative model for question answering, which leverages the greater amount of information in questions than answers to achieve high performance in both language comprehension and reasoning",
+        "Given the rapid progress made on discriminative question answering models in recent years, we believe there is significant potential for further improvements in generative question answering"
+    ],
+    "summary": [
+        "Question answering tasks are widely used for training and testing machine comprehension and reasoning (<a class=\"ref-link\" id=\"cRajpurkar_et+al_2016_a\" href=\"#rRajpurkar_et+al_2016_a\"><a class=\"ref-link\" id=\"cRajpurkar_et+al_2016_a\" href=\"#rRajpurkar_et+al_2016_a\">Rajpurkar et al, 2016</a></a>; <a class=\"ref-link\" id=\"cJoshi_et+al_2017_a\" href=\"#rJoshi_et+al_2017_a\"><a class=\"ref-link\" id=\"cJoshi_et+al_2017_a\" href=\"#rJoshi_et+al_2017_a\">Joshi et al, 2017</a></a>).",
+        "Generative loss functions train the model to explain all question words, even if the answer is obvious.",
+        "A generative model must learn to perform additional reasoning to assign high likelihood to the complete question-answer pair.",
+        "We train models to minimize the negative log likelihood of the joint distribution of questions and answers given the context, \u2212 log p(q, a|c), which we decompose using the chain rule as: L = \u2212 log p(a|c) \u2212 log p",
+        "2.5.1 INPUT WORD EMBEDDINGS To represent SQUAD question words independently of the answer and document, we use a pretrained left-to-right language model, followed by a trainable LSTM layer of size d.",
+        "It demonstrates the importance of the character-based softmax and pointer mechanism for modelling rare words, the need to model interactions between the answer and context, and a large improvement from fine-tuning the model with negative question-answer pairs.",
+        "This result suggests that generative training is learning more complex dependencies, but can benefit from being calibrated and exposed to negative question-answer pairs during fine tuning.",
+        "We evaluate the ability of our model to perform multihop reasoning on the CLEVR dataset, which consists of images paired with automatically generated questions involving that test visual reasoning.",
+        "Our generative model learns to generalise meaningfully even from highly biased data, because it is trained to explain the whole question, not to answer it\u2014demonstrating that on some QA tasks, there are clear advantages to generative modelling.",
+        "<a class=\"ref-link\" id=\"cTang_et+al_2018_a\" href=\"#rTang_et+al_2018_a\">Tang et al (2018</a>) use question generation to provide an additional loss to improve question answering systems using GAN-like training.",
+        "Our work differs in training a single model for the joint distribution of questions and answers, which can be used to calculate conditional distributions for question generation or answering.",
+        "<a class=\"ref-link\" id=\"cSachan_2018_a\" href=\"#rSachan_2018_a\">Sachan & Xing (2018</a>) improve performance by generating new question-answer pairs for training from unlabelled text, which would be a possible extension to our work.",
+        "<a class=\"ref-link\" id=\"cDu_et+al_2017_a\" href=\"#rDu_et+al_2017_a\">Du et al (2017</a>) use a sequence-to-sequence model that encodes paragraph and sentence level information to generate questions.",
+        "<a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\">Yuan et al (2017</a>) fine-tune a question generation model using reinforcement learning, based on fluency and whether it can be answered.",
+        "We introduced a generative model for question answering, which leverages the greater amount of information in questions than answers to achieve high performance in both language comprehension and reasoning.",
+        "Given the rapid progress made on discriminative QA models in recent years, we believe there is significant potential for further improvements in generative question answering."
+    ],
+    "headline": "We introduce generative models of the joint distribution of questions and answers, which are trained to explain the whole question, not just to answer it",
+    "reference_links": [
+        {
+            "id": "Agrawal_et+al_2017_a",
+            "entry": "Aishwarya Agrawal, Jiasen Lu, Stanislaw Antol, Margaret Mitchell, C. Lawrence Zitnick, Devi Parikh, and Dhruv Batra. Vqa: Visual question answering. Int. J. Comput. Vision, 123(1):4\u201331, May 2017. ISSN 0920-5691. URL https://doi.org/10.1007/s11263-016-0966-6.",
+            "crossref": "https://dx.doi.org/10.1007/s11263-016-0966-6",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11263-016-0966-6"
+        },
+        {
+            "id": "Thorsten_2000_a",
+            "entry": "Thorsten Brants. TnT: a statistical part-of-speech tagger. In Proceedings of the sixth conference on Applied natural language processing, pp. 224\u2013231. Association for Computational Linguistics, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thorsten%20Brants%20TnT%20a%20statistical%20partofspeech%20tagger%20In%20Proceedings%20of%20the%20sixth%20conference%20on%20Applied%20natural%20language%20processing%20pp%20224231%20Association%20for%20Computational%20Linguistics%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thorsten%20Brants%20TnT%20a%20statistical%20partofspeech%20tagger%20In%20Proceedings%20of%20the%20sixth%20conference%20on%20Applied%20natural%20language%20processing%20pp%20224231%20Association%20for%20Computational%20Linguistics%202000"
+        },
+        {
+            "id": "Brown_et+al_1993_a",
+            "entry": "Peter F. Brown, Stephen Della Pietra, Vincent J. Della Pietra, and Robert L. Mercer. The mathematics of statistical machine translation: Parameter estimation. Computational Linguistics, 19(2): 263\u2013311, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brown%2C%20Peter%20F.%20Pietra%2C%20Stephen%20Della%20Pietra%2C%20Vincent%20J.Della%20Mercer%2C%20Robert%20L.%20The%20mathematics%20of%20statistical%20machine%20translation%3A%20Parameter%20estimation%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brown%2C%20Peter%20F.%20Pietra%2C%20Stephen%20Della%20Pietra%2C%20Vincent%20J.Della%20Mercer%2C%20Robert%20L.%20The%20mathematics%20of%20statistical%20machine%20translation%3A%20Parameter%20estimation%201993"
+        },
+        {
+            "id": "Cardie_2018_a",
+            "entry": "Claire Cardie and Xinya Du. Harvesting paragraph-level question-answer pairs from wikipedia. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics, ACL 2018, Melbourne, Australia, July 15-20, 2018, Volume 1: Long Papers, pp. 1907\u20131917, 2018. URL https://aclanthology.info/papers/P18-1177/p18-1177.",
+            "url": "https://aclanthology.info/papers/P18-1177/p18-1177",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cardie%2C%20Claire%20Du%2C%20Xinya%20Harvesting%20paragraph-level%20question-answer%20pairs%20from%20wikipedia%202018-07-15"
+        },
+        {
+            "id": "Chelba_et+al_2014_a",
+            "entry": "Ciprian Chelba, Tomas Mikolov, Mike Schuster, Qi Ge, Thorsten Brants, Phillipp Koehn, and Tony Robinson. One billion word benchmark for measuring progress in statistical language modeling. In INTERSPEECH 2014, 15th Annual Conference of the International Speech Communication Association, Singapore, September 14-18, 2014, pp. 2635\u20132639, 2014. URL http://www.isca-speech.org/archive/interspeech_2014/i14_2635.html.",
+            "url": "http://www.isca-speech.org/archive/interspeech_2014/i14_2635.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chelba%2C%20Ciprian%20Mikolov%2C%20Tomas%20Schuster%2C%20Mike%20Ge%2C%20Qi%20One%20billion%20word%20benchmark%20for%20measuring%20progress%20in%20statistical%20language%20modeling%202014-09-14"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Danqi Chen, Adam Fisch, Jason Weston, and Antoine Bordes. Reading wikipedia to answer opendomain questions. arXiv preprint arXiv:1704.00051, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.00051"
+        },
+        {
+            "id": "Collins_1997_a",
+            "entry": "Michael Collins. Three generative, lexicalised models for statistical parsing. In 35th Annual Meeting of the Association for Computational Linguistics and 8th Conference of the European Chapter of the Association for Computational Linguistics, Proceedings of the Conference, 7-12 July 1997, Universidad Nacional de Educacion a Distancia (UNED), Madrid, Spain., pp. 16\u201323, 1997. URL http://aclweb.org/anthology/P/P97/P97-1003.pdf.",
+            "url": "http://aclweb.org/anthology/P/P97/P97-1003.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collins%2C%20Michael%20Three%20generative%2C%20lexicalised%20models%20for%20statistical%20parsing%201997-07"
+        },
+        {
+            "id": "Dauphin_et+al_2017_a",
+            "entry": "Yann N. Dauphin, Angela Fan, Michael Auli, and David Grangier. Language modeling with gated convolutional networks. In Proceedings of the 34th International Conference on Machine Learning, ICML 2017, Sydney, NSW, Australia, 6-11 August 2017, pp. 933\u2013941, 2017. URL http://proceedings.mlr.press/v70/dauphin17a.html.",
+            "url": "http://proceedings.mlr.press/v70/dauphin17a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dauphin%2C%20Yann%20N.%20Fan%2C%20Angela%20Auli%2C%20Michael%20Grangier%2C%20David%20Language%20modeling%20with%20gated%20convolutional%20networks%202017-08-06"
+        },
+        {
+            "id": "Du_et+al_2017_a",
+            "entry": "Xinya Du, Junru Shao, and Claire Cardie. Learning to ask: Neural question generation for reading comprehension. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics, ACL 2017, Vancouver, Canada, July 30 - August 4, Volume 1: Long Papers, pp. 1342\u20131352, 2017. URL https://doi.org/10.18653/v1/P17-1123.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-1123",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-1123"
+        },
+        {
+            "id": "Duan_et+al_2017_a",
+            "entry": "Nan Duan, Duyu Tang, Peng Chen, and Ming Zhou. Question generation for question answering. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, EMNLP 2017, Copenhagen, Denmark, September 9-11, 2017, pp. 866\u2013874, 2017. URL https://aclanthology.info/papers/D17-1090/d17-1090.",
+            "url": "https://aclanthology.info/papers/D17-1090/d17-1090",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Nan%20Tang%2C%20Duyu%20Chen%2C%20Peng%20Zhou%2C%20Ming%20Question%20generation%20for%20question%20answering%202017-09-09"
+        },
+        {
+            "id": "Dyer_et+al_2016_a",
+            "entry": "Chris Dyer, Adhiguna Kuncoro, Miguel Ballesteros, and Noah A. Smith. Recurrent neural network grammars. In NAACL HLT 2016, The 2016 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, San Diego California, USA, June 12-17, 2016, pp. 199\u2013209, 2016. URL http://aclweb.org/anthology/N/ N16/N16-1024.pdf.",
+            "url": "http://aclweb.org/anthology/N/N16/N16-1024.pdf"
+        },
+        {
+            "id": "Abdessamad_2003_a",
+            "entry": "Abdessamad Echihabi and Daniel Marcu. A noisy-channel approach to question answering. In Proceedings of the 41st Annual Meeting of the Association for Computational Linguistics, 712 July 2003, Sapporo Convention Center, Sapporo, Japan., pp. 16\u201323, 2003. URL http://aclweb.org/anthology/P/P03/P03-1003.pdf.",
+            "url": "http://aclweb.org/anthology/P/P03/P03-1003.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abdessamad%20Echihabi%20and%20Daniel%20Marcu%20A%20noisychannel%20approach%20to%20question%20answering%20In%20Proceedings%20of%20the%2041st%20Annual%20Meeting%20of%20the%20Association%20for%20Computational%20Linguistics%20712%20July%202003%20Sapporo%20Convention%20Center%20Sapporo%20Japan%20pp%201623%202003%20URL%20httpaclweborganthologyPP03P031003pdf"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. A theoretically grounded application of dropout in recurrent neural networks. In Advances in Neural Information Processing Systems 29: Annual Conference on Neural Information Processing Systems 2016, December 5-10, 2016, Barcelona, Spain, pp. 1019\u20131027, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016-12-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016-12-05"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Yash Goyal, Tejas Khot, Douglas Summers-Stay, Dhruv Batra, and Devi Parikh. Making the V in VQA matter: Elevating the role of image understanding in visual question answering. In 2017 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, Honolulu, HI, USA, July 21-26, 2017, pp. 6325\u20136334, 2017. URL https://doi.org/10.1109/CVPR.2017.670.",
+            "crossref": "https://dx.doi.org/10.1109/CVPR.2017.670",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/CVPR.2017.670"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In 2016 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2016, Las Vegas, NV, USA, June 27-30, 2016, pp. 770\u2013778, 2016. URL https://doi.org/10.1109/ CVPR.2016.90.",
+            "url": "https://doi.org/10.1109/CVPR.2016.90",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016-06-27"
+        },
+        {
+            "id": "He_et+al_2018_a",
+            "entry": "Luheng He, Kenton Lee, Omer Levy, and Luke Zettlemoyer. Jointly predicting predicates and arguments in neural semantic role labeling. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics, ACL 2018, Melbourne, Australia, July 15-20, 2018, Volume 2: Short Papers, pp. 364\u2013369, 2018. URL https://aclanthology.info/papers/ P18-2058/p18-2058.",
+            "url": "https://aclanthology.info/papers/P18-2058/p18-2058",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Luheng%20Lee%2C%20Kenton%20Levy%2C%20Omer%20Zettlemoyer%2C%20Luke%20Jointly%20predicting%20predicates%20and%20arguments%20in%20neural%20semantic%20role%20labeling%202018-07-15"
+        },
+        {
+            "id": "Heilman_2010_a",
+            "entry": "Michael Heilman and Noah A. Smith. Good question! statistical ranking for question generation. In Human Language Technologies: The 2010 Annual Conference of the North American Chapter of the Association for Computational Linguistics, HLT \u201910, pp. 609\u2013617. Association for Computational Linguistics, 2010. ISBN 1-932432-65-5. URL http://dl.acm.org/citation.cfm?id=1857999.1858085.",
+            "url": "http://dl.acm.org/citation.cfm?id=1857999.1858085",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Michael%20Heilman%20and%20Noah%20A%20Smith%20Good%20question%20statistical%20ranking%20for%20question%20generation%20In%20Human%20Language%20Technologies%20The%202010%20Annual%20Conference%20of%20the%20North%20American%20Chapter%20of%20the%20Association%20for%20Computational%20Linguistics%20HLT%2010%20pp%20609617%20Association%20for%20Computational%20Linguistics%202010%20ISBN%201932432655%20URL%20httpdlacmorgcitationcfmid18579991858085"
+        },
+        {
+            "id": "Hu_et+al_2018_a",
+            "entry": "Minghao Hu, Yuxing Peng, Zhen Huang, Xipeng Qiu, Furu Wei, and Ming Zhou. Reinforced mnemonic reader for machine reading comprehension. In Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, IJCAI 2018, July 13-19, 2018, Stockholm, Sweden., pp. 4099\u20134106, 2018. URL https://doi.org/10.24963/ijcai.2018/570.",
+            "crossref": "https://dx.doi.org/10.24963/ijcai.2018/570",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.24963/ijcai.2018/570"
+        },
+        {
+            "id": "Hudson_2018_a",
+            "entry": "Drew A. Hudson and Christopher D. Manning. Compositional attention networks for machine reasoning. CoRR, abs/1803.03067, 2018. URL http://arxiv.org/abs/1803.03067.",
+            "url": "http://arxiv.org/abs/1803.03067",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03067"
+        },
+        {
+            "id": "Sergey_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Proceedings of the 32nd International Conference on Machine Learning, ICML 2015, Lille, France, 6-11 July 2015, pp. 448\u2013456, 2015. URL http://jmlr.org/proceedings/papers/v37/ioffe15.html.",
+            "url": "http://jmlr.org/proceedings/papers/v37/ioffe15.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%20ICML%202015%20Lille%20France%20611%20July%202015%20pp%20448456%202015%20URL%20httpjmlrorgproceedingspapersv37ioffe15html"
+        },
+        {
+            "id": "Jia_2017_a",
+            "entry": "Robin Jia and Percy Liang. Adversarial examples for evaluating reading comprehension systems. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, EMNLP 2017, Copenhagen, Denmark, September 9-11, 2017, pp. 2021\u20132031, 2017. URL https://aclanthology.info/papers/D17-1215/d17-1215.",
+            "url": "https://aclanthology.info/papers/D17-1215/d17-1215",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jia%2C%20Robin%20Liang%2C%20Percy%20Adversarial%20examples%20for%20evaluating%20reading%20comprehension%20systems%202017-09-09"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Justin Johnson, Bharath Hariharan, Laurens van der Maaten, Li Fei-Fei, C. Lawrence Zitnick, and Ross B. Girshick. CLEVR: A diagnostic dataset for compositional language and elementary visual reasoning. In 2017 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, Honolulu, HI, USA, July 21-26, 2017, pp. 1988\u20131997, 2017. URL https://doi.org/10.1109/CVPR.2017.215.",
+            "crossref": "https://dx.doi.org/10.1109/CVPR.2017.215",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/CVPR.2017.215"
+        },
+        {
+            "id": "Joshi_et+al_2017_a",
+            "entry": "Mandar Joshi, Eunsol Choi, Daniel S. Weld, and Luke Zettlemoyer. Triviaqa: A large scale distantly supervised challenge dataset for reading comprehension. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics, ACL 2017, Vancouver, Canada, July 30 - August 4, Volume 1: Long Papers, pp. 1601\u20131611, 2017. URL https://doi.org/10.18653/v1/P17-1147.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-1147",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-1147"
+        },
+        {
+            "id": "Kim_et+al_2016_a",
+            "entry": "Yoon Kim, Yacine Jernite, David Sontag, and Alexander M. Rush. Character-aware neural language models. In Proceedings of the Thirtieth AAAI Conference on Artificial Intelligence, February 12-17, 2016, Phoenix, Arizona, USA., pp. 2741\u20132749, 2016. URL http://www.aaai.org/ocs/index.php/AAAI/AAAI16/paper/view/12489.",
+            "url": "http://www.aaai.org/ocs/index.php/AAAI/AAAI16/paper/view/12489",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yoon%20Jernite%2C%20Yacine%20Sontag%2C%20David%20Rush%2C%20Alexander%20M.%20Character-aware%20neural%20language%20models%202016-02"
+        },
+        {
+            "id": "Lee_et+al_2016_a",
+            "entry": "Kenton Lee, Tom Kwiatkowski, Ankur P. Parikh, and Dipanjan Das. Learning recurrent span representations for extractive question answering. CoRR, abs/1611.01436, 2016. URL http://arxiv.org/abs/1611.01436.",
+            "url": "http://arxiv.org/abs/1611.01436",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01436"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Yikang Li, Nan Duan, Bolei Zhou, Xiao Chu, Wanli Ouyang, and Xiaogang Wang. Visual question generation as dual task of visual question answering. CoRR, abs/1709.07192, 2017. URL http://arxiv.org/abs/1709.07192.",
+            "url": "http://arxiv.org/abs/1709.07192",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07192"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Feng Liu, Tao Xiang, Timothy M. Hospedales, Wankou Yang, and Changyin Sun. ivqa: Inverse visual question answering. CoRR, abs/1710.03370, 2017. URL http://arxiv.org/abs/1710.03370.",
+            "url": "http://arxiv.org/abs/1710.03370",
+            "arxiv_url": "https://arxiv.org/pdf/1710.03370"
+        },
+        {
+            "id": "Merity_et+al_2016_a",
+            "entry": "Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. CoRR, abs/1609.07843, 2016. URL http://arxiv.org/abs/1609.07843.",
+            "url": "http://arxiv.org/abs/1609.07843",
+            "arxiv_url": "https://arxiv.org/pdf/1609.07843"
+        },
+        {
+            "id": "Nair_2124_a",
+            "entry": "Vinod Nair and Geoffrey E. Hinton. Rectified linear units improve restricted boltzmann machines. In Proceedings of the 27th International Conference on Machine Learning (ICML-10), June 2124, 2010, Haifa, Israel, pp. 807\u2013814, 2010. URL http://www.icml2010.org/papers/432.pdf.",
+            "url": "http://www.icml2010.org/papers/432.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202124-06"
+        },
+        {
+            "id": "Perez_et+al_2018_a",
+            "entry": "Ethan Perez, Florian Strub, Harm de Vries, Vincent Dumoulin, and Aaron C. Courville. Film: Visual reasoning with a general conditioning layer. In Proceedings of the Thirty-Second AAAI Conference on Artificial Intelligence, New Orleans, Louisiana, USA, February 2-7, 2018, 2018. URL https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/16528.",
+            "url": "https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/16528",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Perez%2C%20Ethan%20Strub%2C%20Florian%20de%20Vries%2C%20Harm%20Dumoulin%2C%20Vincent%20Film%3A%20Visual%20reasoning%20with%20a%20general%20conditioning%20layer%202018-02-02"
+        },
+        {
+            "id": "Peters_et+al_2018_a",
+            "entry": "Matthew E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, and Luke Zettlemoyer. Deep contextualized word representations. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, NAACL-HLT 2018, New Orleans, Louisiana, USA, June 1-6, 2018, Volume 1 (Long Papers), pp. 2227\u20132237, 2018. URL https://aclanthology.info/papers/N18-1202/n18-1202.",
+            "url": "https://aclanthology.info/papers/N18-1202/n18-1202",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Matthew%20E.%20Neumann%2C%20Mark%20Iyyer%2C%20Mohit%20Gardner%2C%20Matt%20Deep%20contextualized%20word%20representations%202018-06-01"
+        },
+        {
+            "id": "Radford_et+al_2018_a",
+            "entry": "Alec Radford, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. Improving language understanding by generative pre-training. 2018. URL http://openai-assets.s3.amazonaws.com/research-covers/language-unsupervised/language_understanding_paper.pdf.",
+            "url": "http://openai-assets.s3.amazonaws.com/research-covers/language-unsupervised/language_understanding_paper.pdf"
+        },
+        {
+            "id": "Raison_et+al_2018_a",
+            "entry": "Martin Raison, Pierre-Emmanuel Mazare, Rajarshi Das, and Antoine Bordes. Weaver: Deep coencoding of questions and documents for machine reading. arXiv preprint arXiv:1804.10490, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.10490"
+        },
+        {
+            "id": "Rajpurkar_et+al_2016_a",
+            "entry": "Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang. Squad: 100, 000+ questions for machine comprehension of text. In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, EMNLP 2016, Austin, Texas, USA, November 1-4, 2016, pp. 2383\u20132392, 2016. URL http://aclweb.org/anthology/D/D16/D16-1264.pdf.",
+            "url": "http://aclweb.org/anthology/D/D16/D16-1264.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajpurkar%2C%20Pranav%20Zhang%2C%20Jian%20Lopyrev%2C%20Konstantin%20Liang%2C%20Percy%20Squad%3A%20100%2C%20000%2B%20questions%20for%20machine%20comprehension%20of%20text%202016-11-01"
+        },
+        {
+            "id": "Rajpurkar_et+al_2018_a",
+            "entry": "Pranav Rajpurkar, Robin Jia, and Percy Liang. Know what you don\u2019t know: Unanswerable questions for squad. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics, ACL 2018, Melbourne, Australia, July 15-20, 2018, Volume 2: Short Papers, pp. 784\u2013 789, 2018. URL https://aclanthology.info/papers/P18-2124/p18-2124.",
+            "url": "https://aclanthology.info/papers/P18-2124/p18-2124",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajpurkar%2C%20Pranav%20Jia%2C%20Robin%20Liang%2C%20Percy%20Know%20what%20you%20don%E2%80%99t%20know%3A%20Unanswerable%20questions%20for%20squad%202018-07-15"
+        },
+        {
+            "id": "Rondeau_2018_a",
+            "entry": "Marc-Antoine Rondeau and Timothy J. Hazen. Systematic error analysis of the stanford question answering dataset. In Proceedings of the Workshop on Machine Reading for Question Answering@ACL 2018, Melbourne, Australia, July 19, 2018, pp. 12\u201320, 2018. URL https://aclanthology.info/papers/W18-2602/w18-2602.",
+            "url": "https://aclanthology.info/papers/W18-2602/w18-2602",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rondeau%2C%20Marc-Antoine%20Hazen%2C%20Timothy%20J.%20Systematic%20error%20analysis%20of%20the%20stanford%20question%20answering%20dataset%202018-07-19"
+        },
+        {
+            "id": "Sachan_2018_a",
+            "entry": "Mrinmaya Sachan and Eric P. Xing. Self-training for jointly learning to ask and answer questions. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, NAACL-HLT 2018, New Orleans, Louisiana, USA, June 1-6, 2018, Volume 1 (Long Papers), pp. 629\u2013640, 2018. URL https://aclanthology.info/papers/N18-1058/n18-1058.",
+            "url": "https://aclanthology.info/papers/N18-1058/n18-1058",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sachan%2C%20Mrinmaya%20Xing%2C%20Eric%20P.%20Self-training%20for%20jointly%20learning%20to%20ask%20and%20answer%20questions%202018-06-01"
+        },
+        {
+            "id": "Seo_et+al_2016_a",
+            "entry": "Min Joon Seo, Aniruddha Kembhavi, Ali Farhadi, and Hannaneh Hajishirzi. Bidirectional attention flow for machine comprehension. CoRR, abs/1611.01603, 2016. URL http://arxiv.org/abs/1611.01603.",
+            "url": "http://arxiv.org/abs/1611.01603",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01603"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Yelong Shen, Po-Sen Huang, Jianfeng Gao, and Weizhu Chen. Reasonet: Learning to stop reading in machine comprehension. In Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Halifax, NS, Canada, August 13 - 17, 2017, pp. 1047\u20131055, 2017. URL http://doi.acm.org/10.1145/3097983.3098177.",
+            "url": "http://doi.acm.org/10.1145/3097983.3098177",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Yelong%20Huang%2C%20Po-Sen%20Gao%2C%20Jianfeng%20Chen%2C%20Weizhu%20Reasonet%3A%20Learning%20to%20stop%20reading%20in%20machine%20comprehension%202017-08"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2015_a",
+            "entry": "Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, and Rob Fergus. End-to-end memory networks. In Advances in Neural Information Processing Systems 28: Annual Conference on Neural Information Processing Systems 2015, December 7-12, 2015, Montreal, Quebec, Canada, pp. 2440\u20132448, 2015. URL http://papers.nips.cc/paper/5846-end-to-end-memory-networks.",
+            "url": "http://papers.nips.cc/paper/5846-end-to-end-memory-networks",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sukhbaatar%2C%20Sainbayar%20Szlam%2C%20Arthur%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015-12-07"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V. Le. Sequence to sequence learning with neural networks. In Advances in Neural Information Processing Systems 27: Annual Conference on Neural Information Processing Systems 2014, December 8-13 2014, Montreal, Quebec, Canada, pp. 3104\u20133112, 2014. URL http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.",
+            "url": "http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014-12-08"
+        },
+        {
+            "id": "Sutton_2012_a",
+            "entry": "Charles A. Sutton and Andrew McCallum. An introduction to conditional random fields. Foundations and Trends in Machine Learning, 4(4):267\u2013373, 2012. URL https://doi.org/10.1561/2200000013.",
+            "crossref": "https://dx.doi.org/10.1561/2200000013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1561/2200000013"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "Duyu Tang, Nan Duan, Tao Qin, and Ming Zhou. Question answering and question generation as dual tasks. CoRR, abs/1706.02027, 2017. URL http://arxiv.org/abs/1706.02027.",
+            "url": "http://arxiv.org/abs/1706.02027",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02027"
+        },
+        {
+            "id": "Tang_et+al_2018_a",
+            "entry": "Duyu Tang, Nan Duan, Zhao Yan, Zhirui Zhang, Yibo Sun, Shujie Liu, Yuanhua Lv, and Ming Zhou. Learning to collaborate for question answering and asking. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, NAACL-HLT 2018, New Orleans, Louisiana, USA, June 1-6, 2018, Volume 1 (Long Papers), pp. 1564\u20131574, 2018. URL https://aclanthology.info/papers/ N18-1141/n18-1141.",
+            "url": "https://aclanthology.info/papers/N18-1141/n18-1141",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Duyu%20Duan%2C%20Nan%20Yan%2C%20Zhao%20Zhang%2C%20Zhirui%20Learning%20to%20collaborate%20for%20question%20answering%20and%20asking%202018-06-01"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems 30: Annual Conference on Neural Information Processing Systems 2017, 4-9 December 2017, Long Beach, CA, USA, pp. 6000\u20136010, 2017. URL http://papers.nips.cc/paper/7181-attention-is-all-you-need.",
+            "url": "http://papers.nips.cc/paper/7181-attention-is-all-you-need",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vaswani%2C%20Ashish%20Shazeer%2C%20Noam%20Parmar%2C%20Niki%20Uszkoreit%2C%20Jakob%20Attention%20is%20all%20you%20need%202017-12"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer networks. In Advances in Neural Information Processing Systems 28: Annual Conference on Neural Information Processing Systems 2015, December 7-12, 2015, Montreal, Quebec, Canada, pp. 2692\u20132700, 2015. URL http://papers.nips.cc/paper/5866-pointer-networks.",
+            "url": "http://papers.nips.cc/paper/5866-pointer-networks",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Fortunato%2C%20Meire%20Jaitly%2C%20Navdeep%20Pointer%20networks%202015-12-07"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Wenhui Wang, Nan Yang, Furu Wei, Baobao Chang, and Ming Zhou. Gated self-matching networks for reading comprehension and question answering. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics, ACL 2017, Vancouver, Canada, July 30 - August 4, Volume 1: Long Papers, pp. 189\u2013198, 2017. URL https://doi.org/10.18653/v1/ P17-1018.",
+            "crossref": "https://dx.doi.org/10.18653/v1/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Zhiguo Wang, Haitao Mi, Wael Hamza, and Radu Florian. Multi-perspective context matching for machine comprehension. CoRR, abs/1612.04211, 2016. URL http://arxiv.org/abs/1612.04211.",
+            "url": "http://arxiv.org/abs/1612.04211",
+            "arxiv_url": "https://arxiv.org/pdf/1612.04211"
+        },
+        {
+            "id": "Weissenborn_et+al_2017_a",
+            "entry": "Dirk Weissenborn, Georg Wiese, and Laura Seiffe. Making neural QA as simple as possible but not simpler. In Proceedings of the 21st Conference on Computational Natural Language Learning (CoNLL 2017), Vancouver, Canada, August 3-4, 2017, pp. 271\u2013280, 2017. URL https://doi.org/10.18653/v1/K17-1028.",
+            "crossref": "https://dx.doi.org/10.18653/v1/K17-1028",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/K17-1028"
+        },
+        {
+            "id": "Xiong_et+al_2017_a",
+            "entry": "Caiming Xiong, Victor Zhong, and Richard Socher. DCN+: mixed objective and deep residual coattention for question answering. CoRR, abs/1711.00106, 2017. URL http://arxiv.org/abs/1711.00106.",
+            "url": "http://arxiv.org/abs/1711.00106",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00106"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "Adams Wei Yu, David Dohan, Minh-Thang Luong, Rui Zhao, Kai Chen, Mohammad Norouzi, and Quoc V. Le. Qanet: Combining local convolution with global self-attention for reading comprehension. CoRR, abs/1804.09541, 2018. URL http://arxiv.org/abs/1804.09541.",
+            "url": "http://arxiv.org/abs/1804.09541",
+            "arxiv_url": "https://arxiv.org/pdf/1804.09541"
+        },
+        {
+            "id": "Yu_et+al_2016_a",
+            "entry": "Lei Yu, Phil Blunsom, Chris Dyer, Edward Grefenstette, and Tomas Kocisky. The neural noisy channel. CoRR, abs/1611.02554, 2016. URL http://arxiv.org/abs/1611.02554.",
+            "url": "http://arxiv.org/abs/1611.02554",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02554"
+        },
+        {
+            "id": "Yuan_et+al_2017_a",
+            "entry": "Xingdi Yuan, Tong Wang, Caglar Gulcehre, Alessandro Sordoni, Philip Bachman, Saizheng Zhang, Sandeep Subramanian, and Adam Trischler. Machine comprehension by text-to-text neural question generation. In Proceedings of the 2nd Workshop on Representation Learning for NLP, Rep4NLP@ACL 2017, Vancouver, Canada, August 3, 2017, pp. 15\u201325, 2017. URL https://aclanthology.info/papers/W17-2603/w17-2603.",
+            "url": "https://aclanthology.info/papers/W17-2603/w17-2603",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuan%2C%20Xingdi%20Wang%2C%20Tong%20Gulcehre%2C%20Caglar%20Sordoni%2C%20Alessandro%20Machine%20comprehension%20by%20text-to-text%20neural%20question%20generation%202017-08-03"
+        },
+        {
+            "id": "Zhou_et+al_2015_a",
+            "entry": "Bolei Zhou, Yuandong Tian, Sainbayar Sukhbaatar, Arthur Szlam, and Rob Fergus. Simple baseline for visual question answering. CoRR, abs/1512.02167, 2015. URL http://arxiv.org/abs/1512.02167.",
+            "url": "http://arxiv.org/abs/1512.02167",
+            "arxiv_url": "https://arxiv.org/pdf/1512.02167"
+        },
+        {
+            "id": "Architecture_2016_a",
+            "entry": "Architecture The encoder contains 2 answer-independent LSTM layers and 3 answer-dependent LSTM layers, all of hidden size 128. The decoder contains 9 blocks, all with hidden size d = 256. We apply dropout (p = 0.55) to contextualised word representations, after encoder LSTM layers and after each decoder block (before residual connects). We also used word level dropout after contextualised embeddings for each encoder (p = 0.1) and decoder word (p = 0.25), and disallow use of the pointer mechanism with p = 0.25. All dropout masks are fixed across time-steps (Gal & Ghahramani, 2016).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Architecture%20The%20encoder%20contains%202%20answerindependent%20LSTM%20layers%20and%203%20answerdependent%20LSTM%20layers%20all%20of%20hidden%20size%20128%20The%20decoder%20contains%209%20blocks%20all%20with%20hidden%20size%20d%20%20256%20We%20apply%20dropout%20p%20%20055%20to%20contextualised%20word%20representations%20after%20encoder%20LSTM%20layers%20and%20after%20each%20decoder%20block%20before%20residual%20connects%20We%20also%20used%20word%20level%20dropout%20after%20contextualised%20embeddings%20for%20each%20encoder%20p%20%2001%20and%20decoder%20word%20p%20%20025%20and%20disallow%20use%20of%20the%20pointer%20mechanism%20with%20p%20%20025%20All%20dropout%20masks%20are%20fixed%20across%20timesteps%20Gal%20%20Ghahramani%202016"
+        }
+    ]
+}

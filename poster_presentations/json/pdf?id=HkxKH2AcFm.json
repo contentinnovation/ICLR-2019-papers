@@ -1,0 +1,402 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "TOWARDS GAN BENCHMARKS WHICH REQUIRE GENERALIZATION",
+        "author": "Ishaan Gulrajani Google Brain igul,@gmail.com",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkxKH2AcFm"
+        },
+        "abstract": "For many evaluation metrics commonly used as benchmarks for unconditional image generation, trivially memorizing the training set attains a better score than models which are considered state-of-the-art; we consider this problematic. We clarify a necessary condition for an evaluation metric not to behave this way: estimating the function must require a large sample from the model. In search of such a metric, we turn to neural network divergences (NNDs), which are defined in terms of a neural network trained to distinguish between distributions. The resulting benchmarks cannot be \u201cwon\u201d by training set memorization, while still being perceptually correlated and computable only from samples. We survey past work on using NNDs for evaluation, implement an example black-box metric based on these ideas, and validate experimentally that it can measure a notion of generalization."
+    },
+    "keywords": [
+        {
+            "term": "maximum likelihood",
+            "url": "https://en.wikipedia.org/wiki/maximum_likelihood"
+        },
+        {
+            "term": "Generative Adversarial Networks",
+            "url": "https://en.wikipedia.org/wiki/Generative_Adversarial_Networks"
+        },
+        {
+            "term": "equilibrium",
+            "url": "https://en.wikipedia.org/wiki/equilibrium"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "metrics",
+            "url": "https://en.wikipedia.org/wiki/metrics"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "NNDs": "neural network divergences",
+        "GANs": "Generative Adversarial Networks",
+        "IS": "Inception Score\u201d",
+        "FID": "Fr\u00e9chet Inception Distance\u201d",
+        "CNN": "convolutional network",
+        "IAF": "Inverse Autoregressive Flow"
+    },
+    "highlights": [
+        "It is often difficult to directly measure progress towards our goals (e.g. \u201cclassify images correctly in the real world\u201d, \u201cgenerate valid translations of text\u201d)",
+        "This paper considers evaluation metrics for generative models which give rise to nontrivial benchmarks, and which are aligned with the final task of generating novel, perceptually realistic and diverse data",
+        "<a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018</a>) \u201cinvestigated whether the [neural network divergence] metric favors samples from the model trained using the same metric\u201d by training Generative Adversarial Networks with different discriminator objectives and evaluating them with neural network divergences utilizing the same set of objectives",
+        "A major difference is that compared to the \u201ccritic\u201d networks used in those works, our convolutional network divergence is a black-box evaluation metric computed from scratch at each point in training",
+        "We believe our experiments show that the neural network divergences are a promising direction for evaluating generative models",
+        "They are not trivially solved by memorizing the training set, which satisfies our argument (Section 3) that measuring generalization ability is linked to whether the metric requires a large collection of samples"
+    ],
+    "key_statements": [
+        "It is often difficult to directly measure progress towards our goals (e.g. \u201cclassify images correctly in the real world\u201d, \u201cgenerate valid translations of text\u201d)",
+        "This paper considers evaluation metrics for generative models which give rise to nontrivial benchmarks, and which are aligned with the final task of generating novel, perceptually realistic and diverse data",
+        "We investigate using neural network divergences (Arora et al, 2017) as evaluation metrics which have attractive properties for this application",
+        "We study an example neural network divergence called \u201cconvolutional network divergence\u201d (DCNN) experimentally",
+        "Throughout the paper we cast evaluation metrics as statistical divergences specifying a notion of dissimilarity between distributions",
+        "The goal of generative modeling, is minimizing some divergence, and the choice of divergence reflects the properties of our final task",
+        "To use an neural network divergences as an evaluation metric, we draw samples from our learned generative model q and utilize a held-out test set ptest of samples from p which was not used to train the generative model",
+        "To test the correlation of convolutional network-based neural network divergences to human perception, <a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018</a>) generated sets of 100 image samples from various models and compared the pairswise preferences given by various neural network divergences to those from humans",
+        "<a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018</a>) \u201cinvestigated whether the [neural network divergence] metric favors samples from the model trained using the same metric\u201d by training Generative Adversarial Networks with different discriminator objectives and evaluating them with neural network divergences utilizing the same set of objectives",
+        "To empirically investigate the use of neural network divergences for evaluation, we developed a simple architecture and training procedure which we refer to as convolutional network divergence (DCNN) which we describe in detail in Appendix D",
+        "We utilize a carefully-tuned learning rate schedule and an exponential moving average of model parameters for evaluation, which we show produces a low-variance metric in Appendix E Our goal in developing the convolutional network divergence is not to propose a new standardized benchmark, but rather to develop a reasonable testbed for experimenting with adversarial divergences in the context of the current study",
+        "We find that both the Inception Score\u201d and the Fr\u00e9chet Inception Distance\u201d assign better scores to memorizing the training set, but that the convolutional network divergence assigns a worse score to training set memorization than the Generative Adversarial Networks",
+        "Comparing Evaluation Metrics\u2019 Ability to Measure Diversity For several evaluation functions, we test how many sample points from the true distribution are needed to attain a better score than a well-trained Generative Adversarial Networks model",
+        "Consistent with our expectation, we find that both convolutional network divergences require memorizing many more images to attain an equivalent score to a Generative Adversarial Networks, so Definition 1 is more likely to be achievable under these",
+        "Every 2000 iterations, we evaluate three convolutional network divergences: first, with respect to a held-out test set of 10,000 images, second, another independent test set of the same size, and last, a 10,000-image subset of the training set",
+        "A major difference is that compared to the \u201ccritic\u201d networks used in those works, our convolutional network divergence is a black-box evaluation metric computed from scratch at each point in training",
+        "We believe our experiments show that the neural network divergences are a promising direction for evaluating generative models",
+        "They are not trivially solved by memorizing the training set, which satisfies our argument (Section 3) that measuring generalization ability is linked to whether the metric requires a large collection of samples"
+    ],
+    "summary": [
+        "It is often difficult to directly measure progress towards our goals (e.g. \u201cclassify images correctly in the real world\u201d, \u201cgenerate valid translations of text\u201d).",
+        "In an evaluation metric like FID, if q = ptrain yields a near-optimal score with respect to the test set, it\u2019s not clear what we aim to achieve through generalization, even if we might be able to measure it sometimes.",
+        "To use an NND as an evaluation metric, we draw samples from our learned generative model q and utilize a held-out test set ptest of samples from p which was not used to train the generative model.",
+        "They satisfy the criterion of subsection 3.3: estimating one involves training a neural network, a process which can consider about 107 data points \u2014 a sample large enough for the divergence to be able to measure diversity beyond the size of most training sets, but not so large as to be computationally intractable.",
+        "To test the correlation of CNN-based NNDs to human perception, <a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\"><a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018</a></a>) generated sets of 100 image samples from various models and compared the pairswise preferences given by various NNDs to those from humans.",
+        "<a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\"><a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018</a></a>) \u201cinvestigated whether the [neural network divergence] metric favors samples from the model trained using the same metric\u201d by training GANs with different discriminator objectives and evaluating them with NNDs utilizing the same set of objectives.",
+        "To compare the resulting scores to training set memorization, we evaluated each metric on ptrain itself.",
+        "The results of this experiment are summarized schematically in Figure 1: The IS and FID prefer memorizing a small sample, whereas the CNN divergence prefers a model which imperfectly fits the underlying distribution but covers more of its support.",
+        "Comparing Evaluation Metrics\u2019 Ability to Measure Diversity For several evaluation functions, we test how many sample points from the true distribution are needed to attain a better score than a well-trained GAN model.",
+        "A major difference is that compared to the \u201ccritic\u201d networks used in those works, our CNN divergence is a black-box evaluation metric computed from scratch at each point in training.",
+        "The overfitting result in Danihelka et al (2017b) comes from \u201cmisusing the independent critic\u201d by evaluating it on empirical distributions it wasn\u2019t trained on: their estimation procedure is different for the training, validation, and test sets.",
+        "They are not trivially solved by memorizing the training set, which satisfies our argument (Section 3) that measuring generalization ability is linked to whether the metric requires a large collection of samples.",
+        "We note that NNDs are almost certainly not the only evaluation metric under which models can meaningfully generalize, and encourage work on alternative metrics"
+    ],
+    "headline": "This paper considers evaluation metrics for generative models which give rise to nontrivial benchmarks, and which are aligned with the final task of generating novel, perceptually realistic and diverse data",
+    "reference_links": [
+        {
+            "id": "Arjovsky_2017_a",
+            "entry": "Martin Arjovsky and L\u00e9on Bottou. Towards Principled Methods for Training Generative Adversarial Networks. arXiv.org, January 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Bottou%2C%20L%C3%A9on%20Towards%20Principled%20Methods%20for%20Training%20Generative%20Adversarial%20Networks.%20arXiv.org%202017-01"
+        },
+        {
+            "id": "Martin_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and L\u00e9on Bottou. Wasserstein gan. arXiv preprint arXiv:1701.07875, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07875"
+        },
+        {
+            "id": "Arora_2017_a",
+            "entry": "Sanjeev Arora and Yi Zhang. Do gans actually learn the distribution? an empirical study. arXiv preprint arXiv:1706.08224, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.08224"
+        },
+        {
+            "id": "Arora_et+al_2017_b",
+            "entry": "Sanjeev Arora, Rong Ge, Yingyu Liang, Tengyu Ma, and Yi Zhang. Generalization and equilibrium in generative adversarial nets (gans). arXiv preprint arXiv:1703.00573, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00573"
+        },
+        {
+            "id": "Barratt_2018_a",
+            "entry": "Shane Barratt and Rishi Sharma. A note on the inception score. arXiv preprint arXiv:1801.01973, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01973"
+        },
+        {
+            "id": "Marc_2017_a",
+            "entry": "Marc G Bellemare, Ivo Danihelka, Will Dabney, Shakir Mohamed, Balaji Lakshminarayanan, Stephan Hoyer, and R\u00e9mi Munos. The cramer distance as a solution to biased wasserstein gradients. arXiv preprint arXiv:1705.10743, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10743"
+        },
+        {
+            "id": "Binkowski_et+al_2018_a",
+            "entry": "Miko\u0142aj Binkowski, Dougal J. Sutherland, Michael Arbel, and Arthur Gretton. Demystifying MMD GANs. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=r1lUOzWCW.",
+            "url": "https://openreview.net/forum?id=r1lUOzWCW",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miko%C5%82aj%20Binkowski%20Dougal%20J%20Sutherland%20Michael%20Arbel%20and%20Arthur%20Gretton%20Demystifying%20MMD%20GANs%20In%20International%20Conference%20on%20Learning%20Representations%202018%20URL%20httpsopenreviewnetforumidr1lUOzWCW"
+        },
+        {
+            "id": "Bowman_et+al_2015_a",
+            "entry": "Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew M Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. arXiv preprint arXiv:1511.06349, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06349"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, and Pieter Abbeel. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2172\u20132180, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Infogan%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Infogan%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016"
+        },
+        {
+            "id": "Cornish_et+al_2018_a",
+            "entry": "Robert Cornish, Hongseok Yang, and Frank Wood. Towards a testable notion of generalization for generative adversarial networks, 2018. URL https://openreview.net/forum?id= ByuI-mW0W.",
+            "url": "https://openreview.net/forum?id="
+        },
+        {
+            "id": "Dai_et+al_2017_a",
+            "entry": "Zihang Dai, Zhilin Yang, Fan Yang, William W Cohen, and Ruslan R Salakhutdinov. Good semisupervised learning that requires a bad gan. In Advances in Neural Information Processing Systems, pp. 6513\u20136523, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Zihang%20Yang%2C%20Zhilin%20Yang%2C%20Fan%20Cohen%2C%20William%20W.%20Good%20semisupervised%20learning%20that%20requires%20a%20bad%20gan%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Zihang%20Yang%2C%20Zhilin%20Yang%2C%20Fan%20Cohen%2C%20William%20W.%20Good%20semisupervised%20learning%20that%20requires%20a%20bad%20gan%202017"
+        },
+        {
+            "id": "Danihelka_et+al_2017_a",
+            "entry": "Ivo Danihelka, Balaji Lakshminarayanan, Benigno Uria, Daan Wierstra, and Peter Dayan. Comparison of Maximum Likelihood and GAN-based training of Real NVPs. arXiv.org, May 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Danihelka%2C%20Ivo%20Lakshminarayanan%2C%20Balaji%20Uria%2C%20Benigno%20Wierstra%2C%20Daan%20Comparison%20of%20Maximum%20Likelihood%20and%20GAN-based%20training%20of%20Real%20NVPs.%20arXiv.org%202017-05"
+        },
+        {
+            "id": "Danihelka_et+al_0000_a",
+            "entry": "Ivo Danihelka, Balaji Lakshminarayanan, Benigno Uria, Daan Wierstra, and Peter Dayan. Comparison of maximum likelihood and gan-based training of real nvps. arXiv preprint arXiv:1705.05263, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.05263"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. ImageNet: A large-scale hierarchical image database. In IEEE Conference on Computer Vision and Pattern Recognition, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gretton_et+al_2012_a",
+            "entry": "Arthur Gretton, Karsten M Borgwardt, Malte J Rasch, Bernhard Sch\u00f6lkopf, and Alexander Smola. A kernel two-sample test. Journal of Machine Learning Research, 13(Mar):723\u2013773, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gretton%2C%20Arthur%20Borgwardt%2C%20Karsten%20M.%20Rasch%2C%20Malte%20J.%20Sch%C3%B6lkopf%2C%20Bernhard%20A%20kernel%20two-sample%20test%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gretton%2C%20Arthur%20Borgwardt%2C%20Karsten%20M.%20Rasch%2C%20Malte%20J.%20Sch%C3%B6lkopf%2C%20Bernhard%20A%20kernel%20two-sample%20test%202012"
+        },
+        {
+            "id": "Grover_et+al_2017_a",
+            "entry": "Aditya Grover, Manik Dhar, and Stefano Ermon. Flow-GAN: Combining maximum likelihood and adversarial learning in generative models. arXiv preprint arXiv:1705.08868, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.08868"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of wasserstein gans. In Advances in Neural Information Processing Systems, pp. 5769\u20135779, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "Henderson_et+al_2018_a",
+            "entry": "Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, and David Meger. Deep reinforcement learning that matters. In Proceedings of the Thirty-Second AAAI Conference on Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Henderson%2C%20Peter%20Islam%2C%20Riashat%20Bachman%2C%20Philip%20Pineau%2C%20Joelle%20Deep%20reinforcement%20learning%20that%20matters%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Henderson%2C%20Peter%20Islam%2C%20Riashat%20Bachman%2C%20Philip%20Pineau%2C%20Joelle%20Deep%20reinforcement%20learning%20that%20matters%202018"
+        },
+        {
+            "id": "Heusel_et+al_2017_a",
+            "entry": "Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. Gans trained by a two time-scale update rule converge to a local nash equilibrium. In Advances in Neural Information Processing Systems, pp. 6626\u20136637, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heusel%2C%20Martin%20Ramsauer%2C%20Hubert%20Unterthiner%2C%20Thomas%20Nessler%2C%20Bernhard%20Gans%20trained%20by%20a%20two%20time-scale%20update%20rule%20converge%20to%20a%20local%20nash%20equilibrium%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heusel%2C%20Martin%20Ramsauer%2C%20Hubert%20Unterthiner%2C%20Thomas%20Nessler%2C%20Bernhard%20Gans%20trained%20by%20a%20two%20time-scale%20update%20rule%20converge%20to%20a%20local%20nash%20equilibrium%202017"
+        },
+        {
+            "id": "Ho_2016_a",
+            "entry": "Jonathan Ho and Stefano Ermon. Generative adversarial imitation learning. In Advances in Neural Information Processing Systems, pp. 4565\u20134573, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gabriel Huang, Hugo Berard, Ahmed Touati, Gauthier Gidel, Pascal Vincent, and Simon LacosteJulien. Parametric Adversarial Divergences are Good Task Losses for Generative Modeling. arXiv.org, August 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gabriel%20Berard%2C%20Hugo%20Touati%2C%20Ahmed%20Gidel%2C%20Gauthier%20Parametric%20Adversarial%20Divergences%20are%20Good%20Task%20Losses%20for%20Generative%20Modeling%202017-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gabriel%20Berard%2C%20Hugo%20Touati%2C%20Ahmed%20Gidel%2C%20Gauthier%20Parametric%20Adversarial%20Divergences%20are%20Good%20Task%20Losses%20for%20Generative%20Modeling%202017-08"
+        },
+        {
+            "id": "Huang_et+al_2016_a",
+            "entry": "Xun Huang, Yixuan Li, Omid Poursaeed, John Hopcroft, and Serge Belongie. Stacked generative adversarial networks. arXiv preprint arXiv:1612.04357, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.04357"
+        },
+        {
+            "id": "Im_et+al_2018_a",
+            "entry": "Daniel Jiwoong Im, He Ma, Graham Taylor, and Kristin Branson. Quantitatively evaluating gans with divergences proposed for training. arXiv preprint arXiv:1803.01045, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01045"
+        },
+        {
+            "id": "Karras_et+al_2017_a",
+            "entry": "Tero Karras, Timo Aila, Samuli Laine, and Jaakko Lehtinen. Progressive growing of gans for improved quality, stability, and variation. arXiv preprint arXiv:1710.10196, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10196"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, pp. 4743\u20134751, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Chun-Liang Li, Wei-Cheng Chang, Yu Cheng, Yiming Yang, and Barnab\u00e1s P\u00f3czos. Mmd gan: Towards deeper understanding of moment matching network. In Advances in Neural Information Processing Systems, pp. 2203\u20132213, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Chun-Liang%20Chang%2C%20Wei-Cheng%20Cheng%2C%20Yu%20Yang%2C%20Yiming%20Mmd%20gan%3A%20Towards%20deeper%20understanding%20of%20moment%20matching%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Chun-Liang%20Chang%2C%20Wei-Cheng%20Cheng%2C%20Yu%20Yang%2C%20Yiming%20Mmd%20gan%3A%20Towards%20deeper%20understanding%20of%20moment%20matching%20network%202017"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Shuang Liu, Olivier Bousquet, and Kamalika Chaudhuri. Approximation and convergence properties of generative adversarial learning. arXiv preprint arXiv:1705.08991, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.08991"
+        },
+        {
+            "id": "Lopez-Paz_2016_a",
+            "entry": "David Lopez-Paz and Maxime Oquab. Revisiting classifier two-sample tests. arXiv preprint arXiv:1610.06545, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.06545"
+        },
+        {
+            "id": "Odena_et+al_2016_a",
+            "entry": "Augustus Odena, Christopher Olah, and Jonathon Shlens. Conditional image synthesis with auxiliary classifier gans. arXiv preprint arXiv:1610.09585, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.09585"
+        },
+        {
+            "id": "Oliver_et+al_2018_a",
+            "entry": "Avital Oliver, Augustus Odena, Colin Raffel, Ekin D Cubuk, and Ian J Goodfellow. Realistic evaluation of deep semi-supervised learning algorithms. arXiv preprint arXiv:1804.09170, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.09170"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, and Koray Kavukcuoglu. Pixel recurrent neural networks. arXiv preprint arXiv:1601.06759, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1601.06759"
+        },
+        {
+            "id": "Paulus_et+al_2017_a",
+            "entry": "Romain Paulus, Caiming Xiong, and Richard Socher. A deep reinforced model for abstractive summarization. arXiv preprint arXiv:1705.04304, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.04304"
+        },
+        {
+            "id": "Post_2018_a",
+            "entry": "Matt Post. A call for clarity in reporting bleu scores. In Proceedings of the Third Conference on Machine Translation (WMT), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Post%2C%20Matt%20A%20call%20for%20clarity%20in%20reporting%20bleu%20scores%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Post%2C%20Matt%20A%20call%20for%20clarity%20in%20reporting%20bleu%20scores%202018"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Raffel_et+al_2014_a",
+            "entry": "Colin Raffel, Brian McFee, Eric J. Humphrey, Justin Salamon, Oriol Nieto, Dawen Liang, and Daniel P. W. Ellis. mir_eval: A transparent implementation of common MIR metrics. In Proceedings of the 15th International Society for Music Information Retrieval Conference, pp. 367\u2013372, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raffel%2C%20Colin%20McFee%2C%20Brian%20Humphrey%2C%20Eric%20J.%20Salamon%2C%20Justin%20mir_eval%3A%20A%20transparent%20implementation%20of%20common%20MIR%20metrics%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raffel%2C%20Colin%20McFee%2C%20Brian%20Humphrey%2C%20Eric%20J.%20Salamon%2C%20Justin%20mir_eval%3A%20A%20transparent%20implementation%20of%20common%20MIR%20metrics%202014"
+        },
+        {
+            "id": "Ramachandran_et+al_2017_a",
+            "entry": "Prajit Ramachandran, Barret Zoph, and Quoc V Le. Swish: a self-gated activation function. arXiv preprint arXiv:1710.05941, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.05941"
+        },
+        {
+            "id": "Ramdas_et+al_2015_a",
+            "entry": "Aaditya Ramdas, Sashank Jakkam Reddi, Barnab\u00e1s P\u00f3czos, Aarti Singh, and Larry A Wasserman. On the decreasing power of kernel and distance based nonparametric hypothesis tests in high dimensions. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramdas%2C%20Aaditya%20Reddi%2C%20Sashank%20Jakkam%20P%C3%B3czos%2C%20Barnab%C3%A1s%20Singh%2C%20Aarti%20and%20Larry%20A%20Wasserman.%20On%20the%20decreasing%20power%20of%20kernel%20and%20distance%20based%20nonparametric%20hypothesis%20tests%20in%20high%20dimensions%202015"
+        },
+        {
+            "id": "Rosca_et+al_2017_a",
+            "entry": "Mihaela Rosca, Balaji Lakshminarayanan, David Warde-Farley, and Shakir Mohamed. Variational approaches for auto-encoding generative adversarial networks. arXiv preprint arXiv:1706.04987, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.04987"
+        },
+        {
+            "id": "Salimans_et+al_2016_a",
+            "entry": "Tim Salimans, Ian Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, and Xi Chen. Improved techniques for training gans. In Advances in Neural Information Processing Systems, pp. 2226\u20132234, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Goodfellow%2C%20Ian%20Zaremba%2C%20Wojciech%20Cheung%2C%20Vicki%20Improved%20techniques%20for%20training%20gans%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Goodfellow%2C%20Ian%20Zaremba%2C%20Wojciech%20Cheung%2C%20Vicki%20Improved%20techniques%20for%20training%20gans%202016"
+        },
+        {
+            "id": "Salimans_et+al_2017_a",
+            "entry": "Tim Salimans, Andrej Karpathy, Xi Chen, and Diederik P Kingma. PixelCNN++: Improving the PixelCNN with Discretized Logistic Mixture Likelihood and Other Modifications. arXiv.org, January 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Karpathy%2C%20Andrej%20Chen%2C%20Xi%20Kingma%2C%20Diederik%20P.%20PixelCNN%2B%2B%3A%20Improving%20the%20PixelCNN%20with%20Discretized%20Logistic%20Mixture%20Likelihood%20and%20Other%20Modifications%202017-01"
+        },
+        {
+            "id": "Shrivastava_et+al_2017_a",
+            "entry": "Ashish Shrivastava, Tomas Pfister, Oncel Tuzel, Joshua Susskind, Wenda Wang, and Russell Webb. Learning from simulated and unsupervised images through adversarial training. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 2107\u20132116, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shrivastava%2C%20Ashish%20Pfister%2C%20Tomas%20Tuzel%2C%20Oncel%20Susskind%2C%20Joshua%20Learning%20from%20simulated%20and%20unsupervised%20images%20through%20adversarial%20training%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shrivastava%2C%20Ashish%20Pfister%2C%20Tomas%20Tuzel%2C%20Oncel%20Susskind%2C%20Joshua%20Learning%20from%20simulated%20and%20unsupervised%20images%20through%20adversarial%20training%202017"
+        },
+        {
+            "id": "Shu_et+al_2017_a",
+            "entry": "Rui Shu, Hung Bui, and Stefano Ermon. Ac-gan learns a biased distribution. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shu%2C%20Rui%20Bui%2C%20Hung%20Ermon%2C%20Stefano%20Ac-gan%20learns%20a%20biased%20distribution%202017"
+        },
+        {
+            "id": "Sriperumbudur_et+al_2012_a",
+            "entry": "Bharath K Sriperumbudur, Kenji Fukumizu, Arthur Gretton, Bernhard Sch\u00f6lkopf, Gert RG Lanckriet, et al. On the empirical estimation of integral probability metrics. Electronic Journal of Statistics, 6:1550\u20131599, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sriperumbudur%2C%20Bharath%20K.%20Fukumizu%2C%20Kenji%20Gretton%2C%20Arthur%20Sch%C3%B6lkopf%2C%20Bernhard%20On%20the%20empirical%20estimation%20of%20integral%20probability%20metrics%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sriperumbudur%2C%20Bharath%20K.%20Fukumizu%2C%20Kenji%20Gretton%2C%20Arthur%20Sch%C3%B6lkopf%2C%20Bernhard%20On%20the%20empirical%20estimation%20of%20integral%20probability%20metrics%202012"
+        },
+        {
+            "id": "Sutherland_et+al_2016_a",
+            "entry": "Dougal J Sutherland, Hsiao-Yu Tung, Heiko Strathmann, Soumyajit De, Aaditya Ramdas, Alex Smola, and Arthur Gretton. Generative models and model criticism via optimized maximum mean discrepancy. arXiv preprint arXiv:1611.04488, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.04488"
+        },
+        {
+            "id": "Szegedy_et+al_2016_a",
+            "entry": "Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, and Zbigniew Wojna. Rethinking the inception architecture for computer vision. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20inception%20architecture%20for%20computer%20vision%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20inception%20architecture%20for%20computer%20vision%202016"
+        },
+        {
+            "id": "Theis_et+al_2015_a",
+            "entry": "Lucas Theis, A\u00e4ron van den Oord, and Matthias Bethge. A note on the evaluation of generative models. arXiv.org, November 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Theis%2C%20Lucas%20van%20den%20Oord%2C%20A%C3%A4ron%20Bethge%2C%20Matthias%20A%20note%20on%20the%20evaluation%20of%20generative%20models.%20arXiv.org%202015-11"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Ilya Tolstikhin, Olivier Bousquet, Sylvain Gelly, and Bernhard Schoelkopf. Wasserstein auto-encoders.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Ilya%20Tolstikhin%20Olivier%20Bousquet%20Sylvain%20Gelly%20and%20Bernhard%20Schoelkopf%20Wasserstein%20autoencoders"
+        },
+        {
+            "id": "Wu_et+al_2017_a",
+            "entry": "arXiv preprint arXiv:1711.01558, 2017. Vladimir N Vapnik. The nature of statistical learning theory. 1995. Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, et al. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. arXiv preprint arXiv:1609.08144, 2016a. Yuhuai Wu, Yuri Burda, Ruslan Salakhutdinov, and Roger Grosse. On the quantitative analysis of decoder-based generative models. arXiv preprint arXiv:1611.04273, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.01558"
+        },
+        {
+            "id": "Theis_2015_b",
+            "entry": "Theis et al. (2015) provide an excellent overview of this problem and its implications for generative model evaluation. They demonstrate on toy data that in the regime of model misspecification, optimizing three different asymptotically consistent metrics (the log-likelihood, the MMD, and the Jensen-Shannon divergence) yields three different results. Further, considering the task of image generation, they show that log-likelihood and sample quality can be almost completely independent when the model is even very slightly suboptimal. Their work cautions against the use of \u201cgeneric\u201d metrics and concludes that generative models should always be evaluated using metrics whose tradeoffs are similar to the intended downstream task.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Theis%20provide%20an%20excellent%20overview%20of%20this%20problem%20and%20its%20implications%20for%20generative%20model%20evaluation.%20They%20demonstrate%20on%20toy%20data%20that%20in%20the%20regime%20of%20model%20misspecification%2C%20optimizing%20three%20different%20asymptotically%20consistent%20metrics%20%28the%20log-likelihood%2C%20the%20MMD%2C%20and%20the%20Jensen-Shannon%20divergence%29%20yields%20three%20different%20results.%20Further%2C%20considering%20the%20task%20of%20image%20generation%2C%20they%20show%20that%20log-likelihood%20and%20sample%20quality%20can%20be%20almost%20completely%20independent%20when%20the%20model%20is%20even%20very%20slightly%20suboptimal.%20Their%20work%20cautions%20against%20the%20use%20of%20%E2%80%9Cgeneric%E2%80%9D%20metrics%20and%20concludes%20that%20generative%20models%20should%20always%20be%20evaluated%20using%20metrics%20whose%20tradeoffs%20are%20similar%20to%20the%20intended%20downstream%20task%202015"
+        },
+        {
+            "id": "The_2015_a",
+            "entry": "The examples in Theis et al. (2015) are mostly hypothetical, so we review a few instances of this problem in recent state-of-the-art generative models of images:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20examples%20in%20Theis%20et%20al%202015%20are%20mostly%20hypothetical%20so%20we%20review%20a%20few%20instances%20of%20this%20problem%20in%20recent%20stateoftheart%20generative%20models%20of%20images",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20examples%20in%20Theis%20et%20al%202015%20are%20mostly%20hypothetical%20so%20we%20review%20a%20few%20instances%20of%20this%20problem%20in%20recent%20stateoftheart%20generative%20models%20of%20images"
+        },
+        {
+            "id": "In_2017_a",
+            "entry": "In this context, we take the view of Huang et al. (2017), who argue that NNDs are particularly good choices for evaluation metrics because we can control the tradeoffs they make by changing the discriminator architecture. For example, by using CNNs as discriminators, we can construct metrics which assign greater importance to perceptually relevant properties of the distribution of natural images.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20this%20context%20we%20take%20the%20view%20of%20Huang%20et%20al%202017%20who%20argue%20that%20NNDs%20are%20particularly%20good%20choices%20for%20evaluation%20metrics%20because%20we%20can%20control%20the%20tradeoffs%20they%20make%20by%20changing%20the%20discriminator%20architecture%20For%20example%20by%20using%20CNNs%20as%20discriminators%20we%20can%20construct%20metrics%20which%20assign%20greater%20importance%20to%20perceptually%20relevant%20properties%20of%20the%20distribution%20of%20natural%20images",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20this%20context%20we%20take%20the%20view%20of%20Huang%20et%20al%202017%20who%20argue%20that%20NNDs%20are%20particularly%20good%20choices%20for%20evaluation%20metrics%20because%20we%20can%20control%20the%20tradeoffs%20they%20make%20by%20changing%20the%20discriminator%20architecture%20For%20example%20by%20using%20CNNs%20as%20discriminators%20we%20can%20construct%20metrics%20which%20assign%20greater%20importance%20to%20perceptually%20relevant%20properties%20of%20the%20distribution%20of%20natural%20images"
+        },
+        {
+            "id": "The_2016_b",
+            "entry": "The Inception Score IS(q) (Salimans et al., 2016) is defined as",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20Inception%20Score%20ISq%20Salimans%20et%20al%202016%20is%20defined%20as"
+        },
+        {
+            "id": "The_2017_b",
+            "entry": "The Inception Score only very indirectly incorporates the statistics of the real data. To mitigate this, Heusel et al. (2017) proposed the Fr\u00e9chet Inception Distance (FID), which is defined as",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20Inception%20Score%20only%20very%20indirectly%20incorporates%20the%20statistics%20of%20the%20real%20data%20To%20mitigate%20this%20Heusel%20et%20al%202017%20proposed%20the%20Fr%C3%A9chet%20Inception%20Distance%20FID%20which%20is%20defined%20as",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20Inception%20Score%20only%20very%20indirectly%20incorporates%20the%20statistics%20of%20the%20real%20data%20To%20mitigate%20this%20Heusel%20et%20al%202017%20proposed%20the%20Fr%C3%A9chet%20Inception%20Distance%20FID%20which%20is%20defined%20as"
+        },
+        {
+            "id": "DFID(p,_2017_c",
+            "entry": "DFID(p, q) = \u03bcp \u2212 \u03bcq 2 + Tr \u03a3p + \u03a3q \u2212 2(\u03a3p\u03a3q)1/2 where \u03bcp, \u03a3p and \u03bcq, \u03a3q are the mean and covariance of feature maps from the penultimate layer of an Inception network for real and generated data respectively. This score was shown to be appropriately sensitive to various image degradations and better correlated with image quality compared to the Inception Score (Heusel et al., 2017). FID is typically computed using statistics from 50,000 real and generated images.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=DFIDp%20q%20%20%CE%BCp%20%20%CE%BCq%202%20%20Tr%20%CE%A3p%20%20%CE%A3q%20%202%CE%A3p%CE%A3q12%20where%20%CE%BCp%20%CE%A3p%20and%20%CE%BCq%20%CE%A3q%20are%20the%20mean%20and%20covariance%20of%20feature%20maps%20from%20the%20penultimate%20layer%20of%20an%20Inception%20network%20for%20real%20and%20generated%20data%20respectively%20This%20score%20was%20shown%20to%20be%20appropriately%20sensitive%20to%20various%20image%20degradations%20and%20better%20correlated%20with%20image%20quality%20compared%20to%20the%20Inception%20Score%20Heusel%20et%20al%202017%20FID%20is%20typically%20computed%20using%20statistics%20from%2050000%20real%20and%20generated%20images",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=DFIDp%20q%20%20%CE%BCp%20%20%CE%BCq%202%20%20Tr%20%CE%A3p%20%20%CE%A3q%20%202%CE%A3p%CE%A3q12%20where%20%CE%BCp%20%CE%A3p%20and%20%CE%BCq%20%CE%A3q%20are%20the%20mean%20and%20covariance%20of%20feature%20maps%20from%20the%20penultimate%20layer%20of%20an%20Inception%20network%20for%20real%20and%20generated%20data%20respectively%20This%20score%20was%20shown%20to%20be%20appropriately%20sensitive%20to%20various%20image%20degradations%20and%20better%20correlated%20with%20image%20quality%20compared%20to%20the%20Inception%20Score%20Heusel%20et%20al%202017%20FID%20is%20typically%20computed%20using%20statistics%20from%2050000%20real%20and%20generated%20images"
+        },
+        {
+            "id": "For_2015_b",
+            "entry": "For the CNN divergence, we use a typical convolutional network architecture which consists of three 5 \u00d7 5 convolutional layers with 64, 128, and 256 channels respectively. These layers are followed by a single fully-collected layer which produces a single scalar output. All convolutional layers utilize a stride of 2 and are each followed by a Swish nonlinearity (Ramachandran et al., 2017). Parameters are all initialized using \u201cHe\u201d-style initialization (He et al., 2015). We do not use any form of normalization, batch or otherwise. The model is trained using the critic\u2019s loss from the WGAN-GP objective (Gulrajani et al., 2017). We train for 100,000 iterations using minibatches of size 256 with a learning rate of 2 \u00d7 10\u22124. Our final loss value is computed after training, using an exponential moving average of model weights over training with a coefficient of 0.999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20the%20CNN%20divergence%20we%20use%20a%20typical%20convolutional%20network%20architecture%20which%20consists%20of%20three%205%20%205%20convolutional%20layers%20with%2064%20128%20and%20256%20channels%20respectively%20These%20layers%20are%20followed%20by%20a%20single%20fullycollected%20layer%20which%20produces%20a%20single%20scalar%20output%20All%20convolutional%20layers%20utilize%20a%20stride%20of%202%20and%20are%20each%20followed%20by%20a%20Swish%20nonlinearity%20Ramachandran%20et%20al%202017%20Parameters%20are%20all%20initialized%20using%20Hestyle%20initialization%20He%20et%20al%202015%20We%20do%20not%20use%20any%20form%20of%20normalization%20batch%20or%20otherwise%20The%20model%20is%20trained%20using%20the%20critics%20loss%20from%20the%20WGANGP%20objective%20Gulrajani%20et%20al%202017%20We%20train%20for%20100000%20iterations%20using%20minibatches%20of%20size%20256%20with%20a%20learning%20rate%20of%202%20%20104%20Our%20final%20loss%20value%20is%20computed%20after%20training%20using%20an%20exponential%20moving%20average%20of%20model%20weights%20over%20training%20with%20a%20coefficient%20of%200999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20the%20CNN%20divergence%20we%20use%20a%20typical%20convolutional%20network%20architecture%20which%20consists%20of%20three%205%20%205%20convolutional%20layers%20with%2064%20128%20and%20256%20channels%20respectively%20These%20layers%20are%20followed%20by%20a%20single%20fullycollected%20layer%20which%20produces%20a%20single%20scalar%20output%20All%20convolutional%20layers%20utilize%20a%20stride%20of%202%20and%20are%20each%20followed%20by%20a%20Swish%20nonlinearity%20Ramachandran%20et%20al%202017%20Parameters%20are%20all%20initialized%20using%20Hestyle%20initialization%20He%20et%20al%202015%20We%20do%20not%20use%20any%20form%20of%20normalization%20batch%20or%20otherwise%20The%20model%20is%20trained%20using%20the%20critics%20loss%20from%20the%20WGANGP%20objective%20Gulrajani%20et%20al%202017%20We%20train%20for%20100000%20iterations%20using%20minibatches%20of%20size%20256%20with%20a%20learning%20rate%20of%202%20%20104%20Our%20final%20loss%20value%20is%20computed%20after%20training%20using%20an%20exponential%20moving%20average%20of%20model%20weights%20over%20training%20with%20a%20coefficient%20of%200999"
+        }
+    ]
+}

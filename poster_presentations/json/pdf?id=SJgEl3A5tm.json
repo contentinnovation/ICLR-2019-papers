@@ -1,0 +1,333 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "CAMOU: LEARNING A VEHICLE CAMOUFLAGE FOR PHYSICAL ADVERSARIAL ATTACK ON OBJECT DETECTORS IN THE WILD",
+        "author": "Yang Zhang, Hassan Foroosh, Philip David, and Boqing Gong, 1 Department of Computer Science, University of Central Florida",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJgEl3A5tm"
+        },
+        "abstract": "In this paper, we conduct an intriguing experimental study about the physical adversarial attack on object detectors in the wild. In particular, we learn a camouflage pattern to hide vehicles from being detected by state-of-the-art convolutional neural network based detectors. Our approach alternates between two threads. In the first, we train a neural approximation function to imitate how a simulator applies a camouflage to vehicles and how a vehicle detector performs given images of the camouflaged vehicles. In the second, we minimize the approximated detection score by searching for the optimal camouflage. Experiments show that the learned camouflage can not only hide a vehicle from the image-based detectors under many test cases but also generalizes to different environments, vehicles, and object detectors."
+    },
+    "keywords": [
+        {
+            "term": "autonomous driving",
+            "url": "https://en.wikipedia.org/wiki/autonomous_driving"
+        },
+        {
+            "term": "image classification",
+            "url": "https://en.wikipedia.org/wiki/image_classification"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "autonomous vehicles",
+            "url": "https://en.wikipedia.org/wiki/autonomous_vehicles"
+        },
+        {
+            "term": "object detection",
+            "url": "https://en.wikipedia.org/wiki/object_detection"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "experimental study",
+            "url": "https://en.wikipedia.org/wiki/experimental_study"
+        }
+    ],
+    "abbreviations": {
+        "SPP": "spatial pyramid pooling"
+    },
+    "highlights": [
+        "Is it possible to paint a unique pattern on a vehicle\u2019s body and hide it from being detected by surveillance cameras? We conjecture the answer is affirmative mainly for two reasons",
+        "The adversarial attack has been extended to other tasks, such as semantic segmentation (<a class=\"ref-link\" id=\"cArnab_et+al_2018_a\" href=\"#rArnab_et+al_2018_a\">Arnab et al, 2018</a>), object detection (Xie et al, 2017), image captioning (<a class=\"ref-link\" id=\"cChen_et+al_2018_a\" href=\"#rChen_et+al_2018_a\">Chen et al, 2018a</a>), etc",
+        "We investigate physical adversarial attack on state-of-the-art neural network based object detectors",
+        "We investigate whether it is possible to physically camouflage 3D objects of complex shapes, i.e., vehicles, in order to hide them from state-of-the-art object detectors",
+        "We propose to use a clone network to mimic the simulator and the detector\u2019s joint response to the 3D vehicles",
+        "We find that the camouflage is transferable across different environments"
+    ],
+    "key_statements": [
+        "Is it possible to paint a unique pattern on a vehicle\u2019s body and hide it from being detected by surveillance cameras? We conjecture the answer is affirmative mainly for two reasons",
+        "Deep neural networks will be widely used in modern surveillance and autonomous driving systems for automatic vehicle detection",
+        "The adversarial attack has been extended to other tasks, such as semantic segmentation (<a class=\"ref-link\" id=\"cArnab_et+al_2018_a\" href=\"#rArnab_et+al_2018_a\">Arnab et al, 2018</a>), object detection (Xie et al, 2017), image captioning (<a class=\"ref-link\" id=\"cChen_et+al_2018_a\" href=\"#rChen_et+al_2018_a\">Chen et al, 2018a</a>), etc",
+        "We investigate physical adversarial attack on state-of-the-art neural network based object detectors",
+        "One can see that the context or background plays a vital role in object detection",
+        "We investigate whether it is possible to physically camouflage 3D objects of complex shapes, i.e., vehicles, in order to hide them from state-of-the-art object detectors",
+        "We propose to use a clone network to mimic the simulator and the detector\u2019s joint response to the 3D vehicles",
+        "We find that the camouflage is transferable across different environments"
+    ],
+    "summary": [
+        "Is it possible to paint a unique pattern on a vehicle\u2019s body and hide it from being detected by surveillance cameras? We conjecture the answer is affirmative mainly for two reasons.",
+        "Fig. 1 shows that the vehicle in the simulation is photo-realistic such that, even covered with random camouflage, it can still be detected by the Mask R-CNN detector (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a>) trained on COCO (Lin et al, 2014).",
+        "The network takes as input the environment, a camouflage pattern, and the 3D vehicle model and outputs an image as close as possible to the one rendered by the simulator.",
+        "If we jointly consider the object detector and the imaging procedure of the simulator as a whole black box, it is easier to learn a function to approximate this black box\u2019s behavior than to train the image generation neural network.",
+        "It is straightforward to generate a large training set for the clone network by randomizing the camouflages and transformations and \u201clabeling\u201d the resulting images with the detection scores.",
+        "The camouflage pattern, along with the detection scores are added to the training set for learning the clone network V\u03b8(c, t).",
+        "Where C is the collection of all camouflages in the training set for learning the clone network V\u03b8(c, t), and s := Vt(c) is the detection score corresponding to the camouflage c and the transformation t.",
+        "Since the primary objective of this paper is to learn camouflage patterns that deceive vehicle detectors, we introduce two baseline camouflage patterns in the experiments: 6 most popular car colors and 800 random camouflages in different resolutions.",
+        "In addition to the main comparison results, we test the transferability of the learned camouflage across different car models, environments, camera positions, and object detectors.",
+        "After we obtain these camouflages and the corresponding detection scores, we use those with proper resolutions to initialize the training set for the clone network V\u03b8(c, t).",
+        "The two baselines partially resolve the concern one might have that the learned camouflage successfully attacks the detector not because it exploits the CNN\u2019s structural weakness, but because it takes advantage of the domain gap between the real data used to train the detector and our simulated data used to test the detector.",
+        "Though random camouflages are visually very different from conventional car paintings, the Mask R-CNN detector is still able to detect most of them.",
+        "Our learned camouflage reduces the precision by around 30% over baseline colors in both training and testing scenes in the urban environment.",
+        "Appendices A to D report the transferabilities of the learned camouflage across different environments, vehicles, camera viewing angles, and distances from the camera to the object.",
+        "We plan to look into possible ways to white-box the entire process so as to propose a more effective camouflage"
+    ],
+    "headline": "We found that our optimization problem is time-consuming, noisy (see Sec",
+    "reference_links": [
+        {
+            "id": "Abdulla_2017_a",
+            "entry": "Waleed Abdulla. Mask r-cnn for object detection and instance segmentation on keras and tensorflow. https://github.com/matterport/Mask_RCNN, 2017.",
+            "url": "https://github.com/matterport/Mask_RCNN"
+        },
+        {
+            "id": "Akhtar_2018_a",
+            "entry": "Naveed Akhtar and Ajmal Mian. Threat of adversarial attacks on deep learning in computer vision: A survey. arXiv preprint arXiv:1801.00553, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.00553"
+        },
+        {
+            "id": "Arnab_et+al_2018_a",
+            "entry": "Anurag Arnab, Ondrej Miksik, and Philip H. S. Torr. On the robustness of semantic segmentation models to adversarial attacks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arnab%2C%20Anurag%20Miksik%2C%20Ondrej%20Torr%2C%20Philip%20H.S.%20On%20the%20robustness%20of%20semantic%20segmentation%20models%20to%20adversarial%20attacks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arnab%2C%20Anurag%20Miksik%2C%20Ondrej%20Torr%2C%20Philip%20H.S.%20On%20the%20robustness%20of%20semantic%20segmentation%20models%20to%20adversarial%20attacks%202018"
+        },
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. In Proceedings of the 35th International Conference on Machine Learning, July 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018-07"
+        },
+        {
+            "id": "Athalye_et+al_0000_a",
+            "entry": "Anish Athalye, Logan Engstrom, Andrew Ilyas, and Kevin Kwok. Synthesizing robust adversarial examples. In Proceedings of the 35th International Conference on Machine Learning, volume 80, pp. 284\u2013293, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Engstrom%2C%20Logan%20Ilyas%2C%20Andrew%20Kwok%2C%20Kevin%20Synthesizing%20robust%20adversarial%20examples",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Engstrom%2C%20Logan%20Ilyas%2C%20Andrew%20Kwok%2C%20Kevin%20Synthesizing%20robust%20adversarial%20examples"
+        },
+        {
+            "id": "Axalta_2017_a",
+            "entry": "Axalta. Global automotive 2017 color popularity report, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Axalta%20Global%20automotive%202017%20color%20popularity%20report%202017"
+        },
+        {
+            "id": "Bousmalis_et+al_2017_a",
+            "entry": "Konstantinos Bousmalis, Alex Irpan, Paul Wohlhart, Yunfei Bai, Matthew Kelcey, Mrinal Kalakrishnan, Laura Downs, Julian Ibarz, Peter Pastor, Kurt Konolige, et al. Using simulation and domain adaptation to improve efficiency of deep robotic grasping. arXiv preprint arXiv:1709.07857, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07857"
+        },
+        {
+            "id": "Brown_et+al_2017_a",
+            "entry": "Tom B Brown, Dandelion Mane, Aurko Roy, Mart\u0131n Abadi, and Justin Gilmer. Adversarial patch. arXiv preprint arXiv:1712.09665, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.09665"
+        },
+        {
+            "id": "Carlini_2018_a",
+            "entry": "Nicholas Carlini and David Wagner. Audio adversarial examples: Targeted attacks on speech-totext. arXiv preprint arXiv:1801.01944, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01944"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Hongge Chen, Huan Zhang, Pin-Yu Chen, Jinfeng Yi, and Cho-Jui Hsieh. Attacking visual language grounding with adversarial examples: A case study on neural image captioning. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics, volume 1, pp. 2587\u2013 2597, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Hongge%20Zhang%2C%20Huan%20Chen%2C%20Pin-Yu%20Yi%2C%20Jinfeng%20Attacking%20visual%20language%20grounding%20with%20adversarial%20examples%3A%20A%20case%20study%20on%20neural%20image%20captioning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Hongge%20Zhang%2C%20Huan%20Chen%2C%20Pin-Yu%20Yi%2C%20Jinfeng%20Attacking%20visual%20language%20grounding%20with%20adversarial%20examples%3A%20A%20case%20study%20on%20neural%20image%20captioning%202018"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Pin-Yu Chen, Huan Zhang, Yash Sharma, Jinfeng Yi, and Cho-Jui Hsieh. Zoo: Zeroth order optimization based black-box attacks to deep neural networks without training substitute models. In Proceedings of the 10th ACM Workshop on Artificial Intelligence and Security, pp. 15\u201326. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Pin-Yu%20Zhang%2C%20Huan%20Sharma%2C%20Yash%20Yi%2C%20Jinfeng%20Zoo%3A%20Zeroth%20order%20optimization%20based%20black-box%20attacks%20to%20deep%20neural%20networks%20without%20training%20substitute%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Pin-Yu%20Zhang%2C%20Huan%20Sharma%2C%20Yash%20Yi%2C%20Jinfeng%20Zoo%3A%20Zeroth%20order%20optimization%20based%20black-box%20attacks%20to%20deep%20neural%20networks%20without%20training%20substitute%20models%202017"
+        },
+        {
+            "id": "Chen_et+al_0000_a",
+            "entry": "Shang-Tse Chen, Cory Cornelius, Jason Martin, and Duen Horng Chau. Shapeshifter: Robust physical adversarial attack on faster r-cnn object detector. arXiv preprint arXiv:1804.05810, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.05810"
+        },
+        {
+            "id": "Downtown_2017_a",
+            "entry": "DownTown, 2017. URL https://www.unrealengine.com/marketplace/downtown.",
+            "url": "https://www.unrealengine.com/marketplace/downtown"
+        },
+        {
+            "id": "Everingham_et+al_2015_a",
+            "entry": "M. Everingham, S. M. A. Eslami, L. Van Gool, C. K. I. Williams, J. Winn, and A. Zisserman. The pascal visual object classes challenge: A retrospective. International Journal of Computer Vision, 111(1):98\u2013136, January 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Everingham%2C%20M.%20Eslami%2C%20S.M.A.%20Gool%2C%20L.Van%20Williams%2C%20C.K.I.%20The%20pascal%20visual%20object%20classes%20challenge%3A%20A%20retrospective%202015-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Everingham%2C%20M.%20Eslami%2C%20S.M.A.%20Gool%2C%20L.Van%20Williams%2C%20C.K.I.%20The%20pascal%20visual%20object%20classes%20challenge%3A%20A%20retrospective%202015-01"
+        },
+        {
+            "id": "Eykholt_et+al_2018_a",
+            "entry": "Kevin Eykholt, Ivan Evtimov, Earlence Fernandes, Bo Li, Amir Rahmati, Florian Tramer, Atul Prakash, Tadayoshi Kohno, and Dawn Song. Physical adversarial examples for object detectors. In 12th USENIX Workshop on Offensive Technologies (WOOT 18), Baltimore, MD, 2018a. USENIX Association. URL https://www.usenix.org/conference/woot18/presentation/eykholt.",
+            "url": "https://www.usenix.org/conference/woot18/presentation/eykholt",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eykholt%2C%20Kevin%20Evtimov%2C%20Ivan%20Fernandes%2C%20Earlence%20Li%2C%20Bo%20Physical%20adversarial%20examples%20for%20object%20detectors%202018"
+        },
+        {
+            "id": "Eykholt_et+al_2018_b",
+            "entry": "Kevin Eykholt, Ivan Evtimov, Earlence Fernandes, Bo Li, Amir Rahmati, Chaowei Xiao, Atul Prakash, Tadayoshi Kohno, and Dawn Song. Robust physical-world attacks on deep learning visual classification. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 1625\u20131634, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eykholt%2C%20Kevin%20Evtimov%2C%20Ivan%20Fernandes%2C%20Earlence%20Li%2C%20Bo%20Robust%20physical-world%20attacks%20on%20deep%20learning%20visual%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eykholt%2C%20Kevin%20Evtimov%2C%20Ivan%20Fernandes%2C%20Earlence%20Li%2C%20Bo%20Robust%20physical-world%20attacks%20on%20deep%20learning%20visual%20classification%202018"
+        },
+        {
+            "id": "Gaidon_et+al_2016_a",
+            "entry": "Adrien Gaidon, Qiao Wang, Yohann Cabon, and Eleonora Vig. Virtual worlds as proxy for multiobject tracking analysis. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 4340\u20134349, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gaidon%2C%20Adrien%20Wang%2C%20Qiao%20Cabon%2C%20Yohann%20Vig%2C%20Eleonora%20Virtual%20worlds%20as%20proxy%20for%20multiobject%20tracking%20analysis%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gaidon%2C%20Adrien%20Wang%2C%20Qiao%20Cabon%2C%20Yohann%20Vig%2C%20Eleonora%20Virtual%20worlds%20as%20proxy%20for%20multiobject%20tracking%20analysis%202016"
+        },
+        {
+            "id": "Geiger_et+al_2012_a",
+            "entry": "Andreas Geiger, Philip Lenz, and Raquel Urtasun. Are we ready for autonomous driving? the kitti vision benchmark suite. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Geiger%2C%20Andreas%20Lenz%2C%20Philip%20Urtasun%2C%20Raquel%20Are%20we%20ready%20for%20autonomous%20driving%3F%20the%20kitti%20vision%20benchmark%20suite%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Geiger%2C%20Andreas%20Lenz%2C%20Philip%20Urtasun%2C%20Raquel%20Are%20we%20ready%20for%20autonomous%20driving%3F%20the%20kitti%20vision%20benchmark%20suite%202012"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Kaiming He, Georgia Gkioxari, Piotr Dollar, and Ross Girshick. Mask r-cnn. In International Conference on Computer Vision, pp. 2980\u20132988. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Dollar%20and%20Ross%20Girshick%20Mask%20rcnn%20In%20International%20Conference%20on%20Computer%20Vision%20pp%2029802988%20IEEE%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Dollar%20and%20Ross%20Girshick%20Mask%20rcnn%20In%20International%20Conference%20on%20Computer%20Vision%20pp%2029802988%20IEEE%202017"
+        },
+        {
+            "id": "Huval_et+al_2015_a",
+            "entry": "Brody Huval, Tao Wang, Sameep Tandon, Jeff Kiske, Will Song, Joel Pazhayampallil, Mykhaylo Andriluka, Pranav Rajpurkar, Toki Migimatsu, Royce Cheng-Yue, Fernando Mujica, Adam Coates, and Andrew Y. Ng. An empirical evaluation of deep learning on highway driving. arXiv preprint arXiv:1504.01716, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1504.01716"
+        },
+        {
+            "id": "Kurakin_et+al_2016_a",
+            "entry": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial examples in the physical world. arXiv preprint arXiv:1607.02533, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.02533"
+        },
+        {
+            "id": "Landscape_2014_a",
+            "entry": "Landscape Mountains, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Landscape%20Mountains%202014"
+        },
+        {
+            "id": "URL_0000_a",
+            "entry": "URL https://www.unrealengine.com/blog/",
+            "url": "https://www.unrealengine.com/blog/"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Yanpei Liu, Xinyun Chen, Chang Liu, and Dawn Song. Delving into transferable adversarial examples and black-box attacks. In Proceedings of 5th International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Yanpei%20Chen%2C%20Xinyun%20Liu%2C%20Chang%20Song%2C%20Dawn%20Delving%20into%20transferable%20adversarial%20examples%20and%20black-box%20attacks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Yanpei%20Chen%2C%20Xinyun%20Liu%2C%20Chang%20Song%2C%20Dawn%20Delving%20into%20transferable%20adversarial%20examples%20and%20black-box%20attacks%202017"
+        },
+        {
+            "id": "Lu_et+al_0000_a",
+            "entry": "Jiajun Lu, Hussein Sibai, and Evan Fabry. Adversarial examples that fool detectors. arXiv preprint arXiv:1712.02494, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.02494"
+        },
+        {
+            "id": "Lu_et+al_0000_b",
+            "entry": "Jiajun Lu, Hussein Sibai, Evan Fabry, and David Forsyth. No need to worry about adversarial examples in object detection in autonomous vehicles. arXiv preprint arXiv:1707.03501, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03501"
+        },
+        {
+            "id": "Lu_et+al_0000_c",
+            "entry": "Jiajun Lu, Hussein Sibai, Evan Fabry, and David Forsyth. Standard detectors aren\u2019t (currently) fooled by physical adversarial stop signs. arXiv preprint arXiv:1710.03337, 2017c.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.03337"
+        },
+        {
+            "id": "Moosavi-Dezfooli_et+al_2017_a",
+            "entry": "Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, Omar Fawzi, and Pascal Frossard. Universal adversarial perturbations. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 1765\u20131773, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Universal%20adversarial%20perturbations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Universal%20adversarial%20perturbations%202017"
+        },
+        {
+            "id": "Nair_et+al_2018_a",
+            "entry": "Malavika Nair, Mathew Gillroy, Neethu Jose, and Jasmy Davies. i-surveillance crime monitoring and prevention using neural networks. International Research Journal of Engineering and Technology, 5, March 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Malavika%20Gillroy%2C%20Mathew%20Jose%2C%20Neethu%20Davies%2C%20Jasmy%20i-surveillance%20crime%20monitoring%20and%20prevention%20using%20neural%20networks%202018-03-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Malavika%20Gillroy%2C%20Mathew%20Jose%2C%20Neethu%20Davies%2C%20Jasmy%20i-surveillance%20crime%20monitoring%20and%20prevention%20using%20neural%20networks%202018-03-05"
+        },
+        {
+            "id": "Nguyen-Phuoc_et+al_2018_a",
+            "entry": "Thu Nguyen-Phuoc, Chuan Li, Stephen Balaban, and Yongliang Yang. Rendernet: A deep convolutional network for differentiable rendering from 3d shapes. arXiv preprint arXiv:1806.06575, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.06575"
+        },
+        {
+            "id": "Papernot_et+al_2017_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Ian Goodfellow, Somesh Jha, Z Berkay Celik, and Ananthram Swami. Practical black-box attacks against machine learning. In Proceedings of the 2017 ACM on Asia Conference on Computer and Communications Security, pp. 506\u2013519. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Goodfellow%2C%20Ian%20Somesh%20Jha%2C%20Z.Berkay%20Celik%20Practical%20black-box%20attacks%20against%20machine%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Goodfellow%2C%20Ian%20Somesh%20Jha%2C%20Z.Berkay%20Celik%20Practical%20black-box%20attacks%20against%20machine%20learning%202017"
+        },
+        {
+            "id": "Pellerin_2017_a",
+            "entry": "Cheryl Pellerin. Project maven to deploy computer algorithms to war zone by year\u2019s end, July 2017. U.S. Department of Defense.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pellerin%2C%20Cheryl%20Project%20maven%20to%20deploy%20computer%20algorithms%20to%20war%20zone%20by%20year%E2%80%99s%20end%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pellerin%2C%20Cheryl%20Project%20maven%20to%20deploy%20computer%20algorithms%20to%20war%20zone%20by%20year%E2%80%99s%20end%202017-07"
+        },
+        {
+            "id": "Redmon_2017_a",
+            "entry": "Joseph Redmon and Ali Farhadi. Yolo9000: Better, faster, stronger. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 6517\u20136525. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joseph%20Redmon%20and%20Ali%20Farhadi%20Yolo9000%20Better%20faster%20stronger%20In%20Proceedings%20of%20the%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20pp%2065176525%20IEEE%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Joseph%20Redmon%20and%20Ali%20Farhadi%20Yolo9000%20Better%20faster%20stronger%20In%20Proceedings%20of%20the%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20pp%2065176525%20IEEE%202017"
+        },
+        {
+            "id": "Redmon_2018_a",
+            "entry": "Joseph Redmon and Ali Farhadi. Yolov3: An incremental improvement. arXiv preprint arXiv:1804.02767, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.02767"
+        },
+        {
+            "id": "Ren_et+al_2015_a",
+            "entry": "Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun. Faster r-cnn: Towards real-time object detection with region proposal networks. In Advances in neural information processing systems, pp. 91\u201399, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20r-cnn%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20r-cnn%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015"
+        },
+        {
+            "id": "Richter_et+al_2017_a",
+            "entry": "Stephan R Richter, Zeeshan Hayder, and Vladlen Koltun. Playing for benchmarks. In International Conference on Computer Vision, volume 2, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Richter%2C%20Stephan%20R.%20Hayder%2C%20Zeeshan%20Koltun%2C%20Vladlen%20Playing%20for%20benchmarks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Richter%2C%20Stephan%20R.%20Hayder%2C%20Zeeshan%20Koltun%2C%20Vladlen%20Playing%20for%20benchmarks%202017"
+        },
+        {
+            "id": "Ros_et+al_2016_a",
+            "entry": "German Ros, Laura Sellart, Joanna Materzynska, David Vazquez, and Antonio M Lopez. The synthia dataset: A large collection of synthetic images for semantic segmentation of urban scenes. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 3234\u2013 3243, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ros%2C%20German%20Sellart%2C%20Laura%20Materzynska%2C%20Joanna%20Vazquez%2C%20David%20The%20synthia%20dataset%3A%20A%20large%20collection%20of%20synthetic%20images%20for%20semantic%20segmentation%20of%20urban%20scenes%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ros%2C%20German%20Sellart%2C%20Laura%20Materzynska%2C%20Joanna%20Vazquez%2C%20David%20The%20synthia%20dataset%3A%20A%20large%20collection%20of%20synthetic%20images%20for%20semantic%20segmentation%20of%20urban%20scenes%202016"
+        },
+        {
+            "id": "Selvaraju_et+al_2017_a",
+            "entry": "Ramprasaath R Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna Vedantam, Devi Parikh, Dhruv Batra, et al. Grad-cam: Visual explanations from deep networks via gradient-based localization. In International Conference on Computer Vision, pp. 618\u2013626, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Selvaraju%2C%20Ramprasaath%20R.%20Cogswell%2C%20Michael%20Das%2C%20Abhishek%20Vedantam%2C%20Ramakrishna%20Grad-cam%3A%20Visual%20explanations%20from%20deep%20networks%20via%20gradient-based%20localization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Selvaraju%2C%20Ramprasaath%20R.%20Cogswell%2C%20Michael%20Das%2C%20Abhishek%20Vedantam%2C%20Ramakrishna%20Grad-cam%3A%20Visual%20explanations%20from%20deep%20networks%20via%20gradient-based%20localization%202017"
+        },
+        {
+            "id": "Shah_et+al_2017_a",
+            "entry": "Shital Shah, Debadeepta Dey, Chris Lovett, and Ashish Kapoor. Airsim: High-fidelity visual and physical simulation for autonomous vehicles. In Field and Service Robotics, 2017. URL https://arxiv.org/abs/1705.05065.",
+            "url": "https://arxiv.org/abs/1705.05065",
+            "arxiv_url": "https://arxiv.org/pdf/1705.05065"
+        },
+        {
+            "id": "Simonyan_et+al_2013_a",
+            "entry": "Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside convolutional networks: Visualising image classification models and saliency maps. arXiv preprint arXiv:1312.6034, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6034"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tremblay_et+al_2018_a",
+            "entry": "Jonathan Tremblay, Aayush Prakash, David Acuna, Mark Brophy, Varun Jampani, Cem Anil, Thang To, Eric Cameracci, Shaad Boochoon, and Stan Birchfield. Training deep networks with synthetic data: Bridging the reality gap by domain randomization. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops, pp. 969\u2013977, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tremblay%2C%20Jonathan%20Prakash%2C%20Aayush%20Acuna%2C%20David%20Brophy%2C%20Mark%20Training%20deep%20networks%20with%20synthetic%20data%3A%20Bridging%20the%20reality%20gap%20by%20domain%20randomization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tremblay%2C%20Jonathan%20Prakash%2C%20Aayush%20Acuna%2C%20David%20Brophy%2C%20Mark%20Training%20deep%20networks%20with%20synthetic%20data%3A%20Bridging%20the%20reality%20gap%20by%20domain%20randomization%202018"
+        },
+        {
+            "id": "Unreal_1998_a",
+            "entry": "Unreal, 1998. URL https://www.unrealengine.com. Gul Varol, Javier Romero, Xavier Martin, Naureen Mahmood, Michael J Black, Ivan Laptev, and",
+            "url": "https://www.unrealengine.com"
+        },
+        {
+            "id": "Schmid_2017_a",
+            "entry": "Cordelia Schmid. Learning from synthetic humans. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 4627\u20134635. IEEE, 2017. X11 Color Names. URL https://cgit.freedesktop.org/xorg/app/rgb/tree/rgb.txt. Cihang Xie, Jianyu Wang, Zhishuai Zhang, Yuyin Zhou, Lingxi Xie, and Alan Yuille. Adversarial examples for semantic segmentation and object detection. In International Conference on Computer Vision. IEEE, 2017. Fangyi Zhang, Jurgen Leitner, Michael Milford, and Peter Corke. Sim-to-real transfer of visuomotor policies for reaching in clutter: Domain randomization and adaptation with modular networks.arXiv preprint arXiv:1709.05746, 2017.",
+            "url": "https://cgit.freedesktop.org/xorg/app/rgb/tree/rgb.txt",
+            "arxiv_url": "https://arxiv.org/pdf/1709.05746"
+        }
+    ]
+}

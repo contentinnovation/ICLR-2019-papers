@@ -1,0 +1,266 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Bhargav Kanuparthi\u22171, Devansh Arpit\u22171, Giancarlo Kerg1, Nan Rosemary Ke1, Ioannis Mitliagkas1 & Yoshua Bengio1,2 1Montreal Institute for Learning Algorithms (MILA), Canada 2CIFAR Senior Fellow *Authors contributed equally {bhargavkanuparthi25,devansharpit}@gmail.com",
+        "author": "Recurrent Neural Networks (RNNs) (Rumelhart et al. (1986); Elman (1990)) are a class of neural network architectures used for modeling sequential data. Compared to feed-forward networks, the loss landscape of recurrent neural networks are much harder to optimize. Among others, this difficulty may be attributed to the exploding and vanishing gradient problem (Hochreiter, 1991; Bengio et al., 1994; Pascanu et al., 2013) which is more severe for recurrent networks and arises due to the highly ill-conditioned nature of their loss surface. This problem becomes more evident in tasks where training data has dependencies that exist over long time scales",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ryf7ioRqFX"
+        },
+        "abstract": "Recurrent neural networks are known for their notorious exploding and vanishing gradient problem (EVGP). This problem becomes more evident in tasks where the information needed to correctly solve them exist over long time scales, because EVGP prevents important gradient components from being back-propagated adequately over a large number of steps. We introduce a simple stochastic algorithm (h-detach) that is specific to LSTM optimization and targeted towards addressing this problem. Specifically, we show that when the LSTM weights are large, the gradient components through the linear path (cell state) in the LSTM computational graph get suppressed. Based on the hypothesis that these components carry information about long term dependencies (which we show empirically), their suppression can prevent LSTMs from capturing them. Our algorithm1 prevents gradients flowing through this path from getting suppressed, thus allowing the LSTM to capture such dependencies better. We show significant improvements over vanilla LSTM gradient based training in terms of convergence speed, robustness to seed and learning rate, and generalization using our modification of LSTM gradient on various benchmark datasets."
+    },
+    "keywords": [
+        {
+            "term": "gated recurrent unit",
+            "url": "https://en.wikipedia.org/wiki/gated_recurrent_unit"
+        },
+        {
+            "term": "Recurrent Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Recurrent_Neural_Network"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "EVGP": "exploding and vanishing gradient problem",
+        "RNNs": "Recurrent Neural Networks",
+        "BPTT": "back-propagation through time",
+        "GRU": "gated recurrent unit"
+    },
+    "highlights": [
+        "Recurrent Neural Networks (RNNs) (Rumelhart et al (1986); <a class=\"ref-link\" id=\"cElman_1990_a\" href=\"#rElman_1990_a\"><a class=\"ref-link\" id=\"cElman_1990_a\" href=\"#rElman_1990_a\">Elman (1990</a></a>)) are a class of neural network architectures used for modeling sequential data",
+        "We show that the gradient of the loss function resulting from the LSTM forward pass shown in algorithm 1 has the property that the gradient components arising from Bt get dampened",
+        "We proposed a simple stochastic algorithm called h-detach aimed at improving LSTM performance on tasks that involve long term dependencies",
+        "We provided a theoretical understanding of the method using a novel analysis of the back-propagation equations of the LSTM architecture",
+        "We note that our method reduces the amount of computation needed during training compared to vanilla LSTM training",
+        "We empirically showed that h-detach is robust to initialization, makes the convergence of LSTM faster, and/or improves generalization compared to vanilla LSTM on various benchmark datasets"
+    ],
+    "key_statements": [
+        "Recurrent Neural Networks (RNNs) (Rumelhart et al (1986); <a class=\"ref-link\" id=\"cElman_1990_a\" href=\"#rElman_1990_a\">Elman (1990</a>)) are a class of neural network architectures used for modeling sequential data",
+        "Compared to feed-forward networks, the loss landscape of recurrent neural networks are much harder to optimize. This difficulty may be attributed to the exploding and vanishing gradient problem (<a class=\"ref-link\" id=\"cHochreiter_1991_a\" href=\"#rHochreiter_1991_a\">Hochreiter, 1991</a>; <a class=\"ref-link\" id=\"cBengio_et+al_1994_a\" href=\"#rBengio_et+al_1994_a\">Bengio et al, 1994</a>; <a class=\"ref-link\" id=\"cPascanu_et+al_2013_a\" href=\"#rPascanu_et+al_2013_a\">Pascanu et al, 2013</a>) which is more severe for recurrent networks and arises due to the highly ill-conditioned nature of their loss surface",
+        "Compared to feed-forward networks, the loss landscape of recurrent neural networks are much harder to optimize. This difficulty may be attributed to the exploding and vanishing gradient problem (<a class=\"ref-link\" id=\"cHochreiter_1991_a\" href=\"#rHochreiter_1991_a\">Hochreiter, 1991</a>; <a class=\"ref-link\" id=\"cBengio_et+al_1994_a\" href=\"#rBengio_et+al_1994_a\">Bengio et al, 1994</a>; <a class=\"ref-link\" id=\"cPascanu_et+al_2013_a\" href=\"#rPascanu_et+al_2013_a\">Pascanu et al, 2013</a>) which is more severe for recurrent networks and arises due to the highly ill-conditioned nature of their loss surface. This problem becomes more evident in tasks where training data has dependencies that exist over long time scales",
+        "We introduce a simple stochastic algorithm that in expectation scales the individual gradient components, which prevents the gradients through the linear temporal path from being suppressed",
+        "We show that the gradient of the loss function resulting from the LSTM forward pass shown in algorithm 1 has the property that the gradient components arising from Bt get dampened",
+        "We note that when training LSTMs with h-detach, we reduce the amount of computation needed. This is because by stochastically blocking the gradient from flowing through the ht hidden states of LSTM, less computation needs to be done during back-propagation through time (BPTT).\n3.1",
+        "The only way to solve this task is for the network to capture the long term dependency between inputs and targets which requires gradient components carrying this information to flow through many time steps",
+        "Having shown the benefit of h-detach in terms of training dynamics, we extend the challenge of the copying task by evaluating how well an LSTM trained on data with a certain time delay generalizes when a larger time delay is used during inference",
+        "In the pMNIST task, we find that training LSTM with h-detach gives a test accuracy of 92.3% which is an improvement over the regular LSTM training which reaches an accuracy of 91.1%",
+        "We believe the reason why our method leads to improvements on this task is that the gradient components from the cell state path are important for this task and our theoretical analysis shows that h-detach prevents these components from getting suppressed compared with the gradient components from the other paths",
+        "We proposed a simple stochastic algorithm called h-detach aimed at improving LSTM performance on tasks that involve long term dependencies",
+        "We provided a theoretical understanding of the method using a novel analysis of the back-propagation equations of the LSTM architecture",
+        "We note that our method reduces the amount of computation needed during training compared to vanilla LSTM training",
+        "We empirically showed that h-detach is robust to initialization, makes the convergence of LSTM faster, and/or improves generalization compared to vanilla LSTM on various benchmark datasets"
+    ],
+    "summary": [
+        "Recurrent Neural Networks (RNNs) (Rumelhart et al (1986); <a class=\"ref-link\" id=\"cElman_1990_a\" href=\"#rElman_1990_a\"><a class=\"ref-link\" id=\"cElman_1990_a\" href=\"#rElman_1990_a\">Elman (1990</a></a>)) are a class of neural network architectures used for modeling sequential data.",
+        "The goal of this paper is to introduce a simple trick that is specific to LSTM optimization and improves its training on tasks that involve long term dependencies.",
+        "We recall that the linear recursion in the cell state path was introduced in the LSTM architecture (<a class=\"ref-link\" id=\"cHochreiter_1997_a\" href=\"#rHochreiter_1997_a\">Hochreiter & Schmidhuber, 1997</a>) as an important feature to allow gradients to flow smoothly through time.",
+        "This is because by stochastically blocking the gradient from flowing through the ht hidden states of LSTM, less computation needs to be done during back-propagation through time (BPTT).",
+        "The only way to solve this task is for the network to capture the long term dependency between inputs and targets which requires gradient components carrying this information to flow through many time steps.",
+        "On the sequential MNIST task, both vanilla LSTM and training with h-detach give an accuracy of 98.5%.",
+        "The goal of this experiment is to corroborate our hypothesis that the gradients through the cell state path carry information about long term dependencies.",
+        "We notice in the copying task for T = 100, learning becomes very slow) and does not converge even after 500 epochs, whereas when not detaching the cell state, even the Vanilla LSTM converges in around 150 epochs for most cases for T=100 as shown in the experiments in section 3.1.",
+        "This experiment corroborates our hypothesis that gradients through the cell state contain important components of the gradient signal as blocking them worsens the performance of these models when compared to Vanilla LSTM.",
+        "Very recently, <a class=\"ref-link\" id=\"cKe_et+al_2018_a\" href=\"#rKe_et+al_2018_a\">Ke et al (2018</a>) propose to learn an attention mechanism over past hidden states and sparsely back-propagate through paths with high attention weights in order to capture long term dependencies.",
+        "Our theoretical analysis shows the precise behavior of our method: the effect of h-detach is that it changes the update direction used for descent which prevents the gradients through the cell state path from being suppressed.",
+        "We believe the reason why our method leads to improvements on this task is that the gradient components from the cell state path are important for this task and our theoretical analysis shows that h-detach prevents these components from getting suppressed compared with the gradient components from the other paths.",
+        "We proposed a simple stochastic algorithm called h-detach aimed at improving LSTM performance on tasks that involve long term dependencies.",
+        "We empirically showed that h-detach is robust to initialization, makes the convergence of LSTM faster, and/or improves generalization compared to vanilla LSTM on various benchmark datasets"
+    ],
+    "headline": "We introduce a simple stochastic algorithm that is specific to LSTM optimization and targeted towards addressing this problem",
+    "reference_links": [
+        {
+            "id": "Arjovsky_et+al_2016_a",
+            "entry": "Martin Arjovsky, Amar Shah, and Yoshua Bengio. Unitary evolution recurrent neural networks. In International Conference on Machine Learning, pp. 1120\u20131128, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Shah%2C%20Amar%20Bengio%2C%20Yoshua%20Unitary%20evolution%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjovsky%2C%20Martin%20Shah%2C%20Amar%20Bengio%2C%20Yoshua%20Unitary%20evolution%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Bengio_et+al_1993_a",
+            "entry": "Yoshua Bengio, Paolo Frasconi, and Patrice Simard. The problem of learning long-term dependencies in recurrent networks. In Neural Networks, 1993., IEEE International Conference on, pp. 1183\u20131188. IEEE, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Frasconi%2C%20Paolo%20Simard%2C%20Patrice%20The%20problem%20of%20learning%20long-term%20dependencies%20in%20recurrent%20networks%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Frasconi%2C%20Paolo%20Simard%2C%20Patrice%20The%20problem%20of%20learning%20long-term%20dependencies%20in%20recurrent%20networks%201993"
+        },
+        {
+            "id": "Bengio_et+al_1994_a",
+            "entry": "Yoshua Bengio, Patrice Simard, and Paolo Frasconi. Learning long-term dependencies with gradient descent is difficult. IEEE transactions on neural networks, 5(2):157\u2013166, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Simard%2C%20Patrice%20Frasconi%2C%20Paolo%20Learning%20long-term%20dependencies%20with%20gradient%20descent%20is%20difficult%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Simard%2C%20Patrice%20Frasconi%2C%20Paolo%20Learning%20long-term%20dependencies%20with%20gradient%20descent%20is%20difficult%201994"
+        },
+        {
+            "id": "Chung_et+al_2014_a",
+            "entry": "Junyoung Chung, Caglar Gulcehre, KyungHyun Cho, and Yoshua Bengio. Empirical evaluation of gated recurrent neural networks on sequence modeling. arXiv preprint arXiv:1412.3555, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.3555"
+        },
+        {
+            "id": "Elman_1990_a",
+            "entry": "Jeffrey L Elman. Finding structure in time. Cognitive science, 14(2):179\u2013211, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elman%2C%20Jeffrey%20L.%20Finding%20structure%20in%20time%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elman%2C%20Jeffrey%20L.%20Finding%20structure%20in%20time%201990"
+        },
+        {
+            "id": "Gers_et+al_1999_a",
+            "entry": "Felix A Gers, J\u00fcrgen Schmidhuber, and Fred Cummins. Learning to forget: Continual prediction with lstm. 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gers%2C%20Felix%20A.%20Schmidhuber%2C%20J%C3%BCrgen%20Cummins%2C%20Fred%20Learning%20to%20forget%3A%20Continual%20prediction%20with%20lstm%201999"
+        },
+        {
+            "id": "Hanson_1990_a",
+            "entry": "Stephen Jos\u00e9 Hanson. A stochastic version of the delta rule. Physica D: Nonlinear Phenomena, 42 (1-3):265\u2013272, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hanson%2C%20Stephen%20Jos%C3%A9%20A%20stochastic%20version%20of%20the%20delta%20rule%201990"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. CoRR, abs/1512.03385, 2015. URL http://arxiv.org/abs/1512.03385.",
+            "url": "http://arxiv.org/abs/1512.03385",
+            "arxiv_url": "https://arxiv.org/pdf/1512.03385"
+        },
+        {
+            "id": "Hochreiter_1991_a",
+            "entry": "S Hochreiter. Untersuchungen zu dynamischen neuronalen netzen [in german] diploma thesis. TU M\u00fcnich, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20S.%20Untersuchungen%20zu%20dynamischen%20neuronalen%20netzen%20%5Bin%20german%5D%20diploma%20thesis%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20S.%20Untersuchungen%20zu%20dynamischen%20neuronalen%20netzen%20%5Bin%20german%5D%20diploma%20thesis%201991"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Jing_et+al_2016_a",
+            "entry": "Li Jing, Yichen Shen, Tena Dubcek, John Peurifoy, Scott Skirlo, Yann LeCun, Max Tegmark, and Marin Soljacic. Tunable efficient unitary neural networks (eunn) and their application to rnns. arXiv preprint arXiv:1612.05231, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.05231"
+        },
+        {
+            "id": "Jose_et+al_2017_a",
+            "entry": "Cijo Jose, Moustpaha Cisse, and Francois Fleuret. Kronecker recurrent units. arXiv preprint arXiv:1705.10142, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10142"
+        },
+        {
+            "id": "Karpathy_2015_a",
+            "entry": "Andrej Karpathy and Li Fei-Fei. Deep visual-semantic alignments for generating image descriptions. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 3128\u20133137, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karpathy%2C%20Andrej%20Fei-Fei%2C%20Li%20Deep%20visual-semantic%20alignments%20for%20generating%20image%20descriptions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karpathy%2C%20Andrej%20Fei-Fei%2C%20Li%20Deep%20visual-semantic%20alignments%20for%20generating%20image%20descriptions%202015"
+        },
+        {
+            "id": "Ke_et+al_2018_a",
+            "entry": "Nan Rosemary Ke, Anirudh Goyal ALIAS PARTH GOYAL, Olexa Bilaniuk, Jonathan Binas, Michael C Mozer, Chris Pal, and Yoshua Bengio. Sparse attentive backtracking: Temporal credit assignment through reminding. In Advances in Neural Information Processing Systems, pp. 7651\u2013 7662, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ke%2C%20Nan%20Rosemary%20GOYAL%2C%20Anirudh%20Goyal%20A.L.I.A.S.P.A.R.T.H.%20Bilaniuk%2C%20Olexa%20Binas%2C%20Jonathan%20Sparse%20attentive%20backtracking%3A%20Temporal%20credit%20assignment%20through%20reminding%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ke%2C%20Nan%20Rosemary%20GOYAL%2C%20Anirudh%20Goyal%20A.L.I.A.S.P.A.R.T.H.%20Bilaniuk%2C%20Olexa%20Binas%2C%20Jonathan%20Sparse%20attentive%20backtracking%3A%20Temporal%20credit%20assignment%20through%20reminding%202018"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krueger_et+al_2016_a",
+            "entry": "David Krueger, Tegan Maharaj, J\u00e1nos Kram\u00e1r, Mohammad Pezeshki, Nicolas Ballas, Nan Rosemary Ke, Anirudh Goyal, Yoshua Bengio, Hugo Larochelle, Aaron Courville, et al. Zoneout: Regularizing rnns by randomly preserving hidden activations. arXiv preprint arXiv:1606.01305, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01305"
+        },
+        {
+            "id": "Le_et+al_2015_a",
+            "entry": "Quoc V Le, Navdeep Jaitly, and Geoffrey E Hinton. A simple way to initialize recurrent networks of rectified linear units. arXiv preprint arXiv:1504.00941, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1504.00941"
+        },
+        {
+            "id": "Lecun_2010_a",
+            "entry": "Yann LeCun and Corinna Cortes. MNIST handwritten digit database. 2010. URL http://yann.lecun.com/exdb/mnist/.",
+            "url": "http://yann.lecun.com/exdb/mnist/"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Shuai Li, Wanqing Li, Chris Cook, Ce Zhu, and Yanbo Gao. Independently recurrent neural network (indrnn): Building a longer and deeper rnn. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 5457\u20135466, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Shuai%20Li%2C%20Wanqing%20Cook%2C%20Chris%20Zhu%2C%20Ce%20Independently%20recurrent%20neural%20network%20%28indrnn%29%3A%20Building%20a%20longer%20and%20deeper%20rnn%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Shuai%20Li%2C%20Wanqing%20Cook%2C%20Chris%20Zhu%2C%20Ce%20Independently%20recurrent%20neural%20network%20%28indrnn%29%3A%20Building%20a%20longer%20and%20deeper%20rnn%202018"
+        },
+        {
+            "id": "Lin_et+al_1996_a",
+            "entry": "Tsungnan Lin, Bill G Horne, Peter Tino, and C Lee Giles. Learning long-term dependencies in narx recurrent neural networks. IEEE Transactions on Neural Networks, 7(6):1329\u20131338, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Tsungnan%20Horne%2C%20Bill%20G.%20Tino%2C%20Peter%20Giles%2C%20C.Lee%20Learning%20long-term%20dependencies%20in%20narx%20recurrent%20neural%20networks%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Tsungnan%20Horne%2C%20Bill%20G.%20Tino%2C%20Peter%20Giles%2C%20C.Lee%20Learning%20long-term%20dependencies%20in%20narx%20recurrent%20neural%20networks%201996"
+        },
+        {
+            "id": "Lu_et+al_2017_a",
+            "entry": "Jiasen Lu, Caiming Xiong, Devi Parikh, and Richard Socher. Knowing when to look: Adaptive attention via a visual sentinel for image captioning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), volume 6, pp. 2, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lu%2C%20Jiasen%20Xiong%2C%20Caiming%20Parikh%2C%20Devi%20Socher%2C%20Richard%20Knowing%20when%20to%20look%3A%20Adaptive%20attention%20via%20a%20visual%20sentinel%20for%20image%20captioning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lu%2C%20Jiasen%20Xiong%2C%20Caiming%20Parikh%2C%20Devi%20Socher%2C%20Richard%20Knowing%20when%20to%20look%3A%20Adaptive%20attention%20via%20a%20visual%20sentinel%20for%20image%20captioning%202017"
+        },
+        {
+            "id": "Martens_0000_a",
+            "entry": "James Martens and Ilya Sutskever. Learning recurrent neural networks with hessian-free optimization. In Proceedings of the 28th International Conference on Machine Learning (ICML-11), pp. 1033\u20131040.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Sutskever%2C%20Ilya%20Learning%20recurrent%20neural%20networks%20with%20hessian-free%20optimization",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Sutskever%2C%20Ilya%20Learning%20recurrent%20neural%20networks%20with%20hessian-free%20optimization"
+        },
+        {
+            "id": "Mhammedi_et+al_2016_a",
+            "entry": "Zakaria Mhammedi, Andrew Hellicar, Ashfaqur Rahman, and James Bailey. Efficient orthogonal parametrisation of recurrent neural networks using householder reflections. arXiv preprint arXiv:1612.00188, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.00188"
+        },
+        {
+            "id": "Pascanu_et+al_2013_a",
+            "entry": "Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. On the difficulty of training recurrent neural networks. In International Conference on Machine Learning, pp. 1310\u20131318, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Rumelhart_1986_a",
+            "entry": "David E Rumelhart, Geoffrey E Hinton, and Ronald J Williams. Learning representations by backpropagating errors. nature, 323(6088):533, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=David%20E%20Rumelhart%20Geoffrey%20E%20Hinton%20and%20Ronald%20J%20Williams%20Learning%20representations%20by%20backpropagating%20errors%20nature%203236088533%201986",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=David%20E%20Rumelhart%20Geoffrey%20E%20Hinton%20and%20Ronald%20J%20Williams%20Learning%20representations%20by%20backpropagating%20errors%20nature%203236088533%201986"
+        },
+        {
+            "id": "Serdyuk_et+al_2018_a",
+            "entry": "Dmitriy Serdyuk, Nan Rosemary Ke, Alessandro Sordoni, Adam Trischler, Chris Pal, and Yoshua Bengio. Twin networks: Matching the future for sequence generation. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Serdyuk%2C%20Dmitriy%20Ke%2C%20Nan%20Rosemary%20Sordoni%2C%20Alessandro%20Trischler%2C%20Adam%20Twin%20networks%3A%20Matching%20the%20future%20for%20sequence%20generation%202018"
+        },
+        {
+            "id": "Tomas_2012_a",
+            "entry": "Mikolov Tomas. Statistical language models based on neural networks. Brno University of Technology, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tomas%2C%20Mikolov%20Statistical%20language%20models%20based%20on%20neural%20networks%202012"
+        },
+        {
+            "id": "Trinh_et+al_2018_a",
+            "entry": "Trieu H Trinh, Andrew M Dai, Thang Luong, and Quoc V Le. Learning longer-term dependencies in rnns with auxiliary losses. arXiv preprint arXiv:1803.00144, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00144"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan. Show and tell: A neural image caption generator. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 3156\u20133164, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015"
+        },
+        {
+            "id": "Warde-Farley_et+al_2013_a",
+            "entry": "David Warde-Farley, Ian J Goodfellow, Aaron Courville, and Yoshua Bengio. An empirical analysis of dropout in piecewise linear networks. arXiv preprint arXiv:1312.6197, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6197"
+        },
+        {
+            "id": "Weiss_et+al_2018_a",
+            "entry": "Gail Weiss, Yoav Goldberg, and Eran Yahav. On the practical computational power of finite precision rnns for language recognition. arXiv preprint arXiv:1805.04908, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.04908"
+        },
+        {
+            "id": "Wisdom_et+al_2016_a",
+            "entry": "Scott Wisdom, Thomas Powers, John Hershey, Jonathan Le Roux, and Les Atlas. Full-capacity unitary recurrent neural networks. In Advances in Neural Information Processing Systems, pp. 4880\u20134888, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wisdom%2C%20Scott%20Powers%2C%20Thomas%20Hershey%2C%20John%20Jonathan%20Le%20Roux%2C%20and%20Les%20Atlas.%20Full-capacity%20unitary%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wisdom%2C%20Scott%20Powers%2C%20Thomas%20Hershey%2C%20John%20Jonathan%20Le%20Roux%2C%20and%20Les%20Atlas.%20Full-capacity%20unitary%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Kelvin%20Xu%20Jimmy%20Ba%20Ryan%20Kiros%20Kyunghyun%20Cho%20Aaron%20Courville%20Ruslan%20Salakhudinov%20Rich"
+        },
+        {
+            "id": "Zemel_2015_a",
+            "entry": "Zemel, and Yoshua Bengio. Show, attend and tell: Neural image caption generation with visual attention. In International conference on machine learning, pp. 2048\u20132057, 2015. Ting Yao, Yingwei Pan, Yehao Li, Zhaofan Qiu, and Tao Mei. Boosting image captioning with attributes. In IEEE International Conference on Computer Vision, ICCV, pp. 22\u201329, 2017. Quanzeng You, Hailin Jin, Zhaowen Wang, Chen Fang, and Jiebo Luo. Image captioning with semantic attention. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 4651\u20134659, 2016. Jiong Zhang, Yibo Lin, Zhao Song, and Inderjit S Dhillon. Learning long term dependencies via fourier recurrent units. arXiv preprint arXiv:1803.06585, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06585"
+        }
+    ]
+}

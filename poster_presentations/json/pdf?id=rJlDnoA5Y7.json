@@ -1,0 +1,344 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "VON MISES-FISHER LOSS FOR TRAINING SEQUENCE TO SEQUENCE MODELS WITH CONTINUOUS OUTPUTS",
+        "author": "Sachin Kumar & Yulia Tsvetkov Language Technologies Institute Carnegie Mellon University {sachink,ytsvetko}@cs.cmu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJlDnoA5Y7"
+        },
+        "abstract": "The Softmax function is used in the final layer of nearly all existing sequence-tosequence models for language generation. However, it is usually the slowest layer to compute which limits the vocabulary size to a subset of most frequent types; and it has a large memory footprint. We propose a general technique for replacing the softmax layer with a continuous embedding layer. Our primary innovations are a novel probabilistic loss, and a training and inference procedure in which we generate a probability distribution over pre-trained word embeddings, instead of a multinomial distribution over the vocabulary obtained via softmax. We evaluate this new class of sequence-to-sequence models with continuous outputs on the task of neural machine translation. We show that our models train up to 2.5x faster than the state-of-the-art models while achieving comparable translation quality. These models are capable of handling very large vocabularies without compromising on translation quality or speed. They also produce more meaningful errors than the softmax-based models, as these errors typically lie in a subspace of the vector space of the reference translations1."
+    },
+    "keywords": [
+        {
+            "term": "word embedding",
+            "url": "https://en.wikipedia.org/wiki/word_embedding"
+        },
+        {
+            "term": "softmax function",
+            "url": "https://en.wikipedia.org/wiki/softmax_function"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "language generation",
+            "url": "https://en.wikipedia.org/wiki/language_generation"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "BPE": "Byte Pair Encoding",
+        "vMF": "von Mises-Fisher"
+    },
+    "highlights": [
+        "Due to the power law distribution of word frequencies, rare words are extremely common in any language (<a class=\"ref-link\" id=\"cZipf_1935_a\" href=\"#rZipf_1935_a\"><a class=\"ref-link\" id=\"cZipf_1935_a\" href=\"#rZipf_1935_a\">Zipf, 1935</a></a>)",
+        "Translation Quality Table 1 shows the BLEU scores on the test sets for several baseline systems, and various configurations including the types of losses, types of inputs/outputs used12 and whether the model used tied embeddings in the decoder or not",
+        "The BLEU scores improve for cosine loss, confirming the argument of <a class=\"ref-link\" id=\"cXing_et+al_2015_a\" href=\"#rXing_et+al_2015_a\">Xing et al (2015</a>) that cosine distance is a better suited similarity function for word embeddings",
+        "We introduce a novel framework of sequence to sequence learning for language generation using word embeddings as outputs",
+        "We propose new probabilistic loss functions based on von Mises-Fisher distribution for learning in this framework",
+        "We show that the proposed model trained on the task of machine translation leads to reduction in trainable parameters, to faster convergence, and a dramatic speed-up, up to 2.5x in training time over standard benchmarks"
+    ],
+    "key_statements": [
+        "Due to the power law distribution of word frequencies, rare words are extremely common in any language (<a class=\"ref-link\" id=\"cZipf_1935_a\" href=\"#rZipf_1935_a\"><a class=\"ref-link\" id=\"cZipf_1935_a\" href=\"#rZipf_1935_a\">Zipf, 1935</a></a>)",
+        "We propose a novel technique to generate low-dimensional continuous word representations, or word embeddings (<a class=\"ref-link\" id=\"cMikolov_et+al_2013_a\" href=\"#rMikolov_et+al_2013_a\">Mikolov et al, 2013</a>; <a class=\"ref-link\" id=\"cPennington_et+al_2014_a\" href=\"#rPennington_et+al_2014_a\">Pennington et al, 2014</a>; <a class=\"ref-link\" id=\"cBojanowski_et+al_2017_a\" href=\"#rBojanowski_et+al_2017_a\">Bojanowski et al, 2017</a>) instead of a probability distribution over the vocabulary at each output step",
+        "We evaluate our proposed model with the new loss function on the task of machine translation, including on datasets with huge vocabulary sizes, in two language pairs, and in two data domains (\u00a74)",
+        "Each word w is represented as a unique vector o(w) \u2208 {0, 1}V , where V is the size of the output vocabulary and only one entry id(w) in o(w) is 1 and the rest are set to 0",
+        "We evaluate our systems on standard machine translation datasets from IWSLT\u201916 (<a class=\"ref-link\" id=\"cCettolo_et+al_2016_a\" href=\"#rCettolo_et+al_2016_a\">Cettolo et al, 2016</a>), on two target languages, English: German\u2192English, French\u2192English and a morphologically richer language French: English\u2192French",
+        "Translation Quality Table 1 shows the BLEU scores on the test sets for several baseline systems, and various configurations including the types of losses, types of inputs/outputs used12 and whether the model used tied embeddings in the decoder or not",
+        "The BLEU scores improve for cosine loss, confirming the argument of <a class=\"ref-link\" id=\"cXing_et+al_2015_a\" href=\"#rXing_et+al_2015_a\">Xing et al (2015</a>) that cosine distance is a better suited similarity function for word embeddings",
+        "Memory Requirements As shown in Table 4 our best performing model requires less than 1% of the number of parameters in input and output layers, compared to Byte Pair Encoding-based baselines.\n13In IWSLT\u201916 datasets we obtain similar performances in BLEU and METEOR, this is likely because those models perform better in translating rare words (\u00a76) which are not covered in METEOR resources",
+        "We show substantial improvements over softmax and Byte Pair Encoding baselines in translating less frequent and rare words, which we hypothesize is due to having learned good embeddings of such words from the monolingual target corpus where these words are not as rare",
+        "We introduce a novel framework of sequence to sequence learning for language generation using word embeddings as outputs",
+        "We propose new probabilistic loss functions based on von Mises-Fisher distribution for learning in this framework",
+        "We show that the proposed model trained on the task of machine translation leads to reduction in trainable parameters, to faster convergence, and a dramatic speed-up, up to 2.5x in training time over standard benchmarks",
+        "The results that we report are comparable or slightly lower than the strongest baselines, but these setups are only an initial investigation of translation with the continuous output layer",
+        "We focus on enabling training with continuous outputs efficiently and accurately giving us huge gains in training time"
+    ],
+    "summary": [
+        "Due to the power law distribution of word frequencies, rare words are extremely common in any language (<a class=\"ref-link\" id=\"cZipf_1935_a\" href=\"#rZipf_1935_a\"><a class=\"ref-link\" id=\"cZipf_1935_a\" href=\"#rZipf_1935_a\">Zipf, 1935</a></a>).",
+        "The model generates a vector and searches for its nearest neighbor in the target embedding space to generate the corresponding word.",
+        "We evaluate our proposed model with the new loss function on the task of machine translation, including on datasets with huge vocabulary sizes, in two language pairs, and in two data domains (\u00a74).",
+        "All sequence to sequence language generation models use one-hot representations for each word in the output vocabulary V.",
+        "Each word type in the output vocabulary is represented by a continuous vector e(w) \u2208 Rm where m V .",
+        "The decoder of our model produces a continuous vectore \u2208 Rm. The output word is predicted by searching for the nearest neighbor ofe in the embedding space: wpredicted = argmin{d(\u02c6e, e(w))|w \u2208 V}",
+        "Since with continuous outputs we do not need to perform a time consuming softmax computation, we can train the proposed model with very large target vocabulary without any change in training time per batch.",
+        "We experiment with a margin-based ranking loss to train the model to rank the word vector predictione for target vector e(w) higher than any other word vector e(w ) in the embedding space.",
+        "In the case of empirical losses, we output the word whose target embedding is the nearest neighbor to the vector in terms of the distance defined.",
+        "Translation Quality Table 1 shows the BLEU scores on the test sets for several baseline systems, and various configurations including the types of losses, types of inputs/outputs used12 and whether the model used tied embeddings in the decoder or not.",
+        "Memory Requirements As shown in Table 4 our best performing model requires less than 1% of the number of parameters in input and output layers, compared to BPE-based baselines.",
+        "We show that the proposed model trained on the task of machine translation leads to reduction in trainable parameters, to faster convergence, and a dramatic speed-up, up to 2.5x in training time over standard benchmarks.",
+        "Can low-resource neural machine translation benefit from translation with continuous outputs if large monolingual corpora are available to pre-train strong target-side embeddings?",
+        "Parameter LSTM Layers: Encoder LSTM Layers: Decoder Hidden Dimension (H) Input Word Embedding Size Output Vector Size Optimizer Learning Rate (Baseline) Learning Rate (Our Models) Max Sentence Length Vocabulary Size (Source) Vocabulary Size (Target)",
+        "Table 6 visualizes a comparison between different types of softmax approximations and our proposed method"
+    ],
+    "headline": "We propose a general technique for replacing the softmax layer with a continuous embedding layer",
+    "reference_links": [
+        {
+            "id": "Andreas_et+al_2015_a",
+            "entry": "Jacob Andreas, Maxim Rabinovich, Michael I. Jordan, and Dan Klein. On the accuracy of selfnormalized log-linear models. In Proc NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andreas%2C%20Jacob%20Rabinovich%2C%20Maxim%20Jordan%2C%20Michael%20I.%20Klein%2C%20Dan%20On%20the%20accuracy%20of%20selfnormalized%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andreas%2C%20Jacob%20Rabinovich%2C%20Maxim%20Jordan%2C%20Michael%20I.%20Klein%2C%20Dan%20On%20the%20accuracy%20of%20selfnormalized%202015"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In Proc. ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202014"
+        },
+        {
+            "id": "Bengio_2003_a",
+            "entry": "Yoshua Bengio and Jean-Sebastien Senecal. Quick training of probabilistic neural nets by importance sampling. In Proc. AISTATS, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Senecal%2C%20Jean-Sebastien%20Quick%20training%20of%20probabilistic%20neural%20nets%20by%20importance%20sampling%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Senecal%2C%20Jean-Sebastien%20Quick%20training%20of%20probabilistic%20neural%20nets%20by%20importance%20sampling%202003"
+        },
+        {
+            "id": "Bishop_1994_a",
+            "entry": "Christopher M. Bishop. Mixture density networks. Technical report, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Christopher%20M.%20Mixture%20density%20networks%201994"
+        },
+        {
+            "id": "Bojanowski_et+al_2017_a",
+            "entry": "Piotr Bojanowski, Edouard Grave, Armand Joulin, and Tomas Mikolov. Enriching word vectors with subword information. Transactions of the Association for Computational Linguistics, 5, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bojanowski%2C%20Piotr%20Grave%2C%20Edouard%20Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Enriching%20word%20vectors%20with%20subword%20information%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bojanowski%2C%20Piotr%20Grave%2C%20Edouard%20Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Enriching%20word%20vectors%20with%20subword%20information%202017"
+        },
+        {
+            "id": "Bojar_et+al_2016_a",
+            "entry": "Ondrej Bojar, Rajen Chatterjee, Christian Federmann, Yvette Graham, Barry Haddow, Matthias Huck, Antonio Jimeno Yepes, Philipp Koehn, Varvara Logacheva, Christof Monz, et al. Findings of the 2016 conference on machine translation. In Proc. WMT, pp. 131\u2013198, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ondrej%20Bojar%20Rajen%20Chatterjee%20Christian%20Federmann%20Yvette%20Graham%20Barry%20Haddow%20Matthias%20Huck%20Antonio%20Jimeno%20Yepes%20Philipp%20Koehn%20Varvara%20Logacheva%20Christof%20Monz%20et%20al%20Findings%20of%20the%202016%20conference%20on%20machine%20translation%20In%20Proc%20WMT%20pp%20131198%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ondrej%20Bojar%20Rajen%20Chatterjee%20Christian%20Federmann%20Yvette%20Graham%20Barry%20Haddow%20Matthias%20Huck%20Antonio%20Jimeno%20Yepes%20Philipp%20Koehn%20Varvara%20Logacheva%20Christof%20Monz%20et%20al%20Findings%20of%20the%202016%20conference%20on%20machine%20translation%20In%20Proc%20WMT%20pp%20131198%202016"
+        },
+        {
+            "id": "Cettolo_et+al_2016_a",
+            "entry": "M Cettolo, J Niehues, S Stuker, L Bentivogli, R Cattoni, and M Federico. The IWSLT 2016 evaluation campaign. In Proc. IWSLT, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=M%20Cettolo%20J%20Niehues%20S%20Stuker%20L%20Bentivogli%20R%20Cattoni%20and%20M%20Federico%20The%20IWSLT%202016%20evaluation%20campaign%20In%20Proc%20IWSLT%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=M%20Cettolo%20J%20Niehues%20S%20Stuker%20L%20Bentivogli%20R%20Cattoni%20and%20M%20Federico%20The%20IWSLT%202016%20evaluation%20campaign%20In%20Proc%20IWSLT%202016"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Wenlin Chen, David Grangier, and Michael Auli. Strategies for training large vocabulary neural language models. In Proc. ACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Wenlin%20Grangier%2C%20David%20Auli%2C%20Michael%20Strategies%20for%20training%20large%20vocabulary%20neural%20language%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Wenlin%20Grangier%2C%20David%20Auli%2C%20Michael%20Strategies%20for%20training%20large%20vocabulary%20neural%20language%20models%202016"
+        },
+        {
+            "id": "De_2016_a",
+            "entry": "Alexandre de Brebisson and Pascal Vincent. An exploration of softmax alternatives belonging to the spherical loss family. In Proc. ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=de%20Brebisson%2C%20Alexandre%20Vincent%2C%20Pascal%20An%20exploration%20of%20softmax%20alternatives%20belonging%20to%20the%20spherical%20loss%20family%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=de%20Brebisson%2C%20Alexandre%20Vincent%2C%20Pascal%20An%20exploration%20of%20softmax%20alternatives%20belonging%20to%20the%20spherical%20loss%20family%202016"
+        },
+        {
+            "id": "Denkowski_2014_a",
+            "entry": "Michael Denkowski and Alon Lavie. Meteor universal: Language specific translation evaluation for any target language. In Proc. EACL 2014 Workshop on Statistical Machine Translation, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denkowski%2C%20Michael%20Lavie%2C%20Alon%20Meteor%20universal%3A%20Language%20specific%20translation%20evaluation%20for%20any%20target%20language%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denkowski%2C%20Michael%20Lavie%2C%20Alon%20Meteor%20universal%3A%20Language%20specific%20translation%20evaluation%20for%20any%20target%20language%202014"
+        },
+        {
+            "id": "Denkowski_2017_a",
+            "entry": "Michael J. Denkowski and Graham Neubig. Stronger baselines for trustable results in neural machine translation. CoRR, abs/1706.09733, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.09733"
+        },
+        {
+            "id": "Devlin_et+al_2014_a",
+            "entry": "Jacob Devlin, Rabih Zbib, Zhongqiang Huang, Thomas Lamar, Richard Schwartz, and John Makhoul. In Proc. ACL, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacob%20Devlin%20Rabih%20Zbib%20Zhongqiang%20Huang%20Thomas%20Lamar%20Richard%20Schwartz%20and%20John%20Makhoul%20In%20Proc%20ACL%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jacob%20Devlin%20Rabih%20Zbib%20Zhongqiang%20Huang%20Thomas%20Lamar%20Richard%20Schwartz%20and%20John%20Makhoul%20In%20Proc%20ACL%202014"
+        },
+        {
+            "id": "Dyer_et+al_2013_a",
+            "entry": "Chris Dyer, Victor Chahuneau, and Noah A. Smith. A simple, fast, and effective reparameterization of IBM Model 2. In Proc. NAACL, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dyer%2C%20Chris%20Chahuneau%2C%20Victor%20Smith%2C%20Noah%20A.%20A%20simple%2C%20fast%2C%20and%20effective%20reparameterization%20of%20IBM%20Model%202%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dyer%2C%20Chris%20Chahuneau%2C%20Victor%20Smith%2C%20Noah%20A.%20A%20simple%2C%20fast%2C%20and%20effective%20reparameterization%20of%20IBM%20Model%202%202013"
+        },
+        {
+            "id": "Graves_et+al_2013_a",
+            "entry": "Alex Graves, Abdel-rahman Mohamed, and Geoffrey Hinton. Speech recognition with deep recurrent neural networks. In Proc. ICASSP, pp. 6645\u20136649, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Mohamed%2C%20Abdel-rahman%20Hinton%2C%20Geoffrey%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Mohamed%2C%20Abdel-rahman%20Hinton%2C%20Geoffrey%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Gray_1990_a",
+            "entry": "Robert M. Gray. Vector quantization. In Readings in Speech Recognition. 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gray%2C%20Robert%20M.%20Vector%20quantization%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gray%2C%20Robert%20M.%20Vector%20quantization%201990"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Computation, 9:1735\u2013 1780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Shihao_et+al_2015_a",
+            "entry": "Shihao Ji, S. V. N. Vishwanathan, Nadathur Satish, Michael J. Anderson, and Pradeep Dubey. Blackout: Speeding up recurrent neural network language models with very large vocabularies. CoRR, 2015. URL http://arxiv.org/abs/1511.06909.",
+            "url": "http://arxiv.org/abs/1511.06909",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06909"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Jeff Johnson, Matthijs Douze, and Herve Jegou. Billion-scale similarity search with gpus. arXiv preprint arXiv:1702.08734, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08734"
+        },
+        {
+            "id": "Jozefowicz_et+al_2016_a",
+            "entry": "Rafal Jozefowicz, Oriol Vinyals, Mike Schuster, Noam Shazeer, and Yonghui Wu. Exploring the limits of language modeling, 2016. URL https://arxiv.org/pdf/1602.02410.pdf.",
+            "url": "https://arxiv.org/pdf/1602.02410.pdf",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02410"
+        },
+        {
+            "id": "Klein_et+al_2017_a",
+            "entry": "Guillaume Klein, Yoon Kim, Yuntian Deng, Jean Senellart, and Alexander M. Rush. Opennmt: Open-source toolkit for neural machine translation. In Proc. ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klein%2C%20Guillaume%20Kim%2C%20Yoon%20Deng%2C%20Yuntian%20Senellart%2C%20Jean%20Opennmt%3A%20Open-source%20toolkit%20for%20neural%20machine%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klein%2C%20Guillaume%20Kim%2C%20Yoon%20Deng%2C%20Yuntian%20Senellart%2C%20Jean%20Opennmt%3A%20Open-source%20toolkit%20for%20neural%20machine%20translation%202017"
+        },
+        {
+            "id": "Lazaridou_et+al_2015_a",
+            "entry": "Angeliki Lazaridou, Georgiana Dinu, and Marco Baroni. Hubness and pollution: Delving into cross-space mapping for zero-shot learning. In Proc. ACL, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lazaridou%2C%20Angeliki%20Dinu%2C%20Georgiana%20Baroni%2C%20Marco%20Hubness%20and%20pollution%3A%20Delving%20into%20cross-space%20mapping%20for%20zero-shot%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lazaridou%2C%20Angeliki%20Dinu%2C%20Georgiana%20Baroni%2C%20Marco%20Hubness%20and%20pollution%3A%20Delving%20into%20cross-space%20mapping%20for%20zero-shot%20learning%202015"
+        },
+        {
+            "id": "Lehmann_1998_a",
+            "entry": "E.L. Lehmann and G. Casella. Theory of Point Estimation. Springer Verlag, 1998. ISBN 0387985026.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehmann%2C%20E.L.%20Casella%2C%20G.%20Theory%20of%20Point%20Estimation%201998"
+        },
+        {
+            "id": "Levy_2014_a",
+            "entry": "Omer Levy and Yoav Goldberg. Dependency-based word embeddings. In Proc. ACL. The Association for Computer Linguistics, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Dependency-based%20word%20embeddings%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Dependency-based%20word%20embeddings%202014"
+        },
+        {
+            "id": "Ling_et+al_0000_a",
+            "entry": "Wang Ling, Chris Dyer, Alan Black, and Isabel Trancoso. Two/too simple adaptations of word2vec for syntax problems. In Proc. NAACL-HLT 2015, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ling%2C%20Wang%20Dyer%2C%20Chris%20Black%2C%20Alan%20Trancoso%2C%20Isabel%20Two/too%20simple%20adaptations%20of%20word2vec%20for%20syntax%20problems",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ling%2C%20Wang%20Dyer%2C%20Chris%20Black%2C%20Alan%20Trancoso%2C%20Isabel%20Two/too%20simple%20adaptations%20of%20word2vec%20for%20syntax%20problems"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher D. Manning. Effective approaches to attentionbased neural machine translation. In Proc. EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attentionbased%20neural%20machine%20translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attentionbased%20neural%20machine%20translation%202015"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. Distributed representations of words and phrases and their compositionality. In Proc. NIPS. 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013"
+        },
+        {
+            "id": "Mnih_2013_a",
+            "entry": "Andriy Mnih and Koray Kavukcuoglu. Learning word embeddings efficiently with noise-contrastive estimation. In Proc. NIPS, pp. 2265\u20132273, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Andriy%20Kavukcuoglu%2C%20Koray%20Learning%20word%20embeddings%20efficiently%20with%20noise-contrastive%20estimation%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Andriy%20Kavukcuoglu%2C%20Koray%20Learning%20word%20embeddings%20efficiently%20with%20noise-contrastive%20estimation%202013"
+        },
+        {
+            "id": "Morin_2005_a",
+            "entry": "Frederic Morin and Yoshua Bengio. Hierarchical probabilistic neural network language model. In Robert G. Cowell and Zoubin Ghahramani (eds.), Proc. AISTATS, pp. 246\u2013252, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morin%2C%20Frederic%20Bengio%2C%20Yoshua%20Hierarchical%20probabilistic%20neural%20network%20language%20model%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morin%2C%20Frederic%20Bengio%2C%20Yoshua%20Hierarchical%20probabilistic%20neural%20network%20language%20model%202005"
+        },
+        {
+            "id": "Oda_et+al_2017_a",
+            "entry": "Yusuke Oda, Philip Arthur, Graham Neubig, Koichiro Yoshino, and Satoshi Nakamura. Neural machine translation via binary code prediction. In Proc. ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oda%2C%20Yusuke%20Arthur%2C%20Philip%20Neubig%2C%20Graham%20Yoshino%2C%20Koichiro%20Neural%20machine%20translation%20via%20binary%20code%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oda%2C%20Yusuke%20Arthur%2C%20Philip%20Neubig%2C%20Graham%20Yoshino%2C%20Koichiro%20Neural%20machine%20translation%20via%20binary%20code%20prediction%202017"
+        },
+        {
+            "id": "Papineni_et+al_2002_a",
+            "entry": "Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. BLEU: a method for automatic evaluation of machine translation. In Proc. ACL, pp. 311\u2013318, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20BLEU%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20BLEU%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002"
+        },
+        {
+            "id": "Paulus_et+al_2018_a",
+            "entry": "Romain Paulus, Caiming Xiong, and Richard Socher. A deep reinforced model for abstractive summarization. In Proc. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paulus%2C%20Romain%20Xiong%2C%20Caiming%20Socher%2C%20Richard%20A%20deep%20reinforced%20model%20for%20abstractive%20summarization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Paulus%2C%20Romain%20Xiong%2C%20Caiming%20Socher%2C%20Richard%20A%20deep%20reinforced%20model%20for%20abstractive%20summarization%202018"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher D. Manning. Glove: Global vectors for word representation. In Proc. EMNLP, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014"
+        },
+        {
+            "id": "Pinter_et+al_2017_a",
+            "entry": "Yuval Pinter, Robert Guthrie, and Jacob Eisenstein. Mimicking word embeddings using subword rnns. In Proc. EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pinter%2C%20Yuval%20Guthrie%2C%20Robert%20Eisenstein%2C%20Jacob%20Mimicking%20word%20embeddings%20using%20subword%20rnns%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pinter%2C%20Yuval%20Guthrie%2C%20Robert%20Eisenstein%2C%20Jacob%20Mimicking%20word%20embeddings%20using%20subword%20rnns%202017"
+        },
+        {
+            "id": "Press_2016_a",
+            "entry": "Ofir Press and Lior Wolf. Using the output embedding to improve language models. CoRR, abs/1608.05859, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.05859"
+        },
+        {
+            "id": "Ruder_2017_a",
+            "entry": "Sebastian Ruder. A survey of cross-lingual embedding models. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ruder%2C%20Sebastian%20A%20survey%20of%20cross-lingual%20embedding%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ruder%2C%20Sebastian%20A%20survey%20of%20cross-lingual%20embedding%20models%202017"
+        },
+        {
+            "id": "Ruiz-Antoln_2016_a",
+            "entry": "Diego Ruiz-Antoln and Javier Segura. A new type of sharp bounds for ratios of modified bessel functions. Journal of Mathematical Analysis and Applications, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ruiz-Antoln%2C%20Diego%20Segura%2C%20Javier%20A%20new%20type%20of%20sharp%20bounds%20for%20ratios%20of%20modified%20bessel%20functions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ruiz-Antoln%2C%20Diego%20Segura%2C%20Javier%20A%20new%20type%20of%20sharp%20bounds%20for%20ratios%20of%20modified%20bessel%20functions%202016"
+        },
+        {
+            "id": "Rush_et+al_2015_a",
+            "entry": "Alexander M. Rush, Sumit Chopra, and Jason Weston. A neural attention model for abstractive sentence summarization. In Proc. EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015"
+        },
+        {
+            "id": "See_et+al_2017_a",
+            "entry": "Abigail See, Peter J. Liu, and Christopher D. Manning. Get to the point: Summarization with pointer-generator networks. In Proc. ACL, pp. 1073\u20131083, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=See%2C%20Abigail%20Liu%2C%20Peter%20J.%20Manning%2C%20Christopher%20D.%20Get%20to%20the%20point%3A%20Summarization%20with%20pointer-generator%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=See%2C%20Abigail%20Liu%2C%20Peter%20J.%20Manning%2C%20Christopher%20D.%20Get%20to%20the%20point%3A%20Summarization%20with%20pointer-generator%20networks%202017"
+        },
+        {
+            "id": "Sennrich_et+al_2016_a",
+            "entry": "Rico Sennrich, Barry Haddow, and Alexandra Birch. Neural machine translation of rare words with subword units. In Proc. ACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202016"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In Proc. NIPS, pp. 3104\u20133112, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Vinyals_2015_a",
+            "entry": "Oriol Vinyals and Quoc V. Le. A neural conversational model. CoRR, abs/1506.05869, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.05869"
+        },
+        {
+            "id": "Xing_et+al_2015_a",
+            "entry": "Chao Xing, Dong Wang, Chao Liu, and Yiye Lin. Normalized word embedding and orthogonal transform for bilingual word translation. In HLT-NAACL, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xing%2C%20Chao%20Wang%2C%20Dong%20Liu%2C%20Chao%20Lin%2C%20Yiye%20Normalized%20word%20embedding%20and%20orthogonal%20transform%20for%20bilingual%20word%20translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xing%2C%20Chao%20Wang%2C%20Dong%20Liu%2C%20Chao%20Lin%2C%20Yiye%20Normalized%20word%20embedding%20and%20orthogonal%20transform%20for%20bilingual%20word%20translation%202015"
+        },
+        {
+            "id": "Xiong_et+al_2017_a",
+            "entry": "Wayne Xiong, Jasha Droppo, Xuedong Huang, Frank Seide, Michael L Seltzer, Andreas Stolcke, Dong Yu, and Geoffrey Zweig. Toward human parity in conversational speech recognition. IEEE/ACM Transactions on Audio, Speech, and Language Processing, 25(12):2410\u20132423, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiong%2C%20Wayne%20Droppo%2C%20Jasha%20Huang%2C%20Xuedong%20Seide%2C%20Frank%20Toward%20human%20parity%20in%20conversational%20speech%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiong%2C%20Wayne%20Droppo%2C%20Jasha%20Huang%2C%20Xuedong%20Seide%2C%20Frank%20Toward%20human%20parity%20in%20conversational%20speech%20recognition%202017"
+        },
+        {
+            "id": "Yin_et+al_2015_a",
+            "entry": "Jun Yin, Xin Jiang, Zhengdong Lu, Lifeng Shang, Hang Li, and Xiaoming Li. Neural generative question answering. CoRR, abs/1512.01337, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.01337"
+        },
+        {
+            "id": "Zipf_1935_a",
+            "entry": "George Kingsley Zipf. The psycho-biology of language. 1935.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zipf%2C%20George%20Kingsley%20The%20psycho-biology%20of%20language%201935"
+        }
+    ]
+}

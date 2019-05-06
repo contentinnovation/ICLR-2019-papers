@@ -1,0 +1,236 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DIAGNOSING AND ENHANCING VAE MODELS",
+        "author": "Bin Dai Institute for Advanced Study Tsinghua University Beijing, China",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1e0X3C9tQ"
+        },
+        "abstract": "Although variational autoencoders (VAEs) represent a widely influential deep generative model, many aspects of the underlying energy function remain poorly understood. In particular, it is commonly believed that Gaussian encoder/decoder assumptions reduce the effectiveness of VAEs in generating realistic samples. In this regard, we rigorously analyze the VAE objective, differentiating situations where this belief is and is not actually true. We then leverage the corresponding insights to develop a simple VAE enhancement that requires no additional hyperparameters or sensitive tuning. Quantitatively, this proposal produces crisp samples and stable FID scores that are actually competitive with a variety of GAN models, all while retaining desirable attributes of the original VAE architecture. The code for our model is available at https://github.com/daib13/TwoStageVAE."
+    },
+    "keywords": [
+        {
+            "term": "equilibrium",
+            "url": "https://en.wikipedia.org/wiki/equilibrium"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "VAEs": "variational autoencoders",
+        "VAE": "variational autoencoder",
+        "GAN": "generative adversarial networks",
+        "FID": "Frechet Inception Distance",
+        "WAE": "Wasserstein autoencoder",
+        "MMD": "Maximum Mean Discrepancy"
+    },
+    "highlights": [
+        "Our starting point is the desire to learn a probabilistic generative model of observable variables x \u2208 \u03c7, where \u03c7 is a r-dimensional manifold embedded in Rd",
+        "In Section 2 we closely investigate the implications of variational autoencoders Gaussian assumptions leading to a number of interesting diagnostic conclusions",
+        "As long as we set \u03ba \u2265 r, the operational regime of the second-stage variational autoencoders is effectively equivalent to the situation described in Section 2.1 where the manifold dimension is equal to the ambient dimension.5",
+        "We evaluated our proposed variational autoencoders pipeline, denoted as 2-Stage variational autoencoders, against three baseline variational autoencoders models differing only in the decoder output layer: a Gaussian layer with fixed \u03b3, a Gaussian layer with a learned \u03b3, and a cross-entropy layer as has been adopted in several previous applications involving images (Chen et al, 2016b)",
+        "It is often assumed that there exists an unavoidable trade-off between the stable training, valuable attendant encoder network, and resistance to mode collapse of variational autoencoders, versus the impressive visual quality of images produced by generative adversarial networks",
+        "While we certainly are not claiming that our two-stage variational autoencoders model is superior to the latest and greatest generative adversarial networks-based architecture in terms of the realism of generated samples, we do strongly believe that this work at least narrows that gap substantially such that variational autoencoders are worth considering in a broader range of applications"
+    ],
+    "key_statements": [
+        "Our starting point is the desire to learn a probabilistic generative model of observable variables x \u2208 \u03c7, where \u03c7 is a r-dimensional manifold embedded in Rd",
+        "In Section 2 we closely investigate the implications of variational autoencoders Gaussian assumptions leading to a number of interesting diagnostic conclusions",
+        "As long as we set \u03ba \u2265 r, the operational regime of the second-stage variational autoencoders is effectively equivalent to the situation described in Section 2.1 where the manifold dimension is equal to the ambient dimension.5",
+        "We evaluated our proposed variational autoencoders pipeline, denoted as 2-Stage variational autoencoders, against three baseline variational autoencoders models differing only in the decoder output layer: a Gaussian layer with fixed \u03b3, a Gaussian layer with a learned \u03b3, and a cross-entropy layer as has been adopted in several previous applications involving images (Chen et al, 2016b)",
+        "We report the value of the best generative adversarial networks model for each dataset when trained using suggested settings from the authors; no single model was optimal across all datasets, so these values represent the best performance from different, dataset-dependent generative adversarial networks",
+        "It is often assumed that there exists an unavoidable trade-off between the stable training, valuable attendant encoder network, and resistance to mode collapse of variational autoencoders, versus the impressive visual quality of images produced by generative adversarial networks",
+        "While we certainly are not claiming that our two-stage variational autoencoders model is superior to the latest and greatest generative adversarial networks-based architecture in terms of the realism of generated samples, we do strongly believe that this work at least narrows that gap substantially such that variational autoencoders are worth considering in a broader range of applications"
+    ],
+    "summary": [
+        "Our starting point is the desire to learn a probabilistic generative model of observable variables x \u2208 \u03c7, where \u03c7 is a r-dimensional manifold embedded in Rd.",
+        "We will demonstrate that, even with the stated Gaussian distributions, there exist parameters \u03c6 and \u03b8 that can simultaneously: (i) Globally optimize the VAE objective and, Recover the ground-truth probability measure in a certain sense described below.",
+        "A \u03ba-simple VAE can achieve such a solution: Theorem 1 Suppose that r = d and there exists a density pgt(x) associated with the ground-truth measure \u03bcgt that is nonzero everywhere on Rd.1.",
+        "At least when r = d, the VAE Gaussian assumptions need not prevent the optimal ground-truth probability measure from being recovered, as long as the latent dimension is sufficiently large (i.e., \u03ba \u2265 r).",
+        "Regardless, there are more significant consequences of this intrinsic favoritism for \u03b3 \u2192 0, in particular as related to reconstructing data drawn from the ground-truth manifold \u03c7: Theorem 4 Applying the same conditions and definitions as in Theorem 3, for all x drawn from \u03bcgt, we have that lim \u03b3\u21920 f\u03bcx f\u03bcz (x; \u03c6\u2217\u03b3 ) + fSz (x; \u03c6\u2217\u03b3 )\u03b5; \u03b8\u03b3\u2217",
+        "Given n observed samples {x(i)}in=1, train a \u03ba-simple VAE, with \u03ba \u2265 r, to estimate the unknown r-dimensional ground-truth manifold \u03c7 embedded in Rd using a minimal number of active latent dimensions.",
+        "As long as we set \u03ba \u2265 r, the operational regime of the second-stage VAE is effectively equivalent to the situation described in Section 2.1 where the manifold dimension is equal to the ambient dimension.5 And as we have already shown there via Theorem 1, the VAE can readily handle this situation, since in the narrow context of the second-stage VAE, d = r = \u03ba, the troublesome (d \u2212 r) log \u03b3 factor becomes zero, and any globally minimizing solution is uniquely matched to the new ground-truth distribution q\u03c6(z).",
+        "It is often assumed that there exists an unavoidable trade-off between the stable training, valuable attendant encoder network, and resistance to mode collapse of VAEs, versus the impressive visual quality of images produced by GANs. While we certainly are not claiming that our two-stage VAE model is superior to the latest and greatest GAN-based architecture in terms of the realism of generated samples, we do strongly believe that this work at least narrows that gap substantially such that VAEs are worth considering in a broader range of applications."
+    ],
+    "headline": "In Section 2 we closely investigate the implications of variational autoencoders Gaussian assumptions leading to a number of interesting diagnostic conclusions",
+    "reference_links": [
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein generative adversarial networks. In International Conference on Machine Learning, pp. 214\u2013223, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Chintala%2C%20Soumith%20Bottou%2C%20Leon%20Wasserstein%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjovsky%2C%20Martin%20Chintala%2C%20Soumith%20Bottou%2C%20Leon%20Wasserstein%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Aaron Courville, and Pascal Vincent. Representation learning: A review and new perspectives. IEEE Transactions on Pattern Analysis and Machine Intelligence, 35(8):1798\u20131828, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013"
+        },
+        {
+            "id": "Berthelot_et+al_2017_a",
+            "entry": "David Berthelot, Thomas Schumm, and Luke Metz. BEGAN: Boundary equilibrium generative adversarial networks. arXiv:1703.10717, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.10717"
+        },
+        {
+            "id": "Bousquet_et+al_2017_a",
+            "entry": "Olivier Bousquet, Sylvain Gelly, Ilya Tolstikhin, Carl Johann Simon-Gabriel, and Bernhard Scholkopf. From optimal transport to generative modeling: the VEGAN cookbook. arXiv:1611.02731, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02731"
+        },
+        {
+            "id": "Brock_et+al_2016_a",
+            "entry": "Andrew Brock, Theodore Lim, James M Ritchie, and Nick Weston. Neural photo editing with introspective adversarial networks. arXiv:1609.07093, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.07093"
+        },
+        {
+            "id": "Burda_et+al_0000_a",
+            "entry": "Yuri Burda, Roger Grosse, and Ruslan Salakhutdinov. Importance weighted autoencoders. arXiv:1509.00519, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.00519"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, and Pieter Abbeel. InfoGAN: Interpretable representation learning by information maximizing generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2172\u20132180, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20InfoGAN%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20InfoGAN%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016"
+        },
+        {
+            "id": "Chen_et+al_0000_a",
+            "entry": "Xi Chen, Diederik Kingma, Tim Salimans, Yan Duan, Prafulla Dhariwal, John Schulman, Ilya Sutskever, and Pieter Abbeel. Variational lossy autoencoder. arXiv:1611.02731, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02731"
+        },
+        {
+            "id": "Dai_2019_a",
+            "entry": "Bin Dai and David Wipf. Diagnosing and enhancing VAE models. arXiv:1903.05789, 2019.",
+            "arxiv_url": "https://arxiv.org/pdf/1903.05789"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Bin Dai, Yu Wang, John Aston, Gang Hua, and David Wipf. Connections with robust PCA and the role of emergent sparsity in variational autoencoder models. Journal of Machine Learning Research, 19(41):1\u201342, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Bin%20Wang%2C%20Yu%20Aston%2C%20John%20Hua%2C%20Gang%20Connections%20with%20robust%20PCA%20and%20the%20role%20of%20emergent%20sparsity%20in%20variational%20autoencoder%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Bin%20Wang%2C%20Yu%20Aston%2C%20John%20Hua%2C%20Gang%20Connections%20with%20robust%20PCA%20and%20the%20role%20of%20emergent%20sparsity%20in%20variational%20autoencoder%20models%202018"
+        },
+        {
+            "id": "Doersch_2016_a",
+            "entry": "Carl Doersch. Tutorial on variational autoencoders. arXiv:1606.05908, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.05908"
+        },
+        {
+            "id": "Dosovitskiy_2016_a",
+            "entry": "Alexey Dosovitskiy and Thomas Brox. Generating images with perceptual similarity metrics based on deep networks. In Advances in Neural Information Processing Systems, pp. 658\u2013666, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dosovitskiy%2C%20Alexey%20Brox%2C%20Thomas%20Generating%20images%20with%20perceptual%20similarity%20metrics%20based%20on%20deep%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dosovitskiy%2C%20Alexey%20Brox%2C%20Thomas%20Generating%20images%20with%20perceptual%20similarity%20metrics%20based%20on%20deep%20networks%202016"
+        },
+        {
+            "id": "Fedus_et+al_2017_a",
+            "entry": "William Fedus, Mihaela Rosca, Balaji Lakshminarayanan, Andrew M Dai, Shakir Mohamed, and Ian Goodfellow. Many paths to equilibrium: GANs do not need to decrease a divergence at every step. arXiv:1710.08446, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.08446"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gretton_et+al_2007_a",
+            "entry": "Arthur Gretton, Karsten Borgwardt, Malte Rasch, Bernhard Scholkopf, and Alex Smola. A kernel method for the two-sample-problem. In Advances in Neural Information Processing Systems, pp. 513\u2013520, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gretton%2C%20Arthur%20Borgwardt%2C%20Karsten%20Rasch%2C%20Malte%20Scholkopf%2C%20Bernhard%20A%20kernel%20method%20for%20the%20two-sample-problem%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gretton%2C%20Arthur%20Borgwardt%2C%20Karsten%20Rasch%2C%20Malte%20Scholkopf%2C%20Bernhard%20A%20kernel%20method%20for%20the%20two-sample-problem%202007"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron Courville. Improved training of Wasserstein GANs. In Advances in Neural Information Processing Systems, pp. 5767\u20135777, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20Wasserstein%20GANs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20Wasserstein%20GANs%202017"
+        },
+        {
+            "id": "Heusel_et+al_2017_a",
+            "entry": "Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. GANs trained by a two time-scale update rule converge to a local Nash equilibrium. In Advances in Neural Information Processing Systems, pp. 6626\u20136637, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heusel%2C%20Martin%20Ramsauer%2C%20Hubert%20Unterthiner%2C%20Thomas%20Nessler%2C%20Bernhard%20GANs%20trained%20by%20a%20two%20time-scale%20update%20rule%20converge%20to%20a%20local%20Nash%20equilibrium%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heusel%2C%20Martin%20Ramsauer%2C%20Hubert%20Unterthiner%2C%20Thomas%20Nessler%2C%20Bernhard%20GANs%20trained%20by%20a%20two%20time-scale%20update%20rule%20converge%20to%20a%20local%20Nash%20equilibrium%202017"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik Kingma and Max Welling. Auto-encoding variational Bayes. In International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20Welling%2C%20Max%20Auto-encoding%20variational%20Bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20Welling%2C%20Max%20Auto-encoding%20variational%20Bayes%202014"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, pp. 4743\u20134751, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Kodali_et+al_2017_a",
+            "entry": "Naveen Kodali, Jacob Abernethy, James Hays, and Zsolt Kira. On convergence and stability of GANs. arXiv:1705.07215, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07215"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. Technical report, Citeseer, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Larsen_et+al_0000_a",
+            "entry": "Anders Boesen Lindbo Larsen, S\u00f8ren Kaae S\u00f8nderby, Hugo Larochelle, and Ole Winther. Autoencoding beyond pixels using a learned similarity metric. arXiv:1512.09300, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.09300"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In IEEE International Conference on Computer Vision, pp. 3730\u20133738, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015"
+        },
+        {
+            "id": "Lucic_et+al_2018_a",
+            "entry": "Mario Lucic, Karol Kurach, Marcin Michalski, Sylvain Gelly, and Olivier Bousquet. Are GANs created equal? A large-scale study. Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lucic%2C%20Mario%20Kurach%2C%20Karol%20Michalski%2C%20Marcin%20Gelly%2C%20Sylvain%20Are%20GANs%20created%20equal%3F%20A%20large-scale%20study%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lucic%2C%20Mario%20Kurach%2C%20Karol%20Michalski%2C%20Marcin%20Gelly%2C%20Sylvain%20Are%20GANs%20created%20equal%3F%20A%20large-scale%20study%202018"
+        },
+        {
+            "id": "Makhzani_et+al_2016_a",
+            "entry": "Alireza Makhzani, Jonathon Shlens, Navdeep Jaitly, Ian Goodfellow, and Brendan Frey. Adversarial autoencoders. arXiv:1511.05644, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05644"
+        },
+        {
+            "id": "Mao_et+al_2017_a",
+            "entry": "Xudong Mao, Qing Li, Haoran Xie, Raymond YK Lau, Zhen Wang, and Stephen Paul Smolley. Least squares generative adversarial networks. In IEEE International Conference on Computer Vision, pp. 2813\u20132821, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mao%2C%20Xudong%20Li%2C%20Qing%20Xie%2C%20Haoran%20Lau%2C%20Raymond%20Y.K.%20Least%20squares%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mao%2C%20Xudong%20Li%2C%20Qing%20Xie%2C%20Haoran%20Lau%2C%20Raymond%20Y.K.%20Least%20squares%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Rezende_0000_a",
+            "entry": "Danilo Jimenez Rezende and Shakir Mohamed. Variational inference with normalizing flows. arXiv:1505.05770, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1505.05770"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "D.J. Rezende, S. Mohamed, and D. Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In International Conference on Machine Learning, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20D.J.%20Mohamed%2C%20S.%20Wierstra%2C%20D.%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20D.J.%20Mohamed%2C%20S.%20Wierstra%2C%20D.%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Tolstikhin_et+al_2018_a",
+            "entry": "Ilya Tolstikhin, Olivier Bousquet, Sylvain Gelly, and Bernhard Schoelkopf. Wasserstein autoencoders. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tolstikhin%2C%20Ilya%20Bousquet%2C%20Olivier%20Gelly%2C%20Sylvain%20Schoelkopf%2C%20Bernhard%20Wasserstein%20autoencoders%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tolstikhin%2C%20Ilya%20Bousquet%2C%20Olivier%20Gelly%2C%20Sylvain%20Schoelkopf%2C%20Bernhard%20Wasserstein%20autoencoders%202018"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Han Xiao, Kashif Rasul, and Roland Vollgraf. Fashion-MNIST: A novel image dataset for benchmarking machine learning algorithms. arXiv:1708.07747, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.07747"
+        }
+    ]
+}

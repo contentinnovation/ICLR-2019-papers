@@ -1,0 +1,358 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "CODE2SEQ: GENERATING SEQUENCES FROM STRUCTURED REPRESENTATIONS OF CODE",
+        "author": "Uri Alon Technion urialon@cs.technion.ac.il",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1gKYo09tX"
+        },
+        "abstract": "The ability to generate natural language sequences from source code snippets has a variety of applications such as code summarization, documentation, and retrieval. Sequence-to-sequence (seq2seq) models, adopted from neural machine translation (NMT), have achieved state-of-the-art performance on these tasks by treating source code as a sequence of tokens. We present CODE2SEQ: an alternative approach that leverages the syntactic structure of programming languages to better encode source code. Our model represents a code snippet as the set of compositional paths in its abstract syntax tree (AST) and uses attention to select the relevant paths while decoding. We demonstrate the effectiveness of our approach for two tasks, two programming languages, and four datasets of up to 16M examples. Our model significantly outperforms previous models that were specifically designed for programming languages, as well as state-of-the-art NMT models. An online demo of our model is available at http://code2seq.org. Our code, data and trained models are available at http://github.com/tech-srl/code2seq."
+    },
+    "keywords": [
+        {
+            "term": "abstract syntax",
+            "url": "https://en.wikipedia.org/wiki/abstract_syntax"
+        },
+        {
+            "term": "syntactic structure",
+            "url": "https://en.wikipedia.org/wiki/syntactic_structure"
+        },
+        {
+            "term": "variable declaration",
+            "url": "https://en.wikipedia.org/wiki/variable_declaration"
+        },
+        {
+            "term": "programming language",
+            "url": "https://en.wikipedia.org/wiki/programming_language"
+        },
+        {
+            "term": "statistical machine translation",
+            "url": "https://en.wikipedia.org/wiki/statistical_machine_translation"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "Abstract Syntax Tree",
+            "url": "https://en.wikipedia.org/wiki/Abstract_Syntax_Tree"
+        },
+        {
+            "term": "source code",
+            "url": "https://en.wikipedia.org/wiki/source_code"
+        },
+        {
+            "term": "syntax tree",
+            "url": "https://en.wikipedia.org/wiki/syntax_tree"
+        },
+        {
+            "term": "multi-layer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptron"
+        },
+        {
+            "term": "Conditional Random Fields",
+            "url": "https://en.wikipedia.org/wiki/Conditional_Random_Field"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "code snippet",
+            "url": "https://en.wikipedia.org/wiki/code_snippet"
+        }
+    ],
+    "abbreviations": {
+        "NMT": "neural machine translation",
+        "AST": "Abstract Syntax Tree",
+        "VarDec": "variable declaration",
+        "MLP": "multi-layer perceptron",
+        "CRFs": "Conditional Random Fields",
+        "GNN": "Graph Neural Networks",
+        "SMT": "statistical machine translation",
+        "ISF": "Israeli Science Foundation"
+    },
+    "highlights": [
+        "Modeling the relation between source code and natural language can be used for automatic code summarization (<a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\">Allamanis et al, 2016</a></a></a>), documentation (<a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\"><a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\"><a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\">Iyer et al, 2016</a></a></a>), retrieval (<a class=\"ref-link\" id=\"cAllamanis_et+al_2015_b\" href=\"#rAllamanis_et+al_2015_b\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2015_b\" href=\"#rAllamanis_et+al_2015_b\">Allamanis et al, 2015b</a></a>), and even generation (<a class=\"ref-link\" id=\"cBalog_et+al_2017_a\" href=\"#rBalog_et+al_2017_a\"><a class=\"ref-link\" id=\"cBalog_et+al_2017_a\" href=\"#rBalog_et+al_2017_a\">Balog et al, 2017</a></a>; <a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\"><a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\">Rabinovich et al, 2017</a></a>; <a class=\"ref-link\" id=\"cYin_2017_a\" href=\"#rYin_2017_a\"><a class=\"ref-link\" id=\"cYin_2017_a\" href=\"#rYin_2017_a\">Yin and Neubig, 2017</a></a>; <a class=\"ref-link\" id=\"cDevlin_et+al_2017_a\" href=\"#rDevlin_et+al_2017_a\"><a class=\"ref-link\" id=\"cDevlin_et+al_2017_a\" href=\"#rDevlin_et+al_2017_a\">Devlin et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMurali_et+al_2017_a\" href=\"#rMurali_et+al_2017_a\"><a class=\"ref-link\" id=\"cMurali_et+al_2017_a\" href=\"#rMurali_et+al_2017_a\">Murali et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBrockschmidt_et+al_2019_a\" href=\"#rBrockschmidt_et+al_2019_a\"><a class=\"ref-link\" id=\"cBrockschmidt_et+al_2019_a\" href=\"#rBrockschmidt_et+al_2019_a\">Brockschmidt et al, 2019</a></a>)",
+        "We present an alternative approach for encoding source code that leverages the syntactic structure of programming languages: CODE2SEQ",
+        "Examples for predictions made by our model and each of the baselines can be found in Appendix C and at http://code2seq.org.\n1We trained versions of the neural machine translation baselines in which we down-matched the sizes and number of parameters to our model",
+        "We presented a novel code-to-sequence model which considers the unique syntactic structure of source code with a sequential modeling of natural language",
+        "We demonstrate our approach by using it to predict method names across three datasets of varying sizes, predict natural language captions given partial and short code snippets, and to generate method documentation, in two programming languages",
+        "Our model performs significantly better than previous programming-language-oriented works and state-of-the-art neural machine translation models applied in our settings"
+    ],
+    "key_statements": [
+        "Modeling the relation between source code and natural language can be used for automatic code summarization (<a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\">Allamanis et al, 2016</a></a></a>), documentation (<a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\"><a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\"><a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\">Iyer et al, 2016</a></a></a>), retrieval (<a class=\"ref-link\" id=\"cAllamanis_et+al_2015_b\" href=\"#rAllamanis_et+al_2015_b\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2015_b\" href=\"#rAllamanis_et+al_2015_b\">Allamanis et al, 2015b</a></a>), and even generation (<a class=\"ref-link\" id=\"cBalog_et+al_2017_a\" href=\"#rBalog_et+al_2017_a\"><a class=\"ref-link\" id=\"cBalog_et+al_2017_a\" href=\"#rBalog_et+al_2017_a\">Balog et al, 2017</a></a>; <a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\"><a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\">Rabinovich et al, 2017</a></a>; <a class=\"ref-link\" id=\"cYin_2017_a\" href=\"#rYin_2017_a\"><a class=\"ref-link\" id=\"cYin_2017_a\" href=\"#rYin_2017_a\">Yin and Neubig, 2017</a></a>; <a class=\"ref-link\" id=\"cDevlin_et+al_2017_a\" href=\"#rDevlin_et+al_2017_a\"><a class=\"ref-link\" id=\"cDevlin_et+al_2017_a\" href=\"#rDevlin_et+al_2017_a\">Devlin et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMurali_et+al_2017_a\" href=\"#rMurali_et+al_2017_a\"><a class=\"ref-link\" id=\"cMurali_et+al_2017_a\" href=\"#rMurali_et+al_2017_a\">Murali et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBrockschmidt_et+al_2019_a\" href=\"#rBrockschmidt_et+al_2019_a\"><a class=\"ref-link\" id=\"cBrockschmidt_et+al_2019_a\" href=\"#rBrockschmidt_et+al_2019_a\">Brockschmidt et al, 2019</a></a>)",
+        "A direct approach is to frame the problem as a machine translation problem, where the source sentence is the sequence of tokens in the code and the target sentence is a corresponding natural language sequence",
+        "We present an alternative approach for encoding source code that leverages the syntactic structure of programming languages: CODE2SEQ",
+        "Examples for predictions made by our model and each of the baselines can be found in Appendix C and at http://code2seq.org.\n1We trained versions of the neural machine translation baselines in which we down-matched the sizes and number of parameters to our model",
+        "Examples for predictions made by our model and each of the baselines can be found in Appendix F. These results show that when the training examples are short and contain incomplete code snippets, our model generalizes better to unseen examples than a shallow textual token-level approach, thanks to its syntactic representation of the data",
+        "We presented a novel code-to-sequence model which considers the unique syntactic structure of source code with a sequential modeling of natural language",
+        "We demonstrate our approach by using it to predict method names across three datasets of varying sizes, predict natural language captions given partial and short code snippets, and to generate method documentation, in two programming languages",
+        "Our model performs significantly better than previous programming-language-oriented works and state-of-the-art neural machine translation models applied in our settings"
+    ],
+    "summary": [
+        "Modeling the relation between source code and natural language can be used for automatic code summarization (<a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\">Allamanis et al, 2016</a></a></a>), documentation (<a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\"><a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\"><a class=\"ref-link\" id=\"cIyer_et+al_2016_a\" href=\"#rIyer_et+al_2016_a\">Iyer et al, 2016</a></a></a>), retrieval (<a class=\"ref-link\" id=\"cAllamanis_et+al_2015_b\" href=\"#rAllamanis_et+al_2015_b\"><a class=\"ref-link\" id=\"cAllamanis_et+al_2015_b\" href=\"#rAllamanis_et+al_2015_b\">Allamanis et al, 2015b</a></a>), and even generation (<a class=\"ref-link\" id=\"cBalog_et+al_2017_a\" href=\"#rBalog_et+al_2017_a\"><a class=\"ref-link\" id=\"cBalog_et+al_2017_a\" href=\"#rBalog_et+al_2017_a\">Balog et al, 2017</a></a>; <a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\"><a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\">Rabinovich et al, 2017</a></a>; <a class=\"ref-link\" id=\"cYin_2017_a\" href=\"#rYin_2017_a\"><a class=\"ref-link\" id=\"cYin_2017_a\" href=\"#rYin_2017_a\">Yin and Neubig, 2017</a></a>; <a class=\"ref-link\" id=\"cDevlin_et+al_2017_a\" href=\"#rDevlin_et+al_2017_a\"><a class=\"ref-link\" id=\"cDevlin_et+al_2017_a\" href=\"#rDevlin_et+al_2017_a\">Devlin et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMurali_et+al_2017_a\" href=\"#rMurali_et+al_2017_a\"><a class=\"ref-link\" id=\"cMurali_et+al_2017_a\" href=\"#rMurali_et+al_2017_a\">Murali et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBrockschmidt_et+al_2019_a\" href=\"#rBrockschmidt_et+al_2019_a\"><a class=\"ref-link\" id=\"cBrockschmidt_et+al_2019_a\" href=\"#rBrockschmidt_et+al_2019_a\">Brockschmidt et al, 2019</a></a>).",
+        "We show the importance of structural encoding of code, by showing how our model yields a significant improvement over an ablation that uses only token-level information without syntactic paths.",
+        "Given the AST of a code snippet, we consider all pairwise paths between terminals, and represent them as sequences of terminal and nonterminal nodes.",
+        "The decoder attends over the encoded AST paths while generating the target sequence.",
+        "Token Representation The first and last node of an AST path are terminals whose values are tokens in the code.",
+        "We evaluate our model on two code-to-sequence tasks: summarization (Section 4.1), in which we predict Java methods\u2019 names from their bodies, and captioning (Section 4.2), where we generate natural language descriptions of C# code snippets.",
+        "We compare CODE2SEQ to the following baselines: <a class=\"ref-link\" id=\"cAllamanis_et+al_2016_a\" href=\"#rAllamanis_et+al_2016_a\">Allamanis et al (2016</a>), who used a convolutional attention network to predict method names; syntactic paths with Conditional Random Fields (CRFs) (<a class=\"ref-link\" id=\"cAlon_et+al_2018_a\" href=\"#rAlon_et+al_2018_a\"><a class=\"ref-link\" id=\"cAlon_et+al_2018_a\" href=\"#rAlon_et+al_2018_a\">Alon et al, 2018</a></a>); code2vec (<a class=\"ref-link\" id=\"cAlon_et+al_2019_a\" href=\"#rAlon_et+al_2019_a\"><a class=\"ref-link\" id=\"cAlon_et+al_2019_a\" href=\"#rAlon_et+al_2019_a\">Alon et al, 2019</a></a>); and a TreeLSTM (<a class=\"ref-link\" id=\"cTai_et+al_2015_a\" href=\"#rTai_et+al_2015_a\">Tai et al, 2015</a>) encoder with an LSTM decoder and attention on the input sub-trees.",
+        "We compared to three NMT baselines that read the input source code as a stream of tokens: 2-layer bidirectional encoder-decoder LSTMs with global attention (<a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a>), and the Transformer (<a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a>), which achieved state-of-the-art results for translation tasks.",
+        "Our model significantly outperforms the baselines in both precision and recall across all three datasets, demonstrating that there is added value in leveraging ASTs to encode source code.",
+        "These results show that when the training examples are short and contain incomplete code snippets, our model generalizes better to unseen examples than a shallow textual token-level approach, thanks to its syntactic representation of the data.",
+        "Code representation models that use syntactic information have usually been evaluated on relatively easier tasks, which mainly focus on \u201cfilling the blanks\u201d in a given program (<a class=\"ref-link\" id=\"cAlon_et+al_2018_a\" href=\"#rAlon_et+al_2018_a\"><a class=\"ref-link\" id=\"cAlon_et+al_2018_a\" href=\"#rAlon_et+al_2018_a\">Alon et al, 2018</a></a>; <a class=\"ref-link\" id=\"cBielik_et+al_2016_a\" href=\"#rBielik_et+al_2016_a\">Bielik et al, 2016</a>; <a class=\"ref-link\" id=\"cRaychev_et+al_2016_a\" href=\"#rRaychev_et+al_2016_a\">Raychev et al, 2016</a>; 2015; <a class=\"ref-link\" id=\"cAllamanis_et+al_2018_a\" href=\"#rAllamanis_et+al_2018_a\">Allamanis et al, 2018</a>) or semantic classification of code snippets (<a class=\"ref-link\" id=\"cAlon_et+al_2019_a\" href=\"#rAlon_et+al_2019_a\"><a class=\"ref-link\" id=\"cAlon_et+al_2019_a\" href=\"#rAlon_et+al_2019_a\">Alon et al, 2019</a></a>).",
+        "The core idea is to sample paths in the Abstract Syntax Tree of a code snippet, encode these paths with an LSTM, and attend to them while generating the target sequence.",
+        "We demonstrate our approach by using it to predict method names across three datasets of varying sizes, predict natural language captions given partial and short code snippets, and to generate method documentation, in two programming languages.",
+        "Our model performs significantly better than previous programming-language-oriented works and state-of-the-art NMT models applied in our settings"
+    ],
+    "headline": "We present CODE2SEQ: an alternative approach that leverages the syntactic structure of programming languages to better encode source code",
+    "reference_links": [
+        {
+            "id": "Allamanis_et+al_2015_a",
+            "entry": "Miltiadis Allamanis, Earl T. Barr, Christian Bird, and Charles Sutton. Suggesting accurate method and class names. In Proceedings of the 2015 10th Joint Meeting on Foundations of Software Engineering, ESEC/FSE 2015, pages 38\u201349, New York, NY, USA, 2015a. ACM. ISBN 9781-4503-3675-8. doi:10.1145/2786805.2786849. URL http://doi.acm.org/10.1145/2786805.2786849.",
+            "crossref": "https://dx.doi.org/10.1145/2786805.2786849",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2786805.2786849"
+        },
+        {
+            "id": "Allamanis_et+al_2015_b",
+            "entry": "Miltiadis Allamanis, Daniel Tarlow, Andrew D. Gordon, and Yi Wei. Bimodal Modelling of Source Code and Natural Language. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 of JMLR Proceedings, pages 2123\u20132132. JMLR.org, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allamanis%2C%20Miltiadis%20Tarlow%2C%20Daniel%20Gordon%2C%20Andrew%20D.%20Wei%2C%20Yi%20Bimodal%20Modelling%20of%20Source%20Code%20and%20Natural%20Language%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Tarlow%2C%20Daniel%20Gordon%2C%20Andrew%20D.%20Wei%2C%20Yi%20Bimodal%20Modelling%20of%20Source%20Code%20and%20Natural%20Language%202015"
+        },
+        {
+            "id": "Allamanis_et+al_2016_a",
+            "entry": "Miltiadis Allamanis, Hao Peng, and Charles A. Sutton. A convolutional attention network for extreme summarization of source code. In Proceedings of the 33nd International Conference on Machine Learning, ICML 2016, New York City, NY, USA, June 19-24, 2016, pages 2091\u20132100, 2016. URL http://jmlr.org/proceedings/papers/v48/allamanis16.html.",
+            "url": "http://jmlr.org/proceedings/papers/v48/allamanis16.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Peng%2C%20Hao%20Sutton%2C%20Charles%20A.%20A%20convolutional%20attention%20network%20for%20extreme%20summarization%20of%20source%20code%202016-06-19"
+        },
+        {
+            "id": "Allamanis_et+al_2018_a",
+            "entry": "Miltiadis Allamanis, Marc Brockschmidt, and Mahmoud Khademi. Learning to represent programs with graphs. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=BJOFETxR-.",
+            "url": "https://openreview.net/forum?id=BJOFETxR-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Brockschmidt%2C%20Marc%20Khademi%2C%20Mahmoud%20Learning%20to%20represent%20programs%20with%20graphs%202018"
+        },
+        {
+            "id": "Alon_et+al_2018_a",
+            "entry": "Uri Alon, Meital Zilberstein, Omer Levy, and Eran Yahav. A general path-based representation for predicting program properties. In Proceedings of the 39th ACM SIGPLAN Conference on Programming Language Design and Implementation, PLDI 2018, pages 404\u2013419, New York, NY, USA, 2018. ACM. ISBN 978-1-4503-5698-5. doi:10.1145/3192366.3192412. URL http://doi.acm.org/10.1145/3192366.3192412.",
+            "crossref": "https://dx.doi.org/10.1145/3192366.3192412",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3192366.3192412"
+        },
+        {
+            "id": "Alon_et+al_2019_a",
+            "entry": "Uri Alon, Meital Zilberstein, Omer Levy, and Eran Yahav. Code2vec: Learning distributed representations of code. Proc. ACM Program. Lang., 3(POPL):40:1\u201340:29, January 2019. ISSN 2475-1421. doi:10.1145/3290353. URL http://doi.acm.org/10.1145/3290353.",
+            "crossref": "https://dx.doi.org/10.1145/3290353",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3290353"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. CoRR, abs/1409.0473, 2014. URL http://arxiv.org/abs/1409.0473.",
+            "url": "http://arxiv.org/abs/1409.0473",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Balog_et+al_2017_a",
+            "entry": "Matej Balog, Alexander L Gaunt, Marc Brockschmidt, Sebastian Nowozin, and Daniel Tarlow. Deepcoder: Learning to write programs. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Balog%2C%20Matej%20Gaunt%2C%20Alexander%20L.%20Brockschmidt%2C%20Marc%20Nowozin%2C%20Sebastian%20Deepcoder%3A%20Learning%20to%20write%20programs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Balog%2C%20Matej%20Gaunt%2C%20Alexander%20L.%20Brockschmidt%2C%20Marc%20Nowozin%2C%20Sebastian%20Deepcoder%3A%20Learning%20to%20write%20programs%202017"
+        },
+        {
+            "id": "Bastings_et+al_2017_a",
+            "entry": "Joost Bastings, Ivan Titov, Wilker Aziz, Diego Marcheggiani, and Khalil Simaan. Graph convolutional encoders for syntax-aware neural machine translation. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pages 1957\u20131967, Copenhagen, Denmark, September 2017. Association for Computational Linguistics. URL https://www.aclweb.org/anthology/D17-1209.",
+            "url": "https://www.aclweb.org/anthology/D17-1209",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bastings%2C%20Joost%20Titov%2C%20Ivan%20Aziz%2C%20Wilker%20Marcheggiani%2C%20Diego%20Graph%20convolutional%20encoders%20for%20syntax-aware%20neural%20machine%20translation%202017-09"
+        },
+        {
+            "id": "Bielik_et+al_2016_a",
+            "entry": "Pavol Bielik, Veselin Raychev, and Martin T. Vechev. PHOG: probabilistic model for code. In Proceedings of the 33nd International Conference on Machine Learning, ICML 2016, New York City, NY, USA, June 19-24, 2016, pages 2933\u20132942, 2016. URL http://jmlr.org/proceedings/papers/v48/bielik16.html.",
+            "url": "http://jmlr.org/proceedings/papers/v48/bielik16.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bielik%2C%20Pavol%20Raychev%2C%20Veselin%20Vechev%2C%20Martin%20T.%20PHOG%3A%20probabilistic%20model%20for%20code%202016-06-19"
+        },
+        {
+            "id": "Bielik_et+al_2017_a",
+            "entry": "Pavol Bielik, Veselin Raychev, and Martin Vechev. Program synthesis for character level language modeling. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bielik%2C%20Pavol%20Raychev%2C%20Veselin%20Vechev%2C%20Martin%20Program%20synthesis%20for%20character%20level%20language%20modeling%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bielik%2C%20Pavol%20Raychev%2C%20Veselin%20Vechev%2C%20Martin%20Program%20synthesis%20for%20character%20level%20language%20modeling%202017"
+        },
+        {
+            "id": "Brockschmidt_et+al_2019_a",
+            "entry": "Marc Brockschmidt, Miltiadis Allamanis, Alexander L. Gaunt, and Oleksandr Polozov. Generative code modeling with graphs. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=Bke4KsA5FX.",
+            "url": "https://openreview.net/forum?id=Bke4KsA5FX",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brockschmidt%2C%20Marc%20Allamanis%2C%20Miltiadis%20Gaunt%2C%20Alexander%20L.%20Polozov%2C%20Oleksandr%20Generative%20code%20modeling%20with%20graphs%202019"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Xinyun Chen, Chang Liu, and Dawn Song. Tree-to-tree neural networks for program translation. CoRR, abs/1802.03691, 2018. URL http://arxiv.org/abs/1802.03691.",
+            "url": "http://arxiv.org/abs/1802.03691",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03691"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical machine translation. arXiv preprint arXiv:1406.1078, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1406.1078"
+        },
+        {
+            "id": "Devlin_et+al_2017_a",
+            "entry": "Jacob Devlin, Jonathan Uesato, Surya Bhupatiraju, Rishabh Singh, Abdel-rahman Mohamed, and Pushmeet Kohli. Robustfill: Neural program learning under noisy i/o. In International Conference on Machine Learning, pages 990\u2013998, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20i/o%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20i/o%202017"
+        },
+        {
+            "id": "Fernandes_et+al_2019_a",
+            "entry": "Patrick Fernandes, Miltiadis Allamanis, and Marc Brockschmidt. Structured neural summarization. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=H1ersoRqtm.",
+            "url": "https://openreview.net/forum?id=H1ersoRqtm",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fernandes%2C%20Patrick%20Allamanis%2C%20Miltiadis%20Brockschmidt%2C%20Marc%20Structured%20neural%20summarization%202019"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics, pages 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Hochreiter_1780_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Comput., 9(8):1735\u2013 1780, November 1997. ISSN 0899-7667. doi:10.1162/neco.1997.9.8.1735. URL http://dx.doi.org/10.1162/neco.1997.9.8.1735.",
+            "crossref": "https://dx.doi.org/10.1162/neco.1997.9.8.1735",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1162/neco.1997.9.8.1735"
+        },
+        {
+            "id": "Hu_et+al_2018_a",
+            "entry": "Xing Hu, Ge Li, Xin Xia, David Lo, and Zhi Jin. Deep code comment generation. In Proceedings of the 26th Conference on Program Comprehension, pages 200\u2013210. ACM, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Xing%20Li%2C%20Ge%20Xia%2C%20Xin%20Lo%2C%20David%20Deep%20code%20comment%20generation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Xing%20Li%2C%20Ge%20Xia%2C%20Xin%20Lo%2C%20David%20Deep%20code%20comment%20generation%202018"
+        },
+        {
+            "id": "Iyer_et+al_2016_a",
+            "entry": "Srinivasan Iyer, Ioannis Konstas, Alvin Cheung, and Luke Zettlemoyer. Summarizing source code using a neural attention model. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics, ACL 2016, August 7-12, 2016, Berlin, Germany, Volume 1: Long Papers, 2016. URL http://aclweb.org/anthology/P/P16/P16-1195.pdf.",
+            "url": "http://aclweb.org/anthology/P/P16/P16-1195.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Iyer%2C%20Srinivasan%20Konstas%2C%20Ioannis%20Cheung%2C%20Alvin%20Zettlemoyer%2C%20Luke%20Summarizing%20source%20code%20using%20a%20neural%20attention%20model%202016-08"
+        },
+        {
+            "id": "Klein_et+al_2017_a",
+            "entry": "G. Klein, Y. Kim, Y. Deng, J. Senellart, and A. M. Rush. OpenNMT: Open-Source Toolkit for Neural Machine Translation. ArXiv e-prints, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=G%20Klein%20Y%20Kim%20Y%20Deng%20J%20Senellart%20and%20A%20M%20Rush%20OpenNMT%20OpenSource%20Toolkit%20for%20Neural%20Machine%20Translation%20ArXiv%20eprints%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=G%20Klein%20Y%20Kim%20Y%20Deng%20J%20Senellart%20and%20A%20M%20Rush%20OpenNMT%20OpenSource%20Toolkit%20for%20Neural%20Machine%20Translation%20ArXiv%20eprints%202017"
+        },
+        {
+            "id": "Koehn_et+al_2007_a",
+            "entry": "Philipp Koehn, Hieu Hoang, Alexandra Birch, Chris Callison-Burch, Marcello Federico, Nicola Bertoldi, Brooke Cowan, Wade Shen, Christine Moran, Richard Zens, Chris Dyer, Ondrej Bojar, Alexandra Constantin, and Evan Herbst. Moses: Open source toolkit for statistical machine translation. In Proceedings of the 45th Annual Meeting of the ACL on Interactive Poster and Demonstration Sessions, ACL \u201907, pages 177\u2013180, Stroudsburg, PA, USA, 2007. Association for Computational Linguistics. URL http://dl.acm.org/citation.cfm?id=1557769.1557821.",
+            "url": "http://dl.acm.org/citation.cfm?id=1557769.1557821",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koehn%2C%20Philipp%20Hoang%2C%20Hieu%20Birch%2C%20Alexandra%20Callison-Burch%2C%20Chris%20Moses%3A%20Open%20source%20toolkit%20for%20statistical%20machine%20translation%202007"
+        },
+        {
+            "id": "Loyola_et+al_2017_a",
+            "entry": "Pablo Loyola, Edison Marrese-Taylor, and Yutaka Matsuo. A neural architecture for generating natural language descriptions from source code changes. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers), pages 287\u2013 292. Association for Computational Linguistics, 2017. doi:10.18653/v1/P17-2045. URL http://www.aclweb.org/anthology/P17-2045.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-2045",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-2045"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Thang Luong, Hieu Pham, and Christopher D. Manning. Effective approaches to attention-based neural machine translation. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing, EMNLP 2015, Lisbon, Portugal, September 17-21, 2015, pages 1412\u20131421, 2015. URL http://aclweb.org/anthology/D/D15/D15-1166.pdf.",
+            "url": "http://aclweb.org/anthology/D/D15/D15-1166.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015-09-17"
+        },
+        {
+            "id": "Murali_et+al_2017_a",
+            "entry": "Vijayaraghavan Murali, Swarat Chaudhuri, and Chris Jermaine. Bayesian sketch learning for program synthesis. CoRR, abs/1703.05698, 2017. URL http://arxiv.org/abs/1703.05698.",
+            "url": "http://arxiv.org/abs/1703.05698",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05698"
+        },
+        {
+            "id": "Nesterov_1983_a",
+            "entry": "Yurii E Nesterov. A method for solving the convex programming problem with convergence rate o (1/k 2). In Dokl. Akad. Nauk SSSR, volume 269, pages 543\u2013547, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nesterov%2C%20Yurii%20E.%20A%20method%20for%20solving%20the%20convex%20programming%20problem%20with%20convergence%20rate%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nesterov%2C%20Yurii%20E.%20A%20method%20for%20solving%20the%20convex%20programming%20problem%20with%20convergence%20rate%201983"
+        },
+        {
+            "id": "Oda_et+al_2015_a",
+            "entry": "Yusuke Oda, Hiroyuki Fudaba, Graham Neubig, Hideaki Hata, Sakriani Sakti, Tomoki Toda, and Satoshi Nakamura. Learning to generate pseudo-code from source code using statistical machine translation (t). In Automated Software Engineering (ASE), 2015 30th IEEE/ACM International Conference on, pages 574\u2013584. IEEE, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oda%2C%20Yusuke%20Fudaba%2C%20Hiroyuki%20Neubig%2C%20Graham%20Hata%2C%20Hideaki%20Learning%20to%20generate%20pseudo-code%20from%20source%20code%20using%20statistical%20machine%20translation%20%28t%29%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oda%2C%20Yusuke%20Fudaba%2C%20Hiroyuki%20Neubig%2C%20Graham%20Hata%2C%20Hideaki%20Learning%20to%20generate%20pseudo-code%20from%20source%20code%20using%20statistical%20machine%20translation%20%28t%29%202015"
+        },
+        {
+            "id": "Piech_et+al_2015_a",
+            "entry": "Chris Piech, Jonathan Huang, Andy Nguyen, Mike Phulsuksombati, Mehran Sahami, and Leonidas Guibas. Learning program embeddings to propagate feedback on student code. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning - Volume 37, ICML\u201915, pages 1093\u20131102. JMLR.org, 2015. URL http://dl.acm.org/citation.cfm?id=3045118.3045235.",
+            "url": "http://dl.acm.org/citation.cfm?id=3045118.3045235",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Piech%2C%20Chris%20Huang%2C%20Jonathan%20Nguyen%2C%20Andy%20Phulsuksombati%2C%20Mike%20Learning%20program%20embeddings%20to%20propagate%20feedback%20on%20student%20code%202015"
+        },
+        {
+            "id": "Rabinovich_et+al_2017_a",
+            "entry": "Maxim Rabinovich, Mitchell Stern, and Dan Klein. Abstract syntax networks for code generation and semantic parsing. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 1139\u20131149. Association for Computational Linguistics, 2017. doi:10.18653/v1/P17-1105. URL http://www.aclweb.org/anthology/P17-1105.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-1105",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-1105"
+        },
+        {
+            "id": "Raychev_et+al_2014_a",
+            "entry": "Veselin Raychev, Martin Vechev, and Eran Yahav. Code completion with statistical language models. SIGPLAN Not., 49(6):419\u2013428, June 2014. ISSN 0362-1340. doi:10.1145/2666356.2594321. URL http://doi.acm.org/10.1145/2666356.2594321.",
+            "crossref": "https://dx.doi.org/10.1145/2666356.2594321",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2666356.2594321"
+        },
+        {
+            "id": "Raychev_et+al_2015_a",
+            "entry": "Veselin Raychev, Martin Vechev, and Andreas Krause. Predicting program properties from \u201dbig code\u201d. In Proceedings of the 42Nd Annual ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages, POPL \u201915, pages 111\u2013124, New York, NY, USA, 2015. ACM. ISBN 978-1-4503-3300-9. doi:10.1145/2676726.2677009. URL http://doi.acm.org/10.1145/2676726.2677009.",
+            "crossref": "https://dx.doi.org/10.1145/2676726.2677009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2676726.2677009"
+        },
+        {
+            "id": "Raychev_et+al_2016_a",
+            "entry": "Veselin Raychev, Pavol Bielik, and Martin Vechev. Probabilistic model for code with decision trees. In Proceedings of the 2016 ACM SIGPLAN International Conference on Object-Oriented Programming, Systems, Languages, and Applications, OOPSLA 2016, pages 731\u2013747, New York, NY, USA, 2016. ACM. ISBN 978-1-4503-4444-9. doi:10.1145/2983990.2984041. URL http://doi.acm.org/10.1145/2983990.2984041.",
+            "crossref": "https://dx.doi.org/10.1145/2983990.2984041",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2983990.2984041"
+        },
+        {
+            "id": "Rubinstein_1999_a",
+            "entry": "Reuven Rubinstein. The cross-entropy method for combinatorial and continuous optimization. Methodology and Computing in Applied Probability, 1(2):127\u2013190, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubinstein%2C%20Reuven%20The%20cross-entropy%20method%20for%20combinatorial%20and%20continuous%20optimization%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rubinstein%2C%20Reuven%20The%20cross-entropy%20method%20for%20combinatorial%20and%20continuous%20optimization%201999"
+        },
+        {
+            "id": "Rubinstein_2001_a",
+            "entry": "Reuven Y Rubinstein. Combinatorial optimization, cross-entropy, ants and rare events. Stochastic Optimization: Algorithms and Applications, 54:303\u2013363, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubinstein%2C%20Reuven%20Y.%20Combinatorial%20optimization%2C%20cross-entropy%2C%20ants%20and%20rare%20events%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rubinstein%2C%20Reuven%20Y.%20Combinatorial%20optimization%2C%20cross-entropy%2C%20ants%20and%20rare%20events%202001"
+        },
+        {
+            "id": "Rush_et+al_2015_a",
+            "entry": "Alexander M. Rush, Sumit Chopra, and Jason Weston. A neural attention model for abstractive sentence summarization. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing, EMNLP 2015, Lisbon, Portugal, September 17-21, 2015, pages 379\u2013389, 2015. URL http://aclweb.org/anthology/D/D15/D15-1044.pdf.",
+            "url": "http://aclweb.org/anthology/D/D15/D15-1044.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015-09-17"
+        },
+        {
+            "id": "Sennrich_et+al_2016_a",
+            "entry": "Rico Sennrich, Barry Haddow, and Alexandra Birch. Neural machine translation of rare words with subword units. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 1715\u20131725, Berlin, Germany, August 2016. Association for Computational Linguistics. URL http://www.aclweb.org/anthology/ P16-1162.",
+            "url": "http://www.aclweb.org/anthology/P16-1162",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202016-08"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey E Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: a simple way to prevent neural networks from overfitting. Journal of Machine Learning Research, 15(1):1929\u20131958, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20E.%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20a%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20E.%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20a%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In Advances in Neural Information Processing Systems, pages 3104\u20133112, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Tai_et+al_2015_a",
+            "entry": "Kai Sheng Tai, Richard Socher, and Christopher D. Manning. Improved semantic representations from tree-structured long short-term memory networks. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers), pages 1556\u20131566. Association for Computational Linguistics, 2015. doi:10.3115/v1/P15-1150. URL http://aclweb.org/anthology/P15-1150.",
+            "crossref": "https://dx.doi.org/10.3115/v1/P15-1150",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3115/v1/P15-1150"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pages 6000\u20136010, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pages%2060006010%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pages%2060006010%202017"
+        },
+        {
+            "id": "Yin_2017_a",
+            "entry": "Pengcheng Yin and Graham Neubig. A syntactic neural model for general-purpose code generation. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 440\u2013450. Association for Computational Linguistics, 2017. doi:10.18653/v1/P17-1041. URL http://www.aclweb.org/anthology/P17-1041.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-1041",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-1041"
+        }
+    ]
+}

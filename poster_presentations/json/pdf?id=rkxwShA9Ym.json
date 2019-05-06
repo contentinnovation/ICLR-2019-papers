@@ -1,0 +1,268 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LABEL SUPER-RESOLUTION NETWORKS",
+        "author": "Kolya Malkin, Caleb Robinson, Le Hou, Rachel Soobitsky, Dimitris Samaras, Joel Saltz, Lucas Joppa, Nebojsa Jojic",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkxwShA9Ym"
+        },
+        "abstract": "We present a deep learning-based method for super-resolving coarse (lowresolution) labels assigned to groups of image pixels into pixel-level (highresolution) labels, given the joint distribution between those low- and highresolution labels. This method involves a novel loss function that minimizes the distance between a distribution determined by a set of model outputs and the corresponding distribution given by low-resolution labels over the same set of outputs. This setup does not require that the high-resolution classes match the lowresolution classes and can be used in high-resolution semantic segmentation tasks where high-resolution labeled data is not available. Furthermore, our proposed method is able to utilize both data with low-resolution labels and any available high-resolution labels, which we show improves performance compared to a network trained only with the same amount of high-resolution data. We test our proposed algorithm in a challenging land cover mapping task to super-resolve labels at a 30m resolution to a separate set of labels at a 1m resolution. We compare our algorithm with models that are trained on high-resolution data and show that 1) we can achieve similar performance using only low-resolution data; and 2) we can achieve better performance when we incorporate a small amount of highresolution data in our training. We also test our approach on a medical imaging problem, resolving low-resolution probability maps into high-resolution segmentation of lymphocytes with accuracy equal to that of fully supervised models."
+    },
+    "keywords": [
+        {
+            "term": "land cover",
+            "url": "https://en.wikipedia.org/wiki/land_cover"
+        },
+        {
+            "term": "ground truth",
+            "url": "https://en.wikipedia.org/wiki/ground_truth"
+        },
+        {
+            "term": "joint distribution",
+            "url": "https://en.wikipedia.org/wiki/joint_distribution"
+        },
+        {
+            "term": "lymphocytes",
+            "url": "https://en.wikipedia.org/wiki/lymphocytes"
+        },
+        {
+            "term": "super resolution",
+            "url": "https://en.wikipedia.org/wiki/super_resolution"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "pathology",
+            "url": "https://en.wikipedia.org/wiki/pathology"
+        }
+    ],
+    "abbreviations": {
+        "NLCD": "National Land Cover Database",
+        "TILs": "tumor infiltrating lymphocytes"
+    },
+    "highlights": [
+        "N }, are defined for sets of pixels in the input images, where we are given the joint distribution P (Y, Z) between the accessory class labels and the application labels",
+        "Semantic image segmentation is the task of labeling each pixel in an input image X = {xij} as belonging to one of L fine-scale application classes, Y = {yij}, y \u2208 {1, . . . , L}",
+        "In Figure 1, a high-resolution aerial image is shown alongside the low-resolution ground truth land cover map and the target high-resolution version",
+        "We separately report overall results and results in National Land Cover Database blocks labeled with \u201cDeveloped\u201d low-resolution classes, which are the main source of errors for all models",
+        "A testing image patch is classified as lymphocyte/non-lymphocyte by our method if its center pixel is segmented as lymphocyte/non-lymphocyte respectively",
+        "We proposed a label super-resolution network which is capable of deriving high-resolution labels, given low-resolution labels that do not necessarily match the targeting high-resolution labels in a one-to-one manner \u2013 we only assume that the joint distribution between the low-resolution and highresolution classes is known"
+    ],
+    "key_statements": [
+        "N }, are defined for sets of pixels in the input images, where we are given the joint distribution P (Y, Z) between the accessory class labels and the application labels",
+        "Semantic image segmentation is the task of labeling each pixel in an input image X = {xij} as belonging to one of L fine-scale application classes, Y = {yij}, y \u2208 {1, . . . , L}",
+        "A training image X is divided into K sets Bk, each with an accessory class label zk, and our models are trained to produce the high-resolution application labels yij",
+        "In Figure 1, a high-resolution aerial image is shown alongside the low-resolution ground truth land cover map and the target high-resolution version",
+        "As our first contribution, we propose a label super-resolution network which utilizes the distribution of high-resolution labels suggested by given low-resolution labels, based on visual cues in the input images, to derive high-resolution label predictions consistent to the input image",
+        "Our second contribution is that we evaluate our method extensively on the application of land cover segmentation and conclude that when there are not enough representative high-resolution training data, our method is much more robust than a model trained on high-resolution training data only, since our method utilizes more training data with weak labels",
+        "We separately report overall results and results in National Land Cover Database blocks labeled with \u201cDeveloped\u201d low-resolution classes, which are the main source of errors for all models",
+        "We present quantitative results, obtained using the lymphocyte classification dataset, in Table 2",
+        "A testing image patch is classified as lymphocyte/non-lymphocyte by our method if its center pixel is segmented as lymphocyte/non-lymphocyte respectively",
+        "We proposed a label super-resolution network which is capable of deriving high-resolution labels, given low-resolution labels that do not necessarily match the targeting high-resolution labels in a one-to-one manner \u2013 we only assume that the joint distribution between the low-resolution and highresolution classes is known"
+    ],
+    "summary": [
+        "N }, are defined for sets of pixels in the input images, where we are given the joint distribution P (Y, Z) between the accessory class labels and the application labels.",
+        "A training image X is divided into K sets Bk, each with an accessory class label zk, and our models are trained to produce the high-resolution application labels yij.",
+        "As low-resolution labels are much easier to collect, and exist over a much wider geographic area in our land cover mapping application, the ability to combine low- and high-resolution labels is an important feature of our proposed methods.",
+        "Our super-resolution model trained on coarse labels performs the same as a lymphocyte classifier trained with high-resolution supervision (<a class=\"ref-link\" id=\"cHou_et+al_2018_a\" href=\"#rHou_et+al_2018_a\">Hou et al (2018</a>)).",
+        "Pixel-level labeled data is typically expensive to produce, as is the case of high resolution land cover mapping where high-resolution labels only exist for limited geographic regions.",
+        "The coarse labels z provide statistical descriptions for each block pcoarse({c }|z), while the label counting modules produce distributions over what the segmentation network sees in the block given the high-res input image X, pnet({c }|X).",
+        "In practical settings it is often the case that a small amount of high-resolution labels exist, as is the case with the land cover data from the Chesapeake Conservancy.",
+        "We use a U-Net architecture as our core segmentation model, and derive the parameters of the joint distributions between accessory and application labels (\u03b7 ,z, \u03c12,z) used in super-res model training from pairs from the Maryland 2013 training set as the true means and variances of the frequencies of high-res label in blocks of low-res class z.",
+        "The SR-only model, not given high-res guidance, often produces segmentation that better match the true color segments and fine features of the images \u2013 see Fig. 4, an example from Maryland 2013).",
+        "We use these probability heatmaps as low-resolution ground truth labels and super-resolve them into high-resolution lymphocyte segmentation.",
+        "We proposed a label super-resolution network which is capable of deriving high-resolution labels, given low-resolution labels that do not necessarily match the targeting high-resolution labels in a one-to-one manner \u2013 we only assume that the joint distribution between the low-resolution and highresolution classes is known.",
+        "We applied our method in two real-world applications where high res labels are very expensive to obtain compared to low res labels, and achieved similar or better results compared to the conventional fully supervised methods trained on high-resolution labels.",
+        "We show how combining low and high res labels leads to better generalization to out-of-sample test sets"
+    ],
+    "headline": "We present a deep learning-based method for super-resolving coarse labels assigned to groups of image pixels into pixel-level labels, given the joint distribution between those low- and highresolution labels",
+    "reference_links": [
+        {
+            "id": "Badrinarayanan_et+al_2017_a",
+            "entry": "Vijay Badrinarayanan, Alex Kendall, and Roberto Cipolla. Segnet: A deep convolutional encoderdecoder architecture for image segmentation. IEEE Transactions on Pattern Analysis & Machine Intelligence, (12):2481\u20132495, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Badrinarayanan%2C%20Vijay%20Kendall%2C%20Alex%20Cipolla%2C%20Roberto%20Segnet%3A%20A%20deep%20convolutional%20encoderdecoder%20architecture%20for%20image%20segmentation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Badrinarayanan%2C%20Vijay%20Kendall%2C%20Alex%20Cipolla%2C%20Roberto%20Segnet%3A%20A%20deep%20convolutional%20encoderdecoder%20architecture%20for%20image%20segmentation%202017"
+        },
+        {
+            "id": "Barnes_et+al_2018_a",
+            "entry": "Michael Barnes, Anindya Sarkar, Rachel Redman, Charles Bechert, and Chukka Srinivas. Development of a histology-based digital pathology image analysis algorithm for assessment of tumor infiltrating lymphocytes in her2+ breast cancer. Cancer Research, 2018. URL http://cancerres.aacrjournals.org/content/78/4_Supplement/P5-03-08.",
+            "url": "http://cancerres.aacrjournals.org/content/78/4_Supplement/P5-03-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barnes%2C%20Michael%20Sarkar%2C%20Anindya%20Redman%2C%20Rachel%20Bechert%2C%20Charles%20Development%20of%20a%20histology-based%20digital%20pathology%20image%20analysis%20algorithm%20for%20assessment%20of%20tumor%20infiltrating%20lymphocytes%20in%20her2%2B%20breast%20cancer%202018"
+        },
+        {
+            "id": "Chih-Chung_2011_a",
+            "entry": "Chih-Chung Chang and Chih-Jen Lin. Libsvm: a library for support vector machines. ACM transactions on intelligent systems and technology (TIST), 2(3):27, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChihChung%20Chang%20and%20ChihJen%20Lin%20Libsvm%20a%20library%20for%20support%20vector%20machines%20ACM%20transactions%20on%20intelligent%20systems%20and%20technology%20TIST%202327%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=ChihChung%20Chang%20and%20ChihJen%20Lin%20Libsvm%20a%20library%20for%20support%20vector%20machines%20ACM%20transactions%20on%20intelligent%20systems%20and%20technology%20TIST%202327%202011"
+        },
+        {
+            "id": "Chen_et+al_2015_a",
+            "entry": "Liang-Chieh Chen, George Papandreou, Iasonas Kokkinos, Kevin Murphy, and Alan Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Liang-Chieh%20Papandreou%2C%20George%20Kokkinos%2C%20Iasonas%20Murphy%2C%20Kevin%20Semantic%20image%20segmentation%20with%20deep%20convolutional%20nets%20and%20fully%20connected%20crfs%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Liang-Chieh%20Papandreou%2C%20George%20Kokkinos%2C%20Iasonas%20Murphy%2C%20Kevin%20Semantic%20image%20segmentation%20with%20deep%20convolutional%20nets%20and%20fully%20connected%20crfs%202015"
+        },
+        {
+            "id": "Conservancy_2016_a",
+            "entry": "Chesapeake Bay Conservancy. High resolution lulc classification accuracy assessment methodology, 2016. URL https://www.chesapeakebay.net/channel_files/24793/lulcaccuracyassessment_detailed_methodology.pdf.[Online].",
+            "url": "https://www.chesapeakebay.net/channel_files/24793/lulcaccuracyassessment_detailed_methodology.pdf.[Online]",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conservancy%2C%20Chesapeake%20Bay%20High%20resolution%20lulc%20classification%20accuracy%20assessment%202016"
+        },
+        {
+            "id": "Conservancy_2017_a",
+            "entry": "Chesapeake Bay Conservancy. Land cover data project, January 2017. URL https://chesapeakeconservancy.org/wp-content/uploads/2017/01/ LandCover101Guide.pdf.[Online].",
+            "url": "https://chesapeakeconservancy.org/wp-content/uploads/2017/01/LandCover101Guide.pdf.[Online]"
+        },
+        {
+            "id": "Cordts_et+al_2016_a",
+            "entry": "Marius Cordts, Mohamed Omran, Sebastian Ramos, Timo Rehfeld, Markus Enzweiler, Rodrigo Benenson, Uwe Franke, Stefan Roth, and Bernt Schiele. The cityscapes dataset for semantic urban scene understanding. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 3213\u20133223, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016"
+        },
+        {
+            "id": "Dai_et+al_2015_a",
+            "entry": "Jifeng Dai, Kaiming He, and Jian Sun. Boxsup: Exploiting bounding boxes to supervise convolutional networks for semantic segmentation. In Proceedings of the IEEE International Conference on Computer Vision, pp. 1635\u20131643, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Jifeng%20He%2C%20Kaiming%20Sun%2C%20Jian%20Boxsup%3A%20Exploiting%20bounding%20boxes%20to%20supervise%20convolutional%20networks%20for%20semantic%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Jifeng%20He%2C%20Kaiming%20Sun%2C%20Jian%20Boxsup%3A%20Exploiting%20bounding%20boxes%20to%20supervise%20convolutional%20networks%20for%20semantic%20segmentation%202015"
+        },
+        {
+            "id": "Alex_2018_a",
+            "entry": "Alex Davydow, OU Neuromation, and Sergey Nikolenko. Land cover classification with superpixels and jaccard index post-optimization. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alex%20Davydow%2C%20O.U.Neuromation%20Nikolenko%2C%20Sergey%20Land%20cover%20classification%20with%20superpixels%20and%20jaccard%20index%20post-optimization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alex%20Davydow%2C%20O.U.Neuromation%20Nikolenko%2C%20Sergey%20Land%20cover%20classification%20with%20superpixels%20and%20jaccard%20index%20post-optimization%202018"
+        },
+        {
+            "id": "Demir_et+al_2018_a",
+            "entry": "Ilke Demir, Krzysztof Koperski, David Lindenbaum, Guan Pang, Jing Huang, Saikat Basu, Forest Hughes, Devis Tuia, and Ramesh Raskar. Deepglobe 2018: A challenge to parse the earth through satellite images. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ilke%20Demir%20Krzysztof%20Koperski%20David%20Lindenbaum%20Guan%20Pang%20Jing%20Huang%20Saikat%20Basu%20Forest%20Hughes%20Devis%20Tuia%20and%20Ramesh%20Raskar%20Deepglobe%202018%20A%20challenge%20to%20parse%20the%20earth%20through%20satellite%20images%20In%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20CVPR%20Workshops%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ilke%20Demir%20Krzysztof%20Koperski%20David%20Lindenbaum%20Guan%20Pang%20Jing%20Huang%20Saikat%20Basu%20Forest%20Hughes%20Devis%20Tuia%20and%20Ramesh%20Raskar%20Deepglobe%202018%20A%20challenge%20to%20parse%20the%20earth%20through%20satellite%20images%20In%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20CVPR%20Workshops%202018"
+        },
+        {
+            "id": "Finn_2008_a",
+            "entry": "Olivera J Finn. Cancer immunology. New England Journal of Medicine, 358(25):2704\u20132715, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Olivera%20J.%20Cancer%20immunology%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Olivera%20J.%20Cancer%20immunology%202008"
+        },
+        {
+            "id": "Homer_et+al_2015_a",
+            "entry": "Collin Homer, Jon Dewitz, Limin Yang, Suming Jin, Patrick Danielson, George Xian, John Coulston, Nathaniel Herold, James Wickham, and Kevin Megown. Completion of the 2011 national land cover database for the conterminous united states\u2013representing a decade of land cover change information. Photogrammetric Engineering & Remote Sensing, 81(5):345\u2013354, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collin%20Homer%20Jon%20Dewitz%20Limin%20Yang%20Suming%20Jin%20Patrick%20Danielson%20George%20Xian%20John%20Coulston%20Nathaniel%20Herold%20James%20Wickham%20and%20Kevin%20Megown%20Completion%20of%20the%202011%20national%20land%20cover%20database%20for%20the%20conterminous%20united%20statesrepresenting%20a%20decade%20of%20land%20cover%20change%20information%20Photogrammetric%20Engineering%20%20Remote%20Sensing%20815345354%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collin%20Homer%20Jon%20Dewitz%20Limin%20Yang%20Suming%20Jin%20Patrick%20Danielson%20George%20Xian%20John%20Coulston%20Nathaniel%20Herold%20James%20Wickham%20and%20Kevin%20Megown%20Completion%20of%20the%202011%20national%20land%20cover%20database%20for%20the%20conterminous%20united%20statesrepresenting%20a%20decade%20of%20land%20cover%20change%20information%20Photogrammetric%20Engineering%20%20Remote%20Sensing%20815345354%202015"
+        },
+        {
+            "id": "Hong_et+al_2015_a",
+            "entry": "Seunghoon Hong, Hyeonwoo Noh, and Bohyung Han. Decoupled deep neural network for semisupervised semantic segmentation. In Advances in neural information processing systems, pp. 1495\u20131503, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hong%2C%20Seunghoon%20Noh%2C%20Hyeonwoo%20Han%2C%20Bohyung%20Decoupled%20deep%20neural%20network%20for%20semisupervised%20semantic%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hong%2C%20Seunghoon%20Noh%2C%20Hyeonwoo%20Han%2C%20Bohyung%20Decoupled%20deep%20neural%20network%20for%20semisupervised%20semantic%20segmentation%202015"
+        },
+        {
+            "id": "Hou_et+al_2018_a",
+            "entry": "Le Hou, Vu Nguyen, Ariel B Kanevsky, Dimitris Samaras, Tahsin M Kurc, Tianhao Zhao, Rajarsi R Gupta, Yi Gao, Wenjin Chen, David Foran, et al. Sparse autoencoder for unsupervised nucleus detection and representation in histopathology images. Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hou%2C%20Le%20Nguyen%2C%20Vu%20Kanevsky%2C%20Ariel%20B.%20Samaras%2C%20Dimitris%20Sparse%20autoencoder%20for%20unsupervised%20nucleus%20detection%20and%20representation%20in%20histopathology%20images%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hou%2C%20Le%20Nguyen%2C%20Vu%20Kanevsky%2C%20Ariel%20B.%20Samaras%2C%20Dimitris%20Sparse%20autoencoder%20for%20unsupervised%20nucleus%20detection%20and%20representation%20in%20histopathology%20images%202018"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Jojic_2004_a",
+            "entry": "Nebojsa Jojic and Yaron Caspi. Capturing image structure with probabilistic index maps. In 2004 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jojic%2C%20Nebojsa%20Caspi%2C%20Yaron%20Capturing%20image%20structure%20with%20probabilistic%20index%20maps%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jojic%2C%20Nebojsa%20Caspi%2C%20Yaron%20Capturing%20image%20structure%20with%20probabilistic%20index%20maps%202004"
+        },
+        {
+            "id": "Jojic_et+al_2009_a",
+            "entry": "Nebojsa Jojic, Alessandro Perina, Marco Cristani, Vittorio Murino, and Brendan Frey. Stel component analysis: Modeling spatial correlations in image class structure. In 2009 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jojic%2C%20Nebojsa%20Perina%2C%20Alessandro%20Cristani%2C%20Marco%20Murino%2C%20Vittorio%20Stel%20component%20analysis%3A%20Modeling%20spatial%20correlations%20in%20image%20class%20structure%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jojic%2C%20Nebojsa%20Perina%2C%20Alessandro%20Cristani%2C%20Marco%20Murino%2C%20Vittorio%20Stel%20component%20analysis%3A%20Modeling%20spatial%20correlations%20in%20image%20class%20structure%202009"
+        },
+        {
+            "id": "Krahenbuhl_2011_a",
+            "entry": "Philipp Krahenbuhl and Vladlen Koltun. Efficient inference in fully connected crfs with gaussian edge potentials. In Advances in neural information processing systems, pp. 109\u2013117, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krahenbuhl%2C%20Philipp%20Koltun%2C%20Vladlen%20Efficient%20inference%20in%20fully%20connected%20crfs%20with%20gaussian%20edge%20potentials%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krahenbuhl%2C%20Philipp%20Koltun%2C%20Vladlen%20Efficient%20inference%20in%20fully%20connected%20crfs%20with%20gaussian%20edge%20potentials%202011"
+        },
+        {
+            "id": "Kuo_et+al_2018_a",
+            "entry": "Tzu-Sheng Kuo, Keng-Sen Tseng, Jia-Wei Yan, Yen-Cheng Liu, and Yu-Chiang Frank Wang. Deep aggregation net for land cover classification. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kuo%2C%20Tzu-Sheng%20Tseng%2C%20Keng-Sen%20Yan%2C%20Jia-Wei%20Liu%2C%20Yen-Cheng%20Deep%20aggregation%20net%20for%20land%20cover%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kuo%2C%20Tzu-Sheng%20Tseng%2C%20Keng-Sen%20Yan%2C%20Jia-Wei%20Liu%2C%20Yen-Cheng%20Deep%20aggregation%20net%20for%20land%20cover%20classification%202018"
+        },
+        {
+            "id": "Lempitsky_2010_a",
+            "entry": "Victor Lempitsky and Andrew Zisserman. Learning to count objects in images. In Advances in neural information processing systems, pp. 1324\u20131332, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lempitsky%2C%20Victor%20Zisserman%2C%20Andrew%20Learning%20to%20count%20objects%20in%20images%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lempitsky%2C%20Victor%20Zisserman%2C%20Andrew%20Learning%20to%20count%20objects%20in%20images%202010"
+        },
+        {
+            "id": "Papandreou_et+al_2015_a",
+            "entry": "George Papandreou, Liang-Chieh Chen, Kevin P Murphy, and Alan L Yuille. Weakly-and semisupervised learning of a deep convolutional network for semantic image segmentation. In Proceedings of the IEEE international conference on computer vision, pp. 1742\u20131750, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papandreou%2C%20George%20Chen%2C%20Liang-Chieh%20Murphy%2C%20Kevin%20P.%20Yuille%2C%20Alan%20L.%20Weakly-and%20semisupervised%20learning%20of%20a%20deep%20convolutional%20network%20for%20semantic%20image%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papandreou%2C%20George%20Chen%2C%20Liang-Chieh%20Murphy%2C%20Kevin%20P.%20Yuille%2C%20Alan%20L.%20Weakly-and%20semisupervised%20learning%20of%20a%20deep%20convolutional%20network%20for%20semantic%20image%20segmentation%202015"
+        },
+        {
+            "id": "Pathak_et+al_2015_a",
+            "entry": "Deepak Pathak, Philipp Krahenbuhl, and Trevor Darrell. Constrained convolutional neural networks for weakly supervised segmentation. In Proceedings of the IEEE international conference on computer vision, pp. 1796\u20131804, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pathak%2C%20Deepak%20Krahenbuhl%2C%20Philipp%20Darrell%2C%20Trevor%20Constrained%20convolutional%20neural%20networks%20for%20weakly%20supervised%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20Deepak%20Krahenbuhl%2C%20Philipp%20Darrell%2C%20Trevor%20Constrained%20convolutional%20neural%20networks%20for%20weakly%20supervised%20segmentation%202015"
+        },
+        {
+            "id": "Pohlen_et+al_2017_a",
+            "entry": "Tobias Pohlen, Alexander Hermans, Markus Mathias, and Bastian Leibe. Full-resolution residual networks for semantic segmentation in street scenes. In 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3309\u20133318. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pohlen%2C%20Tobias%20Hermans%2C%20Alexander%20Mathias%2C%20Markus%20Leibe%2C%20Bastian%20Full-resolution%20residual%20networks%20for%20semantic%20segmentation%20in%20street%20scenes%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pohlen%2C%20Tobias%20Hermans%2C%20Alexander%20Mathias%2C%20Markus%20Leibe%2C%20Bastian%20Full-resolution%20residual%20networks%20for%20semantic%20segmentation%20in%20street%20scenes%202017"
+        },
+        {
+            "id": "Saltz_et+al_2018_a",
+            "entry": "Joel Saltz, Rajarsi Gupta, Le Hou, Tahsin Kurc, Pankaj Singh, Vu Nguyen, Dimitris Samaras, Kenneth R Shroyer, Tianhao Zhao, Rebecca Batiste, et al. Spatial organization and molecular correlation of tumor-infiltrating lymphocytes using deep learning on pathology images. Cell reports, 23(1):181, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Saltz%2C%20Joel%20Gupta%2C%20Rajarsi%20Hou%2C%20Le%20Kurc%2C%20Tahsin%20Spatial%20organization%20and%20molecular%20correlation%20of%20tumor-infiltrating%20lymphocytes%20using%20deep%20learning%20on%20pathology%20images%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saltz%2C%20Joel%20Gupta%2C%20Rajarsi%20Hou%2C%20Le%20Kurc%2C%20Tahsin%20Spatial%20organization%20and%20molecular%20correlation%20of%20tumor-infiltrating%20lymphocytes%20using%20deep%20learning%20on%20pathology%20images%202018"
+        },
+        {
+            "id": "Seide_2016_a",
+            "entry": "Frank Seide and Amit Agarwal. Cntk: Microsoft\u2019s open-source deep-learning toolkit. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 2135\u20132135. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Seide%2C%20Frank%20Agarwal%2C%20Amit%20Cntk%3A%20Microsoft%E2%80%99s%20open-source%20deep-learning%20toolkit%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Seide%2C%20Frank%20Agarwal%2C%20Amit%20Cntk%3A%20Microsoft%E2%80%99s%20open-source%20deep-learning%20toolkit%202016"
+        },
+        {
+            "id": "Srivastava_et+al_2018_a",
+            "entry": "Shashank Srivastava, Igor Labutov, and Tom Mitchell. Zero-shot learning of classifiers from natural language quantification. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 306\u2013316, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Shashank%20Labutov%2C%20Igor%20Mitchell%2C%20Tom%20Zero-shot%20learning%20of%20classifiers%20from%20natural%20language%20quantification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Shashank%20Labutov%2C%20Igor%20Mitchell%2C%20Tom%20Zero-shot%20learning%20of%20classifiers%20from%20natural%20language%20quantification%202018"
+        },
+        {
+            "id": "Thorsson_et+al_2018_a",
+            "entry": "Vesteinn Thorsson, David L Gibbs, Scott D Brown, Denise Wolf, Dante S Bortone, Tai-Hsien Ou Yang, Eduard Porta-Pardo, Galen F Gao, Christopher L Plaisier, James A Eddy, et al. The immune landscape of cancer. Immunity, 48(4):812\u2013830, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vesteinn%20Thorsson%20David%20L%20Gibbs%20Scott%20D%20Brown%20Denise%20Wolf%20Dante%20S%20Bortone%20TaiHsien%20Ou%20Yang%20Eduard%20PortaPardo%20Galen%20F%20Gao%20Christopher%20L%20Plaisier%20James%20A%20Eddy%20et%20al%20The%20immune%20landscape%20of%20cancer%20Immunity%20484812830%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vesteinn%20Thorsson%20David%20L%20Gibbs%20Scott%20D%20Brown%20Denise%20Wolf%20Dante%20S%20Bortone%20TaiHsien%20Ou%20Yang%20Eduard%20PortaPardo%20Galen%20F%20Gao%20Christopher%20L%20Plaisier%20James%20A%20Eddy%20et%20al%20The%20immune%20landscape%20of%20cancer%20Immunity%20484812830%202018"
+        },
+        {
+            "id": "Tian_et+al_2018_a",
+            "entry": "Chao Tian, Cong Li, and Jianping Shi. Dense fusion classmate network for land cover classification. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tian%2C%20Chao%20Li%2C%20Cong%20Shi%2C%20Jianping%20Dense%20fusion%20classmate%20network%20for%20land%20cover%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tian%2C%20Chao%20Li%2C%20Cong%20Shi%2C%20Jianping%20Dense%20fusion%20classmate%20network%20for%20land%20cover%20classification%202018"
+        },
+        {
+            "id": "Winn_2005_a",
+            "entry": "John Winn and Nebojsa Jojic. Locus: Learning object classes with unsupervised segmentation. In Computer Vision, 2005. ICCV 2005. Tenth IEEE International Conference on, volume 1, pp. 756\u2013763. IEEE, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=John%20Winn%20and%20Nebojsa%20Jojic%20Locus%20Learning%20object%20classes%20with%20unsupervised%20segmentation%20In%20Computer%20Vision%202005%20ICCV%202005%20Tenth%20IEEE%20International%20Conference%20on%20volume%201%20pp%20756763%20IEEE%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=John%20Winn%20and%20Nebojsa%20Jojic%20Locus%20Learning%20object%20classes%20with%20unsupervised%20segmentation%20In%20Computer%20Vision%202005%20ICCV%202005%20Tenth%20IEEE%20International%20Conference%20on%20volume%201%20pp%20756763%20IEEE%202005"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Felix Yu, Dong Liu, Sanjiv Kumar, Jebara Tony, and Shih-Fu Chang. \u221d SVM for Learning with",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Felix%20Yu%20Dong%20Liu%20Sanjiv%20Kumar%20Jebara%20Tony%20and%20ShihFu%20Chang%20%20SVM%20for%20Learning%20with"
+        },
+        {
+            "id": "Proportions_2013_a",
+            "entry": "Label Proportions. In International Conference on Machine Learning, pp. 504\u2013512, 2013. Shanshan Zhang, Rodrigo Benenson, and Bernt Schiele. Citypersons: A diverse dataset for pedestrian detection. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), volume 1, pp. 3, 2017. Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. Learning deep features for discriminative localization. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 2921\u20132929, 2016. Naiyun Zhou, Xiaxia Yu, Tianhao Zhao, Si Wen, Fusheng Wang, Wei Zhu, Tahsin Kurc, Allen Tannenbaum, Joel Saltz, and Yi Gao. Evaluation of nucleus segmentation in digital pathology images through large scale image synthesis. In Medical Imaging 2017: Digital Pathology, volume 10140, pp. 101400K. International Society for Optics and Photonics, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Proportions%2C%20Label%20Citypersons%3A%20A%20diverse%20dataset%20for%20pedestrian%20detection%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Proportions%2C%20Label%20Citypersons%3A%20A%20diverse%20dataset%20for%20pedestrian%20detection%202013"
+        }
+    ]
+}

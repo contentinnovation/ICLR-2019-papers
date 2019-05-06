@@ -1,0 +1,205 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "SMOOTHING THE GEOMETRY OF PROBABILISTIC BOX EMBEDDINGS",
+        "author": "Xiang Li, Luke Vilnis, Dongxu Zhang, Michael Boratko & Andrew McCallum College of Information and Computer Sciences University of Massachusetts Amherst",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1xSNiRcF7"
+        },
+        "abstract": "There is growing interest in geometrically-inspired embeddings for learning hierarchies, partial orders, and lattice structures, with natural applications to transitive relational data such as entailment graphs. Recent work has extended these ideas beyond deterministic hierarchies to probabilistically calibrated models, which enable learning from uncertain supervision and inferring soft-inclusions among concepts, while maintaining the geometric inductive bias of hierarchical embedding models. We build on the Box Lattice model of Vilnis et al. (2018), which showed promising results in modeling soft-inclusions through an overlapping hierarchy of sets, parameterized as high-dimensional hyperrectangles (boxes). However, the hard edges of the boxes present difficulties for standard gradient based optimization; that work employed a special surrogate function for the disjoint case, but we find this method to be fragile. In this work, we present a novel hierarchical embedding model, inspired by a relaxation of box embeddings into parameterized density functions using Gaussian convolutions over the boxes. Our approach provides an alternative surrogate to the original lattice measure that improves the robustness of optimization in the disjoint case, while also preserving the desirable properties with respect to the original lattice. We demonstrate increased or matching performance on WordNet hypernymy prediction, Flickr caption entailment and a MovieLens-based market basket dataset. We show especially marked improvements in the case of sparse data, where many conditional probabilities should be low, and thus boxes should be nearly disjoint."
+    },
+    "keywords": [
+        {
+            "term": "partial order",
+            "url": "https://en.wikipedia.org/wiki/partial_order"
+        },
+        {
+            "term": "vector space",
+            "url": "https://en.wikipedia.org/wiki/vector_space"
+        },
+        {
+            "term": "order embedding",
+            "url": "https://en.wikipedia.org/wiki/order_embedding"
+        },
+        {
+            "term": "density function",
+            "url": "https://en.wikipedia.org/wiki/density_function"
+        },
+        {
+            "term": "ontologies",
+            "url": "https://en.wikipedia.org/wiki/ontologies"
+        },
+        {
+            "term": "inductive bias",
+            "url": "https://en.wikipedia.org/wiki/inductive_bias"
+        }
+    ],
+    "abbreviations": {
+        "BE": "Box embeddings",
+        "OE": "order embeddings",
+        "POE": "probabilistic order embeddings"
+    },
+    "highlights": [
+        "Embedding methods have long been a key technique in machine learning, providing a natural way to convert semantic problems into geometric problems",
+        "We focus on the probabilistic Box Lattice model of Vilnis et al (2018), because of its strong empirical performance in modeling transitive relations, probabilistic interpretation, and ability to model complex joint",
+        "When using gradient-based optimization to learn box embeddings, an immediate problem identified in the original work is that when two concepts are incorrectly given as disjoint by the model, no gradient signal can flow since the meet is exactly zero, with zero derivative",
+        "The intuition behind our approach is that the \u201chard edges\u201d of the standard box embeddings lead to unwanted gradient sparsity, and we seek a relaxation of this assumption that maintains the desirable properties of the base lattice model while enabling better optimization and preserving a geometric intuition",
+        "We presented an approach to smoothing the energy and optimization landscape of probabilistic box embeddings and provided a theoretical justification for the smoothing"
+    ],
+    "key_statements": [
+        "Embedding methods have long been a key technique in machine learning, providing a natural way to convert semantic problems into geometric problems",
+        "Embeddings experienced a renaissance after the publication of Word2Vec (<a class=\"ref-link\" id=\"cMikolov_et+al_2013_a\" href=\"#rMikolov_et+al_2013_a\">Mikolov et al, 2013</a>), a neural word embedding method (<a class=\"ref-link\" id=\"cBengio_et+al_2003_a\" href=\"#rBengio_et+al_2003_a\">Bengio et al, 2003</a>; <a class=\"ref-link\" id=\"cMnih_2009_a\" href=\"#rMnih_2009_a\">Mnih & Hinton, 2009</a>) that could run at massive scale",
+        "We focus on the probabilistic Box Lattice model of Vilnis et al (2018), because of its strong empirical performance in modeling transitive relations, probabilistic interpretation, and ability to model complex joint",
+        "When using gradient-based optimization to learn box embeddings, an immediate problem identified in the original work is that when two concepts are incorrectly given as disjoint by the model, no gradient signal can flow since the meet is exactly zero, with zero derivative",
+        "The intuition behind our approach is that the \u201chard edges\u201d of the standard box embeddings lead to unwanted gradient sparsity, and we seek a relaxation of this assumption that maintains the desirable properties of the base lattice model while enabling better optimization and preserving a geometric intuition",
+        "We presented an approach to smoothing the energy and optimization landscape of probabilistic box embeddings and provided a theoretical justification for the smoothing"
+    ],
+    "summary": [
+        "Embedding methods have long been a key technique in machine learning, providing a natural way to convert semantic problems into geometric problems.",
+        "We demonstrate the superiority of our approach to modeling transitive relations on WordNet, Flickr caption entailment, and a MovieLens-based market basket dataset.",
+        "Figure 1b demonstrates a toy, two-dimensional example of the Order Embedding vector lattice representation of a simple ontology.",
+        "Figure 1c demonstrates a toy, two-dimensional example of the Box Embedding lattice representation of a simple ontology.",
+        "When using gradient-based optimization to learn box embeddings, an immediate problem identified in the original work is that when two concepts are incorrectly given as disjoint by the model, no gradient signal can flow since the meet is exactly zero, with zero derivative.",
+        "The intuition behind our approach is that the \u201chard edges\u201d of the standard box embeddings lead to unwanted gradient sparsity, and we seek a relaxation of this assumption that maintains the desirable properties of the base lattice model while enabling better optimization and preserving a geometric intuition.",
+        "While equivalent in the zero temperature limit to the standard uniform probability measure of the box model, this function, like the Gaussian model, is not a valid probability measure on the entire joint space of events.",
+        "A comparison of the 3 different functions is given in Figure 3, with the softplus overlap showing much better behavior for highly disjoint boxes than the Gaussian model, while preserving the meet property.",
+        "The smoothed box model performs nearly as well as the original box lattice in terms of test accuracy1.",
+        "While our model requires less hyper-parameter tuning than the original, we suspect that our performance would be increased on a task with a higher degree of sparsity than the 50/50 positive/negative split of the standard WordNet data, which we explore .",
+        "In order to confirm our intuition that the smoothed box model performs better in the sparse regime, we perform further experiments using different numbers of positive and negative examples from the WordNet mammal subset, comparing the box lattice, our smoothed approach, and order embeddings (OE) as a baseline.",
+        "We compare with several baselines: low-rank matrix factorization, complex bilinear factorization (<a class=\"ref-link\" id=\"cTrouillon_et+al_2016_a\" href=\"#rTrouillon_et+al_2016_a\">Trouillon et al, 2016</a>), and two hierarchical embedding methods, POE (<a class=\"ref-link\" id=\"cLai_2017_a\" href=\"#rLai_2017_a\">Lai & Hockenmaier, 2017</a>) and the Box Lattice (Vilnis et al, 2018).",
+        "From the results in Table 7, we can see that our smoothed box embedding method outperforms the original box lattice as well as all other baselines\u2019 performances, especially in Spearman correlation, the most relevant metric for recommendation, a ranking task.",
+        "We will continue to explore both function lattices, and constraint-based approaches to learning"
+    ],
+    "headline": "The hard edges of the boxes present difficulties for standard gradient based optimization; that work employed a special surrogate function for the disjoint case, but we find this method to be fragile",
+    "reference_links": [
+        {
+            "id": "Athiwaratkun_2017_a",
+            "entry": "Ben Athiwaratkun and Andrew Gordon Wilson. Multimodal word distributions. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athiwaratkun%2C%20Ben%20Wilson%2C%20Andrew%20Gordon%20Multimodal%20word%20distributions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athiwaratkun%2C%20Ben%20Wilson%2C%20Andrew%20Gordon%20Multimodal%20word%20distributions%202017"
+        },
+        {
+            "id": "Athiwaratkun_2018_a",
+            "entry": "Ben Athiwaratkun and Andrew Gordon Wilson. Hierarchical density order embeddings. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=HJCXZQbAZ.",
+            "url": "https://openreview.net/forum?id=HJCXZQbAZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athiwaratkun%2C%20Ben%20Wilson%2C%20Andrew%20Gordon%20Hierarchical%20density%20order%20embeddings%202018"
+        },
+        {
+            "id": "Bengio_et+al_2003_a",
+            "entry": "Yoshua Bengio, Rejean Ducharme, Pascal Vincent, and Christian Jauvin. A neural probabilistic language model. Journal of machine learning research, 3(Feb):1137\u20131155, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Ducharme%2C%20Rejean%20Vincent%2C%20Pascal%20Jauvin%2C%20Christian%20A%20neural%20probabilistic%20language%20model%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Ducharme%2C%20Rejean%20Vincent%2C%20Pascal%20Jauvin%2C%20Christian%20A%20neural%20probabilistic%20language%20model%202003"
+        },
+        {
+            "id": "Bowling_et+al_2009_a",
+            "entry": "Shannon R Bowling, Mohammad T Khasawneh, Sittichai Kaewkuekool, and Byung R Cho. A logistic approximation to the cumulative normal distribution. Journal of Industrial Engineering and Management, 2(1), 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowling%2C%20Shannon%20R.%20Khasawneh%2C%20Mohammad%20T.%20Kaewkuekool%2C%20Sittichai%20Cho%2C%20Byung%20R.%20A%20logistic%20approximation%20to%20the%20cumulative%20normal%20distribution%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowling%2C%20Shannon%20R.%20Khasawneh%2C%20Mohammad%20T.%20Kaewkuekool%2C%20Sittichai%20Cho%2C%20Byung%20R.%20A%20logistic%20approximation%20to%20the%20cumulative%20normal%20distribution%202009"
+        },
+        {
+            "id": "Deerwester_et+al_1990_a",
+            "entry": "Scott Deerwester, Susan T Dumais, George W Furnas, Thomas K Landauer, and Richard Harshman. Indexing by latent semantic analysis. Journal of the American society for information science, 41 (6):391\u2013407, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deerwester%2C%20Scott%20Dumais%2C%20Susan%20T.%20Furnas%2C%20George%20W.%20Landauer%2C%20Thomas%20K.%20Indexing%20by%20latent%20semantic%20analysis%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deerwester%2C%20Scott%20Dumais%2C%20Susan%20T.%20Furnas%2C%20George%20W.%20Landauer%2C%20Thomas%20K.%20Indexing%20by%20latent%20semantic%20analysis%201990"
+        },
+        {
+            "id": "Ganea_et+al_2018_a",
+            "entry": "Octavian-Eugen Ganea, Gary Becigneul, and Thomas Hofmann. Hyperbolic entailment cones for learning hierarchical embeddings. ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ganea%2C%20Octavian-Eugen%20Becigneul%2C%20Gary%20Hofmann%2C%20Thomas%20Hyperbolic%20entailment%20cones%20for%20learning%20hierarchical%20embeddings%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganea%2C%20Octavian-Eugen%20Becigneul%2C%20Gary%20Hofmann%2C%20Thomas%20Hyperbolic%20entailment%20cones%20for%20learning%20hierarchical%20embeddings%202018"
+        },
+        {
+            "id": "Gulcehre_et+al_2016_a",
+            "entry": "Caglar Gulcehre, Marcin Moczulski, Misha Denil, and Yoshua Bengio. Noisy activation functions. In International Conference on Machine Learning, pp. 3059\u20133068, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulcehre%2C%20Caglar%20Moczulski%2C%20Marcin%20Denil%2C%20Misha%20Bengio%2C%20Yoshua%20Noisy%20activation%20functions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulcehre%2C%20Caglar%20Moczulski%2C%20Marcin%20Denil%2C%20Misha%20Bengio%2C%20Yoshua%20Noisy%20activation%20functions%202016"
+        },
+        {
+            "id": "Gulcehre_et+al_0000_a",
+            "entry": "Caglar Gulcehre, Marcin Moczulski, Francesco Visin, and Yoshua Bengio. Mollifying networks. arXiv preprint arXiv:1608.04980, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.04980"
+        },
+        {
+            "id": "Jebara_et+al_2004_a",
+            "entry": "Tony Jebara, Risi Kondor, and Andrew Howard. Probability product kernels. Journal of Machine Learning Research, 5(Jul):819\u2013844, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jebara%2C%20Tony%20Kondor%2C%20Risi%20Howard%2C%20Andrew%20Probability%20product%20kernels%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jebara%2C%20Tony%20Kondor%2C%20Risi%20Howard%2C%20Andrew%20Probability%20product%20kernels%202004"
+        },
+        {
+            "id": "Lai_2017_a",
+            "entry": "Alice Lai and Julia Hockenmaier. Learning to predict denotational probabilities for modeling entailment. In EACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lai%2C%20Alice%20Hockenmaier%2C%20Julia%20Learning%20to%20predict%20denotational%20probabilities%20for%20modeling%20entailment%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lai%2C%20Alice%20Hockenmaier%2C%20Julia%20Learning%20to%20predict%20denotational%20probabilities%20for%20modeling%20entailment%202017"
+        },
+        {
+            "id": "Solomon_1971_a",
+            "entry": "Solomon Leader. Measures on semilattices. Pacific Journal of Mathematics, 39(2):407\u2013423, 1971.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solomon%20Leader%20Measures%20on%20semilattices%20Pacific%20Journal%20of%20Mathematics%20392407423%201971",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Solomon%20Leader%20Measures%20on%20semilattices%20Pacific%20Journal%20of%20Mathematics%20392407423%201971"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Xiang Li, Luke Vilnis, and Andrew McCallum. Improved representation learning for predicting commonsense ontologies. NIPS Workshop on Structured Prediction, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Xiang%20Vilnis%2C%20Luke%20McCallum%2C%20Andrew%20Improved%20representation%20learning%20for%20predicting%20commonsense%20ontologies%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Xiang%20Vilnis%2C%20Luke%20McCallum%2C%20Andrew%20Improved%20representation%20learning%20for%20predicting%20commonsense%20ontologies%202017"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. Distributed representations of words and phrases and their compositionality. In NIPS, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013"
+        },
+        {
+            "id": "Mnih_2009_a",
+            "entry": "Andriy Mnih and Geoffrey E Hinton. A scalable hierarchical distributed language model. In Advances in neural information processing systems, pp. 1081\u20131088, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Andriy%20Hinton%2C%20Geoffrey%20E.%20A%20scalable%20hierarchical%20distributed%20language%20model%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Andriy%20Hinton%2C%20Geoffrey%20E.%20A%20scalable%20hierarchical%20distributed%20language%20model%202009"
+        },
+        {
+            "id": "Mobahi_2016_a",
+            "entry": "Hossein Mobahi. Training recurrent neural networks by diffusion. arXiv preprint arXiv:1601.04114, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1601.04114"
+        },
+        {
+            "id": "Neelakantan_et+al_2015_a",
+            "entry": "Arvind Neelakantan, Luke Vilnis, Quoc V Le, Ilya Sutskever, Lukasz Kaiser, Karol Kurach, and James Martens. Adding gradient noise improves learning for very deep networks. arXiv preprint arXiv:1511.06807, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06807"
+        },
+        {
+            "id": "Nickel_2017_a",
+            "entry": "Maximillian Nickel and Douwe Kiela. Poincareembeddings for learning hierarchical representations. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett (eds.), Advances in Neural Information Processing Systems 30, pp. 6338\u20136347. Curran Associates, Inc., 2017. URL http://papers.nips.cc/paper/7213-poincare-embeddings-for-learning-hierarchical-representations.pdf.",
+            "url": "http://papers.nips.cc/paper/7213-poincare-embeddings-for-learning-hierarchical-representations.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nickel%2C%20Maximillian%20Kiela%2C%20Douwe%20Poincareembeddings%20for%20learning%20hierarchical%20representations%202017"
+        },
+        {
+            "id": "Salton_et+al_1975_a",
+            "entry": "Gerard Salton, Anita Wong, and Chung-Shu Yang. A vector space model for automatic indexing. Communications of the ACM, 18(11):613\u2013620, 1975.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salton%2C%20Gerard%20Wong%2C%20Anita%20Yang%2C%20Chung-Shu%20A%20vector%20space%20model%20for%20automatic%20indexing%201975",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salton%2C%20Gerard%20Wong%2C%20Anita%20Yang%2C%20Chung-Shu%20A%20vector%20space%20model%20for%20automatic%20indexing%201975"
+        },
+        {
+            "id": "Subramanian_2018_a",
+            "entry": "Sandeep Subramanian and Soumen Chakrabarti. New embedded representations and evaluation protocols for inferring transitive relations. SIGIR 2018, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Subramanian%2C%20Sandeep%20Chakrabarti%2C%20Soumen%20New%20embedded%20representations%20and%20evaluation%20protocols%20for%20inferring%20transitive%20relations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Subramanian%2C%20Sandeep%20Chakrabarti%2C%20Soumen%20New%20embedded%20representations%20and%20evaluation%20protocols%20for%20inferring%20transitive%20relations%202018"
+        },
+        {
+            "id": "Trouillon_et+al_2016_a",
+            "entry": "Theo Trouillon, Johannes Welbl, Sebastian Riedel, Eric Gaussier, and Guillaume Bouchard. Complex embeddings for simple link prediction. In International Conference on Machine Learning, pp. 2071\u20132080, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Trouillon%2C%20Theo%20Welbl%2C%20Johannes%20Riedel%2C%20Sebastian%20Gaussier%2C%20Eric%20Complex%20embeddings%20for%20simple%20link%20prediction%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Trouillon%2C%20Theo%20Welbl%2C%20Johannes%20Riedel%2C%20Sebastian%20Gaussier%2C%20Eric%20Complex%20embeddings%20for%20simple%20link%20prediction%202016"
+        },
+        {
+            "id": "Vendrov_et+al_2016_a",
+            "entry": "Ivan Vendrov, Ryan Kiros, Sanja Fidler, and Raquel Urtasun. Order-embeddings of images and language. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ivan%20Vendrov%20Ryan%20Kiros%20Sanja%20Fidler%20and%20Raquel%20Urtasun%20Orderembeddings%20of%20images%20and%20language%20In%20ICLR%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ivan%20Vendrov%20Ryan%20Kiros%20Sanja%20Fidler%20and%20Raquel%20Urtasun%20Orderembeddings%20of%20images%20and%20language%20In%20ICLR%202016"
+        },
+        {
+            "id": "Vilnis_2015_a",
+            "entry": "Luke Vilnis and Andrew McCallum. Word representations via gaussian embedding. In ICLR, 2015. Luke Vilnis, Xiang Li, Shikhar Murty, and Andrew McCallum. Probabilistic embedding of knowledge graphs with box lattice measures. In ACL. Association for Computational Linguistics, 2018. Adriaan C. Zaanen. Introduction to Operator Theory in Riesz Spaces. Springer Berlin Heidelberg, 1997. ISBN 9783642644870.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vilnis%2C%20Luke%20McCallum%2C%20Andrew%20Word%20representations%20via%20gaussian%20embedding%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vilnis%2C%20Luke%20McCallum%2C%20Andrew%20Word%20representations%20via%20gaussian%20embedding%202015"
+        }
+    ]
+}

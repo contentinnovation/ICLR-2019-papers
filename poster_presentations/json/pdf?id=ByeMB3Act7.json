@@ -1,0 +1,249 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO SCREEN FOR FAST SOFTMAX INFERENCE ON LARGE VOCABULARY NEURAL NETWORKS",
+        "author": "Pei-Hung (Patrick) Chen, Si Si, Sanjiv Kumar, Yang Li, Cho-Jui Hsieh, 1Department of Computer Science, University of California, Los Angeles 2Google Research patrickchen@g.ucla.edu, {sisidaisy,sanjivk,liyang}@google.com, chohsieh@cs.ucla.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ByeMB3Act7"
+        },
+        "abstract": "Neural language models have been widely used in various NLP tasks, including machine translation, next word prediction and conversational agents. However, it is challenging to deploy these models on mobile devices due to their slow prediction speed, where the bottleneck is to compute top candidates in the softmax layer. In this paper, we introduce a novel softmax layer approximation algorithm by exploiting the clustering structure of context vectors. Our algorithm uses a light-weight screening model to predict a much smaller set of candidate words based on the given context, and then conducts an exact softmax only within that subset. Training such a procedure end-to-end is challenging as traditional clustering methods are discrete and non-differentiable, and thus unable to be used with back-propagation in the training process. Using the Gumbel softmax, we are able to train the screening model end-to-end on the training set to exploit data distribution. The algorithm achieves an order of magnitude faster inference than the original softmax layer for predicting top-k words in various tasks such as beam search in machine translation or next words prediction. For example, for machine translation task on German to English dataset with around 25K vocabulary, we can achieve 20.4 times speed up with 98.9% precision@1 and 99.3% precision@5 with the original softmax layer prediction, while state-of-the-art (<a class=\"ref-link\" id=\"cZhang_et+al_2018_a\" href=\"#rZhang_et+al_2018_a\">Zhang et al., 2018</a>) only achieves 6.7x speedup with 98.7% precision@1 and 98.1% precision@5 for the same task."
+    },
+    "keywords": [
+        {
+            "term": "language model",
+            "url": "https://en.wikipedia.org/wiki/language_model"
+        },
+        {
+            "term": "Language Modeling",
+            "url": "https://en.wikipedia.org/wiki/Language_Modeling"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "natural language processing",
+            "url": "https://en.wikipedia.org/wiki/natural_language_processing"
+        },
+        {
+            "term": "Locality Sensitive Hashing",
+            "url": "https://en.wikipedia.org/wiki/Locality_Sensitive_Hashing"
+        }
+    ],
+    "abbreviations": {
+        "NLP": "natural language processing",
+        "MIPS": "Maximum Inner Product Search",
+        "NNS": "Nearest Neighbor Search",
+        "LSH": "Locality Sensitive Hashing",
+        "LM": "Language Modeling",
+        "NMT": "Neural Machine Translation",
+        "PTB": "Penn Treebank Bank"
+    },
+    "highlights": [
+        "Neural networks have been widely used in many natural language processing (NLP) tasks, including neural machine translation (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>), text summarization (<a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\"><a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\">Rush et al, 2015</a></a>) and dialogue systems (<a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\"><a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a></a>)",
+        "For natural language processing tasks, there are two previous attempts to speed up softmax layer prediction time. (<a class=\"ref-link\" id=\"cShim_et+al_2017_a\" href=\"#rShim_et+al_2017_a\">Shim et al, 2017</a>) proposed to approximate the weight matrix in the softmax layer with singular value decomposition, find a smaller candidate set based on the approximate logits, and do a finegrained search within the subset. (<a class=\"ref-link\" id=\"cZhang_et+al_2018_a\" href=\"#rZhang_et+al_2018_a\">Zhang et al, 2018</a>) transformed Maximum Inner Product Search to Nearest Neighbor Search and applied graphbased Nearest Neighbor Search algorithm to speed up softmax",
+        "We evaluate our method on two tasks: Language Modeling (LM) and Neural Machine Translation (NMT)",
+        "Since our focus is to speedup the softmax layer which is known to be the bottleneck of natural language processing tasks with large vocabulary, we only report the prediction time results for the softmax layer in all the experiments",
+        "We proposed a new algorithm for fast softmax inference on large vocabulary neural language models",
+        "We show that the proposed algorithm achieves much better inference speedup than stateof-the-art algorithms for language model and machine translation tasks"
+    ],
+    "key_statements": [
+        "Neural networks have been widely used in many natural language processing (NLP) tasks, including neural machine translation (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>), text summarization (<a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\"><a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\">Rush et al, 2015</a></a>) and dialogue systems (<a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\"><a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a></a>)",
+        "Only top-k candidates are needed, for example in neural machine translation where k corresponds to the search beam size",
+        "The softmax layer has become the computational bottleneck in many natural language processing applications at inference time",
+        "To narrow down the search space, we first develop a light-weight screening model to predict the subset of words that are more likely to belong to top-k candidates, and conduct an exact softmax only within the subset",
+        "We propose a screening model to exploit the clustering structure of context features",
+        "We propose to form a joint optimization problem to learn both screening model for clustering as well as the candidate label set inside each cluster simultaneously",
+        "For natural language processing tasks, there are two previous attempts to speed up softmax layer prediction time. (<a class=\"ref-link\" id=\"cShim_et+al_2017_a\" href=\"#rShim_et+al_2017_a\">Shim et al, 2017</a>) proposed to approximate the weight matrix in the softmax layer with singular value decomposition, find a smaller candidate set based on the approximate logits, and do a finegrained search within the subset. (<a class=\"ref-link\" id=\"cZhang_et+al_2018_a\" href=\"#rZhang_et+al_2018_a\">Zhang et al, 2018</a>) transformed Maximum Inner Product Search to Nearest Neighbor Search and applied graphbased Nearest Neighbor Search algorithm to speed up softmax",
+        "How to learn the clustering parameter {vt}tr=1 and the candidate sets {ct}tr=1? We found that running spherical kmeans on all the context vectors in the training set can lead to reasonable results, but can we learn even parameters to minimize the prediction error? In the following, we propose an end-to-end procedure to learn both context clusters and candidate subsets simultaneously to maximize the performance",
+        "The top-k labels for each context vector hi are generated by computing and sorting the values in xi = W T hi + b; 3 Initialize cluster weights {vt}rt=1 using spherical kmeans over {hi}Ni=1 ; 4 Initialize the label set for each cluster {ct}tr=1 to be zeros; 5 for j = 1, \u00b7 \u00b7 \u00b7 , T do 6 Fixing {ct}rt=1 and learning the clustering parameters {vt}tr=1 in Eq(8) by SGD with Gumbel trick; 7 Fixing {vt}rt=1 and learning the labels set ct t = 1, \u00b7 \u00b7 \u00b7 , r by solving the \u201dKnapsack\u201d problem using Greedy approach; 8 return ct,vt for all t = 1, \u00b7 \u00b7 \u00b7 , r",
+        "We evaluate our method on two tasks: Language Modeling (LM) and Neural Machine Translation (NMT)",
+        "Since our focus is to speedup the softmax layer which is known to be the bottleneck of natural language processing tasks with large vocabulary, we only report the prediction time results for the softmax layer in all the experiments",
+        "Some represented results are reported in Table 2. These results indicate that the proposed algorithm significantly outperforms all the previous algorithms for predicting top-k words/tokens on both language model and neural machine translation",
+        "We proposed a new algorithm for fast softmax inference on large vocabulary neural language models",
+        "The main idea is to use a light-weight screening model to predict a smaller subset of candidates, and conduct exact search within that subset",
+        "We show that the proposed algorithm achieves much better inference speedup than stateof-the-art algorithms for language model and machine translation tasks"
+    ],
+    "summary": [
+        "Neural networks have been widely used in many natural language processing (NLP) tasks, including neural machine translation (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>), text summarization (<a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\"><a class=\"ref-link\" id=\"cRush_et+al_2015_a\" href=\"#rRush_et+al_2015_a\">Rush et al, 2015</a></a>) and dialogue systems (<a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\"><a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a></a>).",
+        "We propose a novel algorithm (L2S: learning to screen) to exploit the distribution of both context embeddings and word embeddings to speed up the inference time in softmax layer.",
+        "To narrow down the search space, we first develop a light-weight screening model to predict the subset of words that are more likely to belong to top-k candidates, and conduct an exact softmax only within the subset.",
+        "MIPS algorithms can be used to speed up the prediction phase of softmax layer, since we can view context vectors as query vectors and weight vectors as database.",
+        "(<a class=\"ref-link\" id=\"cShim_et+al_2017_a\" href=\"#rShim_et+al_2017_a\">Shim et al, 2017</a>) proposed to approximate the weight matrix in the softmax layer with singular value decomposition, find a smaller candidate set based on the approximate logits, and do a finegrained search within the subset.",
+        "It outputs the top-k candidate set by sorting the probabilities [p1, \u00b7 \u00b7 \u00b7 , pL], and uses this information to perform beam search in translation or predict word in language model.",
+        "The top-k labels for each context vector hi are generated by computing and sorting the values in xi = W T hi + b; 3 Initialize cluster weights {vt}rt=1 using spherical kmeans over {hi}Ni=1 ; 4 Initialize the label set for each cluster {ct}tr=1 to be zeros; 5 for j = 1, \u00b7 \u00b7 \u00b7 , T do 6 Fixing {ct}rt=1 and learning the clustering parameters {vt}tr=1 in Eq(8) by SGD with Gumbel trick; 7 Fixing {vt}rt=1 and learning the labels set ct t = 1, \u00b7 \u00b7 \u00b7 , r by solving the \u201dKnapsack\u201d problem using Greedy approach; 8 return ct,vt for all t = 1, \u00b7 \u00b7 \u00b7 , r.",
+        "The last three algorithms (Greedy-MIPS, PCA-MIPS and LSH-MIPS) have not been used to speed up softmax prediction in the literature and they do not perform well in these NLP tasks, but we still include them in the experiments for completeness.",
+        "These results indicate that the proposed algorithm significantly outperforms all the previous algorithms for predicting top-k words/tokens on both language model and neural machine translation.",
+        "When varying number of clusters, we vary the time budget B so that the prediction time including finding the correct cluster and computing the softmax in the candidate set are similar.",
+        "We proposed a new algorithm for fast softmax inference on large vocabulary neural language models.",
+        "The main idea is to use a light-weight screening model to predict a smaller subset of candidates, and conduct exact search within that subset.",
+        "We show that the proposed algorithm achieves much better inference speedup than stateof-the-art algorithms for language model and machine translation tasks"
+    ],
+    "headline": "We introduce a novel softmax layer approximation algorithm by exploiting the clustering structure of context vectors",
+    "reference_links": [
+        {
+            "id": "Bachrach_et+al_2014_a",
+            "entry": "Yoram Bachrach, Yehuda Finkelstein, Ran Gilad-Bachrach, Liran Katzir, Noam Koenigstein, Nir Nice, and Ulrich Paquet. Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces. In Proceedings of the 8th ACM Conference on Recommender systems, pp. 257\u2013264. ACM, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bachrach%2C%20Yoram%20Finkelstein%2C%20Yehuda%20Gilad-Bachrach%2C%20Ran%20Katzir%2C%20Liran%20Speeding%20up%20the%20xbox%20recommender%20system%20using%20a%20euclidean%20transformation%20for%20inner-product%20spaces%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bachrach%2C%20Yoram%20Finkelstein%2C%20Yehuda%20Gilad-Bachrach%2C%20Ran%20Katzir%2C%20Liran%20Speeding%20up%20the%20xbox%20recommender%20system%20using%20a%20euclidean%20transformation%20for%20inner-product%20spaces%202014"
+        },
+        {
+            "id": "Boytsov_2013_a",
+            "entry": "Leonid Boytsov and Bilegsaikhan Naidan. Engineering efficient and effective non-metric space library. In Similarity Search and Applications - 6th International Conference, SISAP 2013, A Coruna, Spain, October 2-4, 2013, Proceedings, pp. 280\u2013293, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boytsov%2C%20Leonid%20Naidan%2C%20Bilegsaikhan%20Engineering%20efficient%20and%20effective%20non-metric%20space%20library%202013-10-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Boytsov%2C%20Leonid%20Naidan%2C%20Bilegsaikhan%20Engineering%20efficient%20and%20effective%20non-metric%20space%20library%202013-10-02"
+        },
+        {
+            "id": "Cettolo_et+al_2014_a",
+            "entry": "Mauro Cettolo, Jan Niehues, Sebastian Stuker, Luisa Bentivogli, and Marcello Federico. Report on the 11th iwslt evaluation campaign, iwslt 2014. In Proceedings of the International Workshop on Spoken Language Translation, Hanoi, Vietnam, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mauro%20Cettolo%20Jan%20Niehues%20Sebastian%20Stuker%20Luisa%20Bentivogli%20and%20Marcello%20Federico%20Report%20on%20the%2011th%20iwslt%20evaluation%20campaign%20iwslt%202014%20In%20Proceedings%20of%20the%20International%20Workshop%20on%20Spoken%20Language%20Translation%20Hanoi%20Vietnam%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mauro%20Cettolo%20Jan%20Niehues%20Sebastian%20Stuker%20Luisa%20Bentivogli%20and%20Marcello%20Federico%20Report%20on%20the%2011th%20iwslt%20evaluation%20campaign%20iwslt%202014%20In%20Proceedings%20of%20the%20International%20Workshop%20on%20Spoken%20Language%20Translation%20Hanoi%20Vietnam%202014"
+        },
+        {
+            "id": "Grave_et+al_2017_a",
+            "entry": "Edouard Grave, Armand Joulin, Moustapha Cisse, David Grangier, and Herve Jegou. Efficient softmax approximation for gpus. In Proceedings of the 34th International Conference on Machine Learning, ICML 2017, Sydney, NSW, Australia, 6-11 August 2017, pp. 1302\u20131310, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Cisse%2C%20Moustapha%20Grangier%2C%20David%20Efficient%20softmax%20approximation%20for%20gpus%202017-08-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Cisse%2C%20Moustapha%20Grangier%2C%20David%20Efficient%20softmax%20approximation%20for%20gpus%202017-08-06"
+        },
+        {
+            "id": "Guo_et+al_2016_a",
+            "entry": "Ruiqi Guo, Sanjiv Kumar, Krzysztof Choromanski, and David Simcha. Quantization based fast inner product search. In Artificial Intelligence and Statistics, pp. 482\u2013490, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Ruiqi%20Kumar%2C%20Sanjiv%20Choromanski%2C%20Krzysztof%20Simcha%2C%20David%20Quantization%20based%20fast%20inner%20product%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Ruiqi%20Kumar%2C%20Sanjiv%20Choromanski%2C%20Krzysztof%20Simcha%2C%20David%20Quantization%20based%20fast%20inner%20product%20search%202016"
+        },
+        {
+            "id": "Indyk_1998_a",
+            "entry": "Piotr Indyk and Rajeev Motwani. Approximate nearest neighbors: towards removing the curse of dimensionality. In Proceedings of the thirtieth annual ACM symposium on Theory of computing, pp. 604\u2013613. ACM, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Indyk%2C%20Piotr%20Motwani%2C%20Rajeev%20Approximate%20nearest%20neighbors%3A%20towards%20removing%20the%20curse%20of%20dimensionality%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Indyk%2C%20Piotr%20Motwani%2C%20Rajeev%20Approximate%20nearest%20neighbors%3A%20towards%20removing%20the%20curse%20of%20dimensionality%201998"
+        },
+        {
+            "id": "Jang_et+al_2017_a",
+            "entry": "Eric Jang, Shixiang Gu, and Ben Poole. Categorical reparametrization with gumble-softmax. In International Conference on Learning Representations 2017. OpenReviews. net, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparametrization%20with%20gumble-softmax%202017"
+        },
+        {
+            "id": "Jean_et+al_2014_a",
+            "entry": "Sebastien Jean, Kyunghyun Cho, Roland Memisevic, and Yoshua Bengio. On using very large target vocabulary for neural machine translation. arXiv preprint arXiv:1412.2007, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.2007"
+        },
+        {
+            "id": "Klein_et+al_2017_a",
+            "entry": "Guillaume Klein, Yoon Kim, Yuntian Deng, Jean Senellart, and Alexander M Rush. Opennmt: Open-source toolkit for neural machine translation. arXiv preprint arXiv:1701.02810, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.02810"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Jiwei Li, Will Monroe, Alan Ritter, Michel Galley, Jianfeng Gao, and Dan Jurafsky. Deep reinforcement learning for dialogue generation. arXiv preprint arXiv:1606.01541, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01541"
+        },
+        {
+            "id": "Luong_2015_a",
+            "entry": "Minh-Thang Luong and Christopher D. Manning. Stanford neural machine translation systems for spoken language domain. In International Workshop on Spoken Language Translation, Da Nang, Vietnam, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Minh-Thang%20Manning%2C%20Christopher%20D.%20Stanford%20neural%20machine%20translation%20systems%20for%20spoken%20language%20domain%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Minh-Thang%20Manning%2C%20Christopher%20D.%20Stanford%20neural%20machine%20translation%20systems%20for%20spoken%20language%20domain%202015"
+        },
+        {
+            "id": "Yu_0000_a",
+            "entry": "Yu A Malkov and Dmitry A Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. arXiv preprint arXiv:1603.09320, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.09320"
+        },
+        {
+            "id": "Malkov_et+al_2014_a",
+            "entry": "Yury Malkov, Alexander Ponomarenko, Andrey Logvinov, and Vladimir Krylov. Approximate nearest neighbor algorithm based on navigable small world graphs. Information Systems, 45:61\u201368, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Malkov%2C%20Yury%20Ponomarenko%2C%20Alexander%20Logvinov%2C%20Andrey%20Krylov%2C%20Vladimir%20Approximate%20nearest%20neighbor%20algorithm%20based%20on%20navigable%20small%20world%20graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Malkov%2C%20Yury%20Ponomarenko%2C%20Alexander%20Logvinov%2C%20Andrey%20Krylov%2C%20Vladimir%20Approximate%20nearest%20neighbor%20algorithm%20based%20on%20navigable%20small%20world%20graphs%202014"
+        },
+        {
+            "id": "Malkov_0000_a",
+            "entry": "Yury A. Malkov and D. A. Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. CoRR, abs/1603.09320, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.09320"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P. Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: the penn treebank. Comput. Linguist., 19(2):313\u2013330, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20the%20penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20the%20penn%20treebank%201993"
+        },
+        {
+            "id": "Merity_et+al_2016_a",
+            "entry": "Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. arXiv preprint arXiv:1609.07843, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.07843"
+        },
+        {
+            "id": "Mnih_2012_a",
+            "entry": "Andriy Mnih and Yee Whye Teh. A fast and simple algorithm for training neural probabilistic language models. In ICML, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Andriy%20Teh%2C%20Yee%20Whye%20A%20fast%20and%20simple%20algorithm%20for%20training%20neural%20probabilistic%20language%20models%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Andriy%20Teh%2C%20Yee%20Whye%20A%20fast%20and%20simple%20algorithm%20for%20training%20neural%20probabilistic%20language%20models%202012"
+        },
+        {
+            "id": "Morin_2005_a",
+            "entry": "Frederic Morin and Yoshua Bengio. Hierarchical probabilistic neural network language model. In AISTATS, volume 5, pp. 246\u2013252, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morin%2C%20Frederic%20Bengio%2C%20Yoshua%20Hierarchical%20probabilistic%20neural%20network%20language%20model%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morin%2C%20Frederic%20Bengio%2C%20Yoshua%20Hierarchical%20probabilistic%20neural%20network%20language%20model%202005"
+        },
+        {
+            "id": "Neyshabur_2015_a",
+            "entry": "Behnam Neyshabur and Nathan Srebro. On symmetric and asymmetric lshs for inner product search. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neyshabur%2C%20Behnam%20Srebro%2C%20Nathan%20On%20symmetric%20and%20asymmetric%20lshs%20for%20inner%20product%20search%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neyshabur%2C%20Behnam%20Srebro%2C%20Nathan%20On%20symmetric%20and%20asymmetric%20lshs%20for%20inner%20product%20search%202015"
+        },
+        {
+            "id": "Rush_et+al_2015_a",
+            "entry": "Alexander M Rush, Sumit Chopra, and Jason Weston. A neural attention model for abstractive sentence summarization. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing, pp. 379\u2013389, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015"
+        },
+        {
+            "id": "Shim_et+al_2017_a",
+            "entry": "Kyuhong Shim, Minjae Lee, Iksoo Choi, Yoonho Boo, and Wonyong Sung. Svd-softmax: Fast softmax approximation on large vocabulary neural networks. In Advances in Neural Information Processing Systems 30, pp. 5463\u20135473. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shim%2C%20Kyuhong%20Lee%2C%20Minjae%20Choi%2C%20Iksoo%20Boo%2C%20Yoonho%20Svd-softmax%3A%20Fast%20softmax%20approximation%20on%20large%20vocabulary%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shim%2C%20Kyuhong%20Lee%2C%20Minjae%20Choi%2C%20Iksoo%20Boo%2C%20Yoonho%20Svd-softmax%3A%20Fast%20softmax%20approximation%20on%20large%20vocabulary%20neural%20networks%202017"
+        },
+        {
+            "id": "Shrivastava_2014_a",
+            "entry": "Anshumali Shrivastava and Ping Li. Asymmetric lsh (alsh) for sublinear time maximum inner product search (mips). In Advances in Neural Information Processing Systems, pp. 2321\u20132329, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shrivastava%2C%20Anshumali%20Li%2C%20Ping%20Asymmetric%20lsh%20%28alsh%29%20for%20sublinear%20time%20maximum%20inner%20product%20search%20%28mips%29%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shrivastava%2C%20Anshumali%20Li%2C%20Ping%20Asymmetric%20lsh%20%28alsh%29%20for%20sublinear%20time%20maximum%20inner%20product%20search%20%28mips%29%202014"
+        },
+        {
+            "id": "Sproull_1991_a",
+            "entry": "Robert F Sproull. Refinements to nearest-neighbor searching ink-dimensional trees. Algorithmica, 6(1-6):579\u2013589, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sproull%2C%20Robert%20F.%20Refinements%20to%20nearest-neighbor%20searching%20ink-dimensional%20trees%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sproull%2C%20Robert%20F.%20Refinements%20to%20nearest-neighbor%20searching%20ink-dimensional%20trees%201991"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In Advances in neural information processing systems, pp. 3104\u20133112, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Wu_et+al_2017_a",
+            "entry": "Xiang Wu, Ruiqi Guo, Ananda Theertha Suresh, Sanjiv Kumar, Daniel N Holtmann-Rice, David Simcha, and Felix Yu. Multiscale quantization for fast similarity search. In NIPS, pp. 5745\u20135755. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Xiang%20Guo%2C%20Ruiqi%20Suresh%2C%20Ananda%20Theertha%20Kumar%2C%20Sanjiv%20Multiscale%20quantization%20for%20fast%20similarity%20search%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Xiang%20Guo%2C%20Ruiqi%20Suresh%2C%20Ananda%20Theertha%20Kumar%2C%20Sanjiv%20Multiscale%20quantization%20for%20fast%20similarity%20search%202017"
+        },
+        {
+            "id": "Yu_et+al_2017_a",
+            "entry": "Hsiang-Fu Yu, Cho-Jui Hsieh, Qi Lei, and Inderjit Dhillon. A greedy approach for budgeted maximum inner product search. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Hsiang-Fu%20Hsieh%2C%20Cho-Jui%20Lei%2C%20Qi%20Dhillon%2C%20Inderjit%20A%20greedy%20approach%20for%20budgeted%20maximum%20inner%20product%20search%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Hsiang-Fu%20Hsieh%2C%20Cho-Jui%20Lei%2C%20Qi%20Dhillon%2C%20Inderjit%20A%20greedy%20approach%20for%20budgeted%20maximum%20inner%20product%20search%202017"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Minjia Zhang, Xiaodong Liu, Wenhan Wang, Jianfeng Gao, and Yuxiong He. Navigating with graph representations for fast and scalable decoding of neural language models. In NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Minjia%20Liu%2C%20Xiaodong%20Wang%2C%20Wenhan%20Gao%2C%20Jianfeng%20and%20Yuxiong%20He.%20Navigating%20with%20graph%20representations%20for%20fast%20and%20scalable%20decoding%20of%20neural%20language%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Minjia%20Liu%2C%20Xiaodong%20Wang%2C%20Wenhan%20Gao%2C%20Jianfeng%20and%20Yuxiong%20He.%20Navigating%20with%20graph%20representations%20for%20fast%20and%20scalable%20decoding%20of%20neural%20language%20models%202018"
+        }
+    ]
+}

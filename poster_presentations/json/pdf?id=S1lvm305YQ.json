@@ -1,0 +1,352 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TIMBRETRON: A WAVENET(CYCLEGAN(CQT(AUDIO))) PIPELINE FOR MUSICAL TIMBRE TRANSFER",
+        "author": "Sicong Huang, Qiyang Li, Cem Anil, Xuchan Bao, Sageev Oore, Roger B. Grosse, University of Toronto, Vector Institute, Dalhousie University",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1lvm305YQ"
+        },
+        "abstract": "In this work, we address the problem of musical timbre transfer, where the goal is to manipulate the timbre of a sound sample from one instrument to match another instrument while preserving other musical content, such as pitch, rhythm, and loudness. In principle, one could apply image-based style transfer techniques to a time-frequency representation of an audio signal, but this depends on having a representation that allows independent manipulation of timbre as well as highquality waveform generation. We introduce TimbreTron, a method for musical timbre transfer which applies \u201cimage\u201d domain style transfer to a time-frequency representation of the audio signal, and then produces a high-quality waveform using a conditional WaveNet synthesizer. We show that the Constant Q Transform (CQT) representation is particularly well-suited to convolutional architectures due to its approximate pitch equivariance. Based on human perceptual evaluations, we confirmed that TimbreTron recognizably transferred the timbre while otherwise preserving the musical content, for both monophonic and polyphonic samples. We made an accompanying demo video 1 which we strongly encourage you to watch before reading the paper."
+    },
+    "keywords": [
+        {
+            "term": "audio signal",
+            "url": "https://en.wikipedia.org/wiki/audio_signal"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "fourier transform",
+            "url": "https://en.wikipedia.org/wiki/fourier_transform"
+        },
+        {
+            "term": "Generative Adversarial Networks",
+            "url": "https://en.wikipedia.org/wiki/Generative_Adversarial_Networks"
+        },
+        {
+            "term": "high quality",
+            "url": "https://en.wikipedia.org/wiki/high_quality"
+        },
+        {
+            "term": "Short Time Fourier Transform",
+            "url": "https://en.wikipedia.org/wiki/Short_Time_Fourier_Transform"
+        },
+        {
+            "term": "Constant Q Transform",
+            "url": "https://en.wikipedia.org/wiki/Constant_Q_Transform"
+        },
+        {
+            "term": "spectrogram",
+            "url": "https://en.wikipedia.org/wiki/spectrogram"
+        }
+    ],
+    "abbreviations": {
+        "CQT": "Constant Q Transform",
+        "STFT": "Short Time Fourier Transform",
+        "MFCCs": "Mel-frequency cepstral coefficients",
+        "GANs": "Generative Adversarial Networks",
+        "GP": "Gradient Penalty",
+        "MCEP": "Mel-cepstral coefficient",
+        "MMD": "Maximum Mean Discrepancy",
+        "AMT": "AMAZON MECHANICAL TURK"
+    },
+    "highlights": [
+        "Timbre is a perceptual characteristic that distinguishes one musical instrument from another playing the same note with the same intensity and duration",
+        "We show that this representation is well-suited to musical timbre transfer and other manipulations due to its pitch equivariance and the way it simultaneously achieves high frequency resolution at low frequencies and high temporal resolution at high frequencies, a property that Short Time Fourier Transform lacks",
+        "We evaluated the effectiveness of the Constant Q Transform representation by comparing with a variant of TimbreTron with the Constant Q Transform replaced by the Short Time Fourier Transform",
+        "The Short Time Fourier Transform counterpart is the Wavenet and CycleGAN trained on Short Time Fourier Transform representation and the result is in first row of the Table 4: most people think the Constant Q Transform TimbreTron is better",
+        "We presented the TimbreTron, a pipeline for perfoming high-quality timbre transfer on musical waveforms using Constant Q Transform-domain style transfer",
+        "The entire pipeline can be trained on unrelated real-world music segments, and intriguingly, the MIDI-trained CycleGAN demonstrated generalization capability to real-world musical signals"
+    ],
+    "key_statements": [
+        "Timbre is a perceptual characteristic that distinguishes one musical instrument from another playing the same note with the same intensity and duration",
+        "We propose TimbreTron, a pipeline that performs Constant Q Transform-based timbre transfer with high-quality waveform output",
+        "We show that this representation is well-suited to musical timbre transfer and other manipulations due to its pitch equivariance and the way it simultaneously achieves high frequency resolution at low frequencies and high temporal resolution at high frequencies, a property that Short Time Fourier Transform lacks",
+        "In the context of our TimbreTron pipeline, due to the Constant Q Transform\u2019s pitch equivariance property, pitch shifting can be performed by translating the Constant Q Transform representation on the log-frequency axis. (Since the Short Time Fourier Transform uses linearly sampled frequencies, it does not lend itself to this type of simple transformation.) Audio time stretching can be done using either the Constant Q Transform or Short Time Fourier Transform representations, combined with the WaveNet synthesizer, by changing the number of waveform samples generated per Constant Q Transform window",
+        "We evaluated the effectiveness of the Constant Q Transform representation by comparing with a variant of TimbreTron with the Constant Q Transform replaced by the Short Time Fourier Transform",
+        "The Short Time Fourier Transform counterpart is the Wavenet and CycleGAN trained on Short Time Fourier Transform representation and the result is in first row of the Table 4: most people think the Constant Q Transform TimbreTron is better",
+        "We presented the TimbreTron, a pipeline for perfoming high-quality timbre transfer on musical waveforms using Constant Q Transform-domain style transfer",
+        "The entire pipeline can be trained on unrelated real-world music segments, and intriguingly, the MIDI-trained CycleGAN demonstrated generalization capability to real-world musical signals"
+    ],
+    "summary": [
+        "Timbre is a perceptual characteristic that distinguishes one musical instrument from another playing the same note with the same intensity and duration.",
+        "Tacotron2 performs high-level processing on time-frequency representations of speech, and uses WaveNet to output high-quality audio conditioned on the generated mel spectrogram.",
+        "We propose TimbreTron, a pipeline that performs CQT-based timbre transfer with high-quality waveform output.",
+        "We describe the middle step of our TimbreTron pipeline, which performs timbre transfer on log-amplitude CQT representations of the waveforms.",
+        "Van den Oord et al (2016) demonstrated high-quality audio generation using WaveNet. Following on this, <a class=\"ref-link\" id=\"cEngel_et+al_2017_a\" href=\"#rEngel_et+al_2017_a\">Engel et al (2017</a>) proposed a WaveNet-style autoencoder model operating on raw waveforms that was capable of creating new, realistic timbres by interpolating between already existing ones.",
+        "<a class=\"ref-link\" id=\"cDonahue_et+al_2018_a\" href=\"#rDonahue_et+al_2018_a\">Donahue et al (2018</a>) proposed a method to synthesize waveforms directly using GANs with improved quality over naive generative models such as SampleRNN (<a class=\"ref-link\" id=\"cMehri_et+al_2016_a\" href=\"#rMehri_et+al_2016_a\">Mehri et al, 2016</a>) and WaveNet. <a class=\"ref-link\" id=\"cMor_et+al_2018_a\" href=\"#rMor_et+al_2018_a\">Mor et al (2018</a>) used an encoderdecoder approach for the Timbre Transfer problem, where they trained a universal encoder to learn a shared representation of raw waveforms of various instruments, as well as instrument-specific decoders to reconstruct waveforms from the shared representation.",
+        "While their approach has the advantage of training a single model for many transfer directions, our TimbreTron model has the advantage that it uses a GAN-based training objective, which typically results in outputs with higher perceptual quality compared to VAEs. We conducted two sets of experiments to 1) experiment with pitch-shifting and tempo-changing to further validate our choice of CQT representation; 2) test our full TimbreTron pipeline.",
+        "(Since the STFT uses linearly sampled frequencies, it does not lend itself to this type of simple transformation.) Audio time stretching can be done using either the CQT or STFT representations, combined with the WaveNet synthesizer, by changing the number of waveform samples generated per CQT window.",
+        "While most of our experiments on timbre transfer are conducted on real world music recordings, we use synthetic MIDI audio data in our ablation studies because it is possible to produce paired dataset for evaluation purpose.",
+        "The STFT counterpart is the Wavenet and CycleGAN trained on STFT representation and the result is in first row of the Table 4: most people think the CQT TimbreTron is better.",
+        "We perform the timbre transfer in the time-frequency domain, and reconstruct the inputs using a WaveNet. The CQT is well suited to convolutional architectures due to its approximate pitch equivariance.",
+        "Based on an AMT study, we confirmed that TimbreTron recognizably transferred the timbre while otherwise preserving the musical content, for both monophonic and poly-"
+    ],
+    "headline": "We address the problem of musical timbre transfer, where the goal is to manipulate the timbre of a sound sample from one instrument to match another instrument while preserving other musical content, such as pitch, rhythm, and loudness",
+    "reference_links": [
+        {
+            "id": "Allen_1977_a",
+            "entry": "Jont B Allen and Lawrence R Rabiner. A unified approach to short-time Fourier analysis and synthesis. Proceedings of the IEEE, 65(11):1558\u20131564, 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allen%2C%20Jont%20B.%20Rabiner%2C%20Lawrence%20R.%20A%20unified%20approach%20to%20short-time%20Fourier%20analysis%20and%20synthesis%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allen%2C%20Jont%20B.%20Rabiner%2C%20Lawrence%20R.%20A%20unified%20approach%20to%20short-time%20Fourier%20analysis%20and%20synthesis%201977"
+        },
+        {
+            "id": "Arik_et+al_2017_a",
+            "entry": "Sercan O Arik, Mike Chrzanowski, Adam Coates, Gregory Diamos, Andrew Gibiansky, Yongguo Kang, Xian Li, John Miller, Jonathan Raiman, Shubho Sengupta, et al. Deep voice: Real-time neural text-to-speech. arXiv preprint arXiv:1702.07825, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.07825"
+        },
+        {
+            "id": "Bitton_et+al_2018_a",
+            "entry": "Adrien Bitton, Philippe Esling, and Axel Chemla-Romeu-Santos. Modulated variational autoencoders for many-to-many musical timbre transfer. arXiv preprint arXiv:1810.00222, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.00222"
+        },
+        {
+            "id": "Blankertz_0000_a",
+            "entry": "Benjamin Blankertz. The constant Q transform. URL http://doc.ml.tu-berlin.de/bbci/material/publications/Bla_constQ.pdf.",
+            "url": "http://doc.ml.tu-berlin.de/bbci/material/publications/Bla_constQ.pdf"
+        },
+        {
+            "id": "Brown_1991_a",
+            "entry": "Judith C Brown. Calculation of a constant Q spectral transform. The Journal of the Acoustical Society of America, 89(1):425\u2013434, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brown%2C%20Judith%20C.%20Calculation%20of%20a%20constant%20Q%20spectral%20transform%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brown%2C%20Judith%20C.%20Calculation%20of%20a%20constant%20Q%20spectral%20transform%201991"
+        },
+        {
+            "id": "Brunner_et+al_2018_a",
+            "entry": "Gino Brunner, Yuyi Wang, Roger Wattenhofer, and Sumu Zhao. Symbolic music genre transfer with CycleGAN. arXiv preprint arXiv:1809.07575, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.07575"
+        },
+        {
+            "id": "Chowning_1973_a",
+            "entry": "J. M. Chowning. The synthesis of complex audio spectra by means of frequency modulation. Journal of the Audio Engineering Society, 21(7):526\u2013534, 1973.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chowning%2C%20J.M.%20The%20synthesis%20of%20complex%20audio%20spectra%20by%20means%20of%20frequency%20modulation%201973",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chowning%2C%20J.M.%20The%20synthesis%20of%20complex%20audio%20spectra%20by%20means%20of%20frequency%20modulation%201973"
+        },
+        {
+            "id": "Chu_et+al_2017_a",
+            "entry": "Casey Chu, Andrey Zhmoginov, and Mark Sandler. CycleGAN, a master of steganography. CoRR, abs/1712.02950, 2017. URL http://arxiv.org/abs/1712.02950.",
+            "url": "http://arxiv.org/abs/1712.02950",
+            "arxiv_url": "https://arxiv.org/pdf/1712.02950"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Shuqi Dai, Zheng Zhang, and Gus Xia. Music style transfer issues: A position paper. CoRR, abs/1803.06841, 2018. URL http://arxiv.org/abs/1803.06841.",
+            "url": "http://arxiv.org/abs/1803.06841",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06841"
+        },
+        {
+            "id": "Donahue_et+al_2018_a",
+            "entry": "Chris Donahue, Julian McAuley, and Miller Puckette. Synthesizing audio with generative adversarial networks. CoRR, abs/1802.04208, 2018. URL http://arxiv.org/abs/1802.04208.",
+            "url": "http://arxiv.org/abs/1802.04208",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04208"
+        },
+        {
+            "id": "Engel_et+al_2017_a",
+            "entry": "Jesse Engel, Cinjon Resnick, Adam Roberts, Sander Dieleman, Douglas Eck, Karen Simonyan, and Mohammad Norouzi. Neural audio synthesis of musical notes with wavenet autoencoders. CoRR, abs/1704.01279, 2017. URL http://arxiv.org/abs/1704.01279.",
+            "url": "http://arxiv.org/abs/1704.01279",
+            "arxiv_url": "https://arxiv.org/pdf/1704.01279"
+        },
+        {
+            "id": "Fedus_et+al_2018_a",
+            "entry": "William Fedus, Mihaela Rosca, Balaji Lakshminarayanan, Andrew M Dai, Shakir Mohamed, and Ian Goodfellow. Many paths to equilibrium: GANs do not need to decrease a divergence at every step. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fedus%2C%20William%20Rosca%2C%20Mihaela%20Lakshminarayanan%2C%20Balaji%20Dai%2C%20Andrew%20M.%20Many%20paths%20to%20equilibrium%3A%20GANs%20do%20not%20need%20to%20decrease%20a%20divergence%20at%20every%20step%202018"
+        },
+        {
+            "id": "Fitzgerald_et+al_2006_a",
+            "entry": "Derry Fitzgerald, Matt Cranitch, and Marcin T Cychowski. Towards an inverse constant Q transform. In Conference papers, page 12, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fitzgerald%2C%20Derry%20Cranitch%2C%20Matt%20Cychowski%2C%20Marcin%20T.%20Towards%20an%20inverse%20constant%20Q%20transform%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fitzgerald%2C%20Derry%20Cranitch%2C%20Matt%20Cychowski%2C%20Marcin%20T.%20Towards%20an%20inverse%20constant%20Q%20transform%202006"
+        },
+        {
+            "id": "Gatys_et+al_2015_a",
+            "entry": "Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge. A neural algorithm of artistic style. CoRR, abs/1508.06576, 2015. URL http://arxiv.org/abs/1508.06576.",
+            "url": "http://arxiv.org/abs/1508.06576",
+            "arxiv_url": "https://arxiv.org/pdf/1508.06576"
+        },
+        {
+            "id": "Gmbh_2018_a",
+            "entry": "Vienna Symphonic Library GmbH, 2018. URL https://www.vsl.co.at/en/Products.",
+            "url": "https://www.vsl.co.at/en/Products"
+        },
+        {
+            "id": "Gomez_et+al_2018_a",
+            "entry": "Aidan N Gomez, Sicong Huang, Ivan Zhang, Bryan M Li, Muhammad Osama, and Lukasz Kaiser. Unsupervised cipher cracking using discrete GANs. arXiv preprint arXiv:1801.04883, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.04883"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pages 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Griffin_1984_a",
+            "entry": "Daniel Griffin and Jae Lim. Signal estimation from modified short-time Fourier transform. IEEE Transactions on Acoustics, Speech, and Signal Processing, 32(2):236\u2013243, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Griffin%2C%20Daniel%20Lim%2C%20Jae%20Signal%20estimation%20from%20modified%20short-time%20Fourier%20transform%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Griffin%2C%20Daniel%20Lim%2C%20Jae%20Signal%20estimation%20from%20modified%20short-time%20Fourier%20transform%201984"
+        },
+        {
+            "id": "Grinstein_et+al_2017_a",
+            "entry": "Eric Grinstein, Ngoc Q. K. Duong, Alexey Ozerov, and Patrick P\u00e9rez. Audio style transfer. CoRR, abs/1710.11385, 2017. URL http://arxiv.org/abs/1710.11385.",
+            "url": "http://arxiv.org/abs/1710.11385",
+            "arxiv_url": "https://arxiv.org/pdf/1710.11385"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron Courville. Improved training of wasserstein GANs. arXiv preprint arXiv:1704.00028, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.00028"
+        },
+        {
+            "id": "Hass_2018_a",
+            "entry": "Jeffrey Hass. Chapter one: An acoustics primer, 2018. URL http://www.indiana.edu/~emusic/etext/acoustics/chapter1_loudness.shtml.",
+            "url": "http://www.indiana.edu/~emusic/etext/acoustics/chapter1_loudness.shtml"
+        },
+        {
+            "id": "Holighaus_et+al_2013_a",
+            "entry": "Nicki Holighaus, Monika D\u00f6rfler, Gino Angelo Velasco, and Thomas Grill. A framework for invertible, real-time constant-Q transforms. IEEE Transactions on Audio, Speech, and Language Processing, 21(4):775\u2013785, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Holighaus%2C%20Nicki%20D%C3%B6rfler%2C%20Monika%20Velasco%2C%20Gino%20Angelo%20Grill%2C%20Thomas%20A%20framework%20for%20invertible%2C%20real-time%20constant-Q%20transforms%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Holighaus%2C%20Nicki%20D%C3%B6rfler%2C%20Monika%20Velasco%2C%20Gino%20Angelo%20Grill%2C%20Thomas%20A%20framework%20for%20invertible%2C%20real-time%20constant-Q%20transforms%202013"
+        },
+        {
+            "id": "Huzaifah_2017_a",
+            "entry": "Muhammad Huzaifah. Comparison of time-frequency representations for environmental sound classification using convolutional neural networks. arXiv preprint arXiv:1706.07156, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07156"
+        },
+        {
+            "id": "Kaneko_2017_a",
+            "entry": "Takuhiro Kaneko and Hirokazu Kameoka. Parallel-data-free voice conversion using cycle-consistent adversarial networks. arXiv preprint arXiv:1711.11293, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.11293"
+        },
+        {
+            "id": "Kim_et+al_2017_a",
+            "entry": "Taeksoo Kim, Moonsu Cha, Hyunsoo Kim, Jungkwon Lee, and Jiwon Kim. Learning to discover cross-domain relations with generative adversarial networks. arXiv preprint arXiv:1703.05192, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05192"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Librosa_0000_a",
+            "entry": "librosa. librosa. https://librosa.github.io.",
+            "url": "https://librosa.github.io"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Ming-Yu Liu, Thomas Breuel, and Jan Kautz. Unsupervised image-to-image translation networks. arXiv preprint arXiv:1703.00848, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00848"
+        },
+        {
+            "id": "Mcadams_1979_a",
+            "entry": "Stephen McAdams and Albert Bregman. Hearing musical streams. Computer Music Journal, 3(4): 26\u201343+60, December 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McAdams%2C%20Stephen%20Bregman%2C%20Albert%20Hearing%20musical%20streams%201979-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McAdams%2C%20Stephen%20Bregman%2C%20Albert%20Hearing%20musical%20streams%201979-12"
+        },
+        {
+            "id": "Mehri_et+al_2016_a",
+            "entry": "Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron C. Courville, and Yoshua Bengio. Samplernn: An unconditional end-to-end neural audio generation model. CoRR, abs/1612.07837, 2016. URL http://arxiv.org/abs/1612.07837.",
+            "url": "http://arxiv.org/abs/1612.07837",
+            "arxiv_url": "https://arxiv.org/pdf/1612.07837"
+        },
+        {
+            "id": "Mor_et+al_2018_a",
+            "entry": "Noam Mor, Lior Wolf, Adam Polyak, and Yaniv Taigman. A universal music translation network. arXiv preprint arXiv:1805.07848, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07848"
+        },
+        {
+            "id": "Morise_et+al_2016_a",
+            "entry": "Masanori Morise, Fumiya Yokomori, and Kenji Ozawa. World: a vocoder-based high-quality speech synthesis system for real-time applications. IEICE TRANSACTIONS on Information and Systems, 99(7):1877\u20131884, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morise%2C%20Masanori%20Yokomori%2C%20Fumiya%20Ozawa%2C%20Kenji%20World%3A%20a%20vocoder-based%20high-quality%20speech%20synthesis%20system%20for%20real-time%20applications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morise%2C%20Masanori%20Yokomori%2C%20Fumiya%20Ozawa%2C%20Kenji%20World%3A%20a%20vocoder-based%20high-quality%20speech%20synthesis%20system%20for%20real-time%20applications%202016"
+        },
+        {
+            "id": "Odena_et+al_2016_a",
+            "entry": "Augustus Odena, Vincent Dumoulin, and Chris Olah. Deconvolution and checkerboard artifacts. Distill, 2016. doi: 10.23915/distill.00003. URL http://distill.pub/2016/deconv-checkerboard.",
+            "crossref": "https://dx.doi.org/10.23915/distill.00003"
+        },
+        {
+            "id": "Elsevier_1999_a",
+            "entry": "Elsevier, 2 edition, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elsevier%202%20edition%201999"
+        },
+        {
+            "id": "Roederer_2008_a",
+            "entry": "Juan G Roederer. The physics and psychophysics of music: an introduction. Springer Science & Business Media, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roederer%2C%20Juan%20G.%20The%20physics%20and%20psychophysics%20of%20music%3A%20an%20introduction%202008"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Jonathan Shen, Ruoming Pang, Ron J Weiss, Mike Schuster, Navdeep Jaitly, Zongheng Yang, Zhifeng Chen, Yu Zhang, Yuxuan Wang, RJ Skerry-Ryan, et al. Natural TTS synthesis by conditioning wavenet on mel spectrogram predictions. arXiv preprint arXiv:1712.05884, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.05884"
+        },
+        {
+            "id": "Julius_2010_a",
+            "entry": "Julius O. III Smith. Physical Audio Signal Processing: for Virtual Musical Instruments and Audio Effects. W3K Publishing, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20Julius%20O.%20III%20Physical%20Audio%20Signal%20Processing%3A%20for%20Virtual%20Musical%20Instruments%20and%20Audio%20Effects%202010"
+        },
+        {
+            "id": "Julius_2011_a",
+            "entry": "Julius O. III Smith. Spectral Audio Signal Processing. W3K Publishing, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20Julius%20O.%20III%20Spectral%20Audio%20Signal%20Processing%202011"
+        },
+        {
+            "id": "Tenenbaum_1999_a",
+            "entry": "Joshua B Tenenbaum and William T Freeman. Separating style and content with bilinear models. 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tenenbaum%2C%20Joshua%20B.%20Freeman%2C%20William%20T.%20Separating%20style%20and%20content%20with%20bilinear%20models%201999"
+        },
+        {
+            "id": "2016._0000_a",
+            "entry": "2016. URL https://dmitryulyanov.github.io/",
+            "url": "https://dmitryulyanov.github.io/"
+        },
+        {
+            "id": "Ulyanov_et+al_2016_a",
+            "entry": "Dmitry Ulyanov, Vadim Lebedev, Andrea Vedaldi, and Victor S. Lempitsky. Texture networks: Feed-forward synthesis of textures and stylized images. CoRR, abs/1603.03417, 2016. URL http://arxiv.org/abs/1603.03417.",
+            "url": "http://arxiv.org/abs/1603.03417",
+            "arxiv_url": "https://arxiv.org/pdf/1603.03417"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "A\u00e4ron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew W. Senior, and Koray Kavukcuoglu. Wavenet: A generative model for raw audio. CoRR, abs/1609.03499, 2016. URL http://arxiv.org/abs/1609.03499.",
+            "url": "http://arxiv.org/abs/1609.03499",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Velasco_et+al_2011_a",
+            "entry": "Gino Angelo Velasco, Nicki Holighaus, Monika D\u00f6rfler, and Thomas Grill. Constructing an invertible constant-Q transform with non-stationary gabor frames. Proceedings of DAFX11, Paris, pages 93\u201399, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Velasco%2C%20Gino%20Angelo%20Holighaus%2C%20Nicki%20D%C3%B6rfler%2C%20Monika%20Grill%2C%20Thomas%20Constructing%20an%20invertible%20constant-Q%20transform%20with%20non-stationary%20gabor%20frames%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Velasco%2C%20Gino%20Angelo%20Holighaus%2C%20Nicki%20D%C3%B6rfler%2C%20Monika%20Grill%2C%20Thomas%20Constructing%20an%20invertible%20constant-Q%20transform%20with%20non-stationary%20gabor%20frames%202011"
+        },
+        {
+            "id": "Verma_2018_a",
+            "entry": "Prateek Verma and Julius O Smith. Neural style transfer for audio spectograms. arXiv preprint arXiv:1801.01589, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01589"
+        },
+        {
+            "id": "Yi_et+al_2017_a",
+            "entry": "Zili Yi, Hao Zhang, Ping Tan Gong, et al. DualGAN: Unsupervised dual learning for image-to-image translation. arXiv preprint arXiv:1704.02510, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02510"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. CoRR, abs/1703.10593, 2017. URL http://arxiv.org/abs/1703.10593.",
+            "url": "http://arxiv.org/abs/1703.10593",
+            "arxiv_url": "https://arxiv.org/pdf/1703.10593"
+        },
+        {
+            "id": "In_2017_a",
+            "entry": "In CycleGAN training, because we made several architectural changes, we retuned the hyperparameters. The weighting for our cycle consistency loss is 10 and the weighting of the identity loss is 5. In the original CycleGAN the weighting of identity loss is constant throughout training but in our experiment, it stays constant for the first 100000 steps, then it starts linearly decay to 0. We set the weighing for Gradient Penalty to be 10, as was suggested in Gulrajani et al. (2017). Our learning rate is exponentially warmed up to 0.0001 over 2500 steps, stays constant, then at step 100000 starts to linearly decay to zero. The total training step is 1.5 million steps, trained with Adam optimizer (Kingma and Ba, 2014) with \u03b21 = 0 and \u03b22 = 0.9, with a batch size of 1.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20CycleGAN%20training%20because%20we%20made%20several%20architectural%20changes%20we%20retuned%20the%20hyperparameters%20The%20weighting%20for%20our%20cycle%20consistency%20loss%20is%2010%20and%20the%20weighting%20of%20the%20identity%20loss%20is%205%20In%20the%20original%20CycleGAN%20the%20weighting%20of%20identity%20loss%20is%20constant%20throughout%20training%20but%20in%20our%20experiment%20it%20stays%20constant%20for%20the%20first%20100000%20steps%20then%20it%20starts%20linearly%20decay%20to%200%20We%20set%20the%20weighing%20for%20Gradient%20Penalty%20to%20be%2010%20as%20was%20suggested%20in%20Gulrajani%20et%20al%202017%20Our%20learning%20rate%20is%20exponentially%20warmed%20up%20to%2000001%20over%202500%20steps%20stays%20constant%20then%20at%20step%20100000%20starts%20to%20linearly%20decay%20to%20zero%20The%20total%20training%20step%20is%2015%20million%20steps%20trained%20with%20Adam%20optimizer%20Kingma%20and%20Ba%202014%20with%20%CE%B21%20%200%20and%20%CE%B22%20%2009%20with%20a%20batch%20size%20of%201",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20CycleGAN%20training%20because%20we%20made%20several%20architectural%20changes%20we%20retuned%20the%20hyperparameters%20The%20weighting%20for%20our%20cycle%20consistency%20loss%20is%2010%20and%20the%20weighting%20of%20the%20identity%20loss%20is%205%20In%20the%20original%20CycleGAN%20the%20weighting%20of%20identity%20loss%20is%20constant%20throughout%20training%20but%20in%20our%20experiment%20it%20stays%20constant%20for%20the%20first%20100000%20steps%20then%20it%20starts%20linearly%20decay%20to%200%20We%20set%20the%20weighing%20for%20Gradient%20Penalty%20to%20be%2010%20as%20was%20suggested%20in%20Gulrajani%20et%20al%202017%20Our%20learning%20rate%20is%20exponentially%20warmed%20up%20to%2000001%20over%202500%20steps%20stays%20constant%20then%20at%20step%20100000%20starts%20to%20linearly%20decay%20to%20zero%20The%20total%20training%20step%20is%2015%20million%20steps%20trained%20with%20Adam%20optimizer%20Kingma%20and%20Ba%202014%20with%20%CE%B21%20%200%20and%20%CE%B22%20%2009%20with%20a%20batch%20size%20of%201"
+        },
+        {
+            "id": "11from_0000_b",
+            "entry": "11from website www.jsbach.net/midi/ 12from website www.piano-midi.de/chopin.htm 13For all the synthesized audio, we use Timidity++ synthesizer",
+            "url": "http://www.jsbach.net/midi/12from"
+        }
+    ]
+}

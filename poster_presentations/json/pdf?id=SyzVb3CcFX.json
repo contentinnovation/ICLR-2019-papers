@@ -1,0 +1,284 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Deconvolution and Checkerboard Artifacts",
+        "author": "Augustus Odena, Vincent Dumoulin, Chris Olah",
+        "date": 2017,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SyzVb3CcFX",
+            "doi": "10.23915/distill.00003"
+        },
+        "journal": "Distill",
+        "volume": "1",
+        "abstract": "Prediction is arguably one of the most basic functions of an intelligent system. In general, the problem of predicting events in the future or between two waypoints is exceedingly difficult. However, most phenomena naturally pass through relatively predictable bottlenecks\u2014while we cannot predict the precise trajectory of a robot arm between being at rest and holding an object up, we can be certain that it must have picked the object up. To exploit this, we decouple visual prediction from a rigid notion of time. While conventional approaches predict frames at regularly spaced temporal intervals, our time-agnostic predictors (TAP) are not tied to specific times so that they may instead discover predictable \u201cbottleneck\u201d frames no matter when they occur. We evaluate our approach for future and intermediate frame prediction across three robotic manipulation tasks. Our predictions are not only of higher visual quality, but also correspond to coherent semantic subgoals in temporally extended tasks."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "TAP": "time-agnostic prediction",
+        "GANs": "generative adversarial networks",
+        "VAE": "variational autoencoders",
+        "CGAN": "conditional GAN",
+        "CVAE": "conditional variational autoencoder"
+    },
+    "highlights": [
+        "Imagine taking a bottle of water and laying it on its side",
+        "We propose a general time-agnostic prediction (TAP) framework for prediction tasks",
+        "We show how time-agnostic prediction may be combined with conditional generative adversarial networks as well as variational autoencoders, to handle the residual uncertainty in its predictions",
+        "We have proposed a time-agnostic prediction (TAP) paradigm that is different from the fixed-time paradigm followed in prior prediction work",
+        "The standard paradigm for prediction tasks demands that a predictor not only make good predictions, but that it make them on a set schedule",
+        "We have argued for redefining the prediction task so that the predictor need only care that its prediction occur at some time, rather than that it occur at a specific scheduled time"
+    ],
+    "key_statements": [
+        "Imagine taking a bottle of water and laying it on its side",
+        "Our main contributions are: (i) we reframe the video prediction problem to be time-agnostic, we propose a novel technical approach to solve this problem, we show that our approach effectively identifies \u201cbottleneck states\u201d across several tasks, and we show that these bottlenecks correspond to subgoals that aid in planning towards complex end goals.\n2 RELATED WORK",
+        "We propose a general time-agnostic prediction (TAP) framework for prediction tasks",
+        "We show how time-agnostic prediction may be combined with conditional generative adversarial networks as well as variational autoencoders, to handle the residual uncertainty in its predictions",
+        "We propose not just the basic time-agnostic loss (Sec 3.1), but improvements in Sec 3.2 through 3.5 that allow time-agnostic prediction to work in more general tasks such as synthetic and real videos of robotic object manipulation",
+        "Instead of predicting the video frame at a specified time \u03c4 , we propose to predict predictable bottleneck video frames through a time-agnostic predictor (TAP), as motivated in Sec 1",
+        "We have proposed a time-agnostic prediction (TAP) paradigm that is different from the fixed-time paradigm followed in prior prediction work",
+        "We focus on comparing time-agnostic prediction against a representative fixed-time prediction model, keeping network architectures fixed",
+        "We evaluate the best of 100 stochastic predictions from GENMIN+variational autoencoders in Table 1 (GENMIN+variational autoencoders BEST-OF-100)",
+        "Fig 7 compares consecutive r=1 r=2 r=1 r=2 r=1 r=2 subgoals for the pick-and-place task produced by recursive time-agnostic prediction versus a recursive fixed-time model",
+        "As Fig 8 shows, even though BAIR pushing contains incoherent random arm motions, time-agnostic prediction consistently produces predictions that plausibly lie on the path from start to goal image",
+        "The standard paradigm for prediction tasks demands that a predictor not only make good predictions, but that it make them on a set schedule",
+        "We have argued for redefining the prediction task so that the predictor need only care that its prediction occur at some time, rather than that it occur at a specific scheduled time",
+        "We would like to investigate more general time-agnostic prediction formulations: for example, rather than choosing Et in Eq 5 to encourage predicting farther away times, we could conceivably penalize predictions that look too similar to the input context frames"
+    ],
+    "summary": [
+        "Imagine taking a bottle of water and laying it on its side.",
+        "While all prior work predicts at fixed time intervals, we aim to identify inherently low-uncertainty bottleneck frames with no associated timestamp.",
+        "One immediate concern with this minimum-over-time TAP loss might be that it could produce degenerate predictions very close to the input conditioning frames c.",
+        "A standard conditional GAN (CGAN) in fixed-time video prediction targeting time \u03c4 works as follows: given a \u201cdiscriminator\u201d D that outputs 0 for input-prediction tuples and 1 for input-ground truth tuples, the generator G is trained to fool the discriminator.",
+        "In terms of visual quality of predictions and finding a semantically coherent bottleneck, GENMIN2, GENMIN4, and GENMIN7 perform best\u2014they reliably produce a grasp on the object while it is still on the table.",
+        "With little or no time preferences, MIN and GENMIN10 produce images very close to the start, while GENMIN0.5 places too high a value on predictions farther away, and produces blurry images of the object after lifting.",
+        "TAP produces an even larger variation in stepsizes than fixed-time methods explicitly targeting the entire video (FIX0.75 and FIX1.0 fall short of producing predictions at 0.75 and 1.0 fraction of the episode length).",
+        "For grasping (Fig 6), both MIN and GENMIN consistently produce input fixed-time prediction time-agnostic approaches",
+        "For the pushing setting (Fig 9), GENMIN frequently produces images with one object moved and the other object fixed in place, which again is a semantically coherent bottleneck for this task.",
+        "While all foregoing results were reported without the CVAE approach of Sec 3.4, Table 1 shows results for GENMIN+VAE, and Fig 9 shows example predictions for pick-and-place.",
+        "Fig 7 compares consecutive r=1 r=2 r=1 r=2 r=1 r=2 subgoals for the pick-and-place task produced by recursive TAP versus a recursive fixed-time model.",
+        "As Fig 8 shows, even though BAIR pushing contains incoherent random arm motions, TAP consistently produces predictions that plausibly lie on the path from start to goal image.",
+        "As Fig 10 shows, GENMIN predicts bottlenecks much more frequently (\u223c60% of the time) than FIX.",
+        "We discuss experiments directly evaluating our intermediate predictions as visual subgoals for hierarchical planning for pushing tasks.",
+        "Visual MPC makes Table 2: Multi-object pushing eraction-conditioned fixed-time forward predictions of future object rors.",
+        "We would like to investigate more general TAP formulations: for example, rather than choosing Et in Eq 5 to encourage predicting farther away times, we could conceivably penalize predictions that look too similar to the input context frames.",
+        "In our preliminary experiments with a hierarchical visual planner, our results suggest that such predictions could serve as useful subgoals for complex tasks"
+    ],
+    "headline": "We evaluate our approach for future and intermediate frame prediction across three robotic manipulation tasks",
+    "reference_links": [
+        {
+            "id": "Babaeizadeh_et+al_2018_a",
+            "entry": "Mohammad Babaeizadeh, Chelsea Finn, Dumitru Erhan, Roy H Campbell, and Sergey Levine. Stochastic variational video prediction. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Babaeizadeh%2C%20Mohammad%20Finn%2C%20Chelsea%20Erhan%2C%20Dumitru%20Campbell%2C%20Roy%20H.%20Stochastic%20variational%20video%20prediction%202018"
+        },
+        {
+            "id": "Bacon_2013_a",
+            "entry": "Pierre-Luc Bacon. On the bottleneck concept for options discovery. M.S. Thesis, McGill University, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bacon%2C%20Pierre-Luc%20On%20the%20bottleneck%20concept%20for%20options%20discovery%202013"
+        },
+        {
+            "id": "Bar_2009_a",
+            "entry": "Moshe Bar. The proactive brain: memory for predictions. Philosophical Transactions of the Royal Society B: Biological Sciences, 364(1521):1235\u20131243, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bar%2C%20Moshe%20The%20proactive%20brain%3A%20memory%20for%20predictions%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bar%2C%20Moshe%20The%20proactive%20brain%3A%20memory%20for%20predictions%202009"
+        },
+        {
+            "id": "Clark_2013_a",
+            "entry": "Andy Clark. Whatever next? predictive brains, situated agents, and the future of cognitive science. Behavioral and brain sciences, 36(3):181\u2013204, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Clark%2C%20Andy%20Whatever%20next%3F%20predictive%20brains%2C%20situated%20agents%2C%20and%20the%20future%20of%20cognitive%20science%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Clark%2C%20Andy%20Whatever%20next%3F%20predictive%20brains%2C%20situated%20agents%2C%20and%20the%20future%20of%20cognitive%20science%202013"
+        },
+        {
+            "id": "Denton_2018_a",
+            "entry": "Emily Denton and Rob Fergus. Stochastic video generation with a learned prior. arXiv preprint arXiv:1802.07687, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.07687"
+        },
+        {
+            "id": "Ebert_et+al_2017_a",
+            "entry": "Frederik Ebert, Chelsea Finn, Alex X. Lee, and Sergey Levine. Self-supervised visual planning with temporal skip connections. CORL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ebert%2C%20Frederik%20Finn%2C%20Chelsea%20Lee%2C%20Alex%20X.%20Levine%2C%20Sergey%20Self-supervised%20visual%20planning%20with%20temporal%20skip%20connections%202017"
+        },
+        {
+            "id": "Finn_2017_a",
+            "entry": "Chelsea Finn and Sergey Levine. Deep visual foresight for planning robot motion. In International Conference on Robotics and Automation (ICRA), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Deep%20visual%20foresight%20for%20planning%20robot%20motion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Deep%20visual%20foresight%20for%20planning%20robot%20motion%202017"
+        },
+        {
+            "id": "Finn_et+al_2016_a",
+            "entry": "Chelsea Finn, Ian Goodfellow, and Sergey Levine. Unsupervised learning for physical interaction through video prediction. In Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Goodfellow%2C%20Ian%20Levine%2C%20Sergey%20Unsupervised%20learning%20for%20physical%20interaction%20through%20video%20prediction%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Goodfellow%2C%20Ian%20Levine%2C%20Sergey%20Unsupervised%20learning%20for%20physical%20interaction%20through%20video%20prediction%202016"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Hadsell_et+al_2006_a",
+            "entry": "Raia Hadsell, Sumit Chopra, and Yann LeCun. Dimensionality reduction by learning an invariant mapping. In Computer vision and pattern recognition, 2006 IEEE computer society conference on, volume 2, pp. 1735\u20131742. IEEE, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hadsell%2C%20Raia%20Chopra%2C%20Sumit%20LeCun%2C%20Yann%20Dimensionality%20reduction%20by%20learning%20an%20invariant%20mapping%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hadsell%2C%20Raia%20Chopra%2C%20Sumit%20LeCun%2C%20Yann%20Dimensionality%20reduction%20by%20learning%20an%20invariant%20mapping%202006"
+        },
+        {
+            "id": "Hohwy_2013_a",
+            "entry": "Jakob Hohwy. The predictive mind. Oxford University Press, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hohwy%2C%20Jakob%20The%20predictive%20mind%202013"
+        },
+        {
+            "id": "Isola_et+al_2017_a",
+            "entry": "Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A Efros. Image-to-image translation with conditional adversarial networks. CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Jayaraman_2015_a",
+            "entry": "Dinesh Jayaraman and Kristen Grauman. Learning image representations tied to ego-motion. In Proceedings of the IEEE International Conference on Computer Vision, pp. 1413\u20131421, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jayaraman%2C%20Dinesh%20Grauman%2C%20Kristen%20Learning%20image%20representations%20tied%20to%20ego-motion%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jayaraman%2C%20Dinesh%20Grauman%2C%20Kristen%20Learning%20image%20representations%20tied%20to%20ego-motion%202015"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2016_a",
+            "entry": "Nal Kalchbrenner, Aaron van den Oord, Karen Simonyan, Ivo Danihelka, Oriol Vinyals, Alex Graves, and Koray Kavukcuoglu. Video pixel networks. arXiv preprint arXiv:1610.00527, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.00527"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Larsen_et+al_2016_a",
+            "entry": "Anders Boesen Lindbo Larsen, S\u00f8ren Kaae S\u00f8nderby, Hugo Larochelle, and Ole Winther. Autoencoding beyond pixels using a learned similarity metric. ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Larsen%2C%20Anders%20Boesen%20Lindbo%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Larochelle%2C%20Hugo%20Winther%2C%20Ole%20Autoencoding%20beyond%20pixels%20using%20a%20learned%20similarity%20metric%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Larsen%2C%20Anders%20Boesen%20Lindbo%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Larochelle%2C%20Hugo%20Winther%2C%20Ole%20Autoencoding%20beyond%20pixels%20using%20a%20learned%20similarity%20metric%202016"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Alex X Lee, Richard Zhang, Frederik Ebert, Pieter Abbeel, Chelsea Finn, and Sergey Levine. Stochastic adversarial video prediction. arXiv preprint arXiv:1804.01523, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.01523"
+        },
+        {
+            "id": "Mathieu_et+al_2015_a",
+            "entry": "Michael Mathieu, Camille Couprie, and Yann LeCun. Deep multi-scale video prediction beyond mean square error. arXiv preprint arXiv:1511.05440, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05440"
+        },
+        {
+            "id": "Mcgovern_2001_a",
+            "entry": "Amy McGovern and Andrew G Barto. Automatic discovery of subgoals in reinforcement learning using diverse density. In ICML, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McGovern%2C%20Amy%20Barto%2C%20Andrew%20G.%20Automatic%20discovery%20of%20subgoals%20in%20reinforcement%20learning%20using%20diverse%20density%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McGovern%2C%20Amy%20Barto%2C%20Andrew%20G.%20Automatic%20discovery%20of%20subgoals%20in%20reinforcement%20learning%20using%20diverse%20density%202001"
+        },
+        {
+            "id": "Metzen_2013_a",
+            "entry": "Jan Hendrik Metzen. Online skill discovery using graph-based clustering. In European Workshop on Reinforcement Learning, pp. 77\u201388, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Metzen%2C%20Jan%20Hendrik%20Online%20skill%20discovery%20using%20graph-based%20clustering%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Metzen%2C%20Jan%20Hendrik%20Online%20skill%20discovery%20using%20graph-based%20clustering%202013"
+        },
+        {
+            "id": "Mirza_2014_a",
+            "entry": "Mehdi Mirza and Simon Osindero. Conditional generative adversarial nets. arXiv preprint arXiv:1411.1784, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.1784"
+        },
+        {
+            "id": "Mobahi_et+al_2009_a",
+            "entry": "Hossein Mobahi, Ronan Collobert, and Jason Weston. Deep learning from temporal coherence in video. In Proceedings of the 26th Annual International Conference on Machine Learning, pp. 737\u2013744. ACM, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mobahi%2C%20Hossein%20Collobert%2C%20Ronan%20Weston%2C%20Jason%20Deep%20learning%20from%20temporal%20coherence%20in%20video%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mobahi%2C%20Hossein%20Collobert%2C%20Ronan%20Weston%2C%20Jason%20Deep%20learning%20from%20temporal%20coherence%20in%20video%202009"
+        },
+        {
+            "id": "Neitz_et+al_2018_a",
+            "entry": "Alexander Neitz, Giambattista Parascandolo, Stefan Bauer, and Bernhard Schlkopf. Adaptive skip intervals: Temporal abstraction for recurrent dynamical models. NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neitz%2C%20Alexander%20Parascandolo%2C%20Giambattista%20Bauer%2C%20Stefan%20Schlkopf%2C%20Bernhard%20Adaptive%20skip%20intervals%3A%20Temporal%20abstraction%20for%20recurrent%20dynamical%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neitz%2C%20Alexander%20Parascandolo%2C%20Giambattista%20Bauer%2C%20Stefan%20Schlkopf%2C%20Bernhard%20Adaptive%20skip%20intervals%3A%20Temporal%20abstraction%20for%20recurrent%20dynamical%20models%202018"
+        },
+        {
+            "id": "Odena_et+al_2016_a",
+            "entry": "Augustus Odena, Vincent Dumoulin, and Chris Olah. Deconvolution and checkerboard artifacts. Distill, 2016. doi: 10.23915/distill.00003. URL http://distill.pub/2016/deconv-checkerboard.",
+            "crossref": "https://dx.doi.org/10.23915/distill.00003"
+        },
+        {
+            "id": "Oh_et+al_2015_a",
+            "entry": "Junhyuk Oh, Xiaoxiao Guo, Honglak Lee, Richard L Lewis, and Satinder Singh. Action-conditional video prediction using deep networks in atari games. In Advances in Neural Information Processing Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, and Koray Kavukcuoglu. Pixel recurrent neural networks. arXiv preprint arXiv:1601.06759, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1601.06759"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Ranzato_et+al_2014_a",
+            "entry": "MarcAurelio Ranzato, Arthur Szlam, Joan Bruna, Michael Mathieu, Ronan Collobert, and Sumit Chopra. Video (language) modeling: a baseline for generative models of natural videos. arXiv preprint arXiv:1412.6604, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6604"
+        },
+        {
+            "id": "Simsek_2009_a",
+            "entry": "Ozgur Simsek and Andrew G Barto. Skill characterization based on betweenness. In Advances in neural information processing systems, pp. 1497\u20131504, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simsek%2C%20Ozgur%20Barto%2C%20Andrew%20G.%20Skill%20characterization%20based%20on%20betweenness%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simsek%2C%20Ozgur%20Barto%2C%20Andrew%20G.%20Skill%20characterization%20based%20on%20betweenness%202009"
+        },
+        {
+            "id": "Sutton_et+al_1999_a",
+            "entry": "Richard S Sutton, Doina Precup, and Satinder Singh. Between mdps and semi-mdps: A framework for temporal abstraction in reinforcement learning. Artificial intelligence, 112(1-2):181\u2013211, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Precup%2C%20Doina%20Singh%2C%20Satinder%20Between%20mdps%20and%20semi-mdps%3A%20A%20framework%20for%20temporal%20abstraction%20in%20reinforcement%20learning%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20Richard%20S.%20Precup%2C%20Doina%20Singh%2C%20Satinder%20Between%20mdps%20and%20semi-mdps%3A%20A%20framework%20for%20temporal%20abstraction%20in%20reinforcement%20learning%201999"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 5026\u20135033. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Van_et+al_2016_b",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, Lasse Espeholt, Oriol Vinyals, Alex Graves, et al. Conditional image generation with pixelcnn decoders. In Advances in Neural Information Processing Systems, pp. 4790\u20134798, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Espeholt%2C%20Lasse%20Vinyals%2C%20Oriol%20Conditional%20image%20generation%20with%20pixelcnn%20decoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Espeholt%2C%20Lasse%20Vinyals%2C%20Oriol%20Conditional%20image%20generation%20with%20pixelcnn%20decoders%202016"
+        },
+        {
+            "id": "Vondrick_et+al_0000_a",
+            "entry": "Carl Vondrick, Hamed Pirsiavash, and Antonio Torralba. Generating videos with scene dynamics. In Advances In Neural Information Processing Systems, pp. 613\u2013621, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vondrick%2C%20Carl%20Pirsiavash%2C%20Hamed%20Torralba%2C%20Antonio%20Generating%20videos%20with%20scene%20dynamics",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vondrick%2C%20Carl%20Pirsiavash%2C%20Hamed%20Torralba%2C%20Antonio%20Generating%20videos%20with%20scene%20dynamics"
+        },
+        {
+            "id": "Vondrick_et+al_0000_b",
+            "entry": "Carl Vondrick, Hamed Pirsiavash, and Antonio Torralba. Anticipating visual representations from unlabeled video. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 98\u2013106, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vondrick%2C%20Carl%20Pirsiavash%2C%20Hamed%20Torralba%2C%20Antonio%20Anticipating%20visual%20representations%20from%20unlabeled%20video",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vondrick%2C%20Carl%20Pirsiavash%2C%20Hamed%20Torralba%2C%20Antonio%20Anticipating%20visual%20representations%20from%20unlabeled%20video"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Xiaolong Wang, Ali Farhadi, and Abhinav Gupta. Actionstransformations. In Proceedings of the IEEE conference on Computer Vision and Pattern Recognition, pp. 2658\u20132667, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiaolong%20Wang%20Ali%20Farhadi%20and%20Abhinav%20Gupta%20Actionstransformations%20In%20Proceedings%20of%20the%20IEEE%20conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20pp%2026582667%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiaolong%20Wang%20Ali%20Farhadi%20and%20Abhinav%20Gupta%20Actionstransformations%20In%20Proceedings%20of%20the%20IEEE%20conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20pp%2026582667%202016"
+        },
+        {
+            "id": "Xue_et+al_2016_a",
+            "entry": "Tianfan Xue, Jiajun Wu, Katherine Bouman, and Bill Freeman. Visual dynamics: Probabilistic future frame synthesis via cross convolutional networks. In Advances in Neural Information Processing Systems, pp. 91\u201399, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xue%2C%20Tianfan%20Wu%2C%20Jiajun%20Bouman%2C%20Katherine%20Freeman%2C%20Bill%20Visual%20dynamics%3A%20Probabilistic%20future%20frame%20synthesis%20via%20cross%20convolutional%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xue%2C%20Tianfan%20Wu%2C%20Jiajun%20Bouman%2C%20Katherine%20Freeman%2C%20Bill%20Visual%20dynamics%3A%20Probabilistic%20future%20frame%20synthesis%20via%20cross%20convolutional%20networks%202016"
+        }
+    ]
+}

@@ -1,0 +1,410 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Bayesian Deep Convolutional Networks with Many Channels are Gaussian Processes",
+        "author": "Roman Novak, Lechao Xiao, Jaehoon Lee, Yasaman Bahri, Greg Yang, Daniel A. Abolafia, Jeffrey Pennington, Jascha Sohl-Dickstein",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1g30j0qF7"
+        },
+        "journal": "Google AI Residents",
+        "abstract": "There is a previously identified equivalence between wide fully connected neural networks (FCNs) and Gaussian processes (GPs). This equivalence enables, for instance, test set predictions that would have resulted from a fully Bayesian, infinitely wide trained FCN to be computed without ever instantiating the FCN, but by instead evaluating the corresponding GP. In this work, we derive an analogous equivalence for multi-layer convolutional neural networks (CNNs) both with and without pooling layers, and achieve state of the art results on CIFAR10 for GPs without trainable kernels. We also introduce a Monte Carlo method to estimate the GP corresponding to a given neural network architecture, even in cases where the analytic form has too many terms to be computationally feasible. Surprisingly, in the absence of pooling layers, the GPs corresponding to CNNs with and without weight sharing are identical. As a consequence, translation equivariance, beneficial in finite channel CNNs trained with stochastic gradient descent (SGD), is guaranteed to play no role in the Bayesian treatment of the infinite channel limit \u2013 a qualitative difference between the two regimes that is not present in the FCN case. We confirm experimentally, that while in some scenarios the performance of SGD-trained finite CNNs approaches that of the corresponding GPs as the channel count increases, with careful tuning SGD-trained CNNs can significantly outperform their corresponding GPs, suggesting advantages from SGD training compared to fully Bayesian parameter estimation."
+    },
+    "keywords": [
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "Gaussian processes",
+            "url": "https://en.wikipedia.org/wiki/Gaussian_processes"
+        },
+        {
+            "term": "analytic",
+            "url": "https://en.wikipedia.org/wiki/analytic"
+        },
+        {
+            "term": "gaussian process",
+            "url": "https://en.wikipedia.org/wiki/gaussian_process"
+        },
+        {
+            "term": "Convolutional Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "FCNs": "fully connected networks",
+        "GPs": "Gaussian processes",
+        "CNNs": "Convolutional Neural Networks",
+        "SGD": "stochastic gradient descent",
+        "NNs": "Neural networks",
+        "NN-GPs": "Network-equivalent Gaussian Processes",
+        "LCN": "Locally Connected Network",
+        "MC-GP": "Monte Carlo-GP",
+        "LCNs": "Locally Connected Networks"
+    },
+    "highlights": [
+        "Neural networks (NNs) demonstrate remarkable performance (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; Oord et al, 2016; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>), but are still only poorly understood from a theoretical perspective (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a>; Choromanska et al, 2015; <a class=\"ref-link\" id=\"cPascanu_et+al_2014_a\" href=\"#rPascanu_et+al_2014_a\"><a class=\"ref-link\" id=\"cPascanu_et+al_2014_a\" href=\"#rPascanu_et+al_2014_a\">Pascanu et al, 2014</a></a>; <a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\">Zhang et al, 2017</a></a>)",
+        "We extend the equivalence between Neural networks and Neural networks-Gaussian processes to deep Convolutional Neural Networks (CNNs), both with and without pooling",
+        "We show analytically that Convolutional Neural Networks with many channels, trained in a fully Bayesian fashion, correspond to an Neural networks-Gaussian processes (\u00a72, \u00a73)",
+        "We show that in the absence of pooling, the Neural networks-Gaussian processes for a Convolutional Neural Networks and a Locally Connected Network (LCN) are identical (Figure 1, \u00a75.1)",
+        "We show that careful tuning of hyperparameters allows finite Convolutional Neural Networks trained with stochastic gradient descent to outperform their corresponding Neural networks-Gaussian processes by a significant margin",
+        "In this work we find that the performance of finite width stochastic gradient descent-trained Convolutional Neural Networks often approaches that of their Convolutional Neural Networks-Gaussian processes counterpart (Figure 6, b, c),6 suggesting that in those cases equivariance does not play a beneficial role in stochastic gradient descent-trained networks"
+    ],
+    "key_statements": [
+        "Neural networks (NNs) demonstrate remarkable performance (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; Oord et al, 2016; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>), but are still only poorly understood from a theoretical perspective (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a>; Choromanska et al, 2015; <a class=\"ref-link\" id=\"cPascanu_et+al_2014_a\" href=\"#rPascanu_et+al_2014_a\"><a class=\"ref-link\" id=\"cPascanu_et+al_2014_a\" href=\"#rPascanu_et+al_2014_a\">Pascanu et al, 2014</a></a>; <a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\">Zhang et al, 2017</a></a>)",
+        "The recent discovery of an equivalence between deep neural networks and Gaussian processes (<a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al, 2018</a>; Matthews et al, 2018b) allow us to express an analytic form for the prior over functions encoded by deep Neural networks architectures and initializations",
+        "We extend the equivalence between Neural networks and Neural networks-Gaussian processes to deep Convolutional Neural Networks (CNNs), both with and without pooling",
+        "We show analytically that Convolutional Neural Networks with many channels, trained in a fully Bayesian fashion, correspond to an Neural networks-Gaussian processes (\u00a72, \u00a73)",
+        "We show that in the absence of pooling, the Neural networks-Gaussian processes for a Convolutional Neural Networks and a Locally Connected Network (LCN) are identical (Figure 1, \u00a75.1)",
+        "We show that careful tuning of hyperparameters allows finite Convolutional Neural Networks trained with stochastic gradient descent to outperform their corresponding Neural networks-Gaussian processes by a significant margin",
+        "We introduce a Monte Carlo method to compute Neural networks-Gaussian processes kernels for situations where evaluating the Neural networks-Gaussian processes is otherwise computationally infeasible (\u00a74)",
+        "At depth 15 the spatial dimension of the output without padding is reduced to 1 \u00d7 1, making the Convolutional Neural Networks-Gaussian processes without padding equivalent to the center pixel selection strategy (\u00a73.2.2) \u2013 which performs worse than the Convolutional Neural Networks-Gaussian processes but approaches the latter in the limit of large depth, as information becomes more uniformly spatially distributed (<a class=\"ref-link\" id=\"cXiao_et+al_2018_a\" href=\"#rXiao_et+al_2018_a\">Xiao et al, 2018</a>)",
+        "We introduce a Monte Carlo estimation method for Neural networks-Gaussian processes kernels which are computationally impractical to compute analytically, or for which we do not know the analytic form",
+        "In this work we find that the performance of finite width stochastic gradient descent-trained Convolutional Neural Networks often approaches that of their Convolutional Neural Networks-Gaussian processes counterpart (Figure 6, b, c),6 suggesting that in those cases equivariance does not play a beneficial role in stochastic gradient descent-trained networks"
+    ],
+    "summary": [
+        "Neural networks (NNs) demonstrate remarkable performance (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; Oord et al, 2016; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>), but are still only poorly understood from a theoretical perspective (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a>; Choromanska et al, 2015; <a class=\"ref-link\" id=\"cPascanu_et+al_2014_a\" href=\"#rPascanu_et+al_2014_a\"><a class=\"ref-link\" id=\"cPascanu_et+al_2014_a\" href=\"#rPascanu_et+al_2014_a\">Pascanu et al, 2014</a></a>; <a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2017_a\" href=\"#rZhang_et+al_2017_a\">Zhang et al, 2017</a></a>).",
+        "We extend the equivalence between NNs and NN-GPs to deep Convolutional Neural Networks (CNNs), both with and without pooling.",
+        "Our work differs from all of these in that our GP corresponds exactly to a fully Bayesian CNN in the infinite channel limit, when all layers are taken to be of infinite size.",
+        "In addition to explicitly specifying kernels corresponding to pooling and vectorizing, we compare the NN-GP performance to finite width SGD-trained CNNs and analyze the differences between the two models.",
+        "Our work concerns proving that the top-layer pre-activations zL converge in distribution to an |X | nL+1d-variate normal random vector with a particular covariance matrix of shape |X | nL+1d \u00d7 |X | nL+1d as min n1, .",
+        "We consider the prior over outputs zL computed by a CNN in the limit of infinitely many channels in the hidden layers, min n1, .",
+        "Subject to weak restrictions on the nonlinearity \u03c6, we can apply the weak law of large numbers and conclude that the covariance matrix Kl becomes deterministic in the infinite channel limit in layer l.",
+        "At depth 15 the spatial dimension of the output without padding is reduced to 1 \u00d7 1, making the CNN-GP without padding equivalent to the center pixel selection strategy (\u00a73.2.2) \u2013 which performs worse than the CNN-GP but approaches the latter in the limit of large depth, as information becomes more uniformly spatially distributed (<a class=\"ref-link\" id=\"cXiao_et+al_2018_a\" href=\"#rXiao_et+al_2018_a\">Xiao et al, 2018</a>).",
+        "CNN-GPs generally outperform FCN-GP, presumably due to the local connectivity prior, but can fail to capture nonlinear interactions between spatially-distant pixels at shallow depths.",
+        "This approach corresponds to applying global average pooling right after the last convolutional layer.5 This approach takes all pixel-pixel covariances into consideration and makes the kernel translation invariant.",
+        "Similar in spirit to traditional random feature methods (<a class=\"ref-link\" id=\"cRahimi_2007_a\" href=\"#rRahimi_2007_a\">Rahimi & Recht, 2007</a>), the core idea is to instantiate many random finite width networks and use the empirical uncentered covariances of activations to estimate the Monte Carlo-GP (MC-GP) kernel, Knl ,M",
+        "In a non-distributed setting, the MC-GP reduces the memory requirements to compute GPpool from O |X |2 d2 to O |X |2 + n2 + nd , making the evaluation of CNN-GPs with pooling practical.",
+        "5.1 BAYESIAN CNNS WITH MANY CHANNELS ARE IDENTICAL TO LOCALLY CONNECTED NETWORKS, IN THE ABSENCE OF POOLING",
+        "Connected Networks (LCNs) (Fukushima, 1975; <a class=\"ref-link\" id=\"cLecun_1989_a\" href=\"#rLecun_1989_a\">Lecun, 1989</a>) are CNNs without weight sharing between spatial locations.",
+        "After the publication of this paper, <a class=\"ref-link\" id=\"cYang_2019_a\" href=\"#rYang_2019_a\"><a class=\"ref-link\" id=\"cYang_2019_a\" href=\"#rYang_2019_a\">Yang (2019</a></a>) devised a unifying framework proving the GP convergence for even more modelsattention, LSTM) with slightly different assumptions on the nonlinearity"
+    ],
+    "headline": "We introduce a Monte Carlo method to estimate the Gaussian processes corresponding to a given neural network architecture, even in cases where the analytic form has too many terms to be computationally feasible",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2016_a",
+            "entry": "Mart\u0131n Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, et al. Tensorflow: Large-scale machine learning on heterogeneous distributed systems. arXiv preprint arXiv:1603.04467, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.04467"
+        },
+        {
+            "id": "Billingsley_1995_a",
+            "entry": "Patrick Billingsley. Probability and Measure. John Wiley & Sons, 1995. Patrick Billingsley. Convergence of probability measures. John Wiley & Sons, 1999. Kenneth Blomqvist, Samuel Kaski, and Markus Heinonen. Deep convolutional gaussian processes.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Billingsley%2C%20Patrick%20Probability%20and%20Measure%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Billingsley%2C%20Patrick%20Probability%20and%20Measure%201995"
+        },
+        {
+            "id": "Springer_2018_a",
+            "entry": "Springer, 1982. Adria Garriga-Alonso, Laurence Aitchison, and Carl Edward Rasmussen. Deep convolutional networks as shallow Gaussian processes. arXiv preprint arXiv:1808.05587, aug 2018. URL https://arxiv.org/abs/1808.05587.",
+            "url": "https://arxiv.org/abs/1808.05587",
+            "arxiv_url": "https://arxiv.org/pdf/1808.05587"
+        },
+        {
+            "id": "Golovin_et+al_2017_a",
+            "entry": "Daniel Golovin, Benjamin Solnik, Subhodeep Moitra, Greg Kochanski, John Karro, and D Sculley. Google vizier: A service for black-box optimization. In Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 1487\u20131495. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Golovin%2C%20Daniel%20Solnik%2C%20Benjamin%20Moitra%2C%20Subhodeep%20Kochanski%2C%20Greg%20Google%20vizier%3A%20A%20service%20for%20black-box%20optimization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Golovin%2C%20Daniel%20Solnik%2C%20Benjamin%20Moitra%2C%20Subhodeep%20Kochanski%2C%20Greg%20Google%20vizier%3A%20A%20service%20for%20black-box%20optimization%202017"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "Ian J Goodfellow, Oriol Vinyals, and Andrew M Saxe. Qualitatively characterizing neural network optimization problems. International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20J.%20Vinyals%2C%20Oriol%20Saxe%2C%20Andrew%20M.%20Qualitatively%20characterizing%20neural%20network%20optimization%20problems%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20J.%20Vinyals%2C%20Oriol%20Saxe%2C%20Andrew%20M.%20Qualitatively%20characterizing%20neural%20network%20optimization%20problems%202015"
+        },
+        {
+            "id": "Hanin_2018_a",
+            "entry": "Boris Hanin and David Rolnick. How to start training: The effect of initialization and architecture. arXiv preprint arXiv:1803.01719, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01719"
+        },
+        {
+            "id": "Hazan_2015_a",
+            "entry": "Tamir Hazan and Tommi Jaakkola. Steps toward deep kernel methods from infinite neural networks. arXiv preprint arXiv:1508.05133, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1508.05133"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. 3rd International Conference for Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Technical report, Citeseer, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Kumar_et+al_2018_a",
+            "entry": "Vinayak Kumar, Vaibhav Singh, PK Srijith, and Andreas Damianou. Deep gaussian processes with convolutional kernels. arXiv preprint arXiv:1806.01655, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01655"
+        },
+        {
+            "id": "Lawrence_2007_a",
+            "entry": "Neil D Lawrence and Andrew J Moore. Hierarchical gaussian process latent variable models. In Proceedings of the 24th international conference on Machine learning, pp. 481\u2013488. ACM, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lawrence%2C%20Neil%20D.%20Moore%2C%20Andrew%20J.%20Hierarchical%20gaussian%20process%20latent%20variable%20models%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lawrence%2C%20Neil%20D.%20Moore%2C%20Andrew%20J.%20Hierarchical%20gaussian%20process%20latent%20variable%20models%202007"
+        },
+        {
+            "id": "Roux_2007_a",
+            "entry": "Nicolas Le Roux and Yoshua Bengio. Continuous neural networks. In Artificial Intelligence and Statistics, pp. 404\u2013411, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roux%2C%20Nicolas%20Le%20Bengio%2C%20Yoshua%20Continuous%20neural%20networks%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roux%2C%20Nicolas%20Le%20Bengio%2C%20Yoshua%20Continuous%20neural%20networks%202007"
+        },
+        {
+            "id": "Lecun_1989_a",
+            "entry": "Yann Lecun. Generalization and network design strategies. In Connectionism in perspective. Elsevier, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lecun%2C%20Yann%20Generalization%20and%20network%20design%20strategies.%20In%20Connectionism%20in%20perspective%201989"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Jaehoon Lee, Yasaman Bahri, Roman Novak, Sam Schoenholz, Jeffrey Pennington, and Jascha Sohldickstein. Deep neural networks as gaussian processes. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=B1EA-M-0Z.",
+            "url": "https://openreview.net/forum?id=B1EA-M-0Z",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Jaehoon%20Bahri%2C%20Yasaman%20Novak%2C%20Roman%20Schoenholz%2C%20Sam%20Deep%20neural%20networks%20as%20gaussian%20processes%202018"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Henry W Lin, Max Tegmark, and David Rolnick. Why does deep and cheap learning work so well? Journal of Statistical Physics, 168(6):1223\u20131247, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Henry%20W.%20Tegmark%2C%20Max%20Rolnick%2C%20David%20Why%20does%20deep%20and%20cheap%20learning%20work%20so%20well%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Henry%20W.%20Tegmark%2C%20Max%20Rolnick%2C%20David%20Why%20does%20deep%20and%20cheap%20learning%20work%20so%20well%3F%202017"
+        },
+        {
+            "id": "Long_et+al_2014_a",
+            "entry": "Jonathan L Long, Ning Zhang, and Trevor Darrell. Do convnets learn correspondence? In Advances in Neural Information Processing Systems, pp. 1601\u20131609, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Long%2C%20Jonathan%20L.%20Zhang%2C%20Ning%20Darrell%2C%20Trevor%20Do%20convnets%20learn%20correspondence%3F%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Long%2C%20Jonathan%20L.%20Zhang%2C%20Ning%20Darrell%2C%20Trevor%20Do%20convnets%20learn%20correspondence%3F%202014"
+        },
+        {
+            "id": "Long_2019_a",
+            "entry": "Philip M Long and Hanie Sedghi. On the effect of the activation function on the distribution of hidden nodes in a deep network. arXiv preprint arXiv:1901.02104, 2019.",
+            "arxiv_url": "https://arxiv.org/pdf/1901.02104"
+        },
+        {
+            "id": "Mackay_2003_a",
+            "entry": "David JC MacKay. Information theory, inference and learning algorithms. Cambridge university press, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MacKay%2C%20David%20J.C.%20Information%20theory%2C%20inference%20and%20learning%20algorithms%202003"
+        },
+        {
+            "id": "De_et+al_2018_a",
+            "entry": "Alexander G de G Matthews, Mark Rowland, Jiri Hron, Richard E Turner, and Zoubin Ghahramani. Gaussian process behaviour in wide deep neural networks. arXiv preprint arXiv:1804.11271, 9 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.11271"
+        },
+        {
+            "id": "De_et+al_0000_a",
+            "entry": "Alexander G. de G. Matthews, Jiri Hron, Mark Rowland, Richard E. Turner, and Zoubin Ghahramani. Gaussian process behaviour in wide deep neural networks. In International Conference on Learning Representations, 4 2018b. URL https://openreview.net/forum?id= H1-nGgWC-.",
+            "url": "https://openreview.net/forum?id=",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=de%20G.%20Matthews%2C%20Alexander%20G.%20Hron%2C%20Jiri%20Rowland%2C%20Mark%20Turner%2C%20Richard%20E.%20Gaussian%20process%20behaviour%20in%20wide%20deep%20neural%20networks"
+        },
+        {
+            "id": "Nair_2010_a",
+            "entry": "Vinod Nair and Geoffrey E Hinton. Rectified linear units improve restricted boltzmann machines. In Proceedings of the 27th international conference on machine learning (ICML-10), pp. 807\u2013814, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Neal_1994_a",
+            "entry": "Radford M. Neal. Priors for infinite networks (tech. rep. no. crg-tr-94-1). University of Toronto, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20Priors%20for%20infinite%20networks%20%28tech%201994"
+        },
+        {
+            "id": "Neal_1995_a",
+            "entry": "Radford M Neal. BAYESIAN LEARNING FOR NEURAL NETWORKS. PhD thesis, University of Toronto, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20BAYESIAN%20LEARNING%20FOR%20NEURAL%20NETWORKS%201995"
+        },
+        {
+            "id": "Neyshabur_et+al_2015_a",
+            "entry": "Behnam Neyshabur, Ryota Tomioka, and Nathan Srebro. In search of the real inductive bias: On the role of implicit regularization in deep learning. Proceeding of the international Conference on Learning Representations workshop track, abs/1412.6614, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neyshabur%2C%20Behnam%20Tomioka%2C%20Ryota%20Srebro%2C%20Nathan%20In%20search%20of%20the%20real%20inductive%20bias%3A%20On%20the%20role%20of%20implicit%20regularization%20in%20deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neyshabur%2C%20Behnam%20Tomioka%2C%20Ryota%20Srebro%2C%20Nathan%20In%20search%20of%20the%20real%20inductive%20bias%3A%20On%20the%20role%20of%20implicit%20regularization%20in%20deep%20learning%202015"
+        },
+        {
+            "id": "Novak_et+al_2018_a",
+            "entry": "Roman Novak, Yasaman Bahri, Daniel A. Abolafia, Jeffrey Pennington, and Jascha Sohl-Dickstein. Sensitivity and generalization in neural networks: an empirical study. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id= HJC2SzZCW.",
+            "url": "https://openreview.net/forum?id=",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Novak%2C%20Roman%20Bahri%2C%20Yasaman%20Abolafia%2C%20Daniel%20A.%20Pennington%2C%20Jeffrey%20Sensitivity%20and%20generalization%20in%20neural%20networks%3A%20an%20empirical%20study%202018"
+        },
+        {
+            "id": "Olah_et+al_2017_a",
+            "entry": "Chris Olah, Alexander Mordvintsev, and Ludwig Schubert. Feature visualization. Distill, 2(11):e7, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olah%2C%20Chris%20Mordvintsev%2C%20Alexander%20Schubert%2C%20Ludwig%20Feature%20visualization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olah%2C%20Chris%20Mordvintsev%2C%20Alexander%20Schubert%2C%20Ludwig%20Feature%20visualization%202017"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew Senior, and Koray Kavukcuoglu. Wavenet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Pascanu_et+al_2014_a",
+            "entry": "Razvan Pascanu, Yann N Dauphin, Surya Ganguli, and Yoshua Bengio. On the saddle point problem for non-convex optimization. arXiv preprint arXiv:1405.4604, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1405.4604"
+        },
+        {
+            "id": "Poggio_et+al_2017_a",
+            "entry": "Tomaso Poggio, Hrushikesh Mhaskar, Lorenzo Rosasco, Brando Miranda, and Qianli Liao. Why and when can deep-but not shallow-networks avoid the curse of dimensionality: A review. International Journal of Automation and Computing, 14(5):503\u2013519, Oct 2017. ISSN 1751-8520. doi: 10.1007/s11633-017-1054-2. URL https://doi.org/10.1007/s11633-017-1054-2.",
+            "crossref": "https://dx.doi.org/10.1007/s11633-017-1054-2",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11633-017-1054-2"
+        },
+        {
+            "id": "Poole_et+al_2016_a",
+            "entry": "Ben Poole, Subhaneil Lahiri, Maithra Raghu, Jascha Sohl-Dickstein, and Surya Ganguli. Exponential expressivity in deep neural networks through transient chaos. In Advances In Neural Information Processing Systems, pp. 3360\u20133368, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Poole%2C%20Ben%20Lahiri%2C%20Subhaneil%20Raghu%2C%20Maithra%20Sohl-Dickstein%2C%20Jascha%20Exponential%20expressivity%20in%20deep%20neural%20networks%20through%20transient%20chaos%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Poole%2C%20Ben%20Lahiri%2C%20Subhaneil%20Raghu%2C%20Maithra%20Sohl-Dickstein%2C%20Jascha%20Exponential%20expressivity%20in%20deep%20neural%20networks%20through%20transient%20chaos%202016"
+        },
+        {
+            "id": "Quinonero-Candela_2005_a",
+            "entry": "Joaquin Quinonero-Candela and Carl Edward Rasmussen. A unifying view of sparse approximate gaussian process regression. Journal of Machine Learning Research, 6(Dec):1939\u20131959, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Quinonero-Candela%2C%20Joaquin%20Rasmussen%2C%20Carl%20Edward%20A%20unifying%20view%20of%20sparse%20approximate%20gaussian%20process%20regression%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Quinonero-Candela%2C%20Joaquin%20Rasmussen%2C%20Carl%20Edward%20A%20unifying%20view%20of%20sparse%20approximate%20gaussian%20process%20regression%202005"
+        },
+        {
+            "id": "Rahimi_2007_a",
+            "entry": "Ali Rahimi and Ben Recht. Random features for large-scale kernel machines. In In Neural Infomration Processing Systems, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rahimi%2C%20Ali%20Recht%2C%20Ben%20Random%20features%20for%20large-scale%20kernel%20machines%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rahimi%2C%20Ali%20Recht%2C%20Ben%20Random%20features%20for%20large-scale%20kernel%20machines%202007"
+        },
+        {
+            "id": "Rasmussen_2006_a",
+            "entry": "Carl Edward Rasmussen and Christopher KI Williams. Gaussian processes for machine learning, volume 1. MIT press Cambridge, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rasmussen%2C%20Carl%20Edward%20Williams%2C%20Christopher%20K.I.%20Gaussian%20processes%20for%20machine%20learning%2C%20volume%201%202006"
+        },
+        {
+            "id": "Hinton_1985_a",
+            "entry": "David E Rumelhart, Geoffrey E Hinton, and Ronald J Williams. Learning internal representations by error propagation. Technical report, California Univ San Diego La Jolla Inst for Cognitive Science, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%20Williams%2C%20Ronald%20J.%20Learning%20internal%20representations%20by%20error%20propagation%201985"
+        },
+        {
+            "id": "Schoenholz_et+al_2017_a",
+            "entry": "Samuel S Schoenholz, Justin Gilmer, Surya Ganguli, and Jascha Sohl-Dickstein. Deep information propagation. ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schoenholz%2C%20Samuel%20S.%20Gilmer%2C%20Justin%20Ganguli%2C%20Surya%20Sohl-Dickstein%2C%20Jascha%20Deep%20information%20propagation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schoenholz%2C%20Samuel%20S.%20Gilmer%2C%20Justin%20Ganguli%2C%20Surya%20Sohl-Dickstein%2C%20Jascha%20Deep%20information%20propagation%202017"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Simonyan_et+al_2014_a",
+            "entry": "Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside convolutional networks: Visualising image classification models and saliency maps. ICLR Workshop, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Vedaldi%2C%20Andrea%20Zisserman%2C%20Andrew%20Deep%20inside%20convolutional%20networks%3A%20Visualising%20image%20classification%20models%20and%20saliency%20maps%202014"
+        },
+        {
+            "id": "Tino_et+al_2004_a",
+            "entry": "Peter Tino, Michal Cernansky, and Lubica Benuskova. Markovian architectural bias of recurrent neural networks. IEEE Transactions on Neural Networks, 15(1):6\u201315, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tino%2C%20Peter%20Cernansky%2C%20Michal%20Benuskova%2C%20Lubica%20Markovian%20architectural%20bias%20of%20recurrent%20neural%20networks%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tino%2C%20Peter%20Cernansky%2C%20Michal%20Benuskova%2C%20Lubica%20Markovian%20architectural%20bias%20of%20recurrent%20neural%20networks%202004"
+        },
+        {
+            "id": "Titsias_2009_a",
+            "entry": "Michalis Titsias. Variational learning of inducing variables in sparse gaussian processes. In Artificial Intelligence and Statistics, pp. 567\u2013574, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Titsias%2C%20Michalis%20Variational%20learning%20of%20inducing%20variables%20in%20sparse%20gaussian%20processes%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Titsias%2C%20Michalis%20Variational%20learning%20of%20inducing%20variables%20in%20sparse%20gaussian%20processes%202009"
+        },
+        {
+            "id": "Van_et+al_2017_a",
+            "entry": "Mark van der Wilk, Carl Edward Rasmussen, and James Hensman. Convolutional gaussian processes. In Advances in Neural Information Processing Systems 30, pp. 2849\u20132858, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Wilk%2C%20Mark%20Rasmussen%2C%20Carl%20Edward%20Hensman%2C%20James%20Convolutional%20gaussian%20processes%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Wilk%2C%20Mark%20Rasmussen%2C%20Carl%20Edward%20Hensman%2C%20James%20Convolutional%20gaussian%20processes%202017"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pp. 5998\u20136008, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017"
+        },
+        {
+            "id": "Vershynin_2010_a",
+            "entry": "Roman Vershynin. Introduction to the non-asymptotic analysis of random matrices. arXiv preprint arXiv:1011.3027, 2010.",
+            "arxiv_url": "https://arxiv.org/pdf/1011.3027"
+        },
+        {
+            "id": "Werbos_1988_a",
+            "entry": "Paul J Werbos. Generalization of backpropagation with application to a recurrent gas market model. Neural networks, 1(4):339\u2013356, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Werbos%2C%20Paul%20J.%20Generalization%20of%20backpropagation%20with%20application%20to%20a%20recurrent%20gas%20market%20model%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Werbos%2C%20Paul%20J.%20Generalization%20of%20backpropagation%20with%20application%20to%20a%20recurrent%20gas%20market%20model%201988"
+        },
+        {
+            "id": "Williams_1997_a",
+            "entry": "Christopher KI Williams. Computing with infinite networks. In Advances in neural information processing systems, pp. 295\u2013301, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Christopher%20K.I.%20Computing%20with%20infinite%20networks%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Christopher%20K.I.%20Computing%20with%20infinite%20networks%201997"
+        },
+        {
+            "id": "Wilson_et+al_2016_a",
+            "entry": "Andrew G Wilson, Zhiting Hu, Ruslan R Salakhutdinov, and Eric P Xing. Stochastic variational deep kernel learning. In Advances in Neural Information Processing Systems, pp. 2586\u20132594, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wilson%2C%20Andrew%20G.%20Hu%2C%20Zhiting%20Salakhutdinov%2C%20Ruslan%20R.%20and%20Eric%20P%20Xing.%20Stochastic%20variational%20deep%20kernel%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wilson%2C%20Andrew%20G.%20Hu%2C%20Zhiting%20Salakhutdinov%2C%20Ruslan%20R.%20and%20Eric%20P%20Xing.%20Stochastic%20variational%20deep%20kernel%20learning%202016"
+        },
+        {
+            "id": "Wilson_0000_a",
+            "entry": "Andrew Gordon Wilson, Zhiting Hu, Ruslan Salakhutdinov, and Eric P Xing. Deep kernel learning. In Artificial Intelligence and Statistics, pp. 370\u2013378, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wilson%2C%20Andrew%20Gordon%20Hu%2C%20Zhiting%20Ruslan%20Salakhutdinov%2C%20and%20Eric%20P%20Xing.%20Deep%20kernel%20learning",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wilson%2C%20Andrew%20Gordon%20Hu%2C%20Zhiting%20Ruslan%20Salakhutdinov%2C%20and%20Eric%20P%20Xing.%20Deep%20kernel%20learning"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Han Xiao, Kashif Rasul, and Roland Vollgraf. Fashion-mnist: a novel image dataset for benchmarking machine learning algorithms, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20Han%20Rasul%2C%20Kashif%20Vollgraf%2C%20Roland%20Fashion-mnist%3A%20a%20novel%20image%20dataset%20for%20benchmarking%20machine%20learning%20algorithms%202017"
+        },
+        {
+            "id": "Xiao_et+al_2017_b",
+            "entry": "Lechao Xiao, Yasaman Bahri, Sam Schoenholz, and Jeffrey Pennington. Training ultra-deep cnns with critical initialization. In NIPS Workshop, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20Lechao%20Bahri%2C%20Yasaman%20Schoenholz%2C%20Sam%20Pennington%2C%20Jeffrey%20Training%20ultra-deep%20cnns%20with%20critical%20initialization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiao%2C%20Lechao%20Bahri%2C%20Yasaman%20Schoenholz%2C%20Sam%20Pennington%2C%20Jeffrey%20Training%20ultra-deep%20cnns%20with%20critical%20initialization%202017"
+        },
+        {
+            "id": "Xiao_et+al_2018_a",
+            "entry": "Lechao Xiao, Yasaman Bahri, Jascha Sohl-Dickstein, Samuel Schoenholz, and Jeffrey Pennington. Dynamical isometry and a mean field theory of CNNs: How to train 10,000-layer vanilla convolutional neural networks. In Proceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pp. 5393\u20135402, Stockholmsmssan, Stockholm Sweden, 10\u201315 Jul 2018. PMLR. URL http://proceedings.mlr.press/v80/xiao18a.html.",
+            "url": "http://proceedings.mlr.press/v80/xiao18a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiao%2C%20Lechao%20Bahri%2C%20Yasaman%20Sohl-Dickstein%2C%20Jascha%20Schoenholz%2C%20Samuel%20Dynamical%20isometry%20and%20a%20mean%20field%20theory%20of%20CNNs%3A%20How%20to%20train%2010%2C000-layer%20vanilla%20convolutional%20neural%20networks%202018-07"
+        },
+        {
+            "id": "Yang_2019_a",
+            "entry": "Greg Yang. Scaling limits of wide neural networks with weight sharing: Gaussian process behavior, gradient independence, and neural tangent kernel derivation. arXiv preprint arXiv:1902.04760, 2019.",
+            "arxiv_url": "https://arxiv.org/pdf/1902.04760"
+        },
+        {
+            "id": "Yang_2018_a",
+            "entry": "Greg Yang and Sam S. Schoenholz. Deep Mean Field Theory: Layerwise Variance and Width Variation as Methods to Control Gradient Explosion. ICLR Workshop, February 2018. URL https://openreview.net/forum?id=rJGY8GbR-.",
+            "url": "https://openreview.net/forum?id=rJGY8GbR-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Greg%20Schoenholz%2C%20Sam%20S.%20Deep%20Mean%20Field%20Theory%3A%20Layerwise%20Variance%20and%20Width%20Variation%20as%20Methods%20to%20Control%20Gradient%20Explosion%202018-02"
+        },
+        {
+            "id": "Yang_2017_a",
+            "entry": "Greg Yang and Samuel Schoenholz. Mean field residual networks: On the edge of chaos. In Advances in neural information processing systems, pp. 7103\u20137114, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Greg%20Schoenholz%2C%20Samuel%20Mean%20field%20residual%20networks%3A%20On%20the%20edge%20of%20chaos%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Greg%20Schoenholz%2C%20Samuel%20Mean%20field%20residual%20networks%3A%20On%20the%20edge%20of%20chaos%202017"
+        },
+        {
+            "id": "Yang_et+al_2018_b",
+            "entry": "Greg Yang, Jeffrey Pennington, Vinay Rao, Jascha Sohl-Dickstein, and Sam S. Schoenholz. A mean field theory of batch normalization. ICLR, February 2018. URL https://openreview.net/forum?id=rJGY8GbR-.",
+            "url": "https://openreview.net/forum?id=rJGY8GbR-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Greg%20Pennington%2C%20Jeffrey%20Rao%2C%20Vinay%20Sohl-Dickstein%2C%20Jascha%20A%20mean%20field%20theory%20of%20batch%20normalization%202018-02"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Chiyuan%20Bengio%2C%20Samy%20Hardt%2C%20Moritz%20Recht%2C%20Benjamin%20Understanding%20deep%20learning%20requires%20rethinking%20generalization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Chiyuan%20Bengio%2C%20Samy%20Hardt%2C%20Moritz%20Recht%2C%20Benjamin%20Understanding%20deep%20learning%20requires%20rethinking%20generalization%202017"
+        }
+    ]
+}

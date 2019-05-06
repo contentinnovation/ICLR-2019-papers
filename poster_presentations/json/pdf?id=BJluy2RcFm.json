@@ -1,0 +1,418 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "JANOSSY POOLING: LEARNING DEEP PERMUTATIONINVARIANT FUNCTIONS FOR VARIABLE-SIZE INPUTS",
+        "author": "Ryan L. Murphy Department of Statistics Purdue University murph,@purdue.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJluy2RcFm"
+        },
+        "abstract": "We consider a simple and overarching representation for permutation-invariant functions of sequences (or multiset functions). Our approach, which we call Janossy pooling, expresses a permutation-invariant function as the average of a permutation-sensitive function applied to all reorderings of the input sequence. This allows us to leverage the rich and mature literature on permutation-sensitive functions to construct novel and flexible permutation-invariant functions. If carried out naively, Janossy pooling can be computationally prohibitive. To allow computational tractability, we consider three kinds of approximations: canonical orderings of sequences, functions with k-order interactions, and stochastic optimization algorithms with random permutations. Our framework unifies a variety of existing work in the literature, and suggests possible modeling and algorithmic extensions. We explore a few in our experiments, which demonstrate improved performance over current state-of-the-art methods."
+    },
+    "keywords": [
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "random permutation",
+            "url": "https://en.wikipedia.org/wiki/random_permutation"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        },
+        {
+            "term": "root mean squared error",
+            "url": "https://en.wikipedia.org/wiki/root_mean_squared_error"
+        }
+    ],
+    "abbreviations": {
+        "CNNs": "convolutional neural networks",
+        "RNNs": "recurrent neural networks",
+        "RMSE": "root mean squared error",
+        "PPI": "Protein-Protein Interaction",
+        "GNN": "graph neural network"
+    },
+    "highlights": [
+        "Pooling is a fundamental operation in deep learning architectures (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>)",
+        "A more modern example is in neural networks for graphs, where each layer pools together embeddings of neighbors of a vertex to form a new embedding for that vertex, see for instance, (<a class=\"ref-link\" id=\"cKipf_2016_a\" href=\"#rKipf_2016_a\">Kipf & Welling, 2016</a>; <a class=\"ref-link\" id=\"cAtwood_2016_a\" href=\"#rAtwood_2016_a\">Atwood & Towsley, 2016</a>; <a class=\"ref-link\" id=\"cHamilton_et+al_2017_a\" href=\"#rHamilton_et+al_2017_a\">Hamilton et al, 2017</a>; <a class=\"ref-link\" id=\"cVelickovic_et+al_2017_a\" href=\"#rVelickovic_et+al_2017_a\">Velickovic et al, 2017</a>; <a class=\"ref-link\" id=\"cMonti_et+al_2017_a\" href=\"#rMonti_et+al_2017_a\">Monti et al, 2017</a>; <a class=\"ref-link\" id=\"cXu_et+al_2018_a\" href=\"#rXu_et+al_2018_a\">Xu et al, 2018</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al, 2018</a>; <a class=\"ref-link\" id=\"cLiben-Nowell_2007_a\" href=\"#rLiben-Nowell_2007_a\">Liben-Nowell & Kleinberg, 2007</a>; van den Berg et al, 2017; <a class=\"ref-link\" id=\"cDuvenaud_et+al_2015_a\" href=\"#rDuvenaud_et+al_2015_a\">Duvenaud et al, 2015</a>; <a class=\"ref-link\" id=\"cGilmer_et+al_2017_a\" href=\"#rGilmer_et+al_2017_a\">Gilmer et al, 2017</a>; <a class=\"ref-link\" id=\"cYing_et+al_2018_a\" href=\"#rYing_et+al_2018_a\">Ying et al, 2018</a>; <a class=\"ref-link\" id=\"cXu_et+al_2019_a\" href=\"#rXu_et+al_2019_a\">Xu et al, 2019</a>)",
+        "We will show that functions f that depend on their first k arguments of h\u03c0 allow the Janossy pooling layer to capture up to k-ary dependencies in h. (b) We show Janossy pooling can be used to learn permutation-invariant neural networks y(x) by sampling a random permutation of h during training, and modeling this permuted sequence using a sequence model such as a recurrent neural network (LSTMs (<a class=\"ref-link\" id=\"cHochreiter_1997_a\" href=\"#rHochreiter_1997_a\">Hochreiter & Schmidhuber, 1997</a>), GRUs (<a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\">Cho et al, 2014</a>)) or a vector model such as a feedforward network",
+        "Our approach of permutation-invariance through Janossy pooling unifies a number of existing approaches, and opens up avenues to develop both new methodological extensions, as well as better theory",
+        "Our paper focused on two main approaches: k-ary interactions and random permutations",
+        "The former involves exact Janossy pooling for a restricted class of functions f"
+    ],
+    "key_statements": [
+        "Pooling is a fundamental operation in deep learning architectures (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a>)",
+        "A prototypical example is in convolutional neural networks (CNNs) (LeCun et al, 1995), where linear activations of features in neighborhoods of image locations are pooled together to construct more abstract features",
+        "A more modern example is in neural networks for graphs, where each layer pools together embeddings of neighbors of a vertex to form a new embedding for that vertex, see for instance, (<a class=\"ref-link\" id=\"cKipf_2016_a\" href=\"#rKipf_2016_a\">Kipf & Welling, 2016</a>; <a class=\"ref-link\" id=\"cAtwood_2016_a\" href=\"#rAtwood_2016_a\">Atwood & Towsley, 2016</a>; <a class=\"ref-link\" id=\"cHamilton_et+al_2017_a\" href=\"#rHamilton_et+al_2017_a\">Hamilton et al, 2017</a>; <a class=\"ref-link\" id=\"cVelickovic_et+al_2017_a\" href=\"#rVelickovic_et+al_2017_a\">Velickovic et al, 2017</a>; <a class=\"ref-link\" id=\"cMonti_et+al_2017_a\" href=\"#rMonti_et+al_2017_a\">Monti et al, 2017</a>; <a class=\"ref-link\" id=\"cXu_et+al_2018_a\" href=\"#rXu_et+al_2018_a\">Xu et al, 2018</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al, 2018</a>; <a class=\"ref-link\" id=\"cLiben-Nowell_2007_a\" href=\"#rLiben-Nowell_2007_a\">Liben-Nowell & Kleinberg, 2007</a>; van den Berg et al, 2017; <a class=\"ref-link\" id=\"cDuvenaud_et+al_2015_a\" href=\"#rDuvenaud_et+al_2015_a\">Duvenaud et al, 2015</a>; <a class=\"ref-link\" id=\"cGilmer_et+al_2017_a\" href=\"#rGilmer_et+al_2017_a\">Gilmer et al, 2017</a>; <a class=\"ref-link\" id=\"cYing_et+al_2018_a\" href=\"#rYing_et+al_2018_a\">Ying et al, 2018</a>; <a class=\"ref-link\" id=\"cXu_et+al_2019_a\" href=\"#rXu_et+al_2019_a\">Xu et al, 2019</a>)",
+        "Our goal in this paper is to model and learn permutation-sensitive functions f that can be used to construct flexible and learnable permutation-invariant neural networks",
+        "We contribute the following analysis: (a) We show DeepSets (<a class=\"ref-link\" id=\"cZaheer_et+al_2017_a\" href=\"#rZaheer_et+al_2017_a\">Zaheer et al, 2017</a>) is a special case of Janossy pooling where the function f depends only on the first element of the sequence h\u03c0",
+        "We will show that functions f that depend on their first k arguments of h\u03c0 allow the Janossy pooling layer to capture up to k-ary dependencies in h. (b) We show Janossy pooling can be used to learn permutation-invariant neural networks y(x) by sampling a random permutation of h during training, and modeling this permuted sequence using a sequence model such as a recurrent neural network (LSTMs (<a class=\"ref-link\" id=\"cHochreiter_1997_a\" href=\"#rHochreiter_1997_a\">Hochreiter & Schmidhuber, 1997</a>), GRUs (<a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\">Cho et al, 2014</a>)) or a vector model such as a feedforward network",
+        "For any k \u2208 N, define Fk as the set of all permutation-invariant functions that can be represented by Janossy pooling with k-ary dependencies",
+        "In what follows we empirically evaluate two tractable Janossy pooling approaches, k-ary dependencies and sampling permutations for stochastic optimization, to learn permutation-invariant functions for tasks of different complexities",
+        "Corollary 2.1 shows that explicitly modeling higher-order dependencies during pooling simplifies the task of the upper layers (\u03c1) of the neural network, and we evaluate this experimentally by letting k = 1, 2, 3, |h| over different arithmetic tasks",
+        "We evaluate Janossy pooling in graph tasks, where it can be used as a permutation-invariant function to aggregate the features and embeddings of the neighbors of a vertex in the graph",
+        "Following Zaheer et al (2017), we report accuracy (0-1 loss) for all tasks with an integer target; we report root mean squared error (RMSE) for the variance task",
+        "We explore two Janossy pooling tractable approximations: (a) (k-ary dependencies) Janossy (k = 1) (DeepSets), and Janossy k = 2, 3 where f is a feedforward network with a single hidden layer comprised of 30 neurons",
+        "Table 1 shows the accuracy of all tasks except variance, for which we report root mean squared error in the last column",
+        "Each step can be considered as Janossy pooling with \u03c0-SGD and k-ary subsequences, where kl, l \u2208 {1, 2} is the number of vertices sampled from each neighborhood and f is for instance a mean, max, or LSTM",
+        "Under the Janossy pooling framework presented in this work, existing literature falls under one of three approaches to approximating to the intractable Janossy-pooling layer: Canonical orderings, k-ary dependencies, and permutation sampling",
+        "In section 2.2 we described k-ary Janossy pooling, which considers k-order relationships in the input vector h to simplify optimization",
+        "Our approach of permutation-invariance through Janossy pooling unifies a number of existing approaches, and opens up avenues to develop both new methodological extensions, as well as better theory",
+        "Our paper focused on two main approaches: k-ary interactions and random permutations",
+        "The former involves exact Janossy pooling for a restricted class of functions f"
+    ],
+    "summary": [
+        "Pooling is a fundamental operation in deep learning architectures (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>).",
+        "Figure 1 summarizes a neural network with a single Janossy pooling layer f: given an input embedding h, we apply a learnable function f to every permutation h\u03c0 of the input sequence h.",
+        "For any k \u2208 N, define Fk as the set of all permutation-invariant functions that can be represented by Janossy pooling with k-ary dependencies.",
+        "Another approach to tractable Janossy pooling samples random permutations of the input h during training.",
+        "Note that equation 5 defining k-ary Janossy pooling constitutes exact inference of a simplified model whereas \u03c0-SGD with k-ary dependencies constitutes approximate inference.",
+        "In what follows we empirically evaluate two tractable Janossy pooling approaches, k-ary dependencies and sampling permutations for stochastic optimization, to learn permutation-invariant functions for tasks of different complexities.",
+        "We first consider the task of predicting the sum of a sequence of integers (<a class=\"ref-link\" id=\"cZaheer_et+al_2017_a\" href=\"#rZaheer_et+al_2017_a\">Zaheer et al, 2017</a>) and extend it to predicting other permutation-invariant functions: range, unique sum, unique count, and variance.",
+        "The converse is true, if \u03c1 is simple (Linear) a Janossy pooling that models high-order interactions k \u2208 {2, 3, |h|} gives higher accuracy, as shown in the range, unique sum, unique count, and variance tasks.",
+        "Each step can be considered as Janossy pooling with \u03c0-SGD and k-ary subsequences, where kl, l \u2208 {1, 2} is the number of vertices sampled from each neighborhood and f is for instance a mean, max, or LSTM.",
+        "Under the Janossy pooling framework presented in this work, existing literature falls under one of three approaches to approximating to the intractable Janossy-pooling layer: Canonical orderings, k-ary dependencies, and permutation sampling.",
+        "In section 2.3 we have seen a that permutation sampling can be used as a stochastic gradient procedure (\u03c0-SGD) to learn a model with a Janossy pooling layer.",
+        "Permutation sampling has been used as a heuristic in both <a class=\"ref-link\" id=\"cMoore_2017_a\" href=\"#rMoore_2017_a\">Moore & Neville (2017</a>) and <a class=\"ref-link\" id=\"cHamilton_et+al_2017_a\" href=\"#rHamilton_et+al_2017_a\">Hamilton et al (2017</a>), which found that randomly permuting sequences and feeding them forward to an LSTM is effective in relational learning tasks that require permutation-invariant pooling layers.",
+        "The second was a random permutation approach which involves no clear trade-offs between model capacity and computation when \u03c1 is made more complex, instead it modifies the relationship between the tractable approximate loss J and the original Janossy loss L.",
+        "While there is a difference between J and L, we saw the strongest empirical performance coming from this approach in our experiments; future work is required to identify which problems \u03c0-SGD is best suited for and when its conver-"
+    ],
+    "headline": "We explore a few in our experiments, which demonstrate improved performance over current state-of-the-art methods",
+    "reference_links": [
+        {
+            "id": "Atwood_2016_a",
+            "entry": "James Atwood and Don Towsley. Diffusion-convolutional neural networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Atwood%2C%20James%20Towsley%2C%20Don%20Diffusion-convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Atwood%2C%20James%20Towsley%2C%20Don%20Diffusion-convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Battaglia_et+al_2018_a",
+            "entry": "Peter W Battaglia, Jessica B Hamrick, Victor Bapst, Alvaro Sanchez-Gonzalez, Vinicius Zambaldi, Mateusz Malinowski, Andrea Tacchetti, David Raposo, Adam Santoro, Ryan Faulkner, et al. Relational inductive biases, deep learning, and graph networks. arXiv preprint arXiv:1806.01261, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01261"
+        },
+        {
+            "id": "Bloem-Reddy_2019_a",
+            "entry": "Benjamin Bloem-Reddy and Yee Whye Teh. Probabilistic symmetry and invariant neural networks. arXiv preprint arXiv:1901.06082, 2019.",
+            "arxiv_url": "https://arxiv.org/pdf/1901.06082"
+        },
+        {
+            "id": "Bottou_2004_a",
+            "entry": "Leon Bottou and Yann LeCun. Large scale online learning. In NIPS, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bottou%2C%20Leon%20LeCun%2C%20Yann%20Large%20scale%20online%20learning%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bottou%2C%20Leon%20LeCun%2C%20Yann%20Large%20scale%20online%20learning%202004"
+        },
+        {
+            "id": "Chen_et+al_0000_a",
+            "entry": "Jianfei Chen, Jun Zhu, and Le Song. Stochastic training of graph convolutional networks with variance reduction. In ICML, pp. 941\u2013949, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Jianfei%20Zhu%2C%20Jun%20Song%2C%20Le%20Stochastic%20training%20of%20graph%20convolutional%20networks%20with%20variance%20reduction",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Jianfei%20Zhu%2C%20Jun%20Song%2C%20Le%20Stochastic%20training%20of%20graph%20convolutional%20networks%20with%20variance%20reduction"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Jie Chen, Tengfei Ma, and Cao Xiao. Fastgcn: fast learning with graph convolutional networks via importance sampling. In ICLR, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Jie%20Ma%2C%20Tengfei%20Xiao%2C%20Cao%20Fastgcn%3A%20fast%20learning%20with%20graph%20convolutional%20networks%20via%20importance%20sampling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Jie%20Ma%2C%20Tengfei%20Xiao%2C%20Cao%20Fastgcn%3A%20fast%20learning%20with%20graph%20convolutional%20networks%20via%20importance%20sampling%202018"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical machine translation. EMNLP, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20Merrienboer%2C%20Bart%20Van%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder-decoder%20for%20statistical%20machine%20translation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cho%2C%20Kyunghyun%20Merrienboer%2C%20Bart%20Van%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder-decoder%20for%20statistical%20machine%20translation%202014"
+        },
+        {
+            "id": "Chollet_2015_a",
+            "entry": "Francois Chollet et al. Keras. https://keras.io, 2015.",
+            "url": "https://keras.io"
+        },
+        {
+            "id": "Cotter_et+al_2018_a",
+            "entry": "Andrew Cotter, Maya Gupta, Heinrich Jiang, James Muller, Taman Narayan, Serena Wang, and Tao Zhu. Interpretable set functions. arXiv preprint arXiv:1806.00050, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.00050"
+        },
+        {
+            "id": "Daley_2003_a",
+            "entry": "Daryl J Daley and David Vere-Jones. An introduction to the theory of point processes: volume II: general theory and structure. Springer, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daley%2C%20Daryl%20J.%20Vere-Jones%2C%20David%20An%20introduction%20to%20the%20theory%20of%20point%20processes%3A%20volume%20II%3A%20general%20theory%20and%20structure%202003"
+        },
+        {
+            "id": "Finetti_1937_a",
+            "entry": "Bruno De Finetti. La prevision: ses lois logiques, ses sources subjectives. In Annales de l\u2019institut Henri Poincare, volume 7, pp. 1\u201368, 1937. [Translated into Enlish: H. E. Kyburg and H.E. Smokler, eds. Studies in Subjective Probability. Krieger 53-118, 1980].",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finetti%2C%20Bruno%20De%20La%20prevision%3A%20ses%20lois%20logiques%2C%20ses%20sources%20subjectives.%20In%20Annales%20de%20l%E2%80%99institut%20Henri%201937",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finetti%2C%20Bruno%20De%20La%20prevision%3A%20ses%20lois%20logiques%2C%20ses%20sources%20subjectives.%20In%20Annales%20de%20l%E2%80%99institut%20Henri%201937"
+        },
+        {
+            "id": "Diaconis_1977_a",
+            "entry": "Persi Diaconis. Finite forms of de Finetti\u2019s theorem on exchangeability. Synthese, 36(2):271\u2013281, 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Diaconis%2C%20Persi%20Finite%20forms%20of%20de%20Finetti%E2%80%99s%20theorem%20on%20exchangeability%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Diaconis%2C%20Persi%20Finite%20forms%20of%20de%20Finetti%E2%80%99s%20theorem%20on%20exchangeability%201977"
+        },
+        {
+            "id": "Duvenaud_et+al_2015_a",
+            "entry": "David K. Duvenaud, Dougal Maclaurin, Jorge Iparraguirre, Rafael Bombarell, Timothy Hirzel, Alan Aspuru-Guzik, and Ryan P. Adams. Convolutional Networks on Graphs for Learning Molecular Fingerprints. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20Networks%20on%20Graphs%20for%20Learning%20Molecular%20Fingerprints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20Networks%20on%20Graphs%20for%20Learning%20Molecular%20Fingerprints%202015"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, and George E. Dahl. Neural message passing for quantum chemistry. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017"
+        },
+        {
+            "id": "Grimmett_2001_a",
+            "entry": "Geoffrey Grimmett and David Stirzaker. Probability and random processes. Oxford university press, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grimmett%2C%20Geoffrey%20Stirzaker%2C%20David%20Probability%20and%20random%20processes%202001"
+        },
+        {
+            "id": "Hamilton_et+al_2017_a",
+            "entry": "William L. Hamilton, Rex Ying, and Jure Leskovec. Inductive Representation Learning on Large Graphs. In NIPS, jun 2017. URL http://arxiv.org/abs/1706.02216.",
+            "url": "http://arxiv.org/abs/1706.02216",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02216"
+        },
+        {
+            "id": "Hartford_et+al_2018_a",
+            "entry": "Jason Hartford, Devon R Graham, Kevin Leyton-Brown, and Siamak Ravanbakhsh. Deep models of interactions across sets. arXiv preprint arXiv:1803.02879, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02879"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Jeh_2003_a",
+            "entry": "Glen Jeh and Jennifer Widom. Scaling personalized web search. In Proceedings of the 12th international conference on World Wide Web, pp. 271279, 2003. Citation Key: jeh2003scaling bibtex[organization=Acm].",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jeh%2C%20Glen%20Widom%2C%20Jennifer%20Scaling%20personalized%20web%20search%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jeh%2C%20Glen%20Widom%2C%20Jennifer%20Scaling%20personalized%20web%20search%202003"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Lei Ba. ADAM: A Method for Stochastic Optimization. International Conference on Learning Representations, ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Lei%20ADAM%3A%20A%20Method%20for%20Stochastic%20Optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Lei%20ADAM%3A%20A%20Method%20for%20Stochastic%20Optimization%202015"
+        },
+        {
+            "id": "Kipf_2016_a",
+            "entry": "Thomas N. Kipf and Max Welling. Semi-Supervised Classification with Graph Convolutional Networks. sep 2016. URL http://arxiv.org/abs/1609.02907.",
+            "url": "http://arxiv.org/abs/1609.02907",
+            "arxiv_url": "https://arxiv.org/pdf/1609.02907"
+        },
+        {
+            "id": "Korshunova_et+al_2018_a",
+            "entry": "Iryna Korshunova, Jonas Degrave, Ferenc Huszar, Yarin Gal, Arthur Gretton, and Joni Dambre. Bruno: A deep recurrent model for exchangeable data. In Advances in Neural Information Processing Systems, pp. 7190\u20137198, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Korshunova%2C%20Iryna%20Degrave%2C%20Jonas%20Huszar%2C%20Ferenc%20Gal%2C%20Yarin%20Bruno%3A%20A%20deep%20recurrent%20model%20for%20exchangeable%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Korshunova%2C%20Iryna%20Degrave%2C%20Jonas%20Huszar%2C%20Ferenc%20Gal%2C%20Yarin%20Bruno%3A%20A%20deep%20recurrent%20model%20for%20exchangeable%20data%202018"
+        },
+        {
+            "id": "Lecun_1995_a",
+            "entry": "Yann LeCun, Yoshua Bengio, et al. Convolutional networks for images, speech, and time series. The handbook of brain theory and neural networks, 3361(10):1995, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Convolutional%20networks%20for%20images%2C%20speech%2C%20and%20time%20series%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Convolutional%20networks%20for%20images%2C%20speech%2C%20and%20time%20series%201995"
+        },
+        {
+            "id": "Lecun_et+al_2015_a",
+            "entry": "Yann LeCun, Yoshua Bengio, and Geoffrey Hinton. Deep learning. Nature, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015"
+        },
+        {
+            "id": "Lehmann_2006_a",
+            "entry": "Erich L Lehmann and George Casella. Theory of point estimation. Springer Science & Business Media, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehmann%2C%20Erich%20L.%20Casella%2C%20George%20Theory%20of%20point%20estimation%202006"
+        },
+        {
+            "id": "Liben-Nowell_2007_a",
+            "entry": "David Liben-Nowell and Jon Kleinberg. The link-prediction problem for social networks. Journal of the American society for information science and technology, 58(7):1019\u20131031, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liben-Nowell%2C%20David%20Kleinberg%2C%20Jon%20The%20link-prediction%20problem%20for%20social%20networks%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liben-Nowell%2C%20David%20Kleinberg%2C%20Jon%20The%20link-prediction%20problem%20for%20social%20networks%202007"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Ziqi Liu, Chaochao Chen, Longfei Li, Jun Zhou, Xiaolong Li, and Le Song. Geniepath: Graph neural networks with adaptive receptive paths. arXiv preprint arXiv:1802.00910, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.00910"
+        },
+        {
+            "id": "Moller_2003_a",
+            "entry": "Jesper Moller and Rasmus Plenge Waagepetersen. Statistical inference and simulation for spatial point processes. Chapman and Hall/CRC, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moller%2C%20Jesper%20Waagepetersen%2C%20Rasmus%20Plenge%20Statistical%20inference%20and%20simulation%20for%20spatial%20point%20processes%202003"
+        },
+        {
+            "id": "Monti_et+al_2017_a",
+            "entry": "Federico Monti, Davide Boscaini, Jonathan Masci, Emanuele Rodola, Jan Svoboda, and Michael M Bronstein. Geometric deep learning on graphs and manifolds using mixture model cnns. In Proc. CVPR, volume 1, pp. 3, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monti%2C%20Federico%20Boscaini%2C%20Davide%20Masci%2C%20Jonathan%20Rodola%2C%20Emanuele%20Geometric%20deep%20learning%20on%20graphs%20and%20manifolds%20using%20mixture%20model%20cnns%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monti%2C%20Federico%20Boscaini%2C%20Davide%20Masci%2C%20Jonathan%20Rodola%2C%20Emanuele%20Geometric%20deep%20learning%20on%20graphs%20and%20manifolds%20using%20mixture%20model%20cnns%202017"
+        },
+        {
+            "id": "Moore_2017_a",
+            "entry": "John Moore and Jennifer Neville. Deep collective inference. In AAAI, pp. 2364\u20132372, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moore%2C%20John%20Neville%2C%20Jennifer%20Deep%20collective%20inference%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moore%2C%20John%20Neville%2C%20Jennifer%20Deep%20collective%20inference%202017"
+        },
+        {
+            "id": "Niepert_et+al_2014_a",
+            "entry": "Mathias Niepert, Mohamed Ahmed, and Konstantin Kutzkov. Learning convolutional neural networks for graphs. In International conference on machine learning, pp. 2014\u20132023, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niepert%2C%20Mathias%20Ahmed%2C%20Mohamed%20Kutzkov%2C%20Konstantin%20Learning%20convolutional%20neural%20networks%20for%20graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niepert%2C%20Mathias%20Ahmed%2C%20Mohamed%20Kutzkov%2C%20Konstantin%20Learning%20convolutional%20neural%20networks%20for%20graphs%202014"
+        },
+        {
+            "id": "Orbanz_2015_a",
+            "entry": "Peter Orbanz and Daniel M. Roy. Bayesian Models of Graphs, Arrays and Other Exchangeable Random Structures. IEEE Trans. Pattern Anal. Mach. Intell., 37(2):437\u2013461, feb 2015. ISSN 0162-8828. doi: 10.1109/TPAMI.2014.2334607. URL http://ieeexplore.ieee.org/document/6847223/.",
+            "crossref": "https://dx.doi.org/10.1109/TPAMI.2014.2334607",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TPAMI.2014.2334607"
+        },
+        {
+            "id": "Page_et+al_1999_a",
+            "entry": "Lawrence Page, Sergey Brin, Rajeev Motwani, and Terry Winograd. The PageRank citation ranking: Bringing order to the web. 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Page%2C%20Lawrence%20Brin%2C%20Sergey%20Motwani%2C%20Rajeev%20Winograd%2C%20Terry%20The%20PageRank%20citation%20ranking%3A%20Bringing%20order%20to%20the%20web%201999"
+        },
+        {
+            "id": "Qi_et+al_2017_a",
+            "entry": "Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: Deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 652\u2013660, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qi%2C%20Charles%20R.%20Su%2C%20Hao%20Mo%2C%20Kaichun%20Guibas%2C%20Leonidas%20J.%20Pointnet%3A%20Deep%20learning%20on%20point%20sets%20for%203d%20classification%20and%20segmentation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qi%2C%20Charles%20R.%20Su%2C%20Hao%20Mo%2C%20Kaichun%20Guibas%2C%20Leonidas%20J.%20Pointnet%3A%20Deep%20learning%20on%20point%20sets%20for%203d%20classification%20and%20segmentation%202017"
+        },
+        {
+            "id": "Ravanbakhsh_et+al_0000_a",
+            "entry": "Siamak Ravanbakhsh, Jeff Schneider, and Barnabas Poczos. Deep Learning with Sets and Point Clouds. In ICLR Workshop Track, nov 2017a. URL http://arxiv.org/abs/1611.04500.",
+            "url": "http://arxiv.org/abs/1611.04500",
+            "arxiv_url": "https://arxiv.org/pdf/1611.04500"
+        },
+        {
+            "id": "Ravanbakhsh_et+al_2017_a",
+            "entry": "Siamak Ravanbakhsh, Jeff Schneider, and Barnabas Poczos. Equivariance through parametersharing. In Proceedings of the 34th International Conference on Machine Learning-Volume 70, pp. 2892\u20132901. JMLR. org, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravanbakhsh%2C%20Siamak%20Schneider%2C%20Jeff%20Poczos%2C%20Barnabas%20Equivariance%20through%20parametersharing%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ravanbakhsh%2C%20Siamak%20Schneider%2C%20Jeff%20Poczos%2C%20Barnabas%20Equivariance%20through%20parametersharing%202017"
+        },
+        {
+            "id": "Rezatofighi_et+al_2018_a",
+            "entry": "S Hamid Rezatofighi, Roman Kaskman, Farbod T Motlagh, Qinfeng Shi, Daniel Cremers, Laura Leal-Taixe, and Ian Reid. Deep perm-set net: Learn to predict sets with unknown permutation and cardinality using deep neural networks. arXiv preprint arXiv:1805.00613, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.00613"
+        },
+        {
+            "id": "Robbins_1951_a",
+            "entry": "H. Robbins and S. Monro. A stochastic approximation method. Annals of Mathematical Statistics, 1951.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Robbins%2C%20H.%20Monro%2C%20S.%20A%20stochastic%20approximation%20method%201951",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Robbins%2C%20H.%20Monro%2C%20S.%20A%20stochastic%20approximation%20method%201951"
+        },
+        {
+            "id": "Santoro_et+al_2017_a",
+            "entry": "Adam Santoro, David Raposo, David G Barrett, Mateusz Malinowski, Razvan Pascanu, Peter Battaglia, and Tim Lillicrap. A simple neural network module for relational reasoning. In Advances in neural information processing systems, pp. 4967\u20134976, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Raposo%2C%20David%20Barrett%2C%20David%20G.%20Malinowski%2C%20Mateusz%20A%20simple%20neural%20network%20module%20for%20relational%20reasoning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Raposo%2C%20David%20Barrett%2C%20David%20G.%20Malinowski%2C%20Mateusz%20A%20simple%20neural%20network%20module%20for%20relational%20reasoning%202017"
+        },
+        {
+            "id": "Sen_et+al_2008_a",
+            "entry": "Prithviraj Sen, Galileo Namata, Mustafa Bilgic, Lise Getoor, Brian Galligher, and Tina Eliassi-Rad. Collective classification in network data. AI magazine, 29(3):93, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sen%2C%20Prithviraj%20Namata%2C%20Galileo%20Bilgic%2C%20Mustafa%20Getoor%2C%20Lise%20Collective%20classification%20in%20network%20data%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sen%2C%20Prithviraj%20Namata%2C%20Galileo%20Bilgic%2C%20Mustafa%20Getoor%2C%20Lise%20Collective%20classification%20in%20network%20data%202008"
+        },
+        {
+            "id": "Van_et+al_2017_a",
+            "entry": "Rianne van den Berg, Thomas N Kipf, and Max Welling. Graph convolutional matrix completion. stat, 1050:7, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Berg%2C%20Rianne%20Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Graph%20convolutional%20matrix%20completion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Berg%2C%20Rianne%20Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Graph%20convolutional%20matrix%20completion%202017"
+        },
+        {
+            "id": "Velickovic_et+al_2017_a",
+            "entry": "Petar Velickovic, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Lio, and Yoshua Bengio. Graph attention networks. arXiv preprint arXiv:1710.10903, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10903"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Samy Bengio, and Manjunath Kudlur. Order Matters: Sequence to Sequence for Sets. ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Bengio%2C%20Samy%20Kudlur%2C%20Manjunath%20Order%20Matters%3A%20Sequence%20to%20Sequence%20for%20Sets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Bengio%2C%20Samy%20Kudlur%2C%20Manjunath%20Order%20Matters%3A%20Sequence%20to%20Sequence%20for%20Sets%202016"
+        },
+        {
+            "id": "Vo_et+al_2018_a",
+            "entry": "Ba-Ngu Vo, Nhan Dam, Dinh Phung, Quang N Tran, and Ba-Tuong Vo. Model-based learning for point pattern data. Pattern Recognition, 84:136\u2013151, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vo%2C%20Ba-Ngu%20Dam%2C%20Nhan%20Phung%2C%20Dinh%20Tran%2C%20Quang%20N.%20and%20Ba-Tuong%20Vo.%20Model-based%20learning%20for%20point%20pattern%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vo%2C%20Ba-Ngu%20Dam%2C%20Nhan%20Phung%2C%20Dinh%20Tran%2C%20Quang%20N.%20and%20Ba-Tuong%20Vo.%20Model-based%20learning%20for%20point%20pattern%20data%202018"
+        },
+        {
+            "id": "Xu_et+al_2018_a",
+            "entry": "Keyulu Xu, Chengtao Li, Yonglong Tian, Tomohiro Sonobe, Ken-ichi Kawarabayashi, and Stefanie Jegelka. Representation Learning on Graphs with Jumping Knowledge Networks. In ICML, 2018. URL http://arxiv.org/abs/1806.03536.",
+            "url": "http://arxiv.org/abs/1806.03536",
+            "arxiv_url": "https://arxiv.org/pdf/1806.03536"
+        },
+        {
+            "id": "Xu_et+al_2019_a",
+            "entry": "Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka. How powerful are graph neural networks? In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=ryGs6iA5Km.",
+            "url": "https://openreview.net/forum?id=ryGs6iA5Km",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Keyulu%20Hu%2C%20Weihua%20Leskovec%2C%20Jure%20Jegelka%2C%20Stefanie%20How%20powerful%20are%20graph%20neural%20networks%3F%202019"
+        },
+        {
+            "id": "Ying_et+al_2018_a",
+            "entry": "Rex Ying, Jiaxuan You, Christopher Morris, Xiang Ren, William L Hamilton, and Jure Leskovec. Hierarchical graph representation learning with differentiable pooling. arXiv preprint arXiv:1806.08804, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.08804"
+        },
+        {
+            "id": "You_et+al_2017_a",
+            "entry": "Seungil You, David Ding, Kevin Canini, Jan Pfeifer, and Maya Gupta. Deep lattice networks and partial monotonic functions. In Advances in Neural Information Processing Systems, pp. 2981\u2013 2989, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=You%2C%20Seungil%20Ding%2C%20David%20Canini%2C%20Kevin%20Pfeifer%2C%20Jan%20Deep%20lattice%20networks%20and%20partial%20monotonic%20functions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=You%2C%20Seungil%20Ding%2C%20David%20Canini%2C%20Kevin%20Pfeifer%2C%20Jan%20Deep%20lattice%20networks%20and%20partial%20monotonic%20functions%202017"
+        },
+        {
+            "id": "Younes_1999_a",
+            "entry": "Laurent Younes. On the convergence of markovian stochastic algorithms with rapidly decreasing ergodicity rates. Stochastics: An International Journal of Probability and Stochastic Processes, 65(3-4):177\u2013228, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Younes%2C%20Laurent%20On%20the%20convergence%20of%20markovian%20stochastic%20algorithms%20with%20rapidly%20decreasing%20ergodicity%20rates.%20Stochastics%3A%20An%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Younes%2C%20Laurent%20On%20the%20convergence%20of%20markovian%20stochastic%20algorithms%20with%20rapidly%20decreasing%20ergodicity%20rates.%20Stochastics%3A%20An%201999"
+        },
+        {
+            "id": "Yuille_2004_a",
+            "entry": "Alan Yuille. The Convergence of Contrastive Divergences. In NIPS, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuille%2C%20Alan%20The%20Convergence%20of%20Contrastive%20Divergences%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuille%2C%20Alan%20The%20Convergence%20of%20Contrastive%20Divergences%202004"
+        },
+        {
+            "id": "Zaheer_et+al_2017_a",
+            "entry": "Manzil Zaheer, Satwik Kottur, Siamak Ravanbakhsh, Barnabas Poczos, Ruslan Salakhutdinov, and Alexander Smola. Deep Sets. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Manzil%20Zaheer%20Satwik%20Kottur%20Siamak%20Ravanbakhsh%20Barnabas%20Poczos%20Ruslan%20Salakhutdinov%20and%20Alexander%20Smola%20Deep%20Sets%20In%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Manzil%20Zaheer%20Satwik%20Kottur%20Siamak%20Ravanbakhsh%20Barnabas%20Poczos%20Ruslan%20Salakhutdinov%20and%20Alexander%20Smola%20Deep%20Sets%20In%20NIPS%202017"
+        },
+        {
+            "id": "Zitnik_2017_a",
+            "entry": "Marinka Zitnik and Jure Leskovec. Predicting multicellular function through multi-layer tissue networks. Bioinformatics, 33(14):i190\u2013i198, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zitnik%2C%20Marinka%20Leskovec%2C%20Jure%20Predicting%20multicellular%20function%20through%20multi-layer%20tissue%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zitnik%2C%20Marinka%20Leskovec%2C%20Jure%20Predicting%20multicellular%20function%20through%20multi-layer%20tissue%20networks%202017"
+        },
+        {
+            "id": "Zolna_et+al_2018_a",
+            "entry": "Konrad Zolna, Devansh Arpit, Dendi Suhubdy, and Yoshua Bengio. Fraternal dropout. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zolna%2C%20Konrad%20Arpit%2C%20Devansh%20Suhubdy%2C%20Dendi%20Bengio%2C%20Yoshua%20Fraternal%20dropout%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zolna%2C%20Konrad%20Arpit%2C%20Devansh%20Suhubdy%2C%20Dendi%20Bengio%2C%20Yoshua%20Fraternal%20dropout%202018"
+        },
+        {
+            "id": "The_1999_a",
+            "entry": "The following statement is similar to that in Yuille (2004), which also provides intuition behind the theoretical assumptions, which are indeed quite general. See also (Younes, 1999). This is a familiar application of stochastic approximation algorithms already used in training neural networks. Proposition A.1 (\u03c0-SGD Convergence). Consider the \u03c0-SGD algorithm in Definition 2.3. If (a) there exists a constant M > 0 such that for all \u03b8, \u2212GtT \u03b8 \u2264 M \u03b8 \u2212 \u03b8",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20following%20statement%20is%20similar%20to%20that%20in%20Yuille%202004%20which%20also%20provides%20intuition%20behind%20the%20theoretical%20assumptions%20which%20are%20indeed%20quite%20general%20See%20also%20Younes%201999%20This%20is%20a%20familiar%20application%20of%20stochastic%20approximation%20algorithms%20already%20used%20in%20training%20neural%20networks%20Proposition%20A1%20%CF%80SGD%20Convergence%20Consider%20the%20%CF%80SGD%20algorithm%20in%20Definition%2023%20If%20a%20there%20exists%20a%20constant%20M%20%200%20such%20that%20for%20all%20%CE%B8%20GtT%20%CE%B8%20%20M%20%CE%B8%20%20%CE%B8",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20following%20statement%20is%20similar%20to%20that%20in%20Yuille%202004%20which%20also%20provides%20intuition%20behind%20the%20theoretical%20assumptions%20which%20are%20indeed%20quite%20general%20See%20also%20Younes%201999%20This%20is%20a%20familiar%20application%20of%20stochastic%20approximation%20algorithms%20already%20used%20in%20training%20neural%20networks%20Proposition%20A1%20%CF%80SGD%20Convergence%20Consider%20the%20%CF%80SGD%20algorithm%20in%20Definition%2023%20If%20a%20there%20exists%20a%20constant%20M%20%200%20such%20that%20for%20all%20%CE%B8%20GtT%20%CE%B8%20%20M%20%CE%B8%20%20%CE%B8"
+        },
+        {
+            "id": "First_2001_a",
+            "entry": "Proof. First, we can show that Et[Zt] = Gt by equation 10, the linearity of the derivative operator, and the fact that the permutations are independently sampled for each training example in the minibatch and are assumed independent of \u03b8. That equation 9 converges to \u03b8 is a consequence of our conditions and the supermartingale convergence theorem (Grimmett & Stirzaker, 2001, pp. 481).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=First%2C%20Proof%20we%20can%20show%20that%20Et%5BZt%5D%20%3D%20Gt%20by%20equation%2010%2C%20the%20linearity%20of%20the%20derivative%20operator%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=First%2C%20Proof%20we%20can%20show%20that%20Et%5BZt%5D%20%3D%20Gt%20by%20equation%2010%2C%20the%20linearity%20of%20the%20derivative%20operator%202001"
+        },
+        {
+            "id": "(2004)._0000_a",
+            "entry": "(2004). Let At Ct is positive for",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Let%20At%20Ct%20is%20positive%20for"
+        }
+    ]
+}

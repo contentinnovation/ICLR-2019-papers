@@ -1,0 +1,263 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LAGGING INFERENCE NETWORKS AND POSTERIOR COLLAPSE IN VARIATIONAL AUTOENCODERS",
+        "author": "Junxian He, Daniel Spokoyny, Graham Neubig",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rylDfnCqF7"
+        },
+        "abstract": "The variational autoencoder (VAE) is a popular combination of deep latent variable model and accompanying variational learning technique. By using a neural inference network to approximate the model\u2019s posterior on latent variables, VAEs efficiently parameterize a lower bound on marginal data likelihood that can be optimized directly via gradient methods. In practice, however, VAE training often results in a degenerate local optimum known as \u201cposterior collapse\u201d where the model learns to ignore the latent variable and the approximate posterior mimics the prior. In this paper, we investigate posterior collapse from the perspective of training dynamics. We find that during the initial stages of training the inference network fails to approximate the model\u2019s true posterior, which is a moving target. As a result, the model is encouraged to ignore the latent encoding and posterior collapse occurs. Based on this observation, we propose an extremely simple modification to VAE training to reduce inference lag: depending on the model\u2019s current mutual information between latent variable and observation, we aggressively optimize the inference network before performing each model update. Despite introducing neither new model components nor significant complexity over basic VAE, our approach is able to avoid the problem of collapse that has plagued a large amount of previous work. Empirically, our approach outperforms strong autoregressive baselines on text and image benchmarks in terms of held-out likelihood, and is competitive with more complex techniques for avoiding collapse while being substantially faster.1"
+    },
+    "keywords": [
+        {
+            "term": "latent variable model",
+            "url": "https://en.wikipedia.org/wiki/latent_variable_model"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "evidence lower bound",
+            "url": "https://en.wikipedia.org/wiki/evidence_lower_bound"
+        },
+        {
+            "term": "inference network",
+            "url": "https://en.wikipedia.org/wiki/inference_network"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "VAE": "variational autoencoder",
+        "VAEs": "Variational autoencoders",
+        "ELBO": "evidence lower bound",
+        "SVI": "stochastic variational inference",
+        "NLL": "negative log likelihood",
+        "MI": "mutual information Iq",
+        "AU": "active units"
+    },
+    "highlights": [
+        "Variational autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\"><a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Welling, 2014</a></a>) represent a popular combination of a deep latent variable model) and an accompanying variational learning technique",
+        "Compared with recent work that try to combine amortized variational inference and stochastic variational inference (<a class=\"ref-link\" id=\"cHjelm_et+al_2016_a\" href=\"#rHjelm_et+al_2016_a\">Hjelm et al, 2016</a>; <a class=\"ref-link\" id=\"cKrishnan_et+al_2018_a\" href=\"#rKrishnan_et+al_2018_a\">Krishnan et al, 2018</a>; <a class=\"ref-link\" id=\"cKim_et+al_2018_a\" href=\"#rKim_et+al_2018_a\">Kim et al, 2018</a>; <a class=\"ref-link\" id=\"cMarino_et+al_2018_a\" href=\"#rMarino_et+al_2018_a\">Marino et al, 2018</a>) where the inference network is learned to be a component to help perform instance-specific variational inference, our approach keeps variational inference fully amortized, allowing for reverting back to efficient basic variational autoencoder training as discussed in Section 4.2. This aggressive inference network optimization algorithm is as simple as basic variational autoencoder training without introducing additional stochastic variational inference steps, yet attains comparable performance to more sophisticated approaches as we will show in Section 6.\n4In Appendix G we study the setting where the points are not initialized at origin.\n4.2",
+        "In Table 1 and Table 2 we show the results on all three datasets, we plot negative log likelihood vs active units for every trained model from separate runs in Figure 4 to visualize the uncertainties",
+        "In this paper we study the \u201cposterior collapse\u201d problem that variational autoencoders experience when the model is parameterized by a strong autoregressive neural network",
+        "In our synthetic experiment we identify that the problem lies with the lagging inference network in the initial stages of training",
+        "We propose a simple yet effective training algorithm that aggressively optimizes the inference network with more updates before reverting back to basic variational autoencoder training"
+    ],
+    "key_statements": [
+        "Variational autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\"><a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Welling, 2014</a></a>) represent a popular combination of a deep latent variable model) and an accompanying variational learning technique",
+        "We demonstrate how such lagging behavior can drive the generative model towards a collapsed local optimum, and propose a novel training procedure for variational autoencoder that aggressively optimizes the inference network with more updates to mitigate lag (Section 4)",
+        "VARIATIONAL AUTOENCODERS variational autoencoder learn deep generative models defined by a prior p(z) and a conditional distribution p\u03b8(x|z) as shown in Figure 1(a)",
+        "KL Regularizer where q\u03c6(z|x) is a variational distribution parameterized by an inference network with parameters \u03c6, and p\u03b8(x|z) denotes the generator network with parameters \u03b8. q\u03c6(z|x) is optimized to approximate the model posterior p\u03b8(z|x)",
+        "Despite variational autoencoder\u2019s appeal as a tool to learn unsupervised representations through the use of latent variables, as mentioned in the introduction, variational autoencoder models are often found to ignore latent variables when using flexible generators like LSTMs (<a class=\"ref-link\" id=\"cBowman_et+al_2016_a\" href=\"#rBowman_et+al_2016_a\">Bowman et al, 2016</a>). This problem of \u201cposterior collapse\u201d occurs when the training procedure falls into the trivial local optimum of the evidence lower bound objective in which both the variational posterior and true model posterior collapse to the prior",
+        "We will answer the question of why the basic variational autoencoder training with strong decoders tends to hit a collapsed local optimum and provide intuition for the simple solution we propose in Section 4.\n2\u03bcx,\u03b8 can be approximated through discretization of the model posterior, which we show in Appendix A. 3Note that the converse is not true: the setting where all points are located at the origin may not be a local optimum",
+        "Compared with recent work that try to combine amortized variational inference and stochastic variational inference (<a class=\"ref-link\" id=\"cHjelm_et+al_2016_a\" href=\"#rHjelm_et+al_2016_a\">Hjelm et al, 2016</a>; <a class=\"ref-link\" id=\"cKrishnan_et+al_2018_a\" href=\"#rKrishnan_et+al_2018_a\">Krishnan et al, 2018</a>; <a class=\"ref-link\" id=\"cKim_et+al_2018_a\" href=\"#rKim_et+al_2018_a\">Kim et al, 2018</a>; <a class=\"ref-link\" id=\"cMarino_et+al_2018_a\" href=\"#rMarino_et+al_2018_a\">Marino et al, 2018</a>) where the inference network is learned to be a component to help perform instance-specific variational inference, our approach keeps variational inference fully amortized, allowing for reverting back to efficient basic variational autoencoder training as discussed in Section 4.2. This aggressive inference network optimization algorithm is as simple as basic variational autoencoder training without introducing additional stochastic variational inference steps, yet attains comparable performance to more sophisticated approaches as we will show in Section 6.\n4In Appendix G we study the setting where the points are not initialized at origin.\n4.2",
+        "We report DKL p(z)) (KL), mutual information Iq (MI), and number of active units (AU) (<a class=\"ref-link\" id=\"cBurda_et+al_2016_a\" href=\"#rBurda_et+al_2016_a\">Burda et al, 2016</a>) in latent representation",
+        "We examine the effect of KL cost annealing on both SA-variational autoencoder and our approach",
+        "In Table 1 and Table 2 we show the results on all three datasets, we plot negative log likelihood vs active units for every trained model from separate runs in Figure 4 to visualize the uncertainties",
+        "In Table 3 we report the total training time of our approach, SA-variational autoencoder and basic variational autoencoder training across the three datasets",
+        "In this paper we study the \u201cposterior collapse\u201d problem that variational autoencoders experience when the model is parameterized by a strong autoregressive neural network",
+        "In our synthetic experiment we identify that the problem lies with the lagging inference network in the initial stages of training",
+        "We propose a simple yet effective training algorithm that aggressively optimizes the inference network with more updates before reverting back to basic variational autoencoder training"
+    ],
+    "summary": [
+        "Variational autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\"><a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Welling, 2014</a></a>) represent a popular combination of a deep latent variable model) and an accompanying variational learning technique.",
+        "Kim et al (2018) proposed a new approach to training VAEs by composing the standard inference network with additional mean-field updates.",
+        "We demonstrate how such lagging behavior can drive the generative model towards a collapsed local optimum, and propose a novel training procedure for VAEs that aggressively optimizes the inference network with more updates to mitigate lag (Section 4).",
+        "This problem of \u201cposterior collapse\u201d occurs when the training procedure falls into the trivial local optimum of the ELBO objective in which both the variational posterior and true model posterior collapse to the prior.",
+        "Compared with recent work that try to combine amortized variational inference and SVI (<a class=\"ref-link\" id=\"cHjelm_et+al_2016_a\" href=\"#rHjelm_et+al_2016_a\">Hjelm et al, 2016</a>; <a class=\"ref-link\" id=\"cKrishnan_et+al_2018_a\" href=\"#rKrishnan_et+al_2018_a\">Krishnan et al, 2018</a>; <a class=\"ref-link\" id=\"cKim_et+al_2018_a\" href=\"#rKim_et+al_2018_a\">Kim et al, 2018</a>; <a class=\"ref-link\" id=\"cMarino_et+al_2018_a\" href=\"#rMarino_et+al_2018_a\">Marino et al, 2018</a>) where the inference network is learned to be a component to help perform instance-specific variational inference, our approach keeps variational inference fully amortized, allowing for reverting back to efficient basic VAE training as discussed in Section 4.2.",
+        "This aggressive inference network optimization algorithm is as simple as basic VAE training without introducing additional SVI steps, yet attains comparable performance to more sophisticated approaches as we will show in Section 6.",
+        "By training the VAE model with our approach on synthetic data, we visualize the 500 data samples in the posterior mean space in Figure 2.",
+        "In Figure 3 we show the training trajectory of one single data instance for the first several optimization iterations and observe how the aggressive updates help escape inference collapse.",
+        "Note that to examine the posterior collapse issue for images we use a larger PixelCNN decoder than previous work, our approach is not directly comparable to them and included at the top of Table 2 as reference points.",
+        "In the initial training stage we observe that the KL regularizer increases with all three approaches, the mutual information, Iq, in the annealing remains small, a large KL regularizer term does not imply that the latent variable is being used.",
+        "We report the results on Yelp dataset from single runs in Table 4.8 We see that sufficient number of inner iterations is necessary to address posterior collapse and achieve good performance, but the performance starts to saturate near convergence, we believe that optimizing to a near-convergence point is important.",
+        "We propose a simple yet effective training algorithm that aggressively optimizes the inference network with more updates before reverting back to basic VAE training.",
+        "Experiments on text and image modeling demonstrate the effectiveness of our approach"
+    ],
+    "headline": "We investigate posterior collapse from the perspective of training dynamics",
+    "reference_links": [
+        {
+            "id": "Alemi_et+al_2018_a",
+            "entry": "Alexander Alemi, Ben Poole, Ian Fischer, Joshua Dillon, Rif A Saurous, and Kevin Murphy. Fixing a broken ELBO. In Proceedings of ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alemi%2C%20Alexander%20Poole%2C%20Ben%20Fischer%2C%20Ian%20Dillon%2C%20Joshua%20Rif%20A%20Saurous%2C%20and%20Kevin%20Murphy.%20Fixing%20a%20broken%20ELBO%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alemi%2C%20Alexander%20Poole%2C%20Ben%20Fischer%2C%20Ian%20Dillon%2C%20Joshua%20Rif%20A%20Saurous%2C%20and%20Kevin%20Murphy.%20Fixing%20a%20broken%20ELBO%202018"
+        },
+        {
+            "id": "Blei_2003_a",
+            "entry": "David M Blei, Andrew Y Ng, and Michael I Jordan. Latent Dirichlet allocation. Journal of machine Learning research, 3(Jan):993\u20131022, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blei%2C%20David%20M.%20Andrew%20Y%20Ng%2C%20and%20Michael%20I%20Jordan.%20Latent%20Dirichlet%20allocation%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blei%2C%20David%20M.%20Andrew%20Y%20Ng%2C%20and%20Michael%20I%20Jordan.%20Latent%20Dirichlet%20allocation%202003"
+        },
+        {
+            "id": "Bowman_et+al_2016_a",
+            "entry": "Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. In Proceedings of CoNLL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowman%2C%20Samuel%20R.%20Vilnis%2C%20Luke%20Vinyals%2C%20Oriol%20Dai%2C%20Andrew%20Generating%20sentences%20from%20a%20continuous%20space%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowman%2C%20Samuel%20R.%20Vilnis%2C%20Luke%20Vinyals%2C%20Oriol%20Dai%2C%20Andrew%20Generating%20sentences%20from%20a%20continuous%20space%202016"
+        },
+        {
+            "id": "Burda_et+al_2016_a",
+            "entry": "Yuri Burda, Roger Grosse, and Ruslan Salakhutdinov. Importance weighted autoencoders. In Proceedings of ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Burda%2C%20Yuri%20Grosse%2C%20Roger%20Salakhutdinov%2C%20Ruslan%20Importance%20weighted%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Burda%2C%20Yuri%20Grosse%2C%20Roger%20Salakhutdinov%2C%20Ruslan%20Importance%20weighted%20autoencoders%202016"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Xi Chen, Diederik P Kingma, Tim Salimans, Yan Duan, Prafulla Dhariwal, John Schulman, Ilya Sutskever, and Pieter Abbeel. Variational lossy autoencoder. In Proceedings of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Duan%2C%20Yan%20Variational%20lossy%20autoencoder%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Duan%2C%20Yan%20Variational%20lossy%20autoencoder%202017"
+        },
+        {
+            "id": "Cremer_et+al_2018_a",
+            "entry": "Chris Cremer, Xuechen Li, and David Duvenaud. Inference suboptimality in variational autoencoders. In Proceedings of ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cremer%2C%20Chris%20Li%2C%20Xuechen%20Duvenaud%2C%20David%20Inference%20suboptimality%20in%20variational%20autoencoders%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cremer%2C%20Chris%20Li%2C%20Xuechen%20Duvenaud%2C%20David%20Inference%20suboptimality%20in%20variational%20autoencoders%202018"
+        },
+        {
+            "id": "Dieng_et+al_2017_a",
+            "entry": "Adji B Dieng, Chong Wang, Jianfeng Gao, and John Paisley. TopicRNN: A recurrent neural network with long-range semantic dependency. In Proceedings of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dieng%2C%20Adji%20B.%20Wang%2C%20Chong%20Gao%2C%20Jianfeng%20Paisley%2C%20John%20TopicRNN%3A%20A%20recurrent%20neural%20network%20with%20long-range%20semantic%20dependency%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dieng%2C%20Adji%20B.%20Wang%2C%20Chong%20Gao%2C%20Jianfeng%20Paisley%2C%20John%20TopicRNN%3A%20A%20recurrent%20neural%20network%20with%20long-range%20semantic%20dependency%202017"
+        },
+        {
+            "id": "Dieng_et+al_2018_a",
+            "entry": "Adji B Dieng, Yoon Kim, Alexander M Rush, and David M Blei. Avoiding latent variable collapse with generative skip models. In Proceedings of ICML workshop on Theoretical Foundations and Applications of Deep Generative Models, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dieng%2C%20Adji%20B.%20Kim%2C%20Yoon%20Rush%2C%20Alexander%20M.%20Blei%2C%20David%20M.%20Avoiding%20latent%20variable%20collapse%20with%20generative%20skip%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dieng%2C%20Adji%20B.%20Kim%2C%20Yoon%20Rush%2C%20Alexander%20M.%20Blei%2C%20David%20M.%20Avoiding%20latent%20variable%20collapse%20with%20generative%20skip%20models%202018"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. \u03b2-VAE: Learning basic visual concepts with a constrained variational framework. In Proceedings of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20%CE%B2-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20%CE%B2-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017"
+        },
+        {
+            "id": "Hjelm_et+al_2016_a",
+            "entry": "Devon Hjelm, Ruslan R Salakhutdinov, Kyunghyun Cho, Nebojsa Jojic, Vince Calhoun, and Junyoung Chung. Iterative refinement of the approximate posterior for directed belief networks. In Proceedings of NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hjelm%2C%20Devon%20Salakhutdinov%2C%20Ruslan%20R.%20Cho%2C%20Kyunghyun%20Jojic%2C%20Nebojsa%20Iterative%20refinement%20of%20the%20approximate%20posterior%20for%20directed%20belief%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hjelm%2C%20Devon%20Salakhutdinov%2C%20Ruslan%20R.%20Cho%2C%20Kyunghyun%20Jojic%2C%20Nebojsa%20Iterative%20refinement%20of%20the%20approximate%20posterior%20for%20directed%20belief%20networks%202016"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Hoffman_2016_a",
+            "entry": "Matthew D Hoffman and Matthew J Johnson. ELBO surgery: yet another way to carve up the variational evidence lower bound. In Proceedings of NIPS Workshop in Advances in Approximate Bayesian Inference, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoffman%2C%20Matthew%20D.%20Johnson%2C%20Matthew%20J.%20ELBO%20surgery%3A%20yet%20another%20way%20to%20carve%20up%20the%20variational%20evidence%20lower%20bound%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoffman%2C%20Matthew%20D.%20Johnson%2C%20Matthew%20J.%20ELBO%20surgery%3A%20yet%20another%20way%20to%20carve%20up%20the%20variational%20evidence%20lower%20bound%202016"
+        },
+        {
+            "id": "Hoffman_et+al_2013_a",
+            "entry": "Matthew D Hoffman, David M Blei, Chong Wang, and John Paisley. Stochastic variational inference. The Journal of Machine Learning Research, 14(1):1303\u20131347, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoffman%2C%20Matthew%20D.%20Blei%2C%20David%20M.%20Wang%2C%20Chong%20Paisley%2C%20John%20Stochastic%20variational%20inference%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoffman%2C%20Matthew%20D.%20Blei%2C%20David%20M.%20Wang%2C%20Chong%20Paisley%2C%20John%20Stochastic%20variational%20inference%202013"
+        },
+        {
+            "id": "Kim_et+al_2018_a",
+            "entry": "Yoon Kim, Sam Wiseman, Andrew C Miller, David Sontag, and Alexander M Rush. Semi-amortized variational autoencoders. In Proceedings of ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yoon%20Wiseman%2C%20Sam%20Miller%2C%20Andrew%20C.%20Sontag%2C%20David%20Semi-amortized%20variational%20autoencoders%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yoon%20Wiseman%2C%20Sam%20Miller%2C%20Andrew%20C.%20Sontag%2C%20David%20Semi-amortized%20variational%20autoencoders%202018"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In Proceedings of ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. In Proceedings of ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Proceedings of NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Krishnan_et+al_2018_a",
+            "entry": "Rahul Krishnan, Dawen Liang, and Matthew Hoffman. On the challenges of learning with inference networks on sparse, high-dimensional data. In Proceedings of AISTATS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krishnan%2C%20Rahul%20Liang%2C%20Dawen%20Hoffman%2C%20Matthew%20On%20the%20challenges%20of%20learning%20with%20inference%20networks%20on%20sparse%2C%20high-dimensional%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krishnan%2C%20Rahul%20Liang%2C%20Dawen%20Hoffman%2C%20Matthew%20On%20the%20challenges%20of%20learning%20with%20inference%20networks%20on%20sparse%2C%20high-dimensional%20data%202018"
+        },
+        {
+            "id": "Lake_et+al_2015_a",
+            "entry": "Brenden M Lake, Ruslan Salakhutdinov, and Joshua B Tenenbaum. Human-level concept learning through probabilistic program induction. Science, 350(6266):1332\u20131338, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20Tenenbaum%2C%20Joshua%20B.%20Human-level%20concept%20learning%20through%20probabilistic%20program%20induction%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20Tenenbaum%2C%20Joshua%20B.%20Human-level%20concept%20learning%20through%20probabilistic%20program%20induction%202015"
+        },
+        {
+            "id": "Marino_et+al_2018_a",
+            "entry": "Joseph Marino, Yisong Yue, and Stephan Mandt. Iterative amortized inference. In Proceedings of ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marino%2C%20Joseph%20Yue%2C%20Yisong%20Mandt%2C%20Stephan%20Iterative%20amortized%20inference%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marino%2C%20Joseph%20Yue%2C%20Yisong%20Mandt%2C%20Stephan%20Iterative%20amortized%20inference%202018"
+        },
+        {
+            "id": "Park_et+al_2018_a",
+            "entry": "Yookoon Park, Jaemin Cho, and Gunhee Kim. A hierarchical latent structure for variational conversation modeling. In Proceedings of NAACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Park%2C%20Yookoon%20Cho%2C%20Jaemin%20Kim%2C%20Gunhee%20A%20hierarchical%20latent%20structure%20for%20variational%20conversation%20modeling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Park%2C%20Yookoon%20Cho%2C%20Jaemin%20Kim%2C%20Gunhee%20A%20hierarchical%20latent%20structure%20for%20variational%20conversation%20modeling%202018"
+        },
+        {
+            "id": "Phuong_et+al_2018_a",
+            "entry": "Mary Phuong, Max Welling, Nate Kushman, Ryota Tomioka, and Sebastian Nowozin. The mutual autoencoder: Controlling information in latent code representations, 2018. URL https://openreview.net/forum?id=HkbmWqxCZ.",
+            "url": "https://openreview.net/forum?id=HkbmWqxCZ"
+        },
+        {
+            "id": "Semeniuta_et+al_2017_a",
+            "entry": "Stanislau Semeniuta, Aliaksei Severyn, and Erhardt Barth. A hybrid convolutional variational autoencoder for text generation. In Proceedings of EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Semeniuta%2C%20Stanislau%20Severyn%2C%20Aliaksei%20Barth%2C%20Erhardt%20A%20hybrid%20convolutional%20variational%20autoencoder%20for%20text%20generation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Semeniuta%2C%20Stanislau%20Severyn%2C%20Aliaksei%20Barth%2C%20Erhardt%20A%20hybrid%20convolutional%20variational%20autoencoder%20for%20text%20generation%202017"
+        },
+        {
+            "id": "S_et+al_2016_a",
+            "entry": "Casper Kaae S\u00f8nderby, Tapani Raiko, Lars Maal\u00f8e, S\u00f8ren Kaae S\u00f8nderby, and Ole Winther. Ladder variational autoencoders. In Proceedings of NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%C3%B8nderby%2C%20Casper%20Kaae%20Raiko%2C%20Tapani%20Maal%C3%B8e%2C%20Lars%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Ladder%20variational%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%C3%B8nderby%2C%20Casper%20Kaae%20Raiko%2C%20Tapani%20Maal%C3%B8e%2C%20Lars%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Ladder%20variational%20autoencoders%202016"
+        },
+        {
+            "id": "Tolstikhin_et+al_2018_a",
+            "entry": "Ilya Tolstikhin, Olivier Bousquet, Sylvain Gelly, and Bernhard Schoelkopf. Wasserstein autoencoders. In Proceedings of ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tolstikhin%2C%20Ilya%20Bousquet%2C%20Olivier%20Gelly%2C%20Sylvain%20Schoelkopf%2C%20Bernhard%20Wasserstein%20autoencoders%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tolstikhin%2C%20Ilya%20Bousquet%2C%20Olivier%20Gelly%2C%20Sylvain%20Schoelkopf%2C%20Bernhard%20Wasserstein%20autoencoders%202018"
+        },
+        {
+            "id": "Tomczak_2018_a",
+            "entry": "Jakub M. Tomczak and Max Welling. VAE with a VampPrior. In Proceedings of AISTATS, 2018. Aaron van den Oord, Nal Kalchbrenner, Lasse Espeholt, Oriol Vinyals, Alex Graves, et al. Conditional image generation with pixelcnn decoders. In Proceedings of NIPS, 2016. Jiacheng Xu and Greg Durrett. Spherical latent spaces for stable variational autoencoders. In Proceedings of EMNLP, 2018. Zichao Yang, Zhiting Hu, Ruslan Salakhutdinov, and Taylor Berg-Kirkpatrick. Improved variational autoencoders for text modeling using dilated convolutions. In Proceedings of ICML, 2017. Shengjia Zhao, Jiaming Song, and Stefano Ermon. InfoVAE: Information maximizing variational autoencoders. arXiv preprint arXiv:1706.02262, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02262"
+        },
+        {
+            "id": "In_2018_a",
+            "entry": "In general, for annealing we increase the KL weight linearly from 0.1 to 1.0 in the first 10 epochs, as in Kim et al. (2018). We also perform analysis for different annealing strategies in Appendix E",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20general%20for%20annealing%20we%20increase%20the%20KL%20weight%20linearly%20from%2001%20to%2010%20in%20the%20first%2010%20epochs%20as%20in%20Kim%20et%20al%202018%20We%20also%20perform%20analysis%20for%20different%20annealing%20strategies%20in%20Appendix%20E",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20general%20for%20annealing%20we%20increase%20the%20KL%20weight%20linearly%20from%2001%20to%2010%20in%20the%20first%2010%20epochs%20as%20in%20Kim%20et%20al%202018%20We%20also%20perform%20analysis%20for%20different%20annealing%20strategies%20in%20Appendix%20E"
+        },
+        {
+            "id": "Following_2018_b",
+            "entry": "Following Kim et al. (2018), we use a single-layer LSTM with 1024 hidden units and 512dimensional word embeddings as the encoder and decoder for all of text models. The LSTM parameters are initialized from U(\u22120.01, 0.01), and embedding parameters are initialized from U(\u22120.1, 0.1). We use the final hidden state of the encoder to predict (via a linear transformation) the latent variable. We use the SGD optimizer and start with a learning rate of 1.0 and decay it by a factor of 2 if the validation loss has not improved in 2 epochs and terminate training once the learning rate has decayed a total of 5 times. We don\u2019t perform any text preprocessing and use the datasets as provided. We follow Kim et al. (2018) and use dropout of 0.5 on the decoder for both the input embeddings of the decoder and on the output of the decoder before the linear transformation to vocabulary space.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Following%20Kim%20et%20al%202018%20we%20use%20a%20singlelayer%20LSTM%20with%201024%20hidden%20units%20and%20512dimensional%20word%20embeddings%20as%20the%20encoder%20and%20decoder%20for%20all%20of%20text%20models%20The%20LSTM%20parameters%20are%20initialized%20from%20U001%20001%20and%20embedding%20parameters%20are%20initialized%20from%20U01%2001%20We%20use%20the%20final%20hidden%20state%20of%20the%20encoder%20to%20predict%20via%20a%20linear%20transformation%20the%20latent%20variable%20We%20use%20the%20SGD%20optimizer%20and%20start%20with%20a%20learning%20rate%20of%2010%20and%20decay%20it%20by%20a%20factor%20of%202%20if%20the%20validation%20loss%20has%20not%20improved%20in%202%20epochs%20and%20terminate%20training%20once%20the%20learning%20rate%20has%20decayed%20a%20total%20of%205%20times%20We%20dont%20perform%20any%20text%20preprocessing%20and%20use%20the%20datasets%20as%20provided%20We%20follow%20Kim%20et%20al%202018%20and%20use%20dropout%20of%2005%20on%20the%20decoder%20for%20both%20the%20input%20embeddings%20of%20the%20decoder%20and%20on%20the%20output%20of%20the%20decoder%20before%20the%20linear%20transformation%20to%20vocabulary%20space",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Following%20Kim%20et%20al%202018%20we%20use%20a%20singlelayer%20LSTM%20with%201024%20hidden%20units%20and%20512dimensional%20word%20embeddings%20as%20the%20encoder%20and%20decoder%20for%20all%20of%20text%20models%20The%20LSTM%20parameters%20are%20initialized%20from%20U001%20001%20and%20embedding%20parameters%20are%20initialized%20from%20U01%2001%20We%20use%20the%20final%20hidden%20state%20of%20the%20encoder%20to%20predict%20via%20a%20linear%20transformation%20the%20latent%20variable%20We%20use%20the%20SGD%20optimizer%20and%20start%20with%20a%20learning%20rate%20of%2010%20and%20decay%20it%20by%20a%20factor%20of%202%20if%20the%20validation%20loss%20has%20not%20improved%20in%202%20epochs%20and%20terminate%20training%20once%20the%20learning%20rate%20has%20decayed%20a%20total%20of%205%20times%20We%20dont%20perform%20any%20text%20preprocessing%20and%20use%20the%20datasets%20as%20provided%20We%20follow%20Kim%20et%20al%202018%20and%20use%20dropout%20of%2005%20on%20the%20decoder%20for%20both%20the%20input%20embeddings%20of%20the%20decoder%20and%20on%20the%20output%20of%20the%20decoder%20before%20the%20linear%20transformation%20to%20vocabulary%20space"
+        },
+        {
+            "id": "We_2018_c",
+            "entry": "We use the same train/val/test splits as provided by Kim et al. (2018). We use the Adam optimizer and start with a learning rate of 0.001 and decay it by a factor of 2 if the validation loss has not improved in 20 epochs. We terminate training once the learning rate has decayed a total of 5 times. Inputs were dynamically binarized throughout training by viewing the input as Bernoulli random variables that are sampled from pixel values. We validate and test on a fixed binarization and our decoder uses binary likelihood. Our ResNet is the same as used by Chen et al. (2017). Our 13-layer PixelCNN architecture is a larger variant based on what was used in Kim et al. (2018) and described in their Appendix B.3 section. The PixelCNN has five 7 x 7 layers, followed by, four 5 x 5 layers, and then four 3 x 3 layers. Each layer has 64 feature maps. We use batch normalization followed by an ELU activation before our final 1 x 1 convolutional layer and sigmoid nonlinearity.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20use%20the%20same%20trainvaltest%20splits%20as%20provided%20by%20Kim%20et%20al%202018%20We%20use%20the%20Adam%20optimizer%20and%20start%20with%20a%20learning%20rate%20of%200001%20and%20decay%20it%20by%20a%20factor%20of%202%20if%20the%20validation%20loss%20has%20not%20improved%20in%2020%20epochs%20We%20terminate%20training%20once%20the%20learning%20rate%20has%20decayed%20a%20total%20of%205%20times%20Inputs%20were%20dynamically%20binarized%20throughout%20training%20by%20viewing%20the%20input%20as%20Bernoulli%20random%20variables%20that%20are%20sampled%20from%20pixel%20values%20We%20validate%20and%20test%20on%20a%20fixed%20binarization%20and%20our%20decoder%20uses%20binary%20likelihood%20Our%20ResNet%20is%20the%20same%20as%20used%20by%20Chen%20et%20al%202017%20Our%2013layer%20PixelCNN%20architecture%20is%20a%20larger%20variant%20based%20on%20what%20was%20used%20in%20Kim%20et%20al%202018%20and%20described%20in%20their%20Appendix%20B3%20section%20The%20PixelCNN%20has%20five%207%20x%207%20layers%20followed%20by%20four%205%20x%205%20layers%20and%20then%20four%203%20x%203%20layers%20Each%20layer%20has%2064%20feature%20maps%20We%20use%20batch%20normalization%20followed%20by%20an%20ELU%20activation%20before%20our%20final%201%20x%201%20convolutional%20layer%20and%20sigmoid%20nonlinearity",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20use%20the%20same%20trainvaltest%20splits%20as%20provided%20by%20Kim%20et%20al%202018%20We%20use%20the%20Adam%20optimizer%20and%20start%20with%20a%20learning%20rate%20of%200001%20and%20decay%20it%20by%20a%20factor%20of%202%20if%20the%20validation%20loss%20has%20not%20improved%20in%2020%20epochs%20We%20terminate%20training%20once%20the%20learning%20rate%20has%20decayed%20a%20total%20of%205%20times%20Inputs%20were%20dynamically%20binarized%20throughout%20training%20by%20viewing%20the%20input%20as%20Bernoulli%20random%20variables%20that%20are%20sampled%20from%20pixel%20values%20We%20validate%20and%20test%20on%20a%20fixed%20binarization%20and%20our%20decoder%20uses%20binary%20likelihood%20Our%20ResNet%20is%20the%20same%20as%20used%20by%20Chen%20et%20al%202017%20Our%2013layer%20PixelCNN%20architecture%20is%20a%20larger%20variant%20based%20on%20what%20was%20used%20in%20Kim%20et%20al%202018%20and%20described%20in%20their%20Appendix%20B3%20section%20The%20PixelCNN%20has%20five%207%20x%207%20layers%20followed%20by%20four%205%20x%205%20layers%20and%20then%20four%203%20x%203%20layers%20Each%20layer%20has%2064%20feature%20maps%20We%20use%20batch%20normalization%20followed%20by%20an%20ELU%20activation%20before%20our%20final%201%20x%201%20convolutional%20layer%20and%20sigmoid%20nonlinearity"
+        }
+    ]
+}

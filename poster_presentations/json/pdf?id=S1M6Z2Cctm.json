@@ -1,0 +1,357 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "HARMONIC UNPAIRED IMAGE-TO-IMAGE TRANSLA-",
+        "author": "Rui Zhang Google Cloud AI & Chinese Academy of Sciences Beijing, China zhangrui@ict.ac.cn",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1M6Z2Cctm"
+        },
+        "abstract": "The recent direction of unpaired image-to-image translation is on one hand very exciting as it alleviates the big burden in obtaining label-intensive pixel-to-pixel supervision, but it is on the other hand not fully satisfactory due to the presence of artifacts and degenerated transformations. In this paper, we take a manifold view of the problem by introducing a smoothness term over the sample graph to attain harmonic functions to enforce consistent mappings during the translation. We develop HarmonicGAN to learn bi-directional translations between the source and the target domains. With the help of similarity-consistency, the inherent selfconsistency property of samples can be maintained. Distance metrics defined on two types of features including histogram and CNN are exploited. Under an identical problem setting as CycleGAN, without additional manual inputs and only at a small training-time cost, HarmonicGAN demonstrates a significant qualitative and quantitative improvement over the state of the art, as well as improved interpretability. We show experimental results in a number of applications including medical imaging, object transfiguration, and semantic labeling. We outperform the competing methods in all tasks, and for a medical imaging task in particular our method turns CycleGAN from a failure to a success, halving the mean-squared error, and generating images that radiologists prefer over competing methods in 95% of cases."
+    },
+    "keywords": [
+        {
+            "term": "Convolutional Neural Network",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "generative adversarial network",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_network"
+        },
+        {
+            "term": "image synthesis",
+            "url": "https://en.wikipedia.org/wiki/image_synthesis"
+        },
+        {
+            "term": "medical imaging",
+            "url": "https://en.wikipedia.org/wiki/medical_imaging"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "histogram",
+            "url": "https://en.wikipedia.org/wiki/histogram"
+        },
+        {
+            "term": "Mean Squared Error",
+            "url": "https://en.wikipedia.org/wiki/Mean_Squared_Error"
+        },
+        {
+            "term": "image translation",
+            "url": "https://en.wikipedia.org/wiki/image_translation"
+        },
+        {
+            "term": "harmonic functions",
+            "url": "https://en.wikipedia.org/wiki/harmonic_functions"
+        }
+    ],
+    "abbreviations": {
+        "FCNs": "Fully Convolutional Neural Networks",
+        "GANs": "Generative Adaptive Networks",
+        "G(x)": "G(X) \u2192 F",
+        "CNN": "Convolutional Neural Network",
+        "MAE": "Mean Absolute Error",
+        "MSE": "Mean Squared Error",
+        "PSNR": "Peak Signal-to-Noise Ratio",
+        "SSIM": "Structural Similarity Index Measure"
+    },
+    "highlights": [
+        "Image-to-image translation (<a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\">Isola et al, 2017</a></a></a></a>) aims to learn a mapping from a source domain to a target domain",
+        "As shown in Fig. 2, one reason for this is that the circularity constraint in CycleGAN lacks the straightforward description of the target domain, so it may change the inherent properties of the original samples and generate unexpected results which are inconsistent at different image locations",
+        "HarmonicGAN based on histogram and VGG features shows similar performance; the reconstruction losses of histogram-based HarmonicGAN are slightly lower than the VGG-based one in Flair \u2192 T1, while they are slightly higher in T1 \u2192 Flair, indicating that both low-level RGB values and high-level Convolutional Neural Network features can represent the inherent property of medical images well and help to maintain the smoothness-consistency of samples",
+        "The performance using a histogram is slightly lower than CycleGAN; we hypothesize that the reason is that the objects in photos have a large intra-class variance and inter-class similarity in appearance, e.g. cars have different colors, while vegetation and terrain have similar colors, the regularization of the RGB histogram is not appropriate to extract the inherent property of photos.\n4.4",
+        "We have shown that by introducing additional regularization to enforce consistent mappings during the image-to-image translation, the inherent self-consistency property of samples can be maintained",
+        "Through a set of quantitative, qualitative and user studies, we have demonstrated that this results in a significant improvement over the current state-of-the-art methods in a number of applications including medical imaging, object transfiguration, and semantic labeling"
+    ],
+    "key_statements": [
+        "Image-to-image translation (<a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\">Isola et al, 2017</a></a></a></a>) aims to learn a mapping from a source domain to a target domain",
+        "Given a pair of training images with detailed pixel-to-pixel correspondences between the source and the target, image-to-image translation can be cast as a regression problem using e.g. Fully Convolutional Neural Networks (FCNs) (<a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\">Long et al, 2015</a>) by minimizing e.g. the per-pixel prediction loss",
+        "Inspired by graphbased semi-supervised learning (Zhu et al, 2003; Zhu, 2006), we introduce smoothness terms to unpaired image-to-image translation (Zhu et al, 2017a) by providing a stronger regularization for the translation/transformation between the source and target domains, aiming to exploit the \u201cmanifold structure\u201d of the source and target domains",
+        "For a medical imaging task (<a class=\"ref-link\" id=\"cCohen_et+al_2018_a\" href=\"#rCohen_et+al_2018_a\">Cohen et al, 2018</a>) that was recently calling attention to a major CycleGAN failure case, our proposed method provides a large improvement over CycleGAN, halving the mean-squared error, and generating images that radiologists prefer over competing methods in 95% of cases.\n1",
+        "As shown in Fig. 2, one reason for this is that the circularity constraint in CycleGAN lacks the straightforward description of the target domain, so it may change the inherent properties of the original samples and generate unexpected results which are inconsistent at different image locations",
+        "We show that the artifacts in CycleGAN are still present in DistanceGAN, whereas HarmonicGAN provides a significant boost to the performance of CycleGAN",
+        "We propose a smoothness term to enforce a stronger correlation between the source and target domains that focuses on providing similarity-consistency between image patches during the translation",
+        "HarmonicGAN based on histogram and VGG features shows similar performance; the reconstruction losses of histogram-based HarmonicGAN are slightly lower than the VGG-based one in Flair \u2192 T1, while they are slightly higher in T1 \u2192 Flair, indicating that both low-level RGB values and high-level Convolutional Neural Network features can represent the inherent property of medical images well and help to maintain the smoothness-consistency of samples",
+        "The performance using a histogram is slightly lower than CycleGAN; we hypothesize that the reason is that the objects in photos have a large intra-class variance and inter-class similarity in appearance, e.g. cars have different colors, while vegetation and terrain have similar colors, the regularization of the RGB histogram is not appropriate to extract the inherent property of photos.\n4.4",
+        "We showed one radiologist the real ground truth image, followed by images generated by CycleGAN, DistanceGAN and HarmonicGAN",
+        "We introduce a smoothness term over the sample graph to enforce smoothness-consistency between the source and target domains",
+        "We have shown that by introducing additional regularization to enforce consistent mappings during the image-to-image translation, the inherent self-consistency property of samples can be maintained",
+        "Through a set of quantitative, qualitative and user studies, we have demonstrated that this results in a significant improvement over the current state-of-the-art methods in a number of applications including medical imaging, object transfiguration, and semantic labeling"
+    ],
+    "summary": [
+        "Image-to-image translation (<a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\"><a class=\"ref-link\" id=\"cIsola_et+al_2017_a\" href=\"#rIsola_et+al_2017_a\">Isola et al, 2017</a></a></a></a>) aims to learn a mapping from a source domain to a target domain.",
+        "By using a cycled regression for the pixel-level prediction plus a term for the adversarial difference between the transferred images and the target images, CycleGAN is able to successfully, in many cases, train a translation model without paired source\u2192target supervision.",
+        "For a pair of similar samples, we add the smoothness term to minimize a weighted distance of the corresponding locations in the target image.",
+        "We name our algorithm HarmonicGAN as it behaves harmonically along with the circularity and adversarial constraints to learn a pair of dual translations between the source and target domains, as shown in Fig. 1.",
+        "As shown in Fig. 2, one reason for this is that the circularity constraint in CycleGAN lacks the straightforward description of the target domain, so it may change the inherent properties of the original samples and generate unexpected results which are inconsistent at different image locations.",
+        "We propose HarmonicGAN that introduces a smoothness term into the CycleGAN framework to enforce a regularized translation, enforcing similar image content in the source space to be similar in the target space.",
+        "The adversarial constraints ensure the generated samples are in the distribution of the source or target domain, but ignore the relationship between the input and output of the forward or backward translations.",
+        "We propose a smoothness term to enforce a stronger correlation between the source and target domains that focuses on providing similarity-consistency between image patches during the translation.",
+        "We evaluate the proposed method on three different applications: medical imaging, semantic labeling, and object transfiguration.",
+        "HarmonicGAN based on histogram and VGG features shows similar performance; the reconstruction losses of histogram-based HarmonicGAN are slightly lower than the VGG-based one in Flair \u2192 T1, while they are slightly higher in T1 \u2192 Flair, indicating that both low-level RGB values and high-level CNN features can represent the inherent property of medical images well and help to maintain the smoothness-consistency of samples.",
+        "The proposed method using VGG features yields a 3% improvement in Pixel Accuracy in translation scores for photo \u2194 label and shows stable improvements in other metrics, clearly outperforming all competing methods.",
+        "Through a set of quantitative, qualitative and user studies, we have demonstrated that this results in a significant improvement over the current state-of-the-art methods in a number of applications including medical imaging, object transfiguration, and semantic labeling."
+    ],
+    "headline": "We develop HarmonicGAN to learn bi-directional translations between the source and the target domains",
+    "reference_links": [
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein generative adversarial networks. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Chintala%2C%20Soumith%20Bottou%2C%20Leon%20Wasserstein%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjovsky%2C%20Martin%20Chintala%2C%20Soumith%20Bottou%2C%20Leon%20Wasserstein%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Barnes_et+al_2009_a",
+            "entry": "Connelly Barnes, Eli Shechtman, Adam Finkelstein, and Dan B Goldman. Patchmatch: A randomized correspondence algorithm for structural image editing. ACM Trans. Graphics (ToG), 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barnes%2C%20Connelly%20Shechtman%2C%20Eli%20Finkelstein%2C%20Adam%20Goldman%2C%20Dan%20B.%20Patchmatch%3A%20A%20randomized%20correspondence%20algorithm%20for%20structural%20image%20editing%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barnes%2C%20Connelly%20Shechtman%2C%20Eli%20Finkelstein%2C%20Adam%20Goldman%2C%20Dan%20B.%20Patchmatch%3A%20A%20randomized%20correspondence%20algorithm%20for%20structural%20image%20editing%202009"
+        },
+        {
+            "id": "Belkin_et+al_2006_a",
+            "entry": "Mikhail Belkin, Partha Niyogi, and Vikas Sindhwani. Manifold regularization: A geometric framework for learning from labeled and unlabeled examples. JMLR, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belkin%2C%20Mikhail%20Niyogi%2C%20Partha%20Sindhwani%2C%20Vikas%20Manifold%20regularization%3A%20A%20geometric%20framework%20for%20learning%20from%20labeled%20and%20unlabeled%20examples%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belkin%2C%20Mikhail%20Niyogi%2C%20Partha%20Sindhwani%2C%20Vikas%20Manifold%20regularization%3A%20A%20geometric%20framework%20for%20learning%20from%20labeled%20and%20unlabeled%20examples%202006"
+        },
+        {
+            "id": "Benaim_2017_a",
+            "entry": "Sagie Benaim and Lior Wolf. One-sided unsupervised domain mapping. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Benaim%2C%20Sagie%20Wolf%2C%20Lior%20One-sided%20unsupervised%20domain%20mapping%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Benaim%2C%20Sagie%20Wolf%2C%20Lior%20One-sided%20unsupervised%20domain%20mapping%202017"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Liang-Chieh Chen, George Papandreou, Iasonas Kokkinos, Kevin Murphy, and Alan L Yuille. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and fully connected crfs. IEEE transactions on pattern analysis and machine intelligence, 40(4): 834\u2013848, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Liang-Chieh%20Papandreou%2C%20George%20Kokkinos%2C%20Iasonas%20Murphy%2C%20Kevin%20Deeplab%3A%20Semantic%20image%20segmentation%20with%20deep%20convolutional%20nets%2C%20atrous%20convolution%2C%20and%20fully%20connected%20crfs%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Liang-Chieh%20Papandreou%2C%20George%20Kokkinos%2C%20Iasonas%20Murphy%2C%20Kevin%20Deeplab%3A%20Semantic%20image%20segmentation%20with%20deep%20convolutional%20nets%2C%20atrous%20convolution%2C%20and%20fully%20connected%20crfs%202018"
+        },
+        {
+            "id": "Chen_2017_a",
+            "entry": "Qifeng Chen and Vladlen Koltun. Photographic image synthesis with cascaded refinement networks. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Qifeng%20Koltun%2C%20Vladlen%20Photographic%20image%20synthesis%20with%20cascaded%20refinement%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Qifeng%20Koltun%2C%20Vladlen%20Photographic%20image%20synthesis%20with%20cascaded%20refinement%20networks%202017"
+        },
+        {
+            "id": "Cohen_et+al_2018_a",
+            "entry": "Joseph Paul Cohen, Margaux Luck, and Sina Honari. Distribution matching losses can hallucinate features in medical image translation. In MICCAI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cohen%2C%20Joseph%20Paul%20Luck%2C%20Margaux%20Honari%2C%20Sina%20Distribution%20matching%20losses%20can%20hallucinate%20features%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cohen%2C%20Joseph%20Paul%20Luck%2C%20Margaux%20Honari%2C%20Sina%20Distribution%20matching%20losses%20can%20hallucinate%20features%202018"
+        },
+        {
+            "id": "Cordts_et+al_2016_a",
+            "entry": "Marius Cordts, Mohamed Omran, Sebastian Ramos, Timo Rehfeld, Markus Enzweiler, Rodrigo Benenson, Uwe Franke, Stefan Roth, and Bernt Schiele. The cityscapes dataset for semantic urban scene understanding. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016"
+        },
+        {
+            "id": "Criminisi_et+al_2004_a",
+            "entry": "Antonio Criminisi, Patrick Perez, and Kentaro Toyama. Region filling and object removal by exemplar-based image inpainting. IEEE Trans. image processing, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Criminisi%2C%20Antonio%20Perez%2C%20Patrick%20Toyama%2C%20Kentaro%20Region%20filling%20and%20object%20removal%20by%20exemplar-based%20image%20inpainting%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Criminisi%2C%20Antonio%20Perez%2C%20Patrick%20Toyama%2C%20Kentaro%20Region%20filling%20and%20object%20removal%20by%20exemplar-based%20image%20inpainting%202004"
+        },
+        {
+            "id": "Dar_et+al_2018_a",
+            "entry": "Salman Ul Hassan Dar, Mahmut Yurt, Levent Karacan, Aykut Erdem, Erkut Erdem, and Tolga Cukur. Image synthesis in multi-contrast MRI with conditional generative adversarial networks. arXiv preprint, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dar%2C%20Salman%20Ul%20Hassan%20Yurt%2C%20Mahmut%20Karacan%2C%20Levent%20Aykut%20Erdem%2C%20Erkut%20Erdem%2C%20and%20Tolga%20Cukur.%20Image%20synthesis%20in%20multi-contrast%20MRI%20with%20conditional%20generative%20adversarial%20networks.%20arXiv%20p%202018"
+        },
+        {
+            "id": "Alexei_2001_a",
+            "entry": "Alexei A Efros and William T Freeman. Image quilting for texture synthesis and transfer. In Proc. Computer graphics and interactive techniques, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alexei%20A%20Efros%20and%20William%20T%20Freeman%20Image%20quilting%20for%20texture%20synthesis%20and%20transfer%20In%20Proc%20Computer%20graphics%20and%20interactive%20techniques%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alexei%20A%20Efros%20and%20William%20T%20Freeman%20Image%20quilting%20for%20texture%20synthesis%20and%20transfer%20In%20Proc%20Computer%20graphics%20and%20interactive%20techniques%202001"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron C. Courville, and Yoshua Bengio. Generative adversarial nets. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ian%20J%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20C%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20NIPS%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ian%20J%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20C%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20NIPS%202014"
+        },
+        {
+            "id": "Hertzmann_et+al_2001_a",
+            "entry": "Aaron Hertzmann, Charles E Jacobs, Nuria Oliver, Brian Curless, and David H Salesin. Image analogies. In Proc. Computer graphics and interactive techniques, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hertzmann%2C%20Aaron%20Jacobs%2C%20Charles%20E.%20Oliver%2C%20Nuria%20Curless%2C%20Brian%20Image%20analogies%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hertzmann%2C%20Aaron%20Jacobs%2C%20Charles%20E.%20Oliver%2C%20Nuria%20Curless%2C%20Brian%20Image%20analogies%202001"
+        },
+        {
+            "id": "Hoffman_et+al_2018_a",
+            "entry": "Judy Hoffman, Eric Tzeng, Taesung Park, Jun-Yan Zhu, Phillip Isola, Kate Saenko, Alexei A Efros, and Trevor Darrell. Cycada: Cycle-consistent adversarial domain adaptation. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoffman%2C%20Judy%20Tzeng%2C%20Eric%20Park%2C%20Taesung%20Zhu%2C%20Jun-Yan%20Cycada%3A%20Cycle-consistent%20adversarial%20domain%20adaptation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoffman%2C%20Judy%20Tzeng%2C%20Eric%20Park%2C%20Taesung%20Zhu%2C%20Jun-Yan%20Cycada%3A%20Cycle-consistent%20adversarial%20domain%20adaptation%202018"
+        },
+        {
+            "id": "Huang_2017_a",
+            "entry": "Xun Huang and Serge J Belongie. Arbitrary style transfer in real-time with adaptive instance normalization. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Xun%20Belongie%2C%20Serge%20J.%20Arbitrary%20style%20transfer%20in%20real-time%20with%20adaptive%20instance%20normalization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Xun%20Belongie%2C%20Serge%20J.%20Arbitrary%20style%20transfer%20in%20real-time%20with%20adaptive%20instance%20normalization%202017"
+        },
+        {
+            "id": "Isola_et+al_2017_a",
+            "entry": "Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A. Efros. Image-to-image translation with conditional adversarial networks. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20Efros%2C%20Alexei%20A.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20Efros%2C%20Alexei%20A.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Johnson_et+al_2016_a",
+            "entry": "Justin Johnson, Alexandre Alahi, and Li Fei-Fei. Perceptual losses for real-time style transfer and super-resolution. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Justin%20Alahi%2C%20Alexandre%20Fei-Fei%2C%20Li%20Perceptual%20losses%20for%20real-time%20style%20transfer%20and%20super-resolution%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Justin%20Alahi%2C%20Alexandre%20Fei-Fei%2C%20Li%20Perceptual%20losses%20for%20real-time%20style%20transfer%20and%20super-resolution%202016"
+        },
+        {
+            "id": "Kim_et+al_2017_a",
+            "entry": "Taeksoo Kim, Moonsu Cha, Hyunsoo Kim, Jung Kwon Lee, and Jiwon Kim. Learning to discover cross-domain relations with generative adversarial networks. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Taeksoo%20Cha%2C%20Moonsu%20Kim%2C%20Hyunsoo%20Lee%2C%20Jung%20Kwon%20Learning%20to%20discover%20cross-domain%20relations%20with%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Taeksoo%20Cha%2C%20Moonsu%20Kim%2C%20Hyunsoo%20Lee%2C%20Jung%20Kwon%20Learning%20to%20discover%20cross-domain%20relations%20with%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Krahenbuhl_2011_a",
+            "entry": "Philipp Krahenbuhl and Vladlen Koltun. Efficient inference in fully connected crfs with gaussian edge potentials. In NIPS, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krahenbuhl%2C%20Philipp%20Koltun%2C%20Vladlen%20Efficient%20inference%20in%20fully%20connected%20crfs%20with%20gaussian%20edge%20potentials%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krahenbuhl%2C%20Philipp%20Koltun%2C%20Vladlen%20Efficient%20inference%20in%20fully%20connected%20crfs%20with%20gaussian%20edge%20potentials%202011"
+        },
+        {
+            "id": "Lafferty_et+al_2001_a",
+            "entry": "John Lafferty, Andrew McCallum, and Fernando CN Pereira. Conditional random fields: Probabilistic models for segmenting and labeling sequence data. In ICML, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lafferty%2C%20John%20McCallum%2C%20Andrew%20Pereira%2C%20Fernando%20C.N.%20Conditional%20random%20fields%3A%20Probabilistic%20models%20for%20segmenting%20and%20labeling%20sequence%20data%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lafferty%2C%20John%20McCallum%2C%20Andrew%20Pereira%2C%20Fernando%20C.N.%20Conditional%20random%20fields%3A%20Probabilistic%20models%20for%20segmenting%20and%20labeling%20sequence%20data%202001"
+        },
+        {
+            "id": "Lin_et+al_2016_a",
+            "entry": "Di Lin, Jifeng Dai, Jiaya Jia, Kaiming He, and Jian Sun. Scribblesup: Scribble-supervised convolutional networks for semantic segmentation. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Di%20Dai%2C%20Jifeng%20Jia%2C%20Jiaya%20He%2C%20Kaiming%20Scribblesup%3A%20Scribble-supervised%20convolutional%20networks%20for%20semantic%20segmentation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Di%20Dai%2C%20Jifeng%20Jia%2C%20Jiaya%20He%2C%20Kaiming%20Scribblesup%3A%20Scribble-supervised%20convolutional%20networks%20for%20semantic%20segmentation%202016"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Ming-Yu Liu, Thomas Breuel, and Jan Kautz. Unsupervised image-to-image translation networks. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ming-Yu%20Breuel%2C%20Thomas%20Kautz%2C%20Jan%20Unsupervised%20image-to-image%20translation%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ming-Yu%20Breuel%2C%20Thomas%20Kautz%2C%20Jan%20Unsupervised%20image-to-image%20translation%20networks%202017"
+        },
+        {
+            "id": "Long_et+al_2015_a",
+            "entry": "Jonathan Long, Evan Shelhamer, and Trevor Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Long%2C%20Jonathan%20Shelhamer%2C%20Evan%20Darrell%2C%20Trevor%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Long%2C%20Jonathan%20Shelhamer%2C%20Evan%20Darrell%2C%20Trevor%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015"
+        },
+        {
+            "id": "Van_2008_a",
+            "entry": "Laurens van der Maaten and Geoffrey Hinton. Visualizing data using t-sne. JMLR, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-sne%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-sne%202008"
+        },
+        {
+            "id": "Mao_et+al_2017_a",
+            "entry": "Xudong Mao, Qing Li, Haoran Xie, Raymond YK Lau, Zhen Wang, and Stephen Paul Smolley. Least squares generative adversarial networks. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mao%2C%20Xudong%20Li%2C%20Qing%20Xie%2C%20Haoran%20Lau%2C%20Raymond%20Y.K.%20Least%20squares%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mao%2C%20Xudong%20Li%2C%20Qing%20Xie%2C%20Haoran%20Lau%2C%20Raymond%20Y.K.%20Least%20squares%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Menze_et+al_2015_a",
+            "entry": "Bjoern H Menze, Andras Jakab, Stefan Bauer, Jayashree Kalpathy-Cramer, Keyvan Farahani, Justin Kirby, Yuliya Burren, Nicole Porz, Johannes Slotboom, Roland Wiest, et al. The multimodal brain tumor image segmentation benchmark (brats). IEEE trans. medical imaging, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Menze%2C%20Bjoern%20H.%20Jakab%2C%20Andras%20Bauer%2C%20Stefan%20Kalpathy-Cramer%2C%20Jayashree%20The%20multimodal%20brain%20tumor%20image%20segmentation%20benchmark%20%28brats%29%202015"
+        },
+        {
+            "id": "Radford_et+al_2016_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Radford%2C%20Alec%20Metz%2C%20Luke%20Chintala%2C%20Soumith%20Unsupervised%20representation%20learning%20with%20deep%20convolutional%20generative%20adversarial%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Radford%2C%20Alec%20Metz%2C%20Luke%20Chintala%2C%20Soumith%20Unsupervised%20representation%20learning%20with%20deep%20convolutional%20generative%20adversarial%20networks%202016"
+        },
+        {
+            "id": "Roweis_2000_a",
+            "entry": "Sam T Roweis and Lawrence K Saul. Nonlinear dimensionality reduction by locally linear embedding. Science, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roweis%2C%20Sam%20T.%20Saul%2C%20Lawrence%20K.%20Nonlinear%20dimensionality%20reduction%20by%20locally%20linear%20embedding%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roweis%2C%20Sam%20T.%20Saul%2C%20Lawrence%20K.%20Nonlinear%20dimensionality%20reduction%20by%20locally%20linear%20embedding%202000"
+        },
+        {
+            "id": "Shrivastava_et+al_2017_a",
+            "entry": "Ashish Shrivastava, Tomas Pfister, Oncel Tuzel, Joshua Susskind, Wenda Wang, and Russell Webb. Learning from simulated and unsupervised images through adversarial training. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shrivastava%2C%20Ashish%20Pfister%2C%20Tomas%20Tuzel%2C%20Oncel%20Susskind%2C%20Joshua%20Learning%20from%20simulated%20and%20unsupervised%20images%20through%20adversarial%20training%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shrivastava%2C%20Ashish%20Pfister%2C%20Tomas%20Tuzel%2C%20Oncel%20Susskind%2C%20Joshua%20Learning%20from%20simulated%20and%20unsupervised%20images%20through%20adversarial%20training%202017"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Simonyan_2015_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015"
+        },
+        {
+            "id": "Tang_et+al_2018_a",
+            "entry": "Meng Tang, Federico Perazzi, Abdelaziz Djelouah, Ismail Ben Ayed, Christopher Schroers, and Yuri Boykov. On regularized losses for weakly-supervised cnn segmentation. In ECCV, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Meng%20Perazzi%2C%20Federico%20Djelouah%2C%20Abdelaziz%20Ayed%2C%20Ismail%20Ben%20On%20regularized%20losses%20for%20weakly-supervised%20cnn%20segmentation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Meng%20Perazzi%2C%20Federico%20Djelouah%2C%20Abdelaziz%20Ayed%2C%20Ismail%20Ben%20On%20regularized%20losses%20for%20weakly-supervised%20cnn%20segmentation%202018"
+        },
+        {
+            "id": "Tenenbaum_et+al_2000_a",
+            "entry": "Joshua B Tenenbaum, Vin De Silva, and John C Langford. A global geometric framework for nonlinear dimensionality reduction. Science, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tenenbaum%2C%20Joshua%20B.%20Silva%2C%20Vin%20De%20Langford%2C%20John%20C.%20A%20global%20geometric%20framework%20for%20nonlinear%20dimensionality%20reduction%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tenenbaum%2C%20Joshua%20B.%20Silva%2C%20Vin%20De%20Langford%2C%20John%20C.%20A%20global%20geometric%20framework%20for%20nonlinear%20dimensionality%20reduction%202000"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Ting-Chun Wang, Ming-Yu Liu, Jun-Yan Zhu, Andrew Tao, Jan Kautz, and Bryan Catanzaro. Highresolution image synthesis and semantic manipulation with conditional gans. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Ting-Chun%20Liu%2C%20Ming-Yu%20Zhu%2C%20Jun-Yan%20Tao%2C%20Andrew%20Highresolution%20image%20synthesis%20and%20semantic%20manipulation%20with%20conditional%20gans%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Ting-Chun%20Liu%2C%20Ming-Yu%20Zhu%2C%20Jun-Yan%20Tao%2C%20Andrew%20Highresolution%20image%20synthesis%20and%20semantic%20manipulation%20with%20conditional%20gans%202018"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Zhe Wang, Hongsheng Li, Wanli Ouyang, and Xiaogang Wang. Learnable histogram: Statistical context features for deep neural networks. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Zhe%20Li%2C%20Hongsheng%20Ouyang%2C%20Wanli%20Wang%2C%20Xiaogang%20Learnable%20histogram%3A%20Statistical%20context%20features%20for%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Zhe%20Li%2C%20Hongsheng%20Ouyang%2C%20Wanli%20Wang%2C%20Xiaogang%20Learnable%20histogram%3A%20Statistical%20context%20features%20for%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Zili_2017_a",
+            "entry": "Zili Yi, Hao (Richard) Zhang, Ping Tan, and Minglun Gong. Dualgan: Unsupervised dual learning for image-to-image translation. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zili%20Yi%2C%20Hao%20%28Richard%29%20Zhang%2C%20Ping%20Tan%20Gong%2C%20Minglun%20Dualgan%3A%20Unsupervised%20dual%20learning%20for%20image-to-image%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zili%20Yi%2C%20Hao%20%28Richard%29%20Zhang%2C%20Ping%20Tan%20Gong%2C%20Minglun%20Dualgan%3A%20Unsupervised%20dual%20learning%20for%20image-to-image%20translation%202017"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Han Zhang, Tao Xu, Hongsheng Li, Shaoting Zhang, Xiaolei Huang, Xiaogang Wang, and Dimitris Metaxas. StackGAN: Text to photo-realistic image synthesis with stacked generative adversarial networks. arXiv preprint, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Han%20Xu%2C%20Tao%20Li%2C%20Hongsheng%20Zhang%2C%20Shaoting%20Xiaolei%20Huang%2C%20Xiaogang%20Wang%2C%20and%20Dimitris%20Metaxas.%20StackGAN%3A%20Text%20to%20photo-realistic%20image%20synthesis%20with%20stacked%20generative%20adversarial%20networks.%20arXiv%20p%202017"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Zizhao Zhang, Lin Yang, and Yefeng Zheng. Translating and segmenting multimodal medical volumes with cycle-and shapeconsistency generative adversarial network. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Zizhao%20Yang%2C%20Lin%20Zheng%2C%20Yefeng%20Translating%20and%20segmenting%20multimodal%20medical%20volumes%20with%20cycle-and%20shapeconsistency%20generative%20adversarial%20network%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Zizhao%20Yang%2C%20Lin%20Zheng%2C%20Yefeng%20Translating%20and%20segmenting%20multimodal%20medical%20volumes%20with%20cycle-and%20shapeconsistency%20generative%20adversarial%20network%202018"
+        },
+        {
+            "id": "Zheng_et+al_2015_a",
+            "entry": "Shuai Zheng, Sadeep Jayasumana, Bernardino Romera-Paredes, Vibhav Vineet, Zhizhong Su, Dalong Du, Chang Huang, and Philip HS Torr. Conditional random fields as recurrent neural networks. In ICCV, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shuai%20Zheng%20Sadeep%20Jayasumana%20Bernardino%20RomeraParedes%20Vibhav%20Vineet%20Zhizhong%20Su%20Dalong%20Du%20Chang%20Huang%20and%20Philip%20HS%20Torr%20Conditional%20random%20fields%20as%20recurrent%20neural%20networks%20In%20ICCV%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shuai%20Zheng%20Sadeep%20Jayasumana%20Bernardino%20RomeraParedes%20Vibhav%20Vineet%20Zhizhong%20Su%20Dalong%20Du%20Chang%20Huang%20and%20Philip%20HS%20Torr%20Conditional%20random%20fields%20as%20recurrent%20neural%20networks%20In%20ICCV%202015"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. In ICCV, 2017a. Jun-Yan Zhu, Richard Zhang, Deepak Pathak, Trevor Darrell, Alexei A Efros, Oliver Wang, and Eli",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20JunYan%20Zhu%20Taesung%20Park%20Phillip%20Isola%20and%20Alexei%20A%20Efros%20Unpaired%20imagetoimage%20translation%20using%20cycleconsistent%20adversarial%20networks%20In%20ICCV%202017a%20JunYan%20Zhu%20Richard%20Zhang%20Deepak%20Pathak%20Trevor%20Darrell%20Alexei%20A%20Efros%20Oliver%20Wang%20and%20Eli"
+        },
+        {
+            "id": "Shechtman_0000_a",
+            "entry": "Shechtman. Toward multimodal image-to-image translation. In NIPS, 2017b. Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. CycleGAN failure cases. https:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shechtman%20Toward%20multimodal%20image-to-image%20translation.%20In%20NIPS%2C%202017b.%20Jun-Yan%20Zhu%2C%20Taesung%20Park%2C%20Phillip%20Isola%2C%20and%20Alexei%20A%20Efros.%20CycleGAN%20failure%20cases"
+        },
+        {
+            "id": "Githubcom_2018_a",
+            "entry": "//github.com/junyanz/CycleGAN#failure-cases, 2018. Xiaojin Zhu. Semi-supervised learning literature survey. Computer Science, University of",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=githubcom/junyanz/CycleGAN%23failure-cases%20Xiaojin%20Zhu.%20Semi-supervised%20learning%20literature%20survey%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=githubcom/junyanz/CycleGAN%23failure-cases%20Xiaojin%20Zhu.%20Semi-supervised%20learning%20literature%20survey%202018"
+        },
+        {
+            "id": "Wisconsin-Madison_2003_a",
+            "entry": "Wisconsin-Madison, 2006. Xiaojin Zhu, Zoubin Ghahramani, and John D Lafferty. Semi-supervised learning using gaussian fields and harmonic functions. In ICML, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wisconsin-Madison%2C%202006.%20Xiaojin%20Zhu%2C%20Zoubin%20Ghahramani%20Lafferty%2C%20John%20D%20Semi-supervised%20learning%20using%20gaussian%20fields%20and%20harmonic%20functions%202003"
+        }
+    ]
+}

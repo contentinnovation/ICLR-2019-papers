@@ -1,0 +1,361 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Lucas Deecke, Iain Murray & Hakan Bilen University of Edinburgh {l.deecke,i.murray,h.bilen}@ed.ac.uk",
+        "author": "2 RELATED WORK",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyN-M2Rctm"
+        },
+        "abstract": "Normalization methods are a central building block in the deep learning toolbox. They accelerate and stabilize training, while decreasing the dependence on manually tuned learning rate schedules. When learning from multi-modal distributions, the effectiveness of batch normalization (BN), arguably the most prominent normalization method, is reduced. As a remedy, we propose a more flexible approach: by extending the normalization to more than a single mean and variance, we detect modes of data on-the-fly, jointly normalizing samples that share common features. We demonstrate that our method outperforms BN and other widely used normalization techniques in several experiments, including single and multi-task datasets."
+    },
+    "keywords": [
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "batch normalization",
+            "url": "https://en.wikipedia.org/wiki/batch_normalization"
+        }
+    ],
+    "abbreviations": {
+        "BN": "Batch normalization",
+        "MN": "mode normalization",
+        "LRN": "Local response normalization",
+        "GN": "Group normalization",
+        "MoE": "mixtures of experts"
+    },
+    "highlights": [
+        "A challenge in optimizing deep learning models is the change in input distributions at each layer, complicating the training process",
+        "When applied successfully in practice, Batch normalization enables the training of very deep networks, shortens training times by supporting larger learning rates, and reduces sensitivity to parameter initializations",
+        "When training a deep neural network on images that come from a diverse set of visual domains, each with significantly different statistics, Batch normalization is not effective at normalizing the activations with a single mean and variance (<a class=\"ref-link\" id=\"cBilen_2017_a\" href=\"#rBilen_2017_a\">Bilen & Vedaldi, 2017</a>)",
+        "We further show that mode normalization can be incorporated into other normalization techniques such as group normalization (GN, Wu & He, 2018) by learning which filters should be grouped together",
+        "We further demonstrated that accounting for modality in intermediate feature distributions results in a consistent improvement in classification performance for various deep learning architectures"
+    ],
+    "key_statements": [
+        "A challenge in optimizing deep learning models is the change in input distributions at each layer, complicating the training process",
+        "When applied successfully in practice, Batch normalization enables the training of very deep networks, shortens training times by supporting larger learning rates, and reduces sensitivity to parameter initializations",
+        "When training a deep neural network on images that come from a diverse set of visual domains, each with significantly different statistics, Batch normalization is not effective at normalizing the activations with a single mean and variance (<a class=\"ref-link\" id=\"cBilen_2017_a\" href=\"#rBilen_2017_a\">Bilen & Vedaldi, 2017</a>)",
+        "We further show that mode normalization can be incorporated into other normalization techniques such as group normalization (GN, Wu & He, 2018) by learning which filters should be grouped together",
+        "Initial learning rates were set to \u03b3 = 10\u22121, which we reduced by 1/10 at epochs 65 and 80 for all methods",
+        "We further demonstrated that accounting for modality in intermediate feature distributions results in a consistent improvement in classification performance for various deep learning architectures"
+    ],
+    "summary": [
+        "A challenge in optimizing deep learning models is the change in input distributions at each layer, complicating the training process.",
+        "When training a deep neural network on images that come from a diverse set of visual domains, each with significantly different statistics, BN is not effective at normalizing the activations with a single mean and variance (<a class=\"ref-link\" id=\"cBilen_2017_a\" href=\"#rBilen_2017_a\"><a class=\"ref-link\" id=\"cBilen_2017_a\" href=\"#rBilen_2017_a\">Bilen & Vedaldi, 2017</a></a>).",
+        "Mode normalization (MN), first assigns samples in a mini-batch to different modes via a gating network, and normalizes each sample with estimators for its corresponding mode (Figure 1).",
+        "Our approach relates to methods that parametrize neural networks with domain-agnostic and specific layers, and transfer the agnostic parameters to the analysis of very different types of images (<a class=\"ref-link\" id=\"cBilen_2017_a\" href=\"#rBilen_2017_a\"><a class=\"ref-link\" id=\"cBilen_2017_a\" href=\"#rBilen_2017_a\">Bilen & Vedaldi, 2017</a></a>; <a class=\"ref-link\" id=\"cRebuffi_et+al_2017_a\" href=\"#rRebuffi_et+al_2017_a\">Rebuffi et al, 2017</a>; 2018).",
+        "Normalize samples with running average of component-wise estimators: Nk \u2190 n gnk x k",
+        "In mode normalization (MN, Alg. 1), each sample in the mini-batch is normalized under voting from its gate assignment: MN",
+        "Where \u03b1 and \u03b2 are a learned affine transformation, just as in standard BN.3 The mean \u03bck and variance \u03c3k estimates are weighted averages under the gating network.",
+        "We average over W and H, and parametrize the gating functions via an affine transformation \u03a8 : C \u2192 RK of the channels, which is jointly learned alongside the other parameters of the network.",
+        "As in BN, during training we normalize samples with estimators computed from the current batch.",
+        "Instead of learning mappings with their pre-image in X , in MGN we learn a gating network g : R \u2192 RK that assigns channels to modes.",
+        "Mode normalization is evaluated in single-image classification tasks, showing that it can be used to improve performance in several recently proposed convolutional networks.",
+        "We trained the resulting models on CIFAR10 and CIFAR100 for 100 epochs with SGD and momentum, using a batch size of N = 128.",
+        "Unlike NIN and VGG, Residual Networks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a>) originally included layer-wise batch normalizations.",
+        "In Fig. 3 we evaluated the experts gk({xn}) for samples from the CIFAR10 test set in layers conv3-64-1 and conv-3-256-1 of VGG13, and show the samples that have been assigned the highest probability to belong to either of the K = 2 modes.",
+        "Several normalization approaches that aim to tackle this issue have recently emerged, enabling training with higher learning rates, faster model convergence, and allowing for more complex network architectures.",
+        "We further demonstrated that accounting for modality in intermediate feature distributions results in a consistent improvement in classification performance for various deep learning architectures.",
+        "As part of future work, we plan to explore customized, layer-wise mode numbers in MN, and automatically determining them, e.g. by using concepts from sparse regularization"
+    ],
+    "headline": "We propose a more flexible approach: by extending the normalization to more than a single mean and variance, we detect modes of data on-the-fly, jointly normalizing samples that share common features",
+    "reference_links": [
+        {
+            "id": "Arpit_et+al_2016_a",
+            "entry": "Devansh Arpit, Yingbo Zhou, Bhargava Kota, and Venu Govindaraju. Normalization propagation: A parametric technique for removing internal covariate shift in deep networks. In Proceedings of the 33rd International Conference on Machine Learning, pp. 1168\u20131176, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arpit%2C%20Devansh%20Zhou%2C%20Yingbo%20Kota%2C%20Bhargava%20Govindaraju%2C%20Venu%20Normalization%20propagation%3A%20A%20parametric%20technique%20for%20removing%20internal%20covariate%20shift%20in%20deep%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arpit%2C%20Devansh%20Zhou%2C%20Yingbo%20Kota%2C%20Bhargava%20Govindaraju%2C%20Venu%20Normalization%20propagation%3A%20A%20parametric%20technique%20for%20removing%20internal%20covariate%20shift%20in%20deep%20networks%202016"
+        },
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv:1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Bengio_et+al_2016_a",
+            "entry": "Emmanuel Bengio, Pierre-Luc Bacon, Joelle Pineau, and Doina Precup. Conditional computation in neural networks for faster models. In International Conference on Learning Representations, Workshop Track, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Emmanuel%20Bacon%2C%20Pierre-Luc%20Pineau%2C%20Joelle%20Precup%2C%20Doina%20Conditional%20computation%20in%20neural%20networks%20for%20faster%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Emmanuel%20Bacon%2C%20Pierre-Luc%20Pineau%2C%20Joelle%20Precup%2C%20Doina%20Conditional%20computation%20in%20neural%20networks%20for%20faster%20models%202016"
+        },
+        {
+            "id": "Bilen_2017_a",
+            "entry": "Hakan Bilen and Andrea Vedaldi. Universal representations: The missing link between faces, text, planktons, and cat breeds. arXiv:1701.07275, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07275"
+        },
+        {
+            "id": "Bjorck_et+al_2018_a",
+            "entry": "Nils Bjorck, Carla P Gomes, Bart Selman, and Kilian Q Weinberger. Understanding batch normalization. In Advances in Neural Information Processing Systems 31, pp. 7705\u20137716, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bjorck%2C%20Nils%20Gomes%2C%20Carla%20P.%20Selman%2C%20Bart%20Weinberger%2C%20Kilian%20Q.%20Understanding%20batch%20normalization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bjorck%2C%20Nils%20Gomes%2C%20Carla%20P.%20Selman%2C%20Bart%20Weinberger%2C%20Kilian%20Q.%20Understanding%20batch%20normalization%202018"
+        },
+        {
+            "id": "Olivier_2009_a",
+            "entry": "Olivier Cappeand Eric Moulines. On-line expectation\u2013maximization algorithm for latent data models. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 71(3):593\u2013613, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olivier%20Cappeand%20Eric%20Moulines%20Online%20expectationmaximization%20algorithm%20for%20latent%20data%20models%20Journal%20of%20the%20Royal%20Statistical%20Society%20Series%20B%20Statistical%20Methodology%20713593613%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olivier%20Cappeand%20Eric%20Moulines%20Online%20expectationmaximization%20algorithm%20for%20latent%20data%20models%20Journal%20of%20the%20Royal%20Statistical%20Society%20Series%20B%20Statistical%20Methodology%20713593613%202009"
+        },
+        {
+            "id": "Collobert_et+al_2002_a",
+            "entry": "Ronan Collobert, Samy Bengio, and Yoshua Bengio. A parallel mixture of SVMs for very large scale problems. In Advances in Neural Information Processing Systems 15, pp. 633\u2013640, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collobert%2C%20Ronan%20Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20A%20parallel%20mixture%20of%20SVMs%20for%20very%20large%20scale%20problems%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collobert%2C%20Ronan%20Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20A%20parallel%20mixture%20of%20SVMs%20for%20very%20large%20scale%20problems%202002"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. ImageNet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, pp. 248\u2013255, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Denil_et+al_2012_a",
+            "entry": "Misha Denil, Loris Bazzani, Hugo Larochelle, and Nando de Freitas. Learning where to attend with deep architectures for image tracking. Neural Computation, 24(8):2151\u20132184, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denil%2C%20Misha%20Bazzani%2C%20Loris%20Larochelle%2C%20Hugo%20de%20Freitas%2C%20Nando%20Learning%20where%20to%20attend%20with%20deep%20architectures%20for%20image%20tracking%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denil%2C%20Misha%20Bazzani%2C%20Loris%20Larochelle%2C%20Hugo%20de%20Freitas%2C%20Nando%20Learning%20where%20to%20attend%20with%20deep%20architectures%20for%20image%20tracking%202012"
+        },
+        {
+            "id": "Desjardins_et+al_2015_a",
+            "entry": "Guillaume Desjardins, Karen Simonyan, Razvan Pascanu, et al. Natural neural networks. In Advances in Neural Information Processing Systems 28, pp. 2071\u20132079, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guillaume%20Desjardins%20Karen%20Simonyan%20Razvan%20Pascanu%20et%20al%20Natural%20neural%20networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2028%20pp%2020712079%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guillaume%20Desjardins%20Karen%20Simonyan%20Razvan%20Pascanu%20et%20al%20Natural%20neural%20networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2028%20pp%2020712079%202015"
+        },
+        {
+            "id": "David_2013_a",
+            "entry": "David Eigen, Marc\u2019Aurelio Ranzato, and Ilya Sutskever. Learning factored representations in a deep mixture of experts. arXiv:1312.4314, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.4314"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the 13th International Conference on Artificial Intelligence and Statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Computer Vision and Pattern Recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hu_et+al_2018_a",
+            "entry": "Jie Hu, Li Shen, and Gang Sun. Squeeze-and-excitation networks. In Computer Vision and Pattern Recognition, pp. 7132\u20137141, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Jie%20Shen%2C%20Li%20Sun%2C%20Gang%20Squeeze-and-excitation%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Jie%20Shen%2C%20Li%20Sun%2C%20Gang%20Squeeze-and-excitation%20networks%202018"
+        },
+        {
+            "id": "Ioffe_2017_a",
+            "entry": "Sergey Ioffe. Batch renormalization: Towards reducing minibatch dependence in batch-normalized models. In Advances in Neural Information Processing Systems 30, pp. 1942\u20131950, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Batch%20renormalization%3A%20Towards%20reducing%20minibatch%20dependence%20in%20batch-normalized%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Batch%20renormalization%3A%20Towards%20reducing%20minibatch%20dependence%20in%20batch-normalized%20models%202017"
+        },
+        {
+            "id": "Sergey_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Proceedings of the 32nd International Conference on Machine Learning, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%20pp%20448456%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%20pp%20448456%202015"
+        },
+        {
+            "id": "Jacobs_et+al_1991_a",
+            "entry": "Robert A Jacobs, Michael I Jordan, Steven J Nowlan, and Geoffrey E Hinton. Adaptive mixtures of local experts. MIT Press, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacobs%2C%20Robert%20A.%20Jordan%2C%20Michael%20I.%20Nowlan%2C%20Steven%20J.%20Hinton%2C%20Geoffrey%20E.%20Adaptive%20mixtures%20of%20local%20experts%201991"
+        },
+        {
+            "id": "Jarrett_et+al_2009_a",
+            "entry": "Kevin Jarrett, Koray Kavukcuoglu, Yann LeCun, et al. What is the best multi-stage architecture for object recognition? In Computer Vision and Pattern Recognition, pp. 2146\u20132153, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jarrett%2C%20Kevin%20Kavukcuoglu%2C%20Koray%20LeCun%2C%20Yann%20What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition%3F%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jarrett%2C%20Kevin%20Kavukcuoglu%2C%20Koray%20LeCun%2C%20Yann%20What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition%3F%202009"
+        },
+        {
+            "id": "Michael_1994_a",
+            "entry": "Michael I Jordan and Robert A Jacobs. Hierarchical mixtures of experts and the EM algorithm. Neural computation, 6(2):181\u2013214, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Michael%20I%20Jordan%20and%20Robert%20A%20Jacobs%20Hierarchical%20mixtures%20of%20experts%20and%20the%20EM%20algorithm%20Neural%20computation%2062181214%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Michael%20I%20Jordan%20and%20Robert%20A%20Jacobs%20Hierarchical%20mixtures%20of%20experts%20and%20the%20EM%20algorithm%20Neural%20computation%2062181214%201994"
+        },
+        {
+            "id": "Kalayeh_2019_a",
+            "entry": "Mahdi M Kalayeh and Mubarak Shah. Training faster by separating modes of variation in batchnormalized models. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalayeh%2C%20Mahdi%20M.%20Shah%2C%20Mubarak%20Training%20faster%20by%20separating%20modes%20of%20variation%20in%20batchnormalized%20models%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalayeh%2C%20Mahdi%20M.%20Shah%2C%20Mubarak%20Training%20faster%20by%20separating%20modes%20of%20variation%20in%20batchnormalized%20models%202019"
+        },
+        {
+            "id": "Kohler_et+al_2018_a",
+            "entry": "Jonas Kohler, Hadi Daneshmand, Aurelien Lucchi, Ming Zhou, Klaus Neymeyr, and Thomas Hofmann. Towards a theoretical understanding of batch normalization. arXiv:1805.10694, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10694"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. MSc thesis, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. ImageNet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems 25, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lecun_1998_a",
+            "entry": "Yann LeCun. The MNIST database of handwritten digits, http://yann.lecun.com/exdb/mnist, 1998.",
+            "url": "http://yann.lecun.com/exdb/mnist"
+        },
+        {
+            "id": "Lecun_et+al_1989_a",
+            "entry": "Yann LeCun, Bernhard Boser, John S Denker, Donnie Henderson, Richard E Howard, Wayne Hubbard, and Lawrence D Jackel. Backpropagation applied to handwritten zip code recognition. Neural Computation, 1(4):541\u2013551, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Boser%2C%20Bernhard%20Denker%2C%20John%20S.%20Henderson%2C%20Donnie%20Backpropagation%20applied%20to%20handwritten%20zip%20code%20recognition%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Boser%2C%20Bernhard%20Denker%2C%20John%20S.%20Henderson%2C%20Donnie%20Backpropagation%20applied%20to%20handwritten%20zip%20code%20recognition%201989"
+        },
+        {
+            "id": "Lecun_et+al_1998_b",
+            "entry": "Yann LeCun, Leon Bottou, Genevieve Orr, and Klaus-Robert Muller. Efficient backprop in neural networks: Tricks of the trade. Lecture Notes in Computer Science, 1524, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Orr%2C%20Genevieve%20Muller%2C%20Klaus-Robert%20Efficient%20backprop%20in%20neural%20networks%3A%20Tricks%20of%20the%20trade%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Orr%2C%20Genevieve%20Muller%2C%20Klaus-Robert%20Efficient%20backprop%20in%20neural%20networks%3A%20Tricks%20of%20the%20trade%201998"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Xiang Li, Shuo Chen, Xiaolin Hu, and Jian Yang. Understanding the disharmony between dropout and batch normalization by variance shift. arXiv:1801.05134, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.05134"
+        },
+        {
+            "id": "Liang_2009_a",
+            "entry": "Percy Liang and Dan Klein. Online EM for unsupervised models. In Proceedings of human language technologies: The 2009 annual conference of the North American chapter of the association for computational linguistics, pp. 611\u2013619. Association for Computational Linguistics, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Percy%20Klein%2C%20Dan%20Online%20EM%20for%20unsupervised%20models%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liang%2C%20Percy%20Klein%2C%20Dan%20Online%20EM%20for%20unsupervised%20models%202009"
+        },
+        {
+            "id": "Lin_et+al_2014_a",
+            "entry": "Min Lin, Qiang Chen, and Shuicheng Yan. Network in network. In Proceedings of the 2nd International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Min%20Chen%2C%20Qiang%20Yan%2C%20Shuicheng%20Network%20in%20network%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Min%20Chen%2C%20Qiang%20Yan%2C%20Shuicheng%20Network%20in%20network%202014"
+        },
+        {
+            "id": "Lyu_2008_a",
+            "entry": "Siwei Lyu and Eero P Simoncelli. Nonlinear image representation using divisive normalization. In Computer Vision and Pattern Recognition, pp. 1\u20138, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lyu%2C%20Siwei%20Simoncelli%2C%20Eero%20P.%20Nonlinear%20image%20representation%20using%20divisive%20normalization%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lyu%2C%20Siwei%20Simoncelli%2C%20Eero%20P.%20Nonlinear%20image%20representation%20using%20divisive%20normalization%202008"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading digits in natural images with unsupervised feature learning. In NIPS Workshop on Deep Learning and Unsupervised Feature Learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in PyTorch. In NIPS Autodiff Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20PyTorch%20In%20NIPS%20Autodiff%20Workshop%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20PyTorch%20In%20NIPS%20Autodiff%20Workshop%202017"
+        },
+        {
+            "id": "Perez_et+al_2017_a",
+            "entry": "Ethan Perez, Florian Strub, Harm De Vries, Vincent Dumoulin, and Aaron Courville. FiLM: Visual reasoning with a general conditioning layer. In NIPS Visually-Grounded Interaction and Language Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Perez%2C%20Ethan%20Strub%2C%20Florian%20Vries%2C%20Harm%20De%20Dumoulin%2C%20Vincent%20FiLM%3A%20Visual%20reasoning%20with%20a%20general%20conditioning%20layer%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Perez%2C%20Ethan%20Strub%2C%20Florian%20Vries%2C%20Harm%20De%20Dumoulin%2C%20Vincent%20FiLM%3A%20Visual%20reasoning%20with%20a%20general%20conditioning%20layer%202017"
+        },
+        {
+            "id": "Rebuffi_et+al_2018_a",
+            "entry": "S-A. Rebuffi, H. Bilen, and A. Vedaldi. Efficient parametrization of multi-domain deep neural networks. In Computer Vision and Pattern Recognition, pp. 8119\u20138127, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rebuffi%2C%20S.-A.%20Bilen%2C%20H.%20Vedaldi%2C%20A.%20Efficient%20parametrization%20of%20multi-domain%20deep%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rebuffi%2C%20S.-A.%20Bilen%2C%20H.%20Vedaldi%2C%20A.%20Efficient%20parametrization%20of%20multi-domain%20deep%20neural%20networks%202018"
+        },
+        {
+            "id": "Rebuffi_et+al_2017_a",
+            "entry": "Sylvestre-Alvise Rebuffi, Hakan Bilen, and Andrea Vedaldi. Learning multiple visual domains with residual adapters. In Advances in Neural Information Processing Systems 30, pp. 506\u2013516, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rebuffi%2C%20Sylvestre-Alvise%20Bilen%2C%20Hakan%20Vedaldi%2C%20Andrea%20Learning%20multiple%20visual%20domains%20with%20residual%20adapters%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rebuffi%2C%20Sylvestre-Alvise%20Bilen%2C%20Hakan%20Vedaldi%2C%20Andrea%20Learning%20multiple%20visual%20domains%20with%20residual%20adapters%202017"
+        },
+        {
+            "id": "Santurkar_et+al_2018_a",
+            "entry": "Shibani Santurkar, Dimitris Tsipras, Andrew Ilyas, and Aleksander Madry. How does batch normalization help optimization? In Advances in Neural Information Processing Systems 31, pp. 2488\u20132498, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santurkar%2C%20Shibani%20Tsipras%2C%20Dimitris%20Ilyas%2C%20Andrew%20Madry%2C%20Aleksander%20How%20does%20batch%20normalization%20help%20optimization%3F%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santurkar%2C%20Shibani%20Tsipras%2C%20Dimitris%20Ilyas%2C%20Andrew%20Madry%2C%20Aleksander%20How%20does%20batch%20normalization%20help%20optimization%3F%202018"
+        },
+        {
+            "id": "Sermanet_et+al_2014_a",
+            "entry": "Pierre Sermanet, David Eigen, Xiang Zhang, Michael Mathieu, Rob Fergus, and Yann LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In Proceedings of the 2nd International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sermanet%2C%20Pierre%20Eigen%2C%20David%20Zhang%2C%20Xiang%20Mathieu%2C%20Michael%20Overfeat%3A%20Integrated%20recognition%2C%20localization%20and%20detection%20using%20convolutional%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sermanet%2C%20Pierre%20Eigen%2C%20David%20Zhang%2C%20Xiang%20Mathieu%2C%20Michael%20Overfeat%3A%20Integrated%20recognition%2C%20localization%20and%20detection%20using%20convolutional%20networks%202014"
+        },
+        {
+            "id": "Shazeer_et+al_2017_a",
+            "entry": "Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-of-experts layer. In Proceedings of the 5th International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shazeer%2C%20Noam%20Mirhoseini%2C%20Azalia%20Maziarz%2C%20Krzysztof%20Davis%2C%20Andy%20Outrageously%20large%20neural%20networks%3A%20The%20sparsely-gated%20mixture-of-experts%20layer%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shazeer%2C%20Noam%20Mirhoseini%2C%20Azalia%20Maziarz%2C%20Krzysztof%20Davis%2C%20Andy%20Outrageously%20large%20neural%20networks%3A%20The%20sparsely-gated%20mixture-of-experts%20layer%202017"
+        },
+        {
+            "id": "Shimodaira_2000_a",
+            "entry": "Hidetoshi Shimodaira. Improving predictive inference under covariate shift by weighting the loglikelihood function. Journal of statistical planning and inference, 90(2):227\u2013244, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shimodaira%2C%20Hidetoshi%20Improving%20predictive%20inference%20under%20covariate%20shift%20by%20weighting%20the%20loglikelihood%20function%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shimodaira%2C%20Hidetoshi%20Improving%20predictive%20inference%20under%20covariate%20shift%20by%20weighting%20the%20loglikelihood%20function%202000"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of Go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20Go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20Go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Simonyan_2015_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. In Proceedings of the 3rd International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. The Journal of Machine Learning Research, 15(1):1929\u20131958, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Tresp_2001_a",
+            "entry": "Volker Tresp. Mixtures of Gaussian processes. In Advances in Neural Information Processing Systems 14, pp. 654\u2013660, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tresp%2C%20Volker%20Mixtures%20of%20Gaussian%20processes%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tresp%2C%20Volker%20Mixtures%20of%20Gaussian%20processes%202001"
+        },
+        {
+            "id": "Ulyanov_et+al_2017_a",
+            "entry": "Dmitry Ulyanov, Andrea Vedaldi, and Victor Lempitsky. Improved texture networks: Maximizing quality and diversity in feed-forward stylization and texture synthesis. In Computer Vision and Pattern Recognition, pp. 6924\u20136932, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ulyanov%2C%20Dmitry%20Vedaldi%2C%20Andrea%20Lempitsky%2C%20Victor%20Improved%20texture%20networks%3A%20Maximizing%20quality%20and%20diversity%20in%20feed-forward%20stylization%20and%20texture%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ulyanov%2C%20Dmitry%20Vedaldi%2C%20Andrea%20Lempitsky%2C%20Victor%20Improved%20texture%20networks%3A%20Maximizing%20quality%20and%20diversity%20in%20feed-forward%20stylization%20and%20texture%20synthesis%202017"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan. Show and tell: A neural image caption generator. In Computer Vision and Pattern Recognition, pp. 3156\u20133164, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015"
+        },
+        {
+            "id": "Wu_2018_a",
+            "entry": "Yuxin Wu and Kaiming He. Group normalization. In European Conference on Computer Vision, pp. 3\u201319, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuxin%20Wu%20and%20Kaiming%20He%20Group%20normalization%20In%20European%20Conference%20on%20Computer%20Vision%20pp%20319%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuxin%20Wu%20and%20Kaiming%20He%20Group%20normalization%20In%20European%20Conference%20on%20Computer%20Vision%20pp%20319%202018"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Han Xiao, Kashif Rasul, and Roland Vollgraf. Fashion-MNIST: a novel image dataset for benchmarking machine learning algorithms. arXiv:1708.07747, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.07747"
+        },
+        {
+            "id": "Xu_et+al_2005_a",
+            "entry": "Linli Xu, James Neufeld, Bryce Larson, and Dale Schuurmans. Maximum margin clustering. In Advances in Neural Information Processing Systems 18, pp. 1537\u20131544, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Linli%20Neufeld%2C%20James%20Larson%2C%20Bryce%20Schuurmans%2C%20Dale%20Maximum%20margin%20clustering%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Linli%20Neufeld%2C%20James%20Larson%2C%20Bryce%20Schuurmans%2C%20Dale%20Maximum%20margin%20clustering%202005"
+        }
+    ]
+}

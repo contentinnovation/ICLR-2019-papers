@@ -1,0 +1,246 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DECOUPLED WEIGHT DECAY REGULARIZATION",
+        "author": "Ilya Loshchilov & Frank Hutter University of Freiburg Freiburg, Germany, ilya.loshchilov@gmail.com, fh@cs.uni-freiburg.de",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Bkg6RiCqY7"
+        },
+        "abstract": "L2 regularization and weight decay regularization are equivalent for standard stochastic gradient descent (when rescaled by the learning rate), but as we demonstrate this is not the case for adaptive gradient algorithms, such as Adam. While common implementations of these algorithms employ L2 regularization (often calling it \u201cweight decay\u201d in what may be misleading due to the inequivalence we expose), we propose a simple modification to recover the original formulation of weight decay regularization by decoupling the weight decay from the optimization steps taken w.r.t. the loss function. We provide empirical evidence that our proposed modification (i) decouples the optimal choice of weight decay factor from the setting of the learning rate for both standard SGD and Adam and (ii) substantially improves Adam\u2019s generalization performance, allowing it to compete with SGD with momentum on image classification datasets (on which it was previously typically outperformed by the latter). Our proposed decoupled weight decay has already been adopted by many researchers, and the community has implemented it in TensorFlow and PyTorch; the complete source code for our experiments is available at https://github.com/loshchil/AdamW-and-SGDW"
+    },
+    "keywords": [
+        {
+            "term": "European Research Council",
+            "url": "https://en.wikipedia.org/wiki/European_Research_Council"
+        },
+        {
+            "term": "CIFAR",
+            "url": "https://en.wikipedia.org/wiki/CIFAR"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "l2 regularization",
+            "url": "https://en.wikipedia.org/wiki/l2_regularization"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        }
+    ],
+    "abbreviations": {
+        "SGDW": "SGD with decoupled weight decay",
+        "AdamW": "Adam with decoupled weight decay",
+        "K-FAC": "Kronecker-Factored Approximate Curvature",
+        "ERC": "European Research Council"
+    },
+    "highlights": [
+        "Such as AdaGrad (<a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\">Duchi et al, 2011</a></a></a>), RMSProp (<a class=\"ref-link\" id=\"cTieleman_2012_a\" href=\"#rTieleman_2012_a\"><a class=\"ref-link\" id=\"cTieleman_2012_a\" href=\"#rTieleman_2012_a\">Tieleman & Hinton, 2012</a></a>), Adam (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\"><a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Ba, 2014</a></a>) and most recently AMSGrad (<a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\">Reddi et al, 2018</a></a></a>) have become a default method of choice for training feed-forward and recurrent neural networks (<a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\"><a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\">Xu et al, 2015</a></a>; Radford et al, 2015)",
+        "We show that Adam generalizes substantially better with decoupled weight decay than with L2 regularization, achieving 15% relative improvement in test error; this holds true for various image recognition datasets (CIFAR-10 and ImageNet32x32), training budgets, and learning rate schedules",
+        "We demonstrate that our decoupled weight decay renders the optimal settings of the learning rate and the weight decay factor much more independent, thereby easing hyperparameter optimization",
+        "Following suggestions that adaptive gradient methods such as Adam might lead to worse generalization than SGD with momentum (<a class=\"ref-link\" id=\"cWilson_et+al_2017_a\" href=\"#rWilson_et+al_2017_a\">Wilson et al, 2017</a>), we identified and exposed the inequivalence of L2 regularization and weight decay for Adam",
+        "We empirically showed that our version of Adam with decoupled weight decay yields substantially better generalization performance than the common implementation of Adam with L2 regularization",
+        "Our results obtained on image classification datasets must be verified on a wider range of tasks, especially ones where the use of regularization is expected to be important"
+    ],
+    "key_statements": [
+        "Such as AdaGrad (<a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\">Duchi et al, 2011</a></a></a>), RMSProp (<a class=\"ref-link\" id=\"cTieleman_2012_a\" href=\"#rTieleman_2012_a\"><a class=\"ref-link\" id=\"cTieleman_2012_a\" href=\"#rTieleman_2012_a\">Tieleman & Hinton, 2012</a></a>), Adam (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\"><a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Ba, 2014</a></a>) and most recently AMSGrad (<a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\">Reddi et al, 2018</a></a></a>) have become a default method of choice for training feed-forward and recurrent neural networks (<a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\"><a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\">Xu et al, 2015</a></a>; Radford et al, 2015)",
+        "<a class=\"ref-link\" id=\"cWilson_et+al_2017_a\" href=\"#rWilson_et+al_2017_a\">Wilson et al (2017</a>) suggested that adaptive gradient methods do not generalize as well as SGD with momentum when tested on a diverse set of deep learning tasks, such as image classification, character-level language modeling and constituency parsing",
+        "We investigate whether it is better to use L2 regularization or weight decay regularization to train deep neural networks with SGD and Adam",
+        "We show that a major factor of the poor generalization of the most popular adaptive gradient method, Adam, is due to the fact that L2 regularization is not nearly as effective for it as for SGD",
+        "For SGD, they can be made equivalent by a reparameterization of the weight decay factor based on the learning rate; this is not the case for Adam",
+        "One possible explanation why Adam and other adaptive gradient methods might be outperformed by SGD with momentum is that common deep learning libraries only implement L2 regularization, not the original weight decay",
+        "We show that Adam generalizes substantially better with decoupled weight decay than with L2 regularization, achieving 15% relative improvement in test error; this holds true for various image recognition datasets (CIFAR-10 and ImageNet32x32), training budgets, and learning rate schedules",
+        "We demonstrate that our decoupled weight decay renders the optimal settings of the learning rate and the weight decay factor much more independent, thereby easing hyperparameter optimization",
+        "While full credit for this theory goes to Aitchison, we summarize it here to shed some light on why weight decay may be favored over L2 regularization",
+        "While the previous experiment suggested that the basin of optimal hyperparameters of Adam with decoupled weight decay is broader and deeper than the one of Adam, we investigated the results for much longer runs of 1800 epochs to compare the generalization capabilities of Adam with decoupled weight decay and Adam",
+        "Figure 3 shows the results for 12 settings of the L2 regularization of Adam and 7 settings of the normalized weight decay of Adam with decoupled weight decay",
+        "In order to improve anytime performance of SGD with decoupled weight decay and Adam with decoupled weight decay we extended them with warm restarts of (<a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\">Loshchilov & Hutter, 2016</a>) to obtain SGDWR and AdamWR, respectively",
+        "Following suggestions that adaptive gradient methods such as Adam might lead to worse generalization than SGD with momentum (<a class=\"ref-link\" id=\"cWilson_et+al_2017_a\" href=\"#rWilson_et+al_2017_a\">Wilson et al, 2017</a>), we identified and exposed the inequivalence of L2 regularization and weight decay for Adam",
+        "We empirically showed that our version of Adam with decoupled weight decay yields substantially better generalization performance than the common implementation of Adam with L2 regularization",
+        "Our results obtained on image classification datasets must be verified on a wider range of tasks, especially ones where the use of regularization is expected to be important",
+        "While we focused our experimental analysis on Adam, we believe that similar results hold for other adaptive gradient methods, such as AdaGrad (<a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\">Duchi et al, 2011</a>) and AMSGrad (<a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\">Reddi et al, 2018</a>)"
+    ],
+    "summary": [
+        "Such as AdaGrad (<a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\">Duchi et al, 2011</a></a></a>), RMSProp (<a class=\"ref-link\" id=\"cTieleman_2012_a\" href=\"#rTieleman_2012_a\"><a class=\"ref-link\" id=\"cTieleman_2012_a\" href=\"#rTieleman_2012_a\">Tieleman & Hinton, 2012</a></a>), Adam (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\"><a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Ba, 2014</a></a>) and most recently AMSGrad (<a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\">Reddi et al, 2018</a></a></a>) have become a default method of choice for training feed-forward and recurrent neural networks (<a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\"><a class=\"ref-link\" id=\"cXu_et+al_2015_a\" href=\"#rXu_et+al_2015_a\">Xu et al, 2015</a></a>; Radford et al, 2015).",
+        "For SGD, they can be made equivalent by a reparameterization of the weight decay factor based on the learning rate; this is not the case for Adam.",
+        "One possible explanation why Adam and other adaptive gradient methods might be outperformed by SGD with momentum is that common deep learning libraries only implement L2 regularization, not the original weight decay.",
+        "The main contribution of this paper is to improve regularization in Adam by decoupling the weight decay from the gradient-based update.",
+        "We show that Adam generalizes substantially better with decoupled weight decay than with L2 regularization, achieving 15% relative improvement in test error; this holds true for various image recognition datasets (CIFAR-10 and ImageNet32x32), training budgets, and learning rate schedules.",
+        "Standard SGD with base learning rate \u03b1 executes the same steps on batch loss functions ft(\u03b8) with weight decay \u03bb",
+        "Algorithm 2 Adam with L2 regularization and Adam with decoupled weight decay (AdamW)",
+        "We compare Adam with L2 regularization to Adam with decoupled weight decay (AdamW), using three different learning rate schedules: a fixed learning rate, a drop-step schedule, and a cosine annealing schedule (<a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\">Loshchilov & Hutter, 2016</a>).",
+        "The proposed approach renders the two hyperparameters more separable: even if the learning rate is not well tuned yet, leaving it fixed and only optimizing the weight decay factor would yield a good value.",
+        "The results in Figure 2 support our hypothesis that the weight decay and learning rate hyperparameters can be decoupled, and that this in turn simplifies the problem of hyperparameter tuning in SGD and improves Adam\u2019s performance to be competitive w.r.t. SGD with momentum.",
+        "Figure 3 shows the results for 12 settings of the L2 regularization of Adam and 7 settings of the normalized weight decay of AdamW.",
+        "Weight decay for SGD, Adam and the Kronecker-Factored Approximate Curvature (K-FAC) optimizer (<a class=\"ref-link\" id=\"cMartens_2015_a\" href=\"#rMartens_2015_a\">Martens & Grosse, 2015</a>) on the CIFAR datasets with ResNet and VGG architectures, reporting that decoupled weight decay consistently outperformed L2 regularization in cases where they differ.",
+        "Following suggestions that adaptive gradient methods such as Adam might lead to worse generalization than SGD with momentum (<a class=\"ref-link\" id=\"cWilson_et+al_2017_a\" href=\"#rWilson_et+al_2017_a\">Wilson et al, 2017</a>), we identified and exposed the inequivalence of L2 regularization and weight decay for Adam.",
+        "We empirically showed that our version of Adam with decoupled weight decay yields substantially better generalization performance than the common implementation of Adam with L2 regularization.",
+        "While we focused our experimental analysis on Adam, we believe that similar results hold for other adaptive gradient methods, such as AdaGrad (<a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\"><a class=\"ref-link\" id=\"cDuchi_et+al_2011_a\" href=\"#rDuchi_et+al_2011_a\">Duchi et al, 2011</a></a></a>) and AMSGrad (<a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\"><a class=\"ref-link\" id=\"cReddi_et+al_2018_a\" href=\"#rReddi_et+al_2018_a\">Reddi et al, 2018</a></a></a>)"
+    ],
+    "headline": "L2 regularization and weight decay regularization are equivalent for standard stochastic gradient descent, but as we demonstrate this is not the case for adaptive gradient algorithms, such as Adam",
+    "reference_links": [
+        {
+            "id": "Aitchison_2018_a",
+            "entry": "Laurence Aitchison. A unified theory of adaptive stochastic gradient descent as Bayesian filtering. arXiv:1507.02030, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.02030"
+        },
+        {
+            "id": "Chrabaszcz_et+al_2017_a",
+            "entry": "Patryk Chrabaszcz, Ilya Loshchilov, and Frank Hutter. A downsampled variant of ImageNet as an alternative to the CIFAR datasets. arXiv:1707.08819, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.08819"
+        },
+        {
+            "id": "Cubuk_et+al_2018_a",
+            "entry": "Ekin D Cubuk, Barret Zoph, Dandelion Mane, Vijay Vasudevan, and Quoc V Le. Autoaugment: Learning augmentation policies from data. arXiv preprint arXiv:1805.09501, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09501"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "Laurent Dinh, Razvan Pascanu, Samy Bengio, and Yoshua Bengio. Sharp minima can generalize for deep nets. arXiv:1703.04933, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04933"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. The Journal of Machine Learning Research, 12:2121\u20132159, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Gastaldi_2017_a",
+            "entry": "Xavier Gastaldi. Shake-Shake regularization. arXiv preprint arXiv:1705.07485, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07485"
+        },
+        {
+            "id": "Hanson_1988_a",
+            "entry": "Stephen Jose Hanson and Lorien Y Pratt. Comparing biases for minimal network construction with back-propagation. In Proceedings of the 1st International Conference on Neural Information Processing Systems, pp. 177\u2013185, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hanson%2C%20Stephen%20Jose%20Pratt%2C%20Lorien%20Y.%20Comparing%20biases%20for%20minimal%20network%20construction%20with%20back-propagation%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hanson%2C%20Stephen%20Jose%20Pratt%2C%20Lorien%20Y.%20Comparing%20biases%20for%20minimal%20network%20construction%20with%20back-propagation%201988"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Yixuan Li, Geoff Pleiss, Zhuang Liu, John E Hopcroft, and Kilian Q Weinberger. Snapshot ensembles: Train 1, get m for free. arXiv:1704.00109, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.00109"
+        },
+        {
+            "id": "Keskar_et+al_2016_a",
+            "entry": "Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, and Ping Tak Peter Tang. On large-batch training for deep learning: Generalization gap and sharp minima. arXiv:1609.04836, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.04836"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Zheng Xu, Gavin Taylor, and Tom Goldstein. Visualizing the loss landscape of neural nets. arXiv preprint arXiv:1712.09913, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.09913"
+        },
+        {
+            "id": "Loshchilov_2016_a",
+            "entry": "Ilya Loshchilov and Frank Hutter. SGDR: stochastic gradient descent with warm restarts. arXiv:1608.03983, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.03983"
+        },
+        {
+            "id": "Martens_2015_a",
+            "entry": "James Martens and Roger Grosse. Optimizing neural networks with kronecker-factored approximate curvature. In International conference on machine learning, pp. 2408\u20132417, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015"
+        },
+        {
+            "id": "Radford_et+al_0000_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Radford_et+al_2018_a",
+            "entry": "Alec Radford, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. Improving language understanding by generative pre-training. URL https://s3-us-west-2.amazonaws.com/openaiassets/research-covers/language-unsupervised/language understanding paper.pdf, 2018.",
+            "url": "https://s3-us-west-2.amazonaws.com/openaiassets/research-covers/language-unsupervised/language"
+        },
+        {
+            "id": "Reddi_et+al_2018_a",
+            "entry": "Sashank J. Reddi, Satyen Kale, and Sanjiv Kumar. On the convergence of adam and beyond. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20adam%20and%20beyond%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20adam%20and%20beyond%202018"
+        },
+        {
+            "id": "Smith_2016_a",
+            "entry": "Leslie N Smith. Cyclical learning rates for training neural networks. arXiv:1506.01186v3, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.01186v3"
+        },
+        {
+            "id": "Tieleman_2012_a",
+            "entry": "Tijmen Tieleman and Geoffrey Hinton. Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural networks for machine learning, 4(2):26\u2013 31, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pp. 5998\u20136008, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017"
+        },
+        {
+            "id": "Volker_et+al_2018_a",
+            "entry": "Martin Volker, Jir\u0131 Hammer, Robin T Schirrmeister, Joos Behncke, Lukas DJ Fiederer, Andreas Schulze-Bonhage, Petr Marusic, Wolfram Burgard, and Tonio Ball. Intracranial error detection via deep learning. arXiv preprint arXiv:1805.01667, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.01667"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Jianfeng Wang, Ye Yuan, Gang Yu, and Sun Jian. Sface: An efficient network for face detection in large scale variations. arXiv preprint arXiv:1804.06559, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.06559"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nathan Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. arXiv:1705.08292, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.08292"
+        },
+        {
+            "id": "Xu_et+al_2015_a",
+            "entry": "Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and Yoshua Bengio. Show, attend and tell: Neural image caption generation with visual attention. In International Conference on Machine Learning, pp. 2048\u20132057, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Kelvin%20Ba%2C%20Jimmy%20Kiros%2C%20Ryan%20Cho%2C%20Kyunghyun%20attend%20and%20tell%3A%20Neural%20image%20caption%20generation%20with%20visual%20attention%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Kelvin%20Ba%2C%20Jimmy%20Kiros%2C%20Ryan%20Cho%2C%20Kyunghyun%20attend%20and%20tell%3A%20Neural%20image%20caption%20generation%20with%20visual%20attention%202015"
+        },
+        {
+            "id": "Yang_et+al_2016_a",
+            "entry": "Shuo Yang, Ping Luo, Chen-Change Loy, and Xiaoou Tang. Wider face: A face detection benchmark. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 5525\u20135533, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Shuo%20Luo%2C%20Ping%20Loy%2C%20Chen-Change%20Tang%2C%20Xiaoou%20Wider%20face%3A%20A%20face%20detection%20benchmark%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Shuo%20Luo%2C%20Ping%20Loy%2C%20Chen-Change%20Tang%2C%20Xiaoou%20Wider%20face%3A%20A%20face%20detection%20benchmark%202016"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Guodong Zhang, Chaoqi Wang, Bowen Xu, and Roger Grosse. Three mechanisms of weight decay regularization. arXiv preprint arXiv:1810.12281, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.12281"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Zijun Zhang, Lin Ma, Zongpeng Li, and Chuan Wu. Normalized direction-preserving adam. arXiv:1709.04546, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.04546"
+        },
+        {
+            "id": "Zoph_et+al_2017_a",
+            "entry": "Barret Zoph, Vijay Vasudevan, Jonathon Shlens, and Quoc V. Le. Learning transferable architectures for scalable image recognition. In arXiv:1707.07012 [cs.CV], 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.07012"
+        }
+    ]
+}

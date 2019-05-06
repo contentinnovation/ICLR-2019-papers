@@ -1,0 +1,455 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Feature Visualization",
+        "author": "Chris Olah, Alexander Mordvintsev, Ludwig Schubert",
+        "date": 2017,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SyxAb30cY7",
+            "doi": "10.23915/distill.00007"
+        },
+        "journal": "Distill",
+        "volume": "2",
+        "abstract": "We show that there exists an inherent tension between the goal of adversarial robustness and that of standard generalization. Specifically, training robust models may not only be more resource-consuming, but also lead to a reduction of standard accuracy. We demonstrate that this trade-off between the standard accuracy of a model and its robustness to adversarial perturbations provably exists even in a fairly simple and natural setting. These findings also corroborate a similar phenomenon observed in practice. Further, we argue that this phenomenon is a consequence of robust classifiers learning fundamentally different feature representations than standard classifiers. These differences, in particular, seem to result in unexpected benefits: the features learned by robust models tend to align better with salient data characteristics and human perception."
+    },
+    "keywords": [
+        {
+            "term": "speech recognition",
+            "url": "https://en.wikipedia.org/wiki/speech_recognition"
+        },
+        {
+            "term": "training method",
+            "url": "https://en.wikipedia.org/wiki/training_method"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "human perception",
+            "url": "https://en.wikipedia.org/wiki/human_perception"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "National Science Foundation",
+            "url": "https://en.wikipedia.org/wiki/National_Science_Foundation"
+        }
+    ],
+    "abbreviations": {
+        "GANs": "generative adversarial networks",
+        "PGD": "Projected Gradient Descent",
+        "NSF": "National Science Foundation"
+    },
+    "highlights": [
+        "Deep learning models have achieved impressive performance on a number of challenging benchmarks in computer vision, speech recognition and competitive game playing (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\"><a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\">Graves et al, 2013</a></a>; <a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\"><a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015a</a></a>)",
+        "We show that the goal of adversarially robust generalization might fundamentally be at odds with that of standard generalization",
+        "It emphasizes the need to develop robust training methods, since robustness is unlikely to arise as a consequence of standard training",
+        "We discover that even though adversarial robustness comes at a price, it has some unexpected benefits",
+        "The root of this phenomenon is that the set of adversarial perturbations encodes some prior for human perception",
+        "We demonstrate a striking consequence of this phenomenon: robust models yield clean feature interpolations similar to those obtained from generative models such as generative adversarial networks (Goodfellow et al, 2014b)"
+    ],
+    "key_statements": [
+        "Deep learning models have achieved impressive performance on a number of challenging benchmarks in computer vision, speech recognition and competitive game playing (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\"><a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\">Graves et al, 2013</a></a>; <a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\"><a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015a</a></a>)",
+        "Adversarial examples exhibit salient data characteristics Given how the gradients of standard and robust models are concentrated on qualitatively different input features, we want to investigate how the adversarial examples of these models appear visually",
+        "We show that the goal of adversarially robust generalization might fundamentally be at odds with that of standard generalization",
+        "We identify an inherent trade-off between the standard accuracy and adversarial robustness of a model, that provably manifests in a concrete, simple setting. This trade-off stems from intrinsic differences between the feature learned by standard and robust models",
+        "It emphasizes the need to develop robust training methods, since robustness is unlikely to arise as a consequence of standard training",
+        "We discover that even though adversarial robustness comes at a price, it has some unexpected benefits",
+        "The root of this phenomenon is that the set of adversarial perturbations encodes some prior for human perception",
+        "We demonstrate a striking consequence of this phenomenon: robust models yield clean feature interpolations similar to those obtained from generative models such as generative adversarial networks (Goodfellow et al, 2014b)",
+        "Our findings show that the interplay between adversarial robustness and standard classification might be more nuanced that one might expect"
+    ],
+    "summary": [
+        "Deep learning models have achieved impressive performance on a number of challenging benchmarks in computer vision, speech recognition and competitive game playing (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\"><a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\">Graves et al, 2013</a></a>; <a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\"><a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015a</a></a>).",
+        "Our contributions It might be natural to expect that training models to be adversarially robust, albeit more resource-consuming, can only improve performance in the standard classification setting.",
+        "(That is, good standard models for this task need to be somewhat invariant to these perturbations.) In such regime, robust training does act as data augmentation, regularizing the model and leading to a better solution.",
+        "This effect is not an artifact of our adversarial training methods but is inevitable consequence of different goals of adversarial robustness and standard generalization.",
+        "If \u03b4 = 1 \u2212 p, both the standard and adversarial accuracies are bounded by p which is attained by the classifier that relies solely on the first feature.",
+        "Minimizing the distributional adversarial loss instead leads to a robust classifier that has standard and adversarial accuracy of p against any \u03b5 < 1.",
+        "This theorem shows that if our focus is on robust models, adversarial training is crucial to achieve non-trivial adversarial accuracy in this setting.",
+        "Transferability An interesting implication of our analysis is that standard training produces classifiers that rely on features that are weakly correlated with the correct label.",
+        "The adversarial examples that are created by perturbing each feature in the direction of \u2212y will transfer across classifiers trained on independent",
+        "(Note that in settings with finite training data, such brittle features could arise even from noise \u2013 see Appendix E.) The robust classifier on the other hand does not assign any weight beyond a certain threshold.",
+        "We find that it is possible to obtain a robust classifier by directly training a standard model using only features that are relatively well-correlated with the label.",
+        "As more features are incorporated into the training, the standard accuracy is improved at the cost of robustness).",
+        "Loss gradients in the input space align well with human perception As a starting point, we want to investigate which features of the input most strongly affect the prediction of the classifier both for standard and robust models.",
+        "Adversarial examples exhibit salient data characteristics Given how the gradients of standard and robust models are concentrated on qualitatively different input features, we want to investigate how the adversarial examples of these models appear visually.",
+        "We identify an inherent trade-off between the standard accuracy and adversarial robustness of a model, that provably manifests in a concrete, simple setting.",
+        "This motivates further work to fully undertand the relative costs and benefits of each of these notions"
+    ],
+    "headline": "We show that there exists an inherent tension between the goal of adversarial robustness and that of standard generalization",
+    "reference_links": [
+        {
+            "id": "Tensor_2017_a",
+            "entry": "Tensor flow models repository. https://github.com/tensorflow/models/tree/master/resnet, 2017.",
+            "url": "https://github.com/tensorflow/models/tree/master/resnet"
+        },
+        {
+            "id": "Athalye_et+al_2017_a",
+            "entry": "Anish Athalye, Logan Engstrom, Andrew Ilyas, and Kevin Kwok. Synthesizing robust adversarial examples. arXiv preprint arXiv:1707.07397, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.07397"
+        },
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. arXiv preprint arXiv:1802.00420, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.00420"
+        },
+        {
+            "id": "Babbar_2018_a",
+            "entry": "Rohit Babbar and Bernhard Sch\u00f6lkopf. Adversarial extreme multi-label classification. arXiv preprint arXiv:1803.01570, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01570"
+        },
+        {
+            "id": "Ben-Tal_et+al_2009_a",
+            "entry": "Aharon Ben-Tal, Laurent El Ghaoui, and Arkadi Nemirovski. Robust optimization. Princeton University Press, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ben-Tal%2C%20Aharon%20Ghaoui%2C%20Laurent%20El%20Nemirovski%2C%20Arkadi%20Robust%20optimization%202009"
+        },
+        {
+            "id": "Biggio_2017_a",
+            "entry": "Battista Biggio and Fabio Roli. Wild patterns: Ten years after the rise of adversarial machine learning. arXiv preprint arXiv:1712.03141, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.03141"
+        },
+        {
+            "id": "Bubeck_2018_a",
+            "entry": "S\u00e9bastien Bubeck, Eric Price, and Ilya Razenshteyn. Adversarial examples from computational constraints. arXiv preprint arXiv:1805.10204, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10204"
+        },
+        {
+            "id": "Carlini_2016_a",
+            "entry": "Nicholas Carlini and David Wagner. Towards evaluating the robustness of neural networks. arXiv preprint arXiv:1608.04644, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.04644"
+        },
+        {
+            "id": "Carlini_2017_a",
+            "entry": "Nicholas Carlini and David Wagner. Adversarial examples are not easily detected: Bypassing ten detection methods. arXiv preprint arXiv:1705.07263, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07263"
+        },
+        {
+            "id": "Dalvi_et+al_2004_a",
+            "entry": "Nilesh Dalvi, Pedro Domingos, Mausam, Sumit Sanghai, and Deepak Verma. Adversarial classification. In International Conference on Knowledge Discovery and Data Mining (KDD), 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dalvi%2C%20Nilesh%20Domingos%2C%20Pedro%20Mausam%2C%20Sumit%20Sanghai%20Verma%2C%20Deepak%20Adversarial%20classification%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dalvi%2C%20Nilesh%20Domingos%2C%20Pedro%20Mausam%2C%20Sumit%20Sanghai%20Verma%2C%20Deepak%20Adversarial%20classification%202004"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei. ImageNet: A Large-Scale Hierarchical Image Database. In CVPR09, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20ImageNet%3A%20A%20Large-Scale%20Hierarchical%20Image%20Database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20ImageNet%3A%20A%20Large-Scale%20Hierarchical%20Image%20Database%202009"
+        },
+        {
+            "id": "Dvijotham_et+al_0000_a",
+            "entry": "Krishnamurthy Dvijotham, Sven Gowal, Robert Stanforth, Relja Arandjelovic, Brendan O\u2019Donoghue, Jonathan Uesato, and Pushmeet Kohli. Training verified learners with learned verifiers. arXiv preprint arXiv:1805.10265, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10265"
+        },
+        {
+            "id": "Dvijotham_et+al_0000_b",
+            "entry": "Krishnamurthy Dvijotham, Robert Stanforth, Sven Gowal, Timothy Mann, and Pushmeet Kohli. A dual approach to scalable verification of deep networks. arXiv preprint arXiv:1803.06567, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06567"
+        },
+        {
+            "id": "Engstrom_et+al_2017_a",
+            "entry": "Logan Engstrom, Dimitris Tsipras, Ludwig Schmidt, and Aleksander Madry. A rotation and a translation suffice: Fooling cnns with simple transformations. arXiv preprint arXiv:1712.02779, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.02779"
+        },
+        {
+            "id": "Evtimov_et+al_2017_a",
+            "entry": "Ivan Evtimov, Kevin Eykholt, Earlence Fernandes, Tadayoshi Kohno, Bo Li, Atul Prakash, Amir Rahmati, and Dawn Song. Robust physical-world attacks on machine learning models. arXiv preprint arXiv:1707.08945, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.08945"
+        },
+        {
+            "id": "Fawzi_2015_a",
+            "entry": "Alhussein Fawzi and Pascal Frossard. Manitest: Are classifiers really invariant? In British Machine Vision Conference (BMVC), number EPFL-CONF-210209, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20Alhussein%20Frossard%2C%20Pascal%20Manitest%3A%20Are%20classifiers%20really%20invariant%3F%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20Alhussein%20Frossard%2C%20Pascal%20Manitest%3A%20Are%20classifiers%20really%20invariant%3F%202015"
+        },
+        {
+            "id": "Fawzi_et+al_2016_a",
+            "entry": "Alhussein Fawzi, Seyed-Mohsen Moosavi-Dezfooli, and Pascal Frossard. Robustness of classifiers: from adversarial to random noise. In Advances in Neural Information Processing Systems, pp. 1632\u20131640, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20Alhussein%20Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Frossard%2C%20Pascal%20Robustness%20of%20classifiers%3A%20from%20adversarial%20to%20random%20noise%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20Alhussein%20Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Frossard%2C%20Pascal%20Robustness%20of%20classifiers%3A%20from%20adversarial%20to%20random%20noise%202016"
+        },
+        {
+            "id": "Fawzi_et+al_0000_a",
+            "entry": "Alhussein Fawzi, Hamza Fawzi, and Omar Fawzi. Adversarial vulnerability for any classifier. arXiv preprint arXiv:1802.08686, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08686"
+        },
+        {
+            "id": "Fawzi_et+al_0000_b",
+            "entry": "Alhussein Fawzi, Omar Fawzi, and Pascal Frossard. Analysis of classifiers\u2019 robustness to adversarial perturbations. Machine Learning, 107(3):481\u2013508, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Analysis%20of%20classifiers%E2%80%99%20robustness%20to%20adversarial%20perturbations",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Analysis%20of%20classifiers%E2%80%99%20robustness%20to%20adversarial%20perturbations"
+        },
+        {
+            "id": "Gastaldi_2017_a",
+            "entry": "Xavier Gastaldi. Shake-shake regularization. arXiv preprint arXiv:1705.07485, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07485"
+        },
+        {
+            "id": "Gilmer_et+al_2018_a",
+            "entry": "Justin Gilmer, Luke Metz, Fartash Faghri, Samuel S Schoenholz, Maithra Raghu, Martin Wattenberg, and Ian Goodfellow. Adversarial spheres. arXiv preprint arXiv:1801.02774, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.02774"
+        },
+        {
+            "id": "Goodfellow_2015_a",
+            "entry": "Ian Goodfellow. Adversarial examples. Presentation at Deep Learning Summer School, 2015. http://videolectures.net/deeplearning2015_goodfellow_adversarial_examples/.",
+            "url": "http://videolectures.net/deeplearning2015_goodfellow_adversarial_examples/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Adversarial%20examples%202015"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Goodfellow_et+al_0000_a",
+            "entry": "Ian J. Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. arXiv preprint arXiv:1412.6572, 2014b.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Graves_et+al_2013_a",
+            "entry": "Alex Graves, Abdel-rahman Mohamed, and Geoffrey Hinton. Speech recognition with deep recurrent neural networks. In Acoustics, speech and signal processing (icassp), 2013 ieee international conference on, pp. 6645\u20136649. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Mohamed%2C%20Abdel-rahman%20Hinton%2C%20Geoffrey%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Mohamed%2C%20Abdel-rahman%20Hinton%2C%20Geoffrey%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. corr abs/1512.03385 (2015), 2015a.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.03385"
+        },
+        {
+            "id": "He_et+al_2015_b",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "Karpathy_2011_a",
+            "entry": "Andrej Karpathy. Lessons learned from manually classifying cifar-10. http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/, 2011. Accessed:2018-09-23.",
+            "url": "http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "http://karpathy.github.io/2014/09/02/",
+            "url": "http://karpathy.github.io/2014/09/02/"
+        },
+        {
+            "id": "What-I-Learned-From-Competing-Against-A-Convnet-On-Imagenet_2014_a",
+            "entry": "what-i-learned-from-competing-against-a-convnet-on-imagenet/, 2014. Accessed: 2018-09-23.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=whatilearnedfromcompetingagainstaconvnetonimagenet%202014%20Accessed%2020180923"
+        },
+        {
+            "id": "Kemelmacher-Shlizerman_2016_a",
+            "entry": "Ira Kemelmacher-Shlizerman. Transfiguring portraits. ACM Transactions on Graphics (TOG), 35(4):94, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kemelmacher-Shlizerman%2C%20Ira%20Transfiguring%20portraits%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kemelmacher-Shlizerman%2C%20Ira%20Transfiguring%20portraits%202016"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kolter_2017_a",
+            "entry": "J Zico Kolter and Eric Wong. Provable defenses against adversarial examples via the convex outer adversarial polytope. arXiv preprint arXiv:1711.00851, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00851"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Kurakin_et+al_0000_a",
+            "entry": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial examples in the physical world. arXiv preprint arXiv:1607.02533, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.02533"
+        },
+        {
+            "id": "Kurakin_et+al_0000_b",
+            "entry": "Alexey Kurakin, Ian J. Goodfellow, and Samy Bengio. Adversarial machine learning at scale. arXiv preprint arXiv:1611.01236, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01236"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Corinna Cortes, and Christopher J.C. Burges. The mnist database of handwritten digits. Website, 1998. URL http://yann.lecun.com/exdb/mnist/.",
+            "url": "http://yann.lecun.com/exdb/mnist/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Cortes%2C%20Corinna%20Burges%2C%20Christopher%20J.C.%20The%20mnist%20database%20of%20handwritten%20digits%201998"
+        },
+        {
+            "id": "Lecun_et+al_2010_a",
+            "entry": "Yann LeCun, Corinna Cortes, and CJ Burges. Mnist handwritten digit database. AT&T Labs [Online]. Available: http://yann.lecun.com/exdb/mnist, 2, 2010.",
+            "url": "http://yann.lecun.com/exdb/mnist"
+        },
+        {
+            "id": "Madry_et+al_2017_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. arXiv preprint arXiv:1706.06083, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06083"
+        },
+        {
+            "id": "Miyato_et+al_2018_a",
+            "entry": "Takeru Miyato, Shin-ichi Maeda, Shin Ishii, and Masanori Koyama. Virtual adversarial training: a regularization method for supervised and semi-supervised learning. IEEE transactions on pattern analysis and machine intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miyato%2C%20Takeru%20Maeda%2C%20Shin-ichi%20Ishii%2C%20Shin%20Koyama%2C%20Masanori%20Virtual%20adversarial%20training%3A%20a%20regularization%20method%20for%20supervised%20and%20semi-supervised%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miyato%2C%20Takeru%20Maeda%2C%20Shin-ichi%20Ishii%2C%20Shin%20Koyama%2C%20Masanori%20Virtual%20adversarial%20training%3A%20a%20regularization%20method%20for%20supervised%20and%20semi-supervised%20learning%202018"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Moosavi-Dezfooli_et+al_2016_a",
+            "entry": "Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, and Pascal Frossard. Deepfool: A simple and accurate method to fool deep neural networks. In 2016 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2016, Las Vegas, NV, USA, June 27-30, 2016, pp. 2574\u20132582, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Frossard%2C%20Pascal%20Deepfool%3A%20A%20simple%20and%20accurate%20method%20to%20fool%20deep%20neural%20networks%202016-06-27",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Frossard%2C%20Pascal%20Deepfool%3A%20A%20simple%20and%20accurate%20method%20to%20fool%20deep%20neural%20networks%202016-06-27"
+        },
+        {
+            "id": "Nguyen_et+al_2015_a",
+            "entry": "Anh Mai Nguyen, Jason Yosinski, and Jeff Clune. Deep neural networks are easily fooled: High confidence predictions for unrecognizable images. In IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2015, Boston, MA, USA, June 7-12, 2015, pp. 427\u2013436, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20Anh%20Mai%20Yosinski%2C%20Jason%20Clune%2C%20Jeff%20Deep%20neural%20networks%20are%20easily%20fooled%3A%20High%20confidence%20predictions%20for%20unrecognizable%20images%202015-06-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Anh%20Mai%20Yosinski%2C%20Jason%20Clune%2C%20Jeff%20Deep%20neural%20networks%20are%20easily%20fooled%3A%20High%20confidence%20predictions%20for%20unrecognizable%20images%202015-06-07"
+        },
+        {
+            "id": "Olah_et+al_2017_a",
+            "entry": "Chris Olah, Alexander Mordvintsev, and Ludwig Schubert. Feature visualization. Distill, 2017. doi: 10.23915/ distill.00007. https://distill.pub/2017/feature-visualization.",
+            "crossref": "https://dx.doi.org/10.23915/distill.00007"
+        },
+        {
+            "id": "Raghunathan_et+al_2018_a",
+            "entry": "Aditi Raghunathan, Jacob Steinhardt, and Percy Liang. Certified defenses against adversarial examples. arXiv preprint arXiv:1801.09344, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.09344"
+        },
+        {
+            "id": "Andrew_2017_b",
+            "entry": "Andrew Slavin Ross and Finale Doshi-Velez. Improving the adversarial robustness and interpretability of deep neural networks by regularizing their input gradients. arXiv preprint arXiv:1711.09404, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09404"
+        },
+        {
+            "id": "Russakovsky_et+al_2015_a",
+            "entry": "Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg, and Li Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. International Journal of Computer Vision (IJCV), 115(3):211\u2013252, 2015. doi: 10.1007/s11263-015-0816-y.",
+            "crossref": "https://dx.doi.org/10.1007/s11263-015-0816-y",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11263-015-0816-y"
+        },
+        {
+            "id": "Schmidt_et+al_2018_a",
+            "entry": "Ludwig Schmidt, Shibani Santurkar, Dimitris Tsipras, Kunal Talwar, and Aleksander Madry. Adversarially robust generalization requires more data. arXiv preprint arXiv:1804.11285, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.11285"
+        },
+        {
+            "id": "Sharif_et+al_2016_a",
+            "entry": "Mahmood Sharif, Sruti Bhagavatula, Lujo Bauer, and Michael K. Reiter. Accessorize to a crime: Real and stealthy attacks on state-of-the-art face recognition. In Proceedings of the 2016 ACM SIGSAC Conference on Computer and Communications Security, Vienna, Austria, October 24-28, 2016, pp. 1528\u20131540, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sharif%2C%20Mahmood%20Bhagavatula%2C%20Sruti%20Bauer%2C%20Lujo%20Reiter%2C%20Michael%20K.%20Accessorize%20to%20a%20crime%3A%20Real%20and%20stealthy%20attacks%20on%20state-of-the-art%20face%20recognition%202016-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sharif%2C%20Mahmood%20Bhagavatula%2C%20Sruti%20Bauer%2C%20Lujo%20Reiter%2C%20Michael%20K.%20Accessorize%20to%20a%20crime%3A%20Real%20and%20stealthy%20attacks%20on%20state-of-the-art%20face%20recognition%202016-10"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Simonyan_et+al_2013_a",
+            "entry": "Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside convolutional networks: Visualising image classification models and saliency maps. arXiv preprint arXiv:1312.6034, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6034"
+        },
+        {
+            "id": "Sinha_et+al_2017_a",
+            "entry": "Aman Sinha, Hongseok Namkoong, and John Duchi. Certifiable distributional robustness with principled adversarial training. arXiv preprint arXiv:1710.10571, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10571"
+        },
+        {
+            "id": "Su_et+al_2018_a",
+            "entry": "Dong Su, Huan Zhang, Hongge Chen, Jinfeng Yi, Pin-Yu Chen, and Yupeng Gao. Is robustness the cost of accuracy?\u2013a comprehensive study on the robustness of 18 deep image classification models. arXiv preprint arXiv:1808.01688, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.01688"
+        },
+        {
+            "id": "Suwajanakorn_et+al_2015_a",
+            "entry": "Supasorn Suwajanakorn, Steven M Seitz, and Ira Kemelmacher-Shlizerman. What makes tom hanks look like tom hanks. In Proceedings of the IEEE International Conference on Computer Vision, pp. 3952\u20133960, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Suwajanakorn%2C%20Supasorn%20Seitz%2C%20Steven%20M.%20Kemelmacher-Shlizerman%2C%20Ira%20What%20makes%20tom%20hanks%20look%20like%20tom%20hanks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Suwajanakorn%2C%20Supasorn%20Seitz%2C%20Steven%20M.%20Kemelmacher-Shlizerman%2C%20Ira%20What%20makes%20tom%20hanks%20look%20like%20tom%20hanks%202015"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian J. Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tjeng_2017_a",
+            "entry": "Vincent Tjeng and Russ Tedrake. Verifying neural networks with mixed integer programming. arXiv preprint arXiv:1711.07356, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.07356"
+        },
+        {
+            "id": "Torkamani_2014_a",
+            "entry": "Mohamad Ali Torkamani and Daniel Lowd. On robustness and regularization of structural support vector machines. In International Conference on Machine Learning, pp. 577\u2013585, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Torkamani%2C%20Mohamad%20Ali%20Lowd%2C%20Daniel%20On%20robustness%20and%20regularization%20of%20structural%20support%20vector%20machines%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Torkamani%2C%20Mohamad%20Ali%20Lowd%2C%20Daniel%20On%20robustness%20and%20regularization%20of%20structural%20support%20vector%20machines%202014"
+        },
+        {
+            "id": "Torkamani_2013_a",
+            "entry": "MohamadAli Torkamani and Daniel Lowd. Convex adversarial collective classification. In International Conference on Machine Learning, pp. 642\u2013650, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Torkamani%2C%20MohamadAli%20Lowd%2C%20Daniel%20Convex%20adversarial%20collective%20classification%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Torkamani%2C%20MohamadAli%20Lowd%2C%20Daniel%20Convex%20adversarial%20collective%20classification%202013"
+        },
+        {
+            "id": "Uesato_et+al_2018_a",
+            "entry": "Jonathan Uesato, Brendan O\u2019Donoghue, Aaron van den Oord, and Pushmeet Kohli. Adversarial risk and the dangers of evaluating against weak attacks. arXiv preprint arXiv:1802.05666, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05666"
+        },
+        {
+            "id": "Upchurch_et+al_2016_a",
+            "entry": "Paul Upchurch, Jacob Gardner, Geoff Pleiss, Robert Pless, Noah Snavely, Kavita Bala, and Kilian Weinberger. Deep feature interpolation for image content changes. arXiv preprint arXiv:1611.05507, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05507"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Yizhen Wang, Somesh Jha, and Kamalika Chaudhuri. Analyzing the robustness of nearest neighbors to adversarial examples. arXiv preprint arXiv:1706.03922, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.03922"
+        },
+        {
+            "id": "Wong_et+al_2018_a",
+            "entry": "Eric Wong, Frank Schmidt, Jan Hendrik Metzen, and J Zico Kolter. Scaling provable adversarial defenses. arXiv preprint arXiv:1805.12514, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.12514"
+        },
+        {
+            "id": "Wu_2016_a",
+            "entry": "Yuxin Wu et al. Tensorpack. https://github.com/tensorpack/, 2016.",
+            "url": "https://github.com/tensorpack/"
+        },
+        {
+            "id": "Xiao_et+al_0000_a",
+            "entry": "Chaowei Xiao, Jun-Yan Zhu, Bo Li, Warren He, Mingyan Liu, and Dawn Song. Spatially transformed adversarial examples. arXiv preprint arXiv:1801.02612, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.02612"
+        },
+        {
+            "id": "Xiao_et+al_0000_b",
+            "entry": "Kai Y Xiao, Vincent Tjeng, Nur Muhammad Shafiullah, and Aleksander Madry. Training for faster adversarial robustness verification via inducing relu stability. arXiv preprint arXiv:1809.03008, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.03008"
+        },
+        {
+            "id": "Xu_2012_a",
+            "entry": "Huan Xu and Shie Mannor. Robustness and generalization. Machine learning, 86(3):391\u2013423, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Huan%20Mannor%2C%20Shie%20Robustness%20and%20generalization%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Huan%20Mannor%2C%20Shie%20Robustness%20and%20generalization%202012"
+        },
+        {
+            "id": "Yosinski_et+al_2015_a",
+            "entry": "Jason Yosinski, Jeff Clune, Anh Nguyen, Thomas Fuchs, and Hod Lipson. Understanding neural networks through deep visualization. arXiv preprint arXiv:1506.06579, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.06579"
+        },
+        {
+            "id": "We_2009_a",
+            "entry": "We perform our experimental analysis on the MNIST (LeCun et al., 2010), CIFAR-10 (Krizhevsky & Hinton, 2009) and (restricted) ImageNet (Deng et al., 2009) datasets. For binary classification, we filter out all the images from the MNIST dataset other than the \u201c5\u201d and \u201c7\u201d labelled examples. For the ImageNet dataset, adversarial training is significantly harder since the classification problem is challenging by itself and standard classifiers are already computationally expensive to train. We thus restrict our focus to a smaller subset of the dataset. We group together a subset of existing, semantically similar ImageNet classes into 8 different super-classes, as shown in Table 1. We train and evaluate only on examples corresponding to these classes.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20perform%20our%20experimental%20analysis%20on%20the%20MNIST%20LeCun%20et%20al%202010%20CIFAR10%20Krizhevsky%20%20Hinton%202009%20and%20restricted%20ImageNet%20Deng%20et%20al%202009%20datasets%20For%20binary%20classification%20we%20filter%20out%20all%20the%20images%20from%20the%20MNIST%20dataset%20other%20than%20the%205%20and%207%20labelled%20examples%20For%20the%20ImageNet%20dataset%20adversarial%20training%20is%20significantly%20harder%20since%20the%20classification%20problem%20is%20challenging%20by%20itself%20and%20standard%20classifiers%20are%20already%20computationally%20expensive%20to%20train%20We%20thus%20restrict%20our%20focus%20to%20a%20smaller%20subset%20of%20the%20dataset%20We%20group%20together%20a%20subset%20of%20existing%20semantically%20similar%20ImageNet%20classes%20into%208%20different%20superclasses%20as%20shown%20in%20Table%201%20We%20train%20and%20evaluate%20only%20on%20examples%20corresponding%20to%20these%20classes",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20perform%20our%20experimental%20analysis%20on%20the%20MNIST%20LeCun%20et%20al%202010%20CIFAR10%20Krizhevsky%20%20Hinton%202009%20and%20restricted%20ImageNet%20Deng%20et%20al%202009%20datasets%20For%20binary%20classification%20we%20filter%20out%20all%20the%20images%20from%20the%20MNIST%20dataset%20other%20than%20the%205%20and%207%20labelled%20examples%20For%20the%20ImageNet%20dataset%20adversarial%20training%20is%20significantly%20harder%20since%20the%20classification%20problem%20is%20challenging%20by%20itself%20and%20standard%20classifiers%20are%20already%20computationally%20expensive%20to%20train%20We%20thus%20restrict%20our%20focus%20to%20a%20smaller%20subset%20of%20the%20dataset%20We%20group%20together%20a%20subset%20of%20existing%20semantically%20similar%20ImageNet%20classes%20into%208%20different%20superclasses%20as%20shown%20in%20Table%201%20We%20train%20and%20evaluate%20only%20on%20examples%20corresponding%20to%20these%20classes"
+        }
+    ]
+}

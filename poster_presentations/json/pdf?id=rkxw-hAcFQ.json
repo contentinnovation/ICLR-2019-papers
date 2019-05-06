@@ -1,0 +1,363 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "GENERATING MULTI-AGENT TRAJECTORIES USING PROGRAMMATIC WEAK SUPERVISION",
+        "author": "Eric Zhan Caltech ezhan@caltech.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkxw-hAcFQ"
+        },
+        "abstract": "We study the problem of training sequential generative models for capturing coordinated multi-agent trajectory behavior, such as offensive basketball gameplay. When modeling such settings, it is often beneficial to design hierarchical models that can capture long-term coordination using intermediate variables. Furthermore, these intermediate variables should capture interesting high-level behavioral semantics in an interpretable and manipulatable way. We present a hierarchical framework that can effectively learn such sequential generative models. Our approach is inspired by recent work on leveraging programmatically produced weak labels, which we extend to the spatiotemporal regime. In addition to synthetic settings, we show how to instantiate our framework to effectively model complex interactions between basketball players and generate realistic multi-agent trajectories of basketball gameplay over long time periods. We validate our approach using both quantitative and qualitative evaluations, including a user study comparison conducted with professional sports analysts.1"
+    },
+    "keywords": [
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        }
+    ],
+    "abbreviations": {
+        "RNN": "recurrent neural network",
+        "VAE": "variational autoencoder",
+        "ELBO": "evidence lower-bound"
+    },
+    "highlights": [
+        "The ongoing explosion of recorded tracking data is enabling the study of fine-grained behavior in many domains: sports (<a class=\"ref-link\" id=\"cMiller_et+al_2014_a\" href=\"#rMiller_et+al_2014_a\"><a class=\"ref-link\" id=\"cMiller_et+al_2014_a\" href=\"#rMiller_et+al_2014_a\">Miller et al, 2014</a></a>; <a class=\"ref-link\" id=\"cYue_et+al_2014_a\" href=\"#rYue_et+al_2014_a\"><a class=\"ref-link\" id=\"cYue_et+al_2014_a\" href=\"#rYue_et+al_2014_a\">Yue et al, 2014</a></a>; <a class=\"ref-link\" id=\"cZheng_et+al_2016_a\" href=\"#rZheng_et+al_2016_a\"><a class=\"ref-link\" id=\"cZheng_et+al_2016_a\" href=\"#rZheng_et+al_2016_a\">Zheng et al, 2016</a></a>; <a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\"><a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\">Le et al, 2017</a></a>), video games (<a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\"><a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\">Ross et al, 2011</a></a>), video & motion capture (<a class=\"ref-link\" id=\"cSuwajanakorn_et+al_2017_a\" href=\"#rSuwajanakorn_et+al_2017_a\"><a class=\"ref-link\" id=\"cSuwajanakorn_et+al_2017_a\" href=\"#rSuwajanakorn_et+al_2017_a\">Suwajanakorn et al, 2017</a></a>; <a class=\"ref-link\" id=\"cTaylor_et+al_2017_a\" href=\"#rTaylor_et+al_2017_a\"><a class=\"ref-link\" id=\"cTaylor_et+al_2017_a\" href=\"#rTaylor_et+al_2017_a\">Taylor et al, 2017</a></a>; <a class=\"ref-link\" id=\"cXue_et+al_2016_a\" href=\"#rXue_et+al_2016_a\"><a class=\"ref-link\" id=\"cXue_et+al_2016_a\" href=\"#rXue_et+al_2016_a\">Xue et al, 2016</a></a>), navigation & driving (<a class=\"ref-link\" id=\"cZiebart_et+al_2009_a\" href=\"#rZiebart_et+al_2009_a\"><a class=\"ref-link\" id=\"cZiebart_et+al_2009_a\" href=\"#rZiebart_et+al_2009_a\">Ziebart et al, 2009</a></a>; <a class=\"ref-link\" id=\"cZhang_2017_a\" href=\"#rZhang_2017_a\"><a class=\"ref-link\" id=\"cZhang_2017_a\" href=\"#rZhang_2017_a\">Zhang & Cho, 2017</a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\"><a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a></a>), laboratory animal behaviors (<a class=\"ref-link\" id=\"cJohnson_et+al_2016_a\" href=\"#rJohnson_et+al_2016_a\"><a class=\"ref-link\" id=\"cJohnson_et+al_2016_a\" href=\"#rJohnson_et+al_2016_a\">Johnson et al, 2016</a></a>; <a class=\"ref-link\" id=\"cEyjolfsdottir_et+al_2017_a\" href=\"#rEyjolfsdottir_et+al_2017_a\"><a class=\"ref-link\" id=\"cEyjolfsdottir_et+al_2017_a\" href=\"#rEyjolfsdottir_et+al_2017_a\">Eyjolfsdottir et al, 2017</a></a>), and tele-operated robotics (Abbeel & Ng, 2004; <a class=\"ref-link\" id=\"cLin_et+al_2006_a\" href=\"#rLin_et+al_2006_a\"><a class=\"ref-link\" id=\"cLin_et+al_2006_a\" href=\"#rLin_et+al_2006_a\">Lin et al, 2006</a></a>)",
+        "We present a hierarchical framework that can effectively learn such sequential generative models, while using programmatic weak supervision",
+        "We propose a hierarchical framework for sequential generative modeling",
+        "Where \u03c6k maps to a distribution over states, zkt is the VRNN latent variable, hkt is the hidden state of an recurrent neural network that summarizes the trajectory up to time t, and gt is the shared macro-intent at time t",
+        "Figure 5 shows rollouts generated from VRNN-single, VRNN-indep, and our model by sampling states for 40 timesteps after an initial burnin period of 10 timesteps with ground-truth states from the test set",
+        "We found that an recurrent neural network was sufficient in capturing the distribution of macro-intents shown in Figure 4"
+    ],
+    "key_statements": [
+        "The ongoing explosion of recorded tracking data is enabling the study of fine-grained behavior in many domains: sports (<a class=\"ref-link\" id=\"cMiller_et+al_2014_a\" href=\"#rMiller_et+al_2014_a\"><a class=\"ref-link\" id=\"cMiller_et+al_2014_a\" href=\"#rMiller_et+al_2014_a\">Miller et al, 2014</a></a>; <a class=\"ref-link\" id=\"cYue_et+al_2014_a\" href=\"#rYue_et+al_2014_a\"><a class=\"ref-link\" id=\"cYue_et+al_2014_a\" href=\"#rYue_et+al_2014_a\">Yue et al, 2014</a></a>; <a class=\"ref-link\" id=\"cZheng_et+al_2016_a\" href=\"#rZheng_et+al_2016_a\"><a class=\"ref-link\" id=\"cZheng_et+al_2016_a\" href=\"#rZheng_et+al_2016_a\">Zheng et al, 2016</a></a>; <a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\"><a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\">Le et al, 2017</a></a>), video games (<a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\"><a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\">Ross et al, 2011</a></a>), video & motion capture (<a class=\"ref-link\" id=\"cSuwajanakorn_et+al_2017_a\" href=\"#rSuwajanakorn_et+al_2017_a\"><a class=\"ref-link\" id=\"cSuwajanakorn_et+al_2017_a\" href=\"#rSuwajanakorn_et+al_2017_a\">Suwajanakorn et al, 2017</a></a>; <a class=\"ref-link\" id=\"cTaylor_et+al_2017_a\" href=\"#rTaylor_et+al_2017_a\"><a class=\"ref-link\" id=\"cTaylor_et+al_2017_a\" href=\"#rTaylor_et+al_2017_a\">Taylor et al, 2017</a></a>; <a class=\"ref-link\" id=\"cXue_et+al_2016_a\" href=\"#rXue_et+al_2016_a\"><a class=\"ref-link\" id=\"cXue_et+al_2016_a\" href=\"#rXue_et+al_2016_a\">Xue et al, 2016</a></a>), navigation & driving (<a class=\"ref-link\" id=\"cZiebart_et+al_2009_a\" href=\"#rZiebart_et+al_2009_a\"><a class=\"ref-link\" id=\"cZiebart_et+al_2009_a\" href=\"#rZiebart_et+al_2009_a\">Ziebart et al, 2009</a></a>; <a class=\"ref-link\" id=\"cZhang_2017_a\" href=\"#rZhang_2017_a\"><a class=\"ref-link\" id=\"cZhang_2017_a\" href=\"#rZhang_2017_a\">Zhang & Cho, 2017</a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\"><a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a></a>), laboratory animal behaviors (<a class=\"ref-link\" id=\"cJohnson_et+al_2016_a\" href=\"#rJohnson_et+al_2016_a\"><a class=\"ref-link\" id=\"cJohnson_et+al_2016_a\" href=\"#rJohnson_et+al_2016_a\">Johnson et al, 2016</a></a>; <a class=\"ref-link\" id=\"cEyjolfsdottir_et+al_2017_a\" href=\"#rEyjolfsdottir_et+al_2017_a\"><a class=\"ref-link\" id=\"cEyjolfsdottir_et+al_2017_a\" href=\"#rEyjolfsdottir_et+al_2017_a\">Eyjolfsdottir et al, 2017</a></a>), and tele-operated robotics (Abbeel & Ng, 2004; <a class=\"ref-link\" id=\"cLin_et+al_2006_a\" href=\"#rLin_et+al_2006_a\"><a class=\"ref-link\" id=\"cLin_et+al_2006_a\" href=\"#rLin_et+al_2006_a\">Lin et al, 2006</a></a>)",
+        "We present a hierarchical framework that can effectively learn such sequential generative models, while using programmatic weak supervision",
+        "We propose a hierarchical framework for sequential generative modeling",
+        "Where \u03c6k maps to a distribution over states, zkt is the VRNN latent variable, hkt is the hidden state of an recurrent neural network that summarizes the trajectory up to time t, and gt is the shared macro-intent at time t",
+        "Figure 5 shows rollouts generated from VRNN-single, VRNN-indep, and our model by sampling states for 40 timesteps after an initial burnin period of 10 timesteps with ground-truth states from the test set",
+        "We found that an recurrent neural network was sufficient in capturing the distribution of macro-intents shown in Figure 4"
+    ],
+    "summary": [
+        "The ongoing explosion of recorded tracking data is enabling the study of fine-grained behavior in many domains: sports (<a class=\"ref-link\" id=\"cMiller_et+al_2014_a\" href=\"#rMiller_et+al_2014_a\"><a class=\"ref-link\" id=\"cMiller_et+al_2014_a\" href=\"#rMiller_et+al_2014_a\">Miller et al, 2014</a></a>; <a class=\"ref-link\" id=\"cYue_et+al_2014_a\" href=\"#rYue_et+al_2014_a\"><a class=\"ref-link\" id=\"cYue_et+al_2014_a\" href=\"#rYue_et+al_2014_a\">Yue et al, 2014</a></a>; <a class=\"ref-link\" id=\"cZheng_et+al_2016_a\" href=\"#rZheng_et+al_2016_a\"><a class=\"ref-link\" id=\"cZheng_et+al_2016_a\" href=\"#rZheng_et+al_2016_a\">Zheng et al, 2016</a></a>; <a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\"><a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\">Le et al, 2017</a></a>), video games (<a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\"><a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\">Ross et al, 2011</a></a>), video & motion capture (<a class=\"ref-link\" id=\"cSuwajanakorn_et+al_2017_a\" href=\"#rSuwajanakorn_et+al_2017_a\"><a class=\"ref-link\" id=\"cSuwajanakorn_et+al_2017_a\" href=\"#rSuwajanakorn_et+al_2017_a\">Suwajanakorn et al, 2017</a></a>; <a class=\"ref-link\" id=\"cTaylor_et+al_2017_a\" href=\"#rTaylor_et+al_2017_a\"><a class=\"ref-link\" id=\"cTaylor_et+al_2017_a\" href=\"#rTaylor_et+al_2017_a\">Taylor et al, 2017</a></a>; <a class=\"ref-link\" id=\"cXue_et+al_2016_a\" href=\"#rXue_et+al_2016_a\"><a class=\"ref-link\" id=\"cXue_et+al_2016_a\" href=\"#rXue_et+al_2016_a\">Xue et al, 2016</a></a>), navigation & driving (<a class=\"ref-link\" id=\"cZiebart_et+al_2009_a\" href=\"#rZiebart_et+al_2009_a\"><a class=\"ref-link\" id=\"cZiebart_et+al_2009_a\" href=\"#rZiebart_et+al_2009_a\">Ziebart et al, 2009</a></a>; <a class=\"ref-link\" id=\"cZhang_2017_a\" href=\"#rZhang_2017_a\"><a class=\"ref-link\" id=\"cZhang_2017_a\" href=\"#rZhang_2017_a\">Zhang & Cho, 2017</a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\"><a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a></a>), laboratory animal behaviors (<a class=\"ref-link\" id=\"cJohnson_et+al_2016_a\" href=\"#rJohnson_et+al_2016_a\"><a class=\"ref-link\" id=\"cJohnson_et+al_2016_a\" href=\"#rJohnson_et+al_2016_a\">Johnson et al, 2016</a></a>; <a class=\"ref-link\" id=\"cEyjolfsdottir_et+al_2017_a\" href=\"#rEyjolfsdottir_et+al_2017_a\"><a class=\"ref-link\" id=\"cEyjolfsdottir_et+al_2017_a\" href=\"#rEyjolfsdottir_et+al_2017_a\">Eyjolfsdottir et al, 2017</a></a>), and tele-operated robotics (Abbeel & Ng, 2004; <a class=\"ref-link\" id=\"cLin_et+al_2006_a\" href=\"#rLin_et+al_2006_a\"><a class=\"ref-link\" id=\"cLin_et+al_2006_a\" href=\"#rLin_et+al_2006_a\">Lin et al, 2006</a></a>).",
+        "An RNN with Gaussian output distribution has difficulty learning the multimodal behavior of the green player moving to the top-left/bottom-left in Figure 1a.",
+        "As we empirically verify in Section 5, VRNN models using these two approaches have difficulty learning representations of the data that generalize well over long time horizons, and capturing the coordination inherent in multi-agent trajectories.",
+        "Our solution introduces a hierarchical structure of macro-intents obtained via labeling functions to effectively learn low-dimensional representations of the data that extend in both time and space for multiple coordinating agents.",
+        "Where \u03c6k maps to a distribution over states, zkt is the VRNN latent variable, hkt is the hidden state of an RNN that summarizes the trajectory up to time t, and gt is the shared macro-intent at time t.",
+        "Figure 3b shows our hierarchical model, which samples macro-intents during generation rather than using only ground-truth macro-intents.",
+        "Note that all agent-models for generating xkt share the same macro-intent variable gt.",
+        "We learn our agent-models by maximizing the VRNN objective from Eq (2) conditioned on the shared gt variables while independently learning the macro-intent model via supervised learning by maximizing the log-likelihood of macro-intent labels obtained programmatically.",
+        "Table 3 shows that domain statistics from our models using programmatic weak supervision match closer to the ground-truth with more informative labeling functions (LF-stationary > LF-window25 > LF-window50).",
+        "Figure 5 shows rollouts generated from VRNN-single, VRNN-indep, and our model by sampling states for 40 timesteps after an initial burnin period of 10 timesteps with ground-truth states from the test set.",
+        "We highlight that our model learns a multimodal generating distribution, as repeated rollouts with the same burn-in result in a dynamic range of generated trajectories, as seen in Figure 6a Left.",
+        "Figure 6a Right demonstrates that grounding macro-intents during generation instead of sampling them allows us to control agent behavior.",
+        "Figure 6b illustrates how the macro-intents encode coordination between players that results in realistic rollouts of players moving cohesively.",
+        "All models have similar average log-likelihoods on the test set in Table 1, but our hierarchical model can capture the true generating distribution much better than the baselines.",
+        "Figure 7 depicts the histograms of average distances to an agent\u2019s closest neighbor in trajectories generated from all models and the ground-truth.",
+        "We have shown that weak macro-intent labels extracted using simple domain-specific heuristics can be effectively used to generate high-quality coordinated multi-agent trajectories."
+    ],
+    "headline": "We study the problem of training sequential generative models for capturing coordinated multi-agent trajectory behavior, such as offensive basketball gameplay",
+    "reference_links": [
+        {
+            "id": "Pieter_2004_a",
+            "entry": "Pieter Abbeel and Andrew Y Ng. Apprenticeship learning via inverse reinforcement learning. In ICML, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pieter%20Abbeel%20and%20Andrew%20Y%20Ng%20Apprenticeship%20learning%20via%20inverse%20reinforcement%20learning%20In%20ICML%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pieter%20Abbeel%20and%20Andrew%20Y%20Ng%20Apprenticeship%20learning%20via%20inverse%20reinforcement%20learning%20In%20ICML%202004"
+        },
+        {
+            "id": "Akkaya_et+al_2016_a",
+            "entry": "Ilge Akkaya, Daniel J Fremont, Rafael Valle, Alexandre Donze, Edward A Lee, and Sanjit A Seshia. Control improvisation with probabilistic temporal specifications. In 2016 IEEE First International Conference on Internet-of-Things Design and Implementation (IoTDI), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Akkaya%2C%20Ilge%20Fremont%2C%20Daniel%20J.%20Valle%2C%20Rafael%20Donze%2C%20Alexandre%20Edward%20A%20Lee%2C%20and%20Sanjit%20A%20Seshia.%20Control%20improvisation%20with%20probabilistic%20temporal%20specifications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Akkaya%2C%20Ilge%20Fremont%2C%20Daniel%20J.%20Valle%2C%20Rafael%20Donze%2C%20Alexandre%20Edward%20A%20Lee%2C%20and%20Sanjit%20A%20Seshia.%20Control%20improvisation%20with%20probabilistic%20temporal%20specifications%202016"
+        },
+        {
+            "id": "Bach_et+al_2017_a",
+            "entry": "Stephen H. Bach, Bryan Dawei He, Alexander Ratner, and Christopher Re. Learning the structure of generative models without labeled data. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bach%2C%20Stephen%20H.%20He%2C%20Bryan%20Dawei%20Ratner%2C%20Alexander%20Re%2C%20Christopher%20Learning%20the%20structure%20of%20generative%20models%20without%20labeled%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bach%2C%20Stephen%20H.%20He%2C%20Bryan%20Dawei%20Ratner%2C%20Alexander%20Re%2C%20Christopher%20Learning%20the%20structure%20of%20generative%20models%20without%20labeled%20data%202017"
+        },
+        {
+            "id": "Chen_et+al_2015_a",
+            "entry": "Liang-Chieh Chen, Alexander Schwing, Alan Yuille, and Raquel Urtasun. Learning deep structured models. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Liang-Chieh%20Schwing%2C%20Alexander%20Yuille%2C%20Alan%20Urtasun%2C%20Raquel%20Learning%20deep%20structured%20models%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Liang-Chieh%20Schwing%2C%20Alexander%20Yuille%2C%20Alan%20Urtasun%2C%20Raquel%20Learning%20deep%20structured%20models%202015"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Xi Chen, Diederik P. Kingma, Tim Salimans, Yan Duan, Prafulla Dhariwal, John Schulman, Ilya Sutskever, and Pieter Abbeel. Variational lossy autoencoder. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xi%20Chen%20Diederik%20P%20Kingma%20Tim%20Salimans%20Yan%20Duan%20Prafulla%20Dhariwal%20John%20Schulman%20Ilya%20Sutskever%20and%20Pieter%20Abbeel%20Variational%20lossy%20autoencoder%20In%20ICLR%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xi%20Chen%20Diederik%20P%20Kingma%20Tim%20Salimans%20Yan%20Duan%20Prafulla%20Dhariwal%20John%20Schulman%20Ilya%20Sutskever%20and%20Pieter%20Abbeel%20Variational%20lossy%20autoencoder%20In%20ICLR%202017"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "KyungHyun Cho, Bart van Merrienboer, Dzmitry Bahdanau, and Yoshua Bengio. On the properties of neural machine translation: Encoder-decoder approaches. arXiv preprint arXiv:1409.1259, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1259"
+        },
+        {
+            "id": "Chung_et+al_2015_a",
+            "entry": "Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron C. Courville, and Yoshua Bengio. A recurrent latent variable model for sequential data. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015"
+        },
+        {
+            "id": "Eyjolfsdottir_et+al_2017_a",
+            "entry": "Eyrun Eyjolfsdottir, Kristin Branson, Yisong Yue, and Pietro Perona. Learning recurrent representations for hierarchical behavior modeling. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eyjolfsdottir%2C%20Eyrun%20Branson%2C%20Kristin%20Yue%2C%20Yisong%20Perona%2C%20Pietro%20Learning%20recurrent%20representations%20for%20hierarchical%20behavior%20modeling%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eyjolfsdottir%2C%20Eyrun%20Branson%2C%20Kristin%20Yue%2C%20Yisong%20Perona%2C%20Pietro%20Learning%20recurrent%20representations%20for%20hierarchical%20behavior%20modeling%202017"
+        },
+        {
+            "id": "Fabius_2014_a",
+            "entry": "Otto Fabius and Joost R van Amersfoort. Variational recurrent auto-encoders. In ICLR workshop, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fabius%2C%20Otto%20van%20Amersfoort%2C%20Joost%20R.%20Variational%20recurrent%20auto-encoders%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fabius%2C%20Otto%20van%20Amersfoort%2C%20Joost%20R.%20Variational%20recurrent%20auto-encoders%202014"
+        },
+        {
+            "id": "Fraccaro_et+al_2016_a",
+            "entry": "Marco Fraccaro, S\u00f8ren Kaae S\u00f8 nderby, Ulrich Paquet, and Ole Winther. Sequential neural models with stochastic layers. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fraccaro%2C%20Marco%20nderby%2C%20S%C3%B8ren%20Kaae%20S%C3%B8%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fraccaro%2C%20Marco%20nderby%2C%20S%C3%B8ren%20Kaae%20S%C3%B8%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20NIPS%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20NIPS%202014"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Anirudh Goyal, Alessandro Sordoni, Marc-Alexandre Cote, Nan Ke, and Yoshua Bengio. Z-forcing: Training stochastic recurrent networks. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Anirudh%20Sordoni%2C%20Alessandro%20Cote%2C%20Marc-Alexandre%20Ke%2C%20Nan%20Z-forcing%3A%20Training%20stochastic%20recurrent%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Anirudh%20Sordoni%2C%20Alessandro%20Cote%2C%20Marc-Alexandre%20Ke%2C%20Nan%20Z-forcing%3A%20Training%20stochastic%20recurrent%20networks%202017"
+        },
+        {
+            "id": "Ho_2016_a",
+            "entry": "Jonathan Ho and Stefano Ermon. Generative adversarial imitation learning. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Hrolenok_et+al_2017_a",
+            "entry": "Brian Hrolenok, Byron Boots, and Tucker Balch. Sampling beats fixed estimate predictors for cloning stochastic behavior in multiagent systems. In AAAI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hrolenok%2C%20Brian%20Boots%2C%20Byron%20Balch%2C%20Tucker%20Sampling%20beats%20fixed%20estimate%20predictors%20for%20cloning%20stochastic%20behavior%20in%20multiagent%20systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hrolenok%2C%20Brian%20Boots%2C%20Byron%20Balch%2C%20Tucker%20Sampling%20beats%20fixed%20estimate%20predictors%20for%20cloning%20stochastic%20behavior%20in%20multiagent%20systems%202017"
+        },
+        {
+            "id": "Jang_et+al_2017_a",
+            "entry": "Eric Jang, Shixiang Gu, and Ben Poole. Categorical reparameterization with gumbel-softmax. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparameterization%20with%20gumbel-softmax%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparameterization%20with%20gumbel-softmax%202017"
+        },
+        {
+            "id": "Johnson_et+al_2016_a",
+            "entry": "Matthew Johnson, David K Duvenaud, Alex Wiltschko, Ryan P Adams, and Sandeep R Datta. Composing graphical models with neural networks for structured representations and fast inference. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Matthew%20Duvenaud%2C%20David%20K.%20Wiltschko%2C%20Alex%20Adams%2C%20Ryan%20P.%20Composing%20graphical%20models%20with%20neural%20networks%20for%20structured%20representations%20and%20fast%20inference%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Matthew%20Duvenaud%2C%20David%20K.%20Wiltschko%2C%20Alex%20Adams%2C%20Ryan%20P.%20Composing%20graphical%20models%20with%20neural%20networks%20for%20structured%20representations%20and%20fast%20inference%202016"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P. Kingma and Max Welling. Auto-encoding variational bayes. In ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Krishnan_et+al_2017_a",
+            "entry": "Rahul G. Krishnan, Uri Shalit, and David Sontag. Structured inference networks for nonlinear state space models. In AAAI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krishnan%2C%20Rahul%20G.%20Shalit%2C%20Uri%20Sontag%2C%20David%20Structured%20inference%20networks%20for%20nonlinear%20state%20space%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krishnan%2C%20Rahul%20G.%20Shalit%2C%20Uri%20Sontag%2C%20David%20Structured%20inference%20networks%20for%20nonlinear%20state%20space%20models%202017"
+        },
+        {
+            "id": "Le_et+al_2017_a",
+            "entry": "Hoang Minh Le, Yisong Yue, Peter Carr, and Patrick Lucey. Coordinated multi-agent imitation learning. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Le%2C%20Hoang%20Minh%20Yue%2C%20Yisong%20Carr%2C%20Peter%20Lucey%2C%20Patrick%20Coordinated%20multi-agent%20imitation%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Le%2C%20Hoang%20Minh%20Yue%2C%20Yisong%20Carr%2C%20Peter%20Lucey%2C%20Patrick%20Coordinated%20multi-agent%20imitation%20learning%202017"
+        },
+        {
+            "id": "Li_et+al_2015_a",
+            "entry": "Jiwei Li, Minh-Thang Luong, and Dan Jurafsky. A hierarchical neural autoencoder for paragraphs and documents. In ACL, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Jiwei%20Luong%2C%20Minh-Thang%20Jurafsky%2C%20Dan%20A%20hierarchical%20neural%20autoencoder%20for%20paragraphs%20and%20documents%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Jiwei%20Luong%2C%20Minh-Thang%20Jurafsky%2C%20Dan%20A%20hierarchical%20neural%20autoencoder%20for%20paragraphs%20and%20documents%202015"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Yunzhu Li, Jiaming Song, and Stefano Ermon. Infogail: Interpretable imitation learning from visual demonstrations. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yunzhu%20Song%2C%20Jiaming%20Ermon%2C%20Stefano%20Infogail%3A%20Interpretable%20imitation%20learning%20from%20visual%20demonstrations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yunzhu%20Song%2C%20Jiaming%20Ermon%2C%20Stefano%20Infogail%3A%20Interpretable%20imitation%20learning%20from%20visual%20demonstrations%202017"
+        },
+        {
+            "id": "Lin_et+al_2006_a",
+            "entry": "Henry C Lin, Izhak Shafran, David Yuh, and Gregory D Hager. Towards automatic skill evaluation: Detection and segmentation of robot-assisted surgical motions. Computer Aided Surgery, 11(5): 220\u2013230, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Henry%20C.%20Shafran%2C%20Izhak%20Yuh%2C%20David%20Hager%2C%20Gregory%20D.%20Towards%20automatic%20skill%20evaluation%3A%20Detection%20and%20segmentation%20of%20robot-assisted%20surgical%20motions%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Henry%20C.%20Shafran%2C%20Izhak%20Yuh%2C%20David%20Hager%2C%20Gregory%20D.%20Towards%20automatic%20skill%20evaluation%3A%20Detection%20and%20segmentation%20of%20robot-assisted%20surgical%20motions%202006"
+        },
+        {
+            "id": "Lucey_et+al_2013_a",
+            "entry": "Patrick Lucey, Alina Bialkowski, Peter Carr, Stuart Morgan, Iain Matthews, and Yaser Sheikh. Representing and discovering adversarial team behaviors using player roles. In CVPR, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lucey%2C%20Patrick%20Bialkowski%2C%20Alina%20Carr%2C%20Peter%20Morgan%2C%20Stuart%20Representing%20and%20discovering%20adversarial%20team%20behaviors%20using%20player%20roles.%20In%20CVPR%202013"
+        },
+        {
+            "id": "Miller_et+al_2014_a",
+            "entry": "Andrew Miller, Luke Bornn, Ryan Adams, and Kirk Goldsberry. Factorized point process intensities: A spatial analysis of professional basketball. In ICML, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miller%2C%20Andrew%20Bornn%2C%20Luke%20Adams%2C%20Ryan%20Goldsberry%2C%20Kirk%20Factorized%20point%20process%20intensities%3A%20A%20spatial%20analysis%20of%20professional%20basketball%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miller%2C%20Andrew%20Bornn%2C%20Luke%20Adams%2C%20Ryan%20Goldsberry%2C%20Kirk%20Factorized%20point%20process%20intensities%3A%20A%20spatial%20analysis%20of%20professional%20basketball%202014"
+        },
+        {
+            "id": "Van_et+al_0000_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew Senior, and Koray Kavukcuoglu. Wavenet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, and Koray Kavukcuoglu. Pixel recurrent neural networks. In ICML, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Kavukcuoglu%2C%20Koray%20Pixel%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Kavukcuoglu%2C%20Koray%20Pixel%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Ranganath_et+al_2016_a",
+            "entry": "Rajesh Ranganath, Dustin Tran, and David Blei. Hierarchical variational models. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ranganath%2C%20Rajesh%20Tran%2C%20Dustin%20Blei%2C%20David%20Hierarchical%20variational%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ranganath%2C%20Rajesh%20Tran%2C%20Dustin%20Blei%2C%20David%20Hierarchical%20variational%20models%202016"
+        },
+        {
+            "id": "Ratner_et+al_2016_a",
+            "entry": "Alexander Ratner, Christopher De Sa, Sen Wu, Daniel Selsam, and Christopher R. Data programming: Creating large training sets, quickly. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ratner%2C%20Alexander%20Sa%2C%20Christopher%20De%20Wu%2C%20Sen%20Selsam%2C%20Daniel%20Data%20programming%3A%20Creating%20large%20training%20sets%2C%20quickly%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ratner%2C%20Alexander%20Sa%2C%20Christopher%20De%20Wu%2C%20Sen%20Selsam%2C%20Daniel%20Data%20programming%3A%20Creating%20large%20training%20sets%2C%20quickly%202016"
+        },
+        {
+            "id": "Ratner_et+al_2018_a",
+            "entry": "Alexander Ratner, Stephen H. Bach, Henry Ehrenberg, Jason Fries, Sen Wu, and Christopher R. Snorkel: Rapid training data creation with weak supervision. In VLDB, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ratner%2C%20Alexander%20Bach%2C%20Stephen%20H.%20Ehrenberg%2C%20Henry%20Fries%2C%20Jason%20Snorkel%3A%20Rapid%20training%20data%20creation%20with%20weak%20supervision%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ratner%2C%20Alexander%20Bach%2C%20Stephen%20H.%20Ehrenberg%2C%20Henry%20Fries%2C%20Jason%20Snorkel%3A%20Rapid%20training%20data%20creation%20with%20weak%20supervision%202018"
+        },
+        {
+            "id": "Reynolds_1987_a",
+            "entry": "Craig W. Reynolds. Flocks, herds and schools: A distributed behavioral model. In SIGGRAPH, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reynolds%2C%20Craig%20W.%20Flocks%2C%20herds%20and%20schools%3A%20A%20distributed%20behavioral%20model%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reynolds%2C%20Craig%20W.%20Flocks%2C%20herds%20and%20schools%3A%20A%20distributed%20behavioral%20model%201987"
+        },
+        {
+            "id": "Rezende_2015_a",
+            "entry": "Danilo Jimenez Rezende and Shakir Mohamed. Variational inference with normalizing flows. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In ICML, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Ross_et+al_2011_a",
+            "entry": "Stephane Ross, Geoffrey J. Gordon, and J. Andrew Bagnell. No-regret reductions for imitation learning and structured prediction. In AISTATS, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Gordon%2C%20Geoffrey%20J.%20Bagnell%2C%20J.Andrew%20No-regret%20reductions%20for%20imitation%20learning%20and%20structured%20prediction%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Gordon%2C%20Geoffrey%20J.%20Bagnell%2C%20J.Andrew%20No-regret%20reductions%20for%20imitation%20learning%20and%20structured%20prediction%202011"
+        },
+        {
+            "id": "Song_et+al_2018_a",
+            "entry": "Jiaming Song, Hongyu Ren, Dorsa Sadigh, and Stefano Ermon. Multi-agent generative adversarial imitation learning. In NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Song%2C%20Jiaming%20Ren%2C%20Hongyu%20Sadigh%2C%20Dorsa%20Ermon%2C%20Stefano%20Multi-agent%20generative%20adversarial%20imitation%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Song%2C%20Jiaming%20Ren%2C%20Hongyu%20Sadigh%2C%20Dorsa%20Ermon%2C%20Stefano%20Multi-agent%20generative%20adversarial%20imitation%20learning%202018"
+        },
+        {
+            "id": "Suwajanakorn_et+al_2017_a",
+            "entry": "Supasorn Suwajanakorn, Steven M Seitz, and Ira Kemelmacher-Shlizerman. Synthesizing obama: learning lip sync from audio. ACM Transactions on Graphics (TOG), 36(4):95, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Suwajanakorn%2C%20Supasorn%20Seitz%2C%20Steven%20M.%20Kemelmacher-Shlizerman%2C%20Ira%20Synthesizing%20obama%3A%20learning%20lip%20sync%20from%20audio%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Suwajanakorn%2C%20Supasorn%20Seitz%2C%20Steven%20M.%20Kemelmacher-Shlizerman%2C%20Ira%20Synthesizing%20obama%3A%20learning%20lip%20sync%20from%20audio%202017"
+        },
+        {
+            "id": "Syed_2008_a",
+            "entry": "Umar Syed and Robert E Schapire. A game-theoretic approach to apprenticeship learning. In NIPS, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Syed%2C%20Umar%20Schapire%2C%20Robert%20E.%20A%20game-theoretic%20approach%20to%20apprenticeship%20learning%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Syed%2C%20Umar%20Schapire%2C%20Robert%20E.%20A%20game-theoretic%20approach%20to%20apprenticeship%20learning%202008"
+        },
+        {
+            "id": "Taylor_et+al_2017_a",
+            "entry": "Sarah Taylor, Taehwan Kim, Yisong Yue, Moshe Mahler, James Krahe, Anastasio Garcia Rodriguez, Jessica Hodgins, and Iain Matthews. A deep learning approach for generalized speech animation. In SIGGRAPH, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taylor%2C%20Sarah%20Kim%2C%20Taehwan%20Yue%2C%20Yisong%20Mahler%2C%20Moshe%20A%20deep%20learning%20approach%20for%20generalized%20speech%20animation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taylor%2C%20Sarah%20Kim%2C%20Taehwan%20Yue%2C%20Yisong%20Mahler%2C%20Moshe%20A%20deep%20learning%20approach%20for%20generalized%20speech%20animation%202017"
+        },
+        {
+            "id": "Theis_et+al_2015_a",
+            "entry": "L. Theis, A. van den Oord, and M. Bethge. A note on the evaluation of generative models. arXiv preprint arXiv:1511.01844, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.01844"
+        },
+        {
+            "id": "Thickstun_et+al_2017_a",
+            "entry": "John Thickstun, Zaid Harchaoui, and Sham Kakade. Learning features of music from scratch. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thickstun%2C%20John%20Harchaoui%2C%20Zaid%20Kakade%2C%20Sham%20Learning%20features%20of%20music%20from%20scratch%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thickstun%2C%20John%20Harchaoui%2C%20Zaid%20Kakade%2C%20Sham%20Learning%20features%20of%20music%20from%20scratch%202017"
+        },
+        {
+            "id": "Tran_et+al_2016_a",
+            "entry": "Dustin Tran, Alp Kucukelbir, Adji B. Dieng, Maja Rudolph, Dawen Liang, and David M. Blei. Edward: A library for probabilistic modeling, inference, and criticism. arXiv preprint arXiv:1610.09787, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.09787"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Ziyu Wang, Josh Merel, Scott E. Reed, Greg Wayne, Nando de Freitas, and Nicolas Heess. Robust imitation of diverse behaviors. arXiv preprint arXiv:1707.02747, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.02747"
+        },
+        {
+            "id": "Xue_et+al_2016_a",
+            "entry": "Tianfan Xue, Jiajun Wu, Katherine Bouman, and Bill Freeman. Visual dynamics: Probabilistic future frame synthesis via cross convolutional networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xue%2C%20Tianfan%20Wu%2C%20Jiajun%20Bouman%2C%20Katherine%20Freeman%2C%20Bill%20Visual%20dynamics%3A%20Probabilistic%20future%20frame%20synthesis%20via%20cross%20convolutional%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xue%2C%20Tianfan%20Wu%2C%20Jiajun%20Bouman%2C%20Katherine%20Freeman%2C%20Bill%20Visual%20dynamics%3A%20Probabilistic%20future%20frame%20synthesis%20via%20cross%20convolutional%20networks%202016"
+        },
+        {
+            "id": "Yue_et+al_2014_a",
+            "entry": "Yisong Yue, Patrick Lucey, Peter Carr, Alina Bialkowski, and Iain Matthews. Learning fine-grained spatial models for dynamic sports play prediction. In ICDM, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yue%2C%20Yisong%20Lucey%2C%20Patrick%20Carr%2C%20Peter%20Bialkowski%2C%20Alina%20Learning%20fine-grained%20spatial%20models%20for%20dynamic%20sports%20play%20prediction%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yue%2C%20Yisong%20Lucey%2C%20Patrick%20Carr%2C%20Peter%20Bialkowski%2C%20Alina%20Learning%20fine-grained%20spatial%20models%20for%20dynamic%20sports%20play%20prediction%202014"
+        },
+        {
+            "id": "Zhang_2017_a",
+            "entry": "Jiakai Zhang and Kyunghyun Cho. Query-efficient imitation learning for end-to-end autonomous driving. In AAAI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Jiakai%20Cho%2C%20Kyunghyun%20Query-efficient%20imitation%20learning%20for%20end-to-end%20autonomous%20driving%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Jiakai%20Cho%2C%20Kyunghyun%20Query-efficient%20imitation%20learning%20for%20end-to-end%20autonomous%20driving%202017"
+        },
+        {
+            "id": "Zheng_et+al_2016_a",
+            "entry": "Stephan Zheng, Yisong Yue, and Patrick Lucey. Generating long-term trajectories using deep hierarchical networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zheng%2C%20Stephan%20Yue%2C%20Yisong%20Lucey%2C%20Patrick%20Generating%20long-term%20trajectories%20using%20deep%20hierarchical%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zheng%2C%20Stephan%20Yue%2C%20Yisong%20Lucey%2C%20Patrick%20Generating%20long-term%20trajectories%20using%20deep%20hierarchical%20networks%202016"
+        },
+        {
+            "id": "Ziebart_et+al_2008_a",
+            "entry": "Brian D Ziebart, Andrew L Maas, J Andrew Bagnell, and Anind K Dey. Maximum entropy inverse reinforcement learning. In AAAI, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ziebart%2C%20Brian%20D.%20Maas%2C%20Andrew%20L.%20Bagnell%2C%20J.Andrew%20Dey%2C%20Anind%20K.%20Maximum%20entropy%20inverse%20reinforcement%20learning%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ziebart%2C%20Brian%20D.%20Maas%2C%20Andrew%20L.%20Bagnell%2C%20J.Andrew%20Dey%2C%20Anind%20K.%20Maximum%20entropy%20inverse%20reinforcement%20learning%202008"
+        },
+        {
+            "id": "Ziebart_et+al_2009_a",
+            "entry": "Brian D Ziebart, Andrew L Maas, J Andrew Bagnell, and Anind K Dey. Human behavior modeling with maximum entropy inverse optimal control. In AAAI, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ziebart%2C%20Brian%20D.%20Maas%2C%20Andrew%20L.%20Bagnell%2C%20J.Andrew%20Dey%2C%20Anind%20K.%20Human%20behavior%20modeling%20with%20maximum%20entropy%20inverse%20optimal%20control%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ziebart%2C%20Brian%20D.%20Maas%2C%20Andrew%20L.%20Bagnell%2C%20J.Andrew%20Dey%2C%20Anind%20K.%20Human%20behavior%20modeling%20with%20maximum%20entropy%20inverse%20optimal%20control%202009"
+        },
+        {
+            "id": "where_2014_a",
+            "entry": "where \u03c6 maps the hidden state to a probability distribution over states and f is a deterministic function such as LSTMs (Hochreiter & Schmidhuber, 1997) or GRUs (Cho et al., 2014). RNNs with simple output distributions often struggle to capture highly variable and structured sequential data. Recent work in sequential generative models address this issue by injecting stochastic latent variables into the model and using amortized variational inference to infer latent variables from data.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=where%20%CF%86%20maps%20the%20hidden%20state%20to%20a%20probability%20distribution%20over%20states%20and%20f%20is%20a%20deterministic%20function%20such%20as%20LSTMs%20Hochreiter%20%20Schmidhuber%201997%20or%20GRUs%20Cho%20et%20al%202014%20RNNs%20with%20simple%20output%20distributions%20often%20struggle%20to%20capture%20highly%20variable%20and%20structured%20sequential%20data%20Recent%20work%20in%20sequential%20generative%20models%20address%20this%20issue%20by%20injecting%20stochastic%20latent%20variables%20into%20the%20model%20and%20using%20amortized%20variational%20inference%20to%20infer%20latent%20variables%20from%20data",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=where%20%CF%86%20maps%20the%20hidden%20state%20to%20a%20probability%20distribution%20over%20states%20and%20f%20is%20a%20deterministic%20function%20such%20as%20LSTMs%20Hochreiter%20%20Schmidhuber%201997%20or%20GRUs%20Cho%20et%20al%202014%20RNNs%20with%20simple%20output%20distributions%20often%20struggle%20to%20capture%20highly%20variable%20and%20structured%20sequential%20data%20Recent%20work%20in%20sequential%20generative%20models%20address%20this%20issue%20by%20injecting%20stochastic%20latent%20variables%20into%20the%20model%20and%20using%20amortized%20variational%20inference%20to%20infer%20latent%20variables%20from%20data"
+        },
+        {
+            "id": "Note_2015_a",
+            "entry": "Note that the prior distribution of latent variable zt depends on the history of states and latent variables (Eq. (9)). This temporal dependency of the prior allows VRNNs to model complex sequential data like speech and handwriting (Chung et al., 2015).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Note%20that%20the%20prior%20distribution%20of%20latent%20variable%20zt%20depends%20on%20the%20history%20of%20states%20and%20latent%20variables%20Eq%209%20This%20temporal%20dependency%20of%20the%20prior%20allows%20VRNNs%20to%20model%20complex%20sequential%20data%20like%20speech%20and%20handwriting%20Chung%20et%20al%202015"
+        }
+    ]
+}

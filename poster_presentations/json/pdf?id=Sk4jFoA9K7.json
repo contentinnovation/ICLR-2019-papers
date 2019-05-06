@@ -1,0 +1,417 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PEERNETS: EXPLOITING PEER WISDOM AGAINST ADVERSARIAL ATTACKS",
+        "author": "Jan Svoboda, Jonathan Masci, Federico Monti, Michael M. Bronstein, Leonidas Guibas, 1USI, Switzerland 2NNAISENSE, Switzerland 3Intel Perceptual Computing, Israel 4Imperial College London, UK 5Fabula AI, UK 6Stanford University, USA {jan.svoboda,federico.monti,michael.bronstein}@usi.ch jonathan@nnaisense.com, guibas@cs.stanford.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Sk4jFoA9K7"
+        },
+        "abstract": "Deep learning systems have become ubiquitous in many aspects of our lives. Unfortunately, it has been shown that such systems are vulnerable to adversarial attacks, making them prone to potential unlawful uses. Designing deep neural networks that are robust to adversarial attacks is a fundamental step in making such systems safer and deployable in a broader variety of applications (e.g. autonomous driving), but more importantly is a necessary step to design novel and more advanced architectures built on new computational paradigms rather than marginally building on the existing ones. In this paper we introduce PeerNets, a novel family of convolutional networks alternating classical Euclidean convolutions with graph convolutions to harness information from a graph of peer samples. This results in a form of non-local forward propagation in the model, where latent features are conditioned on the global structure induced by the graph, that is up to 3\u00d7 more robust to a variety of white- and black-box adversarial attacks compared to conventional architectures with almost no drop in accuracy."
+    },
+    "keywords": [
+        {
+            "term": "image recognition",
+            "url": "https://en.wikipedia.org/wiki/image_recognition"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "computer vision",
+            "url": "https://en.wikipedia.org/wiki/computer_vision"
+        },
+        {
+            "term": "autonomous driving",
+            "url": "https://en.wikipedia.org/wiki/autonomous_driving"
+        },
+        {
+            "term": "black box",
+            "url": "https://en.wikipedia.org/wiki/black_box"
+        }
+    ],
+    "abbreviations": {
+        "CNN": "convolutional networks",
+        "PeerNet": "Peer-Regularized Networks",
+        "MoNet": "Model networks",
+        "GAT": "graph attention network",
+        "PR": "Peer Regularization",
+        "FGSM": "Fast Gradient Sign Method"
+    },
+    "highlights": [
+        "Deep convolutional networks (CNN) are the de-facto standard in almost any computer vision application, ranging from image recognition (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\"><a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015</a></a>), object detection (<a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\"><a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\">Yuan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cRedmon_et+al_2016_a\" href=\"#rRedmon_et+al_2016_a\"><a class=\"ref-link\" id=\"cRedmon_et+al_2016_a\" href=\"#rRedmon_et+al_2016_a\">Redmon et al, 2016</a></a>; <a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\"><a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\">Ren et al, 2015</a></a>), semantic segmentation (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\"><a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBadrinarayanan_et+al_2017_a\" href=\"#rBadrinarayanan_et+al_2017_a\"><a class=\"ref-link\" id=\"cBadrinarayanan_et+al_2017_a\" href=\"#rBadrinarayanan_et+al_2017_a\">Badrinarayanan et al, 2017</a></a>) and motion estimation (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVijayanarasimhan_et+al_2017_a\" href=\"#rVijayanarasimhan_et+al_2017_a\"><a class=\"ref-link\" id=\"cVijayanarasimhan_et+al_2017_a\" href=\"#rVijayanarasimhan_et+al_2017_a\">Vijayanarasimhan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cNiklaus_et+al_2017_a\" href=\"#rNiklaus_et+al_2017_a\"><a class=\"ref-link\" id=\"cNiklaus_et+al_2017_a\" href=\"#rNiklaus_et+al_2017_a\">Niklaus et al, 2017</a></a>)",
+        "We introduce Peer-Regularized Networks (PeerNet), a new family of deep models that uses a graph of samples to perform non-local forward propagation",
+        "We show that the proposed non-local propagation acts as a strong regularizer that makes possible to increase the model capacity to match the current state-of-the-art without incurring in overfitting",
+        "Our approach is related to three classes of approaches: deep learning on graphs, deep learning models combined with manifold regularization, and non-local filtering",
+        "To previous works on adversarial attacks, we evaluate robustness in terms of the fooling rate, defined as the ratio of images for which the network predicts a different label as the result of the perturbation",
+        "We introduced Peer-Regularized Networks, a novel family of deep networks alternating Euclidean and Graph convolutions to harness information from peer images and showed their robustness to adversarial attacks in a variety of scenarios through extensive experiments for white-box attacks in targeted and non-targeted settings"
+    ],
+    "key_statements": [
+        "Deep convolutional networks (CNN) are the de-facto standard in almost any computer vision application, ranging from image recognition (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\"><a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015</a></a>), object detection (<a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\"><a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\">Yuan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cRedmon_et+al_2016_a\" href=\"#rRedmon_et+al_2016_a\"><a class=\"ref-link\" id=\"cRedmon_et+al_2016_a\" href=\"#rRedmon_et+al_2016_a\">Redmon et al, 2016</a></a>; <a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\"><a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\">Ren et al, 2015</a></a>), semantic segmentation (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\"><a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBadrinarayanan_et+al_2017_a\" href=\"#rBadrinarayanan_et+al_2017_a\"><a class=\"ref-link\" id=\"cBadrinarayanan_et+al_2017_a\" href=\"#rBadrinarayanan_et+al_2017_a\">Badrinarayanan et al, 2017</a></a>) and motion estimation (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVijayanarasimhan_et+al_2017_a\" href=\"#rVijayanarasimhan_et+al_2017_a\"><a class=\"ref-link\" id=\"cVijayanarasimhan_et+al_2017_a\" href=\"#rVijayanarasimhan_et+al_2017_a\">Vijayanarasimhan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cNiklaus_et+al_2017_a\" href=\"#rNiklaus_et+al_2017_a\"><a class=\"ref-link\" id=\"cNiklaus_et+al_2017_a\" href=\"#rNiklaus_et+al_2017_a\">Niklaus et al, 2017</a></a>)",
+        "While it was expected that addition of noise to the input can ruin the classification accuracy of a neural network, only tiny adversarial perturbations are needed as a great surprise to the machine learning community",
+        "Because of its potentially dramatic implications on the security of deep learning technology or autonomously driving cars), adversarial attacks and defenses against them have become a very active topic of research (<a class=\"ref-link\" id=\"cRauber_et+al_2017_a\" href=\"#rRauber_et+al_2017_a\">Rauber et al, 2017</a>; <a class=\"ref-link\" id=\"cKurakin_et+al_2018_a\" href=\"#rKurakin_et+al_2018_a\">Kurakin et al, 2018</a>)",
+        "We introduce Peer-Regularized Networks (PeerNet), a new family of deep models that uses a graph of samples to perform non-local forward propagation",
+        "We show that the proposed non-local propagation acts as a strong regularizer that makes possible to increase the model capacity to match the current state-of-the-art without incurring in overfitting",
+        "Our approach is related to three classes of approaches: deep learning on graphs, deep learning models combined with manifold regularization, and non-local filtering",
+        "We propose a new deep neural network architecture that takes advantage of the data space structure",
+        "Peer Regularization is reminiscent of non-local means denoising of <a class=\"ref-link\" id=\"cBuades_et+al_2005_a\" href=\"#rBuades_et+al_2005_a\">Buades et al (2005</a>), with the important difference that the neighbors are taken from multiple images rather than from the same image, and the combination weights are learnable",
+        "We evaluate the robustness of Peer Regularization to adversarial perturbations on standard benchmarks (MNIST LeCun (1998), CIFAR-10, and CIFAR-100 <a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky (2009</a>)) using a selection of common architectures (LeNet by LeCun et al (1998) and ResNet by <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al (2015</a>))",
+        "To mitigate the influence of the small batch sizes during training of Peer Regularization-Nets, we introduce high level of stochasticity inside the Peer Regularization layer, by using dropout of 0.2 on the all-pairs distances while performing K-nearest neighbors and 0.5 on the attention weights right before the softmax nonlinearity",
+        "To previous works on adversarial attacks, we evaluate robustness in terms of the fooling rate, defined as the ratio of images for which the network predicts a different label as the result of the perturbation",
+        "Fast Gradient Sign Method generates an adversarial example xfor an input x with label y as follows: x \u2190 x + sign(\u2207xJ(\u03b8, x, y)), where J(\u03b8, x, y) is the cost used during training, and controls the magnitude of the perturbation",
+        "This is caused by the iterative nature of PGD and supports the fact that our method does not suffer from gradient obfuscation, as a viable perturbation can be found based on the iterative processing of network gradients for any test sample.\n4.3.2",
+        "We observe minor loss in accuracy at \u03c1 = 0, which is a consequence of the regularization due to the averaging in feature space, and we argue that it could be mitigated by increasing the model capacity",
+        "We introduced Peer-Regularized Networks, a novel family of deep networks alternating Euclidean and Graph convolutions to harness information from peer images and showed their robustness to adversarial attacks in a variety of scenarios through extensive experiments for white-box attacks in targeted and non-targeted settings"
+    ],
+    "summary": [
+        "Deep convolutional networks (CNN) are the de-facto standard in almost any computer vision application, ranging from image recognition (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\"><a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015</a></a>), object detection (<a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\"><a class=\"ref-link\" id=\"cYuan_et+al_2017_a\" href=\"#rYuan_et+al_2017_a\">Yuan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cRedmon_et+al_2016_a\" href=\"#rRedmon_et+al_2016_a\"><a class=\"ref-link\" id=\"cRedmon_et+al_2016_a\" href=\"#rRedmon_et+al_2016_a\">Redmon et al, 2016</a></a>; <a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\"><a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\">Ren et al, 2015</a></a>), semantic segmentation (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\"><a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBadrinarayanan_et+al_2017_a\" href=\"#rBadrinarayanan_et+al_2017_a\"><a class=\"ref-link\" id=\"cBadrinarayanan_et+al_2017_a\" href=\"#rBadrinarayanan_et+al_2017_a\">Badrinarayanan et al, 2017</a></a>) and motion estimation (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVijayanarasimhan_et+al_2017_a\" href=\"#rVijayanarasimhan_et+al_2017_a\"><a class=\"ref-link\" id=\"cVijayanarasimhan_et+al_2017_a\" href=\"#rVijayanarasimhan_et+al_2017_a\">Vijayanarasimhan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cNiklaus_et+al_2017_a\" href=\"#rNiklaus_et+al_2017_a\"><a class=\"ref-link\" id=\"cNiklaus_et+al_2017_a\" href=\"#rNiklaus_et+al_2017_a\">Niklaus et al, 2017</a></a>).",
+        "We introduce Peer-Regularized Networks (PeerNet), a new family of deep models that uses a graph of samples to perform non-local forward propagation.",
+        "Our approach is related to three classes of approaches: deep learning on graphs, deep learning models combined with manifold regularization, and non-local filtering.",
+        "Given a pixel of image i, we consider its K nearest neighbor graph in the space of d-dimensional feature maps of all pixels of all the peer images, where the neighbors are computed using e.g. the cosine distance.",
+        "Peer Regularization is reminiscent of non-local means denoising of <a class=\"ref-link\" id=\"cBuades_et+al_2005_a\" href=\"#rBuades_et+al_2005_a\">Buades et al (2005</a>), with the important difference that the neighbors are taken from multiple images rather than from the same image, and the combination weights are learnable.",
+        "We evaluate the robustness of Peer Regularization to adversarial perturbations on standard benchmarks (MNIST LeCun (1998), CIFAR-10, and CIFAR-100 <a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky (2009</a>)) using a selection of common architectures (LeNet by LeCun et al (1998) and ResNet by <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al (2015</a>)).",
+        "The graph is constructed using all the images of the current batch as peers.",
+        "We tested robustness against several different types of white-box adversarial attacks: gradient descent, fast-gradient sign method of <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al (2015</a>), projected gradient descent and universal adversarial perturbation of Moosavi-Dezfooli et al (2015).",
+        "To previous works on adversarial attacks, we evaluate robustness in terms of the fooling rate, defined as the ratio of images for which the network predicts a different label as the result of the perturbation.",
+        "FGSM generates an adversarial example xfor an input x with label y as follows: x \u2190 x + sign(\u2207xJ(\u03b8, x, y)), where J(\u03b8, x, y) is the cost used during training, and controls the magnitude of the perturbation.",
+        "From Figure 5, we can clearly see that sample-specific gradient-based attacks have to generate much stronger perturbation in order to fool the PeerNet architectures.",
+        "The same configuration with double number of maps in PR layers was trained, and results show a sensible improvement that does not come at the cost of a much higher fooling rate as for the ResNet baselines.",
+        "We introduced PeerNets, a novel family of deep networks alternating Euclidean and Graph convolutions to harness information from peer images and showed their robustness to adversarial attacks in a variety of scenarios through extensive experiments for white-box attacks in targeted and non-targeted settings.",
+        "We plan to provide a theoretical analysis of the method and scale it to ImageNet-like benchmarks"
+    ],
+    "headline": "In this paper we introduce Peer-Regularized Networks, a novel family of convolutional networks alternating classical Euclidean convolutions with graph convolutions to harness information from a graph of peer samples",
+    "reference_links": [
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "A. Athalye, N. Carlini, and D. A. Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20A.%20Carlini%2C%20N.%20Wagner%2C%20D.A.%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Atwood_2016_a",
+            "entry": "J. Atwood and D. Towsley. Diffusion-convolutional neural networks. In Proc. NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Atwood%2C%20J.%20Towsley%2C%20D.%20Diffusion-convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Atwood%2C%20J.%20Towsley%2C%20D.%20Diffusion-convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Badrinarayanan_et+al_2017_a",
+            "entry": "V. Badrinarayanan, A. Kendall, and R. Cipolla. SegNet: A deep convolutional encoder-decoder architecture for image segmentation. IEEE Trans. PAMI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Badrinarayanan%2C%20V.%20Kendall%2C%20A.%20Cipolla%2C%20R.%20SegNet%3A%20A%20deep%20convolutional%20encoder-decoder%20architecture%20for%20image%20segmentation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Badrinarayanan%2C%20V.%20Kendall%2C%20A.%20Cipolla%2C%20R.%20SegNet%3A%20A%20deep%20convolutional%20encoder-decoder%20architecture%20for%20image%20segmentation%202017"
+        },
+        {
+            "id": "Belkin_2003_a",
+            "entry": "M. Belkin and P. Niyogi. Laplacian eigenmaps for dimensionality reduction and data representation. Neural Computation, 15(6):1373\u20131396, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belkin%2C%20M.%20Niyogi%2C%20P.%20Laplacian%20eigenmaps%20for%20dimensionality%20reduction%20and%20data%20representation%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belkin%2C%20M.%20Niyogi%2C%20P.%20Laplacian%20eigenmaps%20for%20dimensionality%20reduction%20and%20data%20representation%202003"
+        },
+        {
+            "id": "Bhagoji_et+al_2017_a",
+            "entry": "A. N. Bhagoji, W. He, B. Li, and D. Song. Exploring the space of black-box attacks on deep neural networks. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bhagoji%2C%20A.N.%20He%2C%20W.%20Li%2C%20B.%20Song%2C%20D.%20Exploring%20the%20space%20of%20black-box%20attacks%20on%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Bronstein_et+al_2017_a",
+            "entry": "M. M. Bronstein, J. Bruna, Y. LeCun, A. Szlam, and P. Vandergheynst. Geometric deep learning: going beyond euclidean data. IEEE Signal Process. Mag., 34(4):18\u201342, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bronstein%2C%20M.M.%20Bruna%2C%20J.%20LeCun%2C%20Y.%20Szlam%2C%20A.%20Geometric%20deep%20learning%3A%20going%20beyond%20euclidean%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bronstein%2C%20M.M.%20Bruna%2C%20J.%20LeCun%2C%20Y.%20Szlam%2C%20A.%20Geometric%20deep%20learning%3A%20going%20beyond%20euclidean%20data%202017"
+        },
+        {
+            "id": "Bruna_et+al_2013_a",
+            "entry": "J. Bruna, W. Zaremba, A. Szlam, and Y. LeCun. Spectral networks and locally connected networks on graphs. arXiv:1312.6203, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6203"
+        },
+        {
+            "id": "Buades_et+al_2005_a",
+            "entry": "A. Buades, B. Coll, and J.-M. Morel. A non-local algorithm for image denoising. In Proc. CVPR, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Buades%2C%20A.%20Coll%2C%20B.%20Morel%2C%20J.-M.%20A%20non-local%20algorithm%20for%20image%20denoising%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Buades%2C%20A.%20Coll%2C%20B.%20Morel%2C%20J.-M.%20A%20non-local%20algorithm%20for%20image%20denoising%202005"
+        },
+        {
+            "id": "Coifman_2006_a",
+            "entry": "R. R Coifman and S. Lafon. Diffusion maps. Applied and Computational Harmonic Analysis, 21(1): 5\u201330, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coifman%2C%20R.R.%20Lafon%2C%20S.%20Diffusion%20maps%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coifman%2C%20R.R.%20Lafon%2C%20S.%20Diffusion%20maps%202006"
+        },
+        {
+            "id": "Defferrard_et+al_2016_a",
+            "entry": "M. Defferrard, X. Bresson, and P. Vandergheynst. Convolutional neural networks on graphs with fast localized spectral filtering. In Proc. NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Defferrard%2C%20M.%20Bresson%2C%20X.%20Vandergheynst%2C%20P.%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Defferrard%2C%20M.%20Bresson%2C%20X.%20Vandergheynst%2C%20P.%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016"
+        },
+        {
+            "id": "Duvenaud_et+al_2015_a",
+            "entry": "D. K Duvenaud, D. Maclaurin, J. Iparraguirre, R. Bombarell, T. Hirzel, A. Aspuru-Guzik, and R. P Adams. Convolutional networks on graphs for learning molecular fingerprints. In Proc. NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duvenaud%2C%20D.K.%20Maclaurin%2C%20D.%20Iparraguirre%2C%20J.%20Bombarell%2C%20R.%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duvenaud%2C%20D.K.%20Maclaurin%2C%20D.%20Iparraguirre%2C%20J.%20Bombarell%2C%20R.%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015"
+        },
+        {
+            "id": "Fawzi_et+al_2018_a",
+            "entry": "A. Fawzi, O. Fawzi, and P. Frossard. Analysis of classifiers robustness to adversarial perturbations. Machine Learning, 107(3):481\u2013508, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20A.%20Fawzi%2C%20O.%20Frossard%2C%20P.%20Analysis%20of%20classifiers%20robustness%20to%20adversarial%20perturbations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20A.%20Fawzi%2C%20O.%20Frossard%2C%20P.%20Analysis%20of%20classifiers%20robustness%20to%20adversarial%20perturbations%202018"
+        },
+        {
+            "id": "Garcia_2017_a",
+            "entry": "V. Garcia and J. Bruna. Few-shot learning with graph neural networks. arXiv:1711.04043, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.04043"
+        },
+        {
+            "id": "Gilmer_2017_a",
+            "entry": "J. Gilmer, S. S Schoenholz, P. F Riley, O. Vinyals, and G. E Dahl. Neural message passing for quantum chemistry. arXiv:1704.01212, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.01212"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "I. Goodfellow, J. Shlens, and Ch. Szegedy. Explaining and harnessing adversarial examples. In Proc. ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20I.%20Shlens%2C%20J.%20Szegedy%2C%20Ch%20Explaining%20and%20harnessing%20adversarial%20examples%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20I.%20Shlens%2C%20J.%20Szegedy%2C%20Ch%20Explaining%20and%20harnessing%20adversarial%20examples%202015"
+        },
+        {
+            "id": "Gori_et+al_2005_a",
+            "entry": "M. Gori, G. Monfardini, and F. Scarselli. A new model for learning in graph domains. In Proc. IJCNN, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gori%2C%20M.%20Monfardini%2C%20G.%20Scarselli%2C%20F.%20A%20new%20model%20for%20learning%20in%20graph%20domains%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gori%2C%20M.%20Monfardini%2C%20G.%20Scarselli%2C%20F.%20A%20new%20model%20for%20learning%20in%20graph%20domains%202005"
+        },
+        {
+            "id": "Gu_1412_a",
+            "entry": "S. Gu and L. Rigazio. Towards deep neural network architectures robust to adversarial examples. arXiv:1412.5068, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.5068"
+        },
+        {
+            "id": "Hamilton_et+al_2017_a",
+            "entry": "W. Hamilton, Z. Ying, and J. Leskovec. Inductive representation learning on large graphs. In Proc. NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hamilton%2C%20W.%20Ying%2C%20Z.%20Leskovec%2C%20J.%20Inductive%20representation%20learning%20on%20large%20graphs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hamilton%2C%20W.%20Ying%2C%20Z.%20Leskovec%2C%20J.%20Inductive%20representation%20learning%20on%20large%20graphs%202017"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In Proc. ICCV, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202015"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "K. He, G. Gkioxari, P. Dollar, and R. Girshick. Mask R-CNN. In Proc. ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=K%20He%20G%20Gkioxari%20P%20Dollar%20and%20R%20Girshick%20Mask%20RCNN%20In%20Proc%20ICCV%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=K%20He%20G%20Gkioxari%20P%20Dollar%20and%20R%20Girshick%20Mask%20RCNN%20In%20Proc%20ICCV%202017"
+        },
+        {
+            "id": "Henaff_et+al_0000_a",
+            "entry": "M. Henaff, J. Bruna, and Y. LeCun. Deep convolutional networks on graph-structured data. arXiv:1506.05163, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.05163"
+        },
+        {
+            "id": "Kipf_2016_a",
+            "entry": "T. N Kipf and M. Welling. Semi-supervised classification with graph convolutional networks. arXiv:1609.02907, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.02907"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "A. Krizhevsky. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20A.%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "A. Krizhevsky, I. Sutskever, and G. E. Hinton. ImageNet classification with deep convolutional neural networks. In Proc. NIPS, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Hinton%2C%20G.E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Hinton%2C%20G.E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Kurakin_et+al_2018_a",
+            "entry": "A. Kurakin, I. J. Goodfellow, S. Bengio, Y. Dong, F. Liao, M. Liang, T. Pang, J. Zhu, X. Hu, C. Xie, J. Wang, Z. Zhang, Z. Ren, A. L. Yuille, S. Huang, Y. Zhao, Y. Zhao, Z. Han, J. Long, Y. Berdibekov, T. Akiba, S. Tokui, and M. Abe. Adversarial attacks and defences competition. arXiv:1804.00097, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00097"
+        },
+        {
+            "id": "Lecun_1998_a",
+            "entry": "Y. LeCun. The MNIST database of handwritten digits. http://yann.lecun.com/exdb/mnist/, 1998.",
+            "url": "http://yann.lecun.com/exdb/mnist/"
+        },
+        {
+            "id": "Lecun_et+al_1998_b",
+            "entry": "Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proc. IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Y.%20Bottou%2C%20L.%20Bengio%2C%20Y.%20Haffner%2C%20P.%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Y.%20Bottou%2C%20L.%20Bengio%2C%20Y.%20Haffner%2C%20P.%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Levie_et+al_2017_a",
+            "entry": "R. Levie, F. Monti, X. Bresson, and M. M Bronstein. Cayleynets: Graph convolutional neural networks with complex rational spectral filters. arXiv:1705.07664, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07664"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Y. Li, D. Tarlow, M. Brockschmidt, and R. Zemel. Gated graph sequence neural networks. In Proc. ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Y.%20Tarlow%2C%20D.%20Brockschmidt%2C%20M.%20Zemel%2C%20R.%20Gated%20graph%20sequence%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Y.%20Tarlow%2C%20D.%20Brockschmidt%2C%20M.%20Zemel%2C%20R.%20Gated%20graph%20sequence%20neural%20networks%202016"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Z. Liu, R. A. Yeh, X. Tang, Y. Liu, and A. Agarwala. Video frame synthesis using deep voxel flow. In Proc. ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Z.%20Yeh%2C%20R.A.%20Tang%2C%20X.%20Liu%2C%20Y.%20Video%20frame%20synthesis%20using%20deep%20voxel%20flow%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Z.%20Yeh%2C%20R.A.%20Tang%2C%20X.%20Liu%2C%20Y.%20Video%20frame%20synthesis%20using%20deep%20voxel%20flow%202017"
+        },
+        {
+            "id": "Madry_et+al_2017_a",
+            "entry": "A. Madry, A. Makelov, L. Schmidt, D. Tsipras, and A. Vladu. Towards deep learning models resistant to adversarial attacks. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Madry%2C%20A.%20Makelov%2C%20A.%20Schmidt%2C%20L.%20Tsipras%2C%20D.%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202017"
+        },
+        {
+            "id": "Mahdizadehaghdam_et+al_2018_a",
+            "entry": "S. Mahdizadehaghdam, A. Panahi, H. Krim, and L. Dai. Deep dictionary learning: A parametric network approach. arXiv:1803.04022, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.04022"
+        },
+        {
+            "id": "Meng_2017_a",
+            "entry": "D. Meng and H. Chen. Magnet: a two-pronged defense against adversarial examples. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Meng%2C%20D.%20Chen%2C%20H.%20Magnet%3A%20a%20two-pronged%20defense%20against%20adversarial%20examples%202017"
+        },
+        {
+            "id": "Monti_et+al_2017_a",
+            "entry": "F. Monti, D. Boscaini, J. Masci, E. Rodola, J. Svoboda, and M. M. Bronstein. Geometric deep learning on graphs and manifolds using mixture model CNNs. In Proc. CVPR, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monti%2C%20F.%20Boscaini%2C%20D.%20Masci%2C%20J.%20Rodola%2C%20E.%20Geometric%20deep%20learning%20on%20graphs%20and%20manifolds%20using%20mixture%20model%20CNNs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monti%2C%20F.%20Boscaini%2C%20D.%20Masci%2C%20J.%20Rodola%2C%20E.%20Geometric%20deep%20learning%20on%20graphs%20and%20manifolds%20using%20mixture%20model%20CNNs%202017"
+        },
+        {
+            "id": "Monti_et+al_2017_b",
+            "entry": "F. Monti, M. M. Bronstein, and X. Bresson. Geometric matrix completion with recurrent multi-graph neural networks. In Proc. NIPS, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monti%2C%20F.%20Bronstein%2C%20M.M.%20Bresson%2C%20X.%20Geometric%20matrix%20completion%20with%20recurrent%20multi-graph%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monti%2C%20F.%20Bronstein%2C%20M.M.%20Bresson%2C%20X.%20Geometric%20matrix%20completion%20with%20recurrent%20multi-graph%20neural%20networks%202017"
+        },
+        {
+            "id": "Monti_et+al_2018_a",
+            "entry": "F. Monti, K. Otness, and M. M Bronstein. Motifnet: a motif-based graph convolutional network for directed graphs. arXiv:1802.01572, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01572"
+        },
+        {
+            "id": "Moosavi-Dezfooli_et+al_0000_a",
+            "entry": "S.-M. Moosavi-Dezfooli, A. Fawzi, and P. Frossard. Deepfool: a simple and accurate method to fool deep neural networks. arXiv:1511.04599, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.04599"
+        },
+        {
+            "id": "Moosavi-Dezfooli_et+al_2016_a",
+            "entry": "S.-M. Moosavi-Dezfooli, A. Fawzi, O. Fawzi, and P. Frossard. Universal adversarial perturbations. arXiv:1610.08401, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.08401"
+        },
+        {
+            "id": "Niklaus_et+al_2017_a",
+            "entry": "S. Niklaus, L. Mai, and F. Liu. Video frame interpolation via adaptive convolution. In Proc. CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niklaus%2C%20S.%20Mai%2C%20L.%20Liu%2C%20F.%20Video%20frame%20interpolation%20via%20adaptive%20convolution%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niklaus%2C%20S.%20Mai%2C%20L.%20Liu%2C%20F.%20Video%20frame%20interpolation%20via%20adaptive%20convolution%202017"
+        },
+        {
+            "id": "Papernot_2016_a",
+            "entry": "N. Papernot and P. McDaniel. On the effectiveness of defensive distillation. arXiv:1607.05113, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.05113"
+        },
+        {
+            "id": "Rauber_et+al_2017_a",
+            "entry": "J. Rauber, W. Brendel, and M. Bethge. Foolbox v0.8.0: A python toolbox to benchmark the robustness of machine learning models. arXiv:1707.04131, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.04131"
+        },
+        {
+            "id": "Redmon_et+al_2016_a",
+            "entry": "J. Redmon, S. Kumar Divvala, R. B. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. In Proc. CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Redmon%2C%20J.%20Divvala%2C%20S.Kumar%20Girshick%2C%20R.B.%20Farhadi%2C%20A.%20You%20only%20look%20once%3A%20Unified%2C%20real-time%20object%20detection%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Redmon%2C%20J.%20Divvala%2C%20S.Kumar%20Girshick%2C%20R.B.%20Farhadi%2C%20A.%20You%20only%20look%20once%3A%20Unified%2C%20real-time%20object%20detection%202016"
+        },
+        {
+            "id": "Ren_et+al_2015_a",
+            "entry": "S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In Proc. NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20S.%20He%2C%20K.%20Girshick%2C%20R.%20Sun%2C%20J.%20Faster%20R-CNN%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20S.%20He%2C%20K.%20Girshick%2C%20R.%20Sun%2C%20J.%20Faster%20R-CNN%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015"
+        },
+        {
+            "id": "Scarselli_et+al_2009_a",
+            "entry": "F. Scarselli, M. Gori, Ah C. Tsoi, M. Hagenbuchner, and G. Monfardini. The graph neural network model. IEEE Trans. Neural Netw., 20(1):61\u201380, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scarselli%2C%20F.%20Gori%2C%20M.%20Tsoi%2C%20Ah%20C.%20Hagenbuchner%2C%20M.%20The%20graph%20neural%20network%20model%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scarselli%2C%20F.%20Gori%2C%20M.%20Tsoi%2C%20Ah%20C.%20Hagenbuchner%2C%20M.%20The%20graph%20neural%20network%20model%202009"
+        },
+        {
+            "id": "Sharif_et+al_2016_a",
+            "entry": "M. Sharif, S. Bhagavatula, L. Bauer, and M. K Reiter. Accessorize to a crime: Real and stealthy attacks on state-of-the-art face recognition. In Proc. CCS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sharif%2C%20M.%20Bhagavatula%2C%20S.%20Bauer%2C%20L.%20Reiter%2C%20M.K.%20Accessorize%20to%20a%20crime%3A%20Real%20and%20stealthy%20attacks%20on%20state-of-the-art%20face%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sharif%2C%20M.%20Bhagavatula%2C%20S.%20Bauer%2C%20L.%20Reiter%2C%20M.K.%20Accessorize%20to%20a%20crime%3A%20Real%20and%20stealthy%20attacks%20on%20state-of-the-art%20face%20recognition%202016"
+        },
+        {
+            "id": "Sochen_et+al_1998_a",
+            "entry": "N. Sochen, R. Kimmel, and R. Malladi. A general framework for low level vision. IEEE Trans. Image Proc., 7(3):310\u2013318, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sochen%2C%20N.%20Kimmel%2C%20R.%20Malladi%2C%20R.%20A%20general%20framework%20for%20low%20level%20vision%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sochen%2C%20N.%20Kimmel%2C%20R.%20Malladi%2C%20R.%20A%20general%20framework%20for%20low%20level%20vision%201998"
+        },
+        {
+            "id": "Su_et+al_2017_a",
+            "entry": "J. Su, D. Vasconcellos Vargas, and K. Sakurai. One pixel attack for fooling deep neural networks. arXiv:1710.08864, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.08864"
+        },
+        {
+            "id": "Ch_et+al_2013_a",
+            "entry": "Ch. Szegedy, W. Zaremba, I. Sutskever, J. Bruna, D. Erhan, I. Goodfellow, and R. Fergus. Intriguing properties of neural networks. arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tomasi_1998_a",
+            "entry": "C. Tomasi and R. Manduchi. Bilateral filtering for gray and color images. In Proc. ICCV, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tomasi%2C%20C.%20Manduchi%2C%20R.%20Bilateral%20filtering%20for%20gray%20and%20color%20images%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tomasi%2C%20C.%20Manduchi%2C%20R.%20Bilateral%20filtering%20for%20gray%20and%20color%20images%201998"
+        },
+        {
+            "id": "Tramer_et+al_2017_a",
+            "entry": "F. Tramer, A. Kurakin, N. Papernot, D. Boneh, and P. McDaniel. Ensemble adversarial training: Attacks and defenses. arXiv:1705.07204, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07204"
+        },
+        {
+            "id": "Tramer_et+al_2018_a",
+            "entry": "F. Tramer, A. Kurakin, N. Papernot, I. Goodfellow, Dan Boneh, and P. McDaniel. Ensemble adversarial training: Attacks and defenses. In Proc. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tramer%2C%20F.%20Kurakin%2C%20A.%20Papernot%2C%20N.%20Goodfellow%2C%20I.%20Ensemble%20adversarial%20training%3A%20Attacks%20and%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tramer%2C%20F.%20Kurakin%2C%20A.%20Papernot%2C%20N.%20Goodfellow%2C%20I.%20Ensemble%20adversarial%20training%3A%20Attacks%20and%20defenses%202018"
+        },
+        {
+            "id": "arXiv:1710.10903,_2017_a",
+            "entry": "arXiv:1710.10903, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10903"
+        },
+        {
+            "id": "Vijayanarasimhan_et+al_2017_a",
+            "entry": "S. Vijayanarasimhan, S. Ricco, C. Schmid, R. Sukthankar, and K. Fragkiadaki. SfM-Net: Learning of structure and motion from video. arXiv:1704.07804, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.07804"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "X. Wang, R. Girshick, A. Gupta, and K. He. Non-local neural networks. arXiv:1711.07971, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.07971"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Y. Wang, Y. Sun, Z. Liu, S. E Sarma, M. M Bronstein, and J. M Solomon. Dynamic graph CNN for learning on point clouds. arXiv:1801.07829, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.07829"
+        },
+        {
+            "id": "Yuan_et+al_2017_a",
+            "entry": "Y. Yuan, X. Liang, X. Wang, D.-Y. Yeung, and A. Gupta. Temporal dynamic graph LSTM for action-driven video object detection. In Proc. ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuan%2C%20Y.%20Liang%2C%20X.%20Wang%2C%20X.%20Yeung%2C%20D.-Y.%20Temporal%20dynamic%20graph%20LSTM%20for%20action-driven%20video%20object%20detection%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuan%2C%20Y.%20Liang%2C%20X.%20Wang%2C%20X.%20Yeung%2C%20D.-Y.%20Temporal%20dynamic%20graph%20LSTM%20for%20action-driven%20video%20object%20detection%202017"
+        },
+        {
+            "id": "Zantedeschi_et+al_2017_a",
+            "entry": "V. Zantedeschi, M.-I. Nicolae, and A. Rawat. Efficient defenses against adversarial attacks. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zantedeschi%2C%20V.%20Nicolae%2C%20M.-I.%20Rawat%2C%20A.%20Efficient%20defenses%20against%20adversarial%20attacks%202017"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "W. Zhu, Q. Qiu, J. Huang, R. Calderbank, G. Sapiro, and I. Daubechies. Ldmnet: Low dimensional manifold regularized neural networks. arXiv:1711.06246, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.06246"
+        }
+    ]
+}

@@ -1,0 +1,344 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "FIXUP INITIALIZATION: RESIDUAL LEARNING WITHOUT NORMALIZATION",
+        "author": "Hongyi Zhang, MIT hongyiz@mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1gsz30cKX"
+        },
+        "abstract": "Normalization layers are a staple in state-of-the-art deep neural network architectures. They are widely believed to stabilize training, enable higher learning rate, accelerate convergence and improve generalization, though the reason for their effectiveness is still an active research topic. In this work, we challenge the commonly-held beliefs by showing that none of the perceived benefits is unique to normalization. Specifically, we propose fixed-update initialization (Fixup), an initialization motivated by solving the exploding and vanishing gradient problem at the beginning of training via properly rescaling a standard initialization. We find training residual networks with Fixup to be as stable as training with normalization \u2014 even for networks with 10,000 layers. Furthermore, with proper regularization, Fixup enables residual networks without normalization to achieve state-of-the-art performance in image classification and machine translation."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "residual network",
+            "url": "https://en.wikipedia.org/wiki/residual_network"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "image recognition",
+            "url": "https://en.wikipedia.org/wiki/image_recognition"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        },
+        {
+            "term": "image classification",
+            "url": "https://en.wikipedia.org/wiki/image_classification"
+        },
+        {
+            "term": "isometry",
+            "url": "https://en.wikipedia.org/wiki/isometry"
+        },
+        {
+            "term": "batch normalization",
+            "url": "https://en.wikipedia.org/wiki/batch_normalization"
+        }
+    ],
+    "abbreviations": {
+        "Fixup": "fixed-update initialization",
+        "WRN": "wide residual network"
+    },
+    "highlights": [
+        "Artificial intelligence applications have witnessed major advances in recent years",
+        "We study how to train a deep residual network reliably without normalization",
+        "Our theory in Section 2 suggests that the exploding gradient problem at initialization in a positively homogeneous network such as ResNet is directly linked to the blowup of logits",
+        "In Section 3 we develop fixed-update initialization initialization to ensure the whole network as well as each residual branch gets updates of proper scale, based on a top-down analysis",
+        "Extensive experiments on real world datasets demonstrate that fixed-update initialization matches normalization techniques in training deep residual networks, and achieves state-of-the-art test performance with proper regularization",
+        "Can we analyze the training dynamics of fixed-update initialization, which may potentially be simpler than analyzing models with batch normalization is? Could we apply or extend the initialization scheme to other applications of deep learning? It would be very interesting to understand the regularization benefits of various normalization methods, and to develop better regularizers to further improve the test performance of fixed-update initialization"
+    ],
+    "key_statements": [
+        "Artificial intelligence applications have witnessed major advances in recent years",
+        "Since the landmark work of <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al (2016</a>), most of the state-of-the-art image recognition systems are built upon a deep stack of network blocks consisting of convolutional layers and additive skip connections, with some normalization mechanism) to facilitate training and generalization",
+        "We propose fixed-update initialization, a method that rescales the standard initialization of residual branches by adjusting for the network architecture",
+        "Our analysis in the previous section points out the failure mode of standard initializations for training deep residual network: the gradient norm of certain layers is in expectation lower bounded by a quantity that increases indefinitely with the network depth",
+        "We find ablation experiments confirm our claims.\n2For example, in batch normalization gamma and beta parameters are used to affine-transform the normalized activations per each channel.\n3It is worth noting that the design of fixed-update initialization is a simplification of the common practice, in that we only introduce O(K) parameters beyond convolution and linear weights, whereas the common practice includes O(KC) (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a>; <a class=\"ref-link\" id=\"cSalimans_2016_a\" href=\"#rSalimans_2016_a\">Salimans & Kingma, 2016</a>) or O(KCW H) (<a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\">Ba et al, 2016</a>) additional parameters, where K is the number of layers, C is the max number of channels per layer and W, H are the spatial dimension of the largest feature maps",
+        "While network with fixed-update initialization is trained with the same learning rate and converge as fast as network with batch normalization, we fail to train a Xavier initialized ResNet-110 with 0.1x maximal learning rate.5",
+        "We present the results in Table 2, noting that with better regularization, the performance of fixed-update initialization is on par with GroupNorm",
+        "We empirically showed in Section 3 that steep loss surface may be alleviated for residual networks by using smaller initialization than the standard ones such as Xavier or He\u2019s initialization in residual branches. van Laarhoven (2017); <a class=\"ref-link\" id=\"cHoffer_et+al_2018_a\" href=\"#rHoffer_et+al_2018_a\">Hoffer et al (2018</a>) studied the effect of normalization and weight decay on the effective learning rate",
+        "<a class=\"ref-link\" id=\"cMishkin_2015_a\" href=\"#rMishkin_2015_a\">Mishkin & Matas (2015</a>) proposed a data-dependent initialization to mimic the effect of batch normalization in the first forward pass. While both methods limit the scale of activation and gradient, they would fail to train stably at the maximal learning rate for very deep residual networks, since\n6For reference, we include a brief history of normalization methods in Appendix D",
+        "We study how to train a deep residual network reliably without normalization",
+        "Our theory in Section 2 suggests that the exploding gradient problem at initialization in a positively homogeneous network such as ResNet is directly linked to the blowup of logits",
+        "In Section 3 we develop fixed-update initialization initialization to ensure the whole network as well as each residual branch gets updates of proper scale, based on a top-down analysis",
+        "Extensive experiments on real world datasets demonstrate that fixed-update initialization matches normalization techniques in training deep residual networks, and achieves state-of-the-art test performance with proper regularization",
+        "Can we analyze the training dynamics of fixed-update initialization, which may potentially be simpler than analyzing models with batch normalization is? Could we apply or extend the initialization scheme to other applications of deep learning? It would be very interesting to understand the regularization benefits of various normalization methods, and to develop better regularizers to further improve the test performance of fixed-update initialization"
+    ],
+    "summary": [
+        "Artificial intelligence applications have witnessed major advances in recent years.",
+        "We propose Fixup, a method that rescales the standard initialization of residual branches by adjusting for the network architecture.",
+        "Fixup enables training very deep residual networks stably at maximal learning rate without normalization.",
+        "Our analysis in the previous section points out the failure mode of standard initializations for training deep residual network: the gradient norm of certain layers is in expectation lower bounded by a quantity that increases indefinitely with the network depth.",
+        "We study how to initialize a residual branch with m layers so that its SGD update changes the network output by \u0398(\u03b7/L).",
+        "We observe that inserting just one scalar multiplier per residual branch mimics the weight norm dynamics of a network with normalization, and spares us the search of a new learning rate schedule.",
+        "We propose the following method to train residual networks without normalization: Fixup initialization",
+        "While network with Fixup is trained with the same learning rate and converge as fast as network with batch normalization, we fail to train a Xavier initialized ResNet-110 with 0.1x maximal learning rate.5 The test error gap in Table 1 is likely due to the regularization effect of BatchNorm",
+        "Rather than difficulty in optimization; when we train Fixup networks with better regularization, the test error gap disappears and we obtain state-of-the-art results on CIFAR-10 and SVHN without normalization layers.",
+        "To demonstrate the generality of Fixup, we apply it to replace layer normalization (<a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\">Ba et al, 2016</a>) in Transformer (<a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a>), a state-of-the-art neural network for machine translation.",
+        "Normalization methods have enabled training very deep residual networks, and are currently an essential building block of the most successful deep learning architectures.",
+        "Our use of positive homogeneity for lower bounding the gradient norm of a neural network is novel, and applies to a broad class of neural network architectures (e.g., ResNet, DenseNet) and initialization methods (e.g., Xavier, LSUV) with simple assumptions and proof.",
+        "While both methods limit the scale of activation and gradient, they would fail to train stably at the maximal learning rate for very deep residual networks, since",
+        "In Section 3 we develop Fixup initialization to ensure the whole network as well as each residual branch gets updates of proper scale, based on a top-down analysis.",
+        "Extensive experiments on real world datasets demonstrate that Fixup matches normalization techniques in training deep residual networks, and achieves state-of-the-art test performance with proper regularization.",
+        "Can we analyze the training dynamics of Fixup, which may potentially be simpler than analyzing models with batch normalization is? Could we apply or extend the initialization scheme to other applications of deep learning? It would be very interesting to understand the regularization benefits of various normalization methods, and to develop better regularizers to further improve the test performance of Fixup"
+    ],
+    "headline": "We propose fixed-update initialization, an initialization motivated by solving the exploding and vanishing gradient problem at the beginning of training via properly rescaling a standard initialization",
+    "reference_links": [
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Balduzzi_et+al_2017_a",
+            "entry": "David Balduzzi, Marcus Frean, Lennox Leary, JP Lewis, Kurt Wan-Duo Ma, and Brian McWilliams. The shattered gradients problem: If resnets are the answer, then what is the question? arXiv preprint arXiv:1702.08591, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08591"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Mia Xu Chen, Orhan Firat, Ankur Bapna, Melvin Johnson, Wolfgang Macherey, George Foster, Llion Jones, Niki Parmar, Mike Schuster, Zhifeng Chen, et al. The best of both worlds: Combining recent advances in neural machine translation. arXiv preprint arXiv:1804.09849, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.09849"
+        },
+        {
+            "id": "Deng_et+al_2018_a",
+            "entry": "Yuntian Deng, Yoon Kim, Justin Chiu, Demi Guo, and Alexander M Rush. Latent alignment and variational attention. Thirty-second Conference on Neural Information Processing Systems (NIPS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Yuntian%20Kim%2C%20Yoon%20Chiu%2C%20Justin%20Guo%2C%20Demi%20Latent%20alignment%20and%20variational%20attention%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Yuntian%20Kim%2C%20Yoon%20Chiu%2C%20Justin%20Guo%2C%20Demi%20Latent%20alignment%20and%20variational%20attention%202018"
+        },
+        {
+            "id": "Devries_2017_a",
+            "entry": "Terrance DeVries and Graham W Taylor. Improved regularization of convolutional neural networks with cutout. arXiv preprint arXiv:1708.04552, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.04552"
+        },
+        {
+            "id": "Gehring_et+al_2017_a",
+            "entry": "Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N Dauphin. Convolutional Sequence to Sequence Learning. In Proc. of ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20Sequence%20to%20Sequence%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20Sequence%20to%20Sequence%20Learning%202017"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Dollar, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch sgd: training imagenet in 1 hour. arXiv preprint arXiv:1706.02677, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "Graham_2014_a",
+            "entry": "Benjamin Graham. Fractional max-pooling. arXiv preprint arXiv:1412.6071, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6071"
+        },
+        {
+            "id": "Hanin_2018_a",
+            "entry": "Boris Hanin. Which neural net architectures give rise to exploding and vanishing gradients? arXiv preprint arXiv:1801.03744, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.03744"
+        },
+        {
+            "id": "Hanin_2018_b",
+            "entry": "Boris Hanin and David Rolnick. How to start training: The effect of initialization and architecture. arXiv preprint arXiv:1803.01719, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01719"
+        },
+        {
+            "id": "Hardt_2016_a",
+            "entry": "Moritz Hardt and Tengyu Ma. Identity matters in deep learning. arXiv preprint arXiv:1611.04231, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.04231"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Heeger_1992_a",
+            "entry": "David J Heeger. Normalization of cell responses in cat striate cortex. Visual neuroscience, 9(2): 181\u2013197, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heeger%2C%20David%20J.%20Normalization%20of%20cell%20responses%20in%20cat%20striate%20cortex%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heeger%2C%20David%20J.%20Normalization%20of%20cell%20responses%20in%20cat%20striate%20cortex%201992"
+        },
+        {
+            "id": "Hoffer_et+al_2018_a",
+            "entry": "Elad Hoffer, Ron Banner, Itay Golan, and Daniel Soudry. Norm matters: efficient and accurate normalization schemes in deep networks. arXiv preprint arXiv:1803.01814, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01814"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Kingma_2018_a",
+            "entry": "Diederik P Kingma and Prafulla Dhariwal. Glow: Generative flow with invertible 1x1 convolutions. arXiv preprint arXiv:1807.03039, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.03039"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lee_et+al_2016_a",
+            "entry": "Chen-Yu Lee, Patrick W Gallagher, and Zhuowen Tu. Generalizing pooling functions in convolutional neural networks: Mixed, gated, and tree. In Artificial Intelligence and Statistics, pp. 464\u2013472, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Chen-Yu%20Gallagher%2C%20Patrick%20W.%20Tu%2C%20Zhuowen%20Generalizing%20pooling%20functions%20in%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Chen-Yu%20Gallagher%2C%20Patrick%20W.%20Tu%2C%20Zhuowen%20Generalizing%20pooling%20functions%20in%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Yuanzhi Li, Tengyu Ma, and Hongyang Zhang. Algorithmic regularization in over-parameterized matrix recovery. Conference on Learning Theory (COLT), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yuanzhi%20Ma%2C%20Tengyu%20Zhang%2C%20Hongyang%20Algorithmic%20regularization%20in%20over-parameterized%20matrix%20recovery.%20Conference%20on%20Learning%20Theory%20%28COLT%29%202018"
+        },
+        {
+            "id": "Lyu_2008_a",
+            "entry": "Siwei Lyu and Eero P Simoncelli. Nonlinear image representation using divisive normalization. In Computer Vision and Pattern Recognition, 2008. CVPR 2008. IEEE Conference on, pp. 1\u20138. IEEE, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lyu%2C%20Siwei%20Simoncelli%2C%20Eero%20P.%20Nonlinear%20image%20representation%20using%20divisive%20normalization%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lyu%2C%20Siwei%20Simoncelli%2C%20Eero%20P.%20Nonlinear%20image%20representation%20using%20divisive%20normalization%202008"
+        },
+        {
+            "id": "Mishkin_2015_a",
+            "entry": "Dmytro Mishkin and Jiri Matas. All you need is a good init. arXiv preprint arXiv:1511.06422, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06422"
+        },
+        {
+            "id": "Ott_et+al_2018_a",
+            "entry": "Myle Ott, Sergey Edunov, David Grangier, and Michael Auli. Scaling neural machine translation. arXiv preprint arXiv:1806.00187, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.00187"
+        },
+        {
+            "id": "Pennington_et+al_2017_a",
+            "entry": "Jeffrey Pennington, Samuel Schoenholz, and Surya Ganguli. Resurrecting the sigmoid in deep learning through dynamical isometry: theory and practice. In Advances in neural information processing systems, pp. 4785\u20134795, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Schoenholz%2C%20Samuel%20Ganguli%2C%20Surya%20Resurrecting%20the%20sigmoid%20in%20deep%20learning%20through%20dynamical%20isometry%3A%20theory%20and%20practice%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Schoenholz%2C%20Samuel%20Ganguli%2C%20Surya%20Resurrecting%20the%20sigmoid%20in%20deep%20learning%20through%20dynamical%20isometry%3A%20theory%20and%20practice%202017"
+        },
+        {
+            "id": "Pinto_et+al_2008_a",
+            "entry": "Nicolas Pinto, David D Cox, and James J DiCarlo. Why is real-world visual object recognition hard? PLoS computational biology, 4(1):e27, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pinto%2C%20Nicolas%20Cox%2C%20David%20D.%20DiCarlo%2C%20James%20J.%20Why%20is%20real-world%20visual%20object%20recognition%20hard%3F%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pinto%2C%20Nicolas%20Cox%2C%20David%20D.%20DiCarlo%2C%20James%20J.%20Why%20is%20real-world%20visual%20object%20recognition%20hard%3F%202008"
+        },
+        {
+            "id": "Salimans_2016_a",
+            "entry": "Tim Salimans and Diederik P Kingma. Weight normalization: A simple reparameterization to accelerate training of deep neural networks. In Advances in Neural Information Processing Systems, pp. 901\u2013909, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20P.%20Weight%20normalization%3A%20A%20simple%20reparameterization%20to%20accelerate%20training%20of%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20P.%20Weight%20normalization%3A%20A%20simple%20reparameterization%20to%20accelerate%20training%20of%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Santurkar_et+al_2018_a",
+            "entry": "Shibani Santurkar, Dimitris Tsipras, Andrew Ilyas, and Aleksander Madry. How does batch normalization help optimization?(no, it is not about internal covariate shift). arXiv preprint arXiv:1805.11604, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11604"
+        },
+        {
+            "id": "Saxe_et+al_2013_a",
+            "entry": "Andrew M Saxe, James L McClelland, and Surya Ganguli. Exact solutions to the nonlinear dynamics of learning in deep linear neural networks. arXiv preprint arXiv:1312.6120, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6120"
+        },
+        {
+            "id": "Shang_et+al_2017_a",
+            "entry": "Wenling Shang, Justin Chiu, and Kihyuk Sohn. Exploring normalization in deep residual networks with concatenated rectified linear units. In AAAI, pp. 1509\u20131516, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shang%2C%20Wenling%20Chiu%2C%20Justin%20Sohn%2C%20Kihyuk%20Exploring%20normalization%20in%20deep%20residual%20networks%20with%20concatenated%20rectified%20linear%20units%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shang%2C%20Wenling%20Chiu%2C%20Justin%20Sohn%2C%20Kihyuk%20Exploring%20normalization%20in%20deep%20residual%20networks%20with%20concatenated%20rectified%20linear%20units%202017"
+        },
+        {
+            "id": "Srivastava_et+al_2015_a",
+            "entry": "Rupesh Kumar Srivastava, Klaus Greff, and Jurgen Schmidhuber. Highway networks. arXiv preprint arXiv:1505.00387, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1505.00387"
+        },
+        {
+            "id": "Ulyanov_et+al_2016_a",
+            "entry": "Dmitry Ulyanov, Andrea Vedaldi, and Victor S. Lempitsky. Instance normalization: The missing ingredient for fast stylization. CoRR, abs/1607.08022, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.08022"
+        },
+        {
+            "id": "Van_2017_a",
+            "entry": "Twan van Laarhoven. L2 regularization versus batch and weight normalization. arXiv preprint arXiv:1706.05350, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.05350"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pp. 5998\u20136008, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017"
+        },
+        {
+            "id": "Wu_2018_a",
+            "entry": "Yuxin Wu and Kaiming He. Group normalization. In The European Conference on Computer Vision (ECCV), September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuxin%20Wu%20and%20Kaiming%20He%20Group%20normalization%20In%20The%20European%20Conference%20on%20Computer%20Vision%20ECCV%20September%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuxin%20Wu%20and%20Kaiming%20He%20Group%20normalization%20In%20The%20European%20Conference%20on%20Computer%20Vision%20ECCV%20September%202018"
+        },
+        {
+            "id": "Xiao_et+al_2018_a",
+            "entry": "Lechao Xiao, Yasaman Bahri, Jascha Sohl-Dickstein, Samuel S Schoenholz, and Jeffrey Pennington. Dynamical isometry and a mean field theory of cnns: How to train 10,000-layer vanilla convolutional neural networks. arXiv preprint arXiv:1806.05393, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.05393"
+        },
+        {
+            "id": "Yamada_et+al_2018_a",
+            "entry": "Yoshihiro Yamada, Masakazu Iwamura, and Koichi Kise. Shakedrop regularization. arXiv preprint arXiv:1802.02375, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.02375"
+        },
+        {
+            "id": "Yang_2017_a",
+            "entry": "Ge Yang and Samuel Schoenholz. Mean field residual networks: On the edge of chaos. In Advances in neural information processing systems, pp. 7103\u20137114, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Ge%20Schoenholz%2C%20Samuel%20Mean%20field%20residual%20networks%3A%20On%20the%20edge%20of%20chaos%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Ge%20Schoenholz%2C%20Samuel%20Mean%20field%20residual%20networks%3A%20On%20the%20edge%20of%20chaos%202017"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Wide residual networks. arXiv preprint arXiv:1605.07146, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07146"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Hongyi Zhang, Moustapha Cisse, Yann N Dauphin, and David Lopez-Paz. mixup: Beyond empirical risk minimization. arXiv preprint arXiv:1710.09412, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.09412"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. In Computer Vision (ICCV), 2017 IEEE International Conference on, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Schoenholz_2017_a",
+            "entry": "A common theme in previous analysis of residual networks is the scale of activation and gradient (Balduzzi et al., 2017; Yang & Schoenholz, 2017; Hanin & Rolnick, 2018). However, it is more important to consider the scale of actual change to the network function made by a (stochastic) gradient descent step. If the updates to different layers cancel out each other, the network would be stable as a whole despite drastic changes in different layers; if, on the other hand, the updates to different layers align with each other, the whole network may incur a drastic change in one step, even if each layer only changes a tiny amount. We now provide analysis showing that the latter scenario more accurately describes what happens in reality at initialization.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schoenholz%20A%20common%20theme%20in%20previous%20analysis%20of%20residual%20networks%20is%20the%20scale%20of%20activation%20and%20gradient%20%28Balduzzi%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schoenholz%20A%20common%20theme%20in%20previous%20analysis%20of%20residual%20networks%20is%20the%20scale%20of%20activation%20and%20gradient%20%28Balduzzi%202017"
+        },
+        {
+            "id": "We_2017_a",
+            "entry": "We perform additional experiments to validate our hypothesis that the gap in test error between Fixup and batch normalization is primarily due to overfitting. To combat overfitting, we use Mixup (Zhang et al., 2017) and Cutout (DeVries & Taylor, 2017) with default hyperparameters as additional regularization. On the CIFAR-10 dataset, we perform experiments with WideResNet-40-10 and on SVHN we use WideResNet-16-12 (Zagoruyko & Komodakis, 2016), all with the default hyperparameters. We observe in Table 4 that models trained with Fixup and strong regularization are competitive with state-of-the-art methods on CIFAR-10 and SVHN, as well as our baseline with batch normalization.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20perform%20additional%20experiments%20to%20validate%20our%20hypothesis%20that%20the%20gap%20in%20test%20error%20between%20Fixup%20and%20batch%20normalization%20is%20primarily%20due%20to%20overfitting%20To%20combat%20overfitting%20we%20use%20Mixup%20Zhang%20et%20al%202017%20and%20Cutout%20DeVries%20%20Taylor%202017%20with%20default%20hyperparameters%20as%20additional%20regularization%20On%20the%20CIFAR10%20dataset%20we%20perform%20experiments%20with%20WideResNet4010%20and%20on%20SVHN%20we%20use%20WideResNet1612%20Zagoruyko%20%20Komodakis%202016%20all%20with%20the%20default%20hyperparameters%20We%20observe%20in%20Table%204%20that%20models%20trained%20with%20Fixup%20and%20strong%20regularization%20are%20competitive%20with%20stateoftheart%20methods%20on%20CIFAR10%20and%20SVHN%20as%20well%20as%20our%20baseline%20with%20batch%20normalization"
+        }
+    ]
+}

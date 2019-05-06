@@ -1,0 +1,346 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DEEP FRANK-WOLFE FOR NEURAL NETWORK OPTIMIZATION",
+        "author": "Leonard Berrada, Andrew Zisserman, and M. Pawan Kumar, 1Department of Engineering Science",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SyVU6s05K7"
+        },
+        "abstract": "Learning a deep neural network requires solving a challenging optimization problem: it is a high-dimensional, non-convex and non-smooth minimization problem with a large number of terms. The current practice in neural network optimization is to rely on the stochastic gradient descent (SGD) algorithm or its adaptive variants. However, SGD requires a hand-designed schedule for the learning rate. In addition, its adaptive variants tend to produce solutions that generalize less well on unseen data than SGD with a hand-designed schedule. We present an optimization method that offers empirically the best of both worlds: our algorithm yields good generalization performance while requiring only one hyper-parameter. Our approach is based on a composite proximal framework, which exploits the compositional nature of deep neural networks and can leverage powerful convex optimization algorithms by design. Specifically, we employ the Frank-Wolfe (FW) algorithm for SVM, which computes an optimal step-size in closed-form at each time-step. We further show that the descent direction is given by a simple backward pass in the network, yielding the same computational cost per iteration as SGD. We present experiments on the CIFAR and SNLI data sets, where we demonstrate the significant superiority of our method over Adam, Adagrad, as well as the recently proposed BPGrad and AMSGrad. Furthermore, we compare our algorithm to SGD with a hand-designed learning rate schedule, and show that it provides similar generalization while often converging faster. The code is publicly available at https://github.com/oval-group/dfw."
+    },
+    "keywords": [
+        {
+            "term": "CIFAR",
+            "url": "https://en.wikipedia.org/wiki/CIFAR"
+        },
+        {
+            "term": "convex optimization",
+            "url": "https://en.wikipedia.org/wiki/convex_optimization"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "optimization algorithm",
+            "url": "https://en.wikipedia.org/wiki/optimization_algorithm"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "optimization problem",
+            "url": "https://en.wikipedia.org/wiki/optimization_problem"
+        },
+        {
+            "term": "frank wolfe",
+            "url": "https://en.wikipedia.org/wiki/Frank_Wolfe"
+        },
+        {
+            "term": "rate schedule",
+            "url": "https://en.wikipedia.org/wiki/rate_schedule"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        }
+    ],
+    "abbreviations": {
+        "SGD": "stochastic gradient descent",
+        "DFW": "Deep Frank Wolfe",
+        "LPL": "Loss-Preserving Linearization",
+        "SNLI": "Stanford Natural Language Inference"
+    },
+    "highlights": [
+        "Since the introduction of back-propagation (Rumelhart et al, 1986), stochastic gradient descent (SGD) has been the most commonly used optimization algorithm for deep neural networks",
+        "An illustration of this issue is the diversity of learning rate schedules used to train deep convolutional networks with stochastic gradient descent: <a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\">Simonyan & Zisserman (2015</a>) and <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al (2016</a>) adapt the learning rate according to the validation performance, while <a class=\"ref-link\" id=\"cSzegedy_et+al_2015_a\" href=\"#rSzegedy_et+al_2015_a\">Szegedy et al (2015</a>), <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al (2017</a>) and Loshchilov & Hutter (2017) use pre-determined schedules, which are respectively piecewise constant, geometrically decaying, and cyclic with a cosine annealing",
+        "We have observed in our experiments that such a choice of high learning rate provides a consistent improvement for convolutional neural networks: accurate minimization of the training objective with large initial steps usually leads to good generalization",
+        "We have introduced Deep Frank Wolfe, an efficient algorithm to train deep neural networks",
+        "We emphasize the generality of our framework in Section 3, which enables the training of deep neural networks to benefit from any advance on optimization algorithms for linear SVMs",
+        "We have mentioned the intricate relationship between optimization and generalization in deep learning. This illustrates a major difficulty in the design of effective optimization algorithms for deep neural networks: the learning objective does not include all the regularization needed for good generalization"
+    ],
+    "key_statements": [
+        "Since the introduction of back-propagation (Rumelhart et al, 1986), stochastic gradient descent (SGD) has been the most commonly used optimization algorithm for deep neural networks",
+        "An illustration of this issue is the diversity of learning rate schedules used to train deep convolutional networks with stochastic gradient descent: <a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\">Simonyan & Zisserman (2015</a>) and <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al (2016</a>) adapt the learning rate according to the validation performance, while <a class=\"ref-link\" id=\"cSzegedy_et+al_2015_a\" href=\"#rSzegedy_et+al_2015_a\">Szegedy et al (2015</a>), <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al (2017</a>) and Loshchilov & Hutter (2017) use pre-determined schedules, which are respectively piecewise constant, geometrically decaying, and cyclic with a cosine annealing",
+        "The Deep Frank Wolfe algorithm exploits the composite structure of deep neural networks to design an optimization algorithm that leverages efficient convex solvers",
+        "We present two additional improvements to customize the use of the Deep Frank Wolfe algorithm to deep neural networks",
+        "We demonstrate the efficacy of our method on image classification with the CIFAR data sets (Krizhevsky, 2009) using two architectures: wide residual networks (<a class=\"ref-link\" id=\"cZagoruyko_2016_a\" href=\"#rZagoruyko_2016_a\">Zagoruyko & Komodakis, 2016</a>) and densely connected convolutional neural networks (<a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a>); we provide experiments on natural language inference with a Bi-LSTM on the Stanford Natural Language Inference corpus (<a class=\"ref-link\" id=\"cBowman_et+al_2015_a\" href=\"#rBowman_et+al_2015_a\">Bowman et al, 2015</a>)",
+        "We show that the Deep Frank Wolfe algorithm often strongly outperforms previous methods based on adaptive learning rates",
+        "IMPROVEMENTS FOR DEEP NEURAL NETWORKS We present two improvements to customize the application of our algorithm to deep neural networks",
+        "The accuracy of Deep Frank Wolfe is comparable to stochastic gradient descent",
+        "In figure 3, one can see how the step-size is automatically decayed by Deep Frank Wolfe on this same experiment: we compare the effective step-size \u03b3t\u03b7 for Deep Frank Wolfe to the manually tuned \u03b7t for stochastic gradient descent",
+        "The reported results use stochastic gradient descent with an initial learning rate of 0.1 and a hand-designed schedule that adapts to the variations of the validation set: if the validation accuracy does not improve, the learning rate is divided by a factor of 5",
+        "Loss Adagrad Adam AMSGrad BPGrad Deep Frank Wolfe stochastic gradient descent stochastic gradient descent\u2217. Note that these results outperform the reported testing accuracy of 84.5% in (<a class=\"ref-link\" id=\"cConneau_et+al_2017_a\" href=\"#rConneau_et+al_2017_a\">Conneau et al, 2017</a>) that is obtained with CE. This experiment, which is performed on a completely different architecture and data set than the previous one, confirms that Deep Frank Wolfe outperforms adaptive gradient methods and matches the performance of stochastic gradient descent with a hand-designed learning rate schedule.\n6 THE IMPORTANCE OF THE STEP-SIZE\n6.1",
+        "We have observed in our experiments that such a choice of high learning rate provides a consistent improvement for convolutional neural networks: accurate minimization of the training objective with large initial steps usually leads to good generalization",
+        "We have introduced Deep Frank Wolfe, an efficient algorithm to train deep neural networks",
+        "We emphasize the generality of our framework in Section 3, which enables the training of deep neural networks to benefit from any advance on optimization algorithms for linear SVMs",
+        "We have mentioned the intricate relationship between optimization and generalization in deep learning. This illustrates a major difficulty in the design of effective optimization algorithms for deep neural networks: the learning objective does not include all the regularization needed for good generalization"
+    ],
+    "summary": [
+        "Since the introduction of back-propagation (Rumelhart et al, 1986), stochastic gradient descent (SGD) has been the most commonly used optimization algorithm for deep neural networks.",
+        "For the first time for deep neural networks, we demonstrate how our formulation gives at each iteration (i) an optimal step-size in closed form and an update at the same computational cost as SGD.",
+        "To the best of our knowledge, the resulting DFW algorithm is the first to offer comparable or better generalization to SGD with a hand-designed schedule on the CIFAR data sets, all the while converging several times faster and requiring only a single hyperparameter.",
+        "Gradient-based methods continue to be the most popular optimization algorithms for learning deep neural networks.",
+        "We will provide the first algorithm to accurately learn deep neural networks with only a single hyper-parameter while offering similar performance compared to SGD with a hand-designed schedule.",
+        "On the WRN-CIFAR-100 task in particular, DFW obtains a testing accuracy which is about 7% higher than all other adaptive methods and outperforms SGD with a hand-designed schedule by 1%.",
+        "Due to the heavy computational cost of the cross-validation, we provide results for SGD, DFW and the best performing adaptive gradient method, which is AMSGrad.",
+        "The reported results use SGD with an initial learning rate of 0.1 and a hand-designed schedule that adapts to the variations of the validation set: if the validation accuracy does not improve, the learning rate is divided by a factor of 5.",
+        "This experiment, which is performed on a completely different architecture and data set than the previous one, confirms that DFW outperforms adaptive gradient methods and matches the performance of SGD with a hand-designed learning rate schedule.",
+        "We compare results of the DFW and SGD algorithms on the CIFAR data sets when varying the value of \u03b7 as a power of 10.",
+        "We have observed in our experiments that such a choice of high learning rate provides a consistent improvement for convolutional neural networks: accurate minimization of the training objective with large initial steps usually leads to good generalization.",
+        "DFW predominantly outperforms adaptive gradient methods, and obtains similar performance to SGD without requiring a hand-designed learning rate schedule.",
+        "We emphasize the generality of our framework in Section 3, which enables the training of deep neural networks to benefit from any advance on optimization algorithms for linear SVMs. This framework could be applied to other loss functions that yield efficiently solvable proximal problems.",
+        "This illustrates a major difficulty in the design of effective optimization algorithms for deep neural networks: the learning objective does not include all the regularization needed for good generalization.",
+        "We believe that in order to further advance optimization for deep neural networks, it is essential to alleviate this problem and expose a clear objective function to optimize"
+    ],
+    "headline": "We present an optimization method that offers empirically the best of both worlds: our algorithm yields good generalization performance while requiring only one hyper-parameter",
+    "reference_links": [
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan Shillingford, and Nando De Freitas. Learning to learn by gradient descent by gradient descent. Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Arpit_et+al_2017_a",
+            "entry": "Devansh Arpit, Stanis\u0142aw Jastrzebski, Nicolas Ballas, David Krueger, Emmanuel Bengio, Maxinder S. Kanwal, Tegan Maharaj, Asja Fischer, Aaron Courville, Yoshua Bengio, and Simon LacosteJulien. A closer look at memorization in deep networks. International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arpit%2C%20Devansh%20Jastrzebski%2C%20Stanis%C5%82aw%20Ballas%2C%20Nicolas%20Krueger%2C%20David%20A%20closer%20look%20at%20memorization%20in%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arpit%2C%20Devansh%20Jastrzebski%2C%20Stanis%C5%82aw%20Ballas%2C%20Nicolas%20Krueger%2C%20David%20A%20closer%20look%20at%20memorization%20in%20deep%20networks%202017"
+        },
+        {
+            "id": "Ba_et+al_2017_a",
+            "entry": "Jimmy Ba, Roger Grosse, and James Martens. Distributed second-order optimization using kroneckerfactored approximations. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ba%2C%20Jimmy%20Grosse%2C%20Roger%20Martens%2C%20James%20Distributed%20second-order%20optimization%20using%20kroneckerfactored%20approximations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ba%2C%20Jimmy%20Grosse%2C%20Roger%20Martens%2C%20James%20Distributed%20second-order%20optimization%20using%20kroneckerfactored%20approximations%202017"
+        },
+        {
+            "id": "Bach_2015_a",
+            "entry": "Francis Bach. Duality between subgradient and conditional gradient methods. SIAM Journal on Optimization, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bach%2C%20Francis%20Duality%20between%20subgradient%20and%20conditional%20gradient%20methods%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bach%2C%20Francis%20Duality%20between%20subgradient%20and%20conditional%20gradient%20methods%202015"
+        },
+        {
+            "id": "Baydin_et+al_2018_a",
+            "entry": "Atilim Gunes Baydin, Robert Cornish, David Martinez Rubio, Mark Schmidt, and Frank Wood. Online learning rate adaptation with hypergradient descent. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baydin%2C%20Atilim%20Gunes%20Cornish%2C%20Robert%20Rubio%2C%20David%20Martinez%20Schmidt%2C%20Mark%20Online%20learning%20rate%20adaptation%20with%20hypergradient%20descent%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baydin%2C%20Atilim%20Gunes%20Cornish%2C%20Robert%20Rubio%2C%20David%20Martinez%20Schmidt%2C%20Mark%20Online%20learning%20rate%20adaptation%20with%20hypergradient%20descent%202018"
+        },
+        {
+            "id": "Berrada_et+al_2017_a",
+            "entry": "Leonard Berrada, Andrew Zisserman, and M Pawan Kumar. Trusting SVM for piecewise linear CNNs. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Berrada%2C%20Leonard%20Zisserman%2C%20Andrew%20Kumar%2C%20M.Pawan%20Trusting%20SVM%20for%20piecewise%20linear%20CNNs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Berrada%2C%20Leonard%20Zisserman%2C%20Andrew%20Kumar%2C%20M.Pawan%20Trusting%20SVM%20for%20piecewise%20linear%20CNNs%202017"
+        },
+        {
+            "id": "Berrada_et+al_2018_a",
+            "entry": "Leonard Berrada, Andrew Zisserman, and M Pawan Kumar. Smooth loss functions for deep top-k classification. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Berrada%2C%20Leonard%20Zisserman%2C%20Andrew%20Kumar%2C%20M.Pawan%20Smooth%20loss%20functions%20for%20deep%20top-k%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Berrada%2C%20Leonard%20Zisserman%2C%20Andrew%20Kumar%2C%20M.Pawan%20Smooth%20loss%20functions%20for%20deep%20top-k%20classification%202018"
+        },
+        {
+            "id": "Botev_et+al_2017_a",
+            "entry": "Aleksandar Botev, Hippolyt Ritter, and David Barber. Practical gauss-newton optimisation for deep learning. International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Botev%2C%20Aleksandar%20Ritter%2C%20Hippolyt%20Barber%2C%20David%20Practical%20gauss-newton%20optimisation%20for%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Botev%2C%20Aleksandar%20Ritter%2C%20Hippolyt%20Barber%2C%20David%20Practical%20gauss-newton%20optimisation%20for%20deep%20learning%202017"
+        },
+        {
+            "id": "Bowman_et+al_2015_a",
+            "entry": "Samuel R Bowman, Gabor Angeli, Christopher Potts, and Christopher D Manning. A large annotated corpus for learning natural language inference. Conference on Empirical Methods in Natural Language Processing, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowman%2C%20Samuel%20R.%20Angeli%2C%20Gabor%20Potts%2C%20Christopher%20Manning%2C%20Christopher%20D.%20A%20large%20annotated%20corpus%20for%20learning%20natural%20language%20inference%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowman%2C%20Samuel%20R.%20Angeli%2C%20Gabor%20Potts%2C%20Christopher%20Manning%2C%20Christopher%20D.%20A%20large%20annotated%20corpus%20for%20learning%20natural%20language%20inference%202015"
+        },
+        {
+            "id": "Bubeck_2015_a",
+            "entry": "S\u00e9bastien Bubeck. Convex optimization: Algorithms and complexity. Foundations and Trends in Machine Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bubeck%2C%20S%C3%A9bastien%20Convex%20optimization%3A%20Algorithms%20and%20complexity%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bubeck%2C%20S%C3%A9bastien%20Convex%20optimization%3A%20Algorithms%20and%20complexity%202015"
+        },
+        {
+            "id": "Chaudhari_2018_a",
+            "entry": "Pratik Chaudhari and Stefano Soatto. Stochastic gradient descent performs variational inference, converges to limit cycles for deep networks. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chaudhari%2C%20Pratik%20Soatto%2C%20Stefano%20Stochastic%20gradient%20descent%20performs%20variational%20inference%2C%20converges%20to%20limit%20cycles%20for%20deep%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chaudhari%2C%20Pratik%20Soatto%2C%20Stefano%20Stochastic%20gradient%20descent%20performs%20variational%20inference%2C%20converges%20to%20limit%20cycles%20for%20deep%20networks%202018"
+        },
+        {
+            "id": "Conneau_et+al_2017_a",
+            "entry": "Alexis Conneau, Douwe Kiela, Holger Schwenk, Loic Barrault, and Antoine Bordes. Supervised learning of universal sentence representations from natural language inference data. Conference on Empirical Methods in Natural Language Processing, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conneau%2C%20Alexis%20Kiela%2C%20Douwe%20Schwenk%2C%20Holger%20Barrault%2C%20Loic%20Supervised%20learning%20of%20universal%20sentence%20representations%20from%20natural%20language%20inference%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conneau%2C%20Alexis%20Kiela%2C%20Douwe%20Schwenk%2C%20Holger%20Barrault%2C%20Loic%20Supervised%20learning%20of%20universal%20sentence%20representations%20from%20natural%20language%20inference%20data%202017"
+        },
+        {
+            "id": "Desjardins_et+al_2015_a",
+            "entry": "Guillaume Desjardins, Karen Simonyan, Razvan Pascanu, et al. Natural neural networks. Neural Information Processing Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guillaume%20Desjardins%20Karen%20Simonyan%20Razvan%20Pascanu%20et%20al%20Natural%20neural%20networks%20Neural%20Information%20Processing%20Systems%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guillaume%20Desjardins%20Karen%20Simonyan%20Razvan%20Pascanu%20et%20al%20Natural%20neural%20networks%20Neural%20Information%20Processing%20Systems%202015"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. Journal of Machine Learning Research, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Frank_1956_a",
+            "entry": "Marguerite Frank and Philip Wolfe. An algorithm for quadratic programming. Naval Research Logistics Quarterly, 1956.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frank%2C%20Marguerite%20Wolfe%2C%20Philip%20An%20algorithm%20for%20quadratic%20programming%201956",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frank%2C%20Marguerite%20Wolfe%2C%20Philip%20An%20algorithm%20for%20quadratic%20programming%201956"
+        },
+        {
+            "id": "Frerix_et+al_2018_a",
+            "entry": "Thomas Frerix, Thomas M\u00f6llenhoff, Michael Moeller, and Daniel Cremers. Proximal backpropagation. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frerix%2C%20Thomas%20M%C3%B6llenhoff%2C%20Thomas%20Moeller%2C%20Michael%20Cremers%2C%20Daniel%20Proximal%20backpropagation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frerix%2C%20Thomas%20M%C3%B6llenhoff%2C%20Thomas%20Moeller%2C%20Michael%20Cremers%2C%20Daniel%20Proximal%20backpropagation%202018"
+        },
+        {
+            "id": "Goel_et+al_2017_a",
+            "entry": "Surbhi Goel, Varun Kanade, Adam Klivans, and Justin Thaler. Reliably learning the ReLU in polynomial time. Conference on Learning Theory, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goel%2C%20Surbhi%20Kanade%2C%20Varun%20Klivans%2C%20Adam%20Thaler%2C%20Justin%20Reliably%20learning%20the%20ReLU%20in%20polynomial%20time%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goel%2C%20Surbhi%20Kanade%2C%20Varun%20Klivans%2C%20Adam%20Thaler%2C%20Justin%20Reliably%20learning%20the%20ReLU%20in%20polynomial%20time%202017"
+        },
+        {
+            "id": "Grosse_2016_a",
+            "entry": "Roger Grosse and James Martens. A kronecker-factored approximate fisher matrix for convolution layers. International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grosse%2C%20Roger%20Martens%2C%20James%20A%20kronecker-factored%20approximate%20fisher%20matrix%20for%20convolution%20layers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grosse%2C%20Roger%20Martens%2C%20James%20A%20kronecker-factored%20approximate%20fisher%20matrix%20for%20convolution%20layers%202016"
+        },
+        {
+            "id": "Hardt_et+al_2016_a",
+            "entry": "Moritz Hardt, Benjamin Recht, and Yoram Singer. Train faster, generalize better: Stability of stochastic gradient descent. International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hardt%2C%20Moritz%20Recht%2C%20Benjamin%20Singer%2C%20Yoram%20Train%20faster%2C%20generalize%20better%3A%20Stability%20of%20stochastic%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hardt%2C%20Moritz%20Recht%2C%20Benjamin%20Singer%2C%20Yoram%20Train%20faster%2C%20generalize%20better%3A%20Stability%20of%20stochastic%20gradient%20descent%202016"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. Conference on Computer Vision and Pattern Recognition, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Heinemann_et+al_2016_a",
+            "entry": "Uri Heinemann, Roi Livni, Elad Eban, Gal Elidan, and Amir Globerson. Improper deep kernels. International Conference on Artificial Intelligence and Statistics, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heinemann%2C%20Uri%20Livni%2C%20Roi%20Eban%2C%20Elad%20Elidan%2C%20Gal%20Improper%20deep%20kernels%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heinemann%2C%20Uri%20Livni%2C%20Roi%20Eban%2C%20Elad%20Elidan%2C%20Gal%20Improper%20deep%20kernels%202016"
+        },
+        {
+            "id": "Hochreiter_2005_a",
+            "entry": "Sepp Hochreiter and Klaus Obermayer. Optimal gradient-based learning using importance weights. International Joint Conference on Neural Networks, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Obermayer%2C%20Klaus%20Optimal%20gradient-based%20learning%20using%20importance%20weights%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Obermayer%2C%20Klaus%20Optimal%20gradient-based%20learning%20using%20importance%20weights%202005"
+        },
+        {
+            "id": "Hoffer_et+al_2017_a",
+            "entry": "Elad Hoffer, Itay Hubara, and Daniel Soudry. Train longer, generalize better: closing the generalization gap in large batch training of neural networks. Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoffer%2C%20Elad%20Hubara%2C%20Itay%20Soudry%2C%20Daniel%20Train%20longer%2C%20generalize%20better%3A%20closing%20the%20generalization%20gap%20in%20large%20batch%20training%20of%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoffer%2C%20Elad%20Hubara%2C%20Itay%20Soudry%2C%20Daniel%20Train%20longer%2C%20generalize%20better%3A%20closing%20the%20generalization%20gap%20in%20large%20batch%20training%20of%20neural%20networks%202017"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Kilian Q Weinberger, and Laurens van der Maaten. Densely connected convolutional networks. Conference on Computer Vision and Pattern Recognition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20Weinberger%2C%20Kilian%20Q.%20van%20der%20Maaten%2C%20Laurens%20Densely%20connected%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Zhuang%20Weinberger%2C%20Kilian%20Q.%20van%20der%20Maaten%2C%20Laurens%20Densely%20connected%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Simonyan_2015_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015"
+        },
+        {
+            "id": "Singh_2018_a",
+            "entry": "Gaurav Singh and John Shawe-Taylor. Faster convergence & generalization in DNNs. arXiv preprint, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singh%2C%20Gaurav%20Shawe-Taylor%2C%20John%20Faster%20convergence%20%26%20generalization%20in%20DNNs.%20arXiv%20p%202018"
+        },
+        {
+            "id": "Szegedy_et+al_2015_a",
+            "entry": "Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, et al. Going deeper with convolutions. Conference on Computer Vision and Pattern Recognition, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Liu%2C%20Wei%20Jia%2C%20Yangqing%20Sermanet%2C%20Pierre%20Going%20deeper%20with%20convolutions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Liu%2C%20Wei%20Jia%2C%20Yangqing%20Sermanet%2C%20Pierre%20Going%20deeper%20with%20convolutions%202015"
+        },
+        {
+            "id": "Taskar_et+al_2003_a",
+            "entry": "Benjamin Taskar, Carlos Guestrin, and Daphne Koller. Max-margin Markov networks. Neural Information Processing Systems, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taskar%2C%20Benjamin%20Guestrin%2C%20Carlos%20Koller%2C%20Daphne%20Max-margin%20Markov%20networks%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taskar%2C%20Benjamin%20Guestrin%2C%20Carlos%20Koller%2C%20Daphne%20Max-margin%20Markov%20networks%202003"
+        },
+        {
+            "id": "Taylor_et+al_2016_a",
+            "entry": "Gavin Taylor, Ryan Burmeister, Zheng Xu, Bharat Singh, Ankit Patel, and Tom Goldstein. Training neural networks without gradients: A scalable ADMM approach. International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taylor%2C%20Gavin%20Burmeister%2C%20Ryan%20Xu%2C%20Zheng%20Singh%2C%20Bharat%20Training%20neural%20networks%20without%20gradients%3A%20A%20scalable%20ADMM%20approach%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taylor%2C%20Gavin%20Burmeister%2C%20Ryan%20Xu%2C%20Zheng%20Singh%2C%20Bharat%20Training%20neural%20networks%20without%20gradients%3A%20A%20scalable%20ADMM%20approach%202016"
+        },
+        {
+            "id": "Tsochantaridis_et+al_2004_a",
+            "entry": "Ioannis Tsochantaridis, Thomas Hofmann, Thorsten Joachims, and Yasemin Altun. Support vector machine learning for interdependent and structured output spaces. International Conference on Machine Learning, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tsochantaridis%2C%20Ioannis%20Hofmann%2C%20Thomas%20Joachims%2C%20Thorsten%20Altun%2C%20Yasemin%20Support%20vector%20machine%20learning%20for%20interdependent%20and%20structured%20output%20spaces%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tsochantaridis%2C%20Ioannis%20Hofmann%2C%20Thomas%20Joachims%2C%20Thorsten%20Altun%2C%20Yasemin%20Support%20vector%20machine%20learning%20for%20interdependent%20and%20structured%20output%20spaces%202004"
+        },
+        {
+            "id": "Wichrowska_et+al_2017_a",
+            "entry": "Olga Wichrowska, Niru Maheswaranathan, Matthew W Hoffman, Sergio Gomez Colmenarejo, Misha Denil, Nando de Freitas, and Jascha Sohl-Dickstein. Learned optimizers that scale and generalize. International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olga%20Wichrowska%20Niru%20Maheswaranathan%20Matthew%20W%20Hoffman%20Sergio%20Gomez%20Colmenarejo%20Misha%20Denil%20Nando%20de%20Freitas%20and%20Jascha%20SohlDickstein%20Learned%20optimizers%20that%20scale%20and%20generalize%20International%20Conference%20on%20Machine%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olga%20Wichrowska%20Niru%20Maheswaranathan%20Matthew%20W%20Hoffman%20Sergio%20Gomez%20Colmenarejo%20Misha%20Denil%20Nando%20de%20Freitas%20and%20Jascha%20SohlDickstein%20Learned%20optimizers%20that%20scale%20and%20generalize%20International%20Conference%20on%20Machine%20Learning%202017"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nati Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20Neural%20Information%20Processing%20Systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20Neural%20Information%20Processing%20Systems%202017"
+        },
+        {
+            "id": "Xiaoxia_2018_a",
+            "entry": "Xiaoxia Wu, Rachel Ward, and L\u00e9on Bottou. Wngrad: Learn the learning rate in gradient descent. arXiv preprint arXiv:1803.02865, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02865"
+        },
+        {
+            "id": "Yuille_2002_a",
+            "entry": "Alan L. Yuille and Anand Rangarajan. The concave-convex procedure (CCCP). Neural Information Processing Systems, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuille%2C%20Alan%20L.%20Rangarajan%2C%20Anand%20The%20concave-convex%20procedure%20%28CCCP%29.%20Neural%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuille%2C%20Alan%20L.%20Rangarajan%2C%20Anand%20The%20concave-convex%20procedure%20%28CCCP%29.%20Neural%202002"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Wide residual networks. British Machine Vision Conference, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zagoruyko%2C%20Sergey%20Komodakis%2C%20Nikos%20Wide%20residual%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zagoruyko%2C%20Sergey%20Komodakis%2C%20Nikos%20Wide%20residual%20networks%202016"
+        },
+        {
+            "id": "Zeiler_2012_a",
+            "entry": "Matthew Zeiler. ADADELTA: an adaptive learning rate method. arXiv preprint, 2012. Yuchen Zhang, Percy Liang, and Martin J. Wainwright. Convexified convolutional neural networks.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zeiler%2C%20Matthew%20ADADELTA%3A%20an%20adaptive%20learning%20rate%20method.%20arXiv%20p%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zeiler%2C%20Matthew%20ADADELTA%3A%20an%20adaptive%20learning%20rate%20method.%20arXiv%20p%202012"
+        },
+        {
+            "id": "Zhang_2017_a",
+            "entry": "International Conference on Machine Learning, 2017a. Ziming Zhang, Yuanwei Wu, and Guanghui Wang. Bpgrad: Towards global optimality in deep learning via branch and pruning. Conference on Computer Vision and Pattern Recognition, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Yuanwei%20Wu%20Wang%2C%20Guanghui%20Bpgrad%3A%20Towards%20global%20optimality%20in%20deep%20learning%20via%20branch%20and%20pruning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Yuanwei%20Wu%20Wang%2C%20Guanghui%20Bpgrad%3A%20Towards%20global%20optimality%20in%20deep%20learning%20via%20branch%20and%20pruning%202017"
+        },
+        {
+            "id": "For_2013_a",
+            "entry": "For completeness, we prove results for our specific instance of Structural SVM problem. We point out that the proofs of sections A.1, A.2 and A.3 are adaptations from (Lacoste-Julien et al., 2013). Propositions are numbered according to their appearance in the paper.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20completeness%20we%20prove%20results%20for%20our%20specific%20instance%20of%20Structural%20SVM%20problem%20We%20point%20out%20that%20the%20proofs%20of%20sections%20A1%20A2%20and%20A3%20are%20adaptations%20from%20LacosteJulien%20et%20al%202013%20Propositions%20are%20numbered%20according%20to%20their%20appearance%20in%20the%20paper",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20completeness%20we%20prove%20results%20for%20our%20specific%20instance%20of%20Structural%20SVM%20problem%20We%20point%20out%20that%20the%20proofs%20of%20sections%20A1%20A2%20and%20A3%20are%20adaptations%20from%20LacosteJulien%20et%20al%202013%20Propositions%20are%20numbered%20according%20to%20their%20appearance%20in%20the%20paper"
+        },
+        {
+            "id": "Note_2013_b",
+            "entry": "Note that when fx is linear, and when the search direction s is given by the conditional gradient, we recover the standard Frank-Wolfe algorithm for SVM (Lacoste-Julien et al., 2013).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Note%20that%20when%20fx%20is%20linear%20and%20when%20the%20search%20direction%20s%20is%20given%20by%20the%20conditional%20gradient%20we%20recover%20the%20standard%20FrankWolfe%20algorithm%20for%20SVM%20LacosteJulien%20et%20al%202013"
+        }
+    ]
+}

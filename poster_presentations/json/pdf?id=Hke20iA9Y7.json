@@ -1,0 +1,244 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "EFFICIENT TRAINING ON VERY LARGE CORPORA VIA GRAMIAN ESTIMATION",
+        "author": "Walid Krichene, Nicolas Mayoraz, Steffen Rendle, Li Zhang, Xinyang Yi, Lichan Hong, Ed H. Chi & John Anderson Google",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Hke20iA9Y7"
+        },
+        "abstract": "We study the problem of learning similarity functions over very large corpora using neural network embedding models. These models are typically trained using SGD with random sampling of unobserved pairs, with a sample size that grows quadratically with the corpus size, making it expensive to scale. We propose new efficient methods to train such models without sampling unobserved pairs. Inspired by matrix factorization, our approach relies on adding a global quadratic penalty and expressing this term as the inner-product of two Gramians. We show that the gradient of this term can be efficiently computed by maintaining estimates of the Gramians, and develop variance reduction schemes to improve the quality of the estimates. We conduct large-scale experiments that show a significant improvement in training time and generalization performance compared to sampling methods."
+    },
+    "keywords": [
+        {
+            "term": "similarity function",
+            "url": "https://en.wikipedia.org/wiki/similarity_function"
+        },
+        {
+            "term": "inner product",
+            "url": "https://en.wikipedia.org/wiki/inner_product"
+        },
+        {
+            "term": "mean average precision",
+            "url": "https://en.wikipedia.org/wiki/mean_average_precision"
+        },
+        {
+            "term": "matrix factorization",
+            "url": "https://en.wikipedia.org/wiki/matrix_factorization"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "sample size",
+            "url": "https://en.wikipedia.org/wiki/sample_size"
+        }
+    ],
+    "abbreviations": {
+        "MIPS": "maximum inner-product search problem",
+        "SAG": "stochastic average gradient",
+        "MAP": "mean average precision"
+    },
+    "highlights": [
+        "We consider the problem of learning a similarity function h : X \u00d7 Y \u2192 R, that maps each pair of items, represented by their feature vectors (x, y) \u2208 X \u00d7 Y, to a real number h(x, y), representing their similarity",
+        "Many problems can be cast in this form: In natural language processing, x represents a context, y represents a candidate word, and the target similarity measures the likelihood to observe y in context x (<a class=\"ref-link\" id=\"cMikolov_et+al_2013_a\" href=\"#rMikolov_et+al_2013_a\">Mikolov et al, 2013</a>; <a class=\"ref-link\" id=\"cPennington_et+al_2014_a\" href=\"#rPennington_et+al_2014_a\">Pennington et al, 2014</a>; <a class=\"ref-link\" id=\"cLevy_2014_a\" href=\"#rLevy_2014_a\">Levy & Goldberg, 2014</a>)",
+        "Other applications include image similarity, where x and y are pixel-representations of images (<a class=\"ref-link\" id=\"cBromley_et+al_1993_a\" href=\"#rBromley_et+al_1993_a\">Bromley et al, 1993</a>; <a class=\"ref-link\" id=\"cChechik_et+al_2010_a\" href=\"#rChechik_et+al_2010_a\">Chechik et al, 2010</a>; <a class=\"ref-link\" id=\"cSchroff_et+al_2015_a\" href=\"#rSchroff_et+al_2015_a\">Schroff et al, 2015</a>), and network embedding models (<a class=\"ref-link\" id=\"cGrover_2016_a\" href=\"#rGrover_2016_a\">Grover & Leskovec, 2016</a>; <a class=\"ref-link\" id=\"cQiu_et+al_2018_a\" href=\"#rQiu_et+al_2018_a\">Qiu et al, 2018</a>), where x and y are nodes in a graph and the similarity is whether an edge connects them",
+        "Contributions We propose new methods that leverage the Gramian formulation in the non-linear case, and that, unlike previous approaches, are efficient even when both left and right embeddings are non-linear",
+        "We showed that the Gramian formulation commonly used in low-rank matrix factorization can be leveraged for training non-linear embedding models, by maintaining estimates of the Gram matrices and using them to estimate the gradient"
+    ],
+    "key_statements": [
+        "We consider the problem of learning a similarity function h : X \u00d7 Y \u2192 R, that maps each pair of items, represented by their feature vectors (x, y) \u2208 X \u00d7 Y, to a real number h(x, y), representing their similarity",
+        "Many problems can be cast in this form: In natural language processing, x represents a context, y represents a candidate word, and the target similarity measures the likelihood to observe y in context x (<a class=\"ref-link\" id=\"cMikolov_et+al_2013_a\" href=\"#rMikolov_et+al_2013_a\">Mikolov et al, 2013</a>; <a class=\"ref-link\" id=\"cPennington_et+al_2014_a\" href=\"#rPennington_et+al_2014_a\">Pennington et al, 2014</a>; <a class=\"ref-link\" id=\"cLevy_2014_a\" href=\"#rLevy_2014_a\">Levy & Goldberg, 2014</a>)",
+        "X represents a user query, y represents a candidate item, and the target similarity is a measure of relevance of item y to query x, e.g. a movie rating (<a class=\"ref-link\" id=\"cAgarwal_2009_a\" href=\"#rAgarwal_2009_a\">Agarwal & Chen, 2009</a>), or the likelihood to watch a given movie (<a class=\"ref-link\" id=\"cHu_et+al_2008_a\" href=\"#rHu_et+al_2008_a\">Hu et al, 2008</a>; <a class=\"ref-link\" id=\"cRendle_2010_a\" href=\"#rRendle_2010_a\">Rendle, 2010</a>)",
+        "Other applications include image similarity, where x and y are pixel-representations of images (<a class=\"ref-link\" id=\"cBromley_et+al_1993_a\" href=\"#rBromley_et+al_1993_a\">Bromley et al, 1993</a>; <a class=\"ref-link\" id=\"cChechik_et+al_2010_a\" href=\"#rChechik_et+al_2010_a\">Chechik et al, 2010</a>; <a class=\"ref-link\" id=\"cSchroff_et+al_2015_a\" href=\"#rSchroff_et+al_2015_a\">Schroff et al, 2015</a>), and network embedding models (<a class=\"ref-link\" id=\"cGrover_2016_a\" href=\"#rGrover_2016_a\">Grover & Leskovec, 2016</a>; <a class=\"ref-link\" id=\"cQiu_et+al_2018_a\" href=\"#rQiu_et+al_2018_a\">Qiu et al, 2018</a>), where x and y are nodes in a graph and the similarity is whether an edge connects them",
+        "As the corpus size increases, the quality of the estimates deteriorates unless the sample size is increased, which limits scalability. We address this issue by developing new methods to efficiently estimate the repulsive term, without sampling unobserved pairs",
+        "Contributions We propose new methods that leverage the Gramian formulation in the non-linear case, and that, unlike previous approaches, are efficient even when both left and right embeddings are non-linear",
+        "The Gramian formulation (14) is the inner product of two k \u00d7 k matrices, each involving a sum over the batch, computing its gradient costs O(k2 max(|B|, |B |)), which is cheaper when the batch size is larger than the embedding dimension k, a common situation in practice",
+        "The double sum is approximated by all pairs in the cross product (i, j) \u2208 B \u00d7 B , and for efficiency, we implement them using the Gramian formulation as discussed in Section 3.3, since we operate in a regime where the batch size is an order of magnitude larger than the embedding dimension k",
+        "In order to evaluate the impact of the Gramian estimation quality on training speed and generalization, we compare the validation performance of SOGram to the sampling baselines, on each dataset",
+        "The improvement on simple is modest, which can be explained by the relatively small corpus size (85K unique pages), in which case candidate sampling with a large batch size already yields decent estimates",
+        "We showed that the Gramian formulation commonly used in low-rank matrix factorization can be leveraged for training non-linear embedding models, by maintaining estimates of the Gram matrices and using them to estimate the gradient"
+    ],
+    "summary": [
+        "We consider the problem of learning a similarity function h : X \u00d7 Y \u2192 R, that maps each pair of items, represented by their feature vectors (x, y) \u2208 X \u00d7 Y, to a real number h(x, y), representing their similarity.",
+        "The Gramian formulation has been largely ignored in the non-linear setting, where models are instead trained using stochastic gradient methods with sampling of unobserved pairs, see <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al (2016</a>).",
+        "This makes SAGram much less expensive than applying the original SAG(A) methods, which require maintaining caches of the gradients, this would incur a O memory cost, where d is the number of parameters of the model, and can be orders of magnitude larger than the embedding dimension k.",
+        "The Gramian formulation (14) is the inner product of two k \u00d7 k matrices, each involving a sum over the batch, computing its gradient costs O(k2 max(|B|, |B |)), which is cheaper when the batch size is larger than the embedding dimension k, a common situation in practice.",
+        "The double sum is approximated by all pairs in the cross product (i, j) \u2208 B \u00d7 B , and for efficiency, we implement them using the Gramian formulation as discussed in Section 3.3, since we operate in a regime where the batch size is an order of magnitude larger than the embedding dimension k.",
+        "This experiment is done on Wikipedia simple so that we can compute the exact Gramians by periodically computing the embeddings ui(\u03b8(t)), vi(\u03b8(t)) on the full training set at a given time t.",
+        "In Figure 2b, we evaluate the bias-variance tradeoff discussed in Section 3.2, by comparing the estimates of SOGram with different learning rates \u03b1.",
+        "In order to evaluate the impact of the Gramian estimation quality on training speed and generalization, we compare the validation performance of SOGram to the sampling baselines, on each dataset.",
+        "The improvement on simple is modest, which can be explained by the relatively small corpus size (85K unique pages), in which case candidate sampling with a large batch size already yields decent estimates.",
+        "We show that the relative improvement of SOGram compared to the baselines is even larger when using smaller batches, and its generalization performance is more robust to the choice of batch size and learning rate.",
+        "We showed that the Gramian formulation commonly used in low-rank matrix factorization can be leveraged for training non-linear embedding models, by maintaining estimates of the Gram matrices and using them to estimate the gradient.",
+        "By applying variance reduction techniques to the Gramians, one can improve the quality of the gradient estimates, without relying on large sample size as is done in traditional sampling methods.",
+        "Another direction of future work is to extend this formulation to a larger family of penalty functions, such as the spherical loss family studied in (<a class=\"ref-link\" id=\"cVincent_et+al_2015_a\" href=\"#rVincent_et+al_2015_a\"><a class=\"ref-link\" id=\"cVincent_et+al_2015_a\" href=\"#rVincent_et+al_2015_a\">Vincent et al, 2015</a></a>; de Brebisson & Vincent, 2016)"
+    ],
+    "headline": "We study the problem of learning similarity functions over very large corpora using neural network embedding models",
+    "reference_links": [
+        {
+            "id": "Agarwal_2009_a",
+            "entry": "Deepak Agarwal and Bee-Chung Chen. Regression-based latent factor models. In Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD \u201909, pp. 19\u201328, New York, NY, USA, 2009. ACM.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agarwal%2C%20Deepak%20Chen%2C%20Bee-Chung%20Regression-based%20latent%20factor%20models%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agarwal%2C%20Deepak%20Chen%2C%20Bee-Chung%20Regression-based%20latent%20factor%20models%202009"
+        },
+        {
+            "id": "Bai_et+al_2017_a",
+            "entry": "Yu Bai, Sally Goldman, and Li Zhang. Tapas: Two-pass approximate adaptive sampling for softmax. CoRR, abs/1707.03073, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03073"
+        },
+        {
+            "id": "Bayer_et+al_2017_a",
+            "entry": "Immanuel Bayer, Xiangnan He, Bhargav Kanagal, and Steffen Rendle. A generic coordinate descent framework for learning from implicit feedback. In Proceedings of the 26th International Conference on World Wide Web, WWW \u201917, pp. 1341\u20131350, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bayer%2C%20Immanuel%20He%2C%20Xiangnan%20Kanagal%2C%20Bhargav%20Rendle%2C%20Steffen%20A%20generic%20coordinate%20descent%20framework%20for%20learning%20from%20implicit%20feedback%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bayer%2C%20Immanuel%20He%2C%20Xiangnan%20Kanagal%2C%20Bhargav%20Rendle%2C%20Steffen%20A%20generic%20coordinate%20descent%20framework%20for%20learning%20from%20implicit%20feedback%202017"
+        },
+        {
+            "id": "Bengio_2003_a",
+            "entry": "Yoshua Bengio and Jean-Sebastien Senecal. Quick training of probabilistic neural nets by importance sampling. In Proceedings of the Ninth International Workshop on Artificial Intelligence and Statistics, AISTATS 2003, Key West, Florida, USA, January 3-6, 2003, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Senecal%2C%20Jean-Sebastien%20Quick%20training%20of%20probabilistic%20neural%20nets%20by%20importance%20sampling%202003-01-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Senecal%2C%20Jean-Sebastien%20Quick%20training%20of%20probabilistic%20neural%20nets%20by%20importance%20sampling%202003-01-03"
+        },
+        {
+            "id": "Bengio_2008_a",
+            "entry": "Yoshua Bengio and Jean-Sebastien Senecal. Adaptive importance sampling to accelerate training of a neural probabilistic language model. IEEE Trans. Neural Networks, 19(4):713\u2013722, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Senecal%2C%20Jean-Sebastien%20Adaptive%20importance%20sampling%20to%20accelerate%20training%20of%20a%20neural%20probabilistic%20language%20model%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Senecal%2C%20Jean-Sebastien%20Adaptive%20importance%20sampling%20to%20accelerate%20training%20of%20a%20neural%20probabilistic%20language%20model%202008"
+        },
+        {
+            "id": "Bromley_et+al_1993_a",
+            "entry": "Jane Bromley, James W. Bentz, Leon Bottou, Isabelle Guyon, Yann LeCun, Cliff Moore, Eduard Sackinger, and Roopak Shah. Signature verification using a \u201dsiamese\u201d time delay neural network. International Journal of Pattern Recognition and Artificial Intelligence, 7(4):669\u2013688, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bromley%2C%20Jane%20Bentz%2C%20James%20W.%20Bottou%2C%20Leon%20Guyon%2C%20Isabelle%20Signature%20verification%20using%20a%E2%80%9Dsiamese%E2%80%9D%20time%20delay%20neural%20network%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bromley%2C%20Jane%20Bentz%2C%20James%20W.%20Bottou%2C%20Leon%20Guyon%2C%20Isabelle%20Signature%20verification%20using%20a%E2%80%9Dsiamese%E2%80%9D%20time%20delay%20neural%20network%201993"
+        },
+        {
+            "id": "Chechik_et+al_2010_a",
+            "entry": "Gal Chechik, Varun Sharma, Uri Shalit, and Samy Bengio. Large scale online learning of image similarity through ranking. J. Mach. Learn. Res., 11:1109\u20131135, March 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chechik%2C%20Gal%20Sharma%2C%20Varun%20Shalit%2C%20Uri%20Bengio%2C%20Samy%20Large%20scale%20online%20learning%20of%20image%20similarity%20through%20ranking%202010-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chechik%2C%20Gal%20Sharma%2C%20Varun%20Shalit%2C%20Uri%20Bengio%2C%20Samy%20Large%20scale%20online%20learning%20of%20image%20similarity%20through%20ranking%202010-03"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Wenlin Chen, David Grangier, and Michael Auli. Strategies for training large vocabulary neural language models. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics, ACL 2016, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Wenlin%20Grangier%2C%20David%20Auli%2C%20Michael%20Strategies%20for%20training%20large%20vocabulary%20neural%20language%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Wenlin%20Grangier%2C%20David%20Auli%2C%20Michael%20Strategies%20for%20training%20large%20vocabulary%20neural%20language%20models%202016"
+        },
+        {
+            "id": "De_2016_a",
+            "entry": "Alexandre de Brebisson and Pascal Vincent. An exploration of softmax alternatives belonging to the spherical loss family. CoRR, abs/1511.05042, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05042"
+        },
+        {
+            "id": "Defazio_et+al_2014_a",
+            "entry": "Aaron Defazio, Francis Bach, and Simon Lacoste-Julien. Saga: A fast incremental gradient method with support for non-strongly convex composite objectives. In Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger (eds.), Advances in Neural Information Processing Systems 27, pp. 1646\u20131654. Curran Associates, Inc., 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Defazio%2C%20Aaron%20Bach%2C%20Francis%20Lacoste-Julien%2C%20Simon%20Saga%3A%20A%20fast%20incremental%20gradient%20method%20with%20support%20for%20non-strongly%20convex%20composite%20objectives%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Defazio%2C%20Aaron%20Bach%2C%20Francis%20Lacoste-Julien%2C%20Simon%20Saga%3A%20A%20fast%20incremental%20gradient%20method%20with%20support%20for%20non-strongly%20convex%20composite%20objectives%202014"
+        },
+        {
+            "id": "Grover_2016_a",
+            "entry": "Aditya Grover and Jure Leskovec. Node2vec: Scalable feature learning for networks. In Proceedings of the 22Nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD \u201916, pp. 855\u2013864, New York, NY, USA, 2016. ACM. ISBN 978-1-4503-4232-2.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grover%2C%20Aditya%20Leskovec%2C%20Jure%20Node2vec%3A%20Scalable%20feature%20learning%20for%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grover%2C%20Aditya%20Leskovec%2C%20Jure%20Node2vec%3A%20Scalable%20feature%20learning%20for%20networks%202016"
+        },
+        {
+            "id": "Harper_2015_a",
+            "entry": "F. Maxwell Harper and Joseph A. Konstan. The movielens datasets: History and context. ACM Transactions on Interactive Intelligent Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harper%2C%20F.Maxwell%20Konstan%2C%20Joseph%20A.%20The%20movielens%20datasets%3A%20History%20and%20context%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Harper%2C%20F.Maxwell%20Konstan%2C%20Joseph%20A.%20The%20movielens%20datasets%3A%20History%20and%20context%202015"
+        },
+        {
+            "id": "Hu_et+al_2008_a",
+            "entry": "Yifan Hu, Yehuda Koren, and Chris Volinsky. Collaborative filtering for implicit feedback datasets. In Proceedings of the 2008 Eighth IEEE International Conference on Data Mining, ICDM \u201908, pp. 263\u2013272, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Yifan%20Koren%2C%20Yehuda%20Volinsky%2C%20Chris%20Collaborative%20filtering%20for%20implicit%20feedback%20datasets%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Yifan%20Koren%2C%20Yehuda%20Volinsky%2C%20Chris%20Collaborative%20filtering%20for%20implicit%20feedback%20datasets%202008"
+        },
+        {
+            "id": "Levy_2014_a",
+            "entry": "Omer Levy and Yoav Goldberg. Neural word embedding as implicit matrix factorization. In Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger (eds.), Advances in Neural Information Processing Systems 27, pp. 2177\u20132185. Curran Associates, Inc., 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Neural%20word%20embedding%20as%20implicit%20matrix%20factorization%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Neural%20word%20embedding%20as%20implicit%20matrix%20factorization%202014"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. Efficient estimation of word representations in vector space. CoRR, abs/1301.3781, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1301.3781"
+        },
+        {
+            "id": "Neyshabur_2015_a",
+            "entry": "Behnam Neyshabur and Nathan Srebro. On symmetric and asymmetric lshs for inner product search. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning - Volume 37, ICML\u201915, pp. 1926\u20131934. JMLR.org, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neyshabur%2C%20Behnam%20Srebro%2C%20Nathan%20On%20symmetric%20and%20asymmetric%20lshs%20for%20inner%20product%20search%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neyshabur%2C%20Behnam%20Srebro%2C%20Nathan%20On%20symmetric%20and%20asymmetric%20lshs%20for%20inner%20product%20search%202015"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher D. Manning. Glove: Global vectors for word representation. In Empirical Methods in Natural Language Processing (EMNLP), pp. 1532\u20131543, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014"
+        },
+        {
+            "id": "Qiu_et+al_2018_a",
+            "entry": "Jiezhong Qiu, Yuxiao Dong, Hao Ma, Jian Li, Kuansan Wang, and Jie Tang. Network embedding as matrix factorization: Unifying deepwalk, line, pte, and node2vec. In Proceedings of the Eleventh ACM International Conference on Web Search and Data Mining, WSDM \u201918, pp. 459\u2013467, New York, NY, USA, 2018. ACM. ISBN 978-1-4503-5581-0.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qiu%2C%20Jiezhong%20Dong%2C%20Yuxiao%20Ma%2C%20Hao%20Li%2C%20Jian%20Network%20embedding%20as%20matrix%20factorization%3A%20Unifying%20deepwalk%2C%20line%2C%20pte%2C%20and%20node2vec%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qiu%2C%20Jiezhong%20Dong%2C%20Yuxiao%20Ma%2C%20Hao%20Li%2C%20Jian%20Network%20embedding%20as%20matrix%20factorization%3A%20Unifying%20deepwalk%2C%20line%2C%20pte%2C%20and%20node2vec%202018"
+        },
+        {
+            "id": "Rendle_2010_a",
+            "entry": "Steffen Rendle. Factorization machines. In Proceedings of the 2010 IEEE International Conference on Data Mining, ICDM \u201910, pp. 995\u20131000, Washington, DC, USA, 2010. IEEE Computer Society.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rendle%2C%20Steffen%20Factorization%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rendle%2C%20Steffen%20Factorization%20machines%202010"
+        },
+        {
+            "id": "Roux_et+al_2012_a",
+            "entry": "Nicolas Le Roux, Mark Schmidt, and Francis Bach. A stochastic gradient method with an exponential convergence rate for finite training sets. In Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume 2, NIPS\u201912, pp. 2663\u20132671, USA, 2012. Curran Associates Inc.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roux%2C%20Nicolas%20Le%20Schmidt%2C%20Mark%20Bach%2C%20Francis%20A%20stochastic%20gradient%20method%20with%20an%20exponential%20convergence%20rate%20for%20finite%20training%20sets%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roux%2C%20Nicolas%20Le%20Schmidt%2C%20Mark%20Bach%2C%20Francis%20A%20stochastic%20gradient%20method%20with%20an%20exponential%20convergence%20rate%20for%20finite%20training%20sets%202012"
+        },
+        {
+            "id": "Schmidt_et+al_2017_a",
+            "entry": "Mark Schmidt, Nicolas Le Roux, and Francis Bach. Minimizing finite sums with the stochastic average gradient. Math. Program., 162(1-2):83\u2013112, March 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidt%2C%20Mark%20Roux%2C%20Nicolas%20Le%20Bach%2C%20Francis%20Minimizing%20finite%20sums%20with%20the%20stochastic%20average%20gradient%202017-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidt%2C%20Mark%20Roux%2C%20Nicolas%20Le%20Bach%2C%20Francis%20Minimizing%20finite%20sums%20with%20the%20stochastic%20average%20gradient%202017-03"
+        },
+        {
+            "id": "Schnabel_et+al_2015_a",
+            "entry": "Tobias Schnabel, Igor Labutov, David Mimno, and Thorsten Joachims. Evaluation methods for unsupervised word embeddings. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing, pp. 298\u2013307, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schnabel%2C%20Tobias%20Labutov%2C%20Igor%20Mimno%2C%20David%20Joachims%2C%20Thorsten%20Evaluation%20methods%20for%20unsupervised%20word%20embeddings%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schnabel%2C%20Tobias%20Labutov%2C%20Igor%20Mimno%2C%20David%20Joachims%2C%20Thorsten%20Evaluation%20methods%20for%20unsupervised%20word%20embeddings%202015"
+        },
+        {
+            "id": "Schroff_et+al_2015_a",
+            "entry": "F. Schroff, D. Kalenichenko, and J. Philbin. Facenet: A unified embedding for face recognition and clustering. In 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 815\u2013823, June 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schroff%2C%20F.%20Kalenichenko%2C%20D.%20Philbin%2C%20J.%20Facenet%3A%20A%20unified%20embedding%20for%20face%20recognition%20and%20clustering%202015-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schroff%2C%20F.%20Kalenichenko%2C%20D.%20Philbin%2C%20J.%20Facenet%3A%20A%20unified%20embedding%20for%20face%20recognition%20and%20clustering%202015-06"
+        },
+        {
+            "id": "Shazeer_et+al_2016_a",
+            "entry": "Noam Shazeer, Ryan Doherty, Colin Evans, and Chris Waterson. Swivel: Improving embeddings by noticing what\u2019s missing. CoRR, abs/1602.02215, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02215"
+        },
+        {
+            "id": "Shrivastava_2014_a",
+            "entry": "Anshumali Shrivastava and Ping Li. Asymmetric lsh (alsh) for sublinear time maximum inner product search (mips). In Proceedings of the 27th International Conference on Neural Information Processing Systems - Volume 2, NIPS\u201914, pp. 2321\u20132329, Cambridge, MA, USA, 2014. MIT Press.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shrivastava%2C%20Anshumali%20Li%2C%20Ping%20Asymmetric%20lsh%20%28alsh%29%20for%20sublinear%20time%20maximum%20inner%20product%20search%20%28mips%29%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shrivastava%2C%20Anshumali%20Li%2C%20Ping%20Asymmetric%20lsh%20%28alsh%29%20for%20sublinear%20time%20maximum%20inner%20product%20search%20%28mips%29%202014"
+        },
+        {
+            "id": "Vincent_et+al_2015_a",
+            "entry": "Pascal Vincent, Alexandre de Brebisson, and Xavier Bouthillier. Efficient exact gradient update for training deep networks with very large sparse targets. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett (eds.), Advances in Neural Information Processing Systems 28, pp. 1108\u20131116. Curran Associates, Inc., 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vincent%2C%20Pascal%20de%20Brebisson%2C%20Alexandre%20Bouthillier%2C%20Xavier%20Efficient%20exact%20gradient%20update%20for%20training%20deep%20networks%20with%20very%20large%20sparse%20targets%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vincent%2C%20Pascal%20de%20Brebisson%2C%20Alexandre%20Bouthillier%2C%20Xavier%20Efficient%20exact%20gradient%20update%20for%20training%20deep%20networks%20with%20very%20large%20sparse%20targets%202015"
+        },
+        {
+            "id": "Wikimedia_2017_a",
+            "entry": "Wikimedia Foundation. Wikimedia downloads. https://dumps.wikimedia.org/. Doris Xin, Nicolas Mayoraz, Hubert Pham, Karthik Lakshmanan, and John R. Anderson. Folding: Why good models sometimes make spurious recommendations. In Proceedings of the Eleventh ACM Conference on Recommender Systems, RecSys \u201917, pp.201\u2013209, New York, NY, USA, 2017. ACM. Hsiang-Fu Yu, Mikhail Bilenko, and Chih-Jen Lin. Selection of negative samples for one-class matrix factorization. In Proceedings of the 2017 SIAM International Conference on Data Mining, pp.363\u2013371, 2017. Xu Zhang, Felix X. Yu, Sanjiv Kumar, and Shih-Fu Chang. Learning spread-out local feature descriptors. In IEEE International Conference on Computer Vision, ICCV 2017, Venice, Italy, October 22-29, 2017, pp.4605\u20134613, 2017.",
+            "url": "https://dumps.wikimedia.org/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wikimedia%20Foundation%20Wikimedia%20downloads%20httpsdumpswikimediaorg%20Doris%20Xin%20Nicolas%20Mayoraz%20Hubert%20Pham%20Karthik%20Lakshmanan%20and%20John%20R%20Anderson%20Folding%20Why%20good%20models%20sometimes%20make%20spurious%20recommendations%20In%20Proceedings%20of%20the%20Eleventh%20ACM%20Conference%20on%20Recommender%20Systems%20RecSys%2017%20pp201209%20New%20York%20NY%20USA%202017%20ACM%20HsiangFu%20Yu%20Mikhail%20Bilenko%20and%20ChihJen%20Lin%20Selection%20of%20negative%20samples%20for%20oneclass%20matrix%20factorization%20In%20Proceedings%20of%20the%202017%20SIAM%20International%20Conference%20on%20Data%20Mining%20pp363371%202017%20Xu%20Zhang%20Felix%20X%20Yu%20Sanjiv%20Kumar%20and%20ShihFu%20Chang%20Learning%20spreadout%20local%20feature%20descriptors%20In%20IEEE%20International%20Conference%20on%20Computer%20Vision%20ICCV%202017%20Venice%20Italy%20October%202229%202017%20pp46054613%202017"
+        },
+        {
+            "id": "Each_2017_a",
+            "entry": "Each term (vj \u2297 vj)ui = vj vj, ui is simply the projection of ui on vj (scaled by vj 2). Thus the gradient of g(\u03b8) with respect to ui is an average of scaled projections of ui on each of the right embeddings vj, and moving in the direction of the negative gradient simply moves ui away from regions of the embedding space with a high density of right embeddings. This corresponds to the intuition discussed in the introduction: the purpose of the g(\u03b8) term is precisely to push left and right embeddings away from each other, to avoid placing embeddings of dissimilar items near each other, a phenomenon referred to as folding of the embedding space (Xin et al., 2017).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Each%20term%20vj%20%20vjui%20%20vj%20vj%20ui%20is%20simply%20the%20projection%20of%20ui%20on%20vj%20scaled%20by%20vj%202%20Thus%20the%20gradient%20of%20g%CE%B8%20with%20respect%20to%20ui%20is%20an%20average%20of%20scaled%20projections%20of%20ui%20on%20each%20of%20the%20right%20embeddings%20vj%20and%20moving%20in%20the%20direction%20of%20the%20negative%20gradient%20simply%20moves%20ui%20away%20from%20regions%20of%20the%20embedding%20space%20with%20a%20high%20density%20of%20right%20embeddings%20This%20corresponds%20to%20the%20intuition%20discussed%20in%20the%20introduction%20the%20purpose%20of%20the%20g%CE%B8%20term%20is%20precisely%20to%20push%20left%20and%20right%20embeddings%20away%20from%20each%20other%20to%20avoid%20placing%20embeddings%20of%20dissimilar%20items%20near%20each%20other%20a%20phenomenon%20referred%20to%20as%20folding%20of%20the%20embedding%20space%20Xin%20et%20al%202017"
+        }
+    ]
+}

@@ -1,0 +1,216 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ACTIVE LEARNING WITH PARTIAL FEEDBACK",
+        "author": "Peiyun Hu,Zachary C. Lipton, Anima Anandkumar, Deva Ramanan, 1Carnegie Mellon University 2California Institute of Technology 3Amazon AI peiyunh@cs.cmu.edu, zlipton@cmu.edu, anima@caltech.edu, deva@cs.cmu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HJfSEnRqKQ"
+        },
+        "abstract": "While many active learning papers assume that the learner can simply ask for a label and receive it, real annotation often presents a mismatch between the form of a label (say, one among many classes), and the form of an annotation (typically yes/no binary feedback). To annotate examples corpora for multiclass classification, we might need to ask multiple yes/no questions, exploiting a label hierarchy if one is available. To address this more realistic setting, we propose active learning with partial feedback (ALPF), where the learner must actively choose both which example to label and which binary question to ask. At each step, the learner selects an example, asking if it belongs to a chosen (possibly composite) class. Each answer eliminates some classes, leaving the learner with a partial label. The learner may then either ask more questions about the same example (until an exact label is uncovered) or move on immediately, leaving the first example partially labeled. Active learning with partial labels requires (i) a sampling strategy to choose (example, class) pairs, and (ii) learning from partial labels between rounds. Experiments on Tiny ImageNet demonstrate that our most effective method improves 26% (relative) in top-1 classification accuracy compared to i.i.d. baselines and standard active learners given 30% of the annotation budget that would be required (naively) to annotate the dataset. Moreover, ALPF-learners fully annotate TinyImageNet at 42% lower cost. Surprisingly, we observe that accounting for per-example annotation costs can alter the conventional wisdom that active learners should solicit labels for hard examples."
+    },
+    "keywords": [
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "maximum entropy",
+            "url": "https://en.wikipedia.org/wiki/maximum_entropy"
+        },
+        {
+            "term": "active learning",
+            "url": "https://en.wikipedia.org/wiki/active_learning"
+        }
+    ],
+    "abbreviations": {
+        "ALPF": "Active Learning with Partial Feedback",
+        "AL": "Active Learning",
+        "EIG": "Expected Information Gain",
+        "ERC": "Expected Remaining Classes",
+        "EDC": "Expected Decrease in Classes",
+        "ME": "maximum entropy",
+        "LC": "least confidence",
+        "DAL": "Deep Active Learning"
+    },
+    "highlights": [
+        "Given a large set of unlabeled images, and a budget to collect annotations, how can we learn an accurate image classifier most economically? Active Learning (AL) seeks to increase data efficiency by strategically choosing which examples to annotate",
+        "For active learning with partial feedback, we introduce several acquisition functions for soliciting partial labels, selecting questions among all pairs",
+        "Some key results: (i) vanilla active learning does not improve over i.i.d. baselines, confirming similar observations on image classification by <a class=\"ref-link\" id=\"cSener_2017_a\" href=\"#rSener_2017_a\">Sener and Savarese (2017</a>); AQ provides a dramatic improvement over baseline",
+        "Our experiments validate the active learning with partial feedback framework on large-scale classification benchmarks",
+        "The best among our proposed Active Learning with Partial Feedback learners fully labels the data with 42% fewer binary questions as compared to traditional active learners",
+        "Our diagnostic analysis suggests that in Active Learning with Partial Feedback, it\u2019s sometimes more efficient to start with \u201ceasier\u201d examples that can be cheaply annotated rather than with \u201charder\u201d data as often suggested by traditional active learning"
+    ],
+    "key_statements": [
+        "Given a large set of unlabeled images, and a budget to collect annotations, how can we learn an accurate image classifier most economically? Active Learning (AL) seeks to increase data efficiency by strategically choosing which examples to annotate",
+        "We propose Active Learning with Partial Feedback (ALPF), asking, can we cut costs by actively choosing both which examples to annotate, and which questions to ask? Say that for a new image, our current classifier",
+        "For active learning with partial feedback, we introduce several acquisition functions for soliciting partial labels, selecting questions among all pairs",
+        "We address the task of learning a multiclass classifier from partial labels, a fundamental requirement of Active Learning with Partial Feedback, regardless of the choice of sampling strategy",
+        "We evaluate each method from two perspectives: classification and annotation",
+        "Some key results: (i) vanilla active learning does not improve over i.i.d. baselines, confirming similar observations on image classification by <a class=\"ref-link\" id=\"cSener_2017_a\" href=\"#rSener_2017_a\">Sener and Savarese (2017</a>); AQ provides a dramatic improvement over baseline",
+        "Expected Decrease in Classes and Expected Remaining Classes still manage to label all data with less total cost than Expected Information Gain, this behavior might cost us when we have trivial classes, especially when our unlabeled dataset is enormous relative to our budget.\n4 RELATED WORK",
+        "Our experiments validate the active learning with partial feedback framework on large-scale classification benchmarks",
+        "The best among our proposed Active Learning with Partial Feedback learners fully labels the data with 42% fewer binary questions as compared to traditional active learners",
+        "Our diagnostic analysis suggests that in Active Learning with Partial Feedback, it\u2019s sometimes more efficient to start with \u201ceasier\u201d examples that can be cheaply annotated rather than with \u201charder\u201d data as often suggested by traditional active learning"
+    ],
+    "summary": [
+        "Given a large set of unlabeled images, and a budget to collect annotations, how can we learn an accurate image classifier most economically? Active Learning (AL) seeks to increase data efficiency by strategically choosing which examples to annotate.",
+        "We propose Active Learning with Partial Feedback (ALPF), asking, can we cut costs by actively choosing both which examples to annotate, and which questions to ask?",
+        "Each of our experiments simulates rounds of active learning, starting with a small amount of i.i.d. data to warmstart the models, and proceeding until all examples are exactly labeled.",
+        "Partial Feedback The set of possible questions Q = X \u00d7 C includes all pairs of examples and composite classes.",
+        "We evaluate ALPF algorithms on the CIFAR10, CIFAR100, and Tiny ImageNet datasets, with training sets of 50k, 50k, and 100k examples, and 10, 100, and 200 classes respectively.",
+        "In these experiments we simulate a partially labeled dataset and show that the learner achieves significantly better accuracy when learning from partial labels than if it excluded the partial labels and focused only on exactly annotated examples.",
+        "Once an example is sampled, the learner applies topdown binary splitting\u2014choosing the question that most evenly splits the probability mass, see Related Work for details\u2014 with a uniform prior over the classes until that example is exactly labeled.",
+        "AQ Active questions learners, choose examples at random but use partial feedback strategies to efficiently label those examples, moving on to the example after finding an example\u2019s exact label.",
+        "We count the number questions required to exactly label all training examples.",
+        "These learners sample examples randomly and label to completion before moving on, differing only in how efficiently they annotate data.",
+        "Note that ALPF learners using EIG pick high-entropy data, while ALPF learners with EDC and ERC choose examples with lower entropy predictions.",
+        "EDC and ERC still manage to label all data with less total cost than EIG, this behavior might cost us when we have trivial classes, especially when our unlabeled dataset is enormous relative to our budget.",
+        "This presents new algorithmic challenges: (i) the partial labels for each data point changes across training rounds; the partial labels result from active selection, which introduces bias; and our problem setup requires a sampling strategy to choose questions.",
+        "The best among our proposed ALPF learners fully labels the data with 42% fewer binary questions as compared to traditional active learners.",
+        "Our diagnostic analysis suggests that in ALPF, it\u2019s sometimes more efficient to start with \u201ceasier\u201d examples that can be cheaply annotated rather than with \u201charder\u201d data as often suggested by traditional active learning."
+    ],
+    "headline": "To address this more realistic setting, we propose active learning with partial feedback, where the learner must actively choose both which example to label and which binary question to ask",
+    "reference_links": [
+        {
+            "id": "Box_1987_a",
+            "entry": "Box, G. E. and Draper, N. R. (1987). Empirical model-building and response surfaces. John Wiley & Sons. Cohn, D. A., Ghahramani, Z., and Jordan, M. I. (1996). Active learning with statistical models. Journal of artificial intelligence research (JAIR). Cour, T., Sapp, B., and Taskar, B. (2011). Learning from partial labels. Journal of Machine Learning",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Box%2C%20G.E.%20Draper%2C%20N.R.%20Empirical%20model-building%20and%20response%20surfaces%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Box%2C%20G.E.%20Draper%2C%20N.R.%20Empirical%20model-building%20and%20response%20surfaces%201987"
+        },
+        {
+            "id": "Culotta_2005_a",
+            "entry": "Culotta, A. and McCallum, A. (2005). Reducing labeling effort for structured prediction tasks.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Culotta%2C%20A.%20McCallum%2C%20A.%20Reducing%20labeling%20effort%20for%20structured%20prediction%20tasks%202005"
+        },
+        {
+            "id": "Dagan_1995_a",
+            "entry": "Dagan, I. and Engelson, S. P. (1995). Committee-based sampling for training probabilistic classifiers.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dagan%2C%20I.%20Engelson%2C%20S.P.%20Committee-based%20sampling%20for%20training%20probabilistic%20classifiers%201995"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei, L. (2009). Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition (CVPR).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Gal_et+al_2017_a",
+            "entry": "Gal, Y., Islam, R., and Ghahramani, Z. (2017). Deep bayesian active learning with image data. arXiv:1703.02910.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.02910"
+        },
+        {
+            "id": "Garey_1972_a",
+            "entry": "Garey, M. R. (1972). Optimal binary identification procedures. SIAM Journal on Applied Mathematics.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garey%2C%20M.R.%20Optimal%20binary%20identification%20procedures%201972",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garey%2C%20M.R.%20Optimal%20binary%20identification%20procedures%201972"
+        },
+        {
+            "id": "Garey_1974_a",
+            "entry": "Garey, M. R. and Graham, R. L. (1974). Performance bounds on the splitting algorithm for binary testing. Acta Informatica.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garey%2C%20M.R.%20Graham%2C%20R.L.%20Performance%20bounds%20on%20the%20splitting%20algorithm%20for%20binary%20testing.%20Acta%20Informatica%201974"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Glorot, X. and Bengio, Y. (2010). Understanding the difficulty of training deep feedforward neural networks. In Artificial Intelligence and Statistics (AISTATS).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20X.%20Bengio%2C%20Y.%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20X.%20Bengio%2C%20Y.%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Grandvalet_2004_a",
+            "entry": "Grandvalet, Y. and Bengio, Y. (2004). Learning from partial labels with minimum entropy.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grandvalet%2C%20Y.%20Bengio%2C%20Y.%20Learning%20from%20partial%20labels%20with%20minimum%20entropy%202004"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "He, K., Zhang, X., Ren, S., and Sun, J. (2016). Deep residual learning for image recognition. In Computer",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Vision_et+al_1976_a",
+            "entry": "Vision and Pattern Recognition (CVPR). Hyafil, L. and Rivest, R. L. (1976). Constructing optimal binary decision trees is np-complete. Information processing letters.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vision%20Pattern%20Recognition%20%28CVPR%29.%20Hyafil%2C%20L.%20Rivest%2C%20R.%20L%20Constructing%20optimal%20binary%20decision%20trees%20is%20np-complete.%20Information%20processing%20letters%201976"
+        },
+        {
+            "id": "Kampffmeyer_et+al_2016_a",
+            "entry": "Kampffmeyer, M., Salberg, A.-B., and Jenssen, R. (2016). Semantic segmentation of small objects and modeling of uncertainty in urban remote sensing images using deep convolutional neural networks. In CVPR.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kampffmeyer%2C%20M.%20Salberg%2C%20A.-B.%20Jenssen%2C%20R.%20Semantic%20segmentation%20of%20small%20objects%20and%20modeling%20of%20uncertainty%20in%20urban%20remote%20sensing%20images%20using%20deep%20convolutional%20neural%20networks.%20In%20CVPR%202016"
+        },
+        {
+            "id": "Kendall_et+al_2015_a",
+            "entry": "Kendall, A., Badrinarayanan, V., and Cipolla, R. (2015). Bayesian segnet: Model uncertainty in deep convolutional encoder-decoder architectures for scene understanding. arXiv:1511.02680.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.02680"
+        },
+        {
+            "id": "Kendall_2017_a",
+            "entry": "Kendall, A. and Gal, Y. (2017). What uncertainties do we need in bayesian deep learning for computer vision? In NIPS.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kendall%2C%20A.%20Gal%2C%20Y.%20What%20uncertainties%20do%20we%20need%20in%20bayesian%20deep%20learning%20for%20computer%20vision%3F%20In%20NIPS%202017"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Kingma, D. and Ba, J. (2014). Adam: A method for stochastic optimization. In International Conference on Learning Representations (ICLR).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20D.%20Ba%2C%20J.%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20D.%20Ba%2C%20J.%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202014"
+        },
+        {
+            "id": "Loveland_1985_a",
+            "entry": "Loveland, D. W. (1985). Performance bounds for binary testing with arbitrary weights. Acta Informatica.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Loveland%2C%20D.W.%20Performance%20bounds%20for%20binary%20testing%20with%20arbitrary%20weights.%20Acta%20Informatica%201985"
+        },
+        {
+            "id": "Luo_et+al_2013_a",
+            "entry": "Luo, W., Schwing, A., and Urtasun, R. (2013). Latent structured active learning. In Advances in Neural",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20W.%20Schwing%2C%20A.%20Urtasun%2C%20R.%20Latent%20structured%20active%20learning%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20W.%20Schwing%2C%20A.%20Urtasun%2C%20R.%20Latent%20structured%20active%20learning%202013"
+        },
+        {
+            "id": "Information_1995_a",
+            "entry": "Information Processing Systems (NIPS). Miller, G. A. (1995). Wordnet: a lexical database for english. Communications of the ACM.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Information%20Processing%20Systems%20%28NIPS%29.%20Miller%2C%20G.%20A%20Wordnet%3A%20a%20lexical%20database%20for%20english.%20Communications%20of%20the%20ACM%201995"
+        },
+        {
+            "id": "Mo_et+al_2016_a",
+            "entry": "Mo, Y., Scott, S. D., and Downey, D. (2016). Learning hierarchically decomposable concepts with active over-labeling. In International Conference on Data Mining (ICDM).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mo%2C%20Y.%20Scott%2C%20S.D.%20Downey%2C%20D.%20Learning%20hierarchically%20decomposable%20concepts%20with%20active%20over-labeling%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mo%2C%20Y.%20Scott%2C%20S.D.%20Downey%2C%20D.%20Learning%20hierarchically%20decomposable%20concepts%20with%20active%20over-labeling%202016"
+        },
+        {
+            "id": "Nguyen_2008_a",
+            "entry": "Nguyen, N. and Caruana, R. (2008). Classification with partial labels. In Knowledge discovery and data mining (KDD). ACM.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20N.%20Caruana%2C%20R.%20Classification%20with%20partial%20labels.%20In%20Knowledge%20discovery%20and%20data%20mining%20%28KDD%29.%20ACM%202008"
+        },
+        {
+            "id": "Sener_2017_a",
+            "entry": "Sener, O. and Savarese, S. (2017). Active learning for convolutional neural networks: a core-set approach. In ICLR.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sener%2C%20O.%20Savarese%2C%20S.%20Active%20learning%20for%20convolutional%20neural%20networks%3A%20a%20core-set%20approach.%20In%20ICLR%202017"
+        },
+        {
+            "id": "Settles_2010_a",
+            "entry": "Settles, B. (2010). Active learning literature survey. University of Wisconsin, Madison, 52(55-66):11.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Settles%2C%20B.%20Active%20learning%20literature%20survey%202010"
+        },
+        {
+            "id": "Settles_2011_a",
+            "entry": "Settles, B. (2011). From theories to queries: Active learning in practice. In Active Learning and Experimental Design workshop In conjunction with AISTATS 2010, pages 1\u201318.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Settles%2C%20B.%20From%20theories%20to%20queries%3A%20Active%20learning%20in%20practice%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Settles%2C%20B.%20From%20theories%20to%20queries%3A%20Active%20learning%20in%20practice%202011"
+        },
+        {
+            "id": "Settles_et+al_2008_a",
+            "entry": "Settles, B., Craven, M., and Friedland, L. (2008). Active learning with real annotation costs.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Settles%2C%20B.%20Craven%2C%20M.%20Friedland%2C%20L.%20Active%20learning%20with%20real%20annotation%20costs%202008"
+        },
+        {
+            "id": "Shen_et+al_2018_a",
+            "entry": "Shen, Y., Yun, H., Lipton, Z. C., Kronrod, Y., and Anandkumar, A. (2018). Deep active learning for named entity recognition. In ICLR. Wang, K., Zhang, D., Li, Y., Zhang, R., and Lin, L. (2016). Cost-effective active learning for deep image classification. IEEE Transactions on Circuits and Systems for Video Technology.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Y.%20Yun%2C%20H.%20Lipton%2C%20Z.C.%20Kronrod%2C%20Y.%20Deep%20active%20learning%20for%20named%20entity%20recognition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Y.%20Yun%2C%20H.%20Lipton%2C%20Z.C.%20Kronrod%2C%20Y.%20Deep%20active%20learning%20for%20named%20entity%20recognition%202018"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Zhang, Y., Lease, M., and Wallace, B. C. (2017). Active discriminative text representation learning.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Y.%20Lease%2C%20M.%20Wallace%2C%20B.C.%20Active%20discriminative%20text%20representation%20learning%202017"
+        }
+    ]
+}

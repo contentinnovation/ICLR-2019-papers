@@ -1,0 +1,279 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TRAINING FOR FASTER ADVERSARIAL ROBUSTNESS VERIFICATION VIA INDUCING RELU STABILITY",
+        "author": "Kai Y. Xiao Vincent Tjeng Nur Muhammad (Mahi) Shafiullah Massachusetts Institute of Technology Cambridge, MA 02139 {kaix, vtjeng, nshafiul, madry}@mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJfIVjAcKm"
+        },
+        "abstract": "We explore the concept of co-design in the context of neural network verification. Specifically, we aim to train deep neural networks that not only are robust to adversarial perturbations but also whose robustness can be verified more easily. To this end, we identify two properties of network models \u2013 weight sparsity and socalled ReLU stability \u2013 that turn out to significantly impact the complexity of the corresponding verification task. We demonstrate that improving weight sparsity alone already enables us to turn computationally intractable verification problems into tractable ones. Then, improving ReLU stability leads to an additional 4\u201313x speedup in verification times. An important feature of our methodology is its \u201cuniversality,\u201d in the sense that it can be used with a broad range of training procedures and verification approaches."
+    },
+    "keywords": [
+        {
+            "term": "interval arithmetic",
+            "url": "https://en.wikipedia.org/wiki/interval_arithmetic"
+        },
+        {
+            "term": "linear programming",
+            "url": "https://en.wikipedia.org/wiki/linear_programming"
+        },
+        {
+            "term": "Deep neural networks",
+            "url": "https://en.wikipedia.org/wiki/Deep_neural_networks"
+        },
+        {
+            "term": "formal verification",
+            "url": "https://en.wikipedia.org/wiki/formal_verification"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "Deep neural networks",
+        "SMT": "satisfiability modulo theory",
+        "MILP": "Mixed-Integer Linear Programming",
+        "LP": "linear programming",
+        "IA": "interval arithmetic"
+    },
+    "highlights": [
+        "Deep neural networks (DNNs) have recently achieved widespread success in image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>), face and speech recognition (Taigman et al, 2014; <a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a></a>), and game playing (<a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; 2017)",
+        "A prominent example is the existence of adversarial examples (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a>): imperceptibly modified inputs that cause state-of-the-art models to misclassify with high confidence",
+        "We focus on \u221e norm-bound adversarial perturbations, where Adv(x) = {x : ||x \u2212 x||\u221e \u2264 } for some constant , since it is the most common one considered in adversarial robustness and verification literature",
+        "Given sufficient time for each input, an exact verifier can prove robustness to perturbations, or find a perturbation where the network makes a misclassification on the input, and exactly determine the true adversarial accuracy",
+        "This is in contrast to certification methods, which solve a relaxation of the verification problem and can not exactly determine the true adversarial accuracy no matter how much time they have",
+        "We expect that there exist objectives other than weight sparsity and ReLU stability that are important for verification speed"
+    ],
+    "key_statements": [
+        "Deep neural networks (DNNs) have recently achieved widespread success in image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>), face and speech recognition (Taigman et al, 2014; <a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a></a>), and game playing (<a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; 2017)",
+        "A prominent example is the existence of adversarial examples (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a>): imperceptibly modified inputs that cause state-of-the-art models to misclassify with high confidence",
+        "We focus on the major speed bottleneck of current approaches to exact verification of ReLU networks: the need of exact verification methods to \u201cbranch,\u201d i.e., consider two possible cases for each ReLU (ReLU being active or inactive)",
+        "Exact verification of networks has been the subject of many recent works (<a class=\"ref-link\" id=\"cKatz_et+al_2017_a\" href=\"#rKatz_et+al_2017_a\">Katz et al, 2017</a>; <a class=\"ref-link\" id=\"cEhlers_2017_a\" href=\"#rEhlers_2017_a\">Ehlers, 2017</a>; Carlini et al, 2017; <a class=\"ref-link\" id=\"cTjeng_et+al_2017_a\" href=\"#rTjeng_et+al_2017_a\">Tjeng et al, 2017</a>; <a class=\"ref-link\" id=\"cLomuscio_2017_a\" href=\"#rLomuscio_2017_a\">Lomuscio and Maganti, 2017</a>; Cheng et al, 2017a)",
+        "Is so as ReLUs can be active or inactive depending on the input, which can cause exact verifiers to \u201cbranch\" and consider these two cases separately",
+        "We focus on \u221e norm-bound adversarial perturbations, where Adv(x) = {x : ||x \u2212 x||\u221e \u2264 } for some constant , since it is the most common one considered in adversarial robustness and verification literature",
+        "Given sufficient time for each input, an exact verifier can prove robustness to perturbations, or find a perturbation where the network makes a misclassification on the input, and exactly determine the true adversarial accuracy",
+        "This is in contrast to certification methods, which solve a relaxation of the verification problem and can not exactly determine the true adversarial accuracy no matter how much time they have",
+        "Before we describe our methodology, we formally define ReLU stability",
+        "We present the details of naive interval arithmetic and improved interval arithmetic in Appendix C",
+        "We provide experimental evidence that RS Loss regularization improves ReLU stability and speeds up average verification times by more than an order of magnitude in Fig. 2b",
+        "For each setting of dataset (MNIST or CIFAR) and , we find a suitable weight on RS Loss via line search (See Table 6 in Appendix D)",
+        "We expect that there exist objectives other than weight sparsity and ReLU stability that are important for verification speed"
+    ],
+    "summary": [
+        "Deep neural networks (DNNs) have recently achieved widespread success in image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>), face and speech recognition (Taigman et al, 2014; <a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a></a>), and game playing (<a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; 2017).",
+        "We first show that natural methods for improving weight sparsity during training, such as 1-regularization, give models that can already be verified much faster than current methods.",
+        "Our techniques enable us to train weight-sparse and ReLU stable networks for MNIST and CIFAR10 that can be verified significantly faster.",
+        "By combining natural methods for inducing weight sparsity with a robust adversarial training procedure), we are able to train networks for which almost 90% of inputs can be verified in an amount of time that is small2 compared to previous verification techniques.",
+        "By adding our regularization technique for inducing ReLU stability, we are able to train models that can be verified an additional 4\u201313x times as fast while maintaining state-of-the-art accuracy on MNIST.",
+        "Given sufficient time for each input, an exact verifier can prove robustness to perturbations, or find a perturbation where the network makes a misclassification on the input, and exactly determine the true adversarial accuracy.",
+        "This is in contrast to certification methods, which solve a relaxation of the verification problem and can not exactly determine the true adversarial accuracy no matter how much time they have.",
+        "Such exact verification may take impractically long for certain inputs, so we instead compute the provable adversarial accuracy, which we define as the fraction of test set inputs for which the verifier can prove robustness to perturbations within an allocated time budget.",
+        "As the weight on the RS Loss used in training a model increases, the ReLU stability of the model will improve, speeding up verification and likely improving provable adversarial accuracy.",
+        "To show the effectiveness of RS Loss in improving provable adversarial accuracy, we train two networks for each dataset and each value of .",
+        "In addition to attaining a 4\u201313x speedup in MNIST verification times, we achieve higher provable adversarial accuracy in every single setting when using RS Loss.",
+        "This is especially notable for the hardest verification problem we tackle \u2013 proving robustness to perturbations with \u221e norm-bound 8/255 on CIFAR-10 \u2013 where adding RS Loss nearly triples the provable adversarial accuracy from 7.09% to 20.27%.",
+        "This improvement is primarily due to verification speedup induced by RS Loss, which allows the verifier to finish proving robustness for far more inputs within the 120 second time limit.",
+        "We use the principle of co-design to develop training methods that emphasize verification as a goal, and we show that they make verifying the trained model much faster.",
+        "Further exploring the principle of co-design for those objectives is an interesting future direction"
+    ],
+    "headline": "We explore the concept of co-design in the context of neural network verification",
+    "reference_links": [
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David A. Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. In International Conference on Machine Learning (ICML), 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20A.%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20A.%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Athalye_et+al_2018_b",
+            "entry": "Anish Athalye, Logan Engstrom, Andrew Ilyas, and Kevin Kwok. Synthesizing robust adversarial examples. In International Conference on Machine Learning (ICML), 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Engstrom%2C%20Logan%20Ilyas%2C%20Andrew%20Kwok%2C%20Kevin%20Synthesizing%20robust%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Engstrom%2C%20Logan%20Ilyas%2C%20Andrew%20Kwok%2C%20Kevin%20Synthesizing%20robust%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Carlini_2017_a",
+            "entry": "Nicholas Carlini and David Wagner. Adversarial examples are not easily detected: Bypassing ten detection methods. In Proceedings of the 10th ACM Workshop on Artificial Intelligence and Security, AISec \u201917, pages 3\u201314, New York, NY, USA, 2017a. ACM. ISBN 978-1-4503-52024. doi: 10.1145/3128572.3140444. URL http://doi.acm.org/10.1145/3128572.3140444.",
+            "crossref": "https://dx.doi.org/10.1145/3128572.3140444",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3128572.3140444"
+        },
+        {
+            "id": "Carlini_2017_b",
+            "entry": "Nicholas Carlini and David A. Wagner. Towards evaluating the robustness of neural networks. In IEEE Symposium on Security and Privacy, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carlini%2C%20Nicholas%20Wagner%2C%20David%20A.%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carlini%2C%20Nicholas%20Wagner%2C%20David%20A.%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017"
+        },
+        {
+            "id": "Carlini_et+al_2017_c",
+            "entry": "Nicholas Carlini, Guy Katz, Clark Barrett, and David L. Dill. Ground-truth adversarial examples. CoRR, abs/1709.10207, 2017. URL http://arxiv.org/abs/1709.10207.",
+            "url": "http://arxiv.org/abs/1709.10207",
+            "arxiv_url": "https://arxiv.org/pdf/1709.10207"
+        },
+        {
+            "id": "Chih-Hong_2017_a",
+            "entry": "Chih-Hong Cheng, Georg N\u00fchrenberg, and Harald Ruess. Maximum resilience of artificial neural networks. CoRR, abs/1705.01040, 2017a. URL http://arxiv.org/abs/1705.01040.",
+            "url": "http://arxiv.org/abs/1705.01040",
+            "arxiv_url": "https://arxiv.org/pdf/1705.01040"
+        },
+        {
+            "id": "Cheng_et+al_0000_a",
+            "entry": "Yu Cheng, Duo Wang, Pan Zhou, and Tao Zhang. A survey of model compression and acceleration for deep neural networks. CoRR, abs/1710.09282, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.09282"
+        },
+        {
+            "id": "Dvijotham_et+al_2018_a",
+            "entry": "Krishnamurthy Dvijotham, Sven Gowal, Robert Stanforth, Relja Arandjelovic, Brendan O\u2019Donoghue, Jonathan Uesato, and Pushmeet Kohli. Training verified learners with learned verifiers. arXiv preprint arXiv:1805.10265, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10265"
+        },
+        {
+            "id": "Ehlers_2017_a",
+            "entry": "R\u00fcdiger Ehlers. Formal verification of piece-wise linear feed-forward neural networks. In Deepak D\u2019Souza and K. Narayan Kumar, editors, Automated Technology for Verification and Analysis, pages 269\u2013286, Cham, 2017. Springer International Publishing. ISBN 978-3-319-68167-2.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ehlers%2C%20R%C3%BCdiger%20Formal%20verification%20of%20piece-wise%20linear%20feed-forward%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ehlers%2C%20R%C3%BCdiger%20Formal%20verification%20of%20piece-wise%20linear%20feed-forward%20neural%20networks%202017"
+        },
+        {
+            "id": "Evtimov_et+al_2017_a",
+            "entry": "Ivan Evtimov, Kevin Eykholt, Earlence Fernandes, Tadayoshi Kohno, Bo Li, Atul Prakash, Amir Rahmati, and Dawn Song. Robust physical-world attacks on machine learning models. CoRR, abs/1707.08945, 2017. URL http://arxiv.org/abs/1707.08945.",
+            "url": "http://arxiv.org/abs/1707.08945",
+            "arxiv_url": "https://arxiv.org/pdf/1707.08945"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "Ian Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. In International Conference on Learning Representations, 2015. URL http://arxiv.org/abs/1412.6572.",
+            "url": "http://arxiv.org/abs/1412.6572",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Gowal_et+al_2018_a",
+            "entry": "Sven Gowal, Krishnamurthy Dvijotham, Robert Stanforth, Rudy Bunel, Chongli Qin, Jonathan Uesato, Timothy Mann, and Pushmeet Kohli. On the effectiveness of interval bound propagation for training verifiably robust models. arXiv preprint arXiv:1810.12715, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.12715"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Huizi Mao, and William J. Dally. Deep compression: Compressing deep neural network with pruning, trained quantization and huffman coding. In International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20network%20with%20pruning%2C%20trained%20quantization%20and%20huffman%20coding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20network%20with%20pruning%2C%20trained%20quantization%20and%20huffman%20coding%202016"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "G. Hinton, L. Deng, D. Yu, G. E. Dahl, A. r. Mohamed, N. Jaitly, A. Senior, V. Vanhoucke, P. Nguyen, T. N. Sainath, and B. Kingsbury. Deep neural networks for acoustic modeling in speech recognition: The shared views of four research groups. IEEE Signal Processing Magazine, 29(6):82\u201397, Nov 2012. ISSN 1053-5888. doi: 10.1109/MSP.2012.2205597.",
+            "crossref": "https://dx.doi.org/10.1109/MSP.2012.2205597",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/MSP.2012.2205597"
+        },
+        {
+            "id": "Kannan_et+al_2018_a",
+            "entry": "Harini Kannan, Alexey Kurakin, and Ian J. Goodfellow. Adversarial logit pairing. CoRR, abs/1803.06373, 2018. URL http://arxiv.org/abs/1803.06373.",
+            "url": "http://arxiv.org/abs/1803.06373",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06373"
+        },
+        {
+            "id": "Katz_et+al_2017_a",
+            "entry": "Guy Katz, Clark Barrett, David L. Dill, Kyle Julian, and Mykel J. Kochenderfer. Reluplex: An efficient smt solver for verifying deep neural networks. In Rupak Majumdar and Viktor Kuncak, editors, Computer Aided Verification, pages 97\u2013117, Cham, 2017. Springer International Publishing. ISBN 978-3-319-63387-9.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Katz%2C%20Guy%20Barrett%2C%20Clark%20Dill%2C%20David%20L.%20Julian%2C%20Kyle%20Reluplex%3A%20An%20efficient%20smt%20solver%20for%20verifying%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Katz%2C%20Guy%20Barrett%2C%20Clark%20Dill%2C%20David%20L.%20Julian%2C%20Kyle%20Reluplex%3A%20An%20efficient%20smt%20solver%20for%20verifying%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton. Imagenet classification with deep convolutional neural networks. In Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume 1, NIPS\u201912, pages 1097\u20131105, USA, 2012. Curran Associates Inc. URL http://dl.acm.org/citation.cfm?id=2999134.2999257.",
+            "url": "http://dl.acm.org/citation.cfm?id=2999134.2999257",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lomuscio_2017_a",
+            "entry": "Alessio Lomuscio and Lalit Maganti. An approach to reachability analysis for feed-forward relu neural networks. CoRR, abs/1706.07351, 2017. URL http://arxiv.org/abs/1706.07351.",
+            "url": "http://arxiv.org/abs/1706.07351",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07351"
+        },
+        {
+            "id": "Madry_et+al_2018_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018"
+        },
+        {
+            "id": "Mirman_et+al_2018_a",
+            "entry": "Matthew Mirman, Timon Gehr, and Martin Vechev. Differentiable abstract interpretation for provably robust neural networks. In Jennifer Dy and Andreas Krause, editors, Proceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pages 3575\u20133583, Stockholmsm\u00c3d\u2019ssan, Stockholm Sweden, 10\u201315 Jul 2018. PMLR. URL http://proceedings.mlr.press/v80/mirman18b.html.",
+            "url": "http://proceedings.mlr.press/v80/mirman18b.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mirman%2C%20Matthew%20Gehr%2C%20Timon%20Vechev%2C%20Martin%20Differentiable%20abstract%20interpretation%20for%20provably%20robust%20neural%20networks%202018-07"
+        },
+        {
+            "id": "Papernot_et+al_2016_a",
+            "entry": "Nicolas Papernot, Patrick D. McDaniel, Xi Wu, Somesh Jha, and Ananthram Swami. Distillation as a defense to adversarial perturbations against deep neural networks. 2016 IEEE Symposium on Security and Privacy (SP), pages 582\u2013597, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20D.%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20D.%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Raghunathan_et+al_2018_a",
+            "entry": "A. Raghunathan, J. Steinhardt, and P. Liang. Certified defenses against adversarial examples. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghunathan%2C%20A.%20Steinhardt%2C%20J.%20Liang%2C%20P.%20Certified%20defenses%20against%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghunathan%2C%20A.%20Steinhardt%2C%20J.%20Liang%2C%20P.%20Certified%20defenses%20against%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Sinha_et+al_2018_a",
+            "entry": "Aman Sinha, Hongseok Namkoong, and John Duchi. Certifiable distributional robustness with principled adversarial training. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Duchi%2C%20John%20Certifiable%20distributional%20robustness%20with%20principled%20adversarial%20training%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Duchi%2C%20John%20Certifiable%20distributional%20robustness%20with%20principled%20adversarial%20training%202018"
+        },
+        {
+            "id": "Szegedy_et+al_2014_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian J. Goodfellow, and Rob Fergus. Intriguing properties of neural networks. CoRR, abs/1312.6199, 2014. URL http://arxiv.org/abs/1312.6199.",
+            "url": "http://arxiv.org/abs/1312.6199",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Yaniv_2014_a",
+            "entry": "Yaniv Taigman, Ming Yang, Marc\u2019Aurelio Ranzato, and Lior Wolf. Deepface: Closing the gap to human-level performance in face verification. In Proceedings of the 2014 IEEE Conference on Computer Vision and Pattern Recognition, CVPR \u201914, pages 1701\u20131708, Washington, DC, USA, 2014. IEEE Computer Society. ISBN 978-1-4799-5118-5. doi: 10.1109/CVPR.2014.220. URL https://doi.org/10.1109/CVPR.2014.220.",
+            "crossref": "https://dx.doi.org/10.1109/CVPR.2014.220",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/CVPR.2014.220"
+        },
+        {
+            "id": "Tibshirani_1994_a",
+            "entry": "Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society, Series B, 58:267\u2013288, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201994"
+        },
+        {
+            "id": "Tjeng_et+al_2017_a",
+            "entry": "Vincent Tjeng, Kai Xiao, and Russ Tedrake. Verifying neural networks with mixed integer programming. CoRR, abs/1711.07356, 2017. URL http://arxiv.org/abs/1711.07356.",
+            "url": "http://arxiv.org/abs/1711.07356",
+            "arxiv_url": "https://arxiv.org/pdf/1711.07356"
+        },
+        {
+            "id": "Uesato_et+al_2018_a",
+            "entry": "Jonathan Uesato, Brendan O\u2019Donoghue, Aaron van den Oord, and Pushmeet Kohli. Adversarial risk and the dangers of evaluating against weak attacks. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Uesato%2C%20Jonathan%20O%E2%80%99Donoghue%2C%20Brendan%20van%20den%20Oord%2C%20Aaron%20Kohli%2C%20Pushmeet%20Adversarial%20risk%20and%20the%20dangers%20of%20evaluating%20against%20weak%20attacks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Uesato%2C%20Jonathan%20O%E2%80%99Donoghue%2C%20Brendan%20van%20den%20Oord%2C%20Aaron%20Kohli%2C%20Pushmeet%20Adversarial%20risk%20and%20the%20dangers%20of%20evaluating%20against%20weak%20attacks%202018"
+        },
+        {
+            "id": "Wong_2018_a",
+            "entry": "Eric Wong and J. Zico Kolter. Provable defenses against adversarial examples via the convex outer adversarial polytope. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Kolter%2C%20J.Zico%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Kolter%2C%20J.Zico%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018"
+        },
+        {
+            "id": "Wong_et+al_2018_b",
+            "entry": "Eric Wong, Frank Schmidt, Jan Hendrik Metzen, and J. Zico Kolter. Scaling provable adversarial defenses. NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018"
+        }
+    ]
+}

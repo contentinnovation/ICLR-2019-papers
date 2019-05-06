@@ -1,0 +1,409 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TRELLIS NETWORKS FOR SEQUENCE MODELING",
+        "author": "Shaojie Bai Carnegie Mellon University",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyeVtoRqtQ"
+        },
+        "abstract": "We present trellis networks, a new architecture for sequence modeling. On the one hand, a trellis network is a temporal convolutional network with special structure, characterized by weight tying across depth and direct injection of the input into deep layers. On the other hand, we show that truncated recurrent networks are equivalent to trellis networks with special sparsity structure in their weight matrices. Thus trellis networks with general weight matrices generalize truncated recurrent networks. We leverage these connections to design high-performing trellis networks that absorb structural and algorithmic elements from both recurrent and convolutional models. Experiments demonstrate that trellis networks outperform the current state of the art methods on a variety of challenging benchmarks, including word-level language modeling and character-level language modeling tasks, and stress tests designed to evaluate long-term memory retention. The code is available here1."
+    },
+    "keywords": [
+        {
+            "term": "Penn Treebank",
+            "url": "https://en.wikipedia.org/wiki/Penn_Treebank"
+        },
+        {
+            "term": "language modeling",
+            "url": "https://en.wikipedia.org/wiki/language_modeling"
+        },
+        {
+            "term": "long term",
+            "url": "https://en.wikipedia.org/wiki/long_term"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "trellis network",
+            "url": "https://en.wikipedia.org/wiki/trellis_network"
+        }
+    ],
+    "abbreviations": {
+        "PTB": "Penn Treebank",
+        "TCN": "temporal convolutional network",
+        "PMNIST": "permuted MNIST",
+        "RMC": "Relational Memory Core"
+    },
+    "highlights": [
+        "What is the best architecture for sequence modeling? Recent research has produced significant progress on multiple fronts",
+        "We evaluate trellis networks on challenging benchmarks, including word-level language modeling on the standard Penn Treebank (PTB) and the much larger WikiText-103 (WT103) datasets; character-level language modeling on Penn Treebank; and standard stress tests designed to evaluate long-term memory retention",
+        "We evaluate trellis networks on word-level and character-level language modeling on the standard Penn Treebank (PTB) dataset (<a class=\"ref-link\" id=\"cMarcus_et+al_1993_a\" href=\"#rMarcus_et+al_1993_a\">Marcus et al, 1993</a>; <a class=\"ref-link\" id=\"cMikolov_et+al_2010_a\" href=\"#rMikolov_et+al_2010_a\">Mikolov et al, 2010</a>), large-scale word-level modeling on WikiText-103 (WT103) (<a class=\"ref-link\" id=\"cMerity_et+al_2017_a\" href=\"#rMerity_et+al_2017_a\">Merity et al, 2017</a>), and standard stress tests used to study long-range information propagation in sequence models: sequential MNIST, permuted MNIST (PMNIST), and sequential CIFAR-10 (<a class=\"ref-link\" id=\"cChang_et+al_2017_a\" href=\"#rChang_et+al_2017_a\">Chang et al, 2017</a>; Bai et al, 2018; <a class=\"ref-link\" id=\"cTrinh_et+al_2018_a\" href=\"#rTrinh_et+al_2018_a\">Trinh et al, 2018</a>)",
+        "A new architecture for sequence modeling",
+        "Trellis networks form a structural bridge between convolutional and recurrent models. This enables direct assimilation of many techniques designed for either of these two architectural families. We leverage these connections to train high-performing trellis networks that set a new state of the art on highly competitive language modeling benchmarks",
+        "We hope that trellis networks will serve as a step towards deeper and more unified understanding of sequence modeling"
+    ],
+    "key_statements": [
+        "What is the best architecture for sequence modeling? Recent research has produced significant progress on multiple fronts",
+        "We introduce a new architecture for sequence modeling, the Trellis Network",
+        "We evaluate trellis networks on challenging benchmarks, including word-level language modeling on the standard Penn Treebank (PTB) and the much larger WikiText-103 (WT103) datasets; character-level language modeling on Penn Treebank; and standard stress tests designed to evaluate long-term memory retention",
+        "Recent work indicates that convolutional networks are effective on a variety of sequence modeling tasks, ones that demand long-range information propagation",
+        "TrellisNet is a special form of temporal convolutional networks (TCN); this has already been clear in Section 3 and will be discussed further in Section 4.1",
+        "TrellisNet is a special kind of temporal convolutional network",
+        "We evaluate trellis networks on word-level and character-level language modeling on the standard Penn Treebank (PTB) dataset (<a class=\"ref-link\" id=\"cMarcus_et+al_1993_a\" href=\"#rMarcus_et+al_1993_a\">Marcus et al, 1993</a>; <a class=\"ref-link\" id=\"cMikolov_et+al_2010_a\" href=\"#rMikolov_et+al_2010_a\">Mikolov et al, 2010</a>), large-scale word-level modeling on WikiText-103 (WT103) (<a class=\"ref-link\" id=\"cMerity_et+al_2017_a\" href=\"#rMerity_et+al_2017_a\">Merity et al, 2017</a>), and standard stress tests used to study long-range information propagation in sequence models: sequential MNIST, permuted MNIST (PMNIST), and sequential CIFAR-10 (<a class=\"ref-link\" id=\"cChang_et+al_2017_a\" href=\"#rChang_et+al_2017_a\">Chang et al, 2017</a>; Bai et al, 2018; <a class=\"ref-link\" id=\"cTrinh_et+al_2018_a\" href=\"#rTrinh_et+al_2018_a\">Trinh et al, 2018</a>)",
+        "A new architecture for sequence modeling",
+        "Trellis networks form a structural bridge between convolutional and recurrent models. This enables direct assimilation of many techniques designed for either of these two architectural families. We leverage these connections to train high-performing trellis networks that set a new state of the art on highly competitive language modeling benchmarks",
+        "We hope that trellis networks will serve as a step towards deeper and more unified understanding of sequence modeling"
+    ],
+    "summary": [
+        "What is the best architecture for sequence modeling? Recent research has produced significant progress on multiple fronts.",
+        "We introduce a new architecture for sequence modeling, the Trellis Network.",
+        "Weights are shared not only by all time steps but by all network layers, tying them into a regular trellis pattern.",
+        "We describe a new architecture for sequence modeling, referred to as a trellis network or TrellisNet. In particular, we provide an atomic view of TrellisNet, present its fundamental features, and highlight the relationship to convolutional networks.",
+        "Section 4 will elaborate on the relationship of trellis networks to convolutional and recurrent models.",
+        "We use zt(i) \u2208 Rq to represent the hidden unit at time t in layer i of the network.",
+        "Given an input sequence x1:T , we apply the same production procedure across all time steps and all layers, using the same weights.",
+        "Note that since we inject the same input sequence at every layer of the TrellisNet, we can precompute the linear transformation xt+1 = W1xxt + W2xxt+1 for all layers i.",
+        "(<a class=\"ref-link\" id=\"cVogel_2017_a\" href=\"#rVogel_2017_a\">Vogel & Pock (2017</a>) have previously tied weights across depth in image processing.) Another difference is that the transformed input sequence x1:T is directly injected into each hidden layer.",
+        "TrellisNet is a special form of temporal convolutional networks (TCN); this has already been clear in Section 3 and will be discussed further in Section 4.1.",
+        "Any truncated RNN can be represented as a TrellisNet with special structure in the interlayer transformations; this will be the subject of Section 4.2.",
+        "These connections allow TrellisNet to harness architectural elements and regularization techniques from both TCNs and RNNs; this will be summarized in Section 4.3.",
+        "Such approaches were used going back to the late 1980s, under the name of \u201ctime-delay neural networks\u201d (<a class=\"ref-link\" id=\"cWaibel_et+al_1989_a\" href=\"#rWaibel_et+al_1989_a\">Waibel et al, 1989</a>), and have received significant interest in recent years due to their application in architectures such as WaveNet. In essence, TrellisNet is a special kind of temporal convolutional network.",
+        "Instead of operating on all elements of a sequence in parallel in each layer, an RNN processes one input element at a time and unrolls in the time dimension.",
+        "Given a non-linearity g, we can summarize the transformations in an L-layer RNN at time-step t as follows: h = g Whh + Whht(\u2212i)1 for 1 \u2264 i \u2264 L, ht(0) = xt.",
+        "(a) Representing RNN units as channel groups x3 <latexit sha1_base64=\"FsFp5SDaWDjvwmxpdt2PBoWBq3Q=\">AAAB6nicbVBNS8NAEJ3Ur1q/qh69LBbBU0lUUDwVvHisaD+gDWWz3bRLN5uwOxFL6E/w4kERr/4ib/4bt20O2vpg4PHeDDPzgkQKg6777RRWVtfWN4qbpa3tnd298v5B08SpZrzBYhnrdkANl0LxBgqUvJ1oTqNA8lYwupn6rUeujYjVA44T7kd0oEQoGEUr3T/1znvlilt1ZyDLxMtJBXLUe+Wvbj9macQVMkmN6Xhugn5GNQom+aTUTQ1PKBvRAe9YqmjEjZ/NTp2QE6v0SRhrWwrJTP09kdHImHEU2M6I4tAselPxP6+TYnjlZ0IlKXLF5ovCVBKMyfRv0heaM5RjSyjTwt5K2JBqytCmU7IheIsvL5PmWdVzq97dRaV2ncdRhCM4hlPw4BJqcAt1aACDATzDK7w50nlx3p2PeWvByWcO4Q+czx8MUI2a</latexit>"
+    ],
+    "headline": "A new architecture for sequence modeling",
+    "reference_links": [
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Shaojie_2018_a",
+            "entry": "Shaojie Bai, J Zico Kolter, and Vladlen Koltun. An empirical evaluation of generic convolutional and recurrent networks for sequence modeling. arXiv:1803.01271, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01271"
+        },
+        {
+            "id": "Bradbury_et+al_2017_a",
+            "entry": "James Bradbury, Stephen Merity, Caiming Xiong, and Richard Socher. Quasi-recurrent neural networks. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bradbury%2C%20James%20Merity%2C%20Stephen%20Xiong%2C%20Caiming%20Socher%2C%20Richard%20Quasi-recurrent%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bradbury%2C%20James%20Merity%2C%20Stephen%20Xiong%2C%20Caiming%20Socher%2C%20Richard%20Quasi-recurrent%20neural%20networks%202017"
+        },
+        {
+            "id": "Chang_et+al_2017_a",
+            "entry": "Shiyu Chang, Yang Zhang, Wei Han, Mo Yu, Xiaoxiao Guo, Wei Tan, Xiaodong Cui, Michael Witbrock, Mark Hasegawa-Johnson, and Thomas Huang. Dilated recurrent neural networks. In Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shiyu%20Chang%20Yang%20Zhang%20Wei%20Han%20Mo%20Yu%20Xiaoxiao%20Guo%20Wei%20Tan%20Xiaodong%20Cui%20Michael%20Witbrock%20Mark%20HasegawaJohnson%20and%20Thomas%20Huang%20Dilated%20recurrent%20neural%20networks%20In%20Neural%20Information%20Processing%20Systems%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shiyu%20Chang%20Yang%20Zhang%20Wei%20Han%20Mo%20Yu%20Xiaoxiao%20Guo%20Wei%20Tan%20Xiaodong%20Cui%20Michael%20Witbrock%20Mark%20HasegawaJohnson%20and%20Thomas%20Huang%20Dilated%20recurrent%20neural%20networks%20In%20Neural%20Information%20Processing%20Systems%20NIPS%202017"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Mia Xu Chen, Orhan Firat, Ankur Bapna, Melvin Johnson, Wolfgang Macherey, George Foster, Llion Jones, Niki Parmar, Noam Shazeer, Ashish Vaswani, Jakob Uszkoreit, Lukasz Kaiser, Mike Schuster, Zhifeng Chen, Yonghui Wu, and Macduff Hughes. The best of both worlds: Combining recent advances in neural machine translation. In Annual Meeting of the Association for Computational Linguistics (ACL), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Mia%20Xu%20Firat%2C%20Orhan%20Bapna%2C%20Ankur%20Johnson%2C%20Melvin%20The%20best%20of%20both%20worlds%3A%20Combining%20recent%20advances%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Mia%20Xu%20Firat%2C%20Orhan%20Bapna%2C%20Ankur%20Johnson%2C%20Melvin%20The%20best%20of%20both%20worlds%3A%20Combining%20recent%20advances%202018"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merrienboer, Dzmitry Bahdanau, and Yoshua Bengio. On the properties of neural machine translation: Encoder-decoder approaches. arXiv:1409.1259, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1259"
+        },
+        {
+            "id": "Collobert_et+al_2011_a",
+            "entry": "Ronan Collobert, Jason Weston, Leon Bottou, Michael Karlen, Koray Kavukcuoglu, and Pavel P. Kuksa. Natural language processing (almost) from scratch. Journal of Machine Learning Research (JMLR), 12, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collobert%2C%20Ronan%20Weston%2C%20Jason%20Bottou%2C%20Leon%20Karlen%2C%20Michael%20Natural%20language%20processing%20%28almost%29%20from%20scratch%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collobert%2C%20Ronan%20Weston%2C%20Jason%20Bottou%2C%20Leon%20Karlen%2C%20Michael%20Natural%20language%20processing%20%28almost%29%20from%20scratch%202011"
+        },
+        {
+            "id": "Dai_et+al_2019_a",
+            "entry": "Zihang Dai, Zhilin Yang, Yiming Yang, William W Cohen, Jaime Carbonell, Quoc V Le, and Ruslan Salakhutdinov. Transformer-XL: Language modeling with longer-term dependency. arXiv:1901.02860, 2019.",
+            "arxiv_url": "https://arxiv.org/pdf/1901.02860"
+        },
+        {
+            "id": "Dauphin_et+al_2017_a",
+            "entry": "Yann N. Dauphin, Angela Fan, Michael Auli, and David Grangier. Language modeling with gated convolutional networks. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dauphin%2C%20Yann%20N.%20Fan%2C%20Angela%20Auli%2C%20Michael%20Grangier%2C%20David%20Language%20modeling%20with%20gated%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dauphin%2C%20Yann%20N.%20Fan%2C%20Angela%20Auli%2C%20Michael%20Grangier%2C%20David%20Language%20modeling%20with%20gated%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Donahue_et+al_2015_a",
+            "entry": "Jeff Donahue, Lisa Anne Hendricks, Sergio Guadarrama, Marcus Rohrbach, Subhashini Venugopalan, Trevor Darrell, and Kate Saenko. Long-term recurrent convolutional networks for visual recognition and description. In Computer Vision and Pattern Recognition (CVPR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Donahue%2C%20Jeff%20Hendricks%2C%20Lisa%20Anne%20Guadarrama%2C%20Sergio%20Rohrbach%2C%20Marcus%20Long-term%20recurrent%20convolutional%20networks%20for%20visual%20recognition%20and%20description%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Donahue%2C%20Jeff%20Hendricks%2C%20Lisa%20Anne%20Guadarrama%2C%20Sergio%20Rohrbach%2C%20Marcus%20Long-term%20recurrent%20convolutional%20networks%20for%20visual%20recognition%20and%20description%202015"
+        },
+        {
+            "id": "Elman_1990_a",
+            "entry": "Jeffrey L Elman. Finding structure in time. Cognitive Science, 14(2), 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elman%2C%20Jeffrey%20L.%20Finding%20structure%20in%20time%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elman%2C%20Jeffrey%20L.%20Finding%20structure%20in%20time%201990"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. A theoretically grounded application of dropout in recurrent neural networks. In Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Gehring_et+al_2017_a",
+            "entry": "Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N. Dauphin. Convolutional sequence to sequence learning. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20sequence%20to%20sequence%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20sequence%20to%20sequence%20learning%202017"
+        },
+        {
+            "id": "Grave_et+al_2017_a",
+            "entry": "Edouard Grave, Armand Joulin, Moustapha Cisse, David Grangier, and Herve Jegou. Efficient softmax approximation for GPUs. In International Conference on Machine Learning (ICML), 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Cisse%2C%20Moustapha%20Grangier%2C%20David%20Efficient%20softmax%20approximation%20for%20GPUs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Cisse%2C%20Moustapha%20Grangier%2C%20David%20Efficient%20softmax%20approximation%20for%20GPUs%202017"
+        },
+        {
+            "id": "Grave_et+al_2017_b",
+            "entry": "Edouard Grave, Armand Joulin, and Nicolas Usunier. Improving neural language models with a continuous cache. In International Conference on Learning Representations (ICLR), 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Usunier%2C%20Nicolas%20Improving%20neural%20language%20models%20with%20a%20continuous%20cache%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Usunier%2C%20Nicolas%20Improving%20neural%20language%20models%20with%20a%20continuous%20cache%202017"
+        },
+        {
+            "id": "Graves_2012_a",
+            "entry": "Alex Graves. Supervised Sequence Labelling with Recurrent Neural Networks. Springer, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Supervised%20Sequence%20Labelling%20with%20Recurrent%20Neural%20Networks%202012"
+        },
+        {
+            "id": "Graves_2013_a",
+            "entry": "Alex Graves. Generating sequences with recurrent neural networks. arXiv:1308.0850, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.0850"
+        },
+        {
+            "id": "Greff_et+al_2017_a",
+            "entry": "Klaus Greff, Rupesh Kumar Srivastava, Jan Koutn\u0131k, Bas R. Steunebrink, and Jurgen Schmidhuber. LSTM: A search space odyssey. IEEE Transactions on Neural Networks and Learning Systems, 28(10), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Greff%2C%20Klaus%20Srivastava%2C%20Rupesh%20Kumar%20Koutn%C4%B1k%2C%20Jan%20Steunebrink%2C%20Bas%20R.%20LSTM%3A%20A%20search%20space%20odyssey%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Greff%2C%20Klaus%20Srivastava%2C%20Rupesh%20Kumar%20Koutn%C4%B1k%2C%20Jan%20Steunebrink%2C%20Bas%20R.%20LSTM%3A%20A%20search%20space%20odyssey%202017"
+        },
+        {
+            "id": "Ha_et+al_2017_a",
+            "entry": "David Ha, Andrew Dai, and Quoc V Le. HyperNetworks. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=David%20Ha%20Andrew%20Dai%20and%20Quoc%20V%20Le%20HyperNetworks%20In%20International%20Conference%20on%20Learning%20Representations%20ICLR%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=David%20Ha%20Andrew%20Dai%20and%20Quoc%20V%20Le%20HyperNetworks%20In%20International%20Conference%20on%20Learning%20Representations%20ICLR%202017"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Computation, 9(8), 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Jozefowicz_et+al_2015_a",
+            "entry": "Rafal Jozefowicz, Wojciech Zaremba, and Ilya Sutskever. An empirical exploration of recurrent network architectures. In International Conference on Machine Learning (ICML), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jozefowicz%2C%20Rafal%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20An%20empirical%20exploration%20of%20recurrent%20network%20architectures%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jozefowicz%2C%20Rafal%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20An%20empirical%20exploration%20of%20recurrent%20network%20architectures%202015"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2016_a",
+            "entry": "Nal Kalchbrenner, Lasse Espeholt, Karen Simonyan, Aaron van den Oord, Alex Graves, and Koray Kavukcuoglu. Neural machine translation in linear time. arXiv:1610.10099, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.10099"
+        },
+        {
+            "id": "Karpathy_2015_a",
+            "entry": "Andrej Karpathy and Fei-Fei Li. Deep visual-semantic alignments for generating image descriptions. In Computer Vision and Pattern Recognition (CVPR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karpathy%2C%20Andrej%20Li%2C%20Fei-Fei%20Deep%20visual-semantic%20alignments%20for%20generating%20image%20descriptions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karpathy%2C%20Andrej%20Li%2C%20Fei-Fei%20Deep%20visual-semantic%20alignments%20for%20generating%20image%20descriptions%202015"
+        },
+        {
+            "id": "Khandelwal_et+al_2018_a",
+            "entry": "Urvashi Khandelwal, He He, Peng Qi, and Dan Jurafsky. Sharp nearby, fuzzy far away: How neural language models use context. In Annual Meeting of the Association for Computational Linguistics (ACL), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Khandelwal%2C%20Urvashi%20He%2C%20He%20Qi%2C%20Peng%20Jurafsky%2C%20Dan%20Sharp%20nearby%2C%20fuzzy%20far%20away%3A%20How%20neural%20language%20models%20use%20context%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Khandelwal%2C%20Urvashi%20He%2C%20He%20Qi%2C%20Peng%20Jurafsky%2C%20Dan%20Sharp%20nearby%2C%20fuzzy%20far%20away%3A%20How%20neural%20language%20models%20use%20context%202018"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. Technical report, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton. ImageNet classification with deep convolutional neural networks. In Neural Information Processing Systems (NIPS), 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lecun_et+al_1989_a",
+            "entry": "Yann LeCun, Bernhard Boser, John S. Denker, Donnie Henderson, Richard E. Howard, Wayne Hubbard, and Lawrence D. Jackel. Backpropagation applied to handwritten zip code recognition. Neural Computation, 1(4), 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Boser%2C%20Bernhard%20Denker%2C%20John%20S.%20Henderson%2C%20Donnie%20Backpropagation%20applied%20to%20handwritten%20zip%20code%20recognition%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Boser%2C%20Bernhard%20Denker%2C%20John%20S.%20Henderson%2C%20Donnie%20Backpropagation%20applied%20to%20handwritten%20zip%20code%20recognition%201989"
+        },
+        {
+            "id": "Lee_et+al_2015_a",
+            "entry": "Chen-Yu Lee, Saining Xie, Patrick Gallagher, Zhengyou Zhang, and Zhuowen Tu. Deeplysupervised nets. In AISTATS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChenYu%20Lee%20Saining%20Xie%20Patrick%20Gallagher%20Zhengyou%20Zhang%20and%20Zhuowen%20Tu%20Deeplysupervised%20nets%20In%20AISTATS%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=ChenYu%20Lee%20Saining%20Xie%20Patrick%20Gallagher%20Zhengyou%20Zhang%20and%20Zhuowen%20Tu%20Deeplysupervised%20nets%20In%20AISTATS%202015"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Shuai Li, Wanqing Li, Chris Cook, Ce Zhu, and Yanbo Gao. Independently recurrent neural network (IndRNN): Building a longer and deeper RNN. In Computer Vision and Pattern Recognition (CVPR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Shuai%20Li%2C%20Wanqing%20Cook%2C%20Chris%20Zhu%2C%20Ce%20Independently%20recurrent%20neural%20network%20%28IndRNN%29%3A%20Building%20a%20longer%20and%20deeper%20RNN%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Shuai%20Li%2C%20Wanqing%20Cook%2C%20Chris%20Zhu%2C%20Ce%20Independently%20recurrent%20neural%20network%20%28IndRNN%29%3A%20Building%20a%20longer%20and%20deeper%20RNN%202018"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Hanxiao Liu, Karen Simonyan, and Yiming Yang. DARTS: Differentiable architecture search. arXiv:1806.09055, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.09055"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of English: The Penn treebank. Computational Linguistics, 19(2), 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20English%3A%20The%20Penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20English%3A%20The%20Penn%20treebank%201993"
+        },
+        {
+            "id": "Melis_et+al_2018_a",
+            "entry": "Gabor Melis, Chris Dyer, and Phil Blunsom. On the state of the art of evaluation in neural language models. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Melis%2C%20Gabor%20Dyer%2C%20Chris%20Blunsom%2C%20Phil%20On%20the%20state%20of%20the%20art%20of%20evaluation%20in%20neural%20language%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Melis%2C%20Gabor%20Dyer%2C%20Chris%20Blunsom%2C%20Phil%20On%20the%20state%20of%20the%20art%20of%20evaluation%20in%20neural%20language%20models%202018"
+        },
+        {
+            "id": "Merity_et+al_2017_a",
+            "entry": "Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Merity%2C%20Stephen%20Xiong%2C%20Caiming%20Bradbury%2C%20James%20Socher%2C%20Richard%20Pointer%20sentinel%20mixture%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Merity%2C%20Stephen%20Xiong%2C%20Caiming%20Bradbury%2C%20James%20Socher%2C%20Richard%20Pointer%20sentinel%20mixture%20models%202017"
+        },
+        {
+            "id": "Merity_et+al_2018_a",
+            "entry": "Stephen Merity, Nitish Shirish Keskar, and Richard Socher. An analysis of neural language modeling at multiple scales. arXiv:1803.08240, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.08240"
+        },
+        {
+            "id": "Merity_et+al_2018_b",
+            "entry": "Stephen Merity, Nitish Shirish Keskar, and Richard Socher. Regularizing and optimizing LSTM language models. In International Conference on Learning Representations (ICLR), 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Merity%2C%20Stephen%20Keskar%2C%20Nitish%20Shirish%20Socher%2C%20Richard%20Regularizing%20and%20optimizing%20LSTM%20language%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Merity%2C%20Stephen%20Keskar%2C%20Nitish%20Shirish%20Socher%2C%20Richard%20Regularizing%20and%20optimizing%20LSTM%20language%20models%202018"
+        },
+        {
+            "id": "Mikolov_et+al_2010_a",
+            "entry": "Tomas Mikolov, Martin Karafiat, Lukas Burget, Jan Cernocky, and Sanjeev Khudanpur. Recurrent neural network based language model. In Interspeech, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Karafiat%2C%20Martin%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Recurrent%20neural%20network%20based%20language%20model%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Karafiat%2C%20Martin%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Recurrent%20neural%20network%20based%20language%20model%202010"
+        },
+        {
+            "id": "Miller_2018_a",
+            "entry": "John Miller and Moritz Hardt. When recurrent models don\u2019t need to be recurrent. arXiv:1805.10369, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10369"
+        },
+        {
+            "id": "Miyamoto_2016_a",
+            "entry": "Yasumasa Miyamoto and Kyunghyun Cho. Gated word-character recurrent language model. arXiv:1606.01700, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01700"
+        },
+        {
+            "id": "Mujika_et+al_2017_a",
+            "entry": "Asier Mujika, Florian Meier, and Angelika Steger. Fast-slow recurrent neural networks. In Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mujika%2C%20Asier%20Meier%2C%20Florian%20Steger%2C%20Angelika%20Fast-slow%20recurrent%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mujika%2C%20Asier%20Meier%2C%20Florian%20Steger%2C%20Angelika%20Fast-slow%20recurrent%20neural%20networks%202017"
+        },
+        {
+            "id": "Pham_et+al_2018_a",
+            "entry": "Hieu Pham, Melody Y Guan, Barret Zoph, Quoc V Le, and Jeff Dean. Efficient neural architecture search via parameters sharing. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pham%2C%20Hieu%20Guan%2C%20Melody%20Y.%20Zoph%2C%20Barret%20Le%2C%20Quoc%20V.%20Efficient%20neural%20architecture%20search%20via%20parameters%20sharing%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pham%2C%20Hieu%20Guan%2C%20Melody%20Y.%20Zoph%2C%20Barret%20Le%2C%20Quoc%20V.%20Efficient%20neural%20architecture%20search%20via%20parameters%20sharing%202018"
+        },
+        {
+            "id": "Sainath_et+al_2015_a",
+            "entry": "Tara N. Sainath, Oriol Vinyals, Andrew W. Senior, and Hasim Sak. Convolutional, long short-term memory, fully connected deep neural networks. In International Conference on Acoustics, Speech and Signal Processing (ICASSP), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sainath%2C%20Tara%20N.%20Vinyals%2C%20Oriol%20Senior%2C%20Andrew%20W.%20Sak%2C%20Hasim%20Convolutional%2C%20long%20short-term%20memory%2C%20fully%20connected%20deep%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sainath%2C%20Tara%20N.%20Vinyals%2C%20Oriol%20Senior%2C%20Andrew%20W.%20Sak%2C%20Hasim%20Convolutional%2C%20long%20short-term%20memory%2C%20fully%20connected%20deep%20neural%20networks%202015"
+        },
+        {
+            "id": "Salimans_2016_a",
+            "entry": "Tim Salimans and Diederik P Kingma. Weight normalization: A simple reparameterization to accelerate training of deep neural networks. In Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20P.%20Weight%20normalization%3A%20A%20simple%20reparameterization%20to%20accelerate%20training%20of%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20P.%20Weight%20normalization%3A%20A%20simple%20reparameterization%20to%20accelerate%20training%20of%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Santoro_et+al_2018_a",
+            "entry": "Adam Santoro, Ryan Faulkner, David Raposo, Jack Rae, Mike Chrzanowski, Theophane Weber, Daan Wierstra, Oriol Vinyals, Razvan Pascanu, and Timothy Lillicrap. Relational recurrent neural networks. In Neural Information Processing Systems (NIPS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Santoro%20Ryan%20Faulkner%20David%20Raposo%20Jack%20Rae%20Mike%20Chrzanowski%20Theophane%20Weber%20Daan%20Wierstra%20Oriol%20Vinyals%20Razvan%20Pascanu%20and%20Timothy%20Lillicrap%20Relational%20recurrent%20neural%20networks%20In%20Neural%20Information%20Processing%20Systems%20NIPS%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Santoro%20Ryan%20Faulkner%20David%20Raposo%20Jack%20Rae%20Mike%20Chrzanowski%20Theophane%20Weber%20Daan%20Wierstra%20Oriol%20Vinyals%20Razvan%20Pascanu%20and%20Timothy%20Lillicrap%20Relational%20recurrent%20neural%20networks%20In%20Neural%20Information%20Processing%20Systems%20NIPS%202018"
+        },
+        {
+            "id": "Shi_et+al_2015_a",
+            "entry": "Xingjian Shi, Zhourong Chen, Hao Wang, Dit-Yan Yeung, Wai-Kin Wong, and Wang-chun Woo. Convolutional LSTM network: A machine learning approach for precipitation nowcasting. In Neural Information Processing Systems (NIPS), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shi%2C%20Xingjian%20Chen%2C%20Zhourong%20Wang%2C%20Hao%20Yeung%2C%20Dit-Yan%20Convolutional%20LSTM%20network%3A%20A%20machine%20learning%20approach%20for%20precipitation%20nowcasting%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shi%2C%20Xingjian%20Chen%2C%20Zhourong%20Wang%2C%20Hao%20Yeung%2C%20Dit-Yan%20Convolutional%20LSTM%20network%3A%20A%20machine%20learning%20approach%20for%20precipitation%20nowcasting%202015"
+        },
+        {
+            "id": "Sutskever_et+al_2011_a",
+            "entry": "Ilya Sutskever, James Martens, and Geoffrey E. Hinton. Generating text with recurrent neural networks. In International Conference on Machine Learning (ICML), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Martens%2C%20James%20Hinton%2C%20Geoffrey%20E.%20Generating%20text%20with%20recurrent%20neural%20networks%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Martens%2C%20James%20Hinton%2C%20Geoffrey%20E.%20Generating%20text%20with%20recurrent%20neural%20networks%202011"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In Neural Information Processing Systems (NIPS), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Trinh_et+al_2018_a",
+            "entry": "Trieu H Trinh, Andrew M Dai, Thang Luong, and Quoc V Le. Learning longer-term dependencies in RNNs with auxiliary losses. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Trinh%2C%20Trieu%20H.%20Dai%2C%20Andrew%20M.%20Luong%2C%20Thang%20Le%2C%20Quoc%20V.%20Learning%20longer-term%20dependencies%20in%20RNNs%20with%20auxiliary%20losses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Trinh%2C%20Trieu%20H.%20Dai%2C%20Andrew%20M.%20Luong%2C%20Thang%20Le%2C%20Quoc%20V.%20Learning%20longer-term%20dependencies%20in%20RNNs%20with%20auxiliary%20losses%202018"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew W. Senior, and Koray Kavukcuoglu. WaveNet: A generative model for raw audio. arXiv:1609.03499, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Neural%20Information%20Processing%20Systems%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Neural%20Information%20Processing%20Systems%20NIPS%202017"
+        },
+        {
+            "id": "Venugopalan_et+al_2015_a",
+            "entry": "Subhashini Venugopalan, Marcus Rohrbach, Jeffrey Donahue, Raymond J. Mooney, Trevor Darrell, and Kate Saenko. Sequence to sequence \u2013 video to text. In International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Venugopalan%2C%20Subhashini%20Rohrbach%2C%20Marcus%20Donahue%2C%20Jeffrey%20Mooney%2C%20Raymond%20J.%20Sequence%20to%20sequence%20%E2%80%93%20video%20to%20text%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Venugopalan%2C%20Subhashini%20Rohrbach%2C%20Marcus%20Donahue%2C%20Jeffrey%20Mooney%2C%20Raymond%20J.%20Sequence%20to%20sequence%20%E2%80%93%20video%20to%20text%202015"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan. Show and tell: A neural image caption generator. In Computer Vision and Pattern Recognition (CVPR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Toshev%2C%20Alexander%20Bengio%2C%20Samy%20Erhan%2C%20Dumitru%20Show%20and%20tell%3A%20A%20neural%20image%20caption%20generator%202015"
+        },
+        {
+            "id": "Vogel_2017_a",
+            "entry": "Christoph Vogel and Thomas Pock. A primal dual network for low-level vision problems. In German Conference on Pattern Recognition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vogel%2C%20Christoph%20Pock%2C%20Thomas%20A%20primal%20dual%20network%20for%20low-level%20vision%20problems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vogel%2C%20Christoph%20Pock%2C%20Thomas%20A%20primal%20dual%20network%20for%20low-level%20vision%20problems%202017"
+        },
+        {
+            "id": "Waibel_et+al_1989_a",
+            "entry": "Alex Waibel, Toshiyuki Hanazawa, Geoffrey Hinton, Kiyohiro Shikano, and Kevin J Lang. Phoneme recognition using time-delay neural networks. IEEE Transactions on Acoustics, Speech, and Signal Processing, 37(3), 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Waibel%2C%20Alex%20Hanazawa%2C%20Toshiyuki%20Hinton%2C%20Geoffrey%20Shikano%2C%20Kiyohiro%20Phoneme%20recognition%20using%20time-delay%20neural%20networks%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Waibel%2C%20Alex%20Hanazawa%2C%20Toshiyuki%20Hinton%2C%20Geoffrey%20Shikano%2C%20Kiyohiro%20Phoneme%20recognition%20using%20time-delay%20neural%20networks%201989"
+        },
+        {
+            "id": "Werbos_1990_a",
+            "entry": "Paul J Werbos. Backpropagation through time: What it does and how to do it. Proceedings of the IEEE, 78(10), 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Werbos%2C%20Paul%20J.%20Backpropagation%20through%20time%3A%20What%20it%20does%20and%20how%20to%20do%20it%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Werbos%2C%20Paul%20J.%20Backpropagation%20through%20time%3A%20What%20it%20does%20and%20how%20to%20do%20it%201990"
+        },
+        {
+            "id": "Xie_2015_a",
+            "entry": "Saining Xie and Zhuowen Tu. Holistically-nested edge detection. In International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xie%2C%20Saining%20Tu%2C%20Zhuowen%20Holistically-nested%20edge%20detection%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xie%2C%20Saining%20Tu%2C%20Zhuowen%20Holistically-nested%20edge%20detection%202015"
+        },
+        {
+            "id": "Yang_et+al_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Zhilin Yang, Zihang Dai, Ruslan Salakhutdinov, and William W. Cohen. Breaking the softmax bottleneck: A high-rank RNN language model. International Conference on Learning Representations (ICLR), 2018. Fisher Yu and Vladlen Koltun. Multi-scale context aggregation by dilated convolutions. In International Conference on Learning Representations (ICLR), 2016. Julian Georg Zilly, Rupesh Kumar Srivastava, Jan Koutn\u0131k, and Jurgen Schmidhuber. Recurrent highway networks. In International Conference on Machine Learning (ICML), 2017. Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zhilin%20Dai%2C%20Zihang%20Salakhutdinov%2C%20Ruslan%20Cohen%2C%20William%20W.%20Published%20as%20a%20conference%20paper%20at%20ICLR%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zhilin%20Dai%2C%20Zihang%20Salakhutdinov%2C%20Ruslan%20Cohen%2C%20William%20W.%20Published%20as%20a%20conference%20paper%20at%20ICLR%202019"
+        }
+    ]
+}

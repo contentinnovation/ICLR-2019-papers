@@ -1,0 +1,269 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DOUBLY REPARAMETERIZED GRADIENT ESTIMATORS FOR MONTE CARLO OBJECTIVES",
+        "author": "George Tucker Google Brain gjt@google.com",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkG3e205K7"
+        },
+        "abstract": "Deep latent variable models have become a popular model choice due to the scalable learning algorithms introduced by (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a>; <a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\">Rezende et al., 2014</a>). These approaches maximize a variational lower bound on the intractable log likelihood of the observed data. Burda et al. (2015) introduced a multi-sample variational bound, IWAE, that is at least as tight as the standard variational lower bound and becomes increasingly tight as the number of samples increases. Counterintuitively, the typical inference network gradient estimator for the IWAE bound performs poorly as the number of samples increases (<a class=\"ref-link\" id=\"cRainforth_et+al_2018_a\" href=\"#rRainforth_et+al_2018_a\">Rainforth et al., 2018</a>; <a class=\"ref-link\" id=\"cLe_et+al_2018_a\" href=\"#rLe_et+al_2018_a\">Le et al., 2018</a>). Roeder et al. (2017) propose an improved gradient estimator, however, are unable to show it is unbiased. We show that it is in fact biased and that the bias can be estimated efficiently with a second application of the reparameterization trick. The doubly reparameterized gradient (DReG) estimator does not suffer as the number of samples increases, resolving the previously raised issues. The same idea can be used to improve many recently introduced training techniques for latent variable models. In particular, we show that this estimator reduces the variance of the IWAE gradient, the reweighted wake-sleep update (RWS) (<a class=\"ref-link\" id=\"cBornschein_2014_a\" href=\"#rBornschein_2014_a\">Bornschein & Bengio, 2014</a>), and the jackknife variational inference (JVI) gradient (<a class=\"ref-link\" id=\"cNowozin_2018_a\" href=\"#rNowozin_2018_a\">Nowozin, 2018</a>). Finally, we show that this computationally efficient, unbiased drop-in gradient estimator translates to improved performance for all three objectives on several modeling tasks."
+    },
+    "keywords": [
+        {
+            "term": "latent variable model",
+            "url": "https://en.wikipedia.org/wiki/latent_variable_model"
+        },
+        {
+            "term": "evidence lower bound",
+            "url": "https://en.wikipedia.org/wiki/evidence_lower_bound"
+        },
+        {
+            "term": "variational inference",
+            "url": "https://en.wikipedia.org/wiki/variational_inference"
+        },
+        {
+            "term": "signal-to-noise ratio",
+            "url": "https://en.wikipedia.org/wiki/signal-to-noise_ratio"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        }
+    ],
+    "abbreviations": {
+        "DReG": "doubly reparameterized gradient",
+        "RWS": "REWEIGHTED WAKE SLEEP",
+        "JVI": "JACKKNIFE VARIATIONAL INFERENCE",
+        "ELBO": "evidence lower bound",
+        "SNR": "signal-to-noise ratio",
+        "IWAE": "importance weighted autoencoder",
+        "DREGS": "DOUBLY REPARAMETERIZED GRADIENT ESTIMATORS",
+        "MCO": "Monte Carlo objectives"
+    },
+    "highlights": [
+        "Following the influential work by (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a></a>; <a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\"><a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\">Rezende et al, 2014</a></a>), deep generative models with latent variables have been widely used to model data such as natural images (<a class=\"ref-link\" id=\"cRezende_2015_a\" href=\"#rRezende_2015_a\"><a class=\"ref-link\" id=\"cRezende_2015_a\" href=\"#rRezende_2015_a\">Rezende & Mohamed, 2015</a></a>; <a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\"><a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a></a>; <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\"><a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a></a>; <a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\"><a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\">Gulrajani et al, 2016</a></a>), speech and music time-series (<a class=\"ref-link\" id=\"cChung_et+al_2015_a\" href=\"#rChung_et+al_2015_a\"><a class=\"ref-link\" id=\"cChung_et+al_2015_a\" href=\"#rChung_et+al_2015_a\">Chung et al, 2015</a></a>; <a class=\"ref-link\" id=\"cFraccaro_et+al_2016_a\" href=\"#rFraccaro_et+al_2016_a\"><a class=\"ref-link\" id=\"cFraccaro_et+al_2016_a\" href=\"#rFraccaro_et+al_2016_a\">Fraccaro et al, 2016</a></a>; <a class=\"ref-link\" id=\"cKrishnan_et+al_2015_a\" href=\"#rKrishnan_et+al_2015_a\"><a class=\"ref-link\" id=\"cKrishnan_et+al_2015_a\" href=\"#rKrishnan_et+al_2015_a\">Krishnan et al, 2015</a></a>), and video (<a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\"><a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\">Babaeizadeh et al, 2017</a></a>; <a class=\"ref-link\" id=\"cHa_2018_a\" href=\"#rHa_2018_a\"><a class=\"ref-link\" id=\"cHa_2018_a\" href=\"#rHa_2018_a\">Ha & Schmidhuber, 2018</a></a>; <a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\"><a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\">Denton & Fergus, 2018</a></a>)",
+        "We show that it is biased, but that it is possible to construct an unbiased estimator with a second application of the reparameterization trick which we call the importance weighted autoencoder doubly reparameterized gradient (DReG) estimator",
+        "As in the previous tasks, the doubly reparameterized gradient estimator improves across all three updates (IWAE, REWEIGHTED WAKE SLEEP, and JACKKNIFE VARIATIONAL INFERENCE; Appendix Fig. 7)",
+        "We introduce doubly reparameterized estimators for the updates in importance weighted autoencoder, REWEIGHTED WAKE SLEEP, and JACKKNIFE VARIATIONAL INFERENCE",
+        "We found that a convex combination of importance weighted autoencoder-doubly reparameterized gradient and REWEIGHTED WAKE SLEEP-doubly reparameterized gradient performed best, the weighting was task dependent",
+        "The form of the importance weighted autoencoder-doubly reparameterized gradient estimator (Eq 7) is surprisingly simple and suggests that there may be a more direct derivation that is applicable to general Monte Carlo objectives"
+    ],
+    "key_statements": [
+        "Following the influential work by (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a></a>; <a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\"><a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\">Rezende et al, 2014</a></a>), deep generative models with latent variables have been widely used to model data such as natural images (<a class=\"ref-link\" id=\"cRezende_2015_a\" href=\"#rRezende_2015_a\"><a class=\"ref-link\" id=\"cRezende_2015_a\" href=\"#rRezende_2015_a\">Rezende & Mohamed, 2015</a></a>; <a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\"><a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a></a>; <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\"><a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a></a>; <a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\"><a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\">Gulrajani et al, 2016</a></a>), speech and music time-series (<a class=\"ref-link\" id=\"cChung_et+al_2015_a\" href=\"#rChung_et+al_2015_a\"><a class=\"ref-link\" id=\"cChung_et+al_2015_a\" href=\"#rChung_et+al_2015_a\">Chung et al, 2015</a></a>; <a class=\"ref-link\" id=\"cFraccaro_et+al_2016_a\" href=\"#rFraccaro_et+al_2016_a\"><a class=\"ref-link\" id=\"cFraccaro_et+al_2016_a\" href=\"#rFraccaro_et+al_2016_a\">Fraccaro et al, 2016</a></a>; <a class=\"ref-link\" id=\"cKrishnan_et+al_2015_a\" href=\"#rKrishnan_et+al_2015_a\"><a class=\"ref-link\" id=\"cKrishnan_et+al_2015_a\" href=\"#rKrishnan_et+al_2015_a\">Krishnan et al, 2015</a></a>), and video (<a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\"><a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\">Babaeizadeh et al, 2017</a></a>; <a class=\"ref-link\" id=\"cHa_2018_a\" href=\"#rHa_2018_a\"><a class=\"ref-link\" id=\"cHa_2018_a\" href=\"#rHa_2018_a\">Ha & Schmidhuber, 2018</a></a>; <a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\"><a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\">Denton & Fergus, 2018</a></a>)",
+        "The bound is tighter, <a class=\"ref-link\" id=\"cRainforth_et+al_2018_a\" href=\"#rRainforth_et+al_2018_a\">Rainforth et al (2018</a>) theoretically and empirically showed that the standard inference network gradient estimator for the importance weighted autoencoder bound performs poorly as the number of samples increases due to a diminishing signal-to-noise ratio (SNR)",
+        "We show that it is biased, but that it is possible to construct an unbiased estimator with a second application of the reparameterization trick which we call the importance weighted autoencoder doubly reparameterized gradient (DReG) estimator",
+        "The first-order JACKKNIFE VARIATIONAL INFERENCE has significantly reduced bias compared to importance weighted autoencoder, which empirically results in a better estimate of the log marginal likelihood with fewer samples (<a class=\"ref-link\" id=\"cNowozin_2018_a\" href=\"#rNowozin_2018_a\">Nowozin, 2018</a>)",
+        "The JACKKNIFE VARIATIONAL INFERENCE estimator is a linear combination of K and K \u2212 1 sample importance weighted autoencoder estimators, so we can use the doubly reparameterized gradient estimator (Eq 7) for each term.\n5 RELATED WORK",
+        "As in the previous tasks, the doubly reparameterized gradient estimator improves across all three updates (IWAE, REWEIGHTED WAKE SLEEP, and JACKKNIFE VARIATIONAL INFERENCE; Appendix Fig. 7)",
+        "We introduce doubly reparameterized estimators for the updates in importance weighted autoencoder, REWEIGHTED WAKE SLEEP, and JACKKNIFE VARIATIONAL INFERENCE",
+        "We found that a convex combination of importance weighted autoencoder-doubly reparameterized gradient and REWEIGHTED WAKE SLEEP-doubly reparameterized gradient performed best, the weighting was task dependent",
+        "The form of the importance weighted autoencoder-doubly reparameterized gradient estimator (Eq 7) is surprisingly simple and suggests that there may be a more direct derivation that is applicable to general Monte Carlo objectives"
+    ],
+    "summary": [
+        "Following the influential work by (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a></a>; <a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\"><a class=\"ref-link\" id=\"cRezende_et+al_2014_a\" href=\"#rRezende_et+al_2014_a\">Rezende et al, 2014</a></a>), deep generative models with latent variables have been widely used to model data such as natural images (<a class=\"ref-link\" id=\"cRezende_2015_a\" href=\"#rRezende_2015_a\"><a class=\"ref-link\" id=\"cRezende_2015_a\" href=\"#rRezende_2015_a\">Rezende & Mohamed, 2015</a></a>; <a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\"><a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a></a>; <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\"><a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a></a>; <a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\"><a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\">Gulrajani et al, 2016</a></a>), speech and music time-series (<a class=\"ref-link\" id=\"cChung_et+al_2015_a\" href=\"#rChung_et+al_2015_a\"><a class=\"ref-link\" id=\"cChung_et+al_2015_a\" href=\"#rChung_et+al_2015_a\">Chung et al, 2015</a></a>; <a class=\"ref-link\" id=\"cFraccaro_et+al_2016_a\" href=\"#rFraccaro_et+al_2016_a\"><a class=\"ref-link\" id=\"cFraccaro_et+al_2016_a\" href=\"#rFraccaro_et+al_2016_a\">Fraccaro et al, 2016</a></a>; <a class=\"ref-link\" id=\"cKrishnan_et+al_2015_a\" href=\"#rKrishnan_et+al_2015_a\"><a class=\"ref-link\" id=\"cKrishnan_et+al_2015_a\" href=\"#rKrishnan_et+al_2015_a\">Krishnan et al, 2015</a></a>), and video (<a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\"><a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\">Babaeizadeh et al, 2017</a></a>; <a class=\"ref-link\" id=\"cHa_2018_a\" href=\"#rHa_2018_a\"><a class=\"ref-link\" id=\"cHa_2018_a\" href=\"#rHa_2018_a\">Ha & Schmidhuber, 2018</a></a>; <a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\"><a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\">Denton & Fergus, 2018</a></a>).",
+        "The bound is tighter, <a class=\"ref-link\" id=\"cRainforth_et+al_2018_a\" href=\"#rRainforth_et+al_2018_a\"><a class=\"ref-link\" id=\"cRainforth_et+al_2018_a\" href=\"#rRainforth_et+al_2018_a\">Rainforth et al (2018</a></a>) theoretically and empirically showed that the standard inference network gradient estimator for the IWAE bound performs poorly as the number of samples increases due to a diminishing signal-to-noise ratio (SNR).",
+        "<a class=\"ref-link\" id=\"cRoeder_et+al_2017_a\" href=\"#rRoeder_et+al_2017_a\">Roeder et al (2017</a>) proposed a lower-variance estimator of the gradient of the IWAE bound.",
+        "We derive DReG estimators for IWAE, RWS, and JVI and demonstrate improved scaling with the number of samples on a simple example.",
+        "As K increases, the bound becomes increasingly tight, <a class=\"ref-link\" id=\"cRainforth_et+al_2018_a\" href=\"#rRainforth_et+al_2018_a\"><a class=\"ref-link\" id=\"cRainforth_et+al_2018_a\" href=\"#rRainforth_et+al_2018_a\">Rainforth et al (2018</a></a>) show that the signal-to-noise ratio (SNR) of the inference network gradient estimator goes to 0.",
+        "We call the algorithm that uses the single sample Monte Carlo estimator of this expression for the inference network gradient the IWAE doubly reparameterized gradient estimator (IWAE-DReG).",
+        "<a class=\"ref-link\" id=\"cBornschein_2014_a\" href=\"#rBornschein_2014_a\">Bornschein & Bengio (2014</a>) introduced RWS, an alternative multi-sample update for latent variable models that uses importance sampling.",
+        "We call the algorithm that uses the single sample Monte Carlo estimator of this expression as the wake update for the inference network RWS-DReG.",
+        "Nowozin (2018) reinterprets the IWAE lower bound as a biased estimator for the log marginal likelihood.",
+        "The first-order JVI has significantly reduced bias compared to IWAE, which empirically results in a better estimate of the log marginal likelihood with fewer samples (<a class=\"ref-link\" id=\"cNowozin_2018_a\" href=\"#rNowozin_2018_a\">Nowozin, 2018</a>).",
+        "The JVI estimator is a linear combination of K and K \u2212 1 sample IWAE estimators, so we can use the doubly reparameterized gradient estimator (Eq 7) for each term.",
+        "We trained models with the IWAE gradient, the RWS wake update, and with the JVI estimator.",
+        "The doubly reparameterized gradient estimator reduced variance5 and as a result substantially improved performance (Fig. 2).",
+        "The biased gradient estimators STL and RWS-DReG perform best on this task with RWSDReG slightly outperforming STL.",
+        "We found that the doubly reparameterized gradient estimator reduced variance and as a result improved test performance (Figs.",
+        "As in the previous tasks, the doubly reparameterized gradient estimator improves across all three updates (IWAE, RWS, and JVI; Appendix Fig. 7).",
+        "On this task, the biased estimators (STL and RWS) underperform unbiased IWAE gradient estimators (Fig. 4).",
+        "We introduce doubly reparameterized estimators for the updates in IWAE, RWS, and JVI.",
+        "We found that a convex combination of IWAE-DReG and RWS-DReG performed best, the weighting was task dependent."
+    ],
+    "headline": "We show that it is biased and that the bias can be estimated efficiently with a second application of the reparameterization trick",
+    "reference_links": [
+        {
+            "id": "Ba_et+al_2015_a",
+            "entry": "Jimmy Ba, Ruslan R Salakhutdinov, Roger B Grosse, and Brendan J Frey. Learning Wake-Sleep Recurrent Attention Models. In C Cortes, N D Lawrence, D D Lee, M Sugiyama, and R Garnett (eds.), Advances in Neural Information Processing Systems 28, pp. 2593\u20132601. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ba%2C%20Jimmy%20Salakhutdinov%2C%20Ruslan%20R.%20Grosse%2C%20Roger%20B.%20Frey%2C%20Brendan%20J.%20Learning%20Wake-Sleep%20Recurrent%20Attention%20Models%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ba%2C%20Jimmy%20Salakhutdinov%2C%20Ruslan%20R.%20Grosse%2C%20Roger%20B.%20Frey%2C%20Brendan%20J.%20Learning%20Wake-Sleep%20Recurrent%20Attention%20Models%202015"
+        },
+        {
+            "id": "Babaeizadeh_et+al_2017_a",
+            "entry": "Mohammad Babaeizadeh, Chelsea Finn, Dumitru Erhan, Roy H Campbell, and Sergey Levine. Stochastic variational video prediction. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Babaeizadeh%2C%20Mohammad%20Finn%2C%20Chelsea%20Erhan%2C%20Dumitru%20Campbell%2C%20Roy%20H.%20Stochastic%20variational%20video%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Babaeizadeh%2C%20Mohammad%20Finn%2C%20Chelsea%20Erhan%2C%20Dumitru%20Campbell%2C%20Roy%20H.%20Stochastic%20variational%20video%20prediction%202017"
+        },
+        {
+            "id": "Baydin_et+al_2017_a",
+            "entry": "Atilim Gunes Baydin, Robert Cornish, David Martinez Rubio, Mark Schmidt, and Frank Wood. Online learning rate adaptation with hypergradient descent. arXiv preprint arXiv:1703.04782, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04782"
+        },
+        {
+            "id": "Blei_et+al_2017_a",
+            "entry": "David M Blei, Alp Kucukelbir, and Jon D McAuliffe. Variational inference: A review for statisticians. Journal of the American Statistical Association, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blei%2C%20David%20M.%20Kucukelbir%2C%20Alp%20McAuliffe%2C%20Jon%20D.%20Variational%20inference%3A%20A%20review%20for%20statisticians%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blei%2C%20David%20M.%20Kucukelbir%2C%20Alp%20McAuliffe%2C%20Jon%20D.%20Variational%20inference%3A%20A%20review%20for%20statisticians%202017"
+        },
+        {
+            "id": "Bornschein_2014_a",
+            "entry": "Jorg Bornschein and Yoshua Bengio. Reweighted wake-sleep. International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jorg%20Bornschein%20and%20Yoshua%20Bengio%20Reweighted%20wakesleep%20International%20Conference%20on%20Learning%20Representations%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jorg%20Bornschein%20and%20Yoshua%20Bengio%20Reweighted%20wakesleep%20International%20Conference%20on%20Learning%20Representations%202014"
+        },
+        {
+            "id": "Burda_et+al_2015_a",
+            "entry": "Yuri Burda, Roger Grosse, and Ruslan Salakhutdinov. Importance weighted autoencoders. nternational Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Burda%2C%20Yuri%20Grosse%2C%20Roger%20Salakhutdinov%2C%20Ruslan%20Importance%20weighted%20autoencoders.%20nternational%20Conference%20on%20Learning%20Representations%202015"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Diederik P Kingma, Tim Salimans, Yan Duan, Prafulla Dhariwal, John Schulman, Ilya Sutskever, and Pieter Abbeel. Variational lossy autoencoder. International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Duan%2C%20Yan%20Variational%20lossy%20autoencoder%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Duan%2C%20Yan%20Variational%20lossy%20autoencoder%202016"
+        },
+        {
+            "id": "Chung_et+al_2015_a",
+            "entry": "Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron C Courville, and Yoshua Bengio. A recurrent latent variable model for sequential data. In Advances in neural information processing systems, pp. 2980\u20132988, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015"
+        },
+        {
+            "id": "Denton_2018_a",
+            "entry": "Emily Denton and Rob Fergus. Stochastic video generation with a learned prior. International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denton%2C%20Emily%20Fergus%2C%20Rob%20Stochastic%20video%20generation%20with%20a%20learned%20prior%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denton%2C%20Emily%20Fergus%2C%20Rob%20Stochastic%20video%20generation%20with%20a%20learned%20prior%202018"
+        },
+        {
+            "id": "Figurnov_et+al_2018_a",
+            "entry": "Michael Figurnov, Shakir Mohamed, and Andriy Mnih. Implicit reparameterization gradients. arXiv preprint arXiv:1805.08498, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.08498"
+        },
+        {
+            "id": "Fraccaro_et+al_2016_a",
+            "entry": "Marco Fraccaro, S\u00f8ren Kaae S\u00f8nderby, Ulrich Paquet, and Ole Winther. Sequential neural models with stochastic layers. In Advances in neural information processing systems, pp. 2199\u20132207, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016"
+        },
+        {
+            "id": "Graves_2016_a",
+            "entry": "Alex Graves. Stochastic backpropagation through mixture density distributions. arXiv preprint arXiv:1607.05690, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.05690"
+        },
+        {
+            "id": "Gu_et+al_2015_a",
+            "entry": "Shixiang Gu, Zoubin Ghahramani, and Richard E Turner. Neural adaptive sequential monte carlo. In Advances in Neural Information Processing Systems, pp. 2629\u20132637, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Ghahramani%2C%20Zoubin%20Turner%2C%20Richard%20E.%20Neural%20adaptive%20sequential%20monte%20carlo%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Ghahramani%2C%20Zoubin%20Turner%2C%20Richard%20E.%20Neural%20adaptive%20sequential%20monte%20carlo%202015"
+        },
+        {
+            "id": "Gulrajani_et+al_2016_a",
+            "entry": "Ishaan Gulrajani, Kundan Kumar, Faruk Ahmed, Adrien Ali Taiga, Francesco Visin, David Vazquez, and Aaron Courville. Pixelvae: A latent variable model for natural images. International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Kumar%2C%20Kundan%20Ahmed%2C%20Faruk%20Taiga%2C%20Adrien%20Ali%20Pixelvae%3A%20A%20latent%20variable%20model%20for%20natural%20images%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Kumar%2C%20Kundan%20Ahmed%2C%20Faruk%20Taiga%2C%20Adrien%20Ali%20Pixelvae%3A%20A%20latent%20variable%20model%20for%20natural%20images%202016"
+        },
+        {
+            "id": "Ha_2018_a",
+            "entry": "David Ha and Jurgen Schmidhuber. World models. Advances in neural information processing systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ha%2C%20David%20Schmidhuber%2C%20Jurgen%20World%20models.%20Advances%20in%20neural%20information%20processing%20systems%202018"
+        },
+        {
+            "id": "Hinton_et+al_1995_a",
+            "entry": "Geoffrey E Hinton, Peter Dayan, Brendan J Frey, and Radford M Neal. The\u201d wake-sleep\u201d algorithm for unsupervised neural networks. Science, 268(5214):1158\u20131161, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Dayan%2C%20Peter%20Frey%2C%20Brendan%20J.%20Neal%2C%20Radford%20M.%20The%E2%80%9D%20wake-sleep%E2%80%9D%20algorithm%20for%20unsupervised%20neural%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Dayan%2C%20Peter%20Frey%2C%20Brendan%20J.%20Neal%2C%20Radford%20M.%20The%E2%80%9D%20wake-sleep%E2%80%9D%20algorithm%20for%20unsupervised%20neural%20networks%201995"
+        },
+        {
+            "id": "Jankowiak_2018_a",
+            "entry": "Martin Jankowiak and Theofanis Karaletsos. Pathwise derivatives for multivariate distributions. arXiv preprint arXiv:1806.01856, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01856"
+        },
+        {
+            "id": "Jankowiak_2018_b",
+            "entry": "Martin Jankowiak and Fritz Obermeyer. Pathwise derivatives beyond the reparameterization trick. arXiv preprint arXiv:1806.01851, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01851"
+        },
+        {
+            "id": "Jordan_et+al_1999_a",
+            "entry": "Michael I Jordan, Zoubin Ghahramani, Tommi S Jaakkola, and Lawrence K Saul. An introduction to variational methods for graphical models. Machine learning, 37(2):183\u2013233, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jordan%2C%20Michael%20I.%20Ghahramani%2C%20Zoubin%20Jaakkola%2C%20Tommi%20S.%20Saul%2C%20Lawrence%20K.%20An%20introduction%20to%20variational%20methods%20for%20graphical%20models%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jordan%2C%20Michael%20I.%20Ghahramani%2C%20Zoubin%20Jaakkola%2C%20Tommi%20S.%20Saul%2C%20Lawrence%20K.%20An%20introduction%20to%20variational%20methods%20for%20graphical%20models%201999"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. nternational Conference on Learning Representations, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes.%20nternational%20Conference%20on%20Learning%20Representations%202013"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, pp. 4743\u20134751, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Krishnan_et+al_2015_a",
+            "entry": "Rahul G Krishnan, Uri Shalit, and David Sontag. Deep kalman filters. arXiv preprint arXiv:1511.05121, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05121"
+        },
+        {
+            "id": "Le_et+al_2018_a",
+            "entry": "Tuan Anh Le, Adam R Kosiorek, N Siddharth, Yee Whye Teh, and Frank Wood. Revisiting reweighted wake-sleep. arXiv preprint arXiv:1805.10469, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10469"
+        },
+        {
+            "id": "Maddison_et+al_2017_a",
+            "entry": "Chris J Maddison, John Lawson, George Tucker, Nicolas Heess, Mohammad Norouzi, Andriy Mnih, Arnaud Doucet, and Yee Teh. Filtering variational objectives. In Advances in Neural Information Processing Systems, pp. 6573\u20136583, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20Chris%20J.%20Lawson%2C%20John%20Tucker%2C%20George%20Heess%2C%20Nicolas%20Filtering%20variational%20objectives%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20Chris%20J.%20Lawson%2C%20John%20Tucker%2C%20George%20Heess%2C%20Nicolas%20Filtering%20variational%20objectives%202017"
+        },
+        {
+            "id": "Mnih_2016_a",
+            "entry": "Andriy Mnih and Danilo J Rezende. Variational inference for monte carlo objectives. International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Andriy%20Rezende%2C%20Danilo%20J.%20Variational%20inference%20for%20monte%20carlo%20objectives%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Andriy%20Rezende%2C%20Danilo%20J.%20Variational%20inference%20for%20monte%20carlo%20objectives%202016"
+        },
+        {
+            "id": "Naesseth_et+al_2018_a",
+            "entry": "Christian Naesseth, Scott Linderman, Rajesh Ranganath, and David Blei. Variational sequential monte carlo. In International Conference on Artificial Intelligence and Statistics, pp. 968\u2013977, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Naesseth%2C%20Christian%20Linderman%2C%20Scott%20Ranganath%2C%20Rajesh%20Blei%2C%20David%20Variational%20sequential%20monte%20carlo%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Naesseth%2C%20Christian%20Linderman%2C%20Scott%20Ranganath%2C%20Rajesh%20Blei%2C%20David%20Variational%20sequential%20monte%20carlo%202018"
+        },
+        {
+            "id": "Nowozin_2018_a",
+            "entry": "Sebastian Nowozin. Debiasing evidence approximations: On importance-weighted autoencoders and jackknife variational inference. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nowozin%2C%20Sebastian%20Debiasing%20evidence%20approximations%3A%20On%20importance-weighted%20autoencoders%20and%20jackknife%20variational%20inference%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nowozin%2C%20Sebastian%20Debiasing%20evidence%20approximations%3A%20On%20importance-weighted%20autoencoders%20and%20jackknife%20variational%20inference%202018"
+        },
+        {
+            "id": "Rainforth_et+al_2018_a",
+            "entry": "Tom Rainforth, Adam R Kosiorek, Tuan Anh Le, Chris J Maddison, Maximilian Igl, Frank Wood, and Yee Whye Teh. Tighter variational bounds are not necessarily better. International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rainforth%2C%20Tom%20Kosiorek%2C%20Adam%20R.%20Le%2C%20Tuan%20Anh%20Maddison%2C%20Chris%20J.%20Tighter%20variational%20bounds%20are%20not%20necessarily%20better%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rainforth%2C%20Tom%20Kosiorek%2C%20Adam%20R.%20Le%2C%20Tuan%20Anh%20Maddison%2C%20Chris%20J.%20Tighter%20variational%20bounds%20are%20not%20necessarily%20better%202018"
+        },
+        {
+            "id": "Rezende_2015_a",
+            "entry": "Danilo Rezende and Shakir Mohamed. Variational inference with normalizing flows. In International Conference on Machine Learning, pp. 1530\u20131538, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In International Conference on Machine Learning, pp. 1278\u20131286, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Roeder_et+al_2017_a",
+            "entry": "Geoffrey Roeder, Yuhuai Wu, and David Duvenaud. Sticking the landing: An asymptotically zerovariance gradient estimator for variational inference. Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roeder%2C%20Geoffrey%20Wu%2C%20Yuhuai%20Duvenaud%2C%20David%20Sticking%20the%20landing%3A%20An%20asymptotically%20zerovariance%20gradient%20estimator%20for%20variational%20inference%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roeder%2C%20Geoffrey%20Wu%2C%20Yuhuai%20Duvenaud%2C%20David%20Sticking%20the%20landing%3A%20An%20asymptotically%20zerovariance%20gradient%20estimator%20for%20variational%20inference%202017"
+        },
+        {
+            "id": "Williams_1992_a",
+            "entry": "Ronald J Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 8(3-4):229\u2013256, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992"
+        }
+    ]
+}

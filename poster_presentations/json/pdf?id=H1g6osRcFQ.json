@@ -1,0 +1,351 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "POLICY TRANSFER WITH STRATEGY OPTIMIZATION",
+        "author": "Wenhao Yu, C. Karen Liu, Greg Turk School of Interactive Computing Georgia Institute of Technology Atlanta, GA wenhaoyu@gatech.edu, {karenliu,turk}@cc.gatech.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1g6osRcFQ",
+            "doi": "10.15607/RSS.2018"
+        },
+        "abstract": "Computer simulation provides an automatic and safe way for training robotic control policies to achieve complex tasks such as locomotion. However, a policy trained in simulation usually does not transfer directly to the real hardware due to the differences between the two environments. Transfer learning using domain randomization is a promising approach, but it usually assumes that the target environment is close to the distribution of the training environments, thus relying heavily on accurate system identification. In this paper, we present a different approach that leverages domain randomization for transferring control policies to unknown environments. The key idea that, instead of learning a single policy in the simulation, we simultaneously learn a family of policies that exhibit different behaviors. When tested in the target environment, we directly search for the best policy in the family based on the task performance, without the need to identify the dynamic parameters. We evaluate our method on five simulated robotic control problems with different discrepancies in the training and testing environment and demonstrate that our method can overcome larger modeling errors compared to training a robust policy or an adaptive policy."
+    },
+    "keywords": [
+        {
+            "term": "robotic control",
+            "url": "https://en.wikipedia.org/wiki/robotic_control"
+        },
+        {
+            "term": "computer simulation",
+            "url": "https://en.wikipedia.org/wiki/computer_simulation"
+        },
+        {
+            "term": "real world",
+            "url": "https://en.wikipedia.org/wiki/real_world"
+        },
+        {
+            "term": "physics simulation",
+            "url": "https://en.wikipedia.org/wiki/physics_simulation"
+        },
+        {
+            "term": "reward function",
+            "url": "https://en.wikipedia.org/wiki/reward_function"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        }
+    ],
+    "abbreviations": {
+        "DRL": "Deep Reinforcement Learning",
+        "MDP": "Markov Decision Process",
+        "CMA": "Covariance Matrix Adaptation",
+        "PPO": "Policy Optimization",
+        "SO-CMA": "Strategy Optimization with CMA-ES",
+        "Robust": "robust policy"
+    },
+    "highlights": [
+        "Recent developments in Deep Reinforcement Learning (DRL) have shown the potential to learn complex robotic controllers in an automatic way with minimal human intervention",
+        "To further reduce the number of samples from the target environment needed for solving Equation 1, we investigated a number of algorithms, including Bayesian optimization, model-based methods and an evolutionary algorithm (CMA)",
+        "When dim(\u03bc) = 5, SO-Covariance Matrix Adaptation can successfully transfer the policy to MuJoCo Hopper with good performance, while the baseline methods were not able to adapt to the new environment using the same sample budget",
+        "We further investigate whether SO-Covariance Matrix Adaptation can generalize to differences in joint limits in addition to the discrepancies between DART and MuJoCo",
+        "We have proposed a policy transfer algorithm where we first learn a family of policies simultaneously in a source environment that exhibits different behaviors and search directly for a policy in the family that performs the best in the target environment",
+        "We show that our proposed method can overcome large modeling errors, including those commonly seen on real robotic platforms with relatively low amount of samples in the target environment"
+    ],
+    "key_statements": [
+        "Recent developments in Deep Reinforcement Learning (DRL) have shown the potential to learn complex robotic controllers in an automatic way with minimal human intervention",
+        "Due to the model discrepancy between physics simulation and the real-world environment, known as the Reality Gap (<a class=\"ref-link\" id=\"cBoeing_2012_a\" href=\"#rBoeing_2012_a\">Boeing & Braunl, 2012</a>; <a class=\"ref-link\" id=\"cKoos_et+al_2010_a\" href=\"#rKoos_et+al_2010_a\">Koos et al, 2010</a>), the trained policy usually fails in the target environment",
+        "Since our goal is to find a strategy that works well in the target environment, a more direct approach is to use the performance of the task, i.e. the accumulated reward, in the target environment as the metric to search for the strategy: \u03bc\u2217 = arg max JMt",
+        "To further reduce the number of samples from the target environment needed for solving Equation 1, we investigated a number of algorithms, including Bayesian optimization, model-based methods and an evolutionary algorithm (CMA)",
+        "When dim(\u03bc) = 5, SO-Covariance Matrix Adaptation can successfully transfer the policy to MuJoCo Hopper with good performance, while the baseline methods were not able to adapt to the new environment using the same sample budget",
+        "We further investigate whether SO-Covariance Matrix Adaptation can generalize to differences in joint limits in addition to the discrepancies between DART and MuJoCo",
+        "We investigate whether SO-Covariance Matrix Adaptation is able to overcome the error in actuator models",
+        "We have demonstrated that our method, SO-Covariance Matrix Adaptation, can successfully transfer policies trained in one environment to a notably different one with a relatively low amount of samples",
+        "We have proposed a policy transfer algorithm where we first learn a family of policies simultaneously in a source environment that exhibits different behaviors and search directly for a policy in the family that performs the best in the target environment",
+        "We show that our proposed method can overcome large modeling errors, including those commonly seen on real robotic platforms with relatively low amount of samples in the target environment",
+        "The addition of memory will extend our method to target environments that vary over time",
+        "We have investigated in a few options for strategy optimization and found that Covariance Matrix Adaptation-ES works well for our examples",
+        "It would be desired if we can find a way to further reduce the sample required in the target environment"
+    ],
+    "summary": [
+        "Recent developments in Deep Reinforcement Learning (DRL) have shown the potential to learn complex robotic controllers in an automatic way with minimal human intervention.",
+        "<a class=\"ref-link\" id=\"cTan_et+al_2018_a\" href=\"#rTan_et+al_2018_a\">Tan et al (2018</a>) showed that training a robust policy with randomized dynamic parameters is crucial for transferring quadruped locomotion to the real world.",
+        "Our method uses dynamic randomization to train policies that exhibit different strategies for different dynamics, instead of relying on the simulation to learn an identification model for selecting the strategy, we propose to directly optimize the strategy in the target environment.",
+        "To evaluate the ability of our method to overcome the reality gap, we train policies for four locomotion control tasks and transfer each policy to environments with different dynamics.",
+        "When dim(\u03bc) = 5, SO-CMA can successfully transfer the policy to MuJoCo Hopper with good performance, while the baseline methods were not able to adapt to the new environment using the same sample budget.",
+        "Figure 4 (a) shows the transfer performance of different method with respect to the sample numbers in the target environment.",
+        "We train policies in the rigid Hopper environment and randomize the same set of dynamic parameters as in the in the DART-to-MuJoCo transfer example with dim(\u03bc) = 5.",
+        "We have demonstrated that our method, SO-CMA, can successfully transfer policies trained in one environment to a notably different one with a relatively low amount of samples.",
+        "If there exists a robust controller that works for a large range of different dynamic parameters \u03bc in the task, such as a bipedal running motion in the Walker2d example, training a Robust policy may achieve good performance in transfer.",
+        "Hist did not achieve successful transfer in any of the examples, possibly due to two reasons: 1) it shares similar limitation to UPOSI when the reality gap is large and 2) it is in general more difficult to train Hist due to the larger input space, so that with a limited sample budget it is challenging to fine-tune Hist effectively.",
+        "We have proposed a policy transfer algorithm where we first learn a family of policies simultaneously in a source environment that exhibits different behaviors and search directly for a policy in the family that performs the best in the target environment.",
+        "We show that our proposed method can overcome large modeling errors, including those commonly seen on real robotic platforms with relatively low amount of samples in the target environment.",
+        "One possible direction is to warm-start the optimization using models learned in simulation, such as the calibration model in <a class=\"ref-link\" id=\"cZhang_et+al_2018_a\" href=\"#rZhang_et+al_2018_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2018_a\" href=\"#rZhang_et+al_2018_a\">Zhang et al (2018</a></a>) or the online system identification model in Yu et al (2017)"
+    ],
+    "headline": "We present a different approach that leverages domain randomization for transferring control policies to unknown environments",
+    "reference_links": [
+        {
+            "id": "Pycma_0000_a",
+            "entry": "Pycma. URL https://github.com/CMA-ES/pycma.",
+            "url": "https://github.com/CMA-ES/pycma"
+        },
+        {
+            "id": "Abbeel_2005_a",
+            "entry": "Pieter Abbeel and Andrew Y. Ng. Exploration and Apprenticeship Learning in Reinforcement Learning. In International Conference on Machine Learning, pp. 1\u20138, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abbeel%2C%20Pieter%20Ng%2C%20Andrew%20Y.%20Exploration%20and%20Apprenticeship%20Learning%20in%20Reinforcement%20Learning%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abbeel%2C%20Pieter%20Ng%2C%20Andrew%20Y.%20Exploration%20and%20Apprenticeship%20Learning%20in%20Reinforcement%20Learning%202005"
+        },
+        {
+            "id": "Boeing_2012_a",
+            "entry": "Adrian Boeing and Thomas Braunl. Leveraging multiple simulators for crossing the reality gap. In Control Automation Robotics & Vision (ICARCV), 2012 12th International Conference on, pp. 1113\u20131119. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boeing%2C%20Adrian%20Braunl%2C%20Thomas%20Leveraging%20multiple%20simulators%20for%20crossing%20the%20reality%20gap%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Boeing%2C%20Adrian%20Braunl%2C%20Thomas%20Leveraging%20multiple%20simulators%20for%20crossing%20the%20reality%20gap%202012"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym. arXiv preprint arXiv:1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Tao Chen, Adithyavairavan Murali, and Abhinav Gupta. Hardware conditioned policies for multirobot transfer learning. NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Tao%20Murali%2C%20Adithyavairavan%20Gupta%2C%20Abhinav%20Hardware%20conditioned%20policies%20for%20multirobot%20transfer%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Tao%20Murali%2C%20Adithyavairavan%20Gupta%2C%20Abhinav%20Hardware%20conditioned%20policies%20for%20multirobot%20transfer%20learning%202018"
+        },
+        {
+            "id": "Clegg_et+al_2018_a",
+            "entry": "Alexander Clegg, Wenhao Yu, Jie Tan, C. Karen Liu, and Greg Turk. Learning to dress: Synthesizing human dressing motion via deep reinforcement learning. ACM Transactions on Graphics (TOG), 37(6), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Clegg%2C%20Alexander%20Yu%2C%20Wenhao%20Jie%20Tan%2C%20C.Karen%20Liu%20Turk%2C%20Greg%20Learning%20to%20dress%3A%20Synthesizing%20human%20dressing%20motion%20via%20deep%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Clegg%2C%20Alexander%20Yu%2C%20Wenhao%20Jie%20Tan%2C%20C.Karen%20Liu%20Turk%2C%20Greg%20Learning%20to%20dress%3A%20Synthesizing%20human%20dressing%20motion%20via%20deep%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Coumans_2016_a",
+            "entry": "Erwin Coumans and Yunfei Bai. Pybullet, a python module for physics simulation in robotics, games and machine learning., 2016-2017. URL http://pybullet.org.",
+            "url": "http://pybullet.org"
+        },
+        {
+            "id": "Cully_et+al_2015_a",
+            "entry": "Antoine Cully, Jeff Clune, Danesh Tarapore, and Jean-Baptiste Mouret. Robots that can adapt like animals. Nature, 521(7553):503, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cully%2C%20Antoine%20Clune%2C%20Jeff%20Tarapore%2C%20Danesh%20Mouret%2C%20Jean-Baptiste%20Robots%20that%20can%20adapt%20like%20animals%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cully%2C%20Antoine%20Clune%2C%20Jeff%20Tarapore%2C%20Danesh%20Mouret%2C%20Jean-Baptiste%20Robots%20that%20can%20adapt%20like%20animals%202015"
+        },
+        {
+            "id": "Silva_et+al_2012_a",
+            "entry": "Bruno Da Silva, George Konidaris, and Andrew Barto. Learning parameterized skills. arXiv preprint arXiv:1206.6398, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1206.6398"
+        },
+        {
+            "id": "Deisenroth_2011_a",
+            "entry": "Marc Deisenroth and Carl E Rasmussen. Pilco: A model-based and data-efficient approach to policy search. In Proceedings of the 28th International Conference on machine learning (ICML-11), pp. 465\u2013472, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011"
+        },
+        {
+            "id": "Dhariwal_et+al_2017_a",
+            "entry": "Prafulla Dhariwal, Christopher Hesse, Matthias Plappert, Alec Radford, John Schulman, Szymon Sidor, and Yuhuai Wu. Openai baselines. https://github.com/openai/baselines, 2017.",
+            "url": "https://github.com/openai/baselines"
+        },
+        {
+            "id": "Eysenbach_et+al_2018_a",
+            "entry": "Benjamin Eysenbach, Abhishek Gupta, Julian Ibarz, and Sergey Levine. Diversity is all you need: Learning skills without a reward function. arXiv preprint arXiv:1802.06070, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06070"
+        },
+        {
+            "id": "Pydart_2016_a",
+            "entry": "Sehoon Ha. Pydart2, 2016. URL https://github.com/sehoonha/pydart2.",
+            "url": "https://github.com/sehoonha/pydart2"
+        },
+        {
+            "id": "Ha_2015_a",
+            "entry": "Sehoon Ha and Katsu Yamane. Reducing Hardware Experiments for Model Learning and Policy Optimization. IROS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ha%2C%20Sehoon%20Yamane%2C%20Katsu%20Reducing%20Hardware%20Experiments%20for%20Model%20Learning%20and%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ha%2C%20Sehoon%20Yamane%2C%20Katsu%20Reducing%20Hardware%20Experiments%20for%20Model%20Learning%20and%202015"
+        },
+        {
+            "id": "Hansen_et+al_1995_a",
+            "entry": "Nikolaus Hansen, Andreas Ostermeier, and Andreas Gawelczyk. On the adaptation of arbitrary normal mutation distributions in evolution strategies: The generating set adaptation. In ICGA, pp. 57\u201364, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hansen%2C%20Nikolaus%20Ostermeier%2C%20Andreas%20Gawelczyk%2C%20Andreas%20On%20the%20adaptation%20of%20arbitrary%20normal%20mutation%20distributions%20in%20evolution%20strategies%3A%20The%20generating%20set%20adaptation%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hansen%2C%20Nikolaus%20Ostermeier%2C%20Andreas%20Gawelczyk%2C%20Andreas%20On%20the%20adaptation%20of%20arbitrary%20normal%20mutation%20distributions%20in%20evolution%20strategies%3A%20The%20generating%20set%20adaptation%201995"
+        },
+        {
+            "id": "Heess_et+al_2017_a",
+            "entry": "Nicolas Heess, Srinivasan Sriram, Jay Lemmon, Josh Merel, Greg Wayne, Yuval Tassa, Tom Erez, Ziyu Wang, Ali Eslami, Martin Riedmiller, et al. Emergence of locomotion behaviours in rich environments. arXiv preprint arXiv:1707.02286, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.02286"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Jain_2011_a",
+            "entry": "Sumit Jain and C Karen Liu. Controlling physics-based characters using soft contacts. ACM Transactions on Graphics (TOG), 30(6):163, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jain%2C%20Sumit%20Liu%2C%20C.Karen%20Controlling%20physics-based%20characters%20using%20soft%20contacts%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jain%2C%20Sumit%20Liu%2C%20C.Karen%20Controlling%20physics-based%20characters%20using%20soft%20contacts%202011"
+        },
+        {
+            "id": "Koos_et+al_2010_a",
+            "entry": "Sylvain Koos, Jean-Baptiste Mouret, and Stephane Doncieux. Crossing the reality gap in evolutionary robotics by promoting transferable controllers. In Proceedings of the 12th annual conference on Genetic and evolutionary computation, pp. 119\u2013126. ACM, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koos%2C%20Sylvain%20Mouret%2C%20Jean-Baptiste%20Doncieux%2C%20Stephane%20Crossing%20the%20reality%20gap%20in%20evolutionary%20robotics%20by%20promoting%20transferable%20controllers%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koos%2C%20Sylvain%20Mouret%2C%20Jean-Baptiste%20Doncieux%2C%20Stephane%20Crossing%20the%20reality%20gap%20in%20evolutionary%20robotics%20by%20promoting%20transferable%20controllers%202010"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Jeongseok Lee, Michael X Grey, Sehoon Ha, Tobias Kunz, Sumit Jain, Yuting Ye, Siddhartha S Srinivasa, Mike Stilman, and C Karen Liu. Dart: Dynamic animation and robotics toolkit. The Journal of Open Source Software, 3(22):500, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Jeongseok%20Grey%2C%20Michael%20X.%20Ha%2C%20Sehoon%20Kunz%2C%20Tobias%20Dart%3A%20Dynamic%20animation%20and%20robotics%20toolkit%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Jeongseok%20Grey%2C%20Michael%20X.%20Ha%2C%20Sehoon%20Kunz%2C%20Tobias%20Dart%3A%20Dynamic%20animation%20and%20robotics%20toolkit%202018"
+        },
+        {
+            "id": "Neunert_et+al_2017_a",
+            "entry": "Michael Neunert, Thiago Boaventura, and Jonas Buchli. Why off-the-shelf physics simulators fail in evaluating feedback controller performance-a case study for quadrupedal robots. In Advances in Cooperative Robotics, pp. 464\u2013472. World Scientific, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neunert%2C%20Michael%20Boaventura%2C%20Thiago%20Buchli%2C%20Jonas%20Why%20off-the-shelf%20physics%20simulators%20fail%20in%20evaluating%20feedback%20controller%20performance-a%20case%20study%20for%20quadrupedal%20robots%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neunert%2C%20Michael%20Boaventura%2C%20Thiago%20Buchli%2C%20Jonas%20Why%20off-the-shelf%20physics%20simulators%20fail%20in%20evaluating%20feedback%20controller%20performance-a%20case%20study%20for%20quadrupedal%20robots%202017"
+        },
+        {
+            "id": "Openai_2018_a",
+            "entry": "OpenAI,:, M. Andrychowicz, B. Baker, M. Chociej, R. Jozefowicz, B. McGrew, J. Pachocki, A. Petron, M. Plappert, G. Powell, A. Ray, J. Schneider, S. Sidor, J. Tobin, P. Welinder, L. Weng, and W. Zaremba. Learning Dexterous In-Hand Manipulation. ArXiv e-prints, August 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=OpenAI%20M%20Andrychowicz%20B%20Baker%20M%20Chociej%20R%20Jozefowicz%20B%20McGrew%20J%20Pachocki%20A%20Petron%20M%20Plappert%20G%20Powell%20A%20Ray%20J%20Schneider%20S%20Sidor%20J%20Tobin%20P%20Welinder%20L%20Weng%20and%20W%20Zaremba%20Learning%20Dexterous%20InHand%20Manipulation%20ArXiv%20eprints%20August%202018"
+        },
+        {
+            "id": "Peng_et+al_2017_a",
+            "entry": "Xue Bin Peng, Glen Berseth, KangKang Yin, and Michiel Van De Panne. Deeploco: Dynamic locomotion skills using hierarchical deep reinforcement learning. ACM Transactions on Graphics (TOG), 36(4):41, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Xue%20Bin%20Berseth%2C%20Glen%20Yin%2C%20KangKang%20Panne%2C%20Michiel%20Van%20De%20Deeploco%3A%20Dynamic%20locomotion%20skills%20using%20hierarchical%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Xue%20Bin%20Berseth%2C%20Glen%20Yin%2C%20KangKang%20Panne%2C%20Michiel%20Van%20De%20Deeploco%3A%20Dynamic%20locomotion%20skills%20using%20hierarchical%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Peng_et+al_0000_a",
+            "entry": "Xue Bin Peng, Pieter Abbeel, Sergey Levine, and Michiel van de Panne. Deepmimic: Example-guided deep reinforcement learning of physics-based character skills. arXiv preprint arXiv:1804.02717, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.02717"
+        },
+        {
+            "id": "Peng_et+al_2018_a",
+            "entry": "Xue Bin Peng, Marcin Andrychowicz, Wojciech Zaremba, and Pieter Abbeel. Sim-to-real transfer of robotic control with dynamics randomization. In 2018 IEEE International Conference on Robotics and Automation (ICRA), pp. 1\u20138. IEEE, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Xue%20Bin%20Andrychowicz%2C%20Marcin%20Zaremba%2C%20Wojciech%20Abbeel%2C%20Pieter%20Sim-to-real%20transfer%20of%20robotic%20control%20with%20dynamics%20randomization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Xue%20Bin%20Andrychowicz%2C%20Marcin%20Zaremba%2C%20Wojciech%20Abbeel%2C%20Pieter%20Sim-to-real%20transfer%20of%20robotic%20control%20with%20dynamics%20randomization%202018"
+        },
+        {
+            "id": "Pinto_et+al_2017_a",
+            "entry": "Lerrel Pinto, James Davidson, Rahul Sukthankar, and Abhinav Gupta. Robust adversarial reinforcement learning. arXiv preprint arXiv:1703.02702, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.02702"
+        },
+        {
+            "id": "Rajeswaran_et+al_2016_a",
+            "entry": "Aravind Rajeswaran, Sarvjeet Ghotra, Balaraman Ravindran, and Sergey Levine. Epopt: Learning robust neural network policies using model ensembles. arXiv preprint arXiv:1610.01283, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.01283"
+        },
+        {
+            "id": "Rusu_et+al_2016_a",
+            "entry": "Andrei A Rusu, Matej Vecerik, Thomas Rothorl, Nicolas Heess, Razvan Pascanu, and Raia Hadsell. Sim-to-real robot learning from pixels with progressive nets. arXiv preprint arXiv:1610.04286, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.04286"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International Conference on Machine Learning, pp. 1889\u20131897, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Stulp_et+al_2013_a",
+            "entry": "Freek Stulp, Gennaro Raiola, Antoine Hoarau, Serena Ivaldi, and Olivier Sigaud. Learning compact parameterized skills with a single regression. parameters, 5:9, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stulp%2C%20Freek%20Raiola%2C%20Gennaro%20Hoarau%2C%20Antoine%20Ivaldi%2C%20Serena%20Learning%20compact%20parameterized%20skills%20with%20a%20single%20regression%202013"
+        },
+        {
+            "id": "Tan_et+al_2016_a",
+            "entry": "Jie Tan, Zhaoming Xie, Byron Boots, and C Karen Liu. Simulation-based design of dynamic controllers for humanoid balancing. In Intelligent Robots and Systems (IROS), 2016 IEEE/RSJ International Conference on, pp. 2729\u20132736. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tan%2C%20Jie%20Xie%2C%20Zhaoming%20Boots%2C%20Byron%20Liu%2C%20C.Karen%20Simulation-based%20design%20of%20dynamic%20controllers%20for%20humanoid%20balancing%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tan%2C%20Jie%20Xie%2C%20Zhaoming%20Boots%2C%20Byron%20Liu%2C%20C.Karen%20Simulation-based%20design%20of%20dynamic%20controllers%20for%20humanoid%20balancing%202016"
+        },
+        {
+            "id": "Tan_et+al_2018_a",
+            "entry": "Jie Tan, Tingnan Zhang, Erwin Coumans, Atil Iscen, Yunfei Bai, Danijar Hafner, Steven Bohez, and Vincent Vanhoucke. Sim-to-real: Learning agile locomotion for quadruped robots. In Proceedings of Robotics: Science and Systems, Pittsburgh, Pennsylvania, June 2018. doi: 10.15607/RSS.2018. XIV.010.",
+            "crossref": "https://dx.doi.org/10.15607/RSS.2018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.15607/RSS.2018"
+        },
+        {
+            "id": "Tobin_et+al_2017_a",
+            "entry": "Josh Tobin, Rachel Fong, Alex Ray, Jonas Schneider, Wojciech Zaremba, and Pieter Abbeel. Domain randomization for transferring deep neural networks from simulation to the real world. In Intelligent Robots and Systems (IROS), 2017 IEEE/RSJ International Conference on, pp. 23\u201330. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tobin%2C%20Josh%20Fong%2C%20Rachel%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Domain%20randomization%20for%20transferring%20deep%20neural%20networks%20from%20simulation%20to%20the%20real%20world%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tobin%2C%20Josh%20Fong%2C%20Rachel%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Domain%20randomization%20for%20transferring%20deep%20neural%20networks%20from%20simulation%20to%20the%20real%20world%202017"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 5026\u2013 5033. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Wulfmeier_et+al_2017_a",
+            "entry": "Markus Wulfmeier, Ingmar Posner, and Pieter Abbeel. Mutual alignment transfer learning. arXiv preprint arXiv:1707.07907, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.07907"
+        },
+        {
+            "id": "Yu_2017_a",
+            "entry": "Wenhao Yu and C. Karen Liu. Dartenv, 2017. URL https://github.com/DartEnv/dart-env.",
+            "url": "https://github.com/DartEnv/dart-env"
+        },
+        {
+            "id": "Yu_et+al_2017_b",
+            "entry": "Wenhao Yu, Jie Tan, C. Karen Liu, and Greg Turk. Preparing for the unknown: Learning a universal policy with online system identification. In Proceedings of Robotics: Science and Systems, Cambridge, Massachusetts, July 2017. doi: 10.15607/RSS.2017.XIII.048.",
+            "crossref": "https://dx.doi.org/10.15607/RSS.2017.XIII.048",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.15607/RSS.2017.XIII.048"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "Wenhao Yu, Greg Turk, and C. Karen Liu. Learning symmetric and low-energy locomotion. ACM Transactions on Graphics (Proc. SIGGRAPH 2018 - to appear), 37(4), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Wenhao%20Turk%2C%20Greg%20Liu%2C%20C.Karen%20Learning%20symmetric%20and%20low-energy%20locomotion%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Wenhao%20Turk%2C%20Greg%20Liu%2C%20C.Karen%20Learning%20symmetric%20and%20low-energy%20locomotion%202018"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Chao Zhang, Yang Yu, and Zhi-Hua Zhou. Learning environmental calibration actions for policy self-evolution. In IJCAI, pp. 3061\u20133067, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Chao%20Yu%2C%20Yang%20Zhou%2C%20Zhi-Hua%20Learning%20environmental%20calibration%20actions%20for%20policy%20self-evolution%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Chao%20Yu%2C%20Yang%20Zhou%2C%20Zhi-Hua%20Learning%20environmental%20calibration%20actions%20for%20policy%20self-evolution%202018"
+        },
+        {
+            "id": "2",
+            "entry": "2. Joint Limits Similar to the contact solver, DART tries to solve the joint limit constraints exactly so that the joint limit is not violated in the next timestep, while MuJoCo uses a soft constraint formulation, which means the character may violate the joint limit constraint.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joint%20Limits%20Similar%20to%20the%20contact%20solver%20DART%20tries%20to%20solve%20the%20joint%20limit%20constraints%20exactly%20so%20that%20the%20joint%20limit%20is%20not%20violated%20in%20the%20next%20timestep%20while%20MuJoCo%20uses%20a%20soft%20constraint%20formulation%20which%20means%20the%20character%20may%20violate%20the%20joint%20limit%20constraint"
+        },
+        {
+            "id": "3",
+            "entry": "3. Armature In MuJoCo, a diagonal matrix \u03c3In is added to the joint space inertia matrix that can help stabilize the simulation, where \u03c3 \u2208 R is a scalar named Armature in MuJoCo and In is the n \u00d7 n identity matrix. This is not modeled in DART.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Armature%20In%20MuJoCo%20a%20diagonal%20matrix%20%CF%83In%20is%20added%20to%20the%20joint%20space%20inertia%20matrix%20that%20can%20help%20stabilize%20the%20simulation%20where%20%CF%83%20%20R%20is%20a%20scalar%20named%20Armature%20in%20MuJoCo%20and%20In%20is%20the%20n%20%20n%20identity%20matrix%20This%20is%20not%20modeled%20in%20DART",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Armature%20In%20MuJoCo%20a%20diagonal%20matrix%20%CF%83In%20is%20added%20to%20the%20joint%20space%20inertia%20matrix%20that%20can%20help%20stabilize%20the%20simulation%20where%20%CF%83%20%20R%20is%20a%20scalar%20named%20Armature%20in%20MuJoCo%20and%20In%20is%20the%20n%20%20n%20identity%20matrix%20This%20is%20not%20modeled%20in%20DART"
+        },
+        {
+            "id": "2",
+            "entry": "2. Latency The second type of modeling error we tested is latency in the signals. Specifically, we model the latency between when an observation o is sent out from the robot, and when the action corresponding to this observation a = \u03c0(o) is executed on the robot. When a policy",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Latency%20The%20second%20type%20of%20modeling%20error%20we%20tested%20is%20latency%20in%20the%20signals%20Specifically%20we%20model%20the%20latency%20between%20when%20an%20observation%20o%20is%20sent%20out%20from%20the%20robot%20and%20when%20the%20action%20corresponding%20to%20this%20observation%20a%20%20%CF%80o%20is%20executed%20on%20the%20robot%20When%20a%20policy"
+        },
+        {
+            "id": "3",
+            "entry": "3. Actuator Modeling Error As noted by Tan et al. (2018), error in actuator modeling is an important factor that contributes to the reality gap. They solved it by identifying a more accurate actuator model by fitting a piece-wise linear function for the torque-current relation. We use their identified actuator model as the ground-truth target environment in our experiments and used the ideal linear torque-current relation in the source environments.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Actuator%20Modeling%20Error%20As%20noted%20by%20Tan%20et%20al%202018%20error%20in%20actuator%20modeling%20is%20an%20important%20factor%20that%20contributes%20to%20the%20reality%20gap%20They%20solved%20it%20by%20identifying%20a%20more%20accurate%20actuator%20model%20by%20fitting%20a%20piecewise%20linear%20function%20for%20the%20torquecurrent%20relation%20We%20use%20their%20identified%20actuator%20model%20as%20the%20groundtruth%20target%20environment%20in%20our%20experiments%20and%20used%20the%20ideal%20linear%20torquecurrent%20relation%20in%20the%20source%20environments",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Actuator%20Modeling%20Error%20As%20noted%20by%20Tan%20et%20al%202018%20error%20in%20actuator%20modeling%20is%20an%20important%20factor%20that%20contributes%20to%20the%20reality%20gap%20They%20solved%20it%20by%20identifying%20a%20more%20accurate%20actuator%20model%20by%20fitting%20a%20piecewise%20linear%20function%20for%20the%20torquecurrent%20relation%20We%20use%20their%20identified%20actuator%20model%20as%20the%20groundtruth%20target%20environment%20in%20our%20experiments%20and%20used%20the%20ideal%20linear%20torquecurrent%20relation%20in%20the%20source%20environments"
+        },
+        {
+            "id": "5",
+            "entry": "5. Terrain Slope In the example of HalfCheetah, we vary the slope of the ground to create a family of target environments for testing. This is implemented as rotating the gravity direction by the same angle. The angle varies in the range [\u22120.18, 0.0] radians.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Terrain%20Slope%20In%20the%20example%20of%20HalfCheetah%20we%20vary%20the%20slope%20of%20the%20ground%20to%20create%20a%20family%20of%20target%20environments%20for%20testing%20This%20is%20implemented%20as%20rotating%20the%20gravity%20direction%20by%20the%20same%20angle%20The%20angle%20varies%20in%20the%20range%20018%2000%20radians"
+        },
+        {
+            "id": "6",
+            "entry": "6. Rigid to Deformable ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rigid%20to%20Deformable"
+        }
+    ]
+}

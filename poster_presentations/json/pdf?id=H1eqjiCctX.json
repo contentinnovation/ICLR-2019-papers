@@ -1,0 +1,232 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "UNDERSTANDING COMPOSITION OF WORD EMBEDDINGS VIA TENSOR DECOMPOSITION",
+        "author": "Abraham Frandsen & Rong Ge Department of Computer Science Duke University Durham, NC 27708, USA {abef,rongge}@cs.duke.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1eqjiCctX"
+        },
+        "abstract": "Word embedding is a powerful tool in natural language processing. In this paper we consider the problem of word embedding composition \u2013 given vector representations of two words, compute a vector for the entire phrase. We give a generative model that can capture specific syntactic relations between words. Under our model, we prove that the correlations between three words (measured by their PMI) form a tensor that has an approximate low rank Tucker decomposition. The result of the Tucker decomposition gives the word embeddings as well as a core tensor, which can be used to produce better compositions of the word embeddings. We also complement our theoretical results with experiments that verify our assumptions, and demonstrate the effectiveness of the new composition method."
+    },
+    "keywords": [
+        {
+            "term": "word embedding",
+            "url": "https://en.wikipedia.org/wiki/word_embedding"
+        },
+        {
+            "term": "adjective noun",
+            "url": "https://en.wikipedia.org/wiki/adjective_noun"
+        },
+        {
+            "term": "semantics",
+            "url": "https://en.wikipedia.org/wiki/semantics"
+        },
+        {
+            "term": "tucker decomposition",
+            "url": "https://en.wikipedia.org/wiki/tucker_decomposition"
+        },
+        {
+            "term": "pointwise mutual information",
+            "url": "https://en.wikipedia.org/wiki/pointwise_mutual_information"
+        },
+        {
+            "term": "natural language processing",
+            "url": "https://en.wikipedia.org/wiki/natural_language_processing"
+        }
+    ],
+    "abbreviations": {
+        "PMI": "pointwise mutual information"
+    },
+    "highlights": [
+        "Word embeddings have become one of the most popular techniques in natural language processing",
+        "The vector representations are useful for solving many NLP tasks, such as analogy tasks(<a class=\"ref-link\" id=\"cMikolov_et+al_2013_a\" href=\"#rMikolov_et+al_2013_a\">Mikolov et al, 2013</a>) or serving as features for supervised learning problems (<a class=\"ref-link\" id=\"cMaas_et+al_2011_a\" href=\"#rMaas_et+al_2011_a\">Maas et al, 2011</a>)",
+        "We show that if we measure the Pointwise Mutual Information (PMI) between three words, and form an n \u00d7 n \u00d7 n tensor that is indexed by three words a, b, w, the tensor has a Tucker decomposition that exactly matches our core tensor T and the word embeddings",
+        "We model a syntactic word pair as a single semantic unit within the text",
+        "We first train the word embeddings according to the RAND-WALK model, following <a class=\"ref-link\" id=\"cArora_et+al_2015_a\" href=\"#rArora_et+al_2015_a\">Arora et al (2015</a>)",
+        "The sif embeddings outperform the additive and tensor methods, but combining the sif embeddings and the tensor components yields the best performance across the board, suggesting that the composition tensor captures additional information beyond the individual word embeddings that is useful for this task"
+    ],
+    "key_statements": [
+        "Word embeddings have become one of the most popular techniques in natural language processing",
+        "The vector representations are useful for solving many NLP tasks, such as analogy tasks(<a class=\"ref-link\" id=\"cMikolov_et+al_2013_a\" href=\"#rMikolov_et+al_2013_a\">Mikolov et al, 2013</a>) or serving as features for supervised learning problems (<a class=\"ref-link\" id=\"cMaas_et+al_2011_a\" href=\"#rMaas_et+al_2011_a\">Maas et al, 2011</a>)",
+        "We show that if we measure the Pointwise Mutual Information (PMI) between three words, and form an n \u00d7 n \u00d7 n tensor that is indexed by three words a, b, w, the tensor has a Tucker decomposition that exactly matches our core tensor T and the word embeddings",
+        "We model a syntactic word pair as a single semantic unit within the text",
+        "We first train the word embeddings according to the RAND-WALK model, following <a class=\"ref-link\" id=\"cArora_et+al_2015_a\" href=\"#rArora_et+al_2015_a\">Arora et al (2015</a>)",
+        "A bit of care must be taken here, since our syntactic RAND-WALK model constrains the norm of the word embeddings to be related to the frequency of the words, whereas this is not the case with the pre-computed embeddings",
+        "The sif embeddings outperform the additive and tensor methods, but combining the sif embeddings and the tensor components yields the best performance across the board, suggesting that the composition tensor captures additional information beyond the individual word embeddings that is useful for this task"
+    ],
+    "summary": [
+        "Word embeddings have become one of the most popular techniques in natural language processing.",
+        "<a class=\"ref-link\" id=\"cCoecke_et+al_2010_a\" href=\"#rCoecke_et+al_2010_a\">Coecke et al (2010</a>) present a mathematical framework for reasoning about syntax-aware word embedding composition that motivated our syntactic RAND-WALK model.",
+        "Exp would be proportional to the probability of generating word b in the original RAND-WALK model, without considering the syntactic relationship.",
+        "We calculate the marginal probabilities of observing pairs and triples of words under the syntactic RAND-WALK model.",
+        "We arrive at our basic tensor composition: for a syntactic word pair (a, b), the composite embedding for the phrase is va + vb + T.",
+        "Theorem 1 provides key insights into the learning problem, since it relates joint probabilities between words to the word embeddings and composition tensor.",
+        "All the parameters of the syntactic RAND-WALK model can be obtained by finding the Tucker decomposition of the PMI3 tensor.",
+        "We first train the word embeddings according to the RAND-WALK model, following <a class=\"ref-link\" id=\"cArora_et+al_2015_a\" href=\"#rArora_et+al_2015_a\"><a class=\"ref-link\" id=\"cArora_et+al_2015_a\" href=\"#rArora_et+al_2015_a\">Arora et al (2015</a></a>).",
+        "Using the learned word embeddings, we train the composition tensor T via the following optimization problem min f (X(a,b),w) log(X(a,b),w) \u2212 vw + va + vb + T 2 \u2212 Ca \u2212 C 2 , T,{Cw},C (a,b),w where X(a,b),w denotes the number of co-occurrences of word w with the syntactic word pair (a, b) and f (x) = min(x, 100).",
+        "<a class=\"ref-link\" id=\"cArora_et+al_2015_a\" href=\"#rArora_et+al_2015_a\"><a class=\"ref-link\" id=\"cArora_et+al_2015_a\" href=\"#rArora_et+al_2015_a\">Arora et al (2015</a></a>) empirically verify the model assumptions of RAND-WALK, and since we trained our embeddings in the same way, we don\u2019t repeat their verifications here.",
+        "We test the performance of our new composition for adjective-noun and verb-object pairs by looking for the words with closest embedding to the composed vector.",
+        "We use the development set to select the optimal scalar weight for the weighted tensor composition, and using this fixed parameter, we report the results using the test set.",
+        "We re-trained the composition tensor using the same corpus and technique as before, but substituting these pre-computed embeddings in place of the RAND-WALK embeddings.",
+        "A bit of care must be taken here, since our syntactic RAND-WALK model constrains the norm of the word embeddings to be related to the frequency of the words, whereas this is not the case with the pre-computed embeddings.",
+        "The sif embeddings outperform the additive and tensor methods, but combining the sif embeddings and the tensor components yields the best performance across the board, suggesting that the composition tensor captures additional information beyond the individual word embeddings that is useful for this task."
+    ],
+    "headline": "We prove that the correlations between three words form a tensor that has an approximate low rank Tucker decomposition",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2016_a",
+            "entry": "Mart\u00edn Abadi, Paul Barham, Jianmin Chen, Zhifeng Chen, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Geoffrey Irving, Michael Isard, et al. Tensorflow: A system for large-scale machine learning. In OSDI, volume 16, pp. 265\u2013283, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abadi%2C%20Mart%C3%ADn%20Barham%2C%20Paul%20Chen%2C%20Jianmin%20Chen%2C%20Zhifeng%20Tensorflow%3A%20A%20system%20for%20large-scale%20machine%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abadi%2C%20Mart%C3%ADn%20Barham%2C%20Paul%20Chen%2C%20Jianmin%20Chen%2C%20Zhifeng%20Tensorflow%3A%20A%20system%20for%20large-scale%20machine%20learning%202016"
+        },
+        {
+            "id": "Andreas_2014_a",
+            "entry": "Jacob Andreas and Dan Klein. How much do word embeddings encode about syntax? In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers), volume 2, pp. 822\u2013827, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andreas%2C%20Jacob%20Klein%2C%20Dan%20How%20much%20do%20word%20embeddings%20encode%20about%20syntax%3F%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andreas%2C%20Jacob%20Klein%2C%20Dan%20How%20much%20do%20word%20embeddings%20encode%20about%20syntax%3F%202014"
+        },
+        {
+            "id": "Arora_et+al_2015_a",
+            "entry": "Sanjeev Arora, Yuanzhi Li, Yingyu Liang, Tengyu Ma, and Andrej Risteski. Rand-walk: A latent variable model approach to word embeddings. arXiv preprint arXiv:1502.03520, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03520"
+        },
+        {
+            "id": "Arora_et+al_2016_a",
+            "entry": "Sanjeev Arora, Yingyu Liang, and Tengyu Ma. A simple but tough-to-beat baseline for sentence embeddings. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20simple%20but%20tough-to-beat%20baseline%20for%20sentence%20embeddings%202016"
+        },
+        {
+            "id": "Eric_2017_a",
+            "entry": "Eric Bailey and Shuchin Aeron. Word embeddings via tensor factorization. arXiv preprint arXiv:1704.02686, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02686"
+        },
+        {
+            "id": "Baroni_2010_a",
+            "entry": "Marco Baroni and Roberto Zamparelli. Nouns are vectors, adjectives are matrices: Representing adjective-noun constructions in semantic space. In Proceedings of the 2010 Conference on Empirical Methods in Natural Language Processing, pp. 1183\u20131193. Association for Computational Linguistics, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baroni%2C%20Marco%20Zamparelli%2C%20Roberto%20Nouns%20are%20vectors%2C%20adjectives%20are%20matrices%3A%20Representing%20adjective-noun%20constructions%20in%20semantic%20space%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baroni%2C%20Marco%20Zamparelli%2C%20Roberto%20Nouns%20are%20vectors%2C%20adjectives%20are%20matrices%3A%20Representing%20adjective-noun%20constructions%20in%20semantic%20space%202010"
+        },
+        {
+            "id": "Carroll_1970_a",
+            "entry": "J Douglas Carroll and Jih-Jie Chang. Analysis of individual differences in multidimensional scaling via an n-way generalization of \u201ceckart-young\u201d decomposition. Psychometrika, 35(3):283\u2013319, 1970.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carroll%2C%20J.Douglas%20Chang%2C%20Jih-Jie%20Analysis%20of%20individual%20differences%20in%20multidimensional%20scaling%20via%20an%20n-way%20generalization%20of%20%E2%80%9Ceckart-young%E2%80%9D%20decomposition%201970",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carroll%2C%20J.Douglas%20Chang%2C%20Jih-Jie%20Analysis%20of%20individual%20differences%20in%20multidimensional%20scaling%20via%20an%20n-way%20generalization%20of%20%E2%80%9Ceckart-young%E2%80%9D%20decomposition%201970"
+        },
+        {
+            "id": "Chen_2014_a",
+            "entry": "Danqi Chen and Christopher Manning. A fast and accurate dependency parser using neural networks. In Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP), pp. 740\u2013750, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Danqi%20Manning%2C%20Christopher%20A%20fast%20and%20accurate%20dependency%20parser%20using%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Danqi%20Manning%2C%20Christopher%20A%20fast%20and%20accurate%20dependency%20parser%20using%20neural%20networks%202014"
+        },
+        {
+            "id": "Cheng_2015_a",
+            "entry": "Jianpeng Cheng and Dimitri Kartsaklis. Syntax-aware multi-sense word embeddings for deep compositional models of meaning. arXiv preprint arXiv:1508.02354, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1508.02354"
+        },
+        {
+            "id": "Coecke_et+al_2010_a",
+            "entry": "Bob Coecke, Mehrnoosh Sadrzadeh, and Stephen Clark. Mathematical foundations for a compositional distributional model of meaning. arXiv preprint arXiv:1003.4394, 2010.",
+            "arxiv_url": "https://arxiv.org/pdf/1003.4394"
+        },
+        {
+            "id": "Gittens_et+al_2017_a",
+            "entry": "Alex Gittens, Dimitris Achlioptas, and Michael W Mahoney. Skip-gram-zipf+ uniform= vector additivity. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 69\u201376, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gittens%2C%20Alex%20Achlioptas%2C%20Dimitris%20Mahoney%2C%20Michael%20W.%20Skip-gram-zipf%2B%20uniform%3D%20vector%20additivity%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gittens%2C%20Alex%20Achlioptas%2C%20Dimitris%20Mahoney%2C%20Michael%20W.%20Skip-gram-zipf%2B%20uniform%3D%20vector%20additivity%202017"
+        },
+        {
+            "id": "Guevara_2010_a",
+            "entry": "Emiliano Guevara. A regression model of adjective-noun compositionality in distributional semantics. In Proceedings of the 2010 Workshop on GEometrical Models of Natural Language Semantics, pp. 33\u201337. Association for Computational Linguistics, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guevara%2C%20Emiliano%20A%20regression%20model%20of%20adjective-noun%20compositionality%20in%20distributional%20semantics%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guevara%2C%20Emiliano%20A%20regression%20model%20of%20adjective-noun%20compositionality%20in%20distributional%20semantics%202010"
+        },
+        {
+            "id": "Harshman_1970_a",
+            "entry": "Richard A Harshman. Foundations of the parafac procedure: Models and conditions for an\" explanatory\" multimodal factor analysis. 1970.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harshman%2C%20Richard%20A.%20Foundations%20of%20the%20parafac%20procedure%3A%20Models%20and%20conditions%20for%20an%22%20explanatory%22%20multimodal%20factor%20analysis%201970"
+        },
+        {
+            "id": "H_1990_a",
+            "entry": "Johan H\u00e5stad. Tensor rank is np-complete. Journal of Algorithms, 11(4):644\u2013654, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=H%C3%A5stad%2C%20Johan%20Tensor%20rank%20is%20np-complete%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=H%C3%A5stad%2C%20Johan%20Tensor%20rank%20is%20np-complete%201990"
+        },
+        {
+            "id": "Hillar_2013_a",
+            "entry": "Christopher J Hillar and Lek-Heng Lim. Most tensor problems are np-hard. Journal of the ACM (JACM), 60(6):45, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hillar%2C%20Christopher%20J.%20Lim%2C%20Lek-Heng%20Most%20tensor%20problems%20are%20np-hard%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hillar%2C%20Christopher%20J.%20Lim%2C%20Lek-Heng%20Most%20tensor%20problems%20are%20np-hard%202013"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Laurent_2000_a",
+            "entry": "Beatrice Laurent and Pascal Massart. Adaptive estimation of a quadratic functional by model selection. Annals of Statistics, pp. 1302\u20131338, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Laurent%2C%20Beatrice%20Massart%2C%20Pascal%20Adaptive%20estimation%20of%20a%20quadratic%20functional%20by%20model%20selection%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Laurent%2C%20Beatrice%20Massart%2C%20Pascal%20Adaptive%20estimation%20of%20a%20quadratic%20functional%20by%20model%20selection%202000"
+        },
+        {
+            "id": "Levy_0000_a",
+            "entry": "Omer Levy and Yoav Goldberg. Dependency-based word embeddings. In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers), volume 2, pp. 302\u2013308, 2014a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Dependency-based%20word%20embeddings",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Dependency-based%20word%20embeddings"
+        },
+        {
+            "id": "Levy_2014_a",
+            "entry": "Omer Levy and Yoav Goldberg. Neural word embedding as implicit matrix factorization. In Advances in neural information processing systems, pp. 2177\u20132185, 2014b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Neural%20word%20embedding%20as%20implicit%20matrix%20factorization%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levy%2C%20Omer%20Goldberg%2C%20Yoav%20Neural%20word%20embedding%20as%20implicit%20matrix%20factorization%202014"
+        },
+        {
+            "id": "Li_et+al_2015_a",
+            "entry": "Yitan Li, Linli Xu, Fei Tian, Liang Jiang, Xiaowei Zhong, and Enhong Chen. Word embedding revisited: A new representation learning and explicit matrix factorization perspective. In IJCAI, pp. 3650\u20133656, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yitan%20Xu%2C%20Linli%20Tian%2C%20Fei%20Jiang%2C%20Liang%20Word%20embedding%20revisited%3A%20A%20new%20representation%20learning%20and%20explicit%20matrix%20factorization%20perspective%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yitan%20Xu%2C%20Linli%20Tian%2C%20Fei%20Jiang%2C%20Liang%20Word%20embedding%20revisited%3A%20A%20new%20representation%20learning%20and%20explicit%20matrix%20factorization%20perspective%202015"
+        },
+        {
+            "id": "Maas_et+al_2011_a",
+            "entry": "Andrew L. Maas, Raymond E. Daly, Peter T. Pham, Dan Huang, Andrew Y. Ng, and Christopher Potts. Learning word vectors for sentiment analysis. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies, pp. 142\u2013150, Portland, Oregon, USA, June 2011. Association for Computational Linguistics. URL http://www.aclweb.org/anthology/P11-1015.",
+            "url": "http://www.aclweb.org/anthology/P11-1015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maas%2C%20Andrew%20L.%20Daly%2C%20Raymond%20E.%20Pham%2C%20Peter%20T.%20Huang%2C%20Dan%20Learning%20word%20vectors%20for%20sentiment%20analysis%202011-06"
+        },
+        {
+            "id": "Maillard_2015_a",
+            "entry": "Jean Maillard and Stephen Clark. Learning adjective meanings with a tensor-based skip-gram model. In Proceedings of the Nineteenth Conference on Computational Natural Language Learning, pp. 327\u2013331, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maillard%2C%20Jean%20Clark%2C%20Stephen%20Learning%20adjective%20meanings%20with%20a%20tensor-based%20skip-gram%20model%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maillard%2C%20Jean%20Clark%2C%20Stephen%20Learning%20adjective%20meanings%20with%20a%20tensor-based%20skip-gram%20model%202015"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. Distributed representations of words and phrases and their compositionality. In Advances in neural information processing systems, pp. 3111\u20133119, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013"
+        },
+        {
+            "id": "Mikolov_et+al_2017_a",
+            "entry": "Tomas Mikolov, Edouard Grave, Piotr Bojanowski, Christian Puhrsch, and Armand Joulin. Advances in pre-training distributed word representations. arXiv preprint arXiv:1712.09405, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.09405"
+        },
+        {
+            "id": "Mitchell_2008_a",
+            "entry": "Jeff Mitchell and Mirella Lapata. Vector-based models of semantic composition. proceedings of ACL-08: HLT, pp. 236\u2013244, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mitchell%2C%20Jeff%20Lapata%2C%20Mirella%20Vector-based%20models%20of%20semantic%20composition.%20proceedings%20of%20ACL-%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mitchell%2C%20Jeff%20Lapata%2C%20Mirella%20Vector-based%20models%20of%20semantic%20composition.%20proceedings%20of%20ACL-%202008"
+        },
+        {
+            "id": "Mitchell_2010_a",
+            "entry": "Jeff Mitchell and Mirella Lapata. Composition in distributional models of semantics. Cognitive science, 34(8):1388\u20131429, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mitchell%2C%20Jeff%20Lapata%2C%20Mirella%20Composition%20in%20distributional%20models%20of%20semantics%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mitchell%2C%20Jeff%20Lapata%2C%20Mirella%20Composition%20in%20distributional%20models%20of%20semantics%202010"
+        },
+        {
+            "id": "Pang_2004_a",
+            "entry": "Bo Pang and Lillian Lee. A sentimental education: Sentiment analysis using subjectivity summarization based on minimum cuts. In \"Proceedings of the ACL\", 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pang%2C%20Bo%20Lee%2C%20Lillian%20A%20sentimental%20education%3A%20Sentiment%20analysis%20using%20subjectivity%20summarization%20based%20on%20minimum%20cuts.%20In%20%22Proceedings%20of%20the%20ACL%22%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pang%2C%20Bo%20Lee%2C%20Lillian%20A%20sentimental%20education%3A%20Sentiment%20analysis%20using%20subjectivity%20summarization%20based%20on%20minimum%20cuts.%20In%20%22Proceedings%20of%20the%20ACL%22%202004"
+        }
+    ]
+}

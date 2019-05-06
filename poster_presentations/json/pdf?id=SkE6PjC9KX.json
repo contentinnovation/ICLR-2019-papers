@@ -1,0 +1,263 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ATTENTIVE NEURAL PROCESSES",
+        "author": "Hyunjik Kim, Andriy Mnih, Jonathan Schwarz, Marta Garnelo, Ali Eslami, Dan Rosenbaum, Oriol Vinyals, Yee Whye Teh, DeepMind, University of Oxford",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkE6PjC9KX"
+        },
+        "abstract": "Neural Processes (NPs) (<a class=\"ref-link\" id=\"cGarnelo_et+al_2018_a\" href=\"#rGarnelo_et+al_2018_a\">Garnelo et al., 2018a</a>;b) approach regression by learning to map a context set of observed input-output pairs to a distribution over regression functions. Each function models the distribution of the output given an input, conditioned on the context. NPs have the benefit of fitting observed data efficiently with linear complexity in the number of context input-output pairs, and can learn a wide family of conditional distributions; they learn predictive distributions conditioned on context sets of arbitrary size. Nonetheless, we show that NPs suffer a fundamental drawback of underfitting, giving inaccurate predictions at the inputs of the observed data they condition on. We address this issue by incorporating attention into NPs, allowing each input location to attend to the relevant context points for the prediction. We show that this greatly improves the accuracy of predictions, results in noticeably faster training, and expands the range of functions that can be modelled."
+    },
+    "keywords": [
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "Gaussian Processes",
+            "url": "https://en.wikipedia.org/wiki/Gaussian_Processes"
+        },
+        {
+            "term": "regression function",
+            "url": "https://en.wikipedia.org/wiki/regression_function"
+        },
+        {
+            "term": "conditional distribution",
+            "url": "https://en.wikipedia.org/wiki/conditional_distribution"
+        }
+    ],
+    "abbreviations": {
+        "NPs": "Neural Processes",
+        "GPs": "Gaussian Processes",
+        "ANPs": "Attentive Neural Processes",
+        "ANP": "Attentive NP",
+        "BO": "Bayesian Optimisation",
+        "VIP": "Variational Implicit Processes",
+        "ImT": "Image Transformer"
+    },
+    "highlights": [
+        "Regression tasks are usually cast as modelling the distribution of a vector-valued output y given a vector-valued input x via a deterministic function, such as a neural network, taking x as an input",
+        "Our results show that Attentive Neural Processes greatly improve upon Neural Processes in terms of reconstruction of contexts as well as speed of training, both against iterations and wall clock time",
+        "It is important to note that we do not claim the Attentive Neural Processes to be a replacement of state of the art algorithms of image inpainting or super-resolution, and rather we show these image applications to highlight the flexibility of the Attentive Neural Processes in modelling a wide family of conditional distributions.\n5 RELATED WORK",
+        "The work related to Neural Processes in the domain of Gaussian Processes, Meta-Learning, conditional latent variable models and Bayesian Learning have been discussed extensively in the original works of <a class=\"ref-link\" id=\"cGarnelo_et+al_2018_a\" href=\"#rGarnelo_et+al_2018_a\">Garnelo et al (2018a</a>;b), we focus on works that are relevant for Attentive Neural Processes",
+        "We have proposed Attentive Neural Processes, which augment Neural Processes with attention to resolve the fundamental problem of underfitting",
+        "Replacing the MLP in the decoder of the Attentive Neural Processes with self-attention across the target pixels, we have a model that closely resembles an Image Transformer defined on arbitrary orderings of pixels"
+    ],
+    "key_statements": [
+        "Regression tasks are usually cast as modelling the distribution of a vector-valued output y given a vector-valued input x via a deterministic function, such as a neural network, taking x as an input",
+        "We evaluate the resulting Attentive Neural Processes (ANPs) on 1D function regression and on 2D image regression",
+        "Our results show that Attentive Neural Processes greatly improve upon Neural Processes in terms of reconstruction of contexts as well as speed of training, both against iterations and wall clock time",
+        "We demonstrate that Attentive Neural Processes show enhanced expressiveness relative to the Neural Processes and is able to model a wider range of functions.\n2.1",
+        "The Neural Processes is a model for regression functions that map an input xi \u2208 Rdx to an output yi \u2208 Rdy",
+        "The Neural Processes defines a family of conditional distributions, where one may condition on an arbitrary number of observed contexts :=i\u2208C to model an arbitrary number of targets :=i\u2208T in a way that is invariant to ordering of the contexts and ordering of the targets",
+        "The training time for Attentive Neural Processes remains comparable to Neural Processes, and we show that Attentive Neural Processes learn significantly faster than Neural Processes not only in terms of training iterations but in wall-clock time, despite being slower at prediction time (c.f",
+        "See Appendix D for experimental details. On both datasets we show results of three different models: Neural Processes, Attentive Neural Processes with multihead cross-attention in the deterministic path (Multihead Attentive Neural Processes), and Attentive Neural Processes with both multihead attention in the deterministic path and two layers of stacked self-attention in both the deterministic and latent paths (Stacked Multihead Attentive Neural Processes)",
+        "We show results for such mappings given by the same Stacked Multihead Attentive Neural Processes in Figure 6",
+        "It is important to note that we do not claim the Attentive Neural Processes to be a replacement of state of the art algorithms of image inpainting or super-resolution, and rather we show these image applications to highlight the flexibility of the Attentive Neural Processes in modelling a wide family of conditional distributions.\n5 RELATED WORK",
+        "The work related to Neural Processes in the domain of Gaussian Processes, Meta-Learning, conditional latent variable models and Bayesian Learning have been discussed extensively in the original works of <a class=\"ref-link\" id=\"cGarnelo_et+al_2018_a\" href=\"#rGarnelo_et+al_2018_a\">Garnelo et al (2018a</a>;b), we focus on works that are relevant for Attentive Neural Processes",
+        "We have proposed Attentive Neural Processes, which augment Neural Processes with attention to resolve the fundamental problem of underfitting",
+        "Replacing the MLP in the decoder of the Attentive Neural Processes with self-attention across the target pixels, we have a model that closely resembles an Image Transformer defined on arbitrary orderings of pixels"
+    ],
+    "summary": [
+        "Regression tasks are usually cast as modelling the distribution of a vector-valued output y given a vector-valued input x via a deterministic function, such as a neural network, taking x as an input.",
+        "We implement a similar mechanism in NPs using differentiable attention that learns to attend to the contexts relevant to the given target, while preserving the permutation invariance in the contexts.",
+        "The representation of each context pairi\u2208C before the mean-aggregation step is computed by a self-attention mechanism, in both the deterministic and latent path.",
+        "We draw a batch of realisations from the data generating stochastic process, and select random points on these realisations to be the targets and a subset to be the contexts to optimise the loss in Equation (3).",
+        "Using ANPs has significant benefits over raising the bottleneck size in NPs. In Figure 3 we visualise the learned conditional distribution for a qualitative comparison of the attention mechanisms.",
+        "For each of MNIST and CelebA, all qualitative plots were given from the same model for each attention mechanism, learned by optimising the loss in Equation (3) over random context pixels and random target pixels at each iteration.",
+        "The work related to NPs in the domain of Gaussian Processes, Meta-Learning, conditional latent variable models and Bayesian Learning have been discussed extensively in the original works of <a class=\"ref-link\" id=\"cGarnelo_et+al_2018_a\" href=\"#rGarnelo_et+al_2018_a\">Garnelo et al (2018a</a>;b), we focus on works that are relevant for ANPs. Gaussian Processes (GPs) Returning to our motivation for using attention in NPs, there is a clear parallel between GP kernels and attention, in that they both give a measure of similarity between two points in the same domain.",
+        "We have shown that this greatly improves the accuracy of predictions in terms of context and target NLL, results in faster training, and expands the range of functions that can be modelled.",
+        "There is a wide scope of future work for ANPs. Regarding model architecture, one way of incorporating cross-attention into the latent path and modelling the dependencies across the resulting local latents is to have a global latent, much like the setup of the Neural Statistician but translated to the regression setting.",
+        "The Image Transformer (ImT) (<a class=\"ref-link\" id=\"cParmar_et+al_2018_a\" href=\"#rParmar_et+al_2018_a\">Parmar et al, 2018</a>) has some interesting connections with ANPs: its local self-attention used to predict consecutive pixel blocks from previous blocks has parallels with how our model attends to context pixels to predict target pixels.",
+        "Replacing the MLP in the decoder of the ANP with self-attention across the target pixels, we have a model that closely resembles an ImT defined on arbitrary orderings of pixels.",
+        "The targets will affect each other\u2019s predictions, so the ordering and grouping of the targets will become important"
+    ],
+    "headline": "We show that Neural Processes suffer a fundamental drawback of underfitting, giving inaccurate predictions at the inputs of the observed data they condition on",
+    "reference_links": [
+        {
+            "id": "Alvarez_et+al_2012_a",
+            "entry": "Mauricio A Alvarez, Lorenzo Rosasco, Neil D Lawrence, et al. Kernels for vector-valued functions: A review. Foundations and Trends R in Machine Learning, 4(3):195\u2013266, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez%2C%20Mauricio%20A.%20Rosasco%2C%20Lorenzo%20Lawrence%2C%20Neil%20D.%20Kernels%20for%20vector-valued%20functions%3A%20A%20review%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alvarez%2C%20Mauricio%20A.%20Rosasco%2C%20Lorenzo%20Lawrence%2C%20Neil%20D.%20Kernels%20for%20vector-valued%20functions%3A%20A%20review%202012"
+        },
+        {
+            "id": "Bachman_et+al_2018_a",
+            "entry": "Philip Bachman, Riashat Islam, Alessandro Sordoni, and Zafarali Ahmed. Vfunc: a deep generative model for functions. arXiv preprint arXiv:1807.04106, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.04106"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Bartunov_2018_a",
+            "entry": "Sergey Bartunov and Dmitry P Vetrov. Fast adaptation in generative models with generative matching networks. In AISTATS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bartunov%2C%20Sergey%20Vetrov%2C%20Dmitry%20P.%20Fast%20adaptation%20in%20generative%20models%20with%20generative%20matching%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bartunov%2C%20Sergey%20Vetrov%2C%20Dmitry%20P.%20Fast%20adaptation%20in%20generative%20models%20with%20generative%20matching%20networks%202018"
+        },
+        {
+            "id": "Bonilla_et+al_2008_a",
+            "entry": "Edwin V Bonilla, Kian M Chai, and Christopher Williams. Multi-task gaussian process prediction. In NIPS, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bonilla%2C%20Edwin%20V.%20Chai%2C%20Kian%20M.%20Williams%2C%20Christopher%20Multi-task%20gaussian%20process%20prediction%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bonilla%2C%20Edwin%20V.%20Chai%2C%20Kian%20M.%20Williams%2C%20Christopher%20Multi-task%20gaussian%20process%20prediction%202008"
+        },
+        {
+            "id": "Bornschein_et+al_2017_a",
+            "entry": "Jorg Bornschein, Andriy Mnih, Daniel Zoran, and Danilo Jimenez Rezende. Variational memory addressing in generative models. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bornschein%2C%20Jorg%20Mnih%2C%20Andriy%20Zoran%2C%20Daniel%20Rezende%2C%20Danilo%20Jimenez%20Variational%20memory%20addressing%20in%20generative%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bornschein%2C%20Jorg%20Mnih%2C%20Andriy%20Zoran%2C%20Daniel%20Rezende%2C%20Danilo%20Jimenez%20Variational%20memory%20addressing%20in%20generative%20models%202017"
+        },
+        {
+            "id": "Dai_et+al_2017_a",
+            "entry": "Zhenwen Dai, Mauricio A Alvarez, and Neil Lawrence. Efficient modeling of latent information in supervised learning using gaussian processes. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Zhenwen%20Alvarez%2C%20Mauricio%20A.%20Lawrence%2C%20Neil%20Efficient%20modeling%20of%20latent%20information%20in%20supervised%20learning%20using%20gaussian%20processes%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Zhenwen%20Alvarez%2C%20Mauricio%20A.%20Lawrence%2C%20Neil%20Efficient%20modeling%20of%20latent%20information%20in%20supervised%20learning%20using%20gaussian%20processes%202017"
+        },
+        {
+            "id": "Edwards_2017_a",
+            "entry": "Harrison Edwards and Amos Storkey. Towards a neural statistician. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Edwards%2C%20Harrison%20Storkey%2C%20Amos%20Towards%20a%20neural%20statistician%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Edwards%2C%20Harrison%20Storkey%2C%20Amos%20Towards%20a%20neural%20statistician%202017"
+        },
+        {
+            "id": "Eslami_et+al_2018_a",
+            "entry": "SM Ali Eslami, Danilo Jimenez Rezende, Frederic Besse, Fabio Viola, Ari S Morcos, Marta Garnelo, Avraham Ruderman, Andrei A Rusu, Ivo Danihelka, Karol Gregor, et al. Neural scene representation and rendering. Science, 360(6394):1204\u20131210, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eslami%2C%20S.M.Ali%20Rezende%2C%20Danilo%20Jimenez%20Besse%2C%20Frederic%20Viola%2C%20Fabio%20Neural%20scene%20representation%20and%20rendering%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eslami%2C%20S.M.Ali%20Rezende%2C%20Danilo%20Jimenez%20Besse%2C%20Frederic%20Viola%2C%20Fabio%20Neural%20scene%20representation%20and%20rendering%202018"
+        },
+        {
+            "id": "Garnelo_et+al_2018_a",
+            "entry": "Marta Garnelo, Dan Rosenbaum, Christopher Maddison, Tiago Ramalho, David Saxton, Murray Shanahan, Yee Whye Teh, Danilo Rezende, and SM Ali Eslami. Conditional neural processes. In ICML, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garnelo%2C%20Marta%20Rosenbaum%2C%20Dan%20Maddison%2C%20Christopher%20Ramalho%2C%20Tiago%20Conditional%20neural%20processes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garnelo%2C%20Marta%20Rosenbaum%2C%20Dan%20Maddison%2C%20Christopher%20Ramalho%2C%20Tiago%20Conditional%20neural%20processes%202018"
+        },
+        {
+            "id": "Garnelo_et+al_2018_b",
+            "entry": "Marta Garnelo, Jonathan Schwarz, Dan Rosenbaum, Fabio Viola, Danilo J Rezende, SM Eslami, and Yee Whye Teh. Neural processes. In ICML Workshop on Theoretical Foundations and Applications of Deep Generative Models, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garnelo%2C%20Marta%20Schwarz%2C%20Jonathan%20Rosenbaum%2C%20Dan%20Viola%2C%20Fabio%20Neural%20processes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garnelo%2C%20Marta%20Schwarz%2C%20Jonathan%20Rosenbaum%2C%20Dan%20Viola%2C%20Fabio%20Neural%20processes%202018"
+        },
+        {
+            "id": "Graves_2012_a",
+            "entry": "Alex Graves. Supervised sequence labelling with recurrent neural networks. Springer, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Supervised%20sequence%20labelling%20with%20recurrent%20neural%20networks%202012"
+        },
+        {
+            "id": "Hewitt_et+al_2018_a",
+            "entry": "Luke B Hewitt, Maxwell I Nye, Andreea Gane, Tommi Jaakkola, and Joshua B Tenenbaum. The variational homoencoder: Learning to learn high capacity generative models from few examples. In UAI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hewitt%2C%20Luke%20B.%20Nye%2C%20Maxwell%20I.%20Gane%2C%20Andreea%20Jaakkola%2C%20Tommi%20The%20variational%20homoencoder%3A%20Learning%20to%20learn%20high%20capacity%20generative%20models%20from%20few%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hewitt%2C%20Luke%20B.%20Nye%2C%20Maxwell%20I.%20Gane%2C%20Andreea%20Jaakkola%2C%20Tommi%20The%20variational%20homoencoder%3A%20Learning%20to%20learn%20high%20capacity%20generative%20models%20from%20few%20examples%202018"
+        },
+        {
+            "id": "Hinton_et+al_1995_a",
+            "entry": "Geoffrey E Hinton, Peter Dayan, Brendan J Frey, and Radford M Neal. The\u201d wake-sleep\u201d algorithm for unsupervised neural networks. Science, 268(5214):1158\u20131161, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Dayan%2C%20Peter%20Frey%2C%20Brendan%20J.%20Neal%2C%20Radford%20M.%20The%E2%80%9D%20wake-sleep%E2%80%9D%20algorithm%20for%20unsupervised%20neural%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Dayan%2C%20Peter%20Frey%2C%20Brendan%20J.%20Neal%2C%20Radford%20M.%20The%E2%80%9D%20wake-sleep%E2%80%9D%20algorithm%20for%20unsupervised%20neural%20networks%201995"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "D. P. Kingma and J. Ba. Adam: A method for stochastic optimization. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20D.P.%20Ba%2C%20J.%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20D.P.%20Ba%2C%20J.%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. In ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Ananya_et+al_2018_a",
+            "entry": "Ananya Kumar, SM Eslami, Danilo J Rezende, Marta Garnelo, Fabio Viola, Edward Lockhart, and Murray Shanahan. Consistent generative query networks. arXiv preprint arXiv:1807.02033, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.02033"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Z. Liu, P. Luo, X. Wang, and X. Tang. Deep learning face attributes in the wild. In Proceedings of the IEEE International Conference on Computer Vision, pp. 3730\u20133738, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Z.%20Luo%2C%20P.%20Wang%2C%20X.%20Tang%2C%20X.%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Z.%20Luo%2C%20P.%20Wang%2C%20X.%20Tang%2C%20X.%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015"
+        },
+        {
+            "id": "Ma_et+al_2018_a",
+            "entry": "Chao Ma, Yingzhen Li, and Jose Miguel Hernandez-Lobato. Variational implicit processes. arXiv preprint arXiv:1806.02390, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02390"
+        },
+        {
+            "id": "Mishra_et+al_2018_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. A simple neural attentive metalearner. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mishra%2C%20Nikhil%20Rohaninejad%2C%20Mostafa%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20A%20simple%20neural%20attentive%20metalearner%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mishra%2C%20Nikhil%20Rohaninejad%2C%20Mostafa%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20A%20simple%20neural%20attentive%20metalearner%202018"
+        },
+        {
+            "id": "Parmar_et+al_2018_a",
+            "entry": "Niki Parmar, Ashish Vaswani, Jakob Uszkoreit, \u0141ukasz Kaiser, Noam Shazeer, and Alexander Ku. Image transformer. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niki%20Parmar%20Ashish%20Vaswani%20Jakob%20Uszkoreit%20%C5%81ukasz%20Kaiser%20Noam%20Shazeer%20and%20Alexander%20Ku%20Image%20transformer%20In%20ICML%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niki%20Parmar%20Ashish%20Vaswani%20Jakob%20Uszkoreit%20%C5%81ukasz%20Kaiser%20Noam%20Shazeer%20and%20Alexander%20Ku%20Image%20transformer%20In%20ICML%202018"
+        },
+        {
+            "id": "Reed_et+al_2017_a",
+            "entry": "Scott Reed, Yutian Chen, Thomas Paine, Aaron van den Oord, SM Eslami, Danilo Rezende, Oriol Vinyals, and Nando de Freitas. Few-shot autoregressive density estimation: Towards learning to learn distributions. arXiv preprint arXiv:1710.10304, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10304"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In ICML, pp. 1278\u20131286, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Rezende_et+al_2016_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, Ivo Danihelka, Karol Gregor, and Daan Wierstra. Oneshot generalization in deep generative models. arXiv preprint arXiv:1603.05106, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.05106"
+        },
+        {
+            "id": "Rosenbaum_et+al_2018_a",
+            "entry": "Dan Rosenbaum, Frederic Besse, Fabio Viola, Danilo J Rezende, and SM Eslami. Learning models for visual 3d localization with implicit mapping. arXiv preprint arXiv:1807.03149, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.03149"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Oneshot learning with memory-augmented neural networks. arXiv preprint arXiv:1605.06065, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.06065"
+        },
+        {
+            "id": "Snell_et+al_2017_a",
+            "entry": "Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017"
+        },
+        {
+            "id": "Teh_et+al_2005_a",
+            "entry": "Yee Whye Teh, Matthias Seeger, and Michael Jordan. Semiparametric latent factor models. In AISTATS, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Teh%2C%20Yee%20Whye%20Seeger%2C%20Matthias%20Jordan%2C%20Michael%20Semiparametric%20latent%20factor%20models%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Teh%2C%20Yee%20Whye%20Seeger%2C%20Matthias%20Jordan%2C%20Michael%20Semiparametric%20latent%20factor%20models%202005"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20NIPS%202017"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Charles Blundell, Tim Lillicrap, Daan Wierstra, et al. Matching networks for one shot learning. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016"
+        },
+        {
+            "id": "Wilson_2016_a",
+            "entry": "Andrew Gordon Wilson, Zhiting Hu, Ruslan Salakhutdinov, and Eric P Xing. Deep kernel learning. In Artificial Intelligence and Statistics, pp. 370\u2013378, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wilson%2C%20Andrew%20Gordon%20Hu%2C%20Zhiting%20Ruslan%20Salakhutdinov%2C%20and%20Eric%20P%20Xing.%20Deep%20kernel%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wilson%2C%20Andrew%20Gordon%20Hu%2C%20Zhiting%20Ruslan%20Salakhutdinov%2C%20and%20Eric%20P%20Xing.%20Deep%20kernel%20learning%202016"
+        }
+    ]
+}

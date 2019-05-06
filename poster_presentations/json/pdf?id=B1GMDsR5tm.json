@@ -1,0 +1,169 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "INITIALIZED EQUILIBRIUM PROPAGATION FOR BACKPROP-FREE TRAINING",
+        "author": "Peter O\u2019Connor, Efstratios Gavves, Max Welling QUVA Lab University of Amsterdam Amsterdam, Netherlands peter.ed.oconnor@gmail.com,egavves@uva.nl,m.welling@uva.nl",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1GMDsR5tm"
+        },
+        "abstract": "Deep neural networks are almost universally trained with reverse-mode automatic differentiation (a.k.a. backpropagation). Biological networks, on the other hand, appear to lack any mechanism for sending gradients back to their input neurons, and thus cannot be learning in this way. In response to this, Scellier & Bengio (2017) proposed Equilibrium Propagation - a method for gradient-based training of neural networks which uses only local learning rules and, crucially, does not rely on neurons having a mechanism for back-propagating an error gradient. Equilibrium propagation, however, has a major practical limitation: inference involves doing an iterative optimization of neural activations to find a fixed-point, and the number of steps required to closely approximate this fixed point scales poorly with the depth of the network. In response to this problem, we propose Initialized Equilibrium Propagation, which trains a feedforward network to initialize the iterative inference procedure for Equilibrium propagation. This feed-forward network learns to approximate the state of the fixed-point using a local learning rule. After training, we can simply use this initializing network for inference, resulting in a learned feedforward network. Our experiments show that this network appears to work as well or better than the original version of Equilibrium propagation while requiring fewer steps to converge. This shows how we might go about training deep networks without using backpropagation."
+    },
+    "keywords": [
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "Generative Adversarial Networks",
+            "url": "https://en.wikipedia.org/wiki/Generative_Adversarial_Networks"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "inference network",
+            "url": "https://en.wikipedia.org/wiki/inference_network"
+        }
+    ],
+    "abbreviations": {
+        "GANs": "Generative Adversarial Networks",
+        "ADMM": "Alternating Direction Method of Multipliers"
+    },
+    "highlights": [
+        "Deep neural networks are almost always trained with gradient descent, and gradients are almost always computed with backpropagation",
+        "Scellier & Bengio (2017) proposed a novel algorithm called Equilibrium Propagation, which enables the computation of parameter gradients in a deep neural network without backpropagation",
+        "In this paper we describe how to use a recurrent, energy-based model to provide layerwise targets with which to train a feedforward network without backpropagation",
+        "Neurons in the inference network learn to predict local targets, which correspond to the minimal energy states, which are found by the iterative settling of a separate, recurrently connected equilibrating network",
+        "We could imagine using a hybrid circuit to train a digital, copy-able feedforward network, which is updated by gradients computed in the analog hardware"
+    ],
+    "key_statements": [
+        "Deep neural networks are almost always trained with gradient descent, and gradients are almost always computed with backpropagation",
+        "Scellier & Bengio (2017) proposed a novel algorithm called Equilibrium Propagation, which enables the computation of parameter gradients in a deep neural network without backpropagation",
+        "In Figure 3 we demonstrate that using only local losses to update the feedforward network comes with no apparent disadvantage",
+        "In this paper we describe how to use a recurrent, energy-based model to provide layerwise targets with which to train a feedforward network without backpropagation",
+        "Neurons in the inference network learn to predict local targets, which correspond to the minimal energy states, which are found by the iterative settling of a separate, recurrently connected equilibrating network",
+        "We could imagine using a hybrid circuit to train a digital, copy-able feedforward network, which is updated by gradients computed in the analog hardware"
+    ],
+    "summary": [
+        "Deep neural networks are almost always trained with gradient descent, and gradients are almost always computed with backpropagation.",
+        "Scellier & Bengio (2017) proposed a novel algorithm called Equilibrium Propagation, which enables the computation of parameter gradients in a deep neural network without backpropagation.",
+        "The parameters of the network are learned based on a contrastive loss between the negativephase and positive-phase energy, which can be shown to be proportional to the gradient of the output loss in the limit of \u03b2 \u2192 0: 1However as described in Scellier et al (2018), the symmetry requirement can be relaxed without significantly impacting performance.",
+        "The feedforward network can be used to perform inference at test-time, since it learns to approximate the minimal-energy state of the equilibrating network, which corresponds to the prediction.",
+        "We train the parameters \u03c6 to approximate the minimal energy state s\u2212 of the equilibrating network 2.",
+        "Over the course of training, parameters \u03c6 will learn until our feedforward network is a good predictor of the minimal-energy state of the equilibrating network.",
+        "This feedforward network can be used to do inference: we take the state of the output neurons to be our prediction of the target data.",
+        "By initializing the negative phase in a close-to-optimal regime, the network is able to learn when the number of steps is so low that plain Equilibrium Propagation cannot converge.",
+        "They propose using the parameters of the Equilibriating network to do a forward pass, and describe the conditions under which this provides a good approximation of the energy-minimizing state.",
+        "The function of the amortized student network q\u03c6(z|x) is analogous to the function of our initializing network f\u03c6(x), and the negative phase corresponds to the iterative optimization of varational parameters from the starting point provided by f\u03c6(x).",
+        "The resulting inference model is not a feedforward network, the authors claim that this approach allows them to dramatically shorten convergence time of the negative phase.",
+        "In this paper we describe how to use a recurrent, energy-based model to provide layerwise targets with which to train a feedforward network without backpropagation.",
+        "Neurons in the inference network learn to predict local targets, which correspond to the minimal energy states, which are found by the iterative settling of a separate, recurrently connected equilibrating network.",
+        "As pointed out by Scellier & Bengio (2017), it is much easier to design an analog circuit to minimize some energy function than it is to design a feedforward circuit and a parallel backwards circuit which exactly computes its gradients."
+    ],
+    "headline": "In response to this problem, we propose Initialized Equilibrium Propagation, which trains a feedforward network to initialize the iterative inference procedure for Equilibrium propagation",
+    "reference_links": [
+        {
+            "id": "Bengio_et+al_2016_a",
+            "entry": "Yoshua Bengio, Benjamin Scellier, Olexa Bilaniuk, Joao Sacramento, and Walter Senn. Feedforward initialization for fast inference of deep generative networks is biologically plausible. arXiv preprint arXiv:1606.01651, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01651"
+        },
+        {
+            "id": "Carreira-Perpinan_2014_a",
+            "entry": "Miguel Carreira-Perpinan and Weiran Wang. Distributed optimization of deeply nested systems. In Artificial Intelligence and Statistics, pp. 10\u201319, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carreira-Perpinan%2C%20Miguel%20Wang%2C%20Weiran%20Distributed%20optimization%20of%20deeply%20nested%20systems%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carreira-Perpinan%2C%20Miguel%20Wang%2C%20Weiran%20Distributed%20optimization%20of%20deeply%20nested%20systems%202014"
+        },
+        {
+            "id": "Cremer_et+al_2018_a",
+            "entry": "Chris Cremer, Xuechen Li, and David Duvenaud. Inference suboptimality in variational autoencoders. arXiv preprint arXiv:1801.03558, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.03558"
+        },
+        {
+            "id": "Dayan_et+al_1995_a",
+            "entry": "Peter Dayan, Geoffrey E Hinton, Radford M Neal, and Richard S Zemel. The helmholtz machine. Neural computation, 7(5):889\u2013904, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Neal%2C%20Radford%20M.%20Zemel%2C%20Richard%20S.%20The%20helmholtz%20machine%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Neal%2C%20Radford%20M.%20Zemel%2C%20Richard%20S.%20The%20helmholtz%20machine%201995"
+        },
+        {
+            "id": "Dempster_et+al_1977_a",
+            "entry": "Arthur P Dempster, Nan M Laird, and Donald B Rubin. Maximum likelihood from incomplete data via the em algorithm. Journal of the royal statistical society. Series B (methodological), pp. 1\u201338, 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dempster%2C%20Arthur%20P.%20Laird%2C%20Nan%20M.%20Rubin%2C%20Donald%20B.%20Maximum%20likelihood%20from%20incomplete%20data%20via%20the%20em%20algorithm%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dempster%2C%20Arthur%20P.%20Laird%2C%20Nan%20M.%20Rubin%2C%20Donald%20B.%20Maximum%20likelihood%20from%20incomplete%20data%20via%20the%20em%20algorithm%201977"
+        },
+        {
+            "id": "Finn_et+al_2016_a",
+            "entry": "Chelsea Finn, Paul Christiano, Pieter Abbeel, and Sergey Levine. A connection between generative adversarial networks, inverse reinforcement learning, and energy-based models. arXiv preprint arXiv:1611.03852, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03852"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Hopfield_1984_a",
+            "entry": "John J Hopfield. Neurons with graded response have collective computational properties like those of two-state neurons. Proceedings of the national academy of sciences, 81(10):3088\u20133092, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hopfield%2C%20John%20J.%20Neurons%20with%20graded%20response%20have%20collective%20computational%20properties%20like%20those%20of%20two-state%20neurons%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hopfield%2C%20John%20J.%20Neurons%20with%20graded%20response%20have%20collective%20computational%20properties%20like%20those%20of%20two-state%20neurons%201984"
+        },
+        {
+            "id": "Jaderberg_et+al_2016_a",
+            "entry": "Max Jaderberg, Wojciech Marian Czarnecki, Simon Osindero, Oriol Vinyals, Alex Graves, David Silver, and Koray Kavukcuoglu. Decoupled neural interfaces using synthetic gradients. arXiv preprint arXiv:1608.05343, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.05343"
+        },
+        {
+            "id": "Taesup_2016_a",
+            "entry": "Taesup Kim and Yoshua Bengio. Deep directed generative models with energy-based probability estimation. arXiv preprint arXiv:1606.03439, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.03439"
+        },
+        {
+            "id": "Kim_et+al_2018_a",
+            "entry": "Yoon Kim, Sam Wiseman, Andrew C Miller, David Sontag, and Alexander M Rush. Semi-amortized variational autoencoders. arXiv preprint arXiv:1802.02550, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.02550"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kohan_et+al_2018_a",
+            "entry": "Adam A Kohan, Edward A Rietman, and Hava T Siegelmann. Error forward-propagation: Reusing feedforward connections to propagate errors in deep learning. arXiv preprint arXiv:1808.03357, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.03357"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Yingzhen Li, Richard E Turner, and Qiang Liu. Approximate inference with amortised mcmc. arXiv preprint arXiv:1702.08343, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08343"
+        },
+        {
+            "id": "Lillicrap_et+al_2014_a",
+            "entry": "Timothy P Lillicrap, Daniel Cownden, Douglas B Tweed, and Colin J Akerman. Random feedback weights support learning in deep neural networks. arXiv preprint arXiv:1411.0247, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.0247"
+        },
+        {
+            "id": "Marino_et+al_2018_a",
+            "entry": "Joseph Marino, Yisong Yue, and Stephan Mandt. Iterative amortized inference. arXiv preprint arXiv:1807.09356, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.09356"
+        },
+        {
+            "id": "Mirza_2014_a",
+            "entry": "Mehdi Mirza and Simon Osindero. Conditional generative adversarial nets. arXiv preprint arXiv:1411.1784, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.1784"
+        },
+        {
+            "id": "Salakhutdinov_2010_a",
+            "entry": "Ruslan Salakhutdinov and Hugo Larochelle. Efficient learning of deep boltzmann machines. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 693\u2013700, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salakhutdinov%2C%20Ruslan%20Larochelle%2C%20Hugo%20Efficient%20learning%20of%20deep%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salakhutdinov%2C%20Ruslan%20Larochelle%2C%20Hugo%20Efficient%20learning%20of%20deep%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Scellier_et+al_2017_a",
+            "entry": "Published as a conference paper at ICLR 2019 Benjamin Scellier and Yoshua Bengio. Equilibrium propagation: Bridging the gap between energybased models and backpropagation. Frontiers in computational neuroscience, 11:24, 2017. Benjamin Scellier, Anirudh Goyal, Jonathan Binas, Thomas Mesnard, and Yoshua Bengio. Extending the framework of equilibrium propagation to general dynamics, 2018. URL https://openreview.net/forum?id=SJTB5GZCb. Gavin Taylor, Ryan Burmeister, Zheng Xu, Bharat Singh, Ankit Patel, and Tom Goldstein. Training neural networks without gradients: A scalable admm approach. In International Conference on Machine Learning, pp.2722\u20132731, 2016. Shuangfei Zhai, Yu Cheng, Rogerio Feris, and Zhongfei Zhang. Generative adversarial networks as variational training of energy based models.arXiv preprint arXiv:1611.01799, 2016.",
+            "url": "https://openreview.net/forum?id=SJTB5GZCb",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01799"
+        }
+    ]
+}

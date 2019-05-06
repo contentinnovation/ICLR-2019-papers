@@ -1,0 +1,260 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Value Propagation Networks",
+        "author": "Nantas Nardelli \u2217 University of Oxford nantas@robots.ox.ac.uk",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJG6G2RqtX"
+        },
+        "journal": "Model",
+        "abstract": "We present Value Propagation (VProp), a set of parameter-efficient differentiable planning modules built on Value Iteration which can successfully be trained using reinforcement learning to solve unseen tasks, has the capability to generalize to larger map sizes, and can learn to navigate in dynamic environments. We show that the modules enable learning to plan when the environment also includes stochastic elements, providing a cost-efficient learning system to build low-level size-invariant planners for a variety of interactive navigation problems. We evaluate on static and dynamic configurations of MazeBase grid-worlds, with randomly generated environments of several different sizes, and on a StarCraft navigation scenario, with more complex dynamics, and pixels as input."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "low level",
+            "url": "https://en.wikipedia.org/wiki/low_level"
+        },
+        {
+            "term": "planning horizon",
+            "url": "https://en.wikipedia.org/wiki/planning_horizon"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "grid world",
+            "url": "https://en.wikipedia.org/wiki/grid_world"
+        },
+        {
+            "term": "artificial agent",
+            "url": "https://en.wikipedia.org/wiki/artificial_agent"
+        }
+    ],
+    "abbreviations": {
+        "VProp": "Value Propagation",
+        "RL": "Reinforcement Learning",
+        "VI": "Value Iteration",
+        "CNN": "convolutional neural network",
+        "VIN": "Value Iteration Networks",
+        "MDP": "Markov Decision Problem"
+    },
+    "highlights": [
+        "Planning is a key component for artificial agents in a variety of domains",
+        "In this work we extend the formalization used in Value Iteration Networks to more accurately represent the structure of grid-world-like scenarios, enabling Value Iteration network modules to be naturally used within the reinforcement learning framework beyond the scope of the initial work, while removing some of the limitations and underlying assumptions constraining the original architecture",
+        "We show that our models can not only learn to plan and navigate in dynamic environments, but that their hierarchical structure provides a way to generalize to navigation tasks where the required planning horizon and the size of the map are much larger than the ones seen at training time",
+        "Architectures that try to solve the large but structured space of navigation tasks have much to benefit from employing planners that can be learnt from data, these need to be sample efficient to quickly adapt to local environment dynamics so that they can provide a flexible planning horizon without the need to collect new data",
+        "Our work shows that such planners can be successfully learnt via Reinforcement Learning when the dynamics of the task are taken into account, and that great generalization capabilities can be expected when these models are applied to 2D path-planning tasks",
+        "A major issue that still prevents these planners from being deployed on harder tasks is computational cost, since the depth increases with the length of the path that agents must solve, architectures employing Value Iteration modules as low level planners have been successfully tackling complex interactive tasks (Section 1.1), we expect our methods to provide a way for such type of work to train end-to-end via reinforcement learning, even for pathfinding tasks found in different graph-like structures"
+    ],
+    "key_statements": [
+        "Planning is a key component for artificial agents in a variety of domains",
+        "In this work we extend the formalization used in Value Iteration Networks to more accurately represent the structure of grid-world-like scenarios, enabling Value Iteration network modules to be naturally used within the reinforcement learning framework beyond the scope of the initial work, while removing some of the limitations and underlying assumptions constraining the original architecture",
+        "We show that our models can not only learn to plan and navigate in dynamic environments, but that their hierarchical structure provides a way to generalize to navigation tasks where the required planning horizon and the size of the map are much larger than the ones seen at training time",
+        "Our main contributions include: (1) introducing Value Propagation and MVProp, network planning modules which successfully learn to solve pathfinding tasks via reinforcement learning using minimal parametrization, (2) demonstrating the ability to generalize to large unseen maps when training exclusively on much smaller ones, and (3) showing that our modules can learn to plan in environments with more complex dynamics than a static grid world, both in terms of transition function and observation complexity.\n1.1",
+        "The goal is to learn to plan through reinforcement learning, that is learning a policy trained on various configurations of the environment that can generalize to arbitrary other configurations of the environment, including larger environments, and ones with a larger number of entities",
+        "In the case of a standard navigation task, this boils down to learning a policy which, given an observation of the world, will output actions that take the agent to the goal as quickly as possible",
+        "We propose two alternative approaches to the value iteration modules described above, with the objective to provide a minimal parametrization for better sample complexity and generalization, while keeping the convolutional structure and the idea of a deep network with shared weights",
+        "One of the main difficulties we observed with both the Value Iteration module and Value Propagation when generalizing to larger environments is that obstacles/blocking cells on a fixed size grid can be represented in two different ways: either with a small value of propagation or with a large output reward",
+        "We focus on evaluating our modules strictly using Reinforcement Learning, since we are interested in moving towards scenarios that better simulate tasks requiring interaction with the environment",
+        "To test the capability of our models to effectively learn non-static environments - that is, relatively more complex transition functions - we propose a set of experiments in which we allow our environment to spawn dynamic adversarial entities controlled by a set of fixed policies",
+        "Compared to the Value Iteration Networks baseline, the better sample efficiency translates into the ability to more accurately learn a model of the state-action transition function, which allows Value Propagation to learn planning modules for this non-trivial environment",
+        "We evaluate on the scenario directly from pixels, by adding two convolutional layers following by a max-pooling operator to provide capacity to learn the state features: as expected (Figure 4c) the architecture takes some more time to condition on the entities, but reaches similar final performances",
+        "Architectures that try to solve the large but structured space of navigation tasks have much to benefit from employing planners that can be learnt from data, these need to be sample efficient to quickly adapt to local environment dynamics so that they can provide a flexible planning horizon without the need to collect new data",
+        "Our work shows that such planners can be successfully learnt via Reinforcement Learning when the dynamics of the task are taken into account, and that great generalization capabilities can be expected when these models are applied to 2D path-planning tasks",
+        "We have demonstrated that our methods can even generalize when the environment has dynamic, noisy, and adversarial elements, or with high-dimensional observation spaces, enabling them to be employed in relatively complex tasks",
+        "A major issue that still prevents these planners from being deployed on harder tasks is computational cost, since the depth increases with the length of the path that agents must solve, architectures employing Value Iteration modules as low level planners have been successfully tackling complex interactive tasks (Section 1.1), we expect our methods to provide a way for such type of work to train end-to-end via reinforcement learning, even for pathfinding tasks found in different graph-like structures"
+    ],
+    "summary": [
+        "Planning is a key component for artificial agents in a variety of domains.",
+        "<a class=\"ref-link\" id=\"cTamar_et+al_2016_a\" href=\"#rTamar_et+al_2016_a\">Tamar et al (2016</a>) train such models \u2013 Value Iteration Networks (VIN) \u2013 with a supervised loss on the trace from a search/planning algorithm, with the goal to find the parameters that can solve the shortest path task in such environments by iteratively learning the value function using the",
+        "Our main contributions include: (1) introducing VProp and MVProp, network planning modules which successfully learn to solve pathfinding tasks via reinforcement learning using minimal parametrization, (2) demonstrating the ability to generalize to large unseen maps when training exclusively on much smaller ones, and (3) showing that our modules can learn to plan in environments with more complex dynamics than a static grid world, both in terms of transition function and observation complexity.",
+        "One of the main difficulties we observed with both the VI module and VProp when generalizing to larger environments is that obstacles/blocking cells on a fixed size grid can be represented in two different ways: either with a small value of propagation or with a large output reward.",
+        "In particular MVProp very quickly learns a transition function over the MDP dynamics that is sharp enough to provide good values across even bigger sizes, obtaining near-optimal policies over all the sizes during the first thousand training episodes.",
+        "To test the capability of our models to effectively learn non-static environments - that is, relatively more complex transition functions - we propose a set of experiments in which we allow our environment to spawn dynamic adversarial entities controlled by a set of fixed policies.",
+        "Compared to the VIN baseline, the better sample efficiency translates into the ability to more accurately learn a model of the state-action transition function, which allows VProp to learn planning modules for this non-trivial environment.",
+        "We evaluate on the scenario directly from pixels, by adding two convolutional layers following by a max-pooling operator to provide capacity to learn the state features: as expected (Figure 4c) the architecture takes some more time to condition on the entities, but reaches similar final performances.",
+        "A major issue that still prevents these planners from being deployed on harder tasks is computational cost, since the depth increases with the length of the path that agents must solve, architectures employing VI modules as low level planners have been successfully tackling complex interactive tasks (Section 1.1), we expect our methods to provide a way for such type of work to train end-to-end via reinforcement learning, even for pathfinding tasks found in different graph-like structures.",
+        "Interesting venues where VProp and MVProp may be applied are mobile robotics and visual tracking (<a class=\"ref-link\" id=\"cLee_et+al_2017_a\" href=\"#rLee_et+al_2017_a\"><a class=\"ref-link\" id=\"cLee_et+al_2017_a\" href=\"#rLee_et+al_2017_a\">Lee et al, 2017</a></a>; <a class=\"ref-link\" id=\"cBordallo_et+al_2015_a\" href=\"#rBordallo_et+al_2015_a\"><a class=\"ref-link\" id=\"cBordallo_et+al_2015_a\" href=\"#rBordallo_et+al_2015_a\">Bordallo et al, 2015</a></a>), where our work could be used to learn arbitrary propagation functions, and model a wide range of potential functions"
+    ],
+    "headline": "We present Value Propagation, a set of parameter-efficient differentiable planning modules built on Value Iteration which can successfully be trained using reinforcement learning to solve unseen tasks, has the capability to generalize to larger map sizes, and can learn to navigate in dynamic environments",
+    "reference_links": [
+        {
+            "id": "Banino_et+al_2018_a",
+            "entry": "A. Banino, C. Barry, B. Uria, C. Blundell, T. Lillicrap, P. Mirowski, A. Pritzel, M. J. Chadwick, T. Degris, J. Modayil, et al. Vector-based navigation using grid-like representations in artificial agents. Nature, page 1, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Banino%2C%20A.%20Barry%2C%20C.%20Uria%2C%20B.%20Blundell%2C%20C.%20Vector-based%20navigation%20using%20grid-like%20representations%20in%20artificial%20agents%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Banino%2C%20A.%20Barry%2C%20C.%20Uria%2C%20B.%20Blundell%2C%20C.%20Vector-based%20navigation%20using%20grid-like%20representations%20in%20artificial%20agents%202018"
+        },
+        {
+            "id": "Bertsekas_2012_a",
+            "entry": "D. P. Bertsekas. Dynamic Programming and Optimal Control, Vol. II. Athena Scientific, 4th edition, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertsekas%2C%20D.P.%20Dynamic%20Programming%20and%20Optimal%20Control%2C%20Vol.%20II.%20Athena%20Scientific%202012"
+        },
+        {
+            "id": "Bhatti_et+al_2016_a",
+            "entry": "S. Bhatti, A. Desmaison, O. Miksik, N. Nardelli, N. Siddharth, and P. H. Torr. Playing doom with slam-augmented deep reinforcement learning. arXiv preprint arXiv:1612.00380, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.00380"
+        },
+        {
+            "id": "Bordallo_et+al_2015_a",
+            "entry": "A. Bordallo, F. Previtali, N. Nardelli, and S. Ramamoorthy. Counterfactual reasoning about intent for interactive navigation in dynamic environments. In Intelligent Robots and Systems (IROS), 2015 IEEE/RSJ International Conference on, pages 2943\u20132950. IEEE, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bordallo%2C%20A.%20Previtali%2C%20F.%20Nardelli%2C%20N.%20Ramamoorthy%2C%20S.%20Counterfactual%20reasoning%20about%20intent%20for%20interactive%20navigation%20in%20dynamic%20environments%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bordallo%2C%20A.%20Previtali%2C%20F.%20Nardelli%2C%20N.%20Ramamoorthy%2C%20S.%20Counterfactual%20reasoning%20about%20intent%20for%20interactive%20navigation%20in%20dynamic%20environments%202015"
+        },
+        {
+            "id": "Farquhar_et+al_2017_a",
+            "entry": "G. Farquhar, T. Rocktaschel, M. Igl, and S. Whiteson. Treeqn and atreec: Differentiable tree planning for deep reinforcement learning. arXiv preprint arXiv:1710.11417, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.11417"
+        },
+        {
+            "id": "Foerster_et+al_2017_a",
+            "entry": "J. Foerster, N. Nardelli, G. Farquhar, P. Torr, P. Kohli, S. Whiteson, et al. Stabilising experience replay for deep multi-agent reinforcement learning. arXiv preprint arXiv:1702.08887, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08887"
+        },
+        {
+            "id": "Groshev_et+al_2017_a",
+            "entry": "E. Groshev, A. Tamar, S. Srivastava, and P. Abbeel. Learning generalized reactive policies using deep neural networks. arXiv preprint arXiv:1708.07280, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.07280"
+        },
+        {
+            "id": "Gupta_et+al_2017_a",
+            "entry": "S. Gupta, J. Davidson, S. Levine, R. Sukthankar, and J. Malik. Cognitive mapping and planning for visual navigation. arXiv preprint arXiv:1702.03920, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.03920"
+        },
+        {
+            "id": "Kaelbling_et+al_1996_a",
+            "entry": "L. P. Kaelbling, M. L. Littman, and A. W. Moore. Reinforcement learning: A survey. Journal of artificial intelligence research, 4:237\u2013285, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaelbling%2C%20L.P.%20Littman%2C%20M.L.%20Moore%2C%20A.W.%20Reinforcement%20learning%3A%20A%20survey%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaelbling%2C%20L.P.%20Littman%2C%20M.L.%20Moore%2C%20A.W.%20Reinforcement%20learning%3A%20A%20survey%201996"
+        },
+        {
+            "id": "Khan_et+al_2017_a",
+            "entry": "A. Khan, C. Zhang, N. Atanasov, K. Karydis, V. Kumar, and D. D. Lee. Memory augmented control networks. arXiv preprint arXiv:1709.05706, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.05706"
+        },
+        {
+            "id": "Konda_2000_a",
+            "entry": "V. R. Konda and J. N. Tsitsiklis. Actor-critic algorithms. In Advances in neural information processing systems, pages 1008\u20131014, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Konda%2C%20V.R.%20Tsitsiklis%2C%20J.N.%20Actor-critic%20algorithms%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Konda%2C%20V.R.%20Tsitsiklis%2C%20J.N.%20Actor-critic%20algorithms%202000"
+        },
+        {
+            "id": "Lee_et+al_2017_a",
+            "entry": "N. Lee, W. Choi, P. Vernaza, C. B. Choy, P. H. Torr, and M. Chandraker. Desire: Distant future prediction in dynamic scenes with interacting agents. arXiv preprint arXiv:1704.04394, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04394"
+        },
+        {
+            "id": "Mirowski_et+al_2016_a",
+            "entry": "P. Mirowski, R. Pascanu, F. Viola, H. Soyer, A. Ballard, A. Banino, M. Denil, R. Goroshin, L. Sifre, K. Kavukcuoglu, et al. Learning to navigate in complex environments. arXiv preprint arXiv:1611.03673, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03673"
+        },
+        {
+            "id": "Niu_et+al_2017_a",
+            "entry": "S. Niu, S. Chen, H. Guo, C. Targonski, M. C. Smith, and J. Kovacevic. Generalized value iteration networks: Life beyond lattices. arXiv preprint arXiv:1706.02416, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02416"
+        },
+        {
+            "id": "Oh_et+al_2017_a",
+            "entry": "J. Oh, S. Singh, and H. Lee. Value prediction network. arXiv preprint arXiv:1707.03497, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03497"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "A. Paszke, S. Gross, S. Chintala, G. Chanan, E. Yang, Z. DeVito, Z. Lin, A. Desmaison, L. Antiga, and A. Lerer. Automatic differentiation in pytorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20A.%20Gross%2C%20S.%20Chintala%2C%20S.%20Chanan%2C%20G.%20Automatic%20differentiation%20in%20pytorch%202017"
+        },
+        {
+            "id": "Rehder_et+al_2017_a",
+            "entry": "E. Rehder, M. Naumann, N. O. Salscheider, and C. Stiller. Cooperative motion planning for non-holonomic agents with value iteration networks. arXiv preprint arXiv:1709.05273, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.05273"
+        },
+        {
+            "id": "Russell_et+al_1995_a",
+            "entry": "S. Russell, P. Norvig, and A. Intelligence. A modern approach. Artificial Intelligence. Prentice-Hall, Egnlewood Cliffs, 25:27, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Russell%2C%20S.%20Norvig%2C%20P.%20Intelligence%2C%20A.%20A%20modern%20approach.%20Artificial%20Intelligence%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Russell%2C%20S.%20Norvig%2C%20P.%20Intelligence%2C%20A.%20A%20modern%20approach.%20Artificial%20Intelligence%201995"
+        },
+        {
+            "id": "Serban_et+al_2018_a",
+            "entry": "I. V. Serban, C. Sankar, M. Pieper, J. Pineau, and Y. Bengio. The bottleneck simulator: A model-based deep reinforcement learning approach. arXiv preprint arXiv:1807.04723, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.04723"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "D. Silver, H. van Hasselt, M. Hessel, T. Schaul, A. Guez, T. Harley, G. Dulac-Arnold, D. Reichert, N. Rabinowitz, A. Barreto, et al. The predictron: End-to-end learning and planning. arXiv preprint arXiv:1612.08810, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.08810"
+        },
+        {
+            "id": "Srinivas_et+al_2018_a",
+            "entry": "A. Srinivas, A. Jabri, P. Abbeel, S. Levine, and C. Finn. Universal planning networks: Learning generalizable representations for visuomotor control. In International Conference on Machine Learning, pages 4739\u20134748, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srinivas%2C%20A.%20Jabri%2C%20A.%20Abbeel%2C%20P.%20Levine%2C%20S.%20Universal%20planning%20networks%3A%20Learning%20generalizable%20representations%20for%20visuomotor%20control%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srinivas%2C%20A.%20Jabri%2C%20A.%20Abbeel%2C%20P.%20Levine%2C%20S.%20Universal%20planning%20networks%3A%20Learning%20generalizable%20representations%20for%20visuomotor%20control%202018"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2015_a",
+            "entry": "S. Sukhbaatar, A. Szlam, G. Synnaeve, S. Chintala, and R. Fergus. Mazebase: A sandbox for learning from games. arXiv preprint arXiv:1511.07401, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.07401"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "R. S. Sutton and A. G. Barto. Reinforcement learning: An introduction, volume 1. MIT press Cambridge, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20R.S.%20Barto%2C%20A.G.%20Reinforcement%20learning%3A%20An%20introduction%2C%20volume%201%201998"
+        },
+        {
+            "id": "Sutton_et+al_1999_a",
+            "entry": "R. S. Sutton, D. A. McAllester, S. P. Singh, Y. Mansour, et al. Policy gradient methods for reinforcement learning with function approximation. In NIPS, volume 99, pages 1057\u20131063, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20R.S.%20McAllester%2C%20D.A.%20Singh%2C%20S.P.%20Mansour%2C%20Y.%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20R.S.%20McAllester%2C%20D.A.%20Singh%2C%20S.P.%20Mansour%2C%20Y.%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%201999"
+        },
+        {
+            "id": "Synnaeve_et+al_2016_a",
+            "entry": "G. Synnaeve, N. Nardelli, A. Auvolat, S. Chintala, T. Lacroix, Z. Lin, F. Richoux, and N. Usunier. Torchcraft: a library for machine learning research on real-time strategy games. arXiv preprint arXiv:1611.00625, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.00625"
+        },
+        {
+            "id": "Tamar_et+al_2016_a",
+            "entry": "A. Tamar, S. Levine, P. Abbeel, Y. WU, and G. Thomas. Value iteration networks. In Advances in Neural Information Processing Systems, pages 2146\u20132154, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=A%20Tamar%20S%20Levine%20P%20Abbeel%20Y%20WU%20and%20G%20Thomas%20Value%20iteration%20networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pages%2021462154%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=A%20Tamar%20S%20Levine%20P%20Abbeel%20Y%20WU%20and%20G%20Thomas%20Value%20iteration%20networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pages%2021462154%202016"
+        },
+        {
+            "id": "Usunier_et+al_2016_a",
+            "entry": "N. Usunier, G. Synnaeve, Z. Lin, and S. Chintala. Episodic exploration for deep deterministic policies: An application to starcraft micromanagement tasks. arXiv preprint arXiv:1609.02993, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.02993"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Z. Wang, V. Bapst, N. Heess, V. Mnih, R. Munos, K. Kavukcuoglu, and N. de Freitas. Sample efficient actor-critic with experience replay. arXiv preprint arXiv:1611.01224, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01224"
+        },
+        {
+            "id": "Watkins_1992_a",
+            "entry": "C. J. Watkins and P. Dayan. Q-learning. Machine learning, 8(3-4):279\u2013292, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=C%20J%20Watkins%20and%20P%20Dayan%20Qlearning%20Machine%20learning%20834279292%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=C%20J%20Watkins%20and%20P%20Dayan%20Qlearning%20Machine%20learning%20834279292%201992"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "T. Weber, S. Racaniere, D. P. Reichert, L. Buesing, A. Guez, D. J. Rezende, A. P. Badia, O. Vinyals, N. Heess, Y. Li, et al. Imagination-augmented agents for deep reinforcement learning. arXiv preprint arXiv:1707.06203, 2017. M. White. Unifying task specification in reinforcement learning. arXiv preprint arXiv:1609.01995, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06203"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "J. Zhang, L. Tai, J. Boedecker, W. Burgard, and M. Liu. Neural slam. arXiv preprint arXiv:1706.09520, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.09520"
+        }
+    ]
+}

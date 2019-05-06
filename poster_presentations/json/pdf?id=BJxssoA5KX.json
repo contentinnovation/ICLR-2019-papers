@@ -1,0 +1,424 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "BOUNCE AND LEARN: MODELING SCENE DYNAMICS WITH REAL-WORLD BOUNCES",
+        "author": "Senthil Purushwalkam,& Abhinav Gupta Robotics Institute, Carnegie Mellon University {spurushw,abhinavg}@cs.cmu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJxssoA5KX"
+        },
+        "abstract": "We introduce an approach to model surface properties governing bounces in everyday scenes. Our model learns end-to-end, starting from sensor inputs, to predict post-bounce trajectories and infer two underlying physical properties that govern bouncing - restitution and effective collision normals. Our model, Bounce and Learn, comprises two modules \u2013 a Physics Inference Module (PIM) and a Visual Inference Module (VIM). VIM learns to infer physical parameters for locations in a scene given a single still image, while PIM learns to model physical interactions for the prediction task given physical parameters and observed pre-collision 3D trajectories. To achieve our results, we introduce the Bounce Dataset comprising 5K RGB-D videos of bouncing trajectories of a foam ball to probe surfaces of varying shapes and materials in everyday scenes including homes and offices. Our proposed model learns from our collected dataset of real-world bounces and is bootstrapped with additional information from simple physics simulations. We show on our newly collected dataset that our model out-performs baselines, including trajectory fitting with Newtonian physics, in predicting post-bounce trajectories and inferring physical properties of a scene."
+    },
+    "keywords": [
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "Dynamics",
+            "url": "https://en.wikipedia.org/wiki/Dynamics"
+        },
+        {
+            "term": "physical interactions",
+            "url": "https://en.wikipedia.org/wiki/physical_interactions"
+        },
+        {
+            "term": "real world",
+            "url": "https://en.wikipedia.org/wiki/real_world"
+        },
+        {
+            "term": "mechanics",
+            "url": "https://en.wikipedia.org/wiki/mechanics"
+        },
+        {
+            "term": "physical property",
+            "url": "https://en.wikipedia.org/wiki/physical_property"
+        },
+        {
+            "term": "Physics",
+            "url": "https://en.wikipedia.org/wiki/Physics"
+        },
+        {
+            "term": "surface normal",
+            "url": "https://en.wikipedia.org/wiki/surface_normal"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        }
+    ],
+    "abbreviations": {
+        "COR": "coefficients of restitution",
+        "PIM": "PHYSICS INFERENCE MODULE",
+        "VIM": "Visual Inference Module",
+        "FC": "fully connected",
+        "CNN": "convolutional neural network",
+        "IN": "Interaction Networks"
+    },
+    "highlights": [
+        "Our goal is to use captured probe collision trajectories to predict post-bounce trajectories and estimate surface-varying coefficients of restitution (COR) and effective collision normals over complex, everyday objects",
+        "Our contributions are twofold: (1) we propose a model that is trained end-to-end for both predicting post-bounce trajectories given an observed, noisy 3D point cloud of a pre-bounce trajectory in a scene, and for inferring physical properties (COR and collision normal) given a single still image; and (2) we build a large-scale dataset of real-world bounces in a variety of everyday scenes",
+        "We demonstrate experimentally that Visual Inference Module can generalize to novel scenes for inferring physical properties and predicting post-bounce trajectories when used in conjunction with a pretrained PHYSICS INFERENCE MODULE",
+        "We study how our model can benefit if the collision normal or coefficients of restitution is known",
+        "As collision normals are loosely tied to the surface normals, we train our best model with the sensor-estimated normals by adding an additional cosine-distance loss between the Visual Inference Module-predicted collision normals and the sensor normals",
+        "We have introduced a new large-scale dataset of real-world bounces and have demonstrated the ability to predict post-bounce trajectories and infer physical properties of the bounces for a variety of everyday surfaces via our Bounce and Learn model"
+    ],
+    "key_statements": [
+        "Our goal is to use captured probe collision trajectories to predict post-bounce trajectories and estimate surface-varying coefficients of restitution (COR) and effective collision normals over complex, everyday objects",
+        "By learning from a large number of physical interactions in the real world, we develop an approximate visual mapping for physical properties",
+        "We propose Bounce and Learn, a model that learns end-to-end to predict post-bounce trajectories and infers effective physical parameters starting from sensor inputs",
+        "Visual Inference Module learns to infer physical parameters for locations in a scene given a single still image, while PHYSICS INFERENCE MODULE learns to model the physical interaction for the prediction task given physical parameters and an observed pre-collision 3D trajectory",
+        "We show that our model can account for non-rigid surfaces that deform during collision and, compared to inverting a parametric physics model using handdesigned features, better handles uncertainty in the captured trajectories due to end-to-end learning",
+        "Our work demonstrates that an agent can learn to predict physical properties of surfaces in daily scenes and is the first to explore this across a large variety of different real-world surfaces, such as sofas, beds, and tables",
+        "Our contributions are twofold: (1) we propose a model that is trained end-to-end for both predicting post-bounce trajectories given an observed, noisy 3D point cloud of a pre-bounce trajectory in a scene, and for inferring physical properties (COR and collision normal) given a single still image; and (2) we build a large-scale dataset of real-world bounces in a variety of everyday scenes",
+        "We propose a Visual Inference Module (VIM) that is designed to infer the physical parameters of a scene from the visual input",
+        "We demonstrate experimentally that Visual Inference Module can generalize to novel scenes for inferring physical properties and predicting post-bounce trajectories when used in conjunction with a pretrained PHYSICS INFERENCE MODULE",
+        "We found including a mix of 3:1 synthetic-to-real data in the mini-batches achieves the best balance between prediction accuracy and interpretable physical parameter inference",
+        "We report ablations of different training strategies for our model in Appendix F",
+        "We study how our model can benefit if the collision normal or coefficients of restitution is known",
+        "As collision normals are loosely tied to the surface normals, we train our best model with the sensor-estimated normals by adding an additional cosine-distance loss between the Visual Inference Module-predicted collision normals and the sensor normals",
+        "Notice how most of the models benefit from this information",
+        "We show qualitative results of inferred coefficients of restitution values and collision normals from Visual Inference Module in Figure 4",
+        "In Table 1, we evaluate the percentage of Visual Inference Module\u2019s collision normal predictions which align within 30\u25e6 of the sensor-estimated surface normal - the standard evaluation criterion for the NYUv2 surface normal estimation task (Silberman et al, 2012)",
+        "We have introduced a new large-scale dataset of real-world bounces and have demonstrated the ability to predict post-bounce trajectories and infer physical properties of the bounces for a variety of everyday surfaces via our Bounce and Learn model",
+        "The collection of our Bounce Dataset facilitates studying physical properties not addressed by our model and future applications"
+    ],
+    "summary": [
+        "Our goal is to use captured probe collision trajectories to predict post-bounce trajectories and estimate surface-varying coefficients of restitution (COR) and effective collision normals over complex, everyday objects.",
+        "We seek to directly learn collision-response models of deformable surfaces from observed real-world interactions and bootstrapped by only a set of simple, inexpensive rigid-body simulation examples.",
+        "VIM learns to infer physical parameters for locations in a scene given a single still image, while PIM learns to model the physical interaction for the prediction task given physical parameters and an observed pre-collision 3D trajectory.",
+        "Our contributions are twofold: (1) we propose a model that is trained end-to-end for both predicting post-bounce trajectories given an observed, noisy 3D point cloud of a pre-bounce trajectory in a scene, and for inferring physical properties (COR and collision normal) given a single still image; and (2) we build a large-scale dataset of real-world bounces in a variety of everyday scenes.",
+        "We evaluate our model on our collected dataset and show that it outperforms baselines, including trajectory fitting with Newtonian physics, in predicting post-bounce trajectories and inferring physical properties of a scene.",
+        "Let Ti and To be pre- and post-bounce point cloud trajectories, respectively, and \u03c1 be the physical parameters of the probed collision surface \u2013 effective collision normal and coefficient of restitution (COR).",
+        "We observe in our experiments that core physics engine f , when trained on real-world data, can model interactions more complex than rigid-body collisions.",
+        "We demonstrate experimentally that VIM can generalize to novel scenes for inferring physical properties and predicting post-bounce trajectories when used in conjunction with a pretrained PIM.",
+        "For every bounce trajectory (Ti,To) observed at scene location (x, y), we use VIM to estimate the physical parameters \u03c1x,y.",
+        "To explore whether active physical interactions can be used to infer the physical properties of objects, we collect a large-scale dataset of a probe ball bouncing off of complex, everyday surfaces.",
+        "We use the output physical parameters of the VIM from our best model to predict post-bounce trajectories using IN (Pretrain.",
+        "We observe that training the trajectory encoder leads to a model that is not constrained to predict interpretable effective physical parameters.",
+        "We have introduced a new large-scale dataset of real-world bounces and have demonstrated the ability to predict post-bounce trajectories and infer physical properties of the bounces for a variety of everyday surfaces via our Bounce and Learn model."
+    ],
+    "headline": "We introduce an approach to model surface properties governing bounces in everyday scenes",
+    "reference_links": [
+        {
+            "id": "Agrawal_et+al_2016_a",
+            "entry": "Pulkit Agrawal, Ashvin Nair, Pieter Abbeel, Jitendra Malik, and Sergey Levine. Learning to poke by poking: Experiential learning of intuitive physics. In Advances in Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agrawal%2C%20Pulkit%20Nair%2C%20Ashvin%20Abbeel%2C%20Pieter%20Malik%2C%20Jitendra%20Learning%20to%20poke%20by%20poking%3A%20Experiential%20learning%20of%20intuitive%20physics%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agrawal%2C%20Pulkit%20Nair%2C%20Ashvin%20Abbeel%2C%20Pieter%20Malik%2C%20Jitendra%20Learning%20to%20poke%20by%20poking%3A%20Experiential%20learning%20of%20intuitive%20physics%202016"
+        },
+        {
+            "id": "Bansal_et+al_2016_a",
+            "entry": "Aayush Bansal, Bryan C. Russell, and Abhinav Gupta. Marr revisited: 2d-3d alignment via surface normal prediction. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bansal%2C%20Aayush%20Russell%2C%20Bryan%20C.%20Gupta%2C%20Abhinav%20Marr%20revisited%3A%202d-3d%20alignment%20via%20surface%20normal%20prediction%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bansal%2C%20Aayush%20Russell%2C%20Bryan%20C.%20Gupta%2C%20Abhinav%20Marr%20revisited%3A%202d-3d%20alignment%20via%20surface%20normal%20prediction%202016"
+        },
+        {
+            "id": "Battaglia_et+al_2016_a",
+            "entry": "Peter Battaglia, Razvan Pascanu, Matthew Lai, Danilo Jimenez Rezende, and Koray Kavukcuoglu. Interaction networks for learning about objects, relations and physics. In Advances in Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Battaglia%2C%20Peter%20Pascanu%2C%20Razvan%20Lai%2C%20Matthew%20Rezende%2C%20Danilo%20Jimenez%20Interaction%20networks%20for%20learning%20about%20objects%2C%20relations%20and%20physics%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Battaglia%2C%20Peter%20Pascanu%2C%20Razvan%20Lai%2C%20Matthew%20Rezende%2C%20Danilo%20Jimenez%20Interaction%20networks%20for%20learning%20about%20objects%2C%20relations%20and%20physics%202016"
+        },
+        {
+            "id": "Bell_et+al_2013_a",
+            "entry": "Sean Bell, Paul Upchurch, Noah Snavely, and Kavita Bala. OpenSurfaces: A richly annotated catalog of surface appearance. ACM Transactions on Graphics (SIGGRAPH 2013), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bell%2C%20Sean%20Upchurch%2C%20Paul%20Snavely%2C%20Noah%20Bala%2C%20Kavita%20OpenSurfaces%3A%20A%20richly%20annotated%20catalog%20of%20surface%20appearance%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bell%2C%20Sean%20Upchurch%2C%20Paul%20Snavely%2C%20Noah%20Bala%2C%20Kavita%20OpenSurfaces%3A%20A%20richly%20annotated%20catalog%20of%20surface%20appearance%202013"
+        },
+        {
+            "id": "Belytschko_et+al_2013_a",
+            "entry": "Ted Belytschko, Wing Kam Liu, Brian Moran, and Khalil Elkhodary. Nonlinear Finite Elements for Continua and Structures. John Wiley & Sons, November 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belytschko%2C%20Ted%20Liu%2C%20Wing%20Kam%20Moran%2C%20Brian%20Elkhodary%2C%20Khalil%20Nonlinear%20Finite%20Elements%20for%20Continua%20and%20Structures%202013-11"
+        },
+        {
+            "id": "Bettadapura_et+al_2016_a",
+            "entry": "Vinay Bettadapura, Caroline Pantofaru, and Irfan Essa. Leveraging contextual cues for generating basketball highlights. In Proceedings of ACM International Conference on Multimedia (ACMMM). ACM, October 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bettadapura%2C%20Vinay%20Pantofaru%2C%20Caroline%20Essa%2C%20Irfan%20Leveraging%20contextual%20cues%20for%20generating%20basketball%20highlights%202016-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bettadapura%2C%20Vinay%20Pantofaru%2C%20Caroline%20Essa%2C%20Irfan%20Leveraging%20contextual%20cues%20for%20generating%20basketball%20highlights%202016-10"
+        },
+        {
+            "id": "Bhat_et+al_2002_a",
+            "entry": "K. Bhat, S. Seitz, J. Popovic, and P. Khosla. Computing the physical parameters of rigid-body motion from video. In Proceedings of European Conference on Computer Vision (ECCV), 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bhat%2C%20K.%20Seitz%2C%20S.%20Popovic%2C%20J.%20Khosla%2C%20P.%20Computing%20the%20physical%20parameters%20of%20rigid-body%20motion%20from%20video%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bhat%2C%20K.%20Seitz%2C%20S.%20Popovic%2C%20J.%20Khosla%2C%20P.%20Computing%20the%20physical%20parameters%20of%20rigid-body%20motion%20from%20video%202002"
+        },
+        {
+            "id": "Brubaker_et+al_2009_a",
+            "entry": "M. Brubaker, L. Sigal, and D. Fleet. Estimating contact dynamics. In Proceedings of IEEE International Conference on Computer Vision (ICCV), 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brubaker%2C%20M.%20Sigal%2C%20L.%20Fleet%2C%20D.%20Estimating%20contact%20dynamics%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brubaker%2C%20M.%20Sigal%2C%20L.%20Fleet%2C%20D.%20Estimating%20contact%20dynamics%202009"
+        },
+        {
+            "id": "Brubaker_2008_a",
+            "entry": "Marcus A. Brubaker and David J. Fleet. The kneed walker for human pose tracking. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brubaker%2C%20Marcus%20A.%20Fleet%2C%20David%20J.%20The%20kneed%20walker%20for%20human%20pose%20tracking%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brubaker%2C%20Marcus%20A.%20Fleet%2C%20David%20J.%20The%20kneed%20walker%20for%20human%20pose%20tracking%202008"
+        },
+        {
+            "id": "Brubaker_et+al_2010_a",
+            "entry": "Marcus A. Brubaker, David J. Fleet, and Aaron Hertzmann. Physics-based person tracking using the anthropomorphic walker. International Journal of Computer Vision, 87(140), 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brubaker%2C%20Marcus%20A.%20Fleet%2C%20David%20J.%20Hertzmann%2C%20Aaron%20Physics-based%20person%20tracking%20using%20the%20anthropomorphic%20walker%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brubaker%2C%20Marcus%20A.%20Fleet%2C%20David%20J.%20Hertzmann%2C%20Aaron%20Physics-based%20person%20tracking%20using%20the%20anthropomorphic%20walker%202010"
+        },
+        {
+            "id": "Chang_et+al_2017_a",
+            "entry": "Michael B. Chang, Tomer Ullman, Antonio Torralba, and Joshua B. Tenenbaum. A compositional object-based approach to learning physical dynamics. In Proceedings of the International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chang%2C%20Michael%20B.%20Ullman%2C%20Tomer%20Torralba%2C%20Antonio%20Tenenbaum%2C%20Joshua%20B.%20A%20compositional%20object-based%20approach%20to%20learning%20physical%20dynamics%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chang%2C%20Michael%20B.%20Ullman%2C%20Tomer%20Torralba%2C%20Antonio%20Tenenbaum%2C%20Joshua%20B.%20A%20compositional%20object-based%20approach%20to%20learning%20physical%20dynamics%202017"
+        },
+        {
+            "id": "Chao_et+al_2017_a",
+            "entry": "Yu-Wei Chao, Jimei Yang, Brian Price, Scott Cohen, and Jia Deng. Forecasting human dynamics from static images. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chao%2C%20Yu-Wei%20Yang%2C%20Jimei%20Price%2C%20Brian%20Cohen%2C%20Scott%20Forecasting%20human%20dynamics%20from%20static%20images%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chao%2C%20Yu-Wei%20Yang%2C%20Jimei%20Price%2C%20Brian%20Cohen%2C%20Scott%20Forecasting%20human%20dynamics%20from%20static%20images%202017"
+        },
+        {
+            "id": "Chatterjee_1998_a",
+            "entry": "A. Chatterjee and A. L. Ruina. A New Algebraic Rigid-Body Collision Law Based on Impulse Space Considerations. Journal of Applied Mechanics, 65(4):939\u2013951, 1998. doi: 10.1115/1.2791938.",
+            "crossref": "https://dx.doi.org/10.1115/1.2791938",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1115/1.2791938"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Desai Chen, David I. Levin, Wojciech Matusik, and Danny M. Kaufman. Dynamics-aware numerical coarsening for fabrication design. ACM Trans. Graph., 34(4), 2017. doi: 10.1145/3072959. 3073669.",
+            "crossref": "https://dx.doi.org/10.1145/3072959.3073669",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3072959.3073669"
+        },
+        {
+            "id": "Coumans_2016_a",
+            "entry": "Erwin Coumans and Yunfei Bai. pybullet, a Python module for physics simulation for games, robotics and machine learning. http://pybullet.org/, 2016\u20132017.",
+            "url": "http://pybullet.org/"
+        },
+        {
+            "id": "Ehrhardt_et+al_2017_a",
+            "entry": "Sebastien Ehrhardt, Aron Monszpart, Niloy J. Mitra, and Andrea Vedaldi. Learning a physical long-term predictor. CoRR, abs/1703.00247, 2017a. URL http://arxiv.org/abs/1703.00247.",
+            "url": "http://arxiv.org/abs/1703.00247",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00247"
+        },
+        {
+            "id": "Ehrhardt_et+al_2017_b",
+            "entry": "Sebastien Ehrhardt, Aron Monszpart, Andrea Vedaldi, and Niloy J. Mitra. Learning to represent mechanics via long-term extrapolation and interpolation. CoRR, abs/1706.02179, 2017b. URL http://arxiv.org/abs/1706.02179.",
+            "url": "http://arxiv.org/abs/1706.02179",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02179"
+        },
+        {
+            "id": "Eigen_2015_a",
+            "entry": "David Eigen and Rob Fergus. Predicting depth, surface normals and semantic labels with a common multi-scale convolutional architecture. In Proceedings of IEEE International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eigen%2C%20David%20Fergus%2C%20Rob%20Predicting%20depth%2C%20surface%20normals%20and%20semantic%20labels%20with%20a%20common%20multi-scale%20convolutional%20architecture%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eigen%2C%20David%20Fergus%2C%20Rob%20Predicting%20depth%2C%20surface%20normals%20and%20semantic%20labels%20with%20a%20common%20multi-scale%20convolutional%20architecture%202015"
+        },
+        {
+            "id": "Fan_et+al_2017_a",
+            "entry": "Haoqiang Fan, Hao Su, and Leonidas Guibas. A point set generation network for 3D object reconstruction from a single image. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fan%2C%20Haoqiang%20Su%2C%20Hao%20Guibas%2C%20Leonidas%20A%20point%20set%20generation%20network%20for%203D%20object%20reconstruction%20from%20a%20single%20image%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fan%2C%20Haoqiang%20Su%2C%20Hao%20Guibas%2C%20Leonidas%20A%20point%20set%20generation%20network%20for%203D%20object%20reconstruction%20from%20a%20single%20image%202017"
+        },
+        {
+            "id": "Fischler_1981_a",
+            "entry": "Martin A Fischler and Robert C Bolles. Random sample consensus: a paradigm for model fitting with applications to image analysis and automated cartography. Communications of the ACM, 24 (6):381\u2013395, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fischler%2C%20Martin%20A.%20Bolles%2C%20Robert%20C.%20Random%20sample%20consensus%3A%20a%20paradigm%20for%20model%20fitting%20with%20applications%20to%20image%20analysis%20and%20automated%20cartography%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fischler%2C%20Martin%20A.%20Bolles%2C%20Robert%20C.%20Random%20sample%20consensus%3A%20a%20paradigm%20for%20model%20fitting%20with%20applications%20to%20image%20analysis%20and%20automated%20cartography%201981"
+        },
+        {
+            "id": "Fragkiadaki_et+al_2016_a",
+            "entry": "Katerina Fragkiadaki, Pulkit Agrawal, Sergey Levine, and Jitendra Malik. Learning predictive visual models of physics for playing billiards. In Proceedings of the International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fragkiadaki%2C%20Katerina%20Agrawal%2C%20Pulkit%20Levine%2C%20Sergey%20Malik%2C%20Jitendra%20Learning%20predictive%20visual%20models%20of%20physics%20for%20playing%20billiards%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fragkiadaki%2C%20Katerina%20Agrawal%2C%20Pulkit%20Levine%2C%20Sergey%20Malik%2C%20Jitendra%20Learning%20predictive%20visual%20models%20of%20physics%20for%20playing%20billiards%202016"
+        },
+        {
+            "id": "Gandhi_et+al_2017_a",
+            "entry": "Dhiraj Gandhi, Lerrel Pinto, and Abhinav Gupta. Learning to fly by crashing. In Proceedings of the International Conference On Intelligent Robots and Systems (IROS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gandhi%2C%20Dhiraj%20Pinto%2C%20Lerrel%20Gupta%2C%20Abhinav%20Learning%20to%20fly%20by%20crashing%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gandhi%2C%20Dhiraj%20Pinto%2C%20Lerrel%20Gupta%2C%20Abhinav%20Learning%20to%20fly%20by%20crashing%202017"
+        },
+        {
+            "id": "Gupta_et+al_2010_a",
+            "entry": "Abhinav Gupta, Alexei A. Efros, and Martial Hebert. Blocks world revisited: Image understanding using qualitative geometry and mechanics. In ECCV, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gupta%2C%20Abhinav%20Efros%2C%20Alexei%20A.%20Hebert%2C%20Martial%20Blocks%20world%20revisited%3A%20Image%20understanding%20using%20qualitative%20geometry%20and%20mechanics%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gupta%2C%20Abhinav%20Efros%2C%20Alexei%20A.%20Hebert%2C%20Martial%20Blocks%20world%20revisited%3A%20Image%20understanding%20using%20qualitative%20geometry%20and%20mechanics%202010"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoff Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems, pp. 1097\u20131105, 2012. URL http://books.nips.cc/papers/files/nips25/NIPS2012_0534.pdf.",
+            "url": "http://books.nips.cc/papers/files/nips25/NIPS2012_0534.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoff%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Kyriazis_et+al_2011_a",
+            "entry": "N. Kyriazis, I. Oikonomidis, and A. Argyros. Binding vision to physics based simulation: The case study of a bouncing ball. In Proceedings of the British Machine Vision Conference (BMVC), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kyriazis%2C%20N.%20Oikonomidis%2C%20I.%20Argyros%2C%20A.%20Binding%20vision%20to%20physics%20based%20simulation%3A%20The%20case%20study%20of%20a%20bouncing%20ball%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kyriazis%2C%20N.%20Oikonomidis%2C%20I.%20Argyros%2C%20A.%20Binding%20vision%20to%20physics%20based%20simulation%3A%20The%20case%20study%20of%20a%20bouncing%20ball%202011"
+        },
+        {
+            "id": "Lerer_et+al_2016_a",
+            "entry": "Adam Lerer, Sam Gross, and Rob Fergus. Learning physical intuition of block towers by example. In Proceedings of the 33rd International Conference on International Conference on Machine Learning - Volume 48, ICML\u201916, pp. 430\u2013438. JMLR.org, 2016. URL http://dl.acm.org/citation.cfm?id=3045390.3045437.",
+            "url": "http://dl.acm.org/citation.cfm?id=3045390.3045437",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lerer%2C%20Adam%20Gross%2C%20Sam%20Fergus%2C%20Rob%20Learning%20physical%20intuition%20of%20block%20towers%20by%20example%202016"
+        },
+        {
+            "id": "Levine_et+al_2016_a",
+            "entry": "Sergey Levine, Chelsea Finn, Trevor Darrell, and Pieter Abbeel. End-to-end training of deep visuomotor policies. Journal of Machine Learning Research (JMLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Finn%2C%20Chelsea%20Darrell%2C%20Trevor%20Abbeel%2C%20Pieter%20End-to-end%20training%20of%20deep%20visuomotor%20policies%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Finn%2C%20Chelsea%20Darrell%2C%20Trevor%20Abbeel%2C%20Pieter%20End-to-end%20training%20of%20deep%20visuomotor%20policies%202016"
+        },
+        {
+            "id": "Mann_et+al_1997_a",
+            "entry": "Richard Mann, Allan Jepson, and Jeffrey Siskind. The computational perception of scene dynamics. In CVIU, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mann%2C%20Richard%20Jepson%2C%20Allan%20Siskind%2C%20Jeffrey%20The%20computational%20perception%20of%20scene%20dynamics%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mann%2C%20Richard%20Jepson%2C%20Allan%20Siskind%2C%20Jeffrey%20The%20computational%20perception%20of%20scene%20dynamics%201997"
+        },
+        {
+            "id": "Marsden_2012_a",
+            "entry": "J.E. Marsden and T.J.R. Hughes. Mathematical Foundations of Elasticity. Dover Civil and Mechanical Engineering. 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marsden%2C%20J.E.%20Hughes%2C%20T.J.R.%20Mathematical%20Foundations%20of%20Elasticity%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marsden%2C%20J.E.%20Hughes%2C%20T.J.R.%20Mathematical%20Foundations%20of%20Elasticity%202012"
+        },
+        {
+            "id": "Monszpart_et+al_2016_a",
+            "entry": "Aron Monszpart, Nils Thuerey, and Niloy J. Mitra. SMASH: Physics-guided reconstruction of collisions from videos. ACM Transactions on Graphics (SIGGRAPH Asia), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monszpart%2C%20Aron%20Thuerey%2C%20Nils%20Mitra%2C%20Niloy%20J.%20SMASH%3A%20Physics-guided%20reconstruction%20of%20collisions%20from%20videos%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monszpart%2C%20Aron%20Thuerey%2C%20Nils%20Mitra%2C%20Niloy%20J.%20SMASH%3A%20Physics-guided%20reconstruction%20of%20collisions%20from%20videos%202016"
+        },
+        {
+            "id": "Mottaghi_et+al_2016_a",
+            "entry": "Roozbeh Mottaghi, Hessam Bagherinezhad, Mohammad Rastegari, and Ali Farhadi. Newtonian image understanding: Unfolding the dynamics of objects in static images. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mottaghi%2C%20Roozbeh%20Bagherinezhad%2C%20Hessam%20Rastegari%2C%20Mohammad%20Farhadi%2C%20Ali%20Newtonian%20image%20understanding%3A%20Unfolding%20the%20dynamics%20of%20objects%20in%20static%20images%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mottaghi%2C%20Roozbeh%20Bagherinezhad%2C%20Hessam%20Rastegari%2C%20Mohammad%20Farhadi%2C%20Ali%20Newtonian%20image%20understanding%3A%20Unfolding%20the%20dynamics%20of%20objects%20in%20static%20images%202016"
+        },
+        {
+            "id": "Mottaghi_et+al_2016_b",
+            "entry": "Roozbeh Mottaghi, Mohammad Rastegari, Abhinav Gupta, and Ali Farhadi. \u201cWhat happens if...\u201d Learning to predict the effect of forces in images. In Proceedings of European Conference on Computer Vision (ECCV), 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mottaghi%2C%20Roozbeh%20Rastegari%2C%20Mohammad%20Gupta%2C%20Abhinav%20Farhadi%2C%20Ali%20%E2%80%9CWhat%20happens%20if...%E2%80%9D%20Learning%20to%20predict%20the%20effect%20of%20forces%20in%20images%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mottaghi%2C%20Roozbeh%20Rastegari%2C%20Mohammad%20Gupta%2C%20Abhinav%20Farhadi%2C%20Ali%20%E2%80%9CWhat%20happens%20if...%E2%80%9D%20Learning%20to%20predict%20the%20effect%20of%20forces%20in%20images%202016"
+        },
+        {
+            "id": "Nordgren_2003_a",
+            "entry": "William B. Nordgren. Flexible simulation (Flexsim) software: Flexsim simulation environment. In Proceedings of the 35th conference on Winter simulation: driving innovation, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nordgren%2C%20William%20B.%20Flexible%20simulation%20%28Flexsim%29%20software%3A%20Flexsim%20simulation%20environment%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nordgren%2C%20William%20B.%20Flexible%20simulation%20%28Flexsim%29%20software%3A%20Flexsim%20simulation%20environment%202003"
+        },
+        {
+            "id": "Owens_et+al_2016_a",
+            "entry": "Andrew Owens, Phillip Isola, Josh McDermott, Antonio Torralba, Edward Adelson, and William Freeman. Visually indicated sounds. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Owens%2C%20Andrew%20Isola%2C%20Phillip%20McDermott%2C%20Josh%20Torralba%2C%20Antonio%20Visually%20indicated%20sounds%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Owens%2C%20Andrew%20Isola%2C%20Phillip%20McDermott%2C%20Josh%20Torralba%2C%20Antonio%20Visually%20indicated%20sounds%202016"
+        },
+        {
+            "id": "Pinto_2016_a",
+            "entry": "Lerrel Pinto and Abhinav Gupta. Supersizing self-supervision: Learning to grasp from 50K tries and 700 robot hours. In Proceedings of the International Conference On Robotics and Automation (ICRA), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pinto%2C%20Lerrel%20Gupta%2C%20Abhinav%20Supersizing%20self-supervision%3A%20Learning%20to%20grasp%20from%2050K%20tries%20and%20700%20robot%20hours%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pinto%2C%20Lerrel%20Gupta%2C%20Abhinav%20Supersizing%20self-supervision%3A%20Learning%20to%20grasp%20from%2050K%20tries%20and%20700%20robot%20hours%202016"
+        },
+        {
+            "id": "Pinto_et+al_2016_b",
+            "entry": "Lerrel Pinto, Dhiraj Gandhi, Yuanfeng Han, Yong-Lae Park, and Abhinav Gupta. The curious robot: Learning visual representations via physical interactions. In Proceedings of European Conference on Computer Vision (ECCV), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pinto%2C%20Lerrel%20Gandhi%2C%20Dhiraj%20Han%2C%20Yuanfeng%20Park%2C%20Yong-Lae%20The%20curious%20robot%3A%20Learning%20visual%20representations%20via%20physical%20interactions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pinto%2C%20Lerrel%20Gandhi%2C%20Dhiraj%20Han%2C%20Yuanfeng%20Park%2C%20Yong-Lae%20The%20curious%20robot%3A%20Learning%20visual%20representations%20via%20physical%20interactions%202016"
+        },
+        {
+            "id": "Qi_et+al_2016_a",
+            "entry": "Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: Deep learning on point sets for 3d classification and segmentation. arXiv preprint arXiv:1612.00593, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.00593"
+        },
+        {
+            "id": "Chris_1999_a",
+            "entry": "Chris Stauffer and W Eric L Grimson. Adaptive background mixture models for real-time tracking. In Computer Vision and Pattern Recognition, 1999. IEEE Computer Society Conference on., volume 2, pp. 246\u2013252. IEEE, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chris%20Stauffer%20and%20W%20Eric%20L%20Grimson%20Adaptive%20background%20mixture%20models%20for%20realtime%20tracking%20In%20Computer%20Vision%20and%20Pattern%20Recognition%201999%20IEEE%20Computer%20Society%20Conference%20on%20volume%202%20pp%20246252%20IEEE%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chris%20Stauffer%20and%20W%20Eric%20L%20Grimson%20Adaptive%20background%20mixture%20models%20for%20realtime%20tracking%20In%20Computer%20Vision%20and%20Pattern%20Recognition%201999%20IEEE%20Computer%20Society%20Conference%20on%20volume%202%20pp%20246252%20IEEE%201999"
+        },
+        {
+            "id": "Stewart_2011_a",
+            "entry": "David E Stewart. Dynamics with Inequalities: Impacts and Hard Constraints. Society for Industrial and Applied Mathematics, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stewart%2C%20David%20E.%20Dynamics%20with%20Inequalities%3A%20Impacts%20and%20Hard%20Constraints%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stewart%2C%20David%20E.%20Dynamics%20with%20Inequalities%3A%20Impacts%20and%20Hard%20Constraints%202011"
+        },
+        {
+            "id": "Stoianovici_1996_a",
+            "entry": "Dan Stoianovici and Yildirim Hurmuzlu. A critical study of the applicability of rigid-body collision theory. Journal of Applied Mechanics, 63(2):307\u2013316, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stoianovici%2C%20Dan%20Hurmuzlu%2C%20Yildirim%20A%20critical%20study%20of%20the%20applicability%20of%20rigid-body%20collision%20theory%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stoianovici%2C%20Dan%20Hurmuzlu%2C%20Yildirim%20A%20critical%20study%20of%20the%20applicability%20of%20rigid-body%20collision%20theory%201996"
+        },
+        {
+            "id": "Vondrick_2017_a",
+            "entry": "Carl Vondrick and Antonio Torralba. Generating the future with adversarial transformers. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vondrick%2C%20Carl%20Torralba%2C%20Antonio%20Generating%20the%20future%20with%20adversarial%20transformers%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vondrick%2C%20Carl%20Torralba%2C%20Antonio%20Generating%20the%20future%20with%20adversarial%20transformers%202017"
+        },
+        {
+            "id": "Walker_et+al_2016_a",
+            "entry": "Jacob Walker, Carl Doersch, Abhinav Gupta, and Martial Hebert. An uncertain future: Forecasting from variational autoencoders. In Proceedings of European Conference on Computer Vision (ECCV), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Walker%2C%20Jacob%20Doersch%2C%20Carl%20Gupta%2C%20Abhinav%20Hebert%2C%20Martial%20An%20uncertain%20future%3A%20Forecasting%20from%20variational%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Walker%2C%20Jacob%20Doersch%2C%20Carl%20Gupta%2C%20Abhinav%20Hebert%2C%20Martial%20An%20uncertain%20future%3A%20Forecasting%20from%20variational%20autoencoders%202016"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Jui-Hsien Wang, Rajsekhar Setaluri, Dinesh K. Pai, and Doug L. James. Bounce maps: An improved restitution model for real-time rigid-body impact. ACM Transactions on Graphics (Proceedings of SIGGRAPH 2017), 36(4), July 2017. doi: https://doi.org/10.1145/3072959.3073634.",
+            "crossref": "https://dx.doi.org/10.1145/3072959.3073634",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3072959.3073634"
+        },
+        {
+            "id": "Wang_et+al_2015_a",
+            "entry": "Xiaolong Wang, David Fouhey, and Abhinav Gupta. Designing deep networks for surface normal estimation. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 539\u2013547, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Xiaolong%20Fouhey%2C%20David%20Gupta%2C%20Abhinav%20Designing%20deep%20networks%20for%20surface%20normal%20estimation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Xiaolong%20Fouhey%2C%20David%20Gupta%2C%20Abhinav%20Designing%20deep%20networks%20for%20surface%20normal%20estimation%202015"
+        },
+        {
+            "id": "Watters_et+al_2017_a",
+            "entry": "Nicholas Watters, Andrea Tacchetti, Theophane Weber, Razvan Pascanu, Peter Battaglia, and Daniel Zoran. Visual interaction networks. CoRR, abs/1706.01433, 2017. URL http://arxiv.org/abs/1706.01433.",
+            "url": "http://arxiv.org/abs/1706.01433",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01433"
+        },
+        {
+            "id": "Wu_et+al_2015_a",
+            "entry": "Jiajun Wu, Ilker Yildirim, Joseph J. Lim, William T. Freeman, and Joshua B. Tenenbaum. Galileo: Perceiving physical object properties by integrating a physics engine with deep learning. In Advances in Neural Information Processing Systems (NIPS), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Jiajun%20Yildirim%2C%20Ilker%20Lim%2C%20Joseph%20J.%20Freeman%2C%20William%20T.%20Galileo%3A%20Perceiving%20physical%20object%20properties%20by%20integrating%20a%20physics%20engine%20with%20deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Jiajun%20Yildirim%2C%20Ilker%20Lim%2C%20Joseph%20J.%20Freeman%2C%20William%20T.%20Galileo%3A%20Perceiving%20physical%20object%20properties%20by%20integrating%20a%20physics%20engine%20with%20deep%20learning%202015"
+        },
+        {
+            "id": "Jiajun_2016_a",
+            "entry": "Jiajun Wu, Joseph J. Lim, Hongyi Zhang, Joshua B. Tenenbaum,, and William T. Freeman. Physics 101: Learning physical object properties from unlabeled videos. In Proceedings of the British Machine Vision Conference (BMVC), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jiajun%20Wu%20Joseph%20J%20Lim%20Hongyi%20Zhang%20Joshua%20B%20Tenenbaum%20and%20William%20T%20Freeman%20Physics%20101%20Learning%20physical%20object%20properties%20from%20unlabeled%20videos%20In%20Proceedings%20of%20the%20British%20Machine%20Vision%20Conference%20BMVC%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jiajun%20Wu%20Joseph%20J%20Lim%20Hongyi%20Zhang%20Joshua%20B%20Tenenbaum%20and%20William%20T%20Freeman%20Physics%20101%20Learning%20physical%20object%20properties%20from%20unlabeled%20videos%20In%20Proceedings%20of%20the%20British%20Machine%20Vision%20Conference%20BMVC%202016"
+        },
+        {
+            "id": "Xue_et+al_2016_a",
+            "entry": "Tianfan Xue, Jiajun Wu, Katherine L Bouman, and William T Freeman. Visual dynamics: Probabilistic future frame synthesis via cross convolutional networks. In Advances in Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xue%2C%20Tianfan%20Wu%2C%20Jiajun%20Bouman%2C%20Katherine%20L.%20Freeman%2C%20William%20T.%20Visual%20dynamics%3A%20Probabilistic%20future%20frame%20synthesis%20via%20cross%20convolutional%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xue%2C%20Tianfan%20Wu%2C%20Jiajun%20Bouman%2C%20Katherine%20L.%20Freeman%2C%20William%20T.%20Visual%20dynamics%3A%20Probabilistic%20future%20frame%20synthesis%20via%20cross%20convolutional%20networks%202016"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Zhoutong Zhang, Jiajun Wu, Qiujia Li, Zhengjia Huang, James Traer, Josh H. McDermott, Joshua B. Tenenbaum, and William T. Freeman. Generative modeling of audible shapes for object perception. In Proceedings of IEEE International Conference on Computer Vision (ICCV), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Zhoutong%20Wu%2C%20Jiajun%20Li%2C%20Qiujia%20Huang%2C%20Zhengjia%20Generative%20modeling%20of%20audible%20shapes%20for%20object%20perception%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Zhoutong%20Wu%2C%20Jiajun%20Li%2C%20Qiujia%20Huang%2C%20Zhengjia%20Generative%20modeling%20of%20audible%20shapes%20for%20object%20perception%202017"
+        },
+        {
+            "id": "Zhu_et+al_2015_a",
+            "entry": "Yixin Zhu, Yibiao Zhao, and Song-Chun Zhu. Understanding tools: Task-oriented object modeling, learning and recognition. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Yixin%20Zhao%2C%20Yibiao%20Zhu%2C%20Song-Chun%20Understanding%20tools%3A%20Task-oriented%20object%20modeling%2C%20learning%20and%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Yixin%20Zhao%2C%20Yibiao%20Zhu%2C%20Song-Chun%20Understanding%20tools%3A%20Task-oriented%20object%20modeling%2C%20learning%20and%20recognition%202015"
+        },
+        {
+            "id": "Zhu_et+al_2016_a",
+            "entry": "Yixin Zhu, Chenfanfu Jiang, Yibiao Zhao, Demetri Terzopoulos, and Song-Chun Zhu. Inferring forces and learning human utilities from videos. In Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Yixin%20Jiang%2C%20Chenfanfu%20Zhao%2C%20Yibiao%20Terzopoulos%2C%20Demetri%20Inferring%20forces%20and%20learning%20human%20utilities%20from%20videos%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Yixin%20Jiang%2C%20Chenfanfu%20Zhao%2C%20Yibiao%20Terzopoulos%2C%20Demetri%20Inferring%20forces%20and%20learning%20human%20utilities%20from%20videos%202016"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Yuke Zhu, Daniel Gordon, Eric Kolve, Dieter Fox, Li Fei-Fei, Abhinav Gupta, Roozbeh Mottaghi, and Ali Farhadi. Visual semantic planning using deep successor representations. In Proceedings of IEEE International Conference on Computer Vision (ICCV), 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Yuke%20Gordon%2C%20Daniel%20Kolve%2C%20Eric%20Fox%2C%20Dieter%20Visual%20semantic%20planning%20using%20deep%20successor%20representations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Yuke%20Gordon%2C%20Daniel%20Kolve%2C%20Eric%20Fox%2C%20Dieter%20Visual%20semantic%20planning%20using%20deep%20successor%20representations%202017"
+        },
+        {
+            "id": "Lim_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Yuke Zhu, Roozbeh Mottaghi, Eric Kolve, Joseph J. Lim, Abhinav Gupta, Li Fei-Fei, and Ali",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Yuke%20Zhu%20Roozbeh%20Mottaghi%20Eric%20Kolve%20Joseph%20J%20Lim%20Abhinav%20Gupta%20Li%20FeiFei%20and%20Ali"
+        },
+        {
+            "id": "Farhadi_2017_a",
+            "entry": "Farhadi. Target-driven visual navigation in indoor scenes using deep reinforcement learning. In Proceedings of the International Conference On Robotics and Automation (ICRA), 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Farhadi%20Target-driven%20visual%20navigation%20in%20indoor%20scenes%20using%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Farhadi%20Target-driven%20visual%20navigation%20in%20indoor%20scenes%20using%20deep%20reinforcement%20learning%202017"
+        }
+    ]
+}

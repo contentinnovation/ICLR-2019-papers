@@ -1,0 +1,389 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "COMPETITIVE EXPERIENCE REPLAY",
+        "author": "Hao Liu, Alexander Trott, Richard Socher, Caiming Xiong Salesforce Research Palo Alto, 94301 lhao,@gmail.com,{atrott, rsocher, cxiong}@salesforce.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Sklsm20ctX"
+        },
+        "abstract": "Deep learning has achieved remarkable successes in solving challenging reinforcement learning (RL) problems when dense reward function is provided. However, in sparse reward environment it still often suffers from the need to carefully shape reward function to guide policy optimization. This limits the applicability of RL in the real world since both reinforcement learning and domain-specific knowledge are required. It is therefore of great practical importance to develop algorithms which can learn from a binary signal indicating successful task completion or other unshaped, sparse reward signals. We propose a novel method called competitive experience replay, which efficiently supplements a sparse reward by placing learning in the context of an exploration competition between a pair of agents. Our method complements the recently proposed hindsight experience replay (HER) by inducing an automatic exploratory curriculum. We evaluate our approach on the tasks of reaching various goal locations in an ant maze and manipulating objects with a robotic arm. Each task provides only binary rewards indicating whether or not the goal is achieved. Our method asymmetrically augments these sparse rewards for a pair of agents each learning the same task, creating a competitive game designed to drive exploration. Extensive experiments demonstrate that this method leads to faster converge and improved task performance."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        },
+        {
+            "term": "reward function",
+            "url": "https://en.wikipedia.org/wiki/reward_function"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "RL": "reinforcement learning",
+        "HER": "Hindsight Experience Replay",
+        "CER": "Competitive Experience Replay",
+        "DDPG": "Deep Deterministic Policy Gradient",
+        "MADDPG": "multi-agent DDPG",
+        "PPO": "Policy Optimization",
+        "ICM": "intrinsic curiosity module"
+    },
+    "highlights": [
+        "Recent progress in deep reinforcement learning has achieved very impressive results in domains ranging from playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\"><a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\">OpenAI, 2018</a></a>), to high dimensional continuous control (<a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\"><a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\">Schulman et al, 2016</a></a>; 2017; 2015), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\">Levine et al, 2018</a></a>; <a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\"><a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\">Kalashnikov et al, 2018</a></a>; Andrychowicz et al, 2018b).<br/><br/>Despite these successes, in robotics control and many other areas, deep reinforcement learning still suffers from the need to engineer a proper reward function to guide policy optimization",
+        "In robotics control and many other areas, deep reinforcement learning still suffers from the need to engineer a proper reward function to guide policy optimization",
+        "We introduce Competitive Experience Replay, a new and general method for encouraging exploration through implicit curriculum learning in sparse reward settings",
+        "We demonstrate an empirical advantage of our technique when combined with existing methods in several challenging reinforcement learning tasks",
+        "We aim to investigate richer ways to re-label rewards based on intra-agent samples to further harness multi-agent competition, it\u2019s interesting to investigate counterfactual inference to promote efficient re-label off-policy samples",
+        "Future work will explore integrating our method into approaches more closely related to model-based learning, where adequate exposure to the dynamics of the environment is often crucial"
+    ],
+    "key_statements": [
+        "Recent progress in deep reinforcement learning has achieved very impressive results in domains ranging from playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\"><a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\">OpenAI, 2018</a></a>), to high dimensional continuous control (<a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\"><a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\">Schulman et al, 2016</a></a>; 2017; 2015), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\">Levine et al, 2018</a></a>; <a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\"><a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\">Kalashnikov et al, 2018</a></a>; Andrychowicz et al, 2018b).<br/><br/>Despite these successes, in robotics control and many other areas, deep reinforcement learning still suffers from the need to engineer a proper reward function to guide policy optimization",
+        "Recent progress in deep reinforcement learning has achieved very impressive results in domains ranging from playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a>; 2017; <a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\">OpenAI, 2018</a>), to high dimensional continuous control (<a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\">Schulman et al, 2016</a>; 2017; 2015), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\">Levine et al, 2018</a>; <a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\">Kalashnikov et al, 2018</a>; Andrychowicz et al, 2018b)",
+        "In robotics control and many other areas, deep reinforcement learning still suffers from the need to engineer a proper reward function to guide policy optimization",
+        "In the domain of goal-directed reinforcement learning, the recently proposed hindsight experience replay (HER) (<a class=\"ref-link\" id=\"cAndrychowicz_et+al_2017_a\" href=\"#rAndrychowicz_et+al_2017_a\">Andrychowicz et al, 2017</a>) addresses the challenge of learning from sparse rewards by re-labelling visited states as goal states during training. This technique continues to suffer from sample inefficiency, ostensibly due to difficulties related to exploration. We address these limitations by introducing a method called Competitive Experience Replay (CER)",
+        "We show that this competition between agents can automatically generate a curriculum of exploration and shape otherwise sparse reward",
+        "We evaluate our method both with and without Hindsight Experience Replay on a variety of reinforcement learning tasks, including navigating an ant agent to reach a goal position and manipulating objects with a robotic arm",
+        "We provide an introduction to the relevant concepts for reinforcement learning with sparse reward (Section 2.1), Deep Deterministic Policy Gradient, the backbone algorithm we build off of, (Section 2.2), and Hindsight Experience Replay (Section 2.3).\n2.1",
+        "Reinforcement learning considers the problem of finding an optimal policy for an agent that interacts with an uncertain environment and collects reward per action",
+        "The goal of the agent is to maximize its cumulative reward. This problem can be viewed as a Markov decision process over the environment states s \u2208 S and agent actions a \u2208 A, with the environment dynamics defined by the transition probability T (s |s, a) and reward function r, which yields a reward immediately following the action at performed in state st",
+        "We extend multi-agent Deep Deterministic Policy Gradient (MADDPG), proposed by <a class=\"ref-link\" id=\"cLowe_et+al_2017_a\" href=\"#rLowe_et+al_2017_a\">Lowe et al (2017</a>), for training using Competitive Experience Replay",
+        "To examine the efficacy of our method on a broader range of tasks, we evaluate the change in performance when ind-Competitive Experience Replay is added to Hindsight Experience Replay on the challenging multi-goal sparse reward environments introduced in <a class=\"ref-link\" id=\"cPlappert_et+al_2018_a\" href=\"#rPlappert_et+al_2018_a\">Plappert et al (2018</a>). (Note: we would prefer to examine int-Competitive Experience Replay but are prevented by technical issues related to the environment.) Results for each of the 12 tasks we trained on are illustrated in Figure 3",
+        "Our work is similar to theirs, but we propose to use sample-based competitive experience replay, which is not only more readily scalable to high-dimension control but integrates with Hindsight Experience Replay (<a class=\"ref-link\" id=\"cAndrychowicz_et+al_2017_a\" href=\"#rAndrychowicz_et+al_2017_a\">Andrychowicz et al, 2017</a>)",
+        "We introduce Competitive Experience Replay, a new and general method for encouraging exploration through implicit curriculum learning in sparse reward settings",
+        "We demonstrate an empirical advantage of our technique when combined with existing methods in several challenging reinforcement learning tasks",
+        "We aim to investigate richer ways to re-label rewards based on intra-agent samples to further harness multi-agent competition, it\u2019s interesting to investigate counterfactual inference to promote efficient re-label off-policy samples",
+        "Future work will explore integrating our method into approaches more closely related to model-based learning, where adequate exposure to the dynamics of the environment is often crucial"
+    ],
+    "summary": [
+        "Recent progress in deep reinforcement learning has achieved very impressive results in domains ranging from playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\"><a class=\"ref-link\" id=\"cOpenai_2018_a\" href=\"#rOpenai_2018_a\">OpenAI, 2018</a></a>), to high dimensional continuous control (<a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\"><a class=\"ref-link\" id=\"cSchulman_et+al_2016_a\" href=\"#rSchulman_et+al_2016_a\">Schulman et al, 2016</a></a>; 2017; 2015), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2018_a\" href=\"#rLevine_et+al_2018_a\">Levine et al, 2018</a></a>; <a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\"><a class=\"ref-link\" id=\"cKalashnikov_et+al_2018_a\" href=\"#rKalashnikov_et+al_2018_a\">Kalashnikov et al, 2018</a></a>; Andrychowicz et al, 2018b).<br/><br/>Despite these successes, in robotics control and many other areas, deep reinforcement learning still suffers from the need to engineer a proper reward function to guide policy optimization.",
+        "In the domain of goal-directed RL, the recently proposed hindsight experience replay (HER) (<a class=\"ref-link\" id=\"cAndrychowicz_et+al_2017_a\" href=\"#rAndrychowicz_et+al_2017_a\">Andrychowicz et al, 2017</a>) addresses the challenge of learning from sparse rewards by re-labelling visited states as goal states during training.",
+        "We provide an introduction to the relevant concepts for reinforcement learning with sparse reward (Section 2.1), Deep Deterministic Policy Gradient, the backbone algorithm we build off of, (Section 2.2), and Hindsight Experience Replay (Section 2.3).",
+        "Reinforcement learning considers the problem of finding an optimal policy for an agent that interacts with an uncertain environment and collects reward per action.",
+        "We present Competitive Experience Replay (CER) for policy gradient methods (Section 3.1) and describe the application of multi-agent DDPG to enable this technique (Section 3.2).",
+        "While the re-labelling strategy introduced by HER provides useful rewards for training a goal-conditioned policy, it assumes that learning from arbitrary goals will generalize to the actual task goals.",
+        "To implement CER, we learn a policy for each agent, \u03c0A and \u03c0B, as well as a multi-agent critic, taking advantage of methods for decentralized execution and centralized training.",
+        "We collect paired rollouts as described above, apply any re-labelling strategies and use the MADDPG algorithm to train both agent policies and the centralized critic, concatenating states, actions, and goals where appropriate.",
+        "We start by asking whether CER improves performance and sample efficiency in a sparse reward task.",
+        "These results support our hypothesis that existing state-of-the-art methods do not sufficiently address the exploration challenge intrinsic to sparse reward environments.",
+        "To examine the efficacy of our method on a broader range of tasks, we evaluate the change in performance when ind-CER is added to HER on the challenging multi-goal sparse reward environments introduced in <a class=\"ref-link\" id=\"cPlappert_et+al_2018_a\" href=\"#rPlappert_et+al_2018_a\">Plappert et al (2018</a>).",
+        "CER is designed to encourage exploration, but, unlike other methods, uses the behavior of a competitor agent to automatically determine the criteria for exploratory reward.",
+        "Figure 4 illustrates the success rates of agents A and B as well as the \u2018effect ratio,\u2019 which is the fraction of mini-batch samples whose reward is changed by CER during training, calculated as \u03c6",
+        "We speculate that the sampling strategy used in int-CER provides a more targeted re-labelling, leading to the more rapid increase in success rate for agent A.",
+        "We introduce Competitive Experience Replay, a new and general method for encouraging exploration through implicit curriculum learning in sparse reward settings.",
+        "Future work will explore integrating our method into approaches more closely related to model-based learning, where adequate exposure to the dynamics of the environment is often crucial"
+    ],
+    "headline": "We propose a novel method called competitive experience replay, which efficiently supplements a sparse reward by placing learning in the context of an exploration competition between a pair of agents",
+    "reference_links": [
+        {
+            "id": "Andrychowicz_et+al_2017_a",
+            "entry": "Marcin Andrychowicz, Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, Peter Welinder, Bob McGrew, Josh Tobin, OpenAI Pieter Abbeel, and Wojciech Zaremba. Hindsight experience replay. In Advances in Neural Information Processing Systems, pp. 5048\u20135058, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Wolski%2C%20Filip%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Hindsight%20experience%20replay%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Wolski%2C%20Filip%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Hindsight%20experience%20replay%202017"
+        },
+        {
+            "id": "Andrychowicz_et+al_0000_a",
+            "entry": "Marcin Andrychowicz, Bowen Baker, Maciek Chociej, Rafal Jozefowicz, Bob McGrew, Jakub Pachocki, Arthur Petron, Matthias Plappert, Glenn Powell, Alex Ray, Jonas Schneider, Szymon Sidor, Josh Tobin, Peter Welinder, Lilian Weng, and Wojciech Zaremba. Learning dexterous in-hand manipulation. arXiv:1808.00177, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.00177"
+        },
+        {
+            "id": "Andrychowicz_et+al_0000_b",
+            "entry": "Marcin Andrychowicz, Bowen Baker, Maciek Chociej, Rafal Jozefowicz, Bob McGrew, Jakub Pachocki, Arthur Petron, Matthias Plappert, Glenn Powell, Alex Ray, et al. Learning dexterous in-hand manipulation. arXiv preprint arXiv:1808.00177, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.00177"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In Advances in Neural Information Processing Systems, pp. 1471\u20131479, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bengio_et+al_2009_a",
+            "entry": "Yoshua Bengio, Jerome Louradour, Ronan Collobert, and Jason Weston. Curriculum learning. In Proceedings of the 26th annual international conference on machine learning, pp. 41\u201348. ACM, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Louradour%2C%20Jerome%20Collobert%2C%20Ronan%20Weston%2C%20Jason%20Curriculum%20learning%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Louradour%2C%20Jerome%20Collobert%2C%20Ronan%20Weston%2C%20Jason%20Curriculum%20learning%202009"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym. arXiv preprint arXiv:1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Burda_et+al_2018_a",
+            "entry": "Yuri Burda, Harri Edwards, Deepak Pathak, Amos Storkey, Trevor Darrell, and Alexei A Efros. Large-scale study of curiosity-driven learning. arXiv preprint arXiv:1808.04355, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04355"
+        },
+        {
+            "id": "Edwards_et+al_2018_a",
+            "entry": "Ashley D Edwards, Laura Downs, and James C Davidson. Forward-backward reinforcement learning. arXiv preprint arXiv:1803.10227, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.10227"
+        },
+        {
+            "id": "Elman_1993_a",
+            "entry": "Jeffrey L Elman. Learning and development in neural networks: The importance of starting small. Cognition, 48(1):71\u201399, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elman%2C%20Jeffrey%20L.%20Learning%20and%20development%20in%20neural%20networks%3A%20The%20importance%20of%20starting%20small%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elman%2C%20Jeffrey%20L.%20Learning%20and%20development%20in%20neural%20networks%3A%20The%20importance%20of%20starting%20small%201993"
+        },
+        {
+            "id": "Feng_et+al_2019_a",
+            "entry": "Yihao Feng, Hao Liu, Jian Peng, and Qiang Liu. Shrinkage-based bias-variance trade-off for deep reinforcement learning, 2019. URL https://openreview.net/forum?id=S1z9ehAqYX.",
+            "url": "https://openreview.net/forum?id=S1z9ehAqYX"
+        },
+        {
+            "id": "Florensa_et+al_2017_a",
+            "entry": "Carlos Florensa, David Held, Markus Wulfmeier, Michael Zhang, and Pieter Abbeel. Reverse curriculum generation for reinforcement learning. arXiv preprint arXiv:1707.05300, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.05300"
+        },
+        {
+            "id": "Forestier_et+al_2017_a",
+            "entry": "Sebastien Forestier, Yoan Mollard, and Pierre-Yves Oudeyer. Intrinsically motivated goal exploration processes with automatic curriculum learning. arXiv preprint arXiv:1708.02190, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02190"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Justin Fu, John Co-Reyes, and Sergey Levine. Ex2: Exploration with exemplar models for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2577\u20132587, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Goyal_et+al_2018_a",
+            "entry": "Anirudh Goyal, Philemon Brakel, William Fedus, Timothy Lillicrap, Sergey Levine, Hugo Larochelle, and Yoshua Bengio. Recall traces: Backtracking models for efficient reinforcement learning. arXiv preprint arXiv:1804.00379, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00379"
+        },
+        {
+            "id": "Graves_et+al_2017_a",
+            "entry": "Alex Graves, Marc G Bellemare, Jacob Menick, Remi Munos, and Koray Kavukcuoglu. Automated curriculum learning for neural networks. arXiv preprint arXiv:1704.03003, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03003"
+        },
+        {
+            "id": "Gu_et+al_2016_a",
+            "entry": "Shixiang Gu, Timothy Lillicrap, Ilya Sutskever, and Sergey Levine. Continuous deep q-learning with model-based acceleration. In International Conference on Machine Learning, pp. 2829\u20132838, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Lillicrap%2C%20Timothy%20Sutskever%2C%20Ilya%20Levine%2C%20Sergey%20Continuous%20deep%20q-learning%20with%20model-based%20acceleration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Lillicrap%2C%20Timothy%20Sutskever%2C%20Ilya%20Levine%2C%20Sergey%20Continuous%20deep%20q-learning%20with%20model-based%20acceleration%202016"
+        },
+        {
+            "id": "Heess_et+al_2017_a",
+            "entry": "Nicolas Heess, Srinivasan Sriram, Jay Lemmon, Josh Merel, Greg Wayne, Yuval Tassa, Tom Erez, Ziyu Wang, Ali Eslami, Martin Riedmiller, et al. Emergence of locomotion behaviours in rich environments. arXiv preprint arXiv:1707.02286, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.02286"
+        },
+        {
+            "id": "Held_et+al_2017_a",
+            "entry": "David Held, Xinyang Geng, Carlos Florensa, and Pieter Abbeel. Automatic goal generation for reinforcement learning agents. arXiv preprint arXiv:1705.06366, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.06366"
+        },
+        {
+            "id": "Horgan_et+al_2018_a",
+            "entry": "Dan Horgan, John Quan, David Budden, Gabriel Barth-Maron, Matteo Hessel, Hado Van Hasselt, and David Silver. Distributed prioritized experience replay. arXiv preprint arXiv:1803.00933, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00933"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pp. 1109\u2013 1117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Ivanovic_et+al_2018_a",
+            "entry": "Boris Ivanovic, James Harrison, Apoorva Sharma, Mo Chen, and Marco Pavone. Barc: Backward reachability curriculum for robotic reinforcement learning. arXiv preprint arXiv:1806.06161, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.06161"
+        },
+        {
+            "id": "Kalashnikov_et+al_2018_a",
+            "entry": "Dmitry Kalashnikov, Alex Irpan, Peter Pastor, Julian Ibarz, Alexander Herzog, Eric Jang, Deirdre Quillen, Ethan Holly, Mrinal Kalakrishnan, Vincent Vanhoucke, et al. Qt-opt: Scalable deep reinforcement learning for vision-based robotic manipulation. arXiv preprint arXiv:1806.10293, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.10293"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Levine_et+al_2018_a",
+            "entry": "Sergey Levine, Peter Pastor, Alex Krizhevsky, Julian Ibarz, and Deirdre Quillen. Learning hand-eye coordination for robotic grasping with deep learning and large-scale data collection. The International Journal of Robotics Research, 37(4-5):421\u2013436, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Pastor%2C%20Peter%20Krizhevsky%2C%20Alex%20Ibarz%2C%20Julian%20Learning%20hand-eye%20coordination%20for%20robotic%20grasping%20with%20deep%20learning%20and%20large-scale%20data%20collection%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Pastor%2C%20Peter%20Krizhevsky%2C%20Alex%20Ibarz%2C%20Julian%20Learning%20hand-eye%20coordination%20for%20robotic%20grasping%20with%20deep%20learning%20and%20large-scale%20data%20collection%202018"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "Timothy P Lillicrap, Jonathan J Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. arXiv preprint arXiv:1509.02971, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Lin_1992_a",
+            "entry": "Long-Ji Lin. Self-improving reactive agents based on reinforcement learning, planning and teaching. Machine learning, 8(3-4):293\u2013321, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Long-Ji%20Self-improving%20reactive%20agents%20based%20on%20reinforcement%20learning%2C%20planning%20and%20teaching%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Long-Ji%20Self-improving%20reactive%20agents%20based%20on%20reinforcement%20learning%2C%20planning%20and%20teaching%201992"
+        },
+        {
+            "id": "Lowe_et+al_2017_a",
+            "entry": "Ryan Lowe, Yi Wu, Aviv Tamar, Jean Harb, Pieter Abbeel, and Igor Mordatch. Multi-agent actor-critic for mixed cooperative-competitive environments. In Advances in Neural Information Processing Systems, pp. 6379\u20136390, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lowe%2C%20Ryan%20Wu%2C%20Yi%20Tamar%2C%20Aviv%20Harb%2C%20Jean%20Multi-agent%20actor-critic%20for%20mixed%20cooperative-competitive%20environments%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lowe%2C%20Ryan%20Wu%2C%20Yi%20Tamar%2C%20Aviv%20Harb%2C%20Jean%20Multi-agent%20actor-critic%20for%20mixed%20cooperative-competitive%20environments%202017"
+        },
+        {
+            "id": "Mnih_et+al_2013_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. Playing atari with deep reinforcement learning. arXiv preprint arXiv:1312.5602, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.5602"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Olsson_1995_a",
+            "entry": "Roland Olsson. Inductive functional programming using incremental program transformation. Artificial intelligence, 74(1):55\u201381, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olsson%2C%20Roland%20Inductive%20functional%20programming%20using%20incremental%20program%20transformation%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olsson%2C%20Roland%20Inductive%20functional%20programming%20using%20incremental%20program%20transformation%201995"
+        },
+        {
+            "id": "Openai_2018_a",
+            "entry": "OpenAI. Openai five. https://blog.openai.com/openai-five/, 2018.",
+            "url": "https://blog.openai.com/openai-five/"
+        },
+        {
+            "id": "Osband_et+al_2016_a",
+            "entry": "Ian Osband, Charles Blundell, Alexander Pritzel, and Benjamin Van Roy. Deep exploration via bootstrapped dqn. In Advances in neural information processing systems, pp. 4026\u20134034, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Blundell%2C%20Charles%20Pritzel%2C%20Alexander%20Roy%2C%20Benjamin%20Van%20Deep%20exploration%20via%20bootstrapped%20dqn%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Blundell%2C%20Charles%20Pritzel%2C%20Alexander%20Roy%2C%20Benjamin%20Van%20Deep%20exploration%20via%20bootstrapped%20dqn%202016"
+        },
+        {
+            "id": "Pathak_et+al_0000_a",
+            "entry": "Deepak Pathak, Pulkit Agrawal, Alexei A Efros, and Trevor Darrell. Curiosity-driven exploration by selfsupervised prediction. In International Conference on Machine Learning (ICML), volume 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20selfsupervised%20prediction",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20selfsupervised%20prediction"
+        },
+        {
+            "id": "Plappert_et+al_2017_a",
+            "entry": "Matthias Plappert, Rein Houthooft, Prafulla Dhariwal, Szymon Sidor, Richard Y Chen, Xi Chen, Tamim Asfour, Pieter Abbeel, and Marcin Andrychowicz. Parameter space noise for exploration. arXiv preprint arXiv:1706.01905, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01905"
+        },
+        {
+            "id": "Plappert_et+al_2018_a",
+            "entry": "Matthias Plappert, Marcin Andrychowicz, Alex Ray, Bob McGrew, Bowen Baker, Glenn Powell, Jonas Schneider, Josh Tobin, Maciek Chociej, Peter Welinder, et al. Multi-goal reinforcement learning: Challenging robotics environments and request for research. arXiv preprint arXiv:1802.09464, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09464"
+        },
+        {
+            "id": "Popov_et+al_2017_a",
+            "entry": "Ivaylo Popov, Nicolas Heess, Timothy Lillicrap, Roland Hafner, Gabriel Barth-Maron, Matej Vecerik, Thomas Lampe, Yuval Tassa, Tom Erez, and Martin Riedmiller. Data-efficient deep reinforcement learning for dexterous manipulation. arXiv preprint arXiv:1704.03073, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03073"
+        },
+        {
+            "id": "Resnick_et+al_0000_a",
+            "entry": "Cinjon Resnick, Wes Eldridge, David Ha, Denny Britz, Jakob Foerster, Julian Togelius, Kyunghyun Cho, and Joan Bruna. Pommerman: A multi-agent playground. arXiv preprint arXiv:1809.07124, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.07124"
+        },
+        {
+            "id": "Resnick_et+al_0000_b",
+            "entry": "Cinjon Resnick, Roberta Raileanu, Sanyam Kapoor, Alex Peysakhovich, Kyunghyun Cho, and Joan Bruna. Backplay:\u201d man muss immer umkehren\u201d. arXiv preprint arXiv:1807.06919, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.06919"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "https://blog.openai.com/",
+            "url": "https://blog.openai.com/"
+        },
+        {
+            "id": "Learning-Montezumas-Revenge-From-A-Single-Demonstration_2018_a",
+            "entry": "learning-montezumas-revenge-from-a-single-demonstration/, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=learningmontezumasrevengefromasingledemonstration%202018"
+        },
+        {
+            "id": "Samuel_1959_a",
+            "entry": "Arthur L Samuel. Some studies in machine learning using the game of checkers. IBM Journal of research and development, 3(3):210\u2013229, 1959.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Samuel%2C%20Arthur%20L.%20Some%20studies%20in%20machine%20learning%20using%20the%20game%20of%20checkers%201959",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Samuel%2C%20Arthur%20L.%20Some%20studies%20in%20machine%20learning%20using%20the%20game%20of%20checkers%201959"
+        },
+        {
+            "id": "Schaul_et+al_2015_a",
+            "entry": "Tom Schaul, John Quan, Ioannis Antonoglou, and David Silver. Prioritized experience replay. arXiv preprint arXiv:1511.05952, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05952"
+        },
+        {
+            "id": "Schmidhuber_1991_a",
+            "entry": "Jurgen Schmidhuber. A possibility for implementing curiosity and boredom in model-building neural controllers. In Proc. of the international conference on simulation of adaptive behavior: From animals to animats, pp. 222\u2013227, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20A%20possibility%20for%20implementing%20curiosity%20and%20boredom%20in%20model-building%20neural%20controllers%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20A%20possibility%20for%20implementing%20curiosity%20and%20boredom%20in%20model-building%20neural%20controllers%201991"
+        },
+        {
+            "id": "Schmidhuber_2013_a",
+            "entry": "Jurgen Schmidhuber. Powerplay: Training an increasingly general problem solver by continually searching for the simplest still unsolvable problem. Frontiers in psychology, 4:313, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Powerplay%3A%20Training%20an%20increasingly%20general%20problem%20solver%20by%20continually%20searching%20for%20the%20simplest%20still%20unsolvable%20problem%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20Powerplay%3A%20Training%20an%20increasingly%20general%20problem%20solver%20by%20continually%20searching%20for%20the%20simplest%20still%20unsolvable%20problem%202013"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Philipp Moritz, Michael I. Jordan, and Pieter Abbeel. Trust region policy optimization. In International Conference on Machine Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Levine%2C%20Sergey%20Moritz%2C%20Philipp%20Jordan%2C%20Michael%20I.%20Trust%20region%20policy%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Moritz%2C%20Philipp%20Jordan%2C%20Michael%20I.%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Schulman_et+al_2016_a",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. High-dimensional continuous control using generalized advantage estimation. International Conference of Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Moritz%2C%20Philipp%20Levine%2C%20Sergey%20Jordan%2C%20Michael%20High-dimensional%20continuous%20control%20using%20generalized%20advantage%20estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Moritz%2C%20Philipp%20Levine%2C%20Sergey%20Jordan%2C%20Michael%20High-dimensional%20continuous%20control%20using%20generalized%20advantage%20estimation%202016"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Wolski%2C%20Filip%20Dhariwal%2C%20Prafulla%20Radford%2C%20Alec%20Proximal%20policy%20optimization%20algorithms%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Wolski%2C%20Filip%20Dhariwal%2C%20Prafulla%20Radford%2C%20Alec%20Proximal%20policy%20optimization%20algorithms%202017"
+        },
+        {
+            "id": "Silver_et+al_2014_a",
+            "entry": "David Silver, Guy Lever, Nicolas Heess, Thomas Degris, Daan Wierstra, and Martin Riedmiller. Deterministic policy gradient algorithms. In ICML, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Lever%2C%20Guy%20Heess%2C%20Nicolas%20Degris%2C%20Thomas%20Deterministic%20policy%20gradient%20algorithms%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Lever%2C%20Guy%20Heess%2C%20Nicolas%20Degris%2C%20Thomas%20Deterministic%20policy%20gradient%20algorithms%202014"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. Nature, 529(7587):484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Thomas Hubert, Julian Schrittwieser, Ioannis Antonoglou, Matthew Lai, Arthur Guez, Marc Lanctot, Laurent Sifre, Dharshan Kumaran, Thore Graepel, et al. Mastering chess and shogi by self-play with a general reinforcement learning algorithm. arXiv preprint arXiv:1712.01815, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.01815"
+        },
+        {
+            "id": "Srivastava_et+al_2013_a",
+            "entry": "Rupesh Kumar Srivastava, Bas R Steunebrink, and Jurgen Schmidhuber. First experiments with powerplay. Neural Networks, 41:130\u2013136, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Rupesh%20Kumar%20Steunebrink%2C%20Bas%20R.%20Schmidhuber%2C%20Jurgen%20First%20experiments%20with%20powerplay%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Rupesh%20Kumar%20Steunebrink%2C%20Bas%20R.%20Schmidhuber%2C%20Jurgen%20First%20experiments%20with%20powerplay%202013"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2017_a",
+            "entry": "Sainbayar Sukhbaatar, Zeming Lin, Ilya Kostrikov, Gabriel Synnaeve, Arthur Szlam, and Rob Fergus. Intrinsic motivation and automatic curricula via asymmetric self-play. arXiv preprint arXiv:1703.05407, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05407"
+        },
+        {
+            "id": "Sutton_0000_a",
+            "entry": "Richard S Sutton, Andrew G Barto, et al. Reinforcement learning: An introduction. MIT press, 1998. Haoran Tang, Rein Houthooft, Davis Foote, Adam Stooke, OpenAI Xi Chen, Yan Duan, John Schulman, Filip",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20learning%3A%20An%20introduction"
+        },
+        {
+            "id": "Deturck_2017_a",
+            "entry": "DeTurck, and Pieter Abbeel. # exploration: A study of count-based exploration for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2753\u20132762, 2017. Gerald Tesauro. Temporal difference learning and td-gammon. Communications of the ACM, 38(3):58\u201368, 1995. Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 5026\u20135033. IEEE, 2012. Ziyu Wang, Victor Bapst, Nicolas Heess, Volodymyr Mnih, Remi Munos, Koray Kavukcuoglu, and Nando de Freitas. Sample efficient actor-critic with experience replay. arXiv preprint arXiv:1611.01224, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01224"
+        },
+        {
+            "id": "Robotic_2012_a",
+            "entry": "Robotic control environments The robotic control environments shown in Figure 7 are part of challenging continuous robotics control suite (Plappert et al., 2018) integrated in OpenAI Gym (Brockman et al., 2016) and based on Mujoco simulation enginge (Todorov et al., 2012). The Fetch environments are based on the 7-DoF Fetch robotics arm, which has a two-fingered parallel gripper. The Hand environments are based on the Shadow Dexterous Hand, which is an anthropomorphic robotic hand with 24 degrees of freedom. In all tasks, rewards are sparse and binary: the agent obtains a reward of 0 if the goal has been achieved and \u22121 otherwise. For more details please refer to Plappert et al. (2018).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Robotic%20control%20environments%20The%20robotic%20control%20environments%20shown%20in%20Figure%207%20are%20part%20of%20challenging%20continuous%20robotics%20control%20suite%20Plappert%20et%20al%202018%20integrated%20in%20OpenAI%20Gym%20Brockman%20et%20al%202016%20and%20based%20on%20Mujoco%20simulation%20enginge%20Todorov%20et%20al%202012%20The%20Fetch%20environments%20are%20based%20on%20the%207DoF%20Fetch%20robotics%20arm%20which%20has%20a%20twofingered%20parallel%20gripper%20The%20Hand%20environments%20are%20based%20on%20the%20Shadow%20Dexterous%20Hand%20which%20is%20an%20anthropomorphic%20robotic%20hand%20with%2024%20degrees%20of%20freedom%20In%20all%20tasks%20rewards%20are%20sparse%20and%20binary%20the%20agent%20obtains%20a%20reward%20of%200%20if%20the%20goal%20has%20been%20achieved%20and%201%20otherwise%20For%20more%20details%20please%20refer%20to%20Plappert%20et%20al%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Robotic%20control%20environments%20The%20robotic%20control%20environments%20shown%20in%20Figure%207%20are%20part%20of%20challenging%20continuous%20robotics%20control%20suite%20Plappert%20et%20al%202018%20integrated%20in%20OpenAI%20Gym%20Brockman%20et%20al%202016%20and%20based%20on%20Mujoco%20simulation%20enginge%20Todorov%20et%20al%202012%20The%20Fetch%20environments%20are%20based%20on%20the%207DoF%20Fetch%20robotics%20arm%20which%20has%20a%20twofingered%20parallel%20gripper%20The%20Hand%20environments%20are%20based%20on%20the%20Shadow%20Dexterous%20Hand%20which%20is%20an%20anthropomorphic%20robotic%20hand%20with%2024%20degrees%20of%20freedom%20In%20all%20tasks%20rewards%20are%20sparse%20and%20binary%20the%20agent%20obtains%20a%20reward%20of%200%20if%20the%20goal%20has%20been%20achieved%20and%201%20otherwise%20For%20more%20details%20please%20refer%20to%20Plappert%20et%20al%202018"
+        }
+    ]
+}

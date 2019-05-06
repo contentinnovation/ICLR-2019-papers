@@ -1,0 +1,489 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO DESIGN RNA",
+        "author": "Frederic Runge, Danny Stoll, Stefan Falkner, & Frank Hutter, 1Department of Computer Science, University of Freiburg 2Bosch Center for Artificial Intelligence, Robert Bosch GmbH {runget,stolld,sfalkner,fh}@cs.uni-freiburg.de",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ByfyHh05tQ"
+        },
+        "abstract": "Designing RNA molecules has garnered recent interest in medicine, synthetic biology, biotechnology and bioinformatics since many functional RNA molecules were shown to be involved in regulatory processes for transcription, epigenetics and translation. Since an RNA\u2019s function depends on its structural properties, the RNA Design problem is to find an RNA sequence which satisfies given structural constraints. Here, we propose a new algorithm for the RNA Design problem, dubbed LEARNA. LEARNA uses deep reinforcement learning to train a policy network to sequentially design an entire RNA sequence given a specified target structure. By meta-learning across 65 000 different RNA Design tasks for one hour on 20 CPU cores, our extension Meta-LEARNA constructs an RNA Design policy that can be applied out of the box to solve novel RNA Design tasks. Methodologically, for what we believe to be the first time, we jointly optimize over a rich space of architectures for the policy network, the hyperparameters of the training procedure and the formulation of the decision process. Comprehensive empirical results on two widely-used RNA Design benchmarks, as well as a third one that we introduce, show that our approach achieves new state-of-the-art performance on the former while also being orders of magnitudes faster in reaching the previous state-of-the-art performance. In an ablation study, we analyze the importance of our method\u2019s different components."
+    },
+    "keywords": [
+        {
+            "term": "European Research Council",
+            "url": "https://en.wikipedia.org/wiki/European_Research_Council"
+        },
+        {
+            "term": "ENCODE",
+            "url": "https://en.wikipedia.org/wiki/ENCODE"
+        },
+        {
+            "term": "convolutional neural networks",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_networks"
+        },
+        {
+            "term": "architecture search",
+            "url": "https://en.wikipedia.org/wiki/architecture_search"
+        },
+        {
+            "term": "tertiary structure",
+            "url": "https://en.wikipedia.org/wiki/tertiary_structure"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "messenger RNA",
+            "url": "https://en.wikipedia.org/wiki/messenger_RNA"
+        },
+        {
+            "term": "MCTS",
+            "url": "https://en.wikipedia.org/wiki/MCTS"
+        },
+        {
+            "term": "biotechnology",
+            "url": "https://en.wikipedia.org/wiki/biotechnology"
+        },
+        {
+            "term": "biology",
+            "url": "https://en.wikipedia.org/wiki/biology"
+        },
+        {
+            "term": "decision process",
+            "url": "https://en.wikipedia.org/wiki/decision_process"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Consortium",
+            "url": "https://en.wikipedia.org/wiki/Consortium"
+        }
+    ],
+    "abbreviations": {
+        "mRNA": "messenger RNA",
+        "RL": "reinforcement learning",
+        "AS": "architecture search",
+        "CNNs": "convolutional neural networks",
+        "RNNs": "recurrent neural networks",
+        "DP": "decision process",
+        "fANOVA": "functional analysis of variance",
+        "ERC": "European Research Council"
+    },
+    "highlights": [
+        "RNA is one of the major classes of information-carrying biopolymers in the cells of living organisms",
+        "While the RNA sequence serves as the blueprint, the functional structure of the RNA molecule is determined by the folding translating the RNA sequence into its 3D tertiary structure",
+        "Totalized results over all models of the ensemble were reported on the Eterna100 benchmark (<a class=\"ref-link\" id=\"cAnderson-Lee_et+al_2016_a\" href=\"#rAnderson-Lee_et+al_2016_a\">Anderson-Lee et al, 2016</a>), which solely consists of manually designed RNA Design problems, and which we report on here",
+        "We propose to frame the RNA Design problem as a reinforcement learning problem where each candidate solution is designed from scratch",
+        "We proposed the deep reinforcement learning algorithm LEARNA for the RNA Design problem to sequentially construct candidate solutions in an end-to-end fashion",
+        "Our ablation study shows the importance of all components, suggesting that reinforcement learning with an additional local improvement step can solve the RNA Design problem efficiently"
+    ],
+    "key_statements": [
+        "RNA is one of the major classes of information-carrying biopolymers in the cells of living organisms",
+        "Functional ncRNAs are involved in the modulation of epigenetic marks, altering of messenger RNA stability, messenger RNA translation, alternative splicing, signal transduction and scaffolding of large macromolecular complexes (<a class=\"ref-link\" id=\"cVandivier_et+al_2016_a\" href=\"#rVandivier_et+al_2016_a\">Vandivier et al, 2016</a>)",
+        "Engineering of ncRNA molecules is of growing importance with applications ranging from biotechnology and medicine to synthetic biology (<a class=\"ref-link\" id=\"cDelebecque_et+al_2011_a\" href=\"#rDelebecque_et+al_2011_a\">Delebecque et al, 2011</a>; 2012; <a class=\"ref-link\" id=\"cGuo_et+al_2010_a\" href=\"#rGuo_et+al_2010_a\">Guo et al, 2010</a>; <a class=\"ref-link\" id=\"cMeyer_et+al_2015_a\" href=\"#rMeyer_et+al_2015_a\">Meyer et al, 2015</a>)",
+        "While the RNA sequence serves as the blueprint, the functional structure of the RNA molecule is determined by the folding translating the RNA sequence into its 3D tertiary structure",
+        "We describe LEARNA, a deep reinforcement learning algorithm for RNA Design",
+        "We describe Meta-LEARNA, a version of LEARNA that learns a single policy across many RNA Design tasks directly applicable to new RNA Design tasks",
+        "We note that multiple RNA sequences may fold to the same secondary structure, such that the RNA Design problem does not generally have a unique solution; one could distinguish between solutions by preferring more stable folds, targeting a specific GC content, or satisfying other constraints; all of these could be incorporated into the loss function being optimized",
+        "We describe our novel generative approach for the RNA Design problem based on reinforcement learning",
+        "MODELLING RNA DESIGN architecture search A DECISION PROCESS We propose to model the RNA Design problem with respect to a given target structure \u03c9 as the undiscounted decision process D\u03c9 := (S, A, R\u03c9, P\u03c9); its components are specified in the paragraphs below",
+        "Meta-LEARNA Meta-LEARNA uses a meta-learning approach (<a class=\"ref-link\" id=\"cLemke_et+al_2015_a\" href=\"#rLemke_et+al_2015_a\">Lemke et al, 2015</a>) that views the RNA Design problems associated with the target structures in the training set \u03a9train as tasks and learns to transfer knowledge across them",
+        "One problem of current deep reinforcement learning methods is that their performance can be very sensitive to choices regarding the architecture of the policy network, the training hyperparameters, and the formulation of the problem as a decision process (<a class=\"ref-link\" id=\"cHenderson_et+al_2017_a\" href=\"#rHenderson_et+al_2017_a\">Henderson et al, 2017</a>)",
+        "We ran our optimization with a 10-minute and a 30-minute evaluation timeout. We evaluated both alternatives on our full validation set with a limit of 1 hour with the following modification that we used when evaluating on the Eterna100 and Rfam-Learn-Test benchmarks: matching the evaluation timeout during optimization, every 10 or 30 minutes, the policy network and all internal variables of PPO are reinitialized, i.e., we perform a restart of the algorithm to overcome occasional stagnation of PPO",
+        "Totalized results over all models of the ensemble were reported on the Eterna100 benchmark (<a class=\"ref-link\" id=\"cAnderson-Lee_et+al_2016_a\" href=\"#rAnderson-Lee_et+al_2016_a\">Anderson-Lee et al, 2016</a>), which solely consists of manually designed RNA Design problems, and which we report on here",
+        "We propose to frame the RNA Design problem as a reinforcement learning problem where each candidate solution is designed from scratch",
+        "Rfam-Taneda Concerning the Rfam-Taneda benchmark, LEARNA is on par with the current stateof-the-art results of MCTS-RNA after 110 seconds (\u2248 2\u00d7 faster)",
+        "Our meta-learning approach Meta-LEARNA learned a representation of the dynamics underlying RNA Design and is capable of transferring this knowledge to new RNA Design tasks",
+        "For a detailed list of the performance of all algorithms on specific target structures, we refer to the detail tables in Appendix K. 6 . 2 A B L AT IONSTU DY A N D PA RAMETERIMPO RTA N C E To study the influence of the different components and parameters on the performance of our approach, we performed an ablation study and a functional analysis of variance (<a class=\"ref-link\" id=\"cHooker_2007_a\" href=\"#rHooker_2007_a\">Hooker, 2007</a>; Hutter et al, 2014)",
+        "We proposed the deep reinforcement learning algorithm LEARNA for the RNA Design problem to sequentially construct candidate solutions in an end-to-end fashion",
+        "Our ablation study shows the importance of all components, suggesting that reinforcement learning with an additional local improvement step can solve the RNA Design problem efficiently"
+    ],
+    "summary": [
+        "RNA is one of the major classes of information-carrying biopolymers in the cells of living organisms.",
+        "Most algorithms for RNA Design focus on search strategies that start with an initial nucleotide sequence and modify it to find a solution for the given secondary structure (<a class=\"ref-link\" id=\"cHofacker_et+al_1994_a\" href=\"#rHofacker_et+al_1994_a\">Hofacker et al, 1994</a>; <a class=\"ref-link\" id=\"cAndronescu_et+al_2004_a\" href=\"#rAndronescu_et+al_2004_a\">Andronescu et al, 2004</a>; <a class=\"ref-link\" id=\"cTaneda_2011_a\" href=\"#rTaneda_2011_a\"><a class=\"ref-link\" id=\"cTaneda_2011_a\" href=\"#rTaneda_2011_a\">Taneda, 2011</a></a>; <a class=\"ref-link\" id=\"cEsmaili-Taheri_et+al_2014_a\" href=\"#rEsmaili-Taheri_et+al_2014_a\">Esmaili-Taheri et al, 2014</a>; <a class=\"ref-link\" id=\"cEastman_et+al_2018_a\" href=\"#rEastman_et+al_2018_a\">Eastman et al, 2018</a>).",
+        "After generating an RNA sequence, our approach folds this sequence, locally adapts it, and uses the distance of the resulting structure to the target structure as an error signal for the RL agent.",
+        "It learns a conditional generative model from which we can sample candidate RNA sequences for a given RNA target structure, solving many problems with the first sample.",
+        "Given a folding algorithm F and a target RNA secondary structure \u03c9, the RNA Design problem is to find an RNA sequence \u03c6 \u2208 N |\u03c9| = {A, G, C, U }|\u03c9| that satisfies \u03c9 = F(\u03c6).",
+        "We note that multiple RNA sequences may fold to the same secondary structure, such that the RNA Design problem does not generally have a unique solution; one could distinguish between solutions by preferring more stable folds, targeting a specific GC content, or satisfying other constraints; all of these could be incorporated into the loss function being optimized.",
+        "Meta-LEARNA Meta-LEARNA uses a meta-learning approach (<a class=\"ref-link\" id=\"cLemke_et+al_2015_a\" href=\"#rLemke_et+al_2015_a\">Lemke et al, 2015</a>) that views the RNA Design problems associated with the target structures in the training set \u03a9train as tasks and learns to transfer knowledge across them.",
+        "One problem of current deep reinforcement learning methods is that their performance can be very sensitive to choices regarding the architecture of the policy network, the training hyperparameters, and the formulation of the problem as a decision process (<a class=\"ref-link\" id=\"cHenderson_et+al_2017_a\" href=\"#rHenderson_et+al_2017_a\">Henderson et al, 2017</a>).",
+        "To counteract the problems associated with single noisy observations, we studied three different loss functions for the hyperparameter optimization: (a) The number of unsolved sequences, (b) the sum of mean distances, and (c) the sum of minimum distances to the target structure.",
+        "Eterna100 Solving up to 68% (Meta-LEARNA and Meta-LEARNA-Adapt) of the target structures, all our approaches achieve clear new state-of-the-art results on the Eterna100 benchmark.",
+        "We proposed the deep reinforcement learning algorithm LEARNA for the RNA Design problem to sequentially construct candidate solutions in an end-to-end fashion.",
+        "By pre-training on a large corpus of biological sequences, a local improvement step to aid the agent, and extensive architecture and hyperparameter optimization, we arrived at Meta-LEARNA, a ready-to-use agent that achieves stateof-the-art results on the Eterna100 (<a class=\"ref-link\" id=\"cAnderson-Lee_et+al_2016_a\" href=\"#rAnderson-Lee_et+al_2016_a\">Anderson-Lee et al, 2016</a>) and the Rfam-Taneda benchmark (<a class=\"ref-link\" id=\"cTaneda_2011_a\" href=\"#rTaneda_2011_a\"><a class=\"ref-link\" id=\"cTaneda_2011_a\" href=\"#rTaneda_2011_a\">Taneda, 2011</a></a>).",
+        "Code and data for reproducing our results is available at https://github.com/automl/learna"
+    ],
+    "headline": "We propose a new algorithm for the RNA Design problem, dubbed LEARNA",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2015_a",
+            "entry": "Mart\u00edn Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Man\u00e9, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Vi\u00e9gas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-scale machine learning on heterogeneous systems, 2015. URL https://www.tensorflow.org/. Software available from tensorflow.org.",
+            "url": "https://www.tensorflow.org/"
+        },
+        {
+            "id": "Anderson-Lee_et+al_2016_a",
+            "entry": "Jeff Anderson-Lee, Eli Fisker, Vineet Kosaraju, Michelle Wu, Justin Kong, Jeehyung Lee, Minjae Lee, Mathew Zada, Adrien Treuille, and Rhiju Das. Principles for predicting RNA secondary structure design difficulty. Journal of molecular biology, 428(5):748\u2013757, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anderson-Lee%2C%20Jeff%20Fisker%2C%20Eli%20Kosaraju%2C%20Vineet%20Wu%2C%20Michelle%20Principles%20for%20predicting%20RNA%20secondary%20structure%20design%20difficulty%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anderson-Lee%2C%20Jeff%20Fisker%2C%20Eli%20Kosaraju%2C%20Vineet%20Wu%2C%20Michelle%20Principles%20for%20predicting%20RNA%20secondary%20structure%20design%20difficulty%202016"
+        },
+        {
+            "id": "Andronescu_et+al_2004_a",
+            "entry": "Mirela Andronescu, Anthony P. Fejes, Frank Hutter, Holger H. Hoos, and Anne Condon. A New Algorithm for RNA Secondary Structure Design. Journal of Molecular Biology, 336(3): 607\u2013624, 2004. ISSN 0022-2836. doi: https://doi.org/10.1016/j.jmb.2003.12.041. URL http://www.sciencedirect.com/science/article/pii/S0022283603015596.",
+            "crossref": "https://dx.doi.org/10.1016/j.jmb.2003.12.041",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.jmb.2003.12.041"
+        },
+        {
+            "id": "Bansal_et+al_0000_a",
+            "entry": "Trapit Bansal, Jakub Pachocki, Szymon Sidor, Ilya Sutskever, and Igor Mordatch. Emergent complexity via multi-agent competition. In Proceedings of the International Conference on Learning Representations (ICLR\u201918), 2018. Published online: iclr.cc.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bansal%2C%20Trapit%20Pachocki%2C%20Jakub%20Sidor%2C%20Szymon%20Sutskever%2C%20Ilya%20Emergent%20complexity%20via%20multi-agent%20competition",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bansal%2C%20Trapit%20Pachocki%2C%20Jakub%20Sidor%2C%20Szymon%20Sutskever%2C%20Ilya%20Emergent%20complexity%20via%20multi-agent%20competition"
+        },
+        {
+            "id": "Bello_et+al_2016_a",
+            "entry": "Irwan Bello, Hieu Pham, Quoc V Le, Mohammad Norouzi, and Samy Bengio. Neural combinatorial optimization with reinforcement learning. arXiv preprint arXiv:1611.09940, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.09940"
+        },
+        {
+            "id": "Busch_2006_a",
+            "entry": "Anke Busch and Rolf Backofen. INFO-RNA\u2014a fast approach to inverse RNA folding. Bioinformatics, 22(15):1823\u20131831, 2006. doi: 10.1093/bioinformatics/btl194. URL http://dx.doi.org/10.1093/bioinformatics/btl194.",
+            "crossref": "https://dx.doi.org/10.1093/bioinformatics/btl194",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1093/bioinformatics/btl194"
+        },
+        {
+            "id": "Chuai_et+al_2018_a",
+            "entry": "Guohui Chuai, Hanhui Ma, Jifang Yan, Ming Chen, Nanfang Hong, Dongyu Xue, Chi Zhou, Chenyu Zhu, Ke Chen, Bin Duan, Feng Gu, Sheng Qu, Deshuang Huang, Jia Wei, and Qi Liu. Deepcrispr: optimized crispr guide rna design by deep learning. Genome Biology, 19(1):80, Jun 2018. ISSN 1474-760X. doi: 10.1186/s13059-018-1459-4. URL https://doi.org/10.1186/s13059-018-1459-4.",
+            "crossref": "https://dx.doi.org/10.1186/s13059-018-1459-4",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1186/s13059-018-1459-4"
+        },
+        {
+            "id": "Churkin_et+al_2017_a",
+            "entry": "Alexander Churkin, Matan Drory Retwitzer, Vladimir Reinharz, Yann Ponty, J\u00e9r\u00f4me Waldisp\u00fchl, and Danny Barash. Design of rnas: comparing programs for inverse rna folding. Briefings in bioinformatics, 19(2):350\u2013358, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Churkin%2C%20Alexander%20Retwitzer%2C%20Matan%20Drory%20Reinharz%2C%20Vladimir%20Ponty%2C%20Yann%20Design%20of%20rnas%3A%20comparing%20programs%20for%20inverse%20rna%20folding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Churkin%2C%20Alexander%20Retwitzer%2C%20Matan%20Drory%20Reinharz%2C%20Vladimir%20Ponty%2C%20Yann%20Design%20of%20rnas%3A%20comparing%20programs%20for%20inverse%20rna%20folding%202017"
+        },
+        {
+            "id": "Delebecque_et+al_2011_a",
+            "entry": "Camille J. Delebecque, Ariel B. Lindner, Pamela A. Silver, and Faisal A. Aldaye. Organization of Intracellular Reactions with Rationally Designed RNA Assemblies. Science, 333(6041):470\u2013 474, 2011. ISSN 0036-8075. doi: 10.1126/science.1206938. URL http://science.sciencemag.org/content/333/6041/470.",
+            "crossref": "https://dx.doi.org/10.1126/science.1206938",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1126/science.1206938"
+        },
+        {
+            "id": "Delebecque_et+al_2012_a",
+            "entry": "CJ Delebecque, PA Silver, and AB Lindner. Designing and using RNA scaffolds to assemble proteins in vivo. Nature Protocols, 7(10):1797\u2013807, 2012. doi: 10.1038/nprot.2012.102.",
+            "crossref": "https://dx.doi.org/10.1038/nprot.2012.102",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/nprot.2012.102"
+        },
+        {
+            "id": "Dirks_2004_a",
+            "entry": "Robert M. Dirks and Niles A. Pierce. An Algorithm for Computing Nucleic Acid Base-Pairing Probabilities Including Pseudoknots. Journal of Computational Chemistry, 25(10):295\u2014-1304, 2004. doi: 10.1002/jcc.20057.",
+            "crossref": "https://dx.doi.org/10.1002/jcc.20057",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1002/jcc.20057"
+        },
+        {
+            "id": "Dotu_et+al_2014_a",
+            "entry": "Ivan Dotu, Juan Antonio Garcia-Martin, Betty L. Slinger, Vinodh Mechery, Michelle M. Meyer, and Peter Clote. Complete RNA inverse folding: computational design of functional hammerhead ribozymes. Nucleic Acids Research, 42(18):11752\u201311762, 2014. doi: 10.1093/nar/gku740. URL http://dx.doi.org/10.1093/nar/gku740.",
+            "crossref": "https://dx.doi.org/10.1093/nar/gku740",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1093/nar/gku740"
+        },
+        {
+            "id": "Eastman_et+al_2018_a",
+            "entry": "Peter Eastman, Jade Shi, Bharath Ramsundar, and Vijay S Pande. Solving the RNA design problem with reinforcement learning. PLoS computational biology, 14(6):e1006176, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eastman%2C%20Peter%20Shi%2C%20Jade%20Ramsundar%2C%20Bharath%20Pande%2C%20Vijay%20S.%20Solving%20the%20RNA%20design%20problem%20with%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eastman%2C%20Peter%20Shi%2C%20Jade%20Ramsundar%2C%20Bharath%20Pande%2C%20Vijay%20S.%20Solving%20the%20RNA%20design%20problem%20with%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Elsken_et+al_2018_a",
+            "entry": "Thomas Elsken, Jan Hendrik Metzen, and Frank Hutter. Neural Architecture Search: A Survey. ArXiv e-prints, August 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elsken%2C%20Thomas%20Metzen%2C%20Jan%20Hendrik%20Hutter%2C%20Frank%20Neural%20Architecture%20Search%3A%20A%20Survey.%20ArXiv%20e-prints%202018-08"
+        },
+        {
+            "id": "ENCODE_2004_a",
+            "entry": "ENCODE Project Consortium and others. The ENCODE (encyclopedia of DNA elements) project. Science, 306(5696):636\u2013640, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ENCODE%20Project%20Consortium%20and%20others%20The%20ENCODE%20encyclopedia%20of%20DNA%20elements%20project%20Science%203065696636640%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=ENCODE%20Project%20Consortium%20and%20others%20The%20ENCODE%20encyclopedia%20of%20DNA%20elements%20project%20Science%203065696636640%202004"
+        },
+        {
+            "id": "Esmaili-Taheri_et+al_2014_a",
+            "entry": "Ali Esmaili-Taheri, Mohammad Ganjtabesh, and Morteza Mohammad-Noori. Evolutionary solution for the RNA design problem. Bioinformatics, 30(9):1250\u20131258, 2014. doi: 10. 1093/bioinformatics/btu001. URL http://dx.doi.org/10.1093/bioinformatics/btu001.",
+            "crossref": "https://dx.doi.org/10.1093/bioinformatics/btu001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1093/bioinformatics/btu001"
+        },
+        {
+            "id": "Falkner_et+al_2018_a",
+            "entry": "Stefan Falkner, Aaron Klein, and Frank Hutter. BOHB: Robust and efficient hyperparameter optimization at scale. In Proceedings of the 35th International Conference on Machine Learning (ICML 2018), pp. 1436\u20131445, July 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Falkner%2C%20Stefan%20Klein%2C%20Aaron%20Hutter%2C%20Frank%20BOHB%3A%20Robust%20and%20efficient%20hyperparameter%20optimization%20at%20scale%202018-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Falkner%2C%20Stefan%20Klein%2C%20Aaron%20Hutter%2C%20Frank%20BOHB%3A%20Robust%20and%20efficient%20hyperparameter%20optimization%20at%20scale%202018-07"
+        },
+        {
+            "id": "Feurer_0000_a",
+            "entry": "Matthias Feurer and Frank Hutter. Hyperparameter optimization. In Frank Hutter, Lars Kotthoff, and Joaquin Vanschoren (eds.), AutoML: Methods, Sytems, Challenges, chapter 1, pp. 3\u201337.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Feurer%2C%20Matthias%20Hutter%2C%20Frank%20Hyperparameter%20optimization",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Feurer%2C%20Matthias%20Hutter%2C%20Frank%20Hyperparameter%20optimization"
+        },
+        {
+            "id": "Springer_2018_a",
+            "entry": "Springer, December 2018. To appear.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springer%20December%202018%20To%20appear"
+        },
+        {
+            "id": "Fontana_et+al_1993_a",
+            "entry": "Walter Fontana, Peter F. Stadler, Erich G. Bornberg-Bauer, Thomas Griesmacher, Ivo L. Hofacker, Manfred Tacker, Pedro Tarazona, Edward D. Weinberger, and Peter Schuster. Rna folding and combinatory landscapes. Phys. Rev. E, 47:2083\u20132099, Mar 1993. doi: 10.1103/PhysRevE.47. 2083. URL https://link.aps.org/doi/10.1103/PhysRevE.47.2083.",
+            "crossref": "https://dx.doi.org/10.1103/PhysRevE.47.2083",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1103/PhysRevE.47.2083"
+        },
+        {
+            "id": "Greener_et+al_2018_a",
+            "entry": "Joe G Greener, Lewis Moffat, and David T Jones. Design of metalloproteins and novel protein folds using variational autoencoders. Scientific reports, 8(1):16189, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Greener%2C%20Joe%20G.%20Moffat%2C%20Lewis%20Jones%2C%20David%20T.%20Design%20of%20metalloproteins%20and%20novel%20protein%20folds%20using%20variational%20autoencoders%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Greener%2C%20Joe%20G.%20Moffat%2C%20Lewis%20Jones%2C%20David%20T.%20Design%20of%20metalloproteins%20and%20novel%20protein%20folds%20using%20variational%20autoencoders%202018"
+        },
+        {
+            "id": "Gstir_et+al_2014_a",
+            "entry": "Ronald Gstir, Simon Schafferer, Marcel Scheideler, Matthias Misslinger, Matthias Griehl, Nina Daschil, Christian Humpel, Gerald J. Obermair, Claudia Schmuckermair, Joerg Striessnig, Bernhard E. Flucher, and Alexander H\u00fcttenhofer. Generation of a neuro-specific microarray reveals novel differentially expressed noncoding RNAs in mouse models for neurodegenerative diseases. RNA, 20(12):1929\u20131943, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gstir%2C%20Ronald%20Schafferer%2C%20Simon%20Scheideler%2C%20Marcel%20Misslinger%2C%20Matthias%20Generation%20of%20a%20neuro-specific%20microarray%20reveals%20novel%20differentially%20expressed%20noncoding%20RNAs%20in%20mouse%20models%20for%20neurodegenerative%20diseases%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gstir%2C%20Ronald%20Schafferer%2C%20Simon%20Scheideler%2C%20Marcel%20Misslinger%2C%20Matthias%20Generation%20of%20a%20neuro-specific%20microarray%20reveals%20novel%20differentially%20expressed%20noncoding%20RNAs%20in%20mouse%20models%20for%20neurodegenerative%20diseases%202014"
+        },
+        {
+            "id": "Guo_et+al_2010_a",
+            "entry": "Peixuan Guo, Oana Coban, Nicholas M. Snead, Joe Trebley, Steve Hoeprich, Songchuan Guo, and Yi Shu. Engineering RNA for Targeted siRNA Delivery and Medical Application. Advanced Drug Delivery Reviews, 62(6):650 \u2013 666, 2010. ISSN 0169-409X. doi: https://doi.org/10.1016/j.addr.2010.03.008. URL http://www.sciencedirect.com/science/article/pii/S0169409X10000773. From Biology to Materials: Engineering DNA and RNA for Drug Delivery and Nanomedicine.",
+            "crossref": "https://dx.doi.org/10.1016/j.addr.2010.03.008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.addr.2010.03.008"
+        },
+        {
+            "id": "Gupta_2018_a",
+            "entry": "Anvita Gupta and James Zou. Feedback gan (fbgan) for dna: a novel feedback-loop architecture for optimizing protein functions. arXiv preprint arXiv:1804.01694, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.01694"
+        },
+        {
+            "id": "Hamming_1950_a",
+            "entry": "R. W. Hamming. Error detecting and error correcting codes. The Bell System Technical Journal, 29 (2):147\u2013160, April 1950. ISSN 0005-8580. doi: 10.1002/j.1538-7305.1950.tb00463.x.",
+            "crossref": "https://dx.doi.org/10.1002/j.1538-7305.1950.tb00463.x",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1002/j.1538-7305.1950.tb00463.x"
+        },
+        {
+            "id": "Heess_et+al_2017_a",
+            "entry": "Nicolas Heess, Dhruva TB, Srinivasan Sriram, Jay Lemmon, Josh Merel, Greg Wayne, Yuval Tassa, Tom Erez, Ziyu Wang, S. M. Ali Eslami, Martin A. Riedmiller, and David Silver. Emergence of locomotion behaviours in rich environments. CoRR, abs/1707.02286, 2017. URL http://arxiv.org/abs/1707.02286.",
+            "url": "http://arxiv.org/abs/1707.02286",
+            "arxiv_url": "https://arxiv.org/pdf/1707.02286"
+        },
+        {
+            "id": "Henderson_et+al_2017_a",
+            "entry": "Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, and David Meger. Deep reinforcement learning that matters. arXiv preprint arXiv:1709.06560, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.06560"
+        },
+        {
+            "id": "Hofacker_et+al_1994_a",
+            "entry": "Ivo Hofacker, Walter Fontana, Peter Stadler, Sebastian Bonhoeffer, Manfred Tacker, and Peter Schuster. Fast Folding and Comparison of RNA Secondary Structures. Monatshefte fuer Chemie/Chemical Monthly, 125:167\u2013188, 02 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hofacker%2C%20Ivo%20Fontana%2C%20Walter%20Stadler%2C%20Peter%20Bonhoeffer%2C%20Sebastian%20Fast%20Folding%20and%20Comparison%20of%20RNA%20Secondary%20Structures%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hofacker%2C%20Ivo%20Fontana%2C%20Walter%20Stadler%2C%20Peter%20Bonhoeffer%2C%20Sebastian%20Fast%20Folding%20and%20Comparison%20of%20RNA%20Secondary%20Structures%201994"
+        },
+        {
+            "id": "Hooker_2007_a",
+            "entry": "Giles Hooker. Generalized functional ANOVA diagnostics for high-dimensional functions of dependent variables. Journal of Computational and Graphical Statistics, 16(3):709\u2013732, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hooker%2C%20Giles%20Generalized%20functional%20ANOVA%20diagnostics%20for%20high-dimensional%20functions%20of%20dependent%20variables%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hooker%2C%20Giles%20Generalized%20functional%20ANOVA%20diagnostics%20for%20high-dimensional%20functions%20of%20dependent%20variables%202007"
+        },
+        {
+            "id": "Hutter_et+al_0000_a",
+            "entry": "F. Hutter, H. Hoos, and K. Leyton-Brown. An efficient approach for assessing hyperparameter importance. In E. Xing and T. Jebara (eds.), Proceedings of the 31th International Conference on Machine Learning, (ICML\u201914), pp. 754\u2013762.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hutter%2C%20F.%20Hoos%2C%20H.%20Leyton-Brown%2C%20K.%20An%20efficient%20approach%20for%20assessing%20hyperparameter%20importance",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hutter%2C%20F.%20Hoos%2C%20H.%20Leyton-Brown%2C%20K.%20An%20efficient%20approach%20for%20assessing%20hyperparameter%20importance"
+        },
+        {
+            "id": "Omnipress_2014_a",
+            "entry": "Omnipress, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omnipress%202014"
+        },
+        {
+            "id": "Hutter_et+al_0000_b",
+            "entry": "Frank Hutter, Lars Kotthoff, and Joaquin Vanschoren (eds.). Automated Machine Learning: Methods, Systems, Challenges. Springer, 2019. In press, available at http://automl.org/book.",
+            "url": "http://automl.org/book"
+        },
+        {
+            "id": "Kalvari_et+al_2017_a",
+            "entry": "Ioanna Kalvari, Joanna Argasinska, Natalia Quinones-Olvera, Eric P Nawrocki, Elena Rivas, Sean R Eddy, Alex Bateman, Robert D Finn, and Anton I Petrov. Rfam 13.0: shifting to a genome-centric resource for non-coding RNA families. Nucleic acids research, 46(D1):D335\u2013D342, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalvari%2C%20Ioanna%20Argasinska%2C%20Joanna%20Quinones-Olvera%2C%20Natalia%20Nawrocki%2C%20Eric%20P.%20and%20Anton%20I%20Petrov.%20Rfam%2013.0%3A%20shifting%20to%20a%20genome-centric%20resource%20for%20non-coding%20RNA%20families%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalvari%2C%20Ioanna%20Argasinska%2C%20Joanna%20Quinones-Olvera%2C%20Natalia%20Nawrocki%2C%20Eric%20P.%20and%20Anton%20I%20Petrov.%20Rfam%2013.0%3A%20shifting%20to%20a%20genome-centric%20resource%20for%20non-coding%20RNA%20families%202017"
+        },
+        {
+            "id": "Kaushik_et+al_2018_a",
+            "entry": "Kriti Kaushik, Ambily Sivadas, Shamsudheen Karuthedath Vellarikkal, Ankit Verma, Rijith Jayarajan, Satyaprakash Pandey, Tavprithesh Sethi, Souvik Maiti, Vinod Scaria, and Sridhar Sivasubbu. RNA secondary structure profiling in zebrafish reveals unique regulatory features. BMC Genomics, 20:147, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaushik%2C%20Kriti%20Sivadas%2C%20Ambily%20Vellarikkal%2C%20Shamsudheen%20Karuthedath%20Verma%2C%20Ankit%20RNA%20secondary%20structure%20profiling%20in%20zebrafish%20reveals%20unique%20regulatory%20features%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaushik%2C%20Kriti%20Sivadas%2C%20Ambily%20Vellarikkal%2C%20Shamsudheen%20Karuthedath%20Verma%2C%20Ankit%20RNA%20secondary%20structure%20profiling%20in%20zebrafish%20reveals%20unique%20regulatory%20features%202018"
+        },
+        {
+            "id": "Kerpedjiev_et+al_2015_a",
+            "entry": "P Kerpedjiev, C H\u00f6ner zu Siederdissen, and IL Hofacker. Predicting RNA 3D structure using a coarse-grain helix-centered model. RNA, 21(6):1110\u20131121, 2015. doi: 10.1261/rna.047522.114.",
+            "crossref": "https://dx.doi.org/10.1261/rna.047522.114",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1261/rna.047522.114"
+        },
+        {
+            "id": "Kleinkauf_et+al_2015_a",
+            "entry": "Robert Kleinkauf, Torsten Houwaart, Rolf Backofen, and Martin Mann. antaRNA\u2013Multi-objective inverse folding of pseudoknot RNA using ant-colony optimization. BMC bioinformatics, 16(1): 389, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kleinkauf%2C%20Robert%20Houwaart%2C%20Torsten%20Backofen%2C%20Rolf%20Mann%2C%20Martin%20antaRNA%E2%80%93Multi-objective%20inverse%20folding%20of%20pseudoknot%20RNA%20using%20ant-colony%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kleinkauf%2C%20Robert%20Houwaart%2C%20Torsten%20Backofen%2C%20Rolf%20Mann%2C%20Martin%20antaRNA%E2%80%93Multi-objective%20inverse%20folding%20of%20pseudoknot%20RNA%20using%20ant-colony%20optimization%202015"
+        },
+        {
+            "id": "Lemke_et+al_2015_a",
+            "entry": "Christiane Lemke, Marcin Budka, and Bogdan Gabrys. Metalearning: a survey of trends and technologies. 44(1):117\u2013130, Jun 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lemke%2C%20Christiane%20Budka%2C%20Marcin%20Gabrys%2C%20Bogdan%20Metalearning%3A%20a%20survey%20of%20trends%20and%20technologies%202015-06"
+        },
+        {
+            "id": "Lorenz_et+al_2011_a",
+            "entry": "Ronny Lorenz, Stephan H. Bernhart, Christian H\u00f6ner zu Siederdissen, Hakim Tafer, Christoph Flamm, Peter F. Stadler, and Ivo L. Hofacker. Viennarna package 2.0. Algorithms for Molecular Biology, 6(1):26, Nov 2011a. ISSN 1748-7188. doi: 10.1186/1748-7188-6-26. URL https://doi.org/10.1186/1748-7188-6-26.",
+            "crossref": "https://dx.doi.org/10.1186/1748-7188-6-26",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1186/1748-7188-6-26"
+        },
+        {
+            "id": "Lorenz_et+al_2011_b",
+            "entry": "Ronny Lorenz, Stephan H Bernhart, Christian Hoener Zu Siederdissen, Hakim Tafer, Christoph Flamm, Peter F Stadler, and Ivo L Hofacker. Viennarna package 2.0. Algorithms for Molecular Biology, 6(1):26, 2011b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lorenz%2C%20Ronny%20Bernhart%2C%20Stephan%20H.%20Siederdissen%2C%20Christian%20Hoener%20Zu%20Tafer%2C%20Hakim%20and%20Ivo%20L%20Hofacker.%20Viennarna%20package%202.0.%20Algorithms%20for%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lorenz%2C%20Ronny%20Bernhart%2C%20Stephan%20H.%20Siederdissen%2C%20Christian%20Hoener%20Zu%20Tafer%2C%20Hakim%20and%20Ivo%20L%20Hofacker.%20Viennarna%20package%202.0.%20Algorithms%20for%202011"
+        },
+        {
+            "id": "Mendoza_et+al_2016_a",
+            "entry": "H. Mendoza, A. Klein, M. Feurer, J. Springenberg, and F. Hutter. Towards automatically-tuned neural networks. In ICML 2016 AutoML Workshop, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mendoza%2C%20H.%20Klein%2C%20A.%20Feurer%2C%20M.%20Springenberg%2C%20J.%20Towards%20automatically-tuned%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mendoza%2C%20H.%20Klein%2C%20A.%20Feurer%2C%20M.%20Springenberg%2C%20J.%20Towards%20automatically-tuned%20neural%20networks%202016"
+        },
+        {
+            "id": "Meyer_et+al_2015_a",
+            "entry": "Sarai Meyer, James Chappell, Sitara Sankar, Rebecca Chew, and Julius B. Lucks. Improving fold activation of small transcription activating RNAs (STARs) with rational RNA engineering strategies. Biotechnology and Bioengineering, 113(1):216\u2013225, 2015. doi: 10.1002/bit.25693. URL https://onlinelibrary.wiley.com/doi/abs/10.1002/bit.25693.",
+            "crossref": "https://dx.doi.org/10.1002/bit.25693",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1002/bit.25693"
+        },
+        {
+            "id": "Mortazi_2018_a",
+            "entry": "Aliasghar Mortazi and Ulas Bagci. Automatically designing cnn architectures for medical image segmentation. In Yinghuan Shi, Heung-Il Suk, and Mingxia Liu (eds.), Machine Learning in Medical Imaging, pp. 98\u2013106, Cham, 2018. Springer International Publishing. ISBN 978-3-03000919-9.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mortazi%2C%20Aliasghar%20Bagci%2C%20Ulas%20Automatically%20designing%20cnn%20architectures%20for%20medical%20image%20segmentation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mortazi%2C%20Aliasghar%20Bagci%2C%20Ulas%20Automatically%20designing%20cnn%20architectures%20for%20medical%20image%20segmentation%202018"
+        },
+        {
+            "id": "Olivecrona_et+al_2017_a",
+            "entry": "Marcus Olivecrona, Thomas Blaschke, Ola Engkvist, and Hongming Chen. Molecular de-novo design through deep reinforcement learning. Journal of cheminformatics, 9(1):48, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olivecrona%2C%20Marcus%20Blaschke%2C%20Thomas%20Engkvist%2C%20Ola%20Chen%2C%20Hongming%20Molecular%20de-novo%20design%20through%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olivecrona%2C%20Marcus%20Blaschke%2C%20Thomas%20Engkvist%2C%20Ola%20Chen%2C%20Hongming%20Molecular%20de-novo%20design%20through%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Vladimir_2012_a",
+            "entry": "Vladimir Reinharz, Fran\u00e7ois Major, and J\u00e9r\u00f4me Waldisp\u00fchl. Towards 3d structure prediction of large rna molecules: an integer programming framework to insert local 3d motifs in rna secondary structure. Bioinformatics, 28(12):i207\u2013i214, 2012. doi: 10.1093/bioinformatics/bts226. URL http://dx.doi.org/10.1093/bioinformatics/bts226.",
+            "crossref": "https://dx.doi.org/10.1093/bioinformatics/bts226",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1093/bioinformatics/bts226"
+        },
+        {
+            "id": "Benjamin_2018_a",
+            "entry": "Benjamin Sanchez-Lengeling and Al\u00e1n Aspuru-Guzik. Inverse molecular design using machine learning: Generative models for matter engineering. Science, 361(6400):360\u2013365, 2018. ISSN 0036-8075. doi: 10.1126/science.aat2663. URL http://science.sciencemag.org/content/361/6400/360.",
+            "crossref": "https://dx.doi.org/10.1126/science.aat2663",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1126/science.aat2663"
+        },
+        {
+            "id": "Schaarschmidt_et+al_2017_a",
+            "entry": "Michael Schaarschmidt, Alexander Kuhnle, and Kai Fricke. Tensorforce: A tensorflow library for applied reinforcement learning. Web page, 2017. URL https://github.com/reinforceio/tensorforce.",
+            "url": "https://github.com/reinforceio/tensorforce",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schaarschmidt%2C%20Michael%20Kuhnle%2C%20Alexander%20Fricke%2C%20Kai%20Tensorforce%3A%20A%20tensorflow%20library%20for%20applied%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal Policy Optimization Algorithms. CoRR, abs/1707.06347, 2017. URL http://arxiv.org/abs/1707.06347.",
+            "url": "http://arxiv.org/abs/1707.06347",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Shapiro_1988_a",
+            "entry": "Bruce A Shapiro. An algorithm for comparing multiple rna secondary structures. Bioinformatics, 4 (3):387\u2013393, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shapiro%2C%20Bruce%20A.%20An%20algorithm%20for%20comparing%20multiple%20rna%20secondary%20structures.%20Bioinformatics%2C%204%201988"
+        },
+        {
+            "id": "Shi_et+al_2018_a",
+            "entry": "Jade Shi, Rhiju Das, and Vijay S Pande. Sentrna: Improving computational rna design by incorporating a prior of human design strategies. arXiv preprint arXiv:1803.03146, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03146"
+        },
+        {
+            "id": "Taneda_2011_a",
+            "entry": "Akito Taneda. MODENA: a multi-objective RNA inverse folding. Advances and applications in bioinformatics and chemistry: AABC, 4:1, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taneda%2C%20Akito%20MODENA%3A%20a%20multi-objective%20RNA%20inverse%20folding%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taneda%2C%20Akito%20MODENA%3A%20a%20multi-objective%20RNA%20inverse%20folding%202011"
+        },
+        {
+            "id": "Vandivier_et+al_2016_a",
+            "entry": "Lee E. Vandivier, Stephen J. Anderson, Shawn W. Foley, and Brian D. Gregory. The conservation and function of RNA secondary structure in plants. Annual review of plant biology, 67:463\u2013488, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vandivier%2C%20Lee%20E.%20Anderson%2C%20Stephen%20J.%20Foley%2C%20Shawn%20W.%20Gregory%2C%20Brian%20D.%20The%20conservation%20and%20function%20of%20RNA%20secondary%20structure%20in%20plants%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vandivier%2C%20Lee%20E.%20Anderson%2C%20Stephen%20J.%20Foley%2C%20Shawn%20W.%20Gregory%2C%20Brian%20D.%20The%20conservation%20and%20function%20of%20RNA%20secondary%20structure%20in%20plants%202016"
+        },
+        {
+            "id": "Wachsmuth_et+al_2013_a",
+            "entry": "Manja Wachsmuth, Sven Findei\u00df, Nadine Weissheimer, Peter F. Stadler, and Mario M\u00f6rl. De novo design of a synthetic riboswitch that regulates transcription termination. Nucleic Acids Research, 41(4):2541\u20132551, 2013. doi: 10.1093/nar/gks1330. URL http://dx.doi.org/10.1093/nar/gks1330.",
+            "crossref": "https://dx.doi.org/10.1093/nar/gks1330",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1093/nar/gks1330"
+        },
+        {
+            "id": "Wong_et+al_2018_a",
+            "entry": "Catherine Wong, Neil Houlsby, Yifeng Lu, and Andrea Gesmundo. Transfer learning with neural automl. In Advances in Neural Information Processing Systems, pp. 8366\u20138375, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Catherine%20Houlsby%2C%20Neil%20Lu%2C%20Yifeng%20Gesmundo%2C%20Andrea%20Transfer%20learning%20with%20neural%20automl%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Catherine%20Houlsby%2C%20Neil%20Lu%2C%20Yifeng%20Gesmundo%2C%20Andrea%20Transfer%20learning%20with%20neural%20automl%202018"
+        },
+        {
+            "id": "Yang_et+al_2017_a",
+            "entry": "Xiufeng Yang, Kazuki Yoshizoe, Akito Taneda, and Koji Tsuda. RNA inverse folding using Monte Carlo tree search. BMC bioinformatics, 18(1):468, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Xiufeng%20Yoshizoe%2C%20Kazuki%20Taneda%2C%20Akito%20Tsuda%2C%20Koji%20RNA%20inverse%20folding%20using%20Monte%20Carlo%20tree%20search%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Xiufeng%20Yoshizoe%2C%20Kazuki%20Taneda%2C%20Akito%20Tsuda%2C%20Koji%20RNA%20inverse%20folding%20using%20Monte%20Carlo%20tree%20search%202017"
+        },
+        {
+            "id": "Zadeh_et+al_2010_a",
+            "entry": "Joseph N. Zadeh, Conrad D. Steenberg, Justin S. Bois, Brian R. Wolfe, Marshall B. Pierce, Asif R. Khan, Robert M. Dirks, and Niles A. Pierce. Nupack: Analysis and design of nucleic acid systems. Journal of Computational Chemistry, 32(1):170\u2013173, 2010. doi: 10.1002/jcc.21596. URL https://onlinelibrary.wiley.com/doi/abs/10.1002/jcc.21596.",
+            "crossref": "https://dx.doi.org/10.1002/jcc.21596",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1002/jcc.21596"
+        },
+        {
+            "id": "Zela_et+al_2018_a",
+            "entry": "Arber Zela, Aaron Klein, Stefan Falkner, and Frank Hutter. Towards automated deep learning: Efficient joint neural architecture and hyperparameter search. In ICML 2018 AutoML Workshop, July 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zela%2C%20Arber%20Klein%2C%20Aaron%20Falkner%2C%20Stefan%20Hutter%2C%20Frank%20Towards%20automated%20deep%20learning%3A%20Efficient%20joint%20neural%20architecture%20and%20hyperparameter%20search%202018-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zela%2C%20Arber%20Klein%2C%20Aaron%20Falkner%2C%20Stefan%20Hutter%2C%20Frank%20Towards%20automated%20deep%20learning%3A%20Efficient%20joint%20neural%20architecture%20and%20hyperparameter%20search%202018-07"
+        },
+        {
+            "id": "Zhao_et+al_2012_a",
+            "entry": "Y Zhao, Y Huang, Z Gong, Y Wang, J Man, and Y Xiao. Automated and fast building of threedimensional RNA structures. Scientific Reports, 2(734), 2012. doi: 10.1038/srep00734.",
+            "crossref": "https://dx.doi.org/10.1038/srep00734",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/srep00734"
+        },
+        {
+            "id": "Zoph_0000_a",
+            "entry": "B. Zoph and Q. V. Le. Neural architecture search with reinforcement learning. In Proceedings of the International Conference on Learning Representations (ICLR\u201917), 2017. Published online: iclr.cc.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zoph%2C%20B.%20Le%2C%20Q.V.%20Neural%20architecture%20search%20with%20reinforcement%20learning",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zoph%2C%20B.%20Le%2C%20Q.V.%20Neural%20architecture%20search%20with%20reinforcement%20learning"
+        },
+        {
+            "id": "Zoph_et+al_2018_a",
+            "entry": "B. Zoph, V. Vasudevan, J. Shlens, and Q. V. Le. Learning transferable architectures for scalable image recognition. In Proceedings of the International Conference on Computer Vision and Pattern Recognition (CVPR\u201918), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zoph%2C%20B.%20Vasudevan%2C%20V.%20Shlens%2C%20J.%20Le%2C%20Q.V.%20Learning%20transferable%20architectures%20for%20scalable%20image%20recognition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zoph%2C%20B.%20Vasudevan%2C%20V.%20Shlens%2C%20J.%20Le%2C%20Q.V.%20Learning%20transferable%20architectures%20for%20scalable%20image%20recognition%202018"
+        },
+        {
+            "id": "Zuker_1981_a",
+            "entry": "M Zuker and P. Stiegler. Optimal computer folding of large RNA sequences using thermodynamics and auxiliary information. Nucleic Acids Research, 9(1):133\u2013148, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zuker%2C%20M.%20Stiegler%2C%20P.%20Optimal%20computer%20folding%20of%20large%20RNA%20sequences%20using%20thermodynamics%20and%20auxiliary%20information%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zuker%2C%20M.%20Stiegler%2C%20P.%20Optimal%20computer%20folding%20of%20large%20RNA%20sequences%20using%20thermodynamics%20and%20auxiliary%20information%201981"
+        },
+        {
+            "id": "Zuker_1984_a",
+            "entry": "Michael Zuker and David Sankoff. RNA secondary structures and their prediction. Bulletin of Mathematical Biology, 46(4):591 \u2013 621, 1984. ISSN 0092-8240. doi: https://doi.org/10.1016/S0092-8240(84)80062-2. URL http://www.sciencedirect.com/science/article/pii/S0092824084800622.",
+            "crossref": "https://dx.doi.org/10.1016/S0092-8240(84)80062-2",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/S0092-8240%2884%2980062-2"
+        },
+        {
+            "id": "To_2017_a",
+            "entry": "To ensure a large enough and interesting dataset, we downloaded all families of the Rfam database version 13.0 (Kalvari et al., 2017) and folded them using the ViennaRNA package (Lorenz et al., 2011a). We removed all secondary structures with multiple known solutions, and only kept structures with lengths between 50 and 450 to match the existing datasets. To focus on the harder sequences, we only kept the ones that a single run of MCTS-RNA could not solve within 30 seconds. We chose MCTS-RNA for filtering as it was the fastest algorithm from the literature. The remaining secondary structures were split into a training set of 65000, a validation set of 100, and a test set of 100 secondary structures.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=To%20ensure%20a%20large%20enough%20and%20interesting%20dataset%20we%20downloaded%20all%20families%20of%20the%20Rfam%20database%20version%20130%20Kalvari%20et%20al%202017%20and%20folded%20them%20using%20the%20ViennaRNA%20package%20Lorenz%20et%20al%202011a%20We%20removed%20all%20secondary%20structures%20with%20multiple%20known%20solutions%20and%20only%20kept%20structures%20with%20lengths%20between%2050%20and%20450%20to%20match%20the%20existing%20datasets%20To%20focus%20on%20the%20harder%20sequences%20we%20only%20kept%20the%20ones%20that%20a%20single%20run%20of%20MCTSRNA%20could%20not%20solve%20within%2030%20seconds%20We%20chose%20MCTSRNA%20for%20filtering%20as%20it%20was%20the%20fastest%20algorithm%20from%20the%20literature%20The%20remaining%20secondary%20structures%20were%20split%20into%20a%20training%20set%20of%2065000%20a%20validation%20set%20of%20100%20and%20a%20test%20set%20of%20100%20secondary%20structures"
+        },
+        {
+            "id": "We_2015_a",
+            "entry": "We used the implementation of the Zuker algorithm provided by ViennaRNA (Lorenz et al., 2011b) versions 2.4.8 (MCTS-RNA, RL-LS and LEARNA), 2.1.9 (antaRNA) and 2.4.9 (RNAInverse). Our implementation uses the reinforcement learning library tensorforce, version 0.3.3 (Schaarschmidt et al., 2017) working with TensorFlow version 1.4.0 (Abadi et al., 2015). All computations were done on Broadwell E5-2630v4 2.2 GHz CPUs with a limitation of 5 GByte RAM per each of the 10 cores. For the training phase of Meta-LEARNA, we used two of these CPUs, but at evaluation time, all methods were only allowed a single core (using core binding).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20used%20the%20implementation%20of%20the%20Zuker%20algorithm%20provided%20by%20ViennaRNA%20Lorenz%20et%20al%202011b%20versions%20248%20MCTSRNA%20RLLS%20and%20LEARNA%20219%20antaRNA%20and%20249%20RNAInverse%20Our%20implementation%20uses%20the%20reinforcement%20learning%20library%20tensorforce%20version%20033%20Schaarschmidt%20et%20al%202017%20working%20with%20TensorFlow%20version%20140%20Abadi%20et%20al%202015%20All%20computations%20were%20done%20on%20Broadwell%20E52630v4%2022%20GHz%20CPUs%20with%20a%20limitation%20of%205%20GByte%20RAM%20per%20each%20of%20the%2010%20cores%20For%20the%20training%20phase%20of%20MetaLEARNA%20we%20used%20two%20of%20these%20CPUs%20but%20at%20evaluation%20time%20all%20methods%20were%20only%20allowed%20a%20single%20core%20using%20core%20binding",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20used%20the%20implementation%20of%20the%20Zuker%20algorithm%20provided%20by%20ViennaRNA%20Lorenz%20et%20al%202011b%20versions%20248%20MCTSRNA%20RLLS%20and%20LEARNA%20219%20antaRNA%20and%20249%20RNAInverse%20Our%20implementation%20uses%20the%20reinforcement%20learning%20library%20tensorforce%20version%20033%20Schaarschmidt%20et%20al%202017%20working%20with%20TensorFlow%20version%20140%20Abadi%20et%20al%202015%20All%20computations%20were%20done%20on%20Broadwell%20E52630v4%2022%20GHz%20CPUs%20with%20a%20limitation%20of%205%20GByte%20RAM%20per%20each%20of%20the%2010%20cores%20For%20the%20training%20phase%20of%20MetaLEARNA%20we%20used%20two%20of%20these%20CPUs%20but%20at%20evaluation%20time%20all%20methods%20were%20only%20allowed%20a%20single%20core%20using%20core%20binding"
+        }
+    ]
+}

@@ -1,0 +1,274 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "AMORTIZED BAYESIAN META-LEARNING",
+        "author": "Sachin Ravi and Alex Beatson Princeton University {sachinr,abeatson}@cs.princeton.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkgpy3C5tX"
+        },
+        "abstract": "Meta-learning, or learning-to-learn, has proven to be a successful strategy in attacking problems in supervised learning and reinforcement learning that involve small amounts of data. State-of-the-art solutions involve learning an initialization and/or optimization algorithm using a set of training episodes so that the metalearner can generalize to an evaluation episode quickly. These methods perform well but often lack good quantification of uncertainty, which can be vital to realworld applications when data is lacking. We propose a meta-learning method which efficiently amortizes hierarchical variational inference across tasks, learning a prior distribution over neural network weights so that a few steps of Bayes by Backprop will produce a good task-specific approximate posterior. We show that our method produces good uncertainty estimates on contextual bandit and few-shot learning benchmarks."
+    },
+    "keywords": [
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "prior distribution",
+            "url": "https://en.wikipedia.org/wiki/prior_distribution"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "empirical risk minimization",
+            "url": "https://en.wikipedia.org/wiki/empirical_risk_minimization"
+        }
+    ],
+    "abbreviations": {
+        "AVI": "amortized variational inference",
+        "LRT": "Local Reparametrization Trick",
+        "ERM": "empirical risk minimization",
+        "ECE": "Expected Calibration Error",
+        "MCE": "Maximum Calibration Error"
+    },
+    "highlights": [
+        "Deep learning has achieved success in domains that involve a large amount of labeled data (Oord et al, 2016; <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a></a>) or training samples (<a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\">Mnih et al, 2013</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>)",
+        "Because we evaluate in a transductive setting (<a class=\"ref-link\" id=\"cNichol_2018_a\" href=\"#rNichol_2018_a\">Nichol & Schulman, 2018</a>), the evaluation performance is affected by the query set size, and we use 15 examples to be consistent with previous work (<a class=\"ref-link\" id=\"cRavi_2016_a\" href=\"#rRavi_2016_a\">Ravi & Larochelle, 2016</a>)",
+        "We show the Expected Calibration Error (ECE) and Maximum Calibration Error (MCE) of all models, which are two quantitative ways to measure model calibration (<a class=\"ref-link\" id=\"cNaeini_et+al_2015_a\" href=\"#rNaeini_et+al_2015_a\">Naeini et al, 2015</a>; <a class=\"ref-link\" id=\"cGuo_et+al_2017_a\" href=\"#rGuo_et+al_2017_a\">Guo et al, 2017</a>)",
+        "We described a method to efficiently use hierarchical variational inference to learn a meta-learning model that is scalable across many training episodes and large networks",
+        "The method corresponds to learning a prior distribution over the network weights so that a few steps of Bayes by Backprop will produce a good approximate posterior",
+        "Through various experiments we show that using a Bayesian interpretation allows us to reason effectively about uncertainty in contextual bandit and"
+    ],
+    "key_statements": [
+        "Deep learning has achieved success in domains that involve a large amount of labeled data (Oord et al, 2016; <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a></a>) or training samples (<a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\">Mnih et al, 2013</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>)",
+        "Popular meta-learning methods have advanced the state-of-the-art in many tasks, including the few-shot learning problem, where the model has to learn a new task given a small training set containing as few as one example per class",
+        "We could pick a separate prior and global initialization, but we found tying the prior and initialization did not seem to have a negative affect on performance, while significantly reducing the number of total parameters necessary",
+        "Previous work has explored reducing the variance of gradients involving stochastic neural networks, and we found this crucial to training the networks we use",
+        "For the few-shot learning experiments, we found it necessary to downweight the inner KL term for better performance in our model",
+        "Because we evaluate in a transductive setting (<a class=\"ref-link\" id=\"cNichol_2018_a\" href=\"#rNichol_2018_a\">Nichol & Schulman, 2018</a>), the evaluation performance is affected by the query set size, and we use 15 examples to be consistent with previous work (<a class=\"ref-link\" id=\"cRavi_2016_a\" href=\"#rRavi_2016_a\">Ravi & Larochelle, 2016</a>)",
+        "We show the Expected Calibration Error (ECE) and Maximum Calibration Error (MCE) of all models, which are two quantitative ways to measure model calibration (<a class=\"ref-link\" id=\"cNaeini_et+al_2015_a\" href=\"#rNaeini_et+al_2015_a\">Naeini et al, 2015</a>; <a class=\"ref-link\" id=\"cGuo_et+al_2017_a\" href=\"#rGuo_et+al_2017_a\">Guo et al, 2017</a>)",
+        "We described a method to efficiently use hierarchical variational inference to learn a meta-learning model that is scalable across many training episodes and large networks",
+        "The method corresponds to learning a prior distribution over the network weights so that a few steps of Bayes by Backprop will produce a good approximate posterior",
+        "Through various experiments we show that using a Bayesian interpretation allows us to reason effectively about uncertainty in contextual bandit and"
+    ],
+    "summary": [
+        "Deep learning has achieved success in domains that involve a large amount of labeled data (Oord et al, 2016; <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a></a>) or training samples (<a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\">Mnih et al, 2013</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>).",
+        "Instead of maintaining M different variational parameters \u03bbi indexing distributions over neural network weights \u03c6i, we compute \u03bbi on the fly with amortized variational inference (AVI), where a global learned model is used to predict \u03bbi from Di. A popular use of AVI is training a variational autoencoder (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a>), where a trained encoder network produces the variational parameters for each data point.",
+        "Let LDi (\u03bb, \u03b8) = \u2212Eq [log p(Di|\u03c6i)] + KL(q p) be the part of the objective corresponding to data Di. Let the procedure SGDK (D, \u03bb, \u03b8) represent the variational parameters produced after K steps of gradient descent on the objective LD(\u03bb, \u03b8) with respect to \u03bb starting at the initialization \u03bb(0) = \u03bb and where \u03b8 is held constant i.e.: 1.",
+        "This corresponds to learning a global initialization of the variational parameters such that a few steps of gradient descent will produce a good local variational distribution for any given dataset.",
+        "In the few-shot learning problem, we must consider train and test splits for each dataset in each episode.",
+        "It has not been demonstrated whether these methods can be scaled to bigger benchmarks like miniImageNet. <a class=\"ref-link\" id=\"cGordon_et+al_2018_a\" href=\"#rGordon_et+al_2018_a\">Gordon et al (2018</a>) adapt Bayesian decision theory to formulate the use of an amortization network to output the variational distribution over weights for each few-shot dataset.",
+        "The work of <a class=\"ref-link\" id=\"cRiquelme_et+al_2018_a\" href=\"#rRiquelme_et+al_2018_a\">Riquelme et al (2018</a>) compares using Thompson Sampling for different models that approximate the posterior over reward functions on a variety of contextual bandit problems, including the wheel bandit.",
+        "For meta-learning methods there is a pre-training phase in which training episodes consist of randomly generated data across \u03b4 values from wheel bandit task.",
+        "In order to highlight the difference between our method and MAML, we visualize the learned prior p(\u03c6 | \u03b8) in Figure 2 by showing the expectation and standard-deviation of predicted rewards for specific arms with respect to the prior.",
+        "This variation in the standard deviation represents different learning speeds across the network on a new episode, indicating which type of weights are general and which type of weights need to be quickly modified to capture new data.",
+        "We described a method to efficiently use hierarchical variational inference to learn a meta-learning model that is scalable across many training episodes and large networks.",
+        "The method corresponds to learning a prior distribution over the network weights so that a few steps of Bayes by Backprop will produce a good approximate posterior.",
+        "The proposed method is flexible and future work could involve considering more expressive prior distributions to further improve the uncertainty estimates"
+    ],
+    "headline": "We propose a meta-learning method which efficiently amortizes hierarchical variational inference across tasks, learning a prior distribution over neural network weights so that a few steps of Bayes by Backprop will produce a good task-specific approximate posterior",
+    "reference_links": [
+        {
+            "id": "Amit_2018_a",
+            "entry": "Ron Amit and Ron Meir. Meta-learning by adjusting priors based on extended PAC-Bayes theory. In Proceedings of the 35th International Conference on Machine Learning, pp. 205\u2013214, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amit%2C%20Ron%20Meir%2C%20Ron%20Meta-learning%20by%20adjusting%20priors%20based%20on%20extended%20PAC-Bayes%20theory%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amit%2C%20Ron%20Meir%2C%20Ron%20Meta-learning%20by%20adjusting%20priors%20based%20on%20extended%20PAC-Bayes%20theory%202018"
+        },
+        {
+            "id": "Blundell_et+al_2015_a",
+            "entry": "Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural networks. In Proceedings of the 32nd International Conference on International Conference on Machine Learning-Volume 37, pp. 1613\u20131622. JMLR. org, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blundell%2C%20Charles%20Cornebise%2C%20Julien%20Kavukcuoglu%2C%20Koray%20Wierstra%2C%20Daan%20Weight%20uncertainty%20in%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blundell%2C%20Charles%20Cornebise%2C%20Julien%20Kavukcuoglu%2C%20Koray%20Wierstra%2C%20Daan%20Weight%20uncertainty%20in%20neural%20networks%202015"
+        },
+        {
+            "id": "Edwards_2016_a",
+            "entry": "Harrison Edwards and Amos Storkey. Towards a neural statistician. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Edwards%2C%20Harrison%20Storkey%2C%20Amos%20Towards%20a%20neural%20statistician%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Edwards%2C%20Harrison%20Storkey%2C%20Amos%20Towards%20a%20neural%20statistician%202016"
+        },
+        {
+            "id": "Fei-Fei_2005_a",
+            "entry": "Li Fei-Fei and Pietro Perona. A bayesian hierarchical model for learning natural scene categories. In Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on, volume 2, pp. 524\u2013531. IEEE, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%20FeiFei%20and%20Pietro%20Perona%20A%20bayesian%20hierarchical%20model%20for%20learning%20natural%20scene%20categories%20In%20Computer%20Vision%20and%20Pattern%20Recognition%202005%20CVPR%202005%20IEEE%20Computer%20Society%20Conference%20on%20volume%202%20pp%20524531%20IEEE%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%20FeiFei%20and%20Pietro%20Perona%20A%20bayesian%20hierarchical%20model%20for%20learning%20natural%20scene%20categories%20In%20Computer%20Vision%20and%20Pattern%20Recognition%202005%20CVPR%202005%20IEEE%20Computer%20Society%20Conference%20on%20volume%202%20pp%20524531%20IEEE%202005"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning, pp. 1126\u20131135, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Finn_et+al_2018_a",
+            "entry": "Chelsea Finn, Kelvin Xu, and Sergey Levine. Probabilistic model-agnostic meta-learning. arXiv preprint arXiv:1806.02817, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02817"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a bayesian approximation: Representing model uncertainty in deep learning. In International conference on machine learning, pp. 1050\u20131059, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Garnelo_et+al_2018_a",
+            "entry": "Marta Garnelo, Dan Rosenbaum, Christopher Maddison, Tiago Ramalho, David Saxton, Murray Shanahan, Yee Whye Teh, Danilo Rezende, and SM Ali Eslami. Conditional neural processes. In International Conference on Machine Learning, pp. 1690\u20131699, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garnelo%2C%20Marta%20Rosenbaum%2C%20Dan%20Maddison%2C%20Christopher%20Ramalho%2C%20Tiago%20Conditional%20neural%20processes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garnelo%2C%20Marta%20Rosenbaum%2C%20Dan%20Maddison%2C%20Christopher%20Ramalho%2C%20Tiago%20Conditional%20neural%20processes%202018"
+        },
+        {
+            "id": "Garnelo_et+al_0000_a",
+            "entry": "Marta Garnelo, Jonathan Schwarz, Dan Rosenbaum, Fabio Viola, Danilo J Rezende, SM Eslami, and Yee Whye Teh. Neural processes. arXiv preprint arXiv:1807.01622, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.01622"
+        },
+        {
+            "id": "Gordon_et+al_2018_a",
+            "entry": "Jonathan Gordon, John Bronskill, Matthias Bauer, Sebastian Nowozin, and Richard E Turner. Decision-theoretic meta-learning: Versatile and efficient amortization of few-shot learning. arXiv preprint arXiv:1805.09921, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09921"
+        },
+        {
+            "id": "Grant_et+al_2018_a",
+            "entry": "Erin Grant, Chelsea Finn, Sergey Levine, Trevor Darrell, and Thomas Griffiths. Recasting gradientbased meta-learning as hierarchical bayes. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grant%2C%20Erin%20Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Darrell%2C%20Trevor%20Recasting%20gradientbased%20meta-learning%20as%20hierarchical%20bayes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grant%2C%20Erin%20Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Darrell%2C%20Trevor%20Recasting%20gradientbased%20meta-learning%20as%20hierarchical%20bayes%202018"
+        },
+        {
+            "id": "Guo_et+al_2017_a",
+            "entry": "Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q Weinberger. On calibration of modern neural networks. In International Conference on Machine Learning, pp. 1321\u20131330, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Chuan%20Pleiss%2C%20Geoff%20Sun%2C%20Yu%20Weinberger%2C%20Kilian%20Q.%20On%20calibration%20of%20modern%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Chuan%20Pleiss%2C%20Geoff%20Sun%2C%20Yu%20Weinberger%2C%20Kilian%20Q.%20On%20calibration%20of%20modern%20neural%20networks%202017"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Laurens van der Maaten, and Kilian Q Weinberger. Densely connected convolutional networks. In 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 2261\u20132269. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Kim_et+al_0000_a",
+            "entry": "Taesup Kim, Jaesik Yoon, Ousmane Dia, Sungwoong Kim, Yoshua Bengio, and Sungjin Ahn. Bayesian model-agnostic meta-learning. arXiv preprint arXiv:1806.03836, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.03836"
+        },
+        {
+            "id": "Kim_et+al_0000_b",
+            "entry": "Yoon Kim, Sam Wiseman, Andrew C Miller, David Sontag, and Alexander M Rush. Semi-amortized variational autoencoders. arXiv preprint arXiv:1802.02550, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.02550"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kingma_et+al_2015_a",
+            "entry": "Diederik P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In Advances in Neural Information Processing Systems, pp. 2575\u20132583, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015"
+        },
+        {
+            "id": "Koller_et+al_2009_a",
+            "entry": "Daphne Koller, Nir Friedman, and Francis Bach. Probabilistic graphical models: principles and techniques. MIT press, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koller%2C%20Daphne%20Friedman%2C%20Nir%20Bach%2C%20Francis%20Probabilistic%20graphical%20models%3A%20principles%20and%20techniques%202009"
+        },
+        {
+            "id": "Lake_et+al_2017_a",
+            "entry": "Brenden M Lake, Tomer D Ullman, Joshua B Tenenbaum, and Samuel J Gershman. Building machines that learn and think like people. Behavioral and Brain Sciences, 40, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20M.%20Ullman%2C%20Tomer%20D.%20Tenenbaum%2C%20Joshua%20B.%20Gershman%2C%20Samuel%20J.%20Building%20machines%20that%20learn%20and%20think%20like%20people%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20M.%20Ullman%2C%20Tomer%20D.%20Tenenbaum%2C%20Joshua%20B.%20Gershman%2C%20Samuel%20J.%20Building%20machines%20that%20learn%20and%20think%20like%20people%202017"
+        },
+        {
+            "id": "Louizos_2017_a",
+            "entry": "Christos Louizos and Max Welling. Multiplicative normalizing flows for variational bayesian neural networks. In International Conference on Machine Learning, pp. 2218\u20132227, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Welling%2C%20Max%20Multiplicative%20normalizing%20flows%20for%20variational%20bayesian%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Welling%2C%20Max%20Multiplicative%20normalizing%20flows%20for%20variational%20bayesian%20neural%20networks%202017"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan Adams. Gradient-based hyperparameter optimization through reversible learning. In International Conference on Machine Learning, pp. 2113\u20132122, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015"
+        },
+        {
+            "id": "Mishra_et+al_2018_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. A simple neural attentive metalearner. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mishra%2C%20Nikhil%20Rohaninejad%2C%20Mostafa%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20A%20simple%20neural%20attentive%20metalearner%202018"
+        },
+        {
+            "id": "Mnih_et+al_2013_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. Playing atari with deep reinforcement learning. arXiv preprint arXiv:1312.5602, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.5602"
+        },
+        {
+            "id": "Naeini_et+al_2015_a",
+            "entry": "Mahdi Pakdaman Naeini, Gregory F Cooper, and Milos Hauskrecht. Obtaining well calibrated probabilities using bayesian binning. In Proceedings of the... AAAI Conference on Artificial Intelligence. AAAI Conference on Artificial Intelligence, volume 2015, pp. 2901. NIH Public Access, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Naeini%2C%20Mahdi%20Pakdaman%20Cooper%2C%20Gregory%20F.%20Hauskrecht%2C%20Milos%20Obtaining%20well%20calibrated%20probabilities%20using%20bayesian%20binning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Naeini%2C%20Mahdi%20Pakdaman%20Cooper%2C%20Gregory%20F.%20Hauskrecht%2C%20Milos%20Obtaining%20well%20calibrated%20probabilities%20using%20bayesian%20binning%202015"
+        },
+        {
+            "id": "Nichol_2018_a",
+            "entry": "Alex Nichol and John Schulman. Reptile: a scalable metalearning algorithm. arXiv preprint arXiv:1803.02999, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02999"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew Senior, and Koray Kavukcuoglu. Wavenet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Riquelme_et+al_2018_a",
+            "entry": "Carlos Riquelme, George Tucker, and Jasper Snoek. Deep bayesian bandits showdown: An empirical comparison of bayesian deep networks for thompson sampling. arXiv preprint arXiv:1802.09127, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09127"
+        },
+        {
+            "id": "Schmidhuber_1993_a",
+            "entry": "J\u00fcrgen Schmidhuber. A neural network that embeds its own meta-levels. In Neural Networks, 1993., IEEE International Conference on, pp. 407\u2013412. IEEE, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20A%20neural%20network%20that%20embeds%20its%20own%20meta-levels%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20J%C3%BCrgen%20A%20neural%20network%20that%20embeds%20its%20own%20meta-levels%201993"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Snell_et+al_2017_a",
+            "entry": "Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In Advances in Neural Information Processing Systems, pp. 4077\u20134087, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017"
+        },
+        {
+            "id": "Tenenbaum_1999_a",
+            "entry": "Joshua Brett Tenenbaum. A Bayesian framework for concept learning. PhD thesis, Massachusetts Institute of Technology, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tenenbaum%2C%20Joshua%20Brett%20A%20Bayesian%20framework%20for%20concept%20learning%201999"
+        },
+        {
+            "id": "Thompson_1933_a",
+            "entry": "William R Thompson. On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. Biometrika, 25(3/4):285\u2013294, 1933.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thompson%2C%20William%20R.%20On%20the%20likelihood%20that%20one%20unknown%20probability%20exceeds%20another%20in%20view%20of%20the%20evidence%20of%20two%20samples%201933",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thompson%2C%20William%20R.%20On%20the%20likelihood%20that%20one%20unknown%20probability%20exceeds%20another%20in%20view%20of%20the%20evidence%20of%20two%20samples%201933"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Charles Blundell, Tim Lillicrap, Daan Wierstra, et al. Matching networks for one shot learning. In Advances in Neural Information Processing Systems, pp. 3630\u20133638, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016"
+        },
+        {
+            "id": "Wen_et+al_2018_a",
+            "entry": "Yeming Wen, Paul Vicol, Jimmy Ba, Dustin Tran, and Roger Grosse. Flipout: Efficient pseudoindependent weight perturbations on mini-batches. arXiv preprint arXiv:1803.04386, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.04386"
+        }
+    ]
+}

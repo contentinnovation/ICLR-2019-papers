@@ -1,0 +1,263 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DEFENSIVE QUANTIZATION: WHEN EFFICIENCY MEETS ROBUSTNESS",
+        "author": "Ji Lin MIT jilin@mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ryetZ20ctX"
+        },
+        "abstract": "Neural network quantization is becoming an industry standard to efficiently deploy deep learning models on hardware platforms, such as CPU, GPU, TPU, and FPGAs. However, we observe that the conventional quantization approaches are vulnerable to adversarial attacks. This paper aims to raise people\u2019s awareness about the security of the quantized models, and we designed a novel quantization methodology to jointly optimize the efficiency and robustness of deep learning models. We first conduct an empirical study to show that vanilla quantization suffers more from adversarial attacks. We observe that the inferior robustness comes from the error amplification effect, where the quantization operation further enlarges the distance caused by amplified noise. Then we propose a novel Defensive Quantization (DQ) method by controlling the Lipschitz constant of the network during quantization, such that the magnitude of the adversarial noise remains non-expansive during inference. Extensive experiments on CIFAR-10 and SVHN datasets demonstrate that our new quantization method can defend neural networks against adversarial examples, and even achieves superior robustness than their fullprecision counterparts, while maintaining the same hardware efficiency as vanilla quantization approaches. As a by-product, DQ can also improve the accuracy of quantized models without adversarial attack."
+    },
+    "keywords": [
+        {
+            "term": "industry standard",
+            "url": "https://en.wikipedia.org/wiki/industry_standard"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "FPGA",
+            "url": "https://en.wikipedia.org/wiki/FPGA"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        }
+    ],
+    "abbreviations": {
+        "DQ": "Defensive Quantization",
+        "FGSM": "Fast Gradient Sign Method",
+        "BIM": "Basic Iterative Method",
+        "PGD": "Projected Gradient Descend",
+        "SVHN": "Street View House Number dataset"
+    },
+    "highlights": [
+        "Neural network quantization (<a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a></a>; <a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\">Zhu et al, 2016</a></a>; <a class=\"ref-link\" id=\"cJacob_et+al_2017_a\" href=\"#rJacob_et+al_2017_a\"><a class=\"ref-link\" id=\"cJacob_et+al_2017_a\" href=\"#rJacob_et+al_2017_a\">Jacob et al, 2017</a></a>) is a widely used technique to reduce the computation and memory costs of neural networks, facilitating efficient deployment",
+        "We find that the widely used vanilla quantization approaches suffer from unexpected issues \u2014 the quantized model is more vulnerable to adversarial attacks (Figure 1)",
+        "We propose Defensive Quantization (DQ) that not only fixes the robustness issue of quantized models, but turns activation quantization into a defense method that further boosts adversarial robustness",
+        "Given the robustness limitation of conventional quantization technique, we propose Defensive Quantization (DQ) to defend the adversarial examples for quantized models",
+        "We aim to raise people\u2019s awareness about the security of the quantized neural networks, which is widely deployed in GPU/TPU/FPGAs, and pave a possible direction to bridge two important areas in deep learning: efficiency and robustness",
+        "Experimental results on two datasets validate that the new quantization method can make the deep learning models be safely deployed on mobile devices"
+    ],
+    "key_statements": [
+        "Neural network quantization (<a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a></a>; <a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\">Zhu et al, 2016</a></a>; <a class=\"ref-link\" id=\"cJacob_et+al_2017_a\" href=\"#rJacob_et+al_2017_a\"><a class=\"ref-link\" id=\"cJacob_et+al_2017_a\" href=\"#rJacob_et+al_2017_a\">Jacob et al, 2017</a></a>) is a widely used technique to reduce the computation and memory costs of neural networks, facilitating efficient deployment",
+        "We find that the widely used vanilla quantization approaches suffer from unexpected issues \u2014 the quantized model is more vulnerable to adversarial attacks (Figure 1)",
+        "We propose Defensive Quantization (DQ) that not only fixes the robustness issue of quantized models, but turns activation quantization into a defense method that further boosts adversarial robustness",
+        "We find that the quantized models suffer from severe security issues \u2014 they are more vulnerable against adversarial attacks compared to full-precision models, even when they have the same clean image accuracy",
+        "Adversarial perturbation is applied to the input image, it is most related to activation quantization (<a class=\"ref-link\" id=\"cDhillon_et+al_2018_a\" href=\"#rDhillon_et+al_2018_a\">Dhillon et al, 2018</a>)",
+        "Given an image X, an adversarial attack method tries to find a small perturbation \u2206 with constraint ||\u2206|| \u2264 , such that the neural network gives different outputs for X and Xadv X + \u2206",
+        "Fast Gradient Sign Method (FGSM) & R+Fast Gradient Sign Method Goodfellow et al proposed a fast method to calculate the adversarial noise by following the direction of the loss gradient \u2207XL(X, y), where L(X, y) is the loss function for training",
+        "Given the robustness limitation of conventional quantization technique, we propose Defensive Quantization (DQ) to defend the adversarial examples for quantized models",
+        "We aim to raise people\u2019s awareness about the security of the quantized neural networks, which is widely deployed in GPU/TPU/FPGAs, and pave a possible direction to bridge two important areas in deep learning: efficiency and robustness",
+        "Experimental results on two datasets validate that the new quantization method can make the deep learning models be safely deployed on mobile devices"
+    ],
+    "summary": [
+        "Neural network quantization (<a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a></a>; <a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\">Zhu et al, 2016</a></a>; <a class=\"ref-link\" id=\"cJacob_et+al_2017_a\" href=\"#rJacob_et+al_2017_a\"><a class=\"ref-link\" id=\"cJacob_et+al_2017_a\" href=\"#rJacob_et+al_2017_a\">Jacob et al, 2017</a></a>) is a widely used technique to reduce the computation and memory costs of neural networks, facilitating efficient deployment.",
+        "We find that the quantized models suffer from severe security issues \u2014 they are more vulnerable against adversarial attacks compared to full-precision models, even when they have the same clean image accuracy.",
+        "The actual robustness of this work under black-box attack has no improvement over full-precision model and is even worse.",
+        "Given an image X, an adversarial attack method tries to find a small perturbation \u2206 with constraint ||\u2206|| \u2264 , such that the neural network gives different outputs for X and Xadv X + \u2206.",
+        "Current defense methods either preprocess the adversarial samples to denoise the perturbation (<a class=\"ref-link\" id=\"cXu_et+al_2017_a\" href=\"#rXu_et+al_2017_a\"><a class=\"ref-link\" id=\"cXu_et+al_2017_a\" href=\"#rXu_et+al_2017_a\">Xu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSong_et+al_2017_a\" href=\"#rSong_et+al_2017_a\"><a class=\"ref-link\" id=\"cSong_et+al_2017_a\" href=\"#rSong_et+al_2017_a\">Song et al, 2017</a></a>; <a class=\"ref-link\" id=\"cLiao_et+al_2018_a\" href=\"#rLiao_et+al_2018_a\">Liao et al, 2018</a>) or making the network itself robust (<a class=\"ref-link\" id=\"cWarde-Farley_2016_a\" href=\"#rWarde-Farley_2016_a\">Warde-Farley & Goodfellow, 2016</a>; <a class=\"ref-link\" id=\"cPapernot_et+al_2016_b\" href=\"#rPapernot_et+al_2016_b\">Papernot et al, 2016b</a>; <a class=\"ref-link\" id=\"cMadry_et+al_2017_a\" href=\"#rMadry_et+al_2017_a\">Madry et al, 2017</a>; <a class=\"ref-link\" id=\"cKurakin_et+al_2016_a\" href=\"#rKurakin_et+al_2016_a\"><a class=\"ref-link\" id=\"cKurakin_et+al_2016_a\" href=\"#rKurakin_et+al_2016_a\">Kurakin et al, 2016</a></a>; Goodfellow et al.; <a class=\"ref-link\" id=\"cTramer_et+al_2017_a\" href=\"#rTramer_et+al_2017_a\">Tramer et al, 2017</a>).",
+        "I.e., color bit depth reduction is an effective defense method (<a class=\"ref-link\" id=\"cXu_et+al_2017_a\" href=\"#rXu_et+al_2017_a\"><a class=\"ref-link\" id=\"cXu_et+al_2017_a\" href=\"#rXu_et+al_2017_a\">Xu et al, 2017</a></a>).",
+        "As a by-product, DQ can improve the accuracy of training quantized models on clean images without attacks, since it limits the dynamic range.",
+        "Setup: We conduct experiments with Wide ResNet (<a class=\"ref-link\" id=\"cZagoruyko_2016_a\" href=\"#rZagoruyko_2016_a\">Zagoruyko & Komodakis, 2016</a>) of 28 \u00d7 10 on the CIFAR-10 dataset (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky & Hinton, 2009</a>) using ReLU6 based activation quantization, with number of bits ranging from 1 to 5.",
+        "Though the adversarial robustness increases with the number of bits, i.e., the models closer to full-precision one has better robustness, the best quantized model still has inferior robustness by \u22129.1%.",
+        "The robustness is better when the number of bits are small, since it can de-noise larger adversarial perturbations.",
+        "Following (<a class=\"ref-link\" id=\"cKurakin_et+al_2016_a\" href=\"#rKurakin_et+al_2016_a\"><a class=\"ref-link\" id=\"cKurakin_et+al_2016_a\" href=\"#rKurakin_et+al_2016_a\">Kurakin et al, 2016</a></a>; <a class=\"ref-link\" id=\"cSong_et+al_2017_a\" href=\"#rSong_et+al_2017_a\"><a class=\"ref-link\" id=\"cSong_et+al_2017_a\" href=\"#rSong_et+al_2017_a\">Song et al, 2017</a></a>), during training we sample random as in R+FGSM setting, and generate adversarial samples using step size 1 and number of iterations min( + 4, 1.25 ) .",
+        "We observe that for all normal training, feature squeezing and adversarial training settings, our DQ method can further improve the model\u2019s robustness.",
+        "As a by-product of our method, Defensive Quantization can even improve the accuracy of quantized models on clean images without attack, making it a beneficial drop-in substitute for normal quantization procedures.",
+        "We aim to raise people\u2019s awareness about the security of the quantized neural networks, which is widely deployed in GPU/TPU/FPGAs, and pave a possible direction to bridge two important areas in deep learning: efficiency and robustness.",
+        "Experimental results on two datasets validate that the new quantization method can make the deep learning models be safely deployed on mobile devices"
+    ],
+    "headline": "This paper aims to raise people\u2019s awareness about the security of the quantized models, and we designed a novel quantization methodology to jointly optimize the efficiency and robustness of deep learning models",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2016_a",
+            "entry": "Mart\u0131n Abadi, Paul Barham, Jianmin Chen, Zhifeng Chen, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Geoffrey Irving, Michael Isard, et al. Tensorflow: a system for large-scale machine learning. In OSDI, volume 16, pp. 265\u2013283, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abadi%2C%20Mart%C4%B1n%20Barham%2C%20Paul%20Chen%2C%20Jianmin%20Chen%2C%20Zhifeng%20Tensorflow%3A%20a%20system%20for%20large-scale%20machine%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abadi%2C%20Mart%C4%B1n%20Barham%2C%20Paul%20Chen%2C%20Jianmin%20Chen%2C%20Zhifeng%20Tensorflow%3A%20a%20system%20for%20large-scale%20machine%20learning%202016"
+        },
+        {
+            "id": "Amodei_et+al_2016_a",
+            "entry": "Dario Amodei, Chris Olah, Jacob Steinhardt, Paul Christiano, John Schulman, and Dan Mane. Concrete problems in ai safety. arXiv preprint arXiv:1606.06565, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06565"
+        },
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. arXiv preprint arXiv:1802.00420, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.00420"
+        },
+        {
+            "id": "Bartlett_et+al_2017_a",
+            "entry": "Peter L Bartlett, Dylan J Foster, and Matus J Telgarsky. Spectrally-normalized margin bounds for neural networks. In Advances in Neural Information Processing Systems, pp. 6240\u20136249, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bartlett%2C%20Peter%20L.%20Foster%2C%20Dylan%20J.%20Telgarsky%2C%20Matus%20J.%20Spectrally-normalized%20margin%20bounds%20for%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bartlett%2C%20Peter%20L.%20Foster%2C%20Dylan%20J.%20Telgarsky%2C%20Matus%20J.%20Spectrally-normalized%20margin%20bounds%20for%20neural%20networks%202017"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Nicholas Leonard, and Aaron Courville. Estimating or propagating gradients through stochastic neurons for conditional computation. arXiv preprint arXiv:1308.3432, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.3432"
+        },
+        {
+            "id": "Cisse_et+al_2017_a",
+            "entry": "Moustapha Cisse, Piotr Bojanowski, Edouard Grave, Yann Dauphin, and Nicolas Usunier. Parseval networks: Improving robustness to adversarial examples. arXiv preprint arXiv:1704.08847, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.08847"
+        },
+        {
+            "id": "Courbariaux_2016_a",
+            "entry": "Matthieu Courbariaux and Yoshua Bengio. Binarynet: Training deep neural networks with weights and activations constrained to+ 1 or-1. arXiv preprint arXiv:1602.02830, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02830"
+        },
+        {
+            "id": "Dhillon_et+al_2018_a",
+            "entry": "Guneet S Dhillon, Kamyar Azizzadenesheli, Zachary C Lipton, Jeremy Bernstein, Jean Kossaifi, Aran Khanna, and Anima Anandkumar. Stochastic activation pruning for robust adversarial defense. arXiv preprint arXiv:1803.01442, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.01442"
+        },
+        {
+            "id": "Galloway_et+al_2017_a",
+            "entry": "Angus Galloway, Graham W Taylor, and Medhat Moussa. Attacking binarized neural networks. arXiv preprint arXiv:1711.00449, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00449"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples (2014). arXiv preprint arXiv:1412.6572.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. arXiv preprint arXiv:1510.00149, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "Howard_et+al_2017_a",
+            "entry": "Andrew G Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, and Hartwig Adam. Mobilenets: Efficient convolutional neural networks for mobile vision applications. arXiv preprint arXiv:1704.04861, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04861"
+        },
+        {
+            "id": "Jacob_et+al_2017_a",
+            "entry": "Benoit Jacob, Skirmantas Kligys, Bo Chen, Menglong Zhu, Matthew Tang, Andrew Howard, Hartwig Adam, and Dmitry Kalenichenko. Quantization and training of neural networks for efficient integer-arithmetic-only inference. arXiv preprint arXiv:1712.05877, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.05877"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Kurakin_et+al_2016_a",
+            "entry": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial machine learning at scale. arXiv preprint arXiv:1611.01236, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01236"
+        },
+        {
+            "id": "Liao_et+al_2018_a",
+            "entry": "Fangzhou Liao, Ming Liang, Yinpeng Dong, Tianyu Pang, Jun Zhu, and Xiaolin Hu. Defense against adversarial attacks using high-level representation guided denoiser. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 1778\u20131787, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liao%2C%20Fangzhou%20Liang%2C%20Ming%20Dong%2C%20Yinpeng%20Pang%2C%20Tianyu%20Defense%20against%20adversarial%20attacks%20using%20high-level%20representation%20guided%20denoiser%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liao%2C%20Fangzhou%20Liang%2C%20Ming%20Dong%2C%20Yinpeng%20Pang%2C%20Tianyu%20Defense%20against%20adversarial%20attacks%20using%20high-level%20representation%20guided%20denoiser%202018"
+        },
+        {
+            "id": "Madry_et+al_2017_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. arXiv preprint arXiv:1706.06083, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06083"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading digits in natural images with unsupervised feature learning. In NIPS workshop on deep learning and unsupervised feature learning, volume 2011, pp. 5, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "N_0000_a",
+            "entry": "NVIDIA. Nvidia turing architecture whitepaper. URL https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/technologies/turing-architecture/NVIDIA-Turing-Architecture-Whitepaper.pdf.",
+            "url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/technologies/turing-architecture/NVIDIA-Turing-Architecture-Whitepaper.pdf"
+        },
+        {
+            "id": "Papernot_et+al_2016_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Ian Goodfellow, Somesh Jha, Z Berkay Celik, and Ananthram Swami. Practical black-box attacks against deep learning systems using adversarial examples. arXiv preprint, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Goodfellow%2C%20Ian%20Somesh%20Jha%2C%20Z.Berkay%20Celik%20Practical%20black-box%20attacks%20against%20deep%20learning%20systems%20using%20adversarial%20examples.%20arXiv%20p%202016"
+        },
+        {
+            "id": "Papernot_et+al_2016_b",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Xi Wu, Somesh Jha, and Ananthram Swami. Distillation as a defense to adversarial perturbations against deep neural networks. In 2016 IEEE Symposium on Security and Privacy (SP), pp. 582\u2013597. IEEE, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Qian_2018_a",
+            "entry": "Haifeng Qian and Mark N Wegman. L2-nonexpansive neural networks. arXiv preprint arXiv:1802.07896, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.07896"
+        },
+        {
+            "id": "Rakin_et+al_2018_a",
+            "entry": "Adnan Siraj Rakin, Jinfeng Yi, Boqing Gong, and Deliang Fan. Defend deep neural networks against adversarial examples via fixed anddynamic quantized activation functions. arXiv preprint arXiv:1807.06714, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.06714"
+        },
+        {
+            "id": "Sandler_et+al_2018_a",
+            "entry": "Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, and Liang-Chieh Chen. Inverted residuals and linear bottlenecks: Mobile networks for classification, detection and segmentation. arXiv preprint arXiv:1801.04381, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.04381"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Song_et+al_2017_a",
+            "entry": "Yang Song, Taesup Kim, Sebastian Nowozin, Stefano Ermon, and Nate Kushman. Pixeldefend: Leveraging generative models to understand and defend against adversarial examples. arXiv preprint arXiv:1710.10766, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10766"
+        },
+        {
+            "id": "Su_et+al_2018_a",
+            "entry": "Dong Su, Huan Zhang, Hongge Chen, Jinfeng Yi, Pin-Yu Chen, and Yupeng Gao. Is robustness the cost of accuracy?\u2013a comprehensive study on the robustness of 18 deep image classification models. arXiv preprint arXiv:1808.01688, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.01688"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tramer_et+al_2017_a",
+            "entry": "Florian Tramer, Alexey Kurakin, Nicolas Papernot, Ian Goodfellow, Dan Boneh, and Patrick McDaniel. Ensemble adversarial training: Attacks and defenses. arXiv preprint arXiv:1705.07204, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07204"
+        },
+        {
+            "id": "Warde-Farley_2016_a",
+            "entry": "David Warde-Farley and Ian Goodfellow. 11 adversarial perturbations of deep neural networks. Perturbations, Optimization, and Statistics, pp. 311, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Warde-Farley%2C%20David%20Goodfellow%2C%20Ian%2011%20adversarial%20perturbations%20of%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Warde-Farley%2C%20David%20Goodfellow%2C%20Ian%2011%20adversarial%20perturbations%20of%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Xu_et+al_2017_a",
+            "entry": "Weilin Xu, David Evans, and Yanjun Qi. Feature squeezing: Detecting adversarial examples in deep neural networks. arXiv preprint arXiv:1704.01155, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.01155"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Wide residual networks. arXiv preprint arXiv:1605.07146, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07146"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Shuchang Zhou, Yuxin Wu, Zekun Ni, Xinyu Zhou, He Wen, and Yuheng Zou. Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients. arXiv preprint arXiv:1606.06160, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        },
+        {
+            "id": "Zhu_et+al_2016_a",
+            "entry": "Chenzhuo Zhu, Song Han, Huizi Mao, and William J Dally. Trained ternary quantization. arXiv preprint arXiv:1612.01064, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.01064"
+        },
+        {
+            "id": "Rakin_2018_b",
+            "entry": "Rakin et al. (2018) tried to use activation quantization as a defense method against adversarial samples. According to their experiments, simply Tanh based activation quantization can greatly improve the model\u2019s robustness under PGD adversarial training setting. We reproduced their experiments by training a ResNet-18 model with PGD adversarial training on CIFAR-10 following Madry et al. (2017). To make a comparison, we also trained a full precision model and a ReLU6 quantized model following same setting. All the quantized models use bit=2. We tested the trained model using PGD attack by Madry et al. (2017) under both white-box and black-box setting. We use a VGG-16 model separately trained with PGD adversarial training as the black-box attacker. The results are provided in Table 5.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rakin%20tried%20to%20use%20activation%20quantization%20as%20a%20defense%20method%20against%20adversarial%20samples.%20According%20to%20their%20experiments%2C%20simply%20Tanh%20based%20activation%20quantization%20can%20greatly%20improve%20the%20model%E2%80%99s%20robustness%20under%20PGD%20adversarial%20training%20setting.%20We%20reproduced%20their%20experiments%20by%20training%20a%20ResNet-18%20model%20with%20PGD%20adversarial%20training%20on%20CIFAR-10%20following%20Madry%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rakin%20tried%20to%20use%20activation%20quantization%20as%20a%20defense%20method%20against%20adversarial%20samples.%20According%20to%20their%20experiments%2C%20simply%20Tanh%20based%20activation%20quantization%20can%20greatly%20improve%20the%20model%E2%80%99s%20robustness%20under%20PGD%20adversarial%20training%20setting.%20We%20reproduced%20their%20experiments%20by%20training%20a%20ResNet-18%20model%20with%20PGD%20adversarial%20training%20on%20CIFAR-10%20following%20Madry%202018"
+        }
+    ]
+}

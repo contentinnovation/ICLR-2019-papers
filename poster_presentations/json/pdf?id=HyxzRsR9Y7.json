@@ -1,0 +1,340 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING SELF-IMITATING DIVERSE POLICIES",
+        "author": "Tanmay Gangwani Dept. of Computer Science UIUC gangwan,@uiuc.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyxzRsR9Y7"
+        },
+        "abstract": "The success of popular algorithms for deep reinforcement learning, such as policygradients and Q-learning, relies heavily on the availability of an informative reward signal at each timestep of the sequential decision-making process. When rewards are only sparsely available during an episode, or a rewarding feedback is provided only after episode termination, these algorithms perform sub-optimally due to the difficultly in credit assignment. Alternatively, trajectory-based policy optimization methods, such as cross-entropy method and evolution strategies, do not require per-timestep rewards, but have been found to suffer from high sample complexity by completing forgoing the temporal nature of the problem. Improving the efficiency of RL algorithms in real-world problems with sparse or episodic rewards is therefore a pressing need. In this work, we introduce a self-imitation learning algorithm that exploits and explores well in the sparse and episodic reward settings. We view each policy as a state-action visitation distribution and formulate policy optimization as a divergence minimization problem. We show that with Jensen-Shannon divergence, this divergence minimization problem can be reduced into a policy-gradient algorithm with shaped rewards learned from experience replays. Experimental results indicate that our algorithm works comparable to existing algorithms in environments with dense rewards, and significantly better in environments with sparse and episodic rewards. We then discuss limitations of self-imitation learning, and propose to solve them by using Stein variational policy gradient descent with the Jensen-Shannon kernel to learn multiple diverse policies. We demonstrate its effectiveness on a challenging variant of continuous-control MuJoCo locomotion tasks."
+    },
+    "keywords": [
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "function approximation",
+            "url": "https://en.wikipedia.org/wiki/function_approximation"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "policy gradient method",
+            "url": "https://en.wikipedia.org/wiki/policy_gradient_method"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "evolution strategy",
+            "url": "https://en.wikipedia.org/wiki/evolution_strategy"
+        }
+    ],
+    "abbreviations": {
+        "RL": "reinforcement learning",
+        "SVPG": "Stein variational policy gradient",
+        "REPS": "Relative Entropy Policy Search",
+        "LfD": "Learning from Demonstrations"
+    },
+    "highlights": [
+        "Deep reinforcement learning (RL) has demonstrated significant applicability and superior performance in many problems outside the reach of traditional algorithms, such as computer and board games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>), continuous control (<a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\">Levine et al, 2016</a></a>)",
+        "Using deep neural networks as functional approximators, many classical reinforcement learning algorithms have been shown to be very effective in solving sequential decision problems",
+        "A policy that selects actions under certain state observation can be parameterized by a deep neural network that takes the current state observation as input and gives an action or a distribution over actions as output",
+        "Using the equivalence between the policy function and its state-action visitation distribution, we formulate policy optimization as a divergence minimization problem between the current policy\u2019s visitation and the distribution induced by a set of experience replay trajectories with high returns",
+        "We show that with the Jensen-Shannon divergence (DJS), this divergence minimization problem can be reduced into a policy-gradient algorithm with shaped, dense rewards learned from these experience replays",
+        "We conduct experiments to show how self-imitation can lead to sub-optimal policies in certain cases, and how the Stein variational policy gradient objective, which trains an ensemble with an explicit DJS repulsion between policies, can improve performance.\n2D-Navigation"
+    ],
+    "key_statements": [
+        "Deep reinforcement learning (RL) has demonstrated significant applicability and superior performance in many problems outside the reach of traditional algorithms, such as computer and board games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>), continuous control (<a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\">Levine et al, 2016</a></a>)",
+        "Using deep neural networks as functional approximators, many classical reinforcement learning algorithms have been shown to be very effective in solving sequential decision problems",
+        "A policy that selects actions under certain state observation can be parameterized by a deep neural network that takes the current state observation as input and gives an action or a distribution over actions as output",
+        "Using the equivalence between the policy function and its state-action visitation distribution, we formulate policy optimization as a divergence minimization problem between the current policy\u2019s visitation and the distribution induced by a set of experience replay trajectories with high returns",
+        "We show that with the Jensen-Shannon divergence (DJS), this divergence minimization problem can be reduced into a policy-gradient algorithm with shaped, dense rewards learned from these experience replays",
+        "We further find that even in cases with dense environment rewards, the two gradient components can be successfully combined for policy optimization",
+        "We propose to improve Stein variational policy gradient using JS kernel k = exp(\u2212DJS/T ), where \u03c1\u03c0\u03b8 (s, a) is the state-action visitation distribution obtained by running policy \u03c0\u03b8, and T is the temperature",
+        "We conduct experiments to show how self-imitation can lead to sub-optimal policies in certain cases, and how the Stein variational policy gradient objective, which trains an ensemble with an explicit DJS repulsion between policies, can improve performance.\n2D-Navigation",
+        "In Appendix 5.6, we show preliminary results for two cases: a) hierarchical reinforcement learning, where a diverse group of Swimmer bots is trained for downstream use in a complex Swimming+Gathering task; b) reinforcement learning without environment rewards, relying solely on diversity as the optimization objective"
+    ],
+    "summary": [
+        "Deep reinforcement learning (RL) has demonstrated significant applicability and superior performance in many problems outside the reach of traditional algorithms, such as computer and board games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>), continuous control (<a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>), and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\">Levine et al, 2016</a></a>).",
+        "Using the equivalence between the policy function and its state-action visitation distribution, we formulate policy optimization as a divergence minimization problem between the current policy\u2019s visitation and the distribution induced by a set of experience replay trajectories with high returns.",
+        "We show that with the Jensen-Shannon divergence (DJS), this divergence minimization problem can be reduced into a policy-gradient algorithm with shaped, dense rewards learned from these experience replays.",
+        "The objective in LfD, or imitation learning, is to train a control policy to produce a trajectory distribution similar to the demonstrator.",
+        "We obtain additional rewards, but from a discriminator trained on past agent experiences, to accelerate a policy-gradient algorithm.",
+        "We can maintain a selected subset ME of highly-rewarded trajectories from the previous rollouts of policy \u03c0, and optimize the policy \u03c0 to minimize the divergence between \u03c1\u03c0 and the empirical state-action pair distribution {}ME : min \u03c0",
+        "Our goal is to answer the following questions: 1) How does self-imitation fare against standard policy gradients under various reward distributions from the environment, namely episodic, noisy and dense?",
+        "In case of Self-Imitation, the algorithm has access to the shaped rewards for each timestep, derived from the high-return trajectories in ME.",
+        "This indicates that not only does self-imitation vastly help when the environment rewards are scant, it can readily be incorporated with the standard policy gradients via interpolation, for successful learning across reward settings.",
+        "We conduct experiments to show how self-imitation can lead to sub-optimal policies in certain cases, and how the SVPG objective, which trains an ensemble with an explicit DJS repulsion between policies, can improve performance.",
+        "To explore the limitations of self-imitation in harder exploration problems in highdimensional, continuous state-action spaces, we modify 3 MuJoCo tasks as follows \u2013 SparseHalfCheetah, SparseHopper and SparseAnt yield a forward velocity reward only when the centerof-mass of the corresponding bot is beyond a certain threshold distance.",
+        "The SI-independent agents rely solely on action-space noise from the Gaussian policy parameterization to find high-return trajectories which are added to ME as demonstrations.",
+        "This leads to a self-imitation algorithm which improves upon standard policy-gradient methods via the addition of a simple gradient term obtained from implicitly shaped dense rewards.",
+        "In Appendix 5.6, we show preliminary results for two cases: a) hierarchical RL, where a diverse group of Swimmer bots is trained for downstream use in a complex Swimming+Gathering task; b) RL without environment rewards, relying solely on diversity as the optimization objective.",
+        "We demonstrate the benefits of a self-imitating, diverse ensemble for efficient exploration and avoidance of local minima"
+    ],
+    "headline": "We introduce a self-imitation learning algorithm that exploits and explores well in the sparse and episodic reward settings",
+    "reference_links": [
+        {
+            "id": "Abolafia_et+al_2018_a",
+            "entry": "Daniel A Abolafia, Mohammad Norouzi, and Quoc V Le. Neural program synthesis with priority queue training. arXiv preprint arXiv:1801.03526, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.03526"
+        },
+        {
+            "id": "Amari_1998_a",
+            "entry": "Shun-Ichi Amari. Natural gradient works efficiently in learning. Neural computation, 10(2):251\u2013 276, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998"
+        },
+        {
+            "id": "Andrychowicz_et+al_2017_a",
+            "entry": "Marcin Andrychowicz, Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, Peter Welinder, Bob McGrew, Josh Tobin, OpenAI Pieter Abbeel, and Wojciech Zaremba. Hindsight experience replay. In Advances in Neural Information Processing Systems, pp. 5048\u20135058, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Wolski%2C%20Filip%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Hindsight%20experience%20replay%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Wolski%2C%20Filip%20Ray%2C%20Alex%20Schneider%2C%20Jonas%20Hindsight%20experience%20replay%202017"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In Advances in Neural Information Processing Systems, pp. 1471\u20131479, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bojarski_et+al_2016_a",
+            "entry": "Mariusz Bojarski, Davide Del Testa, Daniel Dworakowski, Bernhard Firner, Beat Flepp, Prasoon Goyal, Lawrence D Jackel, Mathew Monfort, Urs Muller, Jiakai Zhang, et al. End to end learning for self-driving cars. arXiv preprint arXiv:1604.07316, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.07316"
+        },
+        {
+            "id": "Christiano_et+al_2017_a",
+            "entry": "Paul F Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. Deep reinforcement learning from human preferences. In Advances in Neural Information Processing Systems, pp. 4302\u20134310, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christiano%2C%20Paul%20F.%20Leike%2C%20Jan%20Brown%2C%20Tom%20Martic%2C%20Miljan%20Deep%20reinforcement%20learning%20from%20human%20preferences%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christiano%2C%20Paul%20F.%20Leike%2C%20Jan%20Brown%2C%20Tom%20Martic%2C%20Miljan%20Deep%20reinforcement%20learning%20from%20human%20preferences%202017"
+        },
+        {
+            "id": "Conti_et+al_2017_a",
+            "entry": "Edoardo Conti, Vashisht Madhavan, Felipe Petroski Such, Joel Lehman, Kenneth O Stanley, and Jeff Clune. Improving exploration in evolution strategies for deep reinforcement learning via a population of novelty-seeking agents. arXiv preprint arXiv:1712.06560, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.06560"
+        },
+        {
+            "id": "Deisenroth_et+al_2013_a",
+            "entry": "Marc Peter Deisenroth, Gerhard Neumann, Jan Peters, et al. A survey on policy search for robotics. Foundations and Trends R in Robotics, 2(1\u20132):1\u2013142, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Peter%20Neumann%2C%20Gerhard%20Peters%2C%20Jan%20A%20survey%20on%20policy%20search%20for%20robotics%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Peter%20Neumann%2C%20Gerhard%20Peters%2C%20Jan%20A%20survey%20on%20policy%20search%20for%20robotics%202013"
+        },
+        {
+            "id": "Dhariwal_et+al_2017_a",
+            "entry": "Prafulla Dhariwal, Christopher Hesse, Oleg Klimov, Alex Nichol, Matthias Plappert, Alec Radford, John Schulman, Szymon Sidor, and Yuhuai Wu. Openai baselines. https://github.com/openai/baselines, 2017.",
+            "url": "https://github.com/openai/baselines"
+        },
+        {
+            "id": "Duan_et+al_2016_a",
+            "entry": "Yan Duan, Xi Chen, Rein Houthooft, John Schulman, and Pieter Abbeel. Benchmarking deep reinforcement learning for continuous control. In International Conference on Machine Learning, pp. 1329\u20131338, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016"
+        },
+        {
+            "id": "Eysenbach_et+al_2018_a",
+            "entry": "Benjamin Eysenbach, Abhishek Gupta, Julian Ibarz, and Sergey Levine. Diversity is all you need: Learning skills without a reward function. arXiv preprint arXiv:1802.06070, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06070"
+        },
+        {
+            "id": "Finn_et+al_2016_a",
+            "entry": "Chelsea Finn, Sergey Levine, and Pieter Abbeel. Guided cost learning: Deep inverse optimal control via policy optimization. In International Conference on Machine Learning, pp. 49\u201358, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Guided%20cost%20learning%3A%20Deep%20inverse%20optimal%20control%20via%20policy%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Guided%20cost%20learning%3A%20Deep%20inverse%20optimal%20control%20via%20policy%20optimization%202016"
+        },
+        {
+            "id": "Florensa_et+al_2017_a",
+            "entry": "Carlos Florensa, Yan Duan, and Pieter Abbeel. Stochastic neural networks for hierarchical reinforcement learning. arXiv preprint arXiv:1704.03012, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03012"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Justin Fu, John Co-Reyes, and Sergey Levine. Ex2: Exploration with exemplar models for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2574\u20132584, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Fujimoto_et+al_2018_a",
+            "entry": "Scott Fujimoto, Herke van Hoof, and Dave Meger. Addressing function approximation error in actor-critic methods. arXiv preprint arXiv:1802.09477, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09477"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Hester_et+al_2017_a",
+            "entry": "Todd Hester, Matej Vecerik, Olivier Pietquin, Marc Lanctot, Tom Schaul, Bilal Piot, Dan Horgan, John Quan, Andrew Sendonaris, Gabriel Dulac-Arnold, et al. Deep q-learning from demonstrations. arXiv preprint arXiv:1704.03732, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03732"
+        },
+        {
+            "id": "Ho_2016_a",
+            "entry": "Jonathan Ho and Stefano Ermon. Generative adversarial imitation learning. In Advances in Neural Information Processing Systems, pp. 4565\u20134573, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ho%2C%20Jonathan%20Ermon%2C%20Stefano%20Generative%20adversarial%20imitation%20learning%202016"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pp. 1109\u20131117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Kakade_2002_a",
+            "entry": "Sham M Kakade. A natural policy gradient. In Advances in neural information processing systems, pp. 1531\u20131538, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kakade%2C%20Sham%20M.%20A%20natural%20policy%20gradient%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kakade%2C%20Sham%20M.%20A%20natural%20policy%20gradient%202002"
+        },
+        {
+            "id": "Kober_2009_a",
+            "entry": "Jens Kober and Jan R Peters. Policy search for motor primitives in robotics. In Advances in neural information processing systems, pp. 849\u2013856, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kober%2C%20Jens%20Peters%2C%20Jan%20R.%20Policy%20search%20for%20motor%20primitives%20in%20robotics%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kober%2C%20Jens%20Peters%2C%20Jan%20R.%20Policy%20search%20for%20motor%20primitives%20in%20robotics%202009"
+        },
+        {
+            "id": "Levine_2013_a",
+            "entry": "Sergey Levine and Vladlen Koltun. Guided policy search. In International Conference on Machine Learning, pp. 1\u20139, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Guided%20policy%20search%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Guided%20policy%20search%202013"
+        },
+        {
+            "id": "Levine_et+al_2016_a",
+            "entry": "Sergey Levine, Chelsea Finn, Trevor Darrell, and Pieter Abbeel. End-to-end training of deep visuomotor policies. The Journal of Machine Learning Research, 17(1):1334\u20131373, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Finn%2C%20Chelsea%20Darrell%2C%20Trevor%20Abbeel%2C%20Pieter%20End-to-end%20training%20of%20deep%20visuomotor%20policies%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Finn%2C%20Chelsea%20Darrell%2C%20Trevor%20Abbeel%2C%20Pieter%20End-to-end%20training%20of%20deep%20visuomotor%20policies%202016"
+        },
+        {
+            "id": "Liang_et+al_2016_a",
+            "entry": "Chen Liang, Jonathan Berant, Quoc Le, Kenneth D Forbus, and Ni Lao. Neural symbolic machines: Learning semantic parsers on freebase with weak supervision. arXiv preprint arXiv:1611.00020, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.00020"
+        },
+        {
+            "id": "Liang_et+al_2018_a",
+            "entry": "Chen Liang, Mohammad Norouzi, Jonathan Berant, Quoc Le, and Ni Lao. Memory augmented policy optimization for program synthesis with generalization. arXiv preprint arXiv:1807.02322, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.02322"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "Timothy P Lillicrap, Jonathan J Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. arXiv preprint arXiv:1509.02971, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Liu_2016_a",
+            "entry": "Qiang Liu and Dilin Wang. Stein variational gradient descent: A general purpose bayesian inference algorithm. In Advances In Neural Information Processing Systems, pp. 2378\u20132386, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Qiang%20Wang%2C%20Dilin%20Stein%20variational%20gradient%20descent%3A%20A%20general%20purpose%20bayesian%20inference%20algorithm%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Qiang%20Wang%2C%20Dilin%20Stein%20variational%20gradient%20descent%3A%20A%20general%20purpose%20bayesian%20inference%20algorithm%202016"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Yang Liu, Prajit Ramachandran, Qiang Liu, and Jian Peng. Stein variational policy gradient. arXiv preprint arXiv:1704.02399, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02399"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International Conference on Machine Learning, pp. 1928\u20131937, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Nair_et+al_2017_a",
+            "entry": "Ashvin Nair, Bob McGrew, Marcin Andrychowicz, Wojciech Zaremba, and Pieter Abbeel. Overcoming exploration in reinforcement learning with demonstrations. arXiv preprint arXiv:1709.10089, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.10089"
+        },
+        {
+            "id": "Oh_et+al_2018_a",
+            "entry": "Junhyuk Oh, Yijie Guo, Satinder Singh, and Honglak Lee. Self-imitation learning. arXiv preprint arXiv:1806.05635, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.05635"
+        },
+        {
+            "id": "Peters_2007_a",
+            "entry": "Jan Peters and Stefan Schaal. Reinforcement learning by reward-weighted regression for operational space control. In Proceedings of the 24th international conference on Machine learning, pp. 745\u2013 750. ACM, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peters%2C%20Jan%20Schaal%2C%20Stefan%20Reinforcement%20learning%20by%20reward-weighted%20regression%20for%20operational%20space%20control%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Jan%20Schaal%2C%20Stefan%20Reinforcement%20learning%20by%20reward-weighted%20regression%20for%20operational%20space%20control%202007"
+        },
+        {
+            "id": "Ross_et+al_2013_a",
+            "entry": "Stephane Ross, Narek Melik-Barkhudarov, Kumar Shaurya Shankar, Andreas Wendel, Debadeepta Dey, J Andrew Bagnell, and Martial Hebert. Learning monocular reactive uav control in cluttered natural environments. In Robotics and Automation (ICRA), 2013 IEEE International Conference on, pp. 1765\u20131772. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Melik-Barkhudarov%2C%20Narek%20Shankar%2C%20Kumar%20Shaurya%20Wendel%2C%20Andreas%20Learning%20monocular%20reactive%20uav%20control%20in%20cluttered%20natural%20environments%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Melik-Barkhudarov%2C%20Narek%20Shankar%2C%20Kumar%20Shaurya%20Wendel%2C%20Andreas%20Learning%20monocular%20reactive%20uav%20control%20in%20cluttered%20natural%20environments%202013"
+        },
+        {
+            "id": "Rubinstein_2016_a",
+            "entry": "Reuven Y Rubinstein and Dirk P Kroese. Simulation and the Monte Carlo method, volume 10. John Wiley & Sons, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubinstein%2C%20Reuven%20Y.%20Kroese%2C%20Dirk%20P.%20Simulation%20and%20the%20Monte%20Carlo%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rubinstein%2C%20Reuven%20Y.%20Kroese%2C%20Dirk%20P.%20Simulation%20and%20the%20Monte%20Carlo%202016"
+        },
+        {
+            "id": "Salimans_et+al_2017_a",
+            "entry": "Tim Salimans, Jonathan Ho, Xi Chen, and Ilya Sutskever. Evolution strategies as a scalable alternative to reinforcement learning. arXiv preprint arXiv:1703.03864, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.03864"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International Conference on Machine Learning, pp. 1889\u20131897, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Schulman_et+al_0000_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Schulman_et+al_0000_b",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Stadie_et+al_2015_a",
+            "entry": "Bradly C Stadie, Sergey Levine, and Pieter Abbeel. Incentivizing exploration in reinforcement learning with deep predictive models. arXiv preprint arXiv:1507.00814, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.00814"
+        },
+        {
+            "id": "Strehl_2008_a",
+            "entry": "Alexander L Strehl and Michael L Littman. An analysis of model-based interval estimation for markov decision processes. Journal of Computer and System Sciences, 74(8):1309\u20131331, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strehl%2C%20Alexander%20L.%20Littman%2C%20Michael%20L.%20An%20analysis%20of%20model-based%20interval%20estimation%20for%20markov%20decision%20processes%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Strehl%2C%20Alexander%20L.%20Littman%2C%20Michael%20L.%20An%20analysis%20of%20model-based%20interval%20estimation%20for%20markov%20decision%20processes%202008"
+        },
+        {
+            "id": "Sutton_et+al_2000_a",
+            "entry": "Richard S Sutton, David A McAllester, Satinder P Singh, and Yishay Mansour. Policy gradient methods for reinforcement learning with function approximation. In Advances in neural information processing systems, pp. 1057\u20131063, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20Richard%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%202000"
+        },
+        {
+            "id": "Sutton_2017_a",
+            "entry": "Richard Stuart Sutton. Temporal credit assignment in reinforcement learning. 1984. Haoran Tang, Rein Houthooft, Davis Foote, Adam Stooke, OpenAI Xi Chen, Yan Duan, John Schulman, Filip DeTurck, and Pieter Abbeel. # exploration: A study of count-based exploration for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2750\u2013 2759, 2017. Matej Vecer\u0131k, Todd Hester, Jonathan Scholz, Fumin Wang, Olivier Pietquin, Bilal Piot, Nicolas Heess, Thomas Rothorl, Thomas Lampe, and Martin Riedmiller. Leveraging demonstrations for deep reinforcement learning on robotics problems with sparse rewards. arXiv preprint arXiv:1707.08817, 2017. Markus Wulfmeier, Ingmar Posner, and Pieter Abbeel. Mutual alignment transfer learning. arXiv preprint arXiv:1707.07907, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.08817"
+        }
+    ]
+}

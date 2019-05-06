@@ -1,0 +1,230 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PROXQUANT: QUANTIZED NEURAL NETWORKS VIA PROXIMAL OPERATORS",
+        "author": "Yu Bai Stanford University yub@stanford.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyzMyhCcK7"
+        },
+        "abstract": "To make deep neural networks feasible in resource-constrained environments (such as mobile devices), it is beneficial to quantize models by using low-precision weights. One common technique for quantizing neural networks is the straightthrough gradient method, which enables back-propagation through the quantization mapping. Despite its empirical success, little is understood about why the straight-through gradient method works. Building upon a novel observation that the straight-through gradient method is in fact identical to Nesterov\u2019s dual-averaging algorithm on a quantization constrained optimization problem, we propose a more principled alternative approach, called PROXQUANT, that formulates quantized network training as a regularized learning problem instead and optimizes it via the prox-gradient method. PROXQUANT does back-propagation on the underlying full-precision vector and applies an efficient prox-operator in between stochastic gradient steps to encourage quantizedness. For quantizing ResNets and LSTMs, PROXQUANT outperforms state-of-the-art results on binary quantization and is on par with state-of-the-art on multi-bit quantization. We further perform theoretical analyses showing that PROXQUANT converges to stationary points under mild smoothness assumptions, whereas variants such as lazy prox-gradient method can fail to converge in the same setting."
+    },
+    "keywords": [
+        {
+            "term": "Penn Treebank",
+            "url": "https://en.wikipedia.org/wiki/Penn_Treebank"
+        },
+        {
+            "term": "gradient method",
+            "url": "https://en.wikipedia.org/wiki/gradient_method"
+        },
+        {
+            "term": "Deep neural networks",
+            "url": "https://en.wikipedia.org/wiki/Deep_neural_networks"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "mobile device",
+            "url": "https://en.wikipedia.org/wiki/mobile_device"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "Deep neural networks",
+        "TTQ": "Trained Ternary Quantization",
+        "PTB": "Penn Treebank"
+    },
+    "highlights": [
+        "Deep neural networks (DNNs) have achieved impressive results in various machine learning tasks (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\">Goodfellow et al, 2016</a></a>)",
+        "High-performance Deep neural networks typically have over tens of layers and millions of parameters, resulting in a high memory usage and a high computational cost at inference time",
+        "In a quantized neural network, each weight and/or activation can be representable in k bits, with a possible codebook of negligible additional size compared to the network itself",
+        "Compared with the straightthrough gradient method, PROXQUANT has access to additional gradient information at non-quantized points, which avoids the problem in Figure 1b and its homotopy scheme prevents potential overshoot early in the training (Section 3.2)",
+        "A couple of proximal or regularization based quantization algorithms were proposed as alternatives to the straight-through gradient method, which we briefly review and compare with. (<a class=\"ref-link\" id=\"cYin_et+al_2018_a\" href=\"#rYin_et+al_2018_a\">Yin et al, 2018</a>) propose BinaryRelax, which corresponds to a lazy proximal gradient descent. (<a class=\"ref-link\" id=\"cHou_et+al_2017_a\" href=\"#rHou_et+al_2017_a\">Hou et al, 2017</a>; <a class=\"ref-link\" id=\"cHou_2018_a\" href=\"#rHou_2018_a\">Hou & Kwok, 2018</a>) propose a proximal Newton method with a diagonal approximate Hessian",
+        "Our results demonstrate that PROXQUANT offers a powerful alternative to the straightthrough gradient method and has theoretically better convergence properties"
+    ],
+    "key_statements": [
+        "Deep neural networks (DNNs) have achieved impressive results in various machine learning tasks (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\">Goodfellow et al, 2016</a></a>)",
+        "High-performance Deep neural networks typically have over tens of layers and millions of parameters, resulting in a high memory usage and a high computational cost at inference time",
+        "In a quantized neural network, each weight and/or activation can be representable in k bits, with a possible codebook of negligible additional size compared to the network itself",
+        "Compared with the straightthrough gradient method, PROXQUANT has access to additional gradient information at non-quantized points, which avoids the problem in Figure 1b and its homotopy scheme prevents potential overshoot early in the training (Section 3.2)",
+        "A couple of proximal or regularization based quantization algorithms were proposed as alternatives to the straight-through gradient method, which we briefly review and compare with. (<a class=\"ref-link\" id=\"cYin_et+al_2018_a\" href=\"#rYin_et+al_2018_a\">Yin et al, 2018</a>) propose BinaryRelax, which corresponds to a lazy proximal gradient descent. (<a class=\"ref-link\" id=\"cHou_et+al_2017_a\" href=\"#rHou_et+al_2017_a\">Hou et al, 2017</a>; <a class=\"ref-link\" id=\"cHou_2018_a\" href=\"#rHou_2018_a\">Hou & Kwok, 2018</a>) propose a proximal Newton method with a diagonal approximate Hessian",
+        "Problem setup We perform language modeling with LSTMs Hochreiter & Schmidhuber (1997) on the Penn Treebank (PTB) dataset (<a class=\"ref-link\" id=\"cMarcus_et+al_1993_a\" href=\"#rMarcus_et+al_1993_a\">Marcus et al, 1993</a>), which contains 929K training tokens, 73K validation tokens, and 82K test tokens",
+        "In Section 5.2, we provide a simple example showing that the lazy prox-gradient method fails to converge under the same set of assumptions",
+        "Our results demonstrate that PROXQUANT offers a powerful alternative to the straightthrough gradient method and has theoretically better convergence properties"
+    ],
+    "summary": [
+        "Deep neural networks (DNNs) have achieved impressive results in various machine learning tasks (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\">Goodfellow et al, 2016</a></a>).",
+        "We formulate the problem of model quantization as a regularized learning problem and propose to solve it with a proximal gradient method.",
+        "We propose training quantized networks using PROXQUANT (Algorithm 1) \u2014 a stochastic proximal gradient method with a homotopy scheme.",
+        "Compared with the straightthrough gradient method, PROXQUANT has access to additional gradient information at non-quantized points, which avoids the problem in Figure 1b and its homotopy scheme prevents potential overshoot early in the training (Section 3.2).",
+        "We perform a systematic theoretical study of quantization algorithms, showing that our PROXQUANT converges to stataionary points under mild smoothness assumptions (Section 5.1), where as lazy prox-gradient method such as BinaryRelax (<a class=\"ref-link\" id=\"cYin_et+al_2018_a\" href=\"#rYin_et+al_2018_a\">Yin et al, 2018</a>) fails to converge in general (Section 5.2).",
+        "In a parallel line of work, <a class=\"ref-link\" id=\"cCourbariaux_et+al_2015_a\" href=\"#rCourbariaux_et+al_2015_a\">Courbariaux et al (2015</a>) propose BinaryConnect that enables the training of binary neural networks, and <a class=\"ref-link\" id=\"cLi_2016_a\" href=\"#rLi_2016_a\">Li & Liu (2016</a>); <a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\">Zhu et al (2016</a>) extend this method into ternary quantization.",
+        "A couple of proximal or regularization based quantization algorithms were proposed as alternatives to the straight-through gradient method, which we briefly review and compare with.",
+        "We propose the PROXQUANT algorithm, which adds a quantization-inducing regularizer onto the loss and optimizes via the prox-gradient method with a finite \u03bb.",
+        "Algorithm 1 PROXQUANT: Prox-gradient method for quantized net training",
+        "We evaluate the performance of PROXQUANT on two tasks: image classification with ResNets, and language modeling with LSTMs. On both tasks, we show that the default straight-through gradient method is not the only choice, and our PROXQUANT can achieve the same and often better results.",
+        "Method We compare our multi-bit PROXQUANT) to the state-of-the-art alternating minimization algorithm with straight-through gradients (<a class=\"ref-link\" id=\"cXu_et+al_2018_a\" href=\"#rXu_et+al_2018_a\">Xu et al, 2018</a>).",
+        "In addition to multi-bit quantization, we report the results for binary LSTMs, comparing BinaryConnect and our PROXQUANT-Binary, where both learning rates are tuned on an exponential grid {2.5, 5, 10, 20, 40}.",
+        "In Section 5.2, we provide a simple example showing that the lazy prox-gradient method fails to converge under the same set of assumptions.",
+        "Our results demonstrate that PROXQUANT offers a powerful alternative to the straightthrough gradient method and has theoretically better convergence properties.",
+        "It would be of interest to propose alternative regularizers for ternary and multi-bit PROXQUANT and experiment with our method on larger tasks."
+    ],
+    "headline": "Building upon a novel observation that the straight-through gradient method is identical to Nesterov\u2019s dual-averaging algorithm on a quantization constrained optimization problem, we propose a more principled alternative approach, called PROXQUANT, that formulates quantized network training as a regularized learning problem instead and optimizes it via the prox-gradient method",
+    "reference_links": [
+        {
+            "id": "Anderson_2017_a",
+            "entry": "Alexander G Anderson and Cory P Berg. The high-dimensional geometry of binary neural networks. arXiv preprint arXiv:1705.07199, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07199"
+        },
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein gan. arXiv preprint arXiv:1701.07875, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07875"
+        },
+        {
+            "id": "Carreira-Perpinan_2017_a",
+            "entry": "Miguel A Carreira-Perpinan. Model compression as constrained optimization, with application to neural nets. part i: General framework. arXiv preprint arXiv:1707.01209, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.01209"
+        },
+        {
+            "id": "Miguel_2017_a",
+            "entry": "Miguel A Carreira-Perpinan and Yerlan Idelbayev. Model compression as constrained optimization, with application to neural nets. part ii: Quantization. arXiv preprint arXiv:1707.04319, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.04319"
+        },
+        {
+            "id": "Courbariaux_et+al_2015_a",
+            "entry": "Matthieu Courbariaux, Yoshua Bengio, and Jean-Pierre David. BinaryConnect: Training deep neural networks with binary weights during propagations. In Advances in neural information processing systems, pp. 3123\u20133131, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Courbariaux%2C%20Matthieu%20Bengio%2C%20Yoshua%20David%2C%20Jean-Pierre%20BinaryConnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Courbariaux%2C%20Matthieu%20Bengio%2C%20Yoshua%20David%2C%20Jean-Pierre%20BinaryConnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015"
+        },
+        {
+            "id": "Ding_et+al_2018_a",
+            "entry": "Yukun Ding, Jinglan Liu, and Yiyu Shi. On the universal approximability of quantized relu neural networks. arXiv preprint arXiv:1802.03646, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03646"
+        },
+        {
+            "id": "Goodfellow_et+al_2016_a",
+            "entry": "Ian Goodfellow, Yoshua Bengio, Aaron Courville, and Yoshua Bengio. Deep learning, volume 1. MIT press Cambridge, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Bengio%2C%20Yoshua%20Deep%20learning%2C%20volume%201%202016"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. arXiv preprint arXiv:1510.00149, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Xingyu Liu, Huizi Mao, Jing Pu, Ardavan Pedram, Mark A Horowitz, and William J Dally. EIE: Efficient inference engine on compressed deep neural network. In Computer Architecture (ISCA), 2016 ACM/IEEE 43rd Annual International Symposium on, pp. 243\u2013254. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20EIE%3A%20Efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20EIE%3A%20Efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Hou_2018_a",
+            "entry": "Lu Hou and James T. Kwok. Loss-aware weight quantization of deep networks. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=BkrSv0lA-.",
+            "url": "https://openreview.net/forum?id=BkrSv0lA-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hou%2C%20Lu%20Kwok%2C%20James%20T.%20Loss-aware%20weight%20quantization%20of%20deep%20networks%202018"
+        },
+        {
+            "id": "Hou_et+al_2017_a",
+            "entry": "Lu Hou, Quanming Yao, and James T Kwok. Loss-aware binarization of deep networks. In International Conference on Learning Representations, 2017. URL https://openreview.net/forum?id=S1oWlN9ll.",
+            "url": "https://openreview.net/forum?id=S1oWlN9ll",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hou%2C%20Lu%20Yao%2C%20Quanming%20Kwok%2C%20James%20T.%20Loss-aware%20binarization%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Hubara_et+al_2017_a",
+            "entry": "Itay Hubara, Matthieu Courbariaux, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Quantized neural networks: Training neural networks with low precision weights and activations. Journal of Machine Learning Research, 18:187\u20131, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubara%2C%20Itay%20Courbariaux%2C%20Matthieu%20Soudry%2C%20Daniel%20El-Yaniv%2C%20Ran%20Quantized%20neural%20networks%3A%20Training%20neural%20networks%20with%20low%20precision%20weights%20and%20activations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubara%2C%20Itay%20Courbariaux%2C%20Matthieu%20Soudry%2C%20Daniel%20El-Yaniv%2C%20Ran%20Quantized%20neural%20networks%3A%20Training%20neural%20networks%20with%20low%20precision%20weights%20and%20activations%202017"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Li_2016_a",
+            "entry": "Fengfu Li and Bin Liu. Ternary weight networks. arXiv preprint arXiv:1605.04711, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.04711"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Soham De, Zheng Xu, Christoph Studer, Hanan Samet, and Tom Goldstein. Training quantized nets: A deeper understanding. In Advances in Neural Information Processing Systems, pp. 5811\u20135821, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Hao%20De%2C%20Soham%20Xu%2C%20Zheng%20Studer%2C%20Christoph%20Training%20quantized%20nets%3A%20A%20deeper%20understanding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Hao%20De%2C%20Soham%20Xu%2C%20Zheng%20Studer%2C%20Christoph%20Training%20quantized%20nets%3A%20A%20deeper%20understanding%202017"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: The penn treebank. Computational linguistics, 19(2):313\u2013330, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993"
+        },
+        {
+            "id": "Parikh_2014_a",
+            "entry": "Neal Parikh and Stephen Boyd. Proximal algorithms. Foundations and Trends R in Optimization, 1 (3):127\u2013239, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parikh%2C%20Neal%20Boyd%2C%20Stephen%20Proximal%20algorithms.%20Foundations%20and%20Trends%20R%20in%20Optimization%2C%201%202014"
+        },
+        {
+            "id": "Sun_2018_a",
+            "entry": "Ju Sun and Xiaoxia Sun. Adversarial probabilistic regularization. Unpublished draft, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Ju%20Sun%2C%20Xiaoxia%20Adversarial%20probabilistic%20regularization%202018"
+        },
+        {
+            "id": "Tibshirani_1996_a",
+            "entry": "Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society. Series B (Methodological), pp. 267\u2013288, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201996"
+        },
+        {
+            "id": "Xiao_2010_a",
+            "entry": "Lin Xiao. Dual averaging methods for regularized stochastic learning and online optimization. Journal of Machine Learning Research, 11(Oct):2543\u20132596, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20Lin%20Dual%20averaging%20methods%20for%20regularized%20stochastic%20learning%20and%20online%20optimization%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiao%2C%20Lin%20Dual%20averaging%20methods%20for%20regularized%20stochastic%20learning%20and%20online%20optimization%202010"
+        },
+        {
+            "id": "Xu_et+al_2018_a",
+            "entry": "Chen Xu, Jianqiang Yao, Zhouchen Lin, Wenwu Ou, Yuanbin Cao, Zhirong Wang, and Hongbin Zha. Alternating multi-bit quantization for recurrent neural networks. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id= S19dR9x0b.",
+            "url": "https://openreview.net/forum?id=",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Chen%20Yao%2C%20Jianqiang%20Lin%2C%20Zhouchen%20Ou%2C%20Wenwu%20Alternating%20multi-bit%20quantization%20for%20recurrent%20neural%20networks%202018"
+        },
+        {
+            "id": "Yin_et+al_2016_a",
+            "entry": "Penghang Yin, Shuai Zhang, Yingyong Qi, and Jack Xin. Quantization and training of low bit-width convolutional neural networks for object detection. arXiv preprint arXiv:1612.06052, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.06052"
+        },
+        {
+            "id": "Yin_et+al_2018_a",
+            "entry": "Penghang Yin, Shuai Zhang, Jiancheng Lyu, Stanley Osher, Yingyong Qi, and Jack Xin. Binaryrelax: A relaxation approach for training deep neural networks with quantized weights. arXiv preprint arXiv:1801.06313, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.06313"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Shuchang Zhou, Yuxin Wu, Zekun Ni, Xinyu Zhou, He Wen, and Yuheng Zou. Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients. arXiv preprint arXiv:1606.06160, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        },
+        {
+            "id": "Zhu_et+al_2016_a",
+            "entry": "Chenzhuo Zhu, Song Han, Huizi Mao, and William J Dally. Trained ternary quantization. arXiv preprint arXiv:1612.01064, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.01064"
+        },
+        {
+            "id": "This_2016_a",
+            "entry": "This is a straightforward extension of the TWN quantizer (Li & Liu, 2016) that allows different levels for positives and negatives. We find that two rounds of alternating computation in eq. (15) achieves a good performance, which we use in our experiments.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=This%20is%20a%20straightforward%20extension%20of%20the%20TWN%20quantizer%20Li%20%20Liu%202016%20that%20allows%20different%20levels%20for%20positives%20and%20negatives%20We%20find%20that%20two%20rounds%20of%20alternating%20computation%20in%20eq%2015%20achieves%20a%20good%20performance%20which%20we%20use%20in%20our%20experiments",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=This%20is%20a%20straightforward%20extension%20of%20the%20TWN%20quantizer%20Li%20%20Liu%202016%20that%20allows%20different%20levels%20for%20positives%20and%20negatives%20We%20find%20that%20two%20rounds%20of%20alternating%20computation%20in%20eq%2015%20achieves%20a%20good%20performance%20which%20we%20use%20in%20our%20experiments"
+        }
+    ]
+}

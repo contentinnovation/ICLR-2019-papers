@@ -1,0 +1,349 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING A META-SOLVER FOR SYNTAX-GUIDED PROGRAM SYNTHESIS",
+        "author": "Xujie Si, Yuan Yang, Hanjun Dai, Mayur Naik, & Le Song, 1University of Pennsylvania, 2Georgia Institute of Technology 1{xsi,mhnaik}@cis.upenn.edu 2{yyang,hanjundai}@gatech.edu,lsong@cc.gatech.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Syl8Sn0cK7"
+        },
+        "abstract": "A general formulation of program synthesis called syntax-guided synthesis (SyGuS) seeks to synthesize a program that follows a given grammar and satisfies a given logical specification. Both the logical specification and the grammar have complex structures and can vary from task to task, posing significant challenges for learning across different tasks. Moreover, supervision is often unavailable for domain-specific synthesis tasks. To address these challenges, we propose a metalearning framework that learns a transferable policy using only weak supervision. Our framework consists of three components: 1) an encoder, which embeds both the logical specification and grammar at the same time using a graph neural network; 2) a grammar adaptive policy network which enables learning a transferable policy; and 3) a reinforcement learning algorithm that jointly trains the embedding and adaptive policy with sparse reward. We evaluate the framework on 214 cryptographic circuit synthesis tasks. It solves 141 of them in the out-of-box solver setting, significantly outperforming a similar search-based approach but without learning, which solves only 31. The result is comparable to two state-of-the-art classical synthesis engines, which solve 129 and 153 respectively. In the metasolver setting, the framework can efficiently adapt to unseen tasks and achieves speedup ranging from 2\u00d7 up to 100\u00d7."
+    },
+    "keywords": [
+        {
+            "term": "context free grammar",
+            "url": "https://en.wikipedia.org/wiki/context_free_grammar"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "program synthesis",
+            "url": "https://en.wikipedia.org/wiki/program_synthesis"
+        },
+        {
+            "term": "abstract syntax tree",
+            "url": "https://en.wikipedia.org/wiki/abstract_syntax_tree"
+        },
+        {
+            "term": "Static Single Assignment",
+            "url": "https://en.wikipedia.org/wiki/Static_Single_Assignment"
+        },
+        {
+            "term": "depth-first search",
+            "url": "https://en.wikipedia.org/wiki/depth-first_search"
+        }
+    ],
+    "abbreviations": {
+        "SyGuS": "Syntax-Guided Synthesis",
+        "CFG": "context free grammar",
+        "SSA": "Static Single Assignment",
+        "AST": "abstract syntax tree",
+        "DFS": "depth-first search"
+    },
+    "highlights": [
+        "Program synthesis concerns automatically generating a program that satisfies desired functional requirements",
+        "The key contributions we make are (1) a joint graph representation of both syntactic and semantic constraints in each task that is learned by a graph neural network model; (2) a grammar adaptive policy network that generalizes across different grammars and guides the search for the desired program; and (3) a reinforcement learning training method that enables learning transferable representation and policy with weak supervision",
+        "We demonstrate our meta-learning framework on a challenging and practical instance of the Syntax-Guided Synthesis problem that concerns synthesizing cryptographic circuits that are provably free of side-channel attacks (<a class=\"ref-link\" id=\"cEldib_et+al_2016_a\" href=\"#rEldib_et+al_2016_a\">Eldib et al, 2016</a>)",
+        "We proposed a framework to learn a transferable representation and strategy in solving a general formulation of program synthesis, i.e. syntax-guided synthesis (SyGuS)",
+        "Compared to previous work on neural synthesis, our framework is capable of handling tasks where 1) the grammar and semantic specification varies from task to task, and 2) the supervision is weak",
+        "We introduced a graph neural network that can learn a joint representation over different pairs of syntactic and semantic specifications; we implemented a grammar adaptive network that enables program generation to be conditioned on the specific task; and we proposed a meta-learning method based on the Advantage Actor-Critic (A2C) framework"
+    ],
+    "key_statements": [
+        "Program synthesis concerns automatically generating a program that satisfies desired functional requirements",
+        "The key contributions we make are (1) a joint graph representation of both syntactic and semantic constraints in each task that is learned by a graph neural network model; (2) a grammar adaptive policy network that generalizes across different grammars and guides the search for the desired program; and (3) a reinforcement learning training method that enables learning transferable representation and policy with weak supervision",
+        "We demonstrate our meta-learning framework on a challenging and practical instance of the Syntax-Guided Synthesis problem that concerns synthesizing cryptographic circuits that are provably free of side-channel attacks (<a class=\"ref-link\" id=\"cEldib_et+al_2016_a\" href=\"#rEldib_et+al_2016_a\">Eldib et al, 2016</a>)",
+        "We introduce the Grammar Adaptive Policy Network in Sec 3.3 that executes a program generation policy while automatically adapting to different grammars encoded in each task specification.\n3.1",
+        "To handle different grammars specified in each task, we propose to use the grammar adaptive policy network",
+        "We evaluate the our framework1 on cryptographic circuit synthesis tasks (<a class=\"ref-link\" id=\"cEldib_et+al_2016_a\" href=\"#rEldib_et+al_2016_a\">Eldib et al, 2016</a>) which constitute a challenging benchmark suite from the general track of the Syntax-Guided Synthesis Competition (2017)",
+        "The dataset contains 214 tasks, each of which is a pair of logical specification, describing the correct functionality, and a context free grammar, describing the timing constraints for input signals",
+        "Each synthesis task has a different logical specification as well as timing constraints, and both the logical specification and context free grammar varies from task to task, posing a significant challenge in representation learning",
+        "In Table 1, we summarize the total number of instances solved by each solver as well as the maximum, average and median running time spent on solved instances",
+        "We evaluate whether our framework is capable of learning transferable knowledge across different synthesis tasks",
+        "We proposed a framework to learn a transferable representation and strategy in solving a general formulation of program synthesis, i.e. syntax-guided synthesis (SyGuS)",
+        "Compared to previous work on neural synthesis, our framework is capable of handling tasks where 1) the grammar and semantic specification varies from task to task, and 2) the supervision is weak",
+        "We introduced a graph neural network that can learn a joint representation over different pairs of syntactic and semantic specifications; we implemented a grammar adaptive network that enables program generation to be conditioned on the specific task; and we proposed a meta-learning method based on the Advantage Actor-Critic (A2C) framework",
+        "In terms of the absolute number of solved tasks, the performance is comparable to two state-of-the-art solvers, CVC4 and EUSolver, which solve 129 and 153 respectively",
+        "The two state-of-the-art solvers failed on 4 tasks solved by our framework"
+    ],
+    "summary": [
+        "Program synthesis concerns automatically generating a program that satisfies desired functional requirements.",
+        "We propose a framework that is general in that it makes few assumptions on specific grammars or constraints, and has meta-learning capability that can be utilized in solving unseen tasks more efficiently.",
+        "The key contributions we make are (1) a joint graph representation of both syntactic and semantic constraints in each task that is learned by a graph neural network model; (2) a grammar adaptive policy network that generalizes across different grammars and guides the search for the desired program; and (3) a reinforcement learning training method that enables learning transferable representation and policy with weak supervision.",
+        "The dataset contains 214 tasks, each of which is a pair of logical specification, describing the correct functionality, and a context free grammar, describing the timing constraints for input signals.",
+        "Each synthesis task has a different logical specification as well as timing constraints, and both the logical specification and context free grammar varies from task to task, posing a significant challenge in representation learning.",
+        "This suite of tasks serves as an ideal testbed for our learning framework and its capability to generalize to unseen specifications and grammars.",
+        "3s 6s 5m 3m framework is capable of learning a transferable representation and policy in order to efficiently adapt to unseen tasks.",
+        "We compare the trained meta-solver with the out-of-box solver in solving tasks in the test set.",
+        "Several implementations of SyGuS solvers exist, including by constraint solving (<a class=\"ref-link\" id=\"cReynolds_et+al_2015_a\" href=\"#rReynolds_et+al_2015_a\">Reynolds et al, 2015</a>), divide-and-conquer (Alur et al, 2017b), and stochastic MCMC search (<a class=\"ref-link\" id=\"cSchkufza_et+al_2013_a\" href=\"#rSchkufza_et+al_2013_a\">Schkufza et al, 2013</a>), in addition to various domain-specific algorithms.",
+        "We proposed a framework to learn a transferable representation and strategy in solving a general formulation of program synthesis, i.e. syntax-guided synthesis (SyGuS).",
+        "Compared to previous work on neural synthesis, our framework is capable of handling tasks where 1) the grammar and semantic specification varies from task to task, and 2) the supervision is weak.",
+        "We introduced a graph neural network that can learn a joint representation over different pairs of syntactic and semantic specifications; we implemented a grammar adaptive network that enables program generation to be conditioned on the specific task; and we proposed a meta-learning method based on the Advantage Actor-Critic (A2C) framework.",
+        "Under the outof-box solver setting with limited computational resources and without any prior knowledge from training, our framework is able to solve 141 of 214 tasks, significantly outperforming the baseline ESymbolic by 110.",
+        "When trained as a meta-solver, our framework is capable of accelerating the solving process by 2\u00d7 to 100\u00d7"
+    ],
+    "headline": "We propose a metalearning framework that learns a transferable policy using only weak supervision",
+    "reference_links": [
+        {
+            "id": "Allamanis_et+al_2017_a",
+            "entry": "Miltiadis Allamanis, Pankajan Chanthirasegaran, Pushmeet Kohli, and Charles Sutton. Learning continuous semantic representations of symbolic expressions. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allamanis%2C%20Miltiadis%20Chanthirasegaran%2C%20Pankajan%20Kohli%2C%20Pushmeet%20Sutton%2C%20Charles%20Learning%20continuous%20semantic%20representations%20of%20symbolic%20expressions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Chanthirasegaran%2C%20Pankajan%20Kohli%2C%20Pushmeet%20Sutton%2C%20Charles%20Learning%20continuous%20semantic%20representations%20of%20symbolic%20expressions%202017"
+        },
+        {
+            "id": "Allamanis_et+al_2018_a",
+            "entry": "Miltiadis Allamanis, Earl T. Barr, Premkumar T. Devanbu, and Charles A. Sutton. A survey of machine learning for big code and naturalness. ACM Computing Surveys, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allamanis%2C%20Miltiadis%20Barr%2C%20Earl%20T.%20Devanbu%2C%20Premkumar%20T.%20Sutton%2C%20Charles%20A.%20A%20survey%20of%20machine%20learning%20for%20big%20code%20and%20naturalness%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Barr%2C%20Earl%20T.%20Devanbu%2C%20Premkumar%20T.%20Sutton%2C%20Charles%20A.%20A%20survey%20of%20machine%20learning%20for%20big%20code%20and%20naturalness%202018"
+        },
+        {
+            "id": "Allamanis_et+al_2018_b",
+            "entry": "Miltiadis Allamanis, Marc Brockschmidt, and Mahmoud Khademi. Learning to represent programs with graphs. In Proceedings of the International Conference on Learning Representations (ICLR), 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allamanis%2C%20Miltiadis%20Brockschmidt%2C%20Marc%20Khademi%2C%20Mahmoud%20Learning%20to%20represent%20programs%20with%20graphs%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Brockschmidt%2C%20Marc%20Khademi%2C%20Mahmoud%20Learning%20to%20represent%20programs%20with%20graphs%202018"
+        },
+        {
+            "id": "Alur_et+al_2013_a",
+            "entry": "Rajeev Alur, Rastislav Bodik, Garvit Juniwal, Milo M. K. Martin, Mukund Raghothaman, Sanjit A. Seshia, Rishabh Singh, Armando Solar-Lezama, Emina Torlak, and Abhishek Udupa. Syntax-guided synthesis. In Proceedings of Formal Methods in Computer-Aided Design (FMCAD), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alur%2C%20Rajeev%20Bodik%2C%20Rastislav%20Juniwal%2C%20Garvit%20Martin%2C%20Milo%20M.K.%20Syntax-guided%20synthesis%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alur%2C%20Rajeev%20Bodik%2C%20Rastislav%20Juniwal%2C%20Garvit%20Martin%2C%20Milo%20M.K.%20Syntax-guided%20synthesis%202013"
+        },
+        {
+            "id": "Alur_et+al_2017_a",
+            "entry": "Rajeev Alur, Dana Fisman, Rishabh Singh, and Armando Solar-Lezama. Sygus-comp 2017: Results and analysis. arXiv preprint arXiv:1711.11438, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.11438"
+        },
+        {
+            "id": "Alur_et+al_2017_a",
+            "entry": "Rajeev Alur, Arjun Radhakrishna, and Abhishek Udupa. Scaling enumerative program synthesis via divide and conquer. In Proceedings of Tools and Algorithms for the Construction and Analysis of Systems (TACAS), 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alur%2C%20Rajeev%20Radhakrishna%2C%20Arjun%20Udupa%2C%20Abhishek%20Scaling%20enumerative%20program%20synthesis%20via%20divide%20and%20conquer%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alur%2C%20Rajeev%20Radhakrishna%2C%20Arjun%20Udupa%2C%20Abhishek%20Scaling%20enumerative%20program%20synthesis%20via%20divide%20and%20conquer%202017"
+        },
+        {
+            "id": "Balabanov_et+al_2016_a",
+            "entry": "Valeriy Balabanov, Jie-Hong Roland Jiang, Christoph Scholl, Alan Mishchenko, and Robert K. Brayton. 2QBF: Challenges and solutions. In Nadia Creignou and Daniel Le Berre (eds.), Theory and Applications of Satisfiability Testing \u2013 SAT 2016, pp. 453\u2013469, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Balabanov%2C%20Valeriy%20Jiang%2C%20Jie-Hong%20Roland%20Scholl%2C%20Christoph%20Mishchenko%2C%20Alan%202QBF%3A%20Challenges%20and%20solutions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Balabanov%2C%20Valeriy%20Jiang%2C%20Jie-Hong%20Roland%20Scholl%2C%20Christoph%20Mishchenko%2C%20Alan%202QBF%3A%20Challenges%20and%20solutions%202016"
+        },
+        {
+            "id": "Balog_et+al_2017_a",
+            "entry": "M. Balog, A. L. Gaunt, M. Brockschmidt, S. Nowozin, and D. Tarlow. Deepcoder: Learning to write programs. In Proceedings of the International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Balog%2C%20M.%20Gaunt%2C%20A.L.%20Brockschmidt%2C%20M.%20Nowozin%2C%20S.%20Deepcoder%3A%20Learning%20to%20write%20programs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Balog%2C%20M.%20Gaunt%2C%20A.L.%20Brockschmidt%2C%20M.%20Nowozin%2C%20S.%20Deepcoder%3A%20Learning%20to%20write%20programs%202017"
+        },
+        {
+            "id": "Barrett_et+al_2003_a",
+            "entry": "Clark Barrett, Benjamin Goldberg, and Lenore Zuck. Run-time validation of speculative optimizations using CVC. In Oleg Sokolsky and Mahesh Viswanathan (eds.), Proceedings of the 3rd International Workshop on Run-time Verification (RV \u201903), volume 89(2) of Electronic Notes in Theoretical Computer Science, October 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barrett%2C%20Clark%20Goldberg%2C%20Benjamin%20Zuck%2C%20Lenore%20Run-time%20validation%20of%20speculative%20optimizations%20using%20CVC%202003-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barrett%2C%20Clark%20Goldberg%2C%20Benjamin%20Zuck%2C%20Lenore%20Run-time%20validation%20of%20speculative%20optimizations%20using%20CVC%202003-10"
+        },
+        {
+            "id": "Bosnjak_et+al_2017_a",
+            "entry": "Matko Bosnjak, Tim Rocktaschel, Jason Naradowsky, and Sebastian Riedel. Programming with a differentiable forth interpreter. In Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, pp. 547\u2013556, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bosnjak%2C%20Matko%20Rocktaschel%2C%20Tim%20Naradowsky%2C%20Jason%20Riedel%2C%20Sebastian%20Programming%20with%20a%20differentiable%20forth%20interpreter%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bosnjak%2C%20Matko%20Rocktaschel%2C%20Tim%20Naradowsky%2C%20Jason%20Riedel%2C%20Sebastian%20Programming%20with%20a%20differentiable%20forth%20interpreter%202017"
+        },
+        {
+            "id": "Bunel_et+al_2018_a",
+            "entry": "Rudy Bunel, Matthew Hausknecht, Jacob Devlin, Rishabh Singh, and Pushmeet Kohli. Leveraging grammar and reinforcement learning for neural program synthesis. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bunel%2C%20Rudy%20Hausknecht%2C%20Matthew%20Devlin%2C%20Jacob%20Singh%2C%20Rishabh%20Leveraging%20grammar%20and%20reinforcement%20learning%20for%20neural%20program%20synthesis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bunel%2C%20Rudy%20Hausknecht%2C%20Matthew%20Devlin%2C%20Jacob%20Singh%2C%20Rishabh%20Leveraging%20grammar%20and%20reinforcement%20learning%20for%20neural%20program%20synthesis%202018"
+        },
+        {
+            "id": "Cai_et+al_2017_a",
+            "entry": "Jonathon Cai, Richard Shin, and Dawn Song. Making neural programming architectures generalize via recursion. In Proceedings of the International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cai%2C%20Jonathon%20Shin%2C%20Richard%20Song%2C%20Dawn%20Making%20neural%20programming%20architectures%20generalize%20via%20recursion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cai%2C%20Jonathon%20Shin%2C%20Richard%20Song%2C%20Dawn%20Making%20neural%20programming%20architectures%20generalize%20via%20recursion%202017"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Xinyun Chen, Chang Liu, and Dawn Song. Towards synthesizing complex programs from input-output examples. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xinyun%20Liu%2C%20Chang%20Song%2C%20Dawn%20Towards%20synthesizing%20complex%20programs%20from%20input-output%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xinyun%20Liu%2C%20Chang%20Song%2C%20Dawn%20Towards%20synthesizing%20complex%20programs%20from%20input-output%20examples%202018"
+        },
+        {
+            "id": "Dai_et+al_2017_a",
+            "entry": "Hanjun Dai, Elias B. Khalil, Yuyu Zhang, Bistra Dilkina, and Le Song. Learning combinatorial optimization algorithms over graphs. In Proceedings of the Conference on Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Hanjun%20Khalil%2C%20Elias%20B.%20Zhang%2C%20Yuyu%20Dilkina%2C%20Bistra%20Learning%20combinatorial%20optimization%20algorithms%20over%20graphs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Hanjun%20Khalil%2C%20Elias%20B.%20Zhang%2C%20Yuyu%20Dilkina%2C%20Bistra%20Learning%20combinatorial%20optimization%20algorithms%20over%20graphs%202017"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Hanjun Dai, Yingtao Tian, Bo Dai, Steven Skiena, and Le Song. Syntax-directed variational autoencoder for structured data. In Proceedings of the International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Hanjun%20Tian%2C%20Yingtao%20Dai%2C%20Bo%20Skiena%2C%20Steven%20Syntax-directed%20variational%20autoencoder%20for%20structured%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Hanjun%20Tian%2C%20Yingtao%20Dai%2C%20Bo%20Skiena%2C%20Steven%20Syntax-directed%20variational%20autoencoder%20for%20structured%20data%202018"
+        },
+        {
+            "id": "Devlin_et+al_2017_a",
+            "entry": "Jacob Devlin, Jonathan Uesato, Surya Bhupatiraju, Rishabh Singh, Abdel rahman Mohamed, and Pushmeet Kohli. Robustfill: Neural program learning under noisy I/O. In Proceedings of the International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20I/O%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20I/O%202017"
+        },
+        {
+            "id": "Eldib_et+al_2016_a",
+            "entry": "Hassan Eldib, Meng Wu, and Chao Wang. Synthesis of fault-attack countermeasures for cryptographic circuits. In Swarat Chaudhuri and Azadeh Farzan (eds.), Computer Aided Verification, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eldib%2C%20Hassan%20Wu%2C%20Meng%20Wang%2C%20Chao%20Synthesis%20of%20fault-attack%20countermeasures%20for%20cryptographic%20circuits%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eldib%2C%20Hassan%20Wu%2C%20Meng%20Wang%2C%20Chao%20Synthesis%20of%20fault-attack%20countermeasures%20for%20cryptographic%20circuits%202016"
+        },
+        {
+            "id": "Ellis_et+al_2018_a",
+            "entry": "Kevin Ellis, Lucas Morales, Mathias Sabl Meyer, Armando Solar-Lezama, and Joshua B. Tenenbaum. Dreamcoder: Bootstrapping domain-specific languages for neurally-guided bayesian program learning. In Proceedings of the 2nd Workshop on Neural Abstract Machines and Program Induction, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ellis%2C%20Kevin%20Morales%2C%20Lucas%20Meyer%2C%20Mathias%20Sabl%20Solar-Lezama%2C%20Armando%20Dreamcoder%3A%20Bootstrapping%20domain-specific%20languages%20for%20neurally-guided%20bayesian%20program%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ellis%2C%20Kevin%20Morales%2C%20Lucas%20Meyer%2C%20Mathias%20Sabl%20Solar-Lezama%2C%20Armando%20Dreamcoder%3A%20Bootstrapping%20domain-specific%20languages%20for%20neurally-guided%20bayesian%20program%20learning%202018"
+        },
+        {
+            "id": "Feng_et+al_2017_a",
+            "entry": "Yu Feng, Ruben Martins, Yuepeng Wang, Isil Dillig, and Thomas W. Reps. Component-based synthesis for complex apis. In Proceedings of the ACM Symposium on Principles of Programming Languages (POPL), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Feng%2C%20Yu%20Martins%2C%20Ruben%20Wang%2C%20Yuepeng%20Dillig%2C%20Isil%20Component-based%20synthesis%20for%20complex%20apis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Feng%2C%20Yu%20Martins%2C%20Ruben%20Wang%2C%20Yuepeng%20Dillig%2C%20Isil%20Component-based%20synthesis%20for%20complex%20apis%202017"
+        },
+        {
+            "id": "Graves_et+al_2014_a",
+            "entry": "Alex Graves, Greg Wayne, and Ivo Danihelka. Neural turing machines. CoRR, abs/1410.5401, 2014. URL http://arxiv.org/abs/1410.5401.",
+            "url": "http://arxiv.org/abs/1410.5401",
+            "arxiv_url": "https://arxiv.org/pdf/1410.5401"
+        },
+        {
+            "id": "Gulwani_et+al_2012_a",
+            "entry": "Sumit Gulwani, William R. Harris, and Rishabh Singh. Spreadsheet data manipulation using examples. Communications of the ACM, 55(8):97\u2013105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulwani%2C%20Sumit%20Harris%2C%20William%20R.%20Singh%2C%20Rishabh%20Spreadsheet%20data%20manipulation%20using%20examples%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulwani%2C%20Sumit%20Harris%2C%20William%20R.%20Singh%2C%20Rishabh%20Spreadsheet%20data%20manipulation%20using%20examples%202012"
+        },
+        {
+            "id": "Gulwani_et+al_2017_a",
+            "entry": "Sumit Gulwani, Oleksandr Polozov, and Rishabh Singh. Program synthesis. Foundations and Trends in Programming Languages, 4(1-2):1\u2013119, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulwani%2C%20Sumit%20Polozov%2C%20Oleksandr%20Singh%2C%20Rishabh%20Program%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulwani%2C%20Sumit%20Polozov%2C%20Oleksandr%20Singh%2C%20Rishabh%20Program%20synthesis%202017"
+        },
+        {
+            "id": "Hindle_et+al_2012_a",
+            "entry": "Abram Hindle, Earl T. Barr, Zhendong Su, Mark Gabel, and Premkumar Devanbu. On the naturalness of software. In Proceedings of the 34th International Conference on Software Engineering, ICSE \u201912, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hindle%2C%20Abram%20Barr%2C%20Earl%20T.%20Su%2C%20Zhendong%20Gabel%2C%20Mark%20On%20the%20naturalness%20of%20software%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hindle%2C%20Abram%20Barr%2C%20Earl%20T.%20Su%2C%20Zhendong%20Gabel%2C%20Mark%20On%20the%20naturalness%20of%20software%202012"
+        },
+        {
+            "id": "Kaiser_2015_a",
+            "entry": "Lukasz Kaiser and Ilya Sutskever. Neural gpus learn algorithms. CoRR, abs/1511.08228, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.08228"
+        },
+        {
+            "id": "Kurach_et+al_2016_a",
+            "entry": "Karol Kurach, Marcin Andrychowicz, and Ilya Sutskever. Neural random-access machines. In Proceedings of the International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kurach%2C%20Karol%20Andrychowicz%2C%20Marcin%20Sutskever%2C%20Ilya%20Neural%20random-access%20machines%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kurach%2C%20Karol%20Andrychowicz%2C%20Marcin%20Sutskever%2C%20Ilya%20Neural%20random-access%20machines%202016"
+        },
+        {
+            "id": "Kusner_et+al_2017_a",
+            "entry": "Matt J Kusner, Brooks Paige, and Jose Miguel Hernandez-Lobato. Grammar variational autoencoder. In Proceedings of the International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kusner%2C%20Matt%20J.%20Paige%2C%20Brooks%20Hernandez-Lobato%2C%20Jose%20Miguel%20Grammar%20variational%20autoencoder%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kusner%2C%20Matt%20J.%20Paige%2C%20Brooks%20Hernandez-Lobato%2C%20Jose%20Miguel%20Grammar%20variational%20autoencoder%202017"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Woosuk Lee, Kihong Heo, Rajeev Alur, and Mayur Naik. Accelerating search-based program synthesis using learned probabilistic models. In Proceedings of the ACM Conference on Programming Language Design and Implementation (PLDI), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Woosuk%20Heo%2C%20Kihong%20Alur%2C%20Rajeev%20Naik%2C%20Mayur%20Accelerating%20search-based%20program%20synthesis%20using%20learned%20probabilistic%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Woosuk%20Heo%2C%20Kihong%20Alur%2C%20Rajeev%20Naik%2C%20Mayur%20Accelerating%20search-based%20program%20synthesis%20using%20learned%20probabilistic%20models%202018"
+        },
+        {
+            "id": "Li_et+al_2015_a",
+            "entry": "Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel. Gated graph sequence neural networks. arXiv preprint arXiv:1511.05493, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05493"
+        },
+        {
+            "id": "Maddison_2014_a",
+            "entry": "C.J. Maddison and D. Tarlow. Structured generative models of natural source code. In Proceedings of the International Conference on Machine Learning (ICML), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20C.J.%20Tarlow%2C%20D.%20Structured%20generative%20models%20of%20natural%20source%20code%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20C.J.%20Tarlow%2C%20D.%20Structured%20generative%20models%20of%20natural%20source%20code%202014"
+        },
+        {
+            "id": "Manna_1971_a",
+            "entry": "Zohar Manna and Richard J. Waldinger. Toward automatic program synthesis. In Communications of the ACM, 1971.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Manna%2C%20Zohar%20Waldinger%2C%20Richard%20J.%20Toward%20automatic%20program%20synthesis%201971",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Manna%2C%20Zohar%20Waldinger%2C%20Richard%20J.%20Toward%20automatic%20program%20synthesis%201971"
+        },
+        {
+            "id": "Murali_et+al_2018_a",
+            "entry": "Vijayaraghavan Murali, Letao Qi, Swarat Chaudhuri, and Chris Jermaine. Neural sketch learning for conditional program generation. In Proceedings of the International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murali%2C%20Vijayaraghavan%20Qi%2C%20Letao%20Chaudhuri%2C%20Swarat%20Jermaine%2C%20Chris%20Neural%20sketch%20learning%20for%20conditional%20program%20generation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Murali%2C%20Vijayaraghavan%20Qi%2C%20Letao%20Chaudhuri%2C%20Swarat%20Jermaine%2C%20Chris%20Neural%20sketch%20learning%20for%20conditional%20program%20generation%202018"
+        },
+        {
+            "id": "Nguyen_2015_a",
+            "entry": "Anh Tuan Nguyen and Tien N. Nguyen. Graph-based statistical language model for code. In Proceedings of the International Conference on Software Engineering (ICSE), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20Anh%20Tuan%20Nguyen%2C%20Tien%20N.%20Graph-based%20statistical%20language%20model%20for%20code%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Anh%20Tuan%20Nguyen%2C%20Tien%20N.%20Graph-based%20statistical%20language%20model%20for%20code%202015"
+        },
+        {
+            "id": "Parisotto_et+al_2016_a",
+            "entry": "Emilio Parisotto, Abdel-rahman Mohamed, Rishabh Singh, Lihong Li, Dengyong Zhou, and Pushmeet Kohli. Neuro-symbolic program synthesis. Proceedings of the International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202016"
+        },
+        {
+            "id": "Piech_et+al_2015_a",
+            "entry": "Chris Piech, Jonathan Huang, Andy Nguyen, Mike Phulsuksombati, Mehran Sahami, and Leonidas Guibas. Learning program embeddings to propagate feedback. In International Conference on Machine Learning (ICML 2015), Lille, France, July 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Piech%2C%20Chris%20Huang%2C%20Jonathan%20Nguyen%2C%20Andy%20Phulsuksombati%2C%20Mike%20Learning%20program%20embeddings%20to%20propagate%20feedback%202015-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Piech%2C%20Chris%20Huang%2C%20Jonathan%20Nguyen%2C%20Andy%20Phulsuksombati%2C%20Mike%20Learning%20program%20embeddings%20to%20propagate%20feedback%202015-07"
+        },
+        {
+            "id": "Pu_et+al_2018_a",
+            "entry": "Yewen Pu, Zachery Miranda, Armando Solar-Lezama, and Leslie Kaelbling. Selecting representative examples for program synthesis. In International Conference on Machine Learning, pp. 4158\u20134167, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pu%2C%20Yewen%20Miranda%2C%20Zachery%20Solar-Lezama%2C%20Armando%20Kaelbling%2C%20Leslie%20Selecting%20representative%20examples%20for%20program%20synthesis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pu%2C%20Yewen%20Miranda%2C%20Zachery%20Solar-Lezama%2C%20Armando%20Kaelbling%2C%20Leslie%20Selecting%20representative%20examples%20for%20program%20synthesis%202018"
+        },
+        {
+            "id": "Reynolds_et+al_2015_a",
+            "entry": "Andrew Reynolds, Morgan Deters, Viktor Kuncak, Cesare Tinelli, and Clark W. Barrett. Counterexampleguided quantifier instantiation for synthesis in SMT. In Proceedings of the International Conference on Computer Aided Verification (CAV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reynolds%2C%20Andrew%20Deters%2C%20Morgan%20Kuncak%2C%20Viktor%20Tinelli%2C%20Cesare%20Counterexampleguided%20quantifier%20instantiation%20for%20synthesis%20in%20SMT%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reynolds%2C%20Andrew%20Deters%2C%20Morgan%20Kuncak%2C%20Viktor%20Tinelli%2C%20Cesare%20Counterexampleguided%20quantifier%20instantiation%20for%20synthesis%20in%20SMT%202015"
+        },
+        {
+            "id": "Schkufza_et+al_2013_a",
+            "entry": "Eric Schkufza, Rahul Sharma, and Alex Aiken. Stochastic superoptimization. In Proceedings of Architectural Support for Programming Languages and Operating Systems (ASPLOS), 2013. ISBN 978-1-4503-1870-9.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schkufza%2C%20Eric%20Sharma%2C%20Rahul%20Aiken%2C%20Alex%20Stochastic%20superoptimization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schkufza%2C%20Eric%20Sharma%2C%20Rahul%20Aiken%2C%20Alex%20Stochastic%20superoptimization%202013"
+        },
+        {
+            "id": "Si_et+al_2018_a",
+            "entry": "Xujie Si, Hanjun Dai, Mukund Raghothaman, Mayur Naik, and Le Song. Learning loop invariants for program verification. In Proceedings of the Conference on Neural Information Processing Systems (NIPS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Si%2C%20Xujie%20Dai%2C%20Hanjun%20Raghothaman%2C%20Mukund%20Naik%2C%20Mayur%20Learning%20loop%20invariants%20for%20program%20verification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Si%2C%20Xujie%20Dai%2C%20Hanjun%20Raghothaman%2C%20Mukund%20Naik%2C%20Mayur%20Learning%20loop%20invariants%20for%20program%20verification%202018"
+        },
+        {
+            "id": "Singh_et+al_2013_a",
+            "entry": "Rishabh Singh, Sumit Gulwani, and Armando Solar-Lezama. Automated feedback generation for introductory programming assignments. In Proceedings of the ACM Conference on Programming Language Design and Implementation (PLDI), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singh%2C%20Rishabh%20Gulwani%2C%20Sumit%20Solar-Lezama%2C%20Armando%20Automated%20feedback%20generation%20for%20introductory%20programming%20assignments%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singh%2C%20Rishabh%20Gulwani%2C%20Sumit%20Solar-Lezama%2C%20Armando%20Automated%20feedback%20generation%20for%20introductory%20programming%20assignments%202013"
+        },
+        {
+            "id": "Solar-Lezama_et+al_2006_a",
+            "entry": "Armando Solar-Lezama, Liviu Tancau, Rastislav Bodik, Vijay Saraswat, and Sanjit Seshia. Combinatorial sketching for finite programs. In Proceedings of Architectural Support for Programming Languages and Operating Systems (ASPLOS), 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solar-Lezama%2C%20Armando%20Tancau%2C%20Liviu%20Bodik%2C%20Rastislav%20Saraswat%2C%20Vijay%20Combinatorial%20sketching%20for%20finite%20programs%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Solar-Lezama%2C%20Armando%20Tancau%2C%20Liviu%20Bodik%2C%20Rastislav%20Saraswat%2C%20Vijay%20Combinatorial%20sketching%20for%20finite%20programs%202006"
+        },
+        {
+            "id": "Sun_et+al_2018_a",
+            "entry": "Shao-Hua Sun, Hyeonwoo Noh, Sriram Somasundaram, and Joseph Lim. Neural program synthesis from diverse demonstration videos. In International Conference on Machine Learning, pp. 4797\u20134806, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Shao-Hua%20Noh%2C%20Hyeonwoo%20Somasundaram%2C%20Sriram%20Lim%2C%20Joseph%20Neural%20program%20synthesis%20from%20diverse%20demonstration%20videos%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sun%2C%20Shao-Hua%20Noh%2C%20Hyeonwoo%20Somasundaram%2C%20Sriram%20Lim%2C%20Joseph%20Neural%20program%20synthesis%20from%20diverse%20demonstration%20videos%202018"
+        },
+        {
+            "id": "Competition_2017_a",
+            "entry": "SyGuS Competition, 2017. http://sygus.seas.upenn.edu/SyGuS-COMP2017.html.",
+            "url": "http://sygus.seas.upenn.edu/SyGuS-COMP2017.html"
+        },
+        {
+            "id": "Vijayakumar_et+al_2018_a",
+            "entry": "Ashwin Vijayakumar, Abhishek Mohta, Alex Polozov, Dhruv Batra, Prateek Jain, and Sumit Gulwani. Neuralguided deductive search for real-time program synthesis from examples. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vijayakumar%2C%20Ashwin%20Mohta%2C%20Abhishek%20Polozov%2C%20Alex%20Batra%2C%20Dhruv%20Neuralguided%20deductive%20search%20for%20real-time%20program%20synthesis%20from%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vijayakumar%2C%20Ashwin%20Mohta%2C%20Abhishek%20Polozov%2C%20Alex%20Batra%2C%20Dhruv%20Neuralguided%20deductive%20search%20for%20real-time%20program%20synthesis%20from%20examples%202018"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer networks. In Advances in Neural Information Processing Systems, pp. 2692\u20132700, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Fortunato%2C%20Meire%20Jaitly%2C%20Navdeep%20Pointer%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Fortunato%2C%20Meire%20Jaitly%2C%20Navdeep%20Pointer%20networks%202015"
+        }
+    ]
+}

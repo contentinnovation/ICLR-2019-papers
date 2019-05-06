@@ -1,0 +1,372 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "INFOBOT: TRANSFER AND EXPLORATION VIA THE INFORMATION BOTTLENECK",
+        "author": "Anirudh Goyal, Riashat Islam, Daniel Strouse, Zafarali Ahmed, Matthew Botvinick, Hugo Larochelle, Yoshua Bengio, Sergey Levine",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJg8yhAqKm"
+        },
+        "abstract": "A central challenge in reinforcement learning is discovering effective policies for tasks where rewards are sparsely distributed. We postulate that in the absence of useful reward signals, an effective exploration strategy should seek out decision states. These states lie at critical junctions in the state space from where the agent can transition to new, potentially unexplored regions. We propose to learn about decision states from prior experience. By training a goal-conditioned policy with an information bottleneck, we can identify decision states by examining where the model actually leverages the goal state. We find that this simple mechanism effectively identifies decision states, even in partially observed settings. In effect, the model learns the sensory cues that correlate with potential subgoals. In new environments, this model can then identify novel subgoals for further exploration, guiding the agent through a sequence of potential decision states and through new regions of the state space."
+    },
+    "keywords": [
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "data processing inequality",
+            "url": "https://en.wikipedia.org/wiki/data_processing_inequality"
+        },
+        {
+            "term": "state space",
+            "url": "https://en.wikipedia.org/wiki/state_space"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "DPI": "data processing inequality",
+        "IB": "information bottleneck"
+    },
+    "highlights": [
+        "Deep reinforcement learning has enjoyed many recent successes in domains where large amounts of training time and a dense reward function are provided",
+        "We propose to incentivize agents to learn about and exploit multi-goal task structure in order to efficiently explore in new environments",
+        "The goal-conditioned policy with information bottleneck leads to much better policy transfer than standard RL training procedures",
+        "We proposed to train agents to develop \u201cdefault behaviours\u201d as well as the knowledge of when to break those behaviour, using an information bottleneck between the agent\u2019s goal and policy",
+        "We demonstrated that the states in which the agent learns to deviate from its habits, which we call \u201ddecision states\u201d, can be used as the basis for a learned exploration bonus that leads to more effective training than other task-agnostic exploration methods"
+    ],
+    "key_statements": [
+        "Deep reinforcement learning has enjoyed many recent successes in domains where large amounts of training time and a dense reward function are provided",
+        "We propose to incentivize agents to learn about and exploit multi-goal task structure in order to efficiently explore in new environments",
+        "The goal-conditioned policy with information bottleneck leads to much better policy transfer than standard RL training procedures",
+        "We proposed to train agents to develop \u201cdefault behaviours\u201d as well as the knowledge of when to break those behaviour, using an information bottleneck between the agent\u2019s goal and policy",
+        "We demonstrated that the states in which the agent learns to deviate from its habits, which we call \u201ddecision states\u201d, can be used as the basis for a learned exploration bonus that leads to more effective training than other task-agnostic exploration methods"
+    ],
+    "summary": [
+        "Deep reinforcement learning has enjoyed many recent successes in domains where large amounts of training time and a dense reward function are provided.",
+        "We propose to incentivize agents to learn about and exploit multi-goal task structure in order to efficiently explore in new environments.",
+        "We regularize RL agents in multi-goal settings with I(A; G | S), an approach inspired by the information bottleneck and the cognitive science of decision making, and show that it promotes generalization across tasks.",
+        "We use policies as trained above to provide an exploration bonus for training new policies in the form of DKL[\u03c0\u03b8(A | S, G) | \u03c00(A | S)], which encourages the agent to seek out decision states.",
+        "We train the agent to identify decision states as in equation 5, such that the learnt goaldependent policy can provide an exploration bonus in the new environments.",
+        "After training on T \u223c ptrain(T ), we freeze the agent\u2019s encoder penc(Z | S, G) and marginal encoding q(Z | S), discard the decoder pdec(A | S, Z), and use the encoders to provide DKL [penc(Z | S, G) | q(Z | S)] as a state and goal dependent exploration bonus for training a new policy \u03c0\u03c6(A | S, G) on T \u223c ptest(T ).",
+        "\u0392 c = z penc(z | S, G) pdec(A | S, z), parameterized by \u03b8 Require: A variational approximation q(Z | S) to the goal-marginalized encoder Require: A regularization weight \u03b2 Require: Another policy \u03c0\u03c6(A | S, G), along with a RL algorithm A to train it Require: A set of training tasks ptrain(T ) and test tasks ptest(T ) Require: A goal sampling strategy p(G | T ) given a task T",
+        "This term is used completely differently context: Whye Teh et al (2017) use a regularizer on the KL-divergence between action distributions of different policies to improve distillation, does not have any notion of goals, and is not concerned with exploration or with learning exploration strategies and transferring them to new domain.",
+        "We train agents with a goal bottleneck on one set of environments (MultiRoomN2S6) where they learn the sensory cues that correspond to decision states.",
+        "We compare to several standard task-agnostic exploration methods, including count-based exploration (Eqn 6 without the DKL, that a bonus of \u03b2/ c(s)), VIME (<a class=\"ref-link\" id=\"cHouthooft_et+al_2016_a\" href=\"#rHouthooft_et+al_2016_a\">Houthooft et al, 2016</a>), and curiosity-driven exploration (<a class=\"ref-link\" id=\"cPathak_et+al_2017_b\" href=\"#rPathak_et+al_2017_b\">Pathak et al, 2017b</a>), as well as a goal-conditioned A2C baseline with no exploration bonuses.",
+        "We proposed to train agents to develop \u201cdefault behaviours\u201d as well as the knowledge of when to break those behaviour, using an information bottleneck between the agent\u2019s goal and policy.",
+        "We demonstrated that the states in which the agent learns to deviate from its habits, which we call \u201ddecision states\u201d, can be used as the basis for a learned exploration bonus that leads to more effective training than other task-agnostic exploration methods"
+    ],
+    "headline": "We propose to learn about decision states from prior experience",
+    "reference_links": [
+        {
+            "id": "Achille_2016_a",
+            "entry": "A. Achille and S. Soatto. Information Dropout: Learning Optimal Representations Through Noisy Computation. ArXiv e-prints, Nov. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Achille%2C%20A.%20Soatto%2C%20S.%20Information%20Dropout%3A%20Learning%20Optimal%20Representations%20Through%20Noisy%20Computation.%20ArXiv%20e-prints%202016-11"
+        },
+        {
+            "id": "Achille_2017_a",
+            "entry": "A. Achille and S. Soatto. On the emergence of invariance and disentangling in deep representations. CoRR, abs/1706.01350, 2017. URL http://arxiv.org/abs/1706.01350.",
+            "url": "http://arxiv.org/abs/1706.01350",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01350"
+        },
+        {
+            "id": "Alemi_et+al_2016_a",
+            "entry": "A. A. Alemi, I. Fischer, J. V. Dillon, and K. Murphy. Deep variational information bottleneck. arXiv preprint arXiv:1612.00410, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.00410"
+        },
+        {
+            "id": "Alemi_et+al_2017_a",
+            "entry": "A. A. Alemi, I. Fischer, J. V. Dillon, and K. Murphy. Deep variational information bottleneck. International Conference on Learning Representations (ICLR), abs/1612.00410, 2017. URL http://arxiv.org/abs/1612.00410.",
+            "url": "http://arxiv.org/abs/1612.00410",
+            "arxiv_url": "https://arxiv.org/pdf/1612.00410"
+        },
+        {
+            "id": "Beaudry_2012_a",
+            "entry": "N. J. Beaudry and R. Renner. An intuitive proof of the data processing inequality. Quantum Information & Computation, 12(5-6):432\u2013441, 2012. URL http://www.rintonpress.com/xxqic12/qic-12-56/0432-0441.pdf.",
+            "url": "http://www.rintonpress.com/xxqic12/qic-12-56/0432-0441.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Beaudry%2C%20N.J.%20Renner%2C%20R.%20An%20intuitive%20proof%20of%20the%20data%20processing%20inequality%202012"
+        },
+        {
+            "id": "Bellemare_et+al_2013_a",
+            "entry": "M. G. Bellemare, Y. Naddaf, J. Veness, and M. Bowling. The arcade learning environment: An evaluation platform for general agents. Journal of Artificial Intelligence Research, 47:253\u2013279, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20M.G.%20Naddaf%2C%20Y.%20Veness%2C%20J.%20Bowling%2C%20M.%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20M.G.%20Naddaf%2C%20Y.%20Veness%2C%20J.%20Bowling%2C%20M.%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "M. G. Bellemare, S. Srinivasan, G. Ostrovski, T. Schaul, D. Saxton, and R. Munos. Unifying Count-Based Exploration and Intrinsic Motivation. ArXiv e-prints, June 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20M.G.%20Srinivasan%2C%20S.%20Ostrovski%2C%20G.%20Schaul%2C%20T.%20Unifying%20Count-Based%20Exploration%20and%20Intrinsic%20Motivation.%20ArXiv%20e-prints%202016-06"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "G. Brockman, V. Cheung, L. Pettersson, J. Schneider, J. Schulman, J. Tang, and W. Zaremba. OpenAI Gym. ArXiv e-prints, June 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=G%20Brockman%20V%20Cheung%20L%20Pettersson%20J%20Schneider%20J%20Schulman%20J%20Tang%20and%20W%20Zaremba%20OpenAI%20Gym%20ArXiv%20eprints%20June%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=G%20Brockman%20V%20Cheung%20L%20Pettersson%20J%20Schneider%20J%20Schulman%20J%20Tang%20and%20W%20Zaremba%20OpenAI%20Gym%20ArXiv%20eprints%20June%202016"
+        },
+        {
+            "id": "Chalk_et+al_2016_a",
+            "entry": "M. Chalk, O. Marre, and G. Tkacik. Relevant sparse codes with variational information bottleneck. ArXiv e-prints, May 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chalk%2C%20M.%20Marre%2C%20O.%20Tkacik%2C%20G.%20Relevant%20sparse%20codes%20with%20variational%20information%20bottleneck.%20ArXiv%20e-prints%202016-05"
+        },
+        {
+            "id": "Chevalier-Boisvert_2018_a",
+            "entry": "M. Chevalier-Boisvert and L. Willems. Minimalistic gridworld environment for openai gym. https://github.com/maximecb/gym-minigrid, 2018.",
+            "url": "https://github.com/maximecb/gym-minigrid"
+        },
+        {
+            "id": "Cover_2006_a",
+            "entry": "T. M. Cover and J. A. Thomas. Elements of Information Theory. Wiley-Interscience, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cover%2C%20T.M.%20Thomas%2C%20J.A.%20Elements%20of%20Information%20Theory%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cover%2C%20T.M.%20Thomas%2C%20J.A.%20Elements%20of%20Information%20Theory%202006"
+        },
+        {
+            "id": "Foster_2002_a",
+            "entry": "D. Foster and P. Dayan. Structure in the space of value functions. Machine Learning, 49(2):325\u2013346, Nov 2002. ISSN 1573-0565. doi: 10.1023/A:1017944732463. URL https://doi.org/10.1023/A:1017944732463.",
+            "crossref": "https://dx.doi.org/10.1023/A:1017944732463",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1023/A%3A1017944732463"
+        },
+        {
+            "id": "Galashov_et+al_2019_a",
+            "entry": "A. Galashov, S. Jayakumar, L. Hasenclever, D. Tirumala, J. Schwarz, G. Desjardins, W. M. Czarnecki, Y. W. Teh, R. Pascanu, and N. Heess. Information asymmetry in KL-regularized RL. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=S1lqMn05Ym.",
+            "url": "https://openreview.net/forum?id=S1lqMn05Ym",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=A%20Galashov%20S%20Jayakumar%20L%20Hasenclever%20D%20Tirumala%20J%20Schwarz%20G%20Desjardins%20W%20M%20Czarnecki%20Y%20W%20Teh%20R%20Pascanu%20and%20N%20Heess%20Information%20asymmetry%20in%20KLregularized%20RL%20In%20International%20Conference%20on%20Learning%20Representations%202019%20URL%20httpsopenreviewnetforumidS1lqMn05Ym"
+        },
+        {
+            "id": "Goyal_et+al_2018_a",
+            "entry": "A. Goyal, P. Brakel, W. Fedus, T. Lillicrap, S. Levine, H. Larochelle, and Y. Bengio. Recall traces: Backtracking models for efficient reinforcement learning. arXiv preprint arXiv:1804.00379, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00379"
+        },
+        {
+            "id": "Gupta_et+al_2018_a",
+            "entry": "A. Gupta, R. Mendonca, Y. Liu, P. Abbeel, and S. Levine. Meta-Reinforcement Learning of Structured Exploration Strategies. ArXiv e-prints, Feb. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gupta%2C%20A.%20Mendonca%2C%20R.%20Liu%2C%20Y.%20Abbeel%2C%20P.%20Meta-Reinforcement%20Learning%20of%20Structured%20Exploration%20Strategies.%20ArXiv%20e-prints%202018-02"
+        },
+        {
+            "id": "Haarnoja_et+al_2018_a",
+            "entry": "T. Haarnoja, A. Zhou, P. Abbeel, and S. Levine. Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor. CoRR, abs/1801.01290, 2018. URL http://arxiv.org/abs/1801.01290.",
+            "url": "http://arxiv.org/abs/1801.01290",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01290"
+        },
+        {
+            "id": "Hassabis_et+al_2017_a",
+            "entry": "D. Hassabis, D. Kumaran, C. Summerfield, and M. Botvinick. Neuroscience-inspired artificial intelligence. Neuron, 95(2):245\u2013248, 2017. URL https://doi.org/10.1016/j.neuron.2017.06.011.",
+            "crossref": "https://dx.doi.org/10.1016/j.neuron.2017.06.011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.neuron.2017.06.011"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "R. Houthooft, X. Chen, Y. Duan, J. Schulman, F. De Turck, and P. Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pages 1109\u20131117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20R.%20Chen%2C%20X.%20Duan%2C%20Y.%20Schulman%2C%20J.%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20R.%20Chen%2C%20X.%20Duan%2C%20Y.%20Schulman%2C%20J.%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Janner_et+al_2018_a",
+            "entry": "M. Janner, K. Narasimhan, and R. Barzilay. Representation learning for grounded spatial reasoning. Transactions of the Association of Computational Linguistics, 6:49\u201361, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Janner%2C%20M.%20Narasimhan%2C%20K.%20Barzilay%2C%20R.%20Representation%20learning%20for%20grounded%20spatial%20reasoning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Janner%2C%20M.%20Narasimhan%2C%20K.%20Barzilay%2C%20R.%20Representation%20learning%20for%20grounded%20spatial%20reasoning%202018"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "D. P. Kingma and M. Welling. Auto-Encoding Variational Bayes. International Conference on Learning Representations (ICLR), Dec. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20D.P.%20Welling%2C%20M.%20Auto-Encoding%20Variational%20Bayes%202014-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20D.P.%20Welling%2C%20M.%20Auto-Encoding%20Variational%20Bayes%202014-12"
+        },
+        {
+            "id": "Kinney_2014_a",
+            "entry": "J. B. Kinney and G. S. Atwal. Equitability, mutual information, and the maximal information coefficient. Proceedings of the National Academy of Sciences, 111(9):3354\u20133359, 2014. ISSN 0027-8424. doi: 10.1073/pnas.1309933111. URL http://www.pnas.org/content/111/9/3354.",
+            "crossref": "https://dx.doi.org/10.1073/pnas.1309933111",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1073/pnas.1309933111"
+        },
+        {
+            "id": "Kolchinsky_et+al_2017_a",
+            "entry": "A. Kolchinsky, B. D. Tracey, and D. H. Wolpert. Nonlinear Information Bottleneck. ArXiv e-prints, May 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=A%20Kolchinsky%20B%20D%20Tracey%20and%20D%20H%20Wolpert%20Nonlinear%20Information%20Bottleneck%20ArXiv%20eprints%20May%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=A%20Kolchinsky%20B%20D%20Tracey%20and%20D%20H%20Wolpert%20Nonlinear%20Information%20Bottleneck%20ArXiv%20eprints%20May%202017"
+        },
+        {
+            "id": "Kool_2018_a",
+            "entry": "W. Kool and M. Botvinick. Mental labour. Nature Human Behaviour, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kool%2C%20W.%20Botvinick%2C%20M.%20Mental%20labour%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kool%2C%20W.%20Botvinick%2C%20M.%20Mental%20labour%202018"
+        },
+        {
+            "id": "Kostrikov_2018_a",
+            "entry": "I. Kostrikov. Pytorch implementations of reinforcement learning algorithms. https://github.com/ikostrikov/pytorch-a2c-ppo-acktr, 2018.",
+            "url": "https://github.com/ikostrikov/pytorch-a2c-ppo-acktr"
+        },
+        {
+            "id": "Machado_et+al_2017_a",
+            "entry": "M. C. Machado, M. G. Bellemare, and M. Bowling. A laplacian framework for option discovery in reinforcement learning. arXiv preprint arXiv:1703.00956, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00956"
+        },
+        {
+            "id": "Mcgovern_2001_a",
+            "entry": "A. McGovern and A. G. Barto. Automatic discovery of subgoals in reinforcement learning using diverse density. Citeseer, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McGovern%2C%20A.%20Barto%2C%20A.G.%20Automatic%20discovery%20of%20subgoals%20in%20reinforcement%20learning%20using%20diverse%20density%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McGovern%2C%20A.%20Barto%2C%20A.G.%20Automatic%20discovery%20of%20subgoals%20in%20reinforcement%20learning%20using%20diverse%20density%202001"
+        },
+        {
+            "id": "Miller_2001_a",
+            "entry": "E. K. Miller and J. D. Cohen. An integrative theory of prefrontal cortex function. Annual Review of Neuroscience, 24(1):167\u2013202, 2001. doi: 10.1146/annurev.neuro.24.1.167. URL https://doi.org/10.1146/annurev.neuro.24.1.167. PMID:11283309.",
+            "crossref": "https://dx.doi.org/10.1146/annurev.neuro.24.1.167",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1146/annurev.neuro.24.1.167"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "V. Mnih, A. Puigdom\u00e8nech Badia, M. Mirza, A. Graves, T. P. Lillicrap, T. Harley, D. Silver, and K. Kavukcuoglu. Asynchronous Methods for Deep Reinforcement Learning. ArXiv e-prints, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20V.%20Badia%2C%20A.Puigdom%C3%A8nech%20Mirza%2C%20M.%20Graves%2C%20A.%20Asynchronous%20Methods%20for%20Deep%20Reinforcement%20Learning.%20ArXiv%20e-prints%202016"
+        },
+        {
+            "id": "Mordatch_2018_a",
+            "entry": "I. Mordatch and P. Abbeel. Emergence of grounded compositional language in multi-agent populations. In Thirty-Second AAAI Conference on Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mordatch%2C%20I.%20Abbeel%2C%20P.%20Emergence%20of%20grounded%20compositional%20language%20in%20multi-agent%20populations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mordatch%2C%20I.%20Abbeel%2C%20P.%20Emergence%20of%20grounded%20compositional%20language%20in%20multi-agent%20populations%202018"
+        },
+        {
+            "id": "Osband_et+al_2016_a",
+            "entry": "I. Osband, C. Blundell, A. Pritzel, and B. Van Roy. Deep exploration via bootstrapped dqn. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett, editors, Advances in Neural Information Processing Systems 29, pages 4026\u2013 4034. Curran Associates, Inc., 2016. URL http://papers.nips.cc/paper/6501-deep-exploration-via-bootstrapped-dqn.pdf.",
+            "url": "http://papers.nips.cc/paper/6501-deep-exploration-via-bootstrapped-dqn.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20I.%20Blundell%2C%20C.%20Pritzel%2C%20A.%20Roy%2C%20B.Van%20Deep%20exploration%20via%20bootstrapped%20dqn%202016"
+        },
+        {
+            "id": "Ostrovski_et+al_2017_a",
+            "entry": "G. Ostrovski, M. G. Bellemare, A. van den Oord, and R. Munos. Count-Based Exploration with Neural Density Models. ArXiv e-prints, Mar. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ostrovski%2C%20G.%20Bellemare%2C%20M.G.%20van%20den%20Oord%2C%20A.%20Munos%2C%20R.%20Count-Based%20Exploration%20with%20Neural%20Density%20Models.%20ArXiv%20e-prints%202017-03"
+        },
+        {
+            "id": "Pathak_et+al_2017_a",
+            "entry": "D. Pathak, P. Agrawal, A. A. Efros, and T. Darrell. Curiosity-driven exploration by self-supervised prediction. CoRR, abs/1705.05363, 2017a. URL http://arxiv.org/abs/1705.05363.",
+            "url": "http://arxiv.org/abs/1705.05363",
+            "arxiv_url": "https://arxiv.org/pdf/1705.05363"
+        },
+        {
+            "id": "Pathak_et+al_2017_b",
+            "entry": "D. Pathak, P. Agrawal, A. A. Efros, and T. Darrell. Curiosity-driven exploration by self-supervised prediction. In D. Precup and Y. W. Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, pages 2778\u2013 2787, International Convention Centre, Sydney, Australia, 06\u201311 Aug 2017b. PMLR. URL http://proceedings.mlr.press/v70/pathak17a.html.",
+            "url": "http://proceedings.mlr.press/v70/pathak17a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20D.%20Agrawal%2C%20P.%20Efros%2C%20A.A.%20Darrell%2C%20T.%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction%202017-08"
+        },
+        {
+            "id": "Plappert_et+al_2018_a",
+            "entry": "M. Plappert, M. Andrychowicz, A. Ray, B. McGrew, B. Baker, G. Powell, J. Schneider, J. Tobin, M. Chociej, P. Welinder, V. Kumar, and W. Zaremba. Multi-Goal Reinforcement Learning: Challenging Robotics Environments and Request for Research. ArXiv e-prints, Feb. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Plappert%2C%20M.%20Andrychowicz%2C%20M.%20Ray%2C%20A.%20McGrew%2C%20B.%20Multi-Goal%20Reinforcement%20Learning%3A%20Challenging%20Robotics%20Environments%20and%20Request%20for%20Research.%20ArXiv%20e-prints%202018-02"
+        },
+        {
+            "id": "Schaul_et+al_2015_a",
+            "entry": "T. Schaul, D. Horgan, K. Gregor, and D. Silver. Universal value function approximators. In F. Bach and D. Blei, editors, Proceedings of the 32nd International Conference on Machine Learning, volume 37 of Proceedings of Machine Learning Research, pages 1312\u20131320, Lille, France, 07\u201309 Jul 2015. PMLR. URL http://proceedings.mlr.press/v37/schaul15.html.",
+            "url": "http://proceedings.mlr.press/v37/schaul15.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schaul%2C%20T.%20Horgan%2C%20D.%20Gregor%2C%20K.%20Silver%2C%20D.%20Universal%20value%20function%20approximators%202015-07"
+        },
+        {
+            "id": "Schmidhuber_1991_a",
+            "entry": "J. Schmidhuber. Curious model-building control systems. In In Proc. International Joint Conference on Neural Networks, Singapore, pages 1458\u20131463. IEEE, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J.%20Curious%20model-building%20control%20systems%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20J.%20Curious%20model-building%20control%20systems%201991"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov. Proximal policy optimization algorithms. CoRR, abs/1707.06347, 2017. URL http://arxiv.org/abs/1707.06347.",
+            "url": "http://arxiv.org/abs/1707.06347",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Schulman_et+al_2017_b",
+            "entry": "J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov. Proximal Policy Optimization Algorithms. ArXiv e-prints, July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=J%20Schulman%20F%20Wolski%20P%20Dhariwal%20A%20Radford%20and%20O%20Klimov%20Proximal%20Policy%20Optimization%20Algorithms%20ArXiv%20eprints%20July%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=J%20Schulman%20F%20Wolski%20P%20Dhariwal%20A%20Radford%20and%20O%20Klimov%20Proximal%20Policy%20Optimization%20Algorithms%20ArXiv%20eprints%20July%202017"
+        },
+        {
+            "id": "Simsek_et+al_2005_a",
+            "entry": "\u00d6. Simsek, A. P. Wolfe, and A. G. Barto. Identifying useful subgoals in reinforcement learning by local graph partitioning. In Proceedings of the 22nd international conference on Machine learning, pages 816\u2013823. ACM, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simsek%2C%20%C3%96.%20Wolfe%2C%20A.P.%20Barto%2C%20A.G.%20Identifying%20useful%20subgoals%20in%20reinforcement%20learning%20by%20local%20graph%20partitioning%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simsek%2C%20%C3%96.%20Wolfe%2C%20A.P.%20Barto%2C%20A.G.%20Identifying%20useful%20subgoals%20in%20reinforcement%20learning%20by%20local%20graph%20partitioning%202005"
+        },
+        {
+            "id": "Strehl_2008_a",
+            "entry": "A. L. Strehl and M. L. Littman. An analysis of model-based interval estimation for markov decision processes. J. Comput. Syst. Sci., 74(8):1309\u20131331, Dec. 2008. ISSN 0022-0000. doi: 10.1016/j. jcss.2007.08.009. URL http://dx.doi.org/10.1016/j.jcss.2007.08.009.",
+            "crossref": "https://dx.doi.org/10.1016/j.jcss.2007.08.009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.jcss.2007.08.009"
+        },
+        {
+            "id": "Strouse_et+al_2018_a",
+            "entry": "D. Strouse, M. Kleiman-Weiner, J. Tenenbaum, M. Botvinick, and D. Schwab. Learning to share and hide intentions using information regularization. In Advances in Neural Information Processing Systems (NIPS) 31. NeurIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strouse%2C%20D.%20Kleiman-Weiner%2C%20M.%20Tenenbaum%2C%20J.%20Botvinick%2C%20M.%20Learning%20to%20share%20and%20hide%20intentions%20using%20information%20regularization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Strouse%2C%20D.%20Kleiman-Weiner%2C%20M.%20Tenenbaum%2C%20J.%20Botvinick%2C%20M.%20Learning%20to%20share%20and%20hide%20intentions%20using%20information%20regularization%202018"
+        },
+        {
+            "id": "Sutton_et+al_0000_a",
+            "entry": "R. S. Sutton, D. McAllester, S. Singh, and Y. Mansour. Policy gradient methods for reinforcement learning with function approximation. In Proceedings of the 12th International Conference on Neural Information Processing Systems, NIPS\u201999, pages 1057\u20131063, Cambridge, MA, USA, 1999a. MIT Press. URL http://dl.acm.org/citation.cfm?id=3009657.3009806.",
+            "url": "http://dl.acm.org/citation.cfm?id=3009657.3009806",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20R.S.%20McAllester%2C%20D.%20Singh%2C%20S.%20Mansour%2C%20Y.%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation"
+        },
+        {
+            "id": "Sutton_et+al_1999_a",
+            "entry": "R. S. Sutton, D. Precup, and S. Singh. Between mdps and semi-mdps: A framework for temporal abstraction in reinforcement learning. Artificial Intelligence, 112(1-2):181\u2013211, Aug. 1999b. ISSN 0004-3702. doi: 10.1016/S0004-3702(99)00052-1. URL http://dx.doi.org/10.1016/ S0004-3702(99)00052-1.",
+            "crossref": "https://dx.doi.org/10.1016/S0004-3702(99)00052-1",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/S0004-3702%2899%2900052-1"
+        },
+        {
+            "id": "Tang_et+al_2016_a",
+            "entry": "H. Tang, R. Houthooft, D. Foote, A. Stooke, X. Chen, Y. Duan, J. Schulman, F. De Turck, and P. Abbeel. #Exploration: A Study of Count-Based Exploration for Deep Reinforcement Learning. ArXiv e-prints, Nov. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20H.%20Houthooft%2C%20R.%20Foote%2C%20D.%20Stooke%2C%20A.%20%23Exploration%3A%20A%20Study%20of%20Count-Based%20Exploration%20for%20Deep%20Reinforcement%20Learning.%20ArXiv%20e-prints%202016-11"
+        },
+        {
+            "id": "Tishby_et+al_1999_a",
+            "entry": "N. Tishby, F. C. Pereira, and W. Bialek. The information bottleneck method. Proceedings of The 37th Allerton Conference on Communication, Control, and Computing, pages 368\u2013377, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tishby%2C%20N.%20Pereira%2C%20F.C.%20Bialek%2C%20W.%20The%20information%20bottleneck%20method%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tishby%2C%20N.%20Pereira%2C%20F.C.%20Bialek%2C%20W.%20The%20information%20bottleneck%20method%201999"
+        },
+        {
+            "id": "Tishby_et+al_2000_a",
+            "entry": "N. Tishby, F. C. Pereira, and W. Bialek. The information bottleneck method. arXiv preprint physics/0004057, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tishby%2C%20N.%20Pereira%2C%20F.C.%20Bialek%2C%20W.%20The%20information%20bottleneck%20method%202000"
+        },
+        {
+            "id": "Van_2011_a",
+            "entry": "S. G. van Dijk and D. Polani. Grounding subgoals in information transitions. IEEE Symposium on Adaptive Dynamic Programming and Reinforcement Learning (ADPRL), 2011. URL https://ieeexplore.ieee.org/document/5967384/.",
+            "url": "https://ieeexplore.ieee.org/document/5967384/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20Dijk%2C%20S.G.%20Polani%2C%20D.%20Grounding%20subgoals%20in%20information%20transitions%202011"
+        },
+        {
+            "id": "Vezhnevets_et+al_2017_a",
+            "entry": "A. S. Vezhnevets, S. Osindero, T. Schaul, N. Heess, M. Jaderberg, D. Silver, and K. Kavukcuoglu. Feudal networks for hierarchical reinforcement learning. CoRR, abs/1703.01161, 2017. URL http://arxiv.org/abs/1703.01161.",
+            "url": "http://arxiv.org/abs/1703.01161",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01161"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "T. Weber, S. Racani\u00e8re, D. P. Reichert, L. Buesing, A. Guez, D. J. Rezende, A. P. Badia, O. Vinyals, N. Heess, Y. Li, R. Pascanu, P. Battaglia, D. Silver, and D. Wierstra. Imagination-augmented agents for deep reinforcement learning. CoRR, abs/1707.06203, 2017. URL http://arxiv.org/abs/1707.06203.",
+            "url": "http://arxiv.org/abs/1707.06203",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06203"
+        },
+        {
+            "id": "Teh_et+al_2017_a",
+            "entry": "Y. Whye Teh, V. Bapst, W. M. Czarnecki, J. Quan, J. Kirkpatrick, R. Hadsell, N. Heess, and R. Pascanu. Distral: Robust Multitask Reinforcement Learning. ArXiv e-prints, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Teh%2C%20Y.Whye%20Bapst%2C%20V.%20Czarnecki%2C%20W.M.%20Quan%2C%20J.%20Distral%3A%20Robust%20Multitask%20Reinforcement%20Learning.%20ArXiv%20e-prints%202017"
+        },
+        {
+            "id": "Williams_1992_a",
+            "entry": "R. J. Williams. Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning. Machine Learning, 8(3-4):229\u2013256, 1992. ISSN 0885-6125. doi: 10.1007/BF00992696. URL https://doi.org/10.1007/BF00992696.",
+            "crossref": "https://dx.doi.org/10.1007/BF00992696",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/BF00992696"
+        },
+        {
+            "id": "Recall_2016_a",
+            "entry": "Recall that the variational information bottleneck objective (Alemi et al., 2016; Tishby et al., 2000) is formulated as the maximization of I(Z, Y ) \u2212 \u03b2I(Z, X). In our setting, the input (X) corresponds to the goal of the agent (G) and (A) corresponds to the target output.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Recall%20that%20the%20variational%20information%20bottleneck%20objective%20Alemi%20et%20al%202016%20Tishby%20et%20al%202000%20is%20formulated%20as%20the%20maximization%20of%20IZ%20Y%20%20%20%CE%B2IZ%20X%20In%20our%20setting%20the%20input%20X%20corresponds%20to%20the%20goal%20of%20the%20agent%20G%20and%20A%20corresponds%20to%20the%20target%20output",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Recall%20that%20the%20variational%20information%20bottleneck%20objective%20Alemi%20et%20al%202016%20Tishby%20et%20al%202000%20is%20formulated%20as%20the%20maximization%20of%20IZ%20Y%20%20%20%CE%B2IZ%20X%20In%20our%20setting%20the%20input%20X%20corresponds%20to%20the%20goal%20of%20the%20agent%20G%20and%20A%20corresponds%20to%20the%20target%20output"
+        },
+        {
+            "id": "The_y)._a",
+            "entry": "The Data Processing Inequality (DPI) (Beaudry and Renner, 2012; Kinney and Atwal, 2014; Achille and Soatto, 2017) for a Markov chain x \u2192 z \u2192 y ensures that I(x; z) \u2265 I(x; y).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20Data%20Processing%20Inequality%20DPI%20Beaudry%20and%20Renner%202012%20Kinney%20and%20Atwal%202014%20Achille%20and%20Soatto%202017%20for%20a%20Markov%20chain%20x%20%20z%20%20y%20ensures%20that%20Ix%20z%20%20Ix%20y"
+        },
+        {
+            "id": "4000_2000_a",
+            "entry": "4000 3500 3000 2500 2000 1500 1000 500",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=3500%203000%202500%202000%201500%201000%20500"
+        }
+    ]
+}

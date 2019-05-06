@@ -1,0 +1,185 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO NAVIGATE THE WEB",
+        "author": "Izzeddin Gur, Ulrich Rueckert, Aleksandra Faust, Dilek Hakkani-Tur Google AI",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJemQ209FQ"
+        },
+        "abstract": "Learning in environments with large state and action spaces, and sparse rewards, can hinder a Reinforcement Learning (RL) agent\u2019s learning through trial-anderror. For instance, following natural language instructions on the Web (such as booking a flight ticket) leads to RL settings where input vocabulary and number of actionable elements on a page can grow very large. Even though recent approaches improve the success rate on relatively simple environments with the help of human demonstrations to guide the exploration, they still fail in environments where the set of possible instructions can reach millions. We approach the aforementioned problems from a different perspective and propose guided RL approaches that can generate unbounded amount of experience for an agent to learn from. Instead of learning from a complicated instruction with a large vocabulary, we decompose it into multiple sub-instructions and schedule a curriculum in which an agent is tasked with a gradually increasing subset of these relatively easier sub-instructions. In addition, when the expert demonstrations are not available, we propose a novel meta-learning framework that generates new instruction following tasks and trains the agent more effectively. We train DQN, deep reinforcement learning agent, with Q-value function approximated with a novel QWeb neural network architecture on these smaller, synthetic instructions. We evaluate the ability of our agent to generalize to new instructions on World of Bits benchmark, on forms with up to 100 elements, supporting 14 million possible instructions. The QWeb agent outperforms the baseline without using any human demonstration achieving 100% success rate on several difficult environments."
+    },
+    "keywords": [
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "success rate",
+            "url": "https://en.wikipedia.org/wiki/success_rate"
+        },
+        {
+            "term": "flight ticket",
+            "url": "https://en.wikipedia.org/wiki/flight_ticket"
+        },
+        {
+            "term": "natural language",
+            "url": "https://en.wikipedia.org/wiki/natural_language"
+        },
+        {
+            "term": "Document Object Model",
+            "url": "https://en.wikipedia.org/wiki/Document_Object_Model"
+        }
+    ],
+    "abbreviations": {
+        "RL": "Reinforcement Learning",
+        "DOM": "Document Object Model",
+        "QWEB": "Q NETWORK FOR WEB NAVIGATION",
+        "F C": "fully connected layer",
+        "biLSTM": "bidirectional LSTM",
+        "INET": "Instruction Generation",
+        "RRND": "rule-based randomized policy",
+        "KS": "knowledge source"
+    },
+    "highlights": [
+        "We study the problem of training reinforcement learning agents to navigate the Web by following certain instructions, such as book a flight ticket or interact with a social media web site, that require learning through large state and action spaces with sparse and delayed rewards",
+        "Each task consists of a structured instruction and a 160px x 210px environment represented as a Document Object Model tree",
+        "We presented two approaches for training DQN agents in difficult web navigation environments with sparse rewards and large state and action spaces, one in presence of expert demonstrations and the other without the demonstrations",
+        "When an expert demonstrations are available, curriculum learning decomposes a difficult instruction into multiple sub-instructions and tasks the agent with incrementally larger subset of these sub-instructions; uncovering the original instruction",
+        "When expert demonstrations are not available, we introduced a meta-trainer that generates goal state and instruction pairs with dense reward signals for the QWeb to train more efficiently"
+    ],
+    "key_statements": [
+        "We study the problem of training reinforcement learning agents to navigate the Web by following certain instructions, such as book a flight ticket or interact with a social media web site, that require learning through large state and action spaces with sparse and delayed rewards",
+        "We present two methods for reinforcement learning in large state and action spaces with sparse rewards for the web navigation",
+        "We describe our proposed models for handling large state and action spaces with sparse rewards",
+        "There are numerous other possibilities to utilize MetaQWeb to provide various signals such as generating supervised episodes and performing behavioral cloning, scheduling a curriculum from the episodes generated by meta-trainer, using MetaQWeb as a behavior policy for off-policy learning, etc",
+        "We conduct extensive experiments on a more difficult environment, book-flight-form, that require learning through a large number of states and actions",
+        "Each task consists of a structured instruction and a 160px x 210px environment represented as a Document Object Model tree",
+        "Social-media-all environment has more than 7000 different possible values in instructions and Document Object Model elements and the task length is 12 which are both considerably higher than other environments",
+        "All the environments return a sparse reward at the end of an episode with (+1) for successful and (-1) for failure episodes, respectively",
+        "We evaluate the performance of QWeb on a set of simple and difficult Miniwob environments based on the size of state and action spaces and the input vocabulary",
+        "Before we examine the performance of MetaQWeb, we first evaluate the performance of Instruction Generation on generating successful instructions to understand the effect of the noise that MetaQWeb introduces into training QWeb",
+        "When we examine the error cases for meta-test use case, we observe that 75% of the errors come from incorrect instruction generations where more than 75% of those errors are from incorrect date field",
+        "We presented two approaches for training DQN agents in difficult web navigation environments with sparse rewards and large state and action spaces, one in presence of expert demonstrations and the other without the demonstrations",
+        "When an expert demonstrations are available, curriculum learning decomposes a difficult instruction into multiple sub-instructions and tasks the agent with incrementally larger subset of these sub-instructions; uncovering the original instruction",
+        "When expert demonstrations are not available, we introduced a meta-trainer that generates goal state and instruction pairs with dense reward signals for the QWeb to train more efficiently",
+        "The evaluations indicate that having a high-quality expert demonstrations is important, as the policies trained from curriculum over demonstrations outperform policies that generate nonperfect demonstrations",
+        "We plan to apply our models on a broader set of navigation tasks with large discrete state and actions, and will experiment with other signals to utilize in the meta-trainer, such as supervised pre-training using behavioral cloning, scheduling a curriculum from the episodes generated by meta-trainer, using meta-trainer as off-policy learning, etc"
+    ],
+    "summary": [
+        "We study the problem of training reinforcement learning agents to navigate the Web by following certain instructions, such as book a flight ticket or interact with a social media web site, that require learning through large state and action spaces with sparse and delayed rewards.",
+        "QWeb serves as Q-value function for the learned instruction-following policy, trained with either curriculum-DQN or instructor agent.",
+        "Our meta-learning framework differs from previous works where we generate instruction and goal pairs to set the environment and provide dense rewards for a low level navigator agent to effectively train.",
+        "To address situations when the human demonstrations and ORACLE policy are not available, we combine the curriculum learning and reward augmentation under a more general unified framework, and present a novel meta-training approach that works in two phases.",
+        "Instruction actions are composite actions: select a DOM element as in web navigation environments and generate a value that corresponds to the current key (K),.",
+        "We use the same sampling procedure used in the curriculum learning (Algorithm 2 to sample new pairs, but states, actions, and rewards in instruction generation environments are set up differently).",
+        "MetaQWeb can still train QWeb by leveraging those incomplete episodes as well as the instruction and goal pairs that the web navigation environment assigns.",
+        "We use a set of tasks that require various combinations of clicking and typing to set a baseline for the QWeb including a difficult environment, social-media-all, where previous approaches fail to generate any successful episodes.",
+        "On click-pie environment, the episode lengths are small (1) but the agent needs to learn a relatively large vocabulary to correctly deduce the semantic similarities between instruction and DOM elements.",
+        "Our empirical results suggest that it is critical to use both shallow encoding and augmented rewards in social-media-all environment where without these improvements, we weren\u2019t able to train a successful agent purely from trial-and-error.",
+        "We presented two approaches for training DQN agents in difficult web navigation environments with sparse rewards and large state and action spaces, one in presence of expert demonstrations and the other without the demonstrations.",
+        "When expert demonstrations are not available, we introduced a meta-trainer that generates goal state and instruction pairs with dense reward signals for the QWeb to train more efficiently.",
+        "We plan to apply our models on a broader set of navigation tasks with large discrete state and actions, and will experiment with other signals to utilize in the meta-trainer, such as supervised pre-training using behavioral cloning, scheduling a curriculum from the episodes generated by meta-trainer, using meta-trainer as off-policy learning, etc."
+    ],
+    "headline": "When the expert demonstrations are not available, we propose a novel meta-learning framework that generates new instruction following tasks and trains the agent more effectively",
+    "reference_links": [
+        {
+            "id": "Abbeel_2004_a",
+            "entry": "Pieter Abbeel and Andrew Y. Ng. Apprenticeship learning via inverse reinforcement learning. In Proceedings of the International Conference on Machine Learning, ICML \u201904, pp. 1\u2013, New York, NY, USA, 2004. ACM. ISBN 1-58113-838-5. doi: 10.1145/1015330.1015430. URL http://doi.acm.org/10.1145/1015330.1015430.",
+            "crossref": "https://dx.doi.org/10.1145/1015330.1015430",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/1015330.1015430"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan Shillingford, and Nando de Freitas. Learning to learn by gradient descent by gradient descent. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett (eds.), Proceedings of the Annual Conference on Neural Information Processing Systems, pp. 3981\u20133989. Curran Associates, Inc., 2016. URL http://papers.nips.cc/paper/6461-learning-to-learn-by-gradient-descent-by-gradient-descent.pdf.",
+            "url": "http://papers.nips.cc/paper/6461-learning-to-learn-by-gradient-descent-by-gradient-descent.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Bengio_et+al_2009_a",
+            "entry": "Yoshua Bengio, Jerome Louradour, Ronan Collobert, and Jason Weston. Curriculum learning. In Proceedings of the International Conference on Machine Learning, ICML \u201909, pp. 41\u201348, New York, NY, USA, 2009. ACM. ISBN 978-1-60558-516-1. doi: 10.1145/1553374.1553380. URL http://doi.acm.org/10.1145/1553374.1553380.",
+            "crossref": "https://dx.doi.org/10.1145/1553374.1553380",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/1553374.1553380"
+        },
+        {
+            "id": "Duan_et+al_2016_a",
+            "entry": "Yan Duan, John Schulman, Xi Chen, Peter L. Bartlett, Ilya Sutskever, and Pieter Abbeel. Rl$\u02c62$: Fast reinforcement learning via slow reinforcement learning. CoRR, abs/1611.02779, 2016. URL http://arxiv.org/abs/1611.02779.",
+            "url": "http://arxiv.org/abs/1611.02779",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02779"
+        },
+        {
+            "id": "Florensa_et+al_2017_a",
+            "entry": "Carlos Florensa, David Held, Markus Wulfmeier, Michael Zhang, and Pieter Abbeel. Reverse curriculum generation for reinforcement learning. In Sergey Levine, Vincent Vanhoucke, and Ken Goldberg (eds.), Proceedings of the 1st Annual Conference on Robot Learning, volume 78 of Proceedings of Machine Learning Research, pp. 482\u2013495. PMLR, 13\u201315 Nov 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Florensa%2C%20Carlos%20Held%2C%20David%20Wulfmeier%2C%20Markus%20Zhang%2C%20Michael%20Reverse%20curriculum%20generation%20for%20reinforcement%20learning%202017-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Florensa%2C%20Carlos%20Held%2C%20David%20Wulfmeier%2C%20Markus%20Zhang%2C%20Michael%20Reverse%20curriculum%20generation%20for%20reinforcement%20learning%202017-11"
+        },
+        {
+            "id": "Frans_et+al_2018_a",
+            "entry": "Kevin Frans, Jonathan Ho, Xi Chen, Pieter Abbeel, and John Schulman. META LEARNING SHARED HIERARCHIES. In Proceedings of the International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=SyX0IeWAW.",
+            "url": "https://openreview.net/forum?id=SyX0IeWAW",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frans%2C%20Kevin%20Ho%2C%20Jonathan%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20META%20LEARNING%20SHARED%20HIERARCHIES%202018"
+        },
+        {
+            "id": "Graves_et+al_2017_a",
+            "entry": "Alex Graves, Marc G. Bellemare, Jacob Menick, Remi Munos, and Koray Kavukcuoglu. Automated curriculum learning for neural networks. In Proceedings of the International Conference on Machine Learning, pp. 1311\u20131320, 2017. URL http://proceedings.mlr.press/v70/graves17a.html.",
+            "url": "http://proceedings.mlr.press/v70/graves17a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Bellemare%2C%20Marc%20G.%20Menick%2C%20Jacob%20Munos%2C%20Remi%20Automated%20curriculum%20learning%20for%20neural%20networks%202017"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Evan Zheran Liu, Kelvin Guu, Panupong Pasupat, and Percy Liang. Reinforcement learning on web interfaces using workflow-guided exploration. In Proceedings of the International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=ryTp3f-0-.",
+            "url": "https://openreview.net/forum?id=ryTp3f-0-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Evan%20Zheran%20Guu%2C%20Kelvin%20Pasupat%2C%20Panupong%20Liang%2C%20Percy%20Reinforcement%20learning%20on%20web%20interfaces%20using%20workflow-guided%20exploration%202018"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg, and Demis Hassabis. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, February 2015. ISSN 00280836. URL http://dx.doi.org/10.1038/nature14236.",
+            "crossref": "https://dx.doi.org/10.1038/nature14236",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/nature14236"
+        },
+        {
+            "id": "Ng_et+al_1999_a",
+            "entry": "Andrew Y. Ng, Daishi Harada, and Stuart J. Russell. Policy invariance under reward transformations: Theory and application to reward shaping. In Proceedings of the International Conference on Machine Learning, ICML \u201999, pp. 278\u2013287, San Francisco, CA, USA, 1999. Morgan Kaufmann Publishers Inc. ISBN 1-55860-612-2. URL http://dl.acm.org/citation.cfm?id=645528.657613.",
+            "url": "http://dl.acm.org/citation.cfm?id=645528.657613",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ng%2C%20Andrew%20Y.%20Harada%2C%20Daishi%20Russell%2C%20Stuart%20J.%20Policy%20invariance%20under%20reward%20transformations%3A%20Theory%20and%20application%20to%20reward%20shaping%201999"
+        },
+        {
+            "id": "Shah_et+al_2018_a",
+            "entry": "Pararth Shah, Marek Fiser, Aleksandra Faust, J. Chase Kew, and Dilek Hakkani-Tur. Follownet: Robot navigation by following natural language directions with deep reinforcement learning. Third Workshop in Machine Learning in the Planning and Control of Robot Motion (MLPC), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shah%2C%20Pararth%20Fiser%2C%20Marek%20Aleksandra%20Faust%2C%20J.Chase%20Kew%20Hakkani-Tur%2C%20Dilek%20Follownet%3A%20Robot%20navigation%20by%20following%20natural%20language%20directions%20with%20deep%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shah%2C%20Pararth%20Fiser%2C%20Marek%20Aleksandra%20Faust%2C%20J.Chase%20Kew%20Hakkani-Tur%2C%20Dilek%20Follownet%3A%20Robot%20navigation%20by%20following%20natural%20language%20directions%20with%20deep%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Shi_et+al_2017_a",
+            "entry": "Tianlin Shi, Andrej Karpathy, Linxi Fan, Jonathan Hernandez, and Percy Liang. World of bits: An open-domain platform for web-based agents. In Doina Precup and Yee Whye Teh (eds.), Proceedings of the International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, pp. 3135\u20133144, International Convention Centre, Sydney, Australia, 06\u201311 Aug 2017. PMLR.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shi%2C%20Tianlin%20Karpathy%2C%20Andrej%20Fan%2C%20Linxi%20Hernandez%2C%20Jonathan%20World%20of%20bits%3A%20An%20open-domain%20platform%20for%20web-based%20agents%202017-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shi%2C%20Tianlin%20Karpathy%2C%20Andrej%20Fan%2C%20Linxi%20Hernandez%2C%20Jonathan%20World%20of%20bits%3A%20An%20open-domain%20platform%20for%20web-based%20agents%202017-08"
+        },
+        {
+            "id": "Vinyals_et+al_2015_a",
+            "entry": "Oriol Vinyals, Lukasz Kaiser, Terry Koo, Slav Petrov, Ilya Sutskever, and Geoffrey Hinton. Grammar as a foreign language. In Proceedings of the 28th International Conference on Neural Information Processing Systems - Volume 2, Proceedings of the Annual Conference on Neural Information Processing Systems, pp. 2773\u20132781, Cambridge, MA, USA, 2015. MIT Press. URL http://dl.acm.org/citation.cfm?id=2969442.2969550.",
+            "url": "http://dl.acm.org/citation.cfm?id=2969442.2969550",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Kaiser%2C%20Lukasz%20Koo%2C%20Terry%20Petrov%2C%20Slav%20Grammar%20as%20a%20foreign%20language%202015"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Jane X. Wang, Zeb Kurth-Nelson, Dhruva Tirumala, Hubert Soyer, Joel Z. Leibo, Remi Munos, Charles Blundell, Dharshan Kumaran, and Matthew Botvinick. Learning to reinforcement learn. CoRR, abs/1611.05763, 2016. URL http://arxiv.org/abs/1611.05763.",
+            "url": "http://arxiv.org/abs/1611.05763",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05763"
+        },
+        {
+            "id": "Zaremba_2014_a",
+            "entry": "Wojciech Zaremba and Ilya Sutskever. Learning to execute. CoRR, abs/1410.4615, 2014. URL http://arxiv.org/abs/1410.4615.",
+            "url": "http://arxiv.org/abs/1410.4615",
+            "arxiv_url": "https://arxiv.org/pdf/1410.4615"
+        }
+    ]
+}

@@ -1,0 +1,225 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MUSIC TRANSFORMER: GENERATING MUSIC WITH LONG-TERM STRUCTURE",
+        "author": "Cheng-Zhi Anna Huang, Ashish Vaswani Jakob Uszkoreit Noam Shazeer Ian Simon Curtis Hawthorne Andrew M. Dai Matthew D. Hoffman Monica Dinculescu Douglas Eck Google Brain {annahuang,avaswani,usz,noam, iansimon,fjord,adai,mhoffman,noms,deck}@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJe4ShAcF7"
+        },
+        "abstract": "Music relies heavily on repetition to build structure and meaning. Self-reference occurs on multiple timescales, from motifs to phrases to reusing of entire sections of music, such as in pieces with ABA structure. The Transformer (<a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al., 2017</a>), a sequence model based on self-attention, has achieved compelling results in many generation tasks that require maintaining long-range coherence. This suggests that self-attention might also be well-suited to modeling music. In musical composition and performance, however, relative timing is critically important. Existing approaches for representing relative positional information in the Transformer modulate attention based on pairwise distance (<a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\">Shaw et al., 2018</a>). This is impractical for long sequences such as musical compositions because their memory complexity for intermediate relative information is quadratic in the sequence length. We propose an algorithm that reduces their intermediate memory requirement to linear in the sequence length. This enables us to demonstrate that a Transformer with our modified relative attention mechanism can generate minute-long compositions (thousands of steps) with compelling structure, generate continuations that coherently elaborate on a given motif, and in a seq2seq setup generate accompaniments conditioned on melodies1. We evaluate the Transformer with our relative attention mechanism on two datasets, JSB Chorales and Maestro, and obtain state-of-the-art results on the latter."
+    },
+    "keywords": [
+        {
+            "term": "polyphonic music",
+            "url": "https://en.wikipedia.org/wiki/polyphonic_music"
+        },
+        {
+            "term": "MUSIC",
+            "url": "https://en.wikipedia.org/wiki/MUSIC"
+        },
+        {
+            "term": "musical composition",
+            "url": "https://en.wikipedia.org/wiki/musical_composition"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        }
+    ],
+    "abbreviations": {
+        "NADE": "Neural Autoregressive Distribution Estimators",
+        "GAN": "generative adversarial networks",
+        "NLL": "negative loglikelihood"
+    },
+    "highlights": [
+        "A musical piece often consists of recurring elements at various levels, from motifs to phrases to sections such as verse-chorus",
+        "In Section 3.4, we show how to reduce the memory requirements to O(LD), making it practical to apply relative attention to long sequences",
+        "We speculate that idiomatic piano gestures such as scales, arpeggios and other motifs all exhibit a certain grammar and recur periodically, knowing their relative positional distances makes it easier to model this regularity. This inductive bias towards learning relational information, as opposed to patterns based on absolute position, suggests that the Transformer with relative attention could generalize beyond the lengths it was trained on, which our experiments in Section 4.2.1 confirm",
+        "Algorithmic contributions The space complexity of the relative self-attention mechanism in its original formulation (<a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\">Shaw et al, 2018</a>) made it infeasible to train on sequences of sufficient length to capture long-range structure in longer musical compositions",
+        "In this work we demonstrated that the Transformer equipped with relative attention is very well-suited for generative modeling of symbolic music",
+        "Our memory-efficient implementation enables the application of relative attention to much longer sequences such as long texts or even audio waveforms, which significantly broadens the range of problems to which it could be applied"
+    ],
+    "key_statements": [
+        "A musical piece often consists of recurring elements at various levels, from motifs to phrases to sections such as verse-chorus",
+        "In Section 3.4, we show how to reduce the memory requirements to O(LD), making it practical to apply relative attention to long sequences",
+        "As position in sequence no longer corresponds to time, a priori it is not obvious that relative attention should work as well with such a representation",
+        "We speculate that idiomatic piano gestures such as scales, arpeggios and other motifs all exhibit a certain grammar and recur periodically, knowing their relative positional distances makes it easier to model this regularity. This inductive bias towards learning relational information, as opposed to patterns based on absolute position, suggests that the Transformer with relative attention could generalize beyond the lengths it was trained on, which our experiments in Section 4.2.1 confirm",
+        "Domain contributions We show the first successful use of Transformers in generating music that exhibits long-term structure",
+        "Algorithmic contributions The space complexity of the relative self-attention mechanism in its original formulation (<a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\">Shaw et al, 2018</a>) made it infeasible to train on sequences of sufficient length to capture long-range structure in longer musical compositions",
+        "We present a crucial algorithmic improvement to the relative self-attention mechanism, dramatically reducing its memory requirements from O(L2D) to O(LD)",
+        "In addition to relative attention, we explored enhancing absolute timing through concatenating instead of adding the sinusoids to the input embeddings",
+        "To capture more relational information, we extend relative attention to capture pairwise distances on additional attributes",
+        "In this work we demonstrated that the Transformer equipped with relative attention is very well-suited for generative modeling of symbolic music",
+        "Our memory-efficient implementation enables the application of relative attention to much longer sequences such as long texts or even audio waveforms, which significantly broadens the range of problems to which it could be applied"
+    ],
+    "summary": [
+        "A musical piece often consists of recurring elements at various levels, from motifs to phrases to sections such as verse-chorus.",
+        "As opposed to the original Transformer, samples from a Transformer with our relative attention mechanism maintain the regular timing grid present in this dataset.",
+        "The original formulation of relative attention (<a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\"><a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\">Shaw et al, 2018</a></a>) requires O(L2D) memory where L is the sequence length and D is the dimension of the model\u2019s hidden state.",
+        "As position in sequence no longer corresponds to time, a priori it is not obvious that relative attention should work as well with such a representation.",
+        "This inductive bias towards learning relational information, as opposed to patterns based on absolute position, suggests that the Transformer with relative attention could generalize beyond the lengths it was trained on, which our experiments in Section 4.2.1 confirm.",
+        "Algorithmic contributions The space complexity of the relative self-attention mechanism in its original formulation (<a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\"><a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\">Shaw et al, 2018</a></a>) made it infeasible to train on sequences of sufficient length to capture long-range structure in longer musical compositions.",
+        "The memory consumption per layer is reduced from 8.5 GB to 4.2 MB for a sequence of length L = 2048 and hidden-state size, allowing us to use GPUs to train the relative self-attention Transformer on long sequences.",
+        "The Transformer decoder is a autoregressive generative model that uses primarily self-attention mechanisms, and learned or sinusoidal position information.",
+        "As the Transformer model relies solely on positional sinusoids to represent timing information, <a class=\"ref-link\" id=\"cShaw_et+al_2018_a\" href=\"#rShaw_et+al_2018_a\">Shaw et al (2018</a>) introduced relative position representations to allow attention to be informed by how far two positions are apart in a sequence.",
+        "Local attention may fare well as it allows for much deeper models and longer sequences, as seen in text and image generation work (<a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al, 2018</a>; <a class=\"ref-link\" id=\"cParmar_et+al_2018_a\" href=\"#rParmar_et+al_2018_a\">Parmar et al, 2018</a>)).",
+        "To compare the perceived sample quality of models trained on the Maestro dataset, and their ability to generate a continuation for a priming sequence, we carried out a listening test study comparing the baseline Transformer, our Transformer with relative-attention, PerformanceRNN (LSTM), and the validation set.",
+        "The improvement in sample quality from using relative attention over the baseline Transformer model was statistically significant, both in aggregate and between the pair.",
+        "In this work we demonstrated that the Transformer equipped with relative attention is very well-suited for generative modeling of symbolic music.",
+        "Our memory-efficient implementation enables the application of relative attention to much longer sequences such as long texts or even audio waveforms, which significantly broadens the range of problems to which it could be applied."
+    ],
+    "headline": "We propose an algorithm that reduces their intermediate memory requirement to linear in the sequence length",
+    "reference_links": [
+        {
+            "id": "Allan_2005_a",
+            "entry": "Moray Allan and Christopher KI Williams. Harmonising chorales by probabilistic inference. Advances in neural information processing systems, 17:25\u201332, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allan%2C%20Moray%20Williams%2C%20Christopher%20K.I.%20Harmonising%20chorales%20by%20probabilistic%20inference.%20Advances%20in%20neural%20information%20processing%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allan%2C%20Moray%20Williams%2C%20Christopher%20K.I.%20Harmonising%20chorales%20by%20probabilistic%20inference.%20Advances%20in%20neural%20information%20processing%202005"
+        },
+        {
+            "id": "Boulanger-Lewandowski_et+al_2012_a",
+            "entry": "Nicolas Boulanger-Lewandowski, Yoshua Bengio, and Pascal Vincent. Modeling temporal dependencies in high-dimensional sequences: Application to polyphonic music generation and transcription. International Conference on Machine Learning, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boulanger-Lewandowski%2C%20Nicolas%20Bengio%2C%20Yoshua%20Vincent%2C%20Pascal%20Modeling%20temporal%20dependencies%20in%20high-dimensional%20sequences%3A%20Application%20to%20polyphonic%20music%20generation%20and%20transcription%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Boulanger-Lewandowski%2C%20Nicolas%20Bengio%2C%20Yoshua%20Vincent%2C%20Pascal%20Modeling%20temporal%20dependencies%20in%20high-dimensional%20sequences%3A%20Application%20to%20polyphonic%20music%20generation%20and%20transcription%202012"
+        },
+        {
+            "id": "Dong_et+al_2018_a",
+            "entry": "Hao-Wen Dong, Wen-Yi Hsiao, Li-Chia Yang, and Yi-Hsuan Yang. Musegan: Multi-track sequential generative adversarial networks for symbolic music generation and accompaniment. In Proceedings of the AAAI Conference on Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dong%2C%20Hao-Wen%20Hsiao%2C%20Wen-Yi%20Yang%2C%20Li-Chia%20Yang%2C%20Yi-Hsuan%20Musegan%3A%20Multi-track%20sequential%20generative%20adversarial%20networks%20for%20symbolic%20music%20generation%20and%20accompaniment%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dong%2C%20Hao-Wen%20Hsiao%2C%20Wen-Yi%20Yang%2C%20Li-Chia%20Yang%2C%20Yi-Hsuan%20Musegan%3A%20Multi-track%20sequential%20generative%20adversarial%20networks%20for%20symbolic%20music%20generation%20and%20accompaniment%202018"
+        },
+        {
+            "id": "Eck_2002_a",
+            "entry": "Douglas Eck and Juergen Schmidhuber. Finding temporal structure in music: Blues improvisation with lstm recurrent networks. In Proceedings of the 12th IEEE Workshop on Neural Networks for Signal Processing, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eck%2C%20Douglas%20Schmidhuber%2C%20Juergen%20Finding%20temporal%20structure%20in%20music%3A%20Blues%20improvisation%20with%20lstm%20recurrent%20networks%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eck%2C%20Douglas%20Schmidhuber%2C%20Juergen%20Finding%20temporal%20structure%20in%20music%3A%20Blues%20improvisation%20with%20lstm%20recurrent%20networks%202002"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Hadjeres_et+al_2016_a",
+            "entry": "Ga\u00ebtan Hadjeres, Jason Sakellariou, and Fran\u00e7ois Pachet. Style imitation and chord invention in polyphonic music with exponential families. arXiv preprint arXiv:1609.05152, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.05152"
+        },
+        {
+            "id": "Hadjeres_et+al_2017_a",
+            "entry": "Ga\u00ebtan Hadjeres, Fran\u00e7ois Pachet, and Frank Nielsen. Deepbach: a steerable model for bach chorales generation. In International Conference on Machine Learning, pp. 1362\u20131371, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hadjeres%2C%20Ga%C3%ABtan%20Pachet%2C%20Fran%C3%A7ois%20Nielsen%2C%20Frank%20Deepbach%3A%20a%20steerable%20model%20for%20bach%20chorales%20generation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hadjeres%2C%20Ga%C3%ABtan%20Pachet%2C%20Fran%C3%A7ois%20Nielsen%2C%20Frank%20Deepbach%3A%20a%20steerable%20model%20for%20bach%20chorales%20generation%202017"
+        },
+        {
+            "id": "Hawthorne_et+al_2019_a",
+            "entry": "Curtis Hawthorne, Andriy Stasyuk, Adam Roberts, Ian Simon, Cheng-Zhi Anna Huang, Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck. Enabling factorized piano music modeling and generation with the maestro dataset. In International Conference on Learning Representations, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hawthorne%2C%20Curtis%20Stasyuk%2C%20Andriy%20Roberts%2C%20Adam%20Simon%2C%20Ian%20Enabling%20factorized%20piano%20music%20modeling%20and%20generation%20with%20the%20maestro%20dataset%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hawthorne%2C%20Curtis%20Stasyuk%2C%20Andriy%20Roberts%2C%20Adam%20Simon%2C%20Ian%20Enabling%20factorized%20piano%20music%20modeling%20and%20generation%20with%20the%20maestro%20dataset%202019"
+        },
+        {
+            "id": "Hinton_et+al_2006_a",
+            "entry": "Geoffrey E Hinton, Simon Osindero, and Yee-Whye Teh. A fast learning algorithm for deep belief nets. Neural computation, 18(7):1527\u20131554, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Osindero%2C%20Simon%20Teh%2C%20Yee-Whye%20A%20fast%20learning%20algorithm%20for%20deep%20belief%20nets%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Osindero%2C%20Simon%20Teh%2C%20Yee-Whye%20A%20fast%20learning%20algorithm%20for%20deep%20belief%20nets%202006"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Cheng-Zhi Anna Huang, Tim Cooijmans, Adam Roberts, Aaron Courville, and Doug Eck. Counterpoint by convolution. In Proceedings of the International Conference on Music Information Retrieval, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Cheng-Zhi%20Anna%20Cooijmans%2C%20Tim%20Roberts%2C%20Adam%20Courville%2C%20Aaron%20Counterpoint%20by%20convolution%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Cheng-Zhi%20Anna%20Cooijmans%2C%20Tim%20Roberts%2C%20Adam%20Courville%2C%20Aaron%20Counterpoint%20by%20convolution%202017"
+        },
+        {
+            "id": "Larochelle_2011_a",
+            "entry": "Hugo Larochelle and Iain Murray. The neural autoregressive distribution estimator. In AISTATS, volume 1, pp. 2, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Larochelle%2C%20Hugo%20Murray%2C%20Iain%20The%20neural%20autoregressive%20distribution%20estimator%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Larochelle%2C%20Hugo%20Murray%2C%20Iain%20The%20neural%20autoregressive%20distribution%20estimator%202011"
+        },
+        {
+            "id": "Lattner_et+al_2018_a",
+            "entry": "Stefan Lattner, Maarten Grachten, and Gerhard Widmer. Imposing higher-level structure in polyphonic music generation using convolutional restricted boltzmann machines and constraints. Journal of Creative Music Systems, 2(2), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lattner%2C%20Stefan%20Grachten%2C%20Maarten%20Widmer%2C%20Gerhard%20Imposing%20higher-level%20structure%20in%20polyphonic%20music%20generation%20using%20convolutional%20restricted%20boltzmann%20machines%20and%20constraints%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lattner%2C%20Stefan%20Grachten%2C%20Maarten%20Widmer%2C%20Gerhard%20Imposing%20higher-level%20structure%20in%20polyphonic%20music%20generation%20using%20convolutional%20restricted%20boltzmann%20machines%20and%20constraints%202018"
+        },
+        {
+            "id": "Liang_2016_a",
+            "entry": "Feynman Liang. Bachbot: Automatic composition in the style of bach chorales. Masters thesis, University of Cambridge, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Feynman%20Bachbot%3A%20Automatic%20composition%20in%20the%20style%20of%20bach%20chorales%202016"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Peter J Liu, Mohammad Saleh, Etienne Pot, Ben Goodrich, Ryan Sepassi, Lukasz Kaiser, and Noam Shazeer. Generating wikipedia by summarizing long sequences. In Proceedings of the International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Peter%20J.%20Saleh%2C%20Mohammad%20Pot%2C%20Etienne%20Goodrich%2C%20Ben%20and%20Noam%20Shazeer.%20Generating%20wikipedia%20by%20summarizing%20long%20sequences%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Peter%20J.%20Saleh%2C%20Mohammad%20Pot%2C%20Etienne%20Goodrich%2C%20Ben%20and%20Noam%20Shazeer.%20Generating%20wikipedia%20by%20summarizing%20long%20sequences%202018"
+        },
+        {
+            "id": "Oore_et+al_2018_a",
+            "entry": "Sageev Oore, Ian Simon, Sander Dieleman, Douglas Eck, and Karen Simonyan. This time with feeling: Learning expressive musical performance. arXiv preprint arXiv:1808.03715, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.03715"
+        },
+        {
+            "id": "Ankur_2016_a",
+            "entry": "Ankur Parikh, Oscar T\u00e4ckstr\u00f6m, Dipanjan Das, and Jakob Uszkoreit. A decomposable attention model for natural language inference. In Proceedings of the Conference on Empirical Methods in Natural Language Processing, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ankur%20Parikh%2C%20Oscar%20T%C3%A4ckstr%C3%B6m%2C%20Dipanjan%20Das%20Uszkoreit%2C%20Jakob%20A%20decomposable%20attention%20model%20for%20natural%20language%20inference%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ankur%20Parikh%2C%20Oscar%20T%C3%A4ckstr%C3%B6m%2C%20Dipanjan%20Das%20Uszkoreit%2C%20Jakob%20A%20decomposable%20attention%20model%20for%20natural%20language%20inference%202016"
+        },
+        {
+            "id": "Parmar_et+al_2018_a",
+            "entry": "Niki Parmar, Ashish Vaswani, Jakob Uszkoreit, \u0141ukasz Kaiser, Noam Shazeer, and Alexander Ku. Image transformer. In Proceedings of the International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parmar%2C%20Niki%20Vaswani%2C%20Ashish%20Uszkoreit%2C%20Jakob%20Kaiser%2C%20%C5%81ukasz%20Image%20transformer%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parmar%2C%20Niki%20Vaswani%2C%20Ashish%20Uszkoreit%2C%20Jakob%20Kaiser%2C%20%C5%81ukasz%20Image%20transformer%202018"
+        },
+        {
+            "id": "Povey_et+al_2018_a",
+            "entry": "Daniel Povey, Hossein Hadian, Pegah Ghahremani, Ke Li, and Sanjeev Khudanpur. A time-restricted self-attention layer for ASR. In Proceddings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Povey%2C%20Daniel%20Hadian%2C%20Hossein%20Ghahremani%2C%20Pegah%20Li%2C%20Ke%20A%20time-restricted%20self-attention%20layer%20for%20ASR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Povey%2C%20Daniel%20Hadian%2C%20Hossein%20Ghahremani%2C%20Pegah%20Li%2C%20Ke%20A%20time-restricted%20self-attention%20layer%20for%20ASR%202018"
+        },
+        {
+            "id": "Shaw_et+al_2018_a",
+            "entry": "Peter Shaw, Jakob Uszkoreit, and Ashish Vaswani. Self-attention with relative position representations. In Proceedings of the Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, volume 2, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shaw%2C%20Peter%20Uszkoreit%2C%20Jakob%20Vaswani%2C%20Ashish%20Self-attention%20with%20relative%20position%20representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shaw%2C%20Peter%20Uszkoreit%2C%20Jakob%20Vaswani%2C%20Ashish%20Self-attention%20with%20relative%20position%20representations%202018"
+        },
+        {
+            "id": "Smolensky_1986_a",
+            "entry": "Paul Smolensky. Information processing in dynamical systems: Foundations of harmony theory. Technical report, DTIC Document, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smolensky%2C%20Paul%20Information%20processing%20in%20dynamical%20systems%3A%20Foundations%20of%20harmony%20theory%201986"
+        },
+        {
+            "id": "Uria_et+al_2014_a",
+            "entry": "Benigno Uria, Iain Murray, and Hugo Larochelle. A deep and tractable density estimator. In International Conference on Machine Learning, pp. 467\u2013475, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Uria%2C%20Benigno%20Murray%2C%20Iain%20Larochelle%2C%20Hugo%20A%20deep%20and%20tractable%20density%20estimator%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Uria%2C%20Benigno%20Murray%2C%20Iain%20Larochelle%2C%20Hugo%20A%20deep%20and%20tractable%20density%20estimator%202014"
+        },
+        {
+            "id": "Uria_et+al_2016_a",
+            "entry": "Benigno Uria, Marc-Alexandre C\u00f4t\u00e9, Karol Gregor, Iain Murray, and Hugo Larochelle. Neural autoregressive distribution estimation. The Journal of Machine Learning Research, 17(1):7184\u2013 7220, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Uria%2C%20Benigno%20C%C3%B4t%C3%A9%2C%20Marc-Alexandre%20Gregor%2C%20Karol%20Murray%2C%20Iain%20Neural%20autoregressive%20distribution%20estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Uria%2C%20Benigno%20C%C3%B4t%C3%A9%2C%20Marc-Alexandre%20Gregor%2C%20Karol%20Murray%2C%20Iain%20Neural%20autoregressive%20distribution%20estimation%202016"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%202017"
+        },
+        {
+            "id": "Vaswani_et+al_2018_a",
+            "entry": "Ashish Vaswani, Samy Bengio, Eugene Brevdo, Francois Chollet, Aidan N. Gomez, Stephan Gouws, Llion Jones, \u0141ukasz Kaiser, Nal Kalchbrenner, Niki Parmar, Ryan Sepassi, Noam Shazeer, and Jakob Uszkoreit. Tensor2tensor for neural machine translation. CoRR, abs/1803.07416, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.07416"
+        },
+        {
+            "id": "Waite_2016_a",
+            "entry": "Elliot Waite. Generating long-term structure in songs and stories. https://magenta.tensorflow.org/2016/07/15/lookback-rnn-attention-rnn, 2016.",
+            "url": "https://magenta.tensorflow.org/2016/07/15/lookback-rnn-attention-rnn"
+        },
+        {
+            "id": "The_2017_a",
+            "entry": "The first dataset, J.S. Bach Chorales, consists of four-part score-based choral music. The time resolution is sixteenth notes, making it possible to use a serialized grid-like representation. Figure 6 shows how a pianoroll (left) can be represented as a grid (right), following (Huang et al., 2017). The rows show the MIDI pitch number of each of the four voices, from top to bottom being soprano (S), alto (A), tenor (T ) and bass (B), while the columns is discretized time, advancing in sixteenth notes. Here longer notes such as quarter notes are broken down into multiple repetitions. To serialize the grid into a sequence, we interleave the parts by first iterating through all the voices at time step 1, and then move to the next column, and then iterate again from top to bottom, and so on. The resulting sequence is S1A1T1B1S2A2T2B2..., where the subscript gives the time step. After serialization, the most common sequence length is 1024. Each token is represented as onehot in pitch.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20first%20dataset%2C%20J.S.%20Bach%20Chorales%2C%20consists%20of%20four-part%20score-based%20choral%20music.%20The%20time%20resolution%20is%20sixteenth%20notes%2C%20making%20it%20possible%20to%20use%20a%20serialized%20grid-like%20representation.%20Figure%206%20shows%20how%20a%20pianoroll%20%28left%29%20can%20be%20represented%20as%20a%20grid%20%28right%29%2C%20following%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20first%20dataset%2C%20J.S.%20Bach%20Chorales%2C%20consists%20of%20four-part%20score-based%20choral%20music.%20The%20time%20resolution%20is%20sixteenth%20notes%2C%20making%20it%20possible%20to%20use%20a%20serialized%20grid-like%20representation.%20Figure%206%20shows%20how%20a%20pianoroll%20%28left%29%20can%20be%20represented%20as%20a%20grid%20%28right%29%2C%20following%202017"
+        }
+    ]
+}

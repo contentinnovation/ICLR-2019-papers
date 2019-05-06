@@ -1,0 +1,341 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DETERMINISTIC VARIATIONAL INFERENCE FOR ROBUST BAYESIAN NEURAL NETWORKS",
+        "author": "Anqi Wu,\u2217 Sebastian Nowozin, Edward Meeds, Richard E. Turner, Jose Miguel Hernandez-Lobato, &",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1l08oAct7"
+        },
+        "abstract": "Bayesian neural networks (BNNs) hold great promise as a flexible and principled solution to deal with uncertainty when learning from finite data. Among approaches to realize probabilistic inference in deep neural networks, variational Bayes (VB) is theoretically grounded, generally applicable, and computationally efficient. With wide recognition of potential advantages, why is it that variational Bayes has seen very limited practical use for BNNs in real applications? We argue that variational inference in neural networks is fragile: successful implementations require careful initialization and tuning of prior variances, as well as controlling the variance of Monte Carlo gradient estimates. We provide two innovations that aim to turn VB into a robust inference tool for Bayesian neural networks: first, we introduce a novel deterministic method to approximate moments in neural networks, eliminating gradient variance; second, we introduce a hierarchical prior for parameters and a novel Empirical Bayes procedure for automatically selecting prior variances. Combining these two innovations, the resulting method is highly efficient and robust. On the application of heteroscedastic regression we demonstrate good predictive performance over alternative approaches."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "central limit theorem",
+            "url": "https://en.wikipedia.org/wiki/central_limit_theorem"
+        },
+        {
+            "term": "parameter estimation",
+            "url": "https://en.wikipedia.org/wiki/parameter_estimation"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "evidence lower bound",
+            "url": "https://en.wikipedia.org/wiki/evidence_lower_bound"
+        },
+        {
+            "term": "variational Bayes",
+            "url": "https://en.wikipedia.org/wiki/variational_Bayes"
+        },
+        {
+            "term": "bayesian approach",
+            "url": "https://en.wikipedia.org/wiki/bayesian_approach"
+        },
+        {
+            "term": "MCMC",
+            "url": "https://en.wikipedia.org/wiki/MCMC"
+        },
+        {
+            "term": "minimum description length",
+            "url": "https://en.wikipedia.org/wiki/minimum_description_length"
+        },
+        {
+            "term": "variational inference",
+            "url": "https://en.wikipedia.org/wiki/variational_inference"
+        },
+        {
+            "term": "Stochastic gradient Langevin dynamics",
+            "url": "https://en.wikipedia.org/wiki/Stochastic_gradient_Langevin_dynamics"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        },
+        {
+            "term": "bayesian neural network",
+            "url": "https://en.wikipedia.org/wiki/bayesian_neural_network"
+        },
+        {
+            "term": "Empirical Bayes",
+            "url": "https://en.wikipedia.org/wiki/Empirical_Bayes"
+        }
+    ],
+    "abbreviations": {
+        "BNNs": "Bayesian neural networks",
+        "VB": "variational Bayes",
+        "MC": "Monte Carlo",
+        "EB": "Empirical Bayes",
+        "ELBO": "evidence lower bound",
+        "CLT": "central limit theorem",
+        "MDL": "minimum description length",
+        "MCVI": "Monte Carlo variational inference",
+        "PBP": "probabilistic backpropagation",
+        "ADF": "assumed density filtering",
+        "SGLD": "Stochastic gradient Langevin dynamics",
+        "DVI": "deterministic variational inference"
+    },
+    "highlights": [
+        "Bayesian approaches to neural network training marry the representational flexibility of deep neural networks with principled parameter estimation in probabilistic models",
+        "Performance of the Bayesian approach is sensitive to the choice of prior (<a class=\"ref-link\" id=\"cNeal_1993_a\" href=\"#rNeal_1993_a\">Neal, 1993</a>), and we may have a priori knowledge concerning the function represented by a neural network, it is generally difficult to translate this into a meaningful prior on neural network weights",
+        "Carlo variational inference (MCVI) (<a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\">Graves, 2011</a>; <a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\">Blundell et al, 2015</a>). Within this paradigm we address the two shortcomings of current practice outlined above: First, we address the issue of high variance in Monte Carlo variational inference, by reducing this variance to zero through novel deterministic approximations to variational inference in neural networks",
+        "We introduced two innovations to make variational inference for neural networks more robust: 1. an effective deterministic approximation to the moments of activations of a neural networks; and 2. a simple empirical Bayes hyperparameter update",
+        "We demonstrate that together these innovations make variational Bayes a competitive method for Bayesian inference in neural heteroscedastic regression models"
+    ],
+    "key_statements": [
+        "Bayesian approaches to neural network training marry the representational flexibility of deep neural networks with principled parameter estimation in probabilistic models",
+        "Performance of the Bayesian approach is sensitive to the choice of prior (<a class=\"ref-link\" id=\"cNeal_1993_a\" href=\"#rNeal_1993_a\">Neal, 1993</a>), and we may have a priori knowledge concerning the function represented by a neural network, it is generally difficult to translate this into a meaningful prior on neural network weights",
+        "Carlo variational inference (MCVI) (<a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\">Graves, 2011</a>; <a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\">Blundell et al, 2015</a>). Within this paradigm we address the two shortcomings of current practice outlined above: First, we address the issue of high variance in Monte Carlo variational inference, by reducing this variance to zero through novel deterministic approximations to variational inference in neural networks",
+        "At the time Bayesian inference was achieved only for small and shallow neural networks using a comparatively crude Laplace approximation. Another early review article summarizing advantages and challenges in Bayesian neural network learning is (MacKay, 1995c). This initial excitement around Bayesian neural networks led to two main methods being developed; First, Hinton & van Camp (1993) and <a class=\"ref-link\" id=\"cMackay_1995_b\" href=\"#rMackay_1995_b\">MacKay (1995b</a>) developed the variational Bayes (VB) approach for posterior inference",
+        "We introduced two innovations to make variational inference for neural networks more robust: 1. an effective deterministic approximation to the moments of activations of a neural networks; and 2. a simple empirical Bayes hyperparameter update",
+        "We demonstrate that together these innovations make variational Bayes a competitive method for Bayesian inference in neural heteroscedastic regression models",
+        "In the sequential decision making and continual learning applications, approximate Bayesian inference must be run as an inner loop of a larger algorithm"
+    ],
+    "summary": [
+        "Bayesian approaches to neural network training marry the representational flexibility of deep neural networks with principled parameter estimation in probabilistic models.",
+        "We demonstrate robustness and improved predictive performance in the context of non-linear regression models, deriving novel closed-form results for expected log-likelihoods in homoscedastic and heteroscedastic regression.",
+        "When M is a non-linear neural network, the first term in equation 1 cannot be computed exactly: this is where MC approximations with finite sample size S are typically employed: Ew\u223cq",
+        "We begin by considering activation propagation), with the aim of deriving the form of an approximation q to the final layer activation distribution q that will be passed to the likelihood computation.",
+        "To use the moment propagation procedure derived above for training BNNs, we need to build a function L that maps final layer activations aL to the expected log-likelihood term in equation 1).",
+        "The expression in equation 8 completes the derivations required to implement the closed form approximation to the ELBO reconstruction term for training a network.",
+        "Variational Bayes for neural network parameters is sensitive to the choice of prior variance parameters, and we will demonstrate this problem empirically in section 6.",
+        "This initial excitement around Bayesian neural networks led to two main methods being developed; First, Hinton & van Camp (1993) and <a class=\"ref-link\" id=\"cMackay_1995_b\" href=\"#rMackay_1995_b\">MacKay (1995b</a>) developed the variational Bayes (VB) approach for posterior inference.",
+        "<a class=\"ref-link\" id=\"cBarber_1998_a\" href=\"#rBarber_1998_a\">Barber & Bishop (1998</a>) extended the methodology for two-layer neural networks to use general multivariate Normal variational distributions.",
+        "After more than a decade of no further work on Bayesian neural networks <a class=\"ref-link\" id=\"cGraves_2011_a\" href=\"#rGraves_2011_a\">Graves (2011</a>) revived the field by using Monte Carlo variational inference (MCVI) to make VB practical and scalable, demonstrating gains in predictive performance on real world tasks.",
+        "Since 2015 the VB approach to Bayesian neural networks is mainstream (<a class=\"ref-link\" id=\"cBlundell_et+al_2015_a\" href=\"#rBlundell_et+al_2015_a\">Blundell et al, 2015</a>); key research drivers since are the problems of high variance in MCVI and the search for useful variational families.",
+        "Two recent works derived deterministic moment approximations for deep neural networks: <a class=\"ref-link\" id=\"cBibi_et+al_2018_a\" href=\"#rBibi_et+al_2018_a\">Bibi et al (2018</a>), using Price\u2019s theorem, derived exact first and second moment expressions for ReLU activations but limit themselves to the case of zero-mean Gaussian activations.",
+        "We implement4 deterministic variational inference (DVI) as described above to train small ReLU networks on UCI regression datasets (<a class=\"ref-link\" id=\"cDheeru_2017_a\" href=\"#rDheeru_2017_a\">Dheeru & Karra Taniskidou, 2017</a>).",
+        "The same model is used for each inference method: a single hidden layer of 50 units for each dataset considered, extending this to 100 units in the special case of the larger protein structure dataset, prot.",
+        "We demonstrate that together these innovations make variational Bayes a competitive method for Bayesian inference in neural heteroscedastic regression models.",
+        "This requires a robust and automated version of BNN training: this is precisely where we believe the innovations in this paper will have large impact since they pave the way to automated and robust deployment of BBNs that do not involve an expert in-the-loop"
+    ],
+    "headline": "With wide recognition of potential advantages, why is it that variational Bayes has seen very limited practical use for Bayesian neural networks in real applications? We argue that variational inference in neural networks is fragile: successful implementations require careful initialization and tuning of prior variances, as well as controlling the variance of Monte Carlo gradient estimates",
+    "reference_links": [
+        {
+            "id": "Ahn_et+al_2012_a",
+            "entry": "Sungjin Ahn, Anoop Korattikara, and Max Welling. Bayesian posterior sampling via stochastic gradient Fisher scoring. arXiv preprint arXiv:1206.6380, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1206.6380"
+        },
+        {
+            "id": "Barber_1998_a",
+            "entry": "David Barber and Christopher M Bishop. Ensemble learning in Bayesian neural networks. NATO ASI SERIES F COMPUTER AND SYSTEMS SCIENCES, 168:215\u2013238, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barber%2C%20David%20Bishop%2C%20Christopher%20M.%20Ensemble%20learning%20in%20Bayesian%20neural%20networks.%20NATO%20ASI%20SERIES%20F%20COMPUTER%20AND%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barber%2C%20David%20Bishop%2C%20Christopher%20M.%20Ensemble%20learning%20in%20Bayesian%20neural%20networks.%20NATO%20ASI%20SERIES%20F%20COMPUTER%20AND%201998"
+        },
+        {
+            "id": "Bibi_et+al_2018_a",
+            "entry": "Adel Bibi, Modar Alfadly, and Bernard Ghanem. Analytic expressions for probabilistic moments of PL-DNN with Gaussian input. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bibi%2C%20Adel%20Alfadly%2C%20Modar%20Ghanem%2C%20Bernard%20Analytic%20expressions%20for%20probabilistic%20moments%20of%20PL-DNN%20with%20Gaussian%20input%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bibi%2C%20Adel%20Alfadly%2C%20Modar%20Ghanem%2C%20Bernard%20Analytic%20expressions%20for%20probabilistic%20moments%20of%20PL-DNN%20with%20Gaussian%20input%202018"
+        },
+        {
+            "id": "Blundell_et+al_2015_a",
+            "entry": "Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural networks. arXiv preprint arXiv:1505.05424, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1505.05424"
+        },
+        {
+            "id": "Bui_et+al_2016_a",
+            "entry": "Thang Bui, Daniel Hernandez-Lobato, Jose Hernandez-Lobato, Yingzhen Li, and Richard Turner. Deep Gaussian processes for regression using approximate expectation propagation. In International Conference on Machine Learning, pp. 1472\u20131481, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bui%2C%20Thang%20Hernandez-Lobato%2C%20Daniel%20Hernandez-Lobato%2C%20Jose%20Li%2C%20Yingzhen%20Deep%20Gaussian%20processes%20for%20regression%20using%20approximate%20expectation%20propagation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bui%2C%20Thang%20Hernandez-Lobato%2C%20Daniel%20Hernandez-Lobato%2C%20Jose%20Li%2C%20Yingzhen%20Deep%20Gaussian%20processes%20for%20regression%20using%20approximate%20expectation%20propagation%202016"
+        },
+        {
+            "id": "Chen_et+al_2014_a",
+            "entry": "Tianqi Chen, Emily Fox, and Carlos Guestrin. Stochastic gradient Hamiltonian Monte Carlo. In International Conference on Machine Learning, pp. 1683\u20131691, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Tianqi%20Fox%2C%20Emily%20Guestrin%2C%20Carlos%20Stochastic%20gradient%20Hamiltonian%20Monte%20Carlo%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Tianqi%20Fox%2C%20Emily%20Guestrin%2C%20Carlos%20Stochastic%20gradient%20Hamiltonian%20Monte%20Carlo%202014"
+        },
+        {
+            "id": "Dheeru_2017_a",
+            "entry": "Dua Dheeru and Efi Karra Taniskidou. UCI machine learning repository, 2017. URL http://archive.ics.uci.edu/ml.",
+            "url": "http://archive.ics.uci.edu/ml"
+        },
+        {
+            "id": "Fushiki_et+al_2005_a",
+            "entry": "Tadayoshi Fushiki, Fumiyasu Komaki, Kazuyuki Aihara, et al. Nonparametric bootstrap prediction. Bernoulli, 11(2):293\u2013307, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fushiki%2C%20Tadayoshi%20Komaki%2C%20Fumiyasu%20Aihara%2C%20Kazuyuki%20Nonparametric%20bootstrap%20prediction%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fushiki%2C%20Tadayoshi%20Komaki%2C%20Fumiyasu%20Aihara%2C%20Kazuyuki%20Nonparametric%20bootstrap%20prediction%202005"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. In international conference on machine learning, pp. 1050\u20131059, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20Bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20Bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Gal_et+al_2017_a",
+            "entry": "Yarin Gal, Riashat Islam, and Zoubin Ghahramani. Deep bayesian active learning with image data. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Islam%2C%20Riashat%20Ghahramani%2C%20Zoubin%20Deep%20bayesian%20active%20learning%20with%20image%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Islam%2C%20Riashat%20Ghahramani%2C%20Zoubin%20Deep%20bayesian%20active%20learning%20with%20image%20data%202017"
+        },
+        {
+            "id": "Ghosh_et+al_2016_a",
+            "entry": "Soumya Ghosh, Francesco Maria Delle Fave, and Jonathan S Yedidia. Assumed density filtering methods for learning Bayesian neural networks. In AAAI, pp. 1589\u20131595, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ghosh%2C%20Soumya%20Fave%2C%20Francesco%20Maria%20Delle%20Yedidia%2C%20Jonathan%20S.%20Assumed%20density%20filtering%20methods%20for%20learning%20Bayesian%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ghosh%2C%20Soumya%20Fave%2C%20Francesco%20Maria%20Delle%20Yedidia%2C%20Jonathan%20S.%20Assumed%20density%20filtering%20methods%20for%20learning%20Bayesian%20neural%20networks%202016"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Gong_et+al_2018_a",
+            "entry": "Wenbo Gong, Yingzhen Li, and Jose Miguel Hernandez-Lobato. Meta-learning for stochastic gradient MCMC. arXiv preprint arXiv:1806.04522, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.04522"
+        },
+        {
+            "id": "Graves_2011_a",
+            "entry": "Alex Graves. Practical variational inference for neural networks. In Advances in neural information processing systems, pp. 2348\u20132356, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Practical%20variational%20inference%20for%20neural%20networks%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Practical%20variational%20inference%20for%20neural%20networks%202011"
+        },
+        {
+            "id": "Harris_1989_a",
+            "entry": "Ian R Harris. Predictive fit for natural exponential families. Biometrika, 76(4):675\u2013684, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harris%2C%20Ian%20R.%20Predictive%20fit%20for%20natural%20exponential%20families%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Harris%2C%20Ian%20R.%20Predictive%20fit%20for%20natural%20exponential%20families%201989"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "Hernandez-Lobato_2015_a",
+            "entry": "Jose Miguel Hernandez-Lobato and Ryan Adams. Probabilistic backpropagation for scalable learning of Bayesian neural networks. In International Conference on Machine Learning, pp. 1861\u20131869, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hernandez-Lobato%2C%20Jose%20Miguel%20Adams%2C%20Ryan%20Probabilistic%20backpropagation%20for%20scalable%20learning%20of%20Bayesian%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hernandez-Lobato%2C%20Jose%20Miguel%20Adams%2C%20Ryan%20Probabilistic%20backpropagation%20for%20scalable%20learning%20of%20Bayesian%20neural%20networks%202015"
+        },
+        {
+            "id": "Hinton_1993_a",
+            "entry": "GE Hinton and Drew van Camp. Keeping neural networks simple by minimising the description length of weights. In Proceedings of COLT-93, pp. 5\u201313, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20G.E.%20van%20Camp%2C%20Drew%20Keeping%20neural%20networks%20simple%20by%20minimising%20the%20description%20length%20of%20weights%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20G.E.%20van%20Camp%2C%20Drew%20Keeping%20neural%20networks%20simple%20by%20minimising%20the%20description%20length%20of%20weights%201993"
+        },
+        {
+            "id": "Kandemir_2018_a",
+            "entry": "Melih Kandemir, Manuel Haussmann, and Fred A Hamprecht. Sampling-free variational inference of Bayesian neural nets. arXiv preprint arXiv:1805.07654, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07654"
+        },
+        {
+            "id": "Kingma_et+al_2015_a",
+            "entry": "Diederik P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In Advances in Neural Information Processing Systems, pp. 2575\u20132583, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015"
+        },
+        {
+            "id": "Lakshminarayanan_et+al_2017_a",
+            "entry": "Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive uncertainty estimation using deep ensembles. In Advances in Neural Information Processing Systems, pp. 6402\u20136413, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lakshminarayanan%2C%20Balaji%20Pritzel%2C%20Alexander%20Blundell%2C%20Charles%20Simple%20and%20scalable%20predictive%20uncertainty%20estimation%20using%20deep%20ensembles%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lakshminarayanan%2C%20Balaji%20Pritzel%2C%20Alexander%20Blundell%2C%20Charles%20Simple%20and%20scalable%20predictive%20uncertainty%20estimation%20using%20deep%20ensembles%202017"
+        },
+        {
+            "id": "Lee_et+al_2017_a",
+            "entry": "Jaehoon Lee, Yasaman Bahri, Roman Novak, Samuel S Schoenholz, Jeffrey Pennington, and Jascha Sohl-Dickstein. Deep neural networks as gaussian processes. arXiv preprint arXiv:1711.00165, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00165"
+        },
+        {
+            "id": "Louizos_2016_a",
+            "entry": "Christos Louizos and Max Welling. Structured and efficient variational deep learning with matrix Gaussian posteriors. In International Conference on Machine Learning, pp. 1708\u20131716, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Welling%2C%20Max%20Structured%20and%20efficient%20variational%20deep%20learning%20with%20matrix%20Gaussian%20posteriors%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Welling%2C%20Max%20Structured%20and%20efficient%20variational%20deep%20learning%20with%20matrix%20Gaussian%20posteriors%202016"
+        },
+        {
+            "id": "Louizos_2017_a",
+            "entry": "Christos Louizos and Max Welling. Multiplicative normalizing flows for variational Bayesian neural networks. arXiv preprint arXiv:1703.01961, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01961"
+        },
+        {
+            "id": "Ma_et+al_2015_a",
+            "entry": "Yi-An Ma, Tianqi Chen, and Emily Fox. A complete recipe for stochastic gradient MCMC. In Advances in Neural Information Processing Systems, pp. 2917\u20132925, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ma%2C%20Yi-An%20Chen%2C%20Tianqi%20Fox%2C%20Emily%20A%20complete%20recipe%20for%20stochastic%20gradient%20MCMC%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ma%2C%20Yi-An%20Chen%2C%20Tianqi%20Fox%2C%20Emily%20A%20complete%20recipe%20for%20stochastic%20gradient%20MCMC%202015"
+        },
+        {
+            "id": "Mackay_1992_a",
+            "entry": "David JC MacKay. A practical Bayesian framework for backpropagation networks. Neural computation, 4(3):448\u2013472, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MacKay%2C%20David%20J.C.%20A%20practical%20Bayesian%20framework%20for%20backpropagation%20networks%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MacKay%2C%20David%20J.C.%20A%20practical%20Bayesian%20framework%20for%20backpropagation%20networks%201992"
+        },
+        {
+            "id": "Mackay_1995_a",
+            "entry": "David JC MacKay. Bayesian neural networks and density networks. Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment, 354(1):73\u201380, 1995a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MacKay%2C%20David%20J.C.%20Bayesian%20neural%20networks%20and%20density%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MacKay%2C%20David%20J.C.%20Bayesian%20neural%20networks%20and%20density%20networks%201995"
+        },
+        {
+            "id": "Springer,_1995_a",
+            "entry": "Springer, 1995b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springer%201995b"
+        },
+        {
+            "id": "Mackay_1995_b",
+            "entry": "David JC MacKay. Probable networks and plausible predictionsa review of practical Bayesian methods for supervised neural networks. Network: Computation in Neural Systems, 6(3):469\u2013505, 1995c.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MacKay%2C%20David%20J.C.%20Probable%20networks%20and%20plausible%20predictionsa%20review%20of%20practical%20Bayesian%20methods%20for%20supervised%20neural%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MacKay%2C%20David%20J.C.%20Probable%20networks%20and%20plausible%20predictionsa%20review%20of%20practical%20Bayesian%20methods%20for%20supervised%20neural%20networks%201995"
+        },
+        {
+            "id": "De_et+al_2018_a",
+            "entry": "Alexander G de G Matthews, Mark Rowland, Jiri Hron, Richard E Turner, and Zoubin Ghahramani. Gaussian process behaviour in wide deep neural networks. arXiv preprint arXiv:1804.11271, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.11271"
+        },
+        {
+            "id": "Miller_et+al_2017_a",
+            "entry": "Andrew Miller, Nick Foti, Alexander D\u2019Amour, and Ryan P Adams. Reducing reparameterization gradient variance. In Advances in Neural Information Processing Systems, pp. 3708\u20133718, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miller%2C%20Andrew%20Foti%2C%20Nick%20D%E2%80%99Amour%2C%20Alexander%20Adams%2C%20Ryan%20P.%20Reducing%20reparameterization%20gradient%20variance%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miller%2C%20Andrew%20Foti%2C%20Nick%20D%E2%80%99Amour%2C%20Alexander%20Adams%2C%20Ryan%20P.%20Reducing%20reparameterization%20gradient%20variance%202017"
+        },
+        {
+            "id": "Molchanov_et+al_2017_a",
+            "entry": "Dmitry Molchanov, Arsenii Ashukha, and Dmitry Vetrov. Variational dropout sparsifies deep neural networks. arXiv preprint arXiv:1701.05369, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.05369"
+        },
+        {
+            "id": "Nagapetyan_et+al_2017_a",
+            "entry": "Tigran Nagapetyan, Andrew B Duncan, Leonard Hasenclever, Sebastian J Vollmer, Lukasz Szpruch, and Konstantinos Zygalakis. The true cost of stochastic gradient Langevin dynamics. arXiv preprint arXiv:1706.02692, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02692"
+        },
+        {
+            "id": "Neal_1993_a",
+            "entry": "Radford M Neal. Bayesian learning via stochastic dynamics. In Advances in neural information processing systems, pp. 475\u2013482, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20Bayesian%20learning%20via%20stochastic%20dynamics%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neal%2C%20Radford%20M.%20Bayesian%20learning%20via%20stochastic%20dynamics%201993"
+        },
+        {
+            "id": "Nguyen_et+al_2018_a",
+            "entry": "Cuong V Nguyen, Yingzhen Li, Thang D Bui, and Richard E Turner. Variational continual learning. International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20Cuong%20V.%20Li%2C%20Yingzhen%20Bui%2C%20Thang%20D.%20Turner%2C%20Richard%20E.%20Variational%20continual%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Cuong%20V.%20Li%2C%20Yingzhen%20Bui%2C%20Thang%20D.%20Turner%2C%20Richard%20E.%20Variational%20continual%20learning%202018"
+        },
+        {
+            "id": "Oliveira_et+al_2016_a",
+            "entry": "Ramon Oliveira, Pedro Tabacof, and Eduardo Valle. Known unknowns: Uncertainty quality in bayesian neural networks. In NIPS Bayesian Deep Learning Workshop, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oliveira%2C%20Ramon%20Tabacof%2C%20Pedro%20Valle%2C%20Eduardo%20Known%20unknowns%3A%20Uncertainty%20quality%20in%20bayesian%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oliveira%2C%20Ramon%20Tabacof%2C%20Pedro%20Valle%2C%20Eduardo%20Known%20unknowns%3A%20Uncertainty%20quality%20in%20bayesian%20neural%20networks%202016"
+        },
+        {
+            "id": "Small_2010_a",
+            "entry": "Christopher G. Small. Expansions and Asymptotics for Statistics. CRC Press, 2010. Shengyang Sun, Changyou Chen, and Lawrence Carin. Learning structured weight uncertainty in",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Small%2C%20Christopher%20G.%20Expansions%20and%20Asymptotics%20for%20Statistics%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Small%2C%20Christopher%20G.%20Expansions%20and%20Asymptotics%20for%20Statistics%202010"
+        },
+        {
+            "id": "Zhu_2017_a",
+            "entry": "Bayesian neural networks. In Artificial Intelligence and Statistics, pp. 1283\u20131292, 2017. Jarno Vanhatalo and Aki Vehtari. Mcmc methods for MLP-network and Gaussian process and stuff\u2014a documentation for Matlab toolbox MCMCstuff. Laboratory of computational engineering, Helsinki university of technology, 2006. Max Welling and Yee W Teh. Bayesian learning via stochastic gradient Langevin dynamics. In Proceedings of the 28th International Conference on Machine Learning (ICML-11), pp. 681\u2013688, 2011. Zhanxing Zhu, Ruosi Wan, and Mingjun Zhong. Neural control variates for variance reduction. arXiv preprint arXiv:1806.00159, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.00159"
+        }
+    ]
+}

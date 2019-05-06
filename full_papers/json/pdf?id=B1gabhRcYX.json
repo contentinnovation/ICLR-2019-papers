@@ -1,0 +1,399 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "BA-NET: DENSE BUNDLE ADJUSTMENT NETWORKS",
+        "author": "Chengzhou Tang School of Computer Science Simon Fraser University chengzhou_tang@sfu.ca",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1gabhRcYX"
+        },
+        "abstract": "This paper introduces a network architecture to solve the structure-from-motion (SfM) problem via feature-metric bundle adjustment (BA), which explicitly enforces multi-view geometry constraints in the form of feature-metric error. The whole pipeline is differentiable, so that the network can learn suitable features that make the BA problem more tractable. Furthermore, this work introduces a novel depth parameterization to recover dense per-pixel depth. The network first generates several basis depth maps according to the input image, and optimizes the final depth as a linear combination of these basis depth maps via feature-metric BA. The basis depth maps generator is also learned via end-to-end training. The whole system nicely combines domain knowledge (i.e. hard-coded multi-view geometry constraints) and deep learning (i.e. feature learning and basis depth maps learning) to address the challenging dense SfM problem. Experiments on large scale real data prove the success of the proposed method."
+    },
+    "keywords": [
+        {
+            "term": "geometry",
+            "url": "https://en.wikipedia.org/wiki/geometry"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "multilayer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multilayer_perceptron"
+        },
+        {
+            "term": "bundle adjustment",
+            "url": "https://en.wikipedia.org/wiki/bundle_adjustment"
+        },
+        {
+            "term": "odometry",
+            "url": "https://en.wikipedia.org/wiki/odometry"
+        },
+        {
+            "term": "depth map",
+            "url": "https://en.wikipedia.org/wiki/depth_map"
+        },
+        {
+            "term": "linear combination",
+            "url": "https://en.wikipedia.org/wiki/linear_combination"
+        }
+    ],
+    "abbreviations": {
+        "MLP": "multilayer perceptron",
+        "VAE": "variational auto-encoder",
+        "FPN": "feature pyramid networks",
+        "ATE": "Absolute Trajectory Error"
+    },
+    "highlights": [
+        "The Structure-from-Motion (SfM) problem has been extensively studied in the past a few decades",
+        "In the recent work DeMoN (<a class=\"ref-link\" id=\"cUmmenhofer_et+al_2017_a\" href=\"#rUmmenhofer_et+al_2017_a\">Ummenhofer et al, 2017</a>), the scene depths and the camera motion are estimated by two individual sub-network branches",
+        "To evaluate the camera poses, we follow (<a class=\"ref-link\" id=\"cZhou_et+al_2017_a\" href=\"#rZhou_et+al_2017_a\">Zhou et al, 2017</a>; Wang et al, 2018) to use the Absolute Trajectory Error (ATE), which measures the Euclidean differences between two trajectories (<a class=\"ref-link\" id=\"cSteinbruecker_et+al_2011_a\" href=\"#rSteinbruecker_et+al_2011_a\">Steinbruecker et al, 2011</a>), on the 9th and 10th sequences from the KITTI odometry data",
+        "This paper presents the BA-Net, a network that explicitly enforces multi-view geometry constraints in terms of feature-metric error",
+        "The whole pipeline is differentiable and end-to-end trainable, such that the features are learned from data to facilitate structure-from-motion",
+        "The dense depth is parameterized as a linear combination of several basis depth maps generated from the network"
+    ],
+    "key_statements": [
+        "The Structure-from-Motion (SfM) problem has been extensively studied in the past a few decades",
+        "In the recent work DeMoN (<a class=\"ref-link\" id=\"cUmmenhofer_et+al_2017_a\" href=\"#rUmmenhofer_et+al_2017_a\">Ummenhofer et al, 2017</a>), the scene depths and the camera motion are estimated by two individual sub-network branches",
+        "We propose the BA-Layer to simultaneously predict the scene depth and the camera motion from CNN features, which explicitly enforces multi-view geometry constraints",
+        "To deal with the above challenges, we propose a feature-metric BA algorithm which estimates the same scene depth and camera motion parameters X as in photometric BA, but minimizes the feature-metric difference of aligned pixels: efi,j(X ) = Fi(\u03c0(Ti, dj \u00b7 qj)) \u2212 F1, (4)",
+        "We evaluate the distance between a pixel marked by a yellow cross in the top image in Figure 3 (a) and all pixels in a neighbourhood of its corresponding point in the bottom image of Figure 3 (a)",
+        "To evaluate the camera poses, we follow (<a class=\"ref-link\" id=\"cZhou_et+al_2017_a\" href=\"#rZhou_et+al_2017_a\">Zhou et al, 2017</a>; Wang et al, 2018) to use the Absolute Trajectory Error (ATE), which measures the Euclidean differences between two trajectories (<a class=\"ref-link\" id=\"cSteinbruecker_et+al_2011_a\" href=\"#rSteinbruecker_et+al_2011_a\">Steinbruecker et al, 2011</a>), on the 9th and 10th sequences from the KITTI odometry data",
+        "This paper presents the BA-Net, a network that explicitly enforces multi-view geometry constraints in terms of feature-metric error",
+        "The whole pipeline is differentiable and end-to-end trainable, such that the features are learned from data to facilitate structure-from-motion",
+        "The dense depth is parameterized as a linear combination of several basis depth maps generated from the network"
+    ],
+    "summary": [
+        "The Structure-from-Motion (SfM) problem has been extensively studied in the past a few decades.",
+        "Some recent works (<a class=\"ref-link\" id=\"cUmmenhofer_et+al_2017_a\" href=\"#rUmmenhofer_et+al_2017_a\">Ummenhofer et al, 2017</a>; <a class=\"ref-link\" id=\"cZhou_et+al_2017_a\" href=\"#rZhou_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhou_et+al_2017_a\" href=\"#rZhou_et+al_2017_a\">Zhou et al, 2017</a></a>; Wang et al, 2018) attempt to solve SfM using deep learning techniques, but most of them do not enforce the geometric constraints between 3D structures and camera motion in their networks.",
+        "We propose the BA-Layer to simultaneously predict the scene depth and the camera motion from CNN features, which explicitly enforces multi-view geometry constraints.",
+        "To deal with the above challenges, we propose a feature-metric BA algorithm which estimates the same scene depth and camera motion parameters X as in photometric BA, but minimizes the feature-metric difference of aligned pixels: efi,j(X ) = Fi(\u03c0(Ti, dj \u00b7 qj)) \u2212 F1, (4)",
+        "The BA-Layer predicts the camera poses T and the dense depth map D during forward pass and back-propagates the loss from T and D to the feature pyramids F for training.",
+        "The BA-Layer optimizes for the camera poses and the dense depth map jointly by minimizing the feature-metric error defined in Equation (4), which makes the whole pipeline end-to-end trainable.",
+        "We apply a 3 \u00d7 3 convolution on the concatenated feature maps to reduce its dimensionality to 128 to balance the expressiveness and computational complexity, which leads to the final feature pyramid Fi = [Fi1, Fi2, Fi3] for image Ii. We visualize some typical channels from the raw image I, the pre-trained DRN-54 C3 and our learned F 3 in Figure 2(b).",
+        "After building feature pyramids for all images, we optimize camera poses and a dense depth map by minimizing the feature-metric error in Equation (4).",
+        "We compute the feature-metric error E(X ) = [e1f,1(X ), e1f,2(X ) \u00b7 \u00b7 \u00b7 efNi,Nj (X )] with Equation (4) on all Ni images and Nj pixels, where X is the solution from the previous iteration; C4 C3 C2 C1",
+        "Once B is generated from the network, we fix B and use w as a compact depth parameterization in BA optimization, and the feature-metric distance becomes: efi,j(X ) = Fi(\u03c0(Ti, ReLU(w B[j]) \u00b7 qj)) \u2212 F1, (8)",
+        "The BA-Net learns the feature pyramid, the damping factor predictor, and the basis depth maps generator in a supervised manner.",
+        "To evaluate the camera poses, we follow (<a class=\"ref-link\" id=\"cZhou_et+al_2017_a\" href=\"#rZhou_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhou_et+al_2017_a\" href=\"#rZhou_et+al_2017_a\">Zhou et al, 2017</a></a>; Wang et al, 2018) to use the Absolute Trajectory Error (ATE), which measures the Euclidean differences between two trajectories (<a class=\"ref-link\" id=\"cSteinbruecker_et+al_2011_a\" href=\"#rSteinbruecker_et+al_2011_a\">Steinbruecker et al, 2011</a>), on the 9th and 10th sequences from the KITTI odometry data.",
+        "It optimizes scene depths and camera motion jointly via feature-metric bundle adjustment.",
+        "Acknowledgement This work is supported by the NSERC discovery grant 611664 and a project funding from Alibaba"
+    ],
+    "headline": "This paper introduces a network architecture to solve the structure-from-motion problem via feature-metric bundle adjustment, which explicitly enforces multi-view geometry constraints in the form of feature-metric error",
+    "reference_links": [
+        {
+            "id": "Agarwal_et+al_0000_a",
+            "entry": "Sameer Agarwal, Keir Mierle, and Others. Ceres solver. http://ceres-solver.org.",
+            "url": "http://ceres-solver.org"
+        },
+        {
+            "id": "Agarwal_et+al_2010_a",
+            "entry": "Sameer Agarwal, Noah Snavely, Steven M. Seitz, and Richard Szeliski. Bundle adjustment in the large. In European Conference on Computer Vision (ECCV), pp. 29\u201342, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agarwal%2C%20Sameer%20Snavely%2C%20Noah%20Seitz%2C%20Steven%20M.%20Szeliski%2C%20Richard%20Bundle%20adjustment%20in%20the%20large%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agarwal%2C%20Sameer%20Snavely%2C%20Noah%20Seitz%2C%20Steven%20M.%20Szeliski%2C%20Richard%20Bundle%20adjustment%20in%20the%20large%202010"
+        },
+        {
+            "id": "Agarwal_et+al_2011_a",
+            "entry": "Sameer Agarwal, Yasutaka Furukawa, Noah Snavely, Ian Simon, Brian Curless, Steven M. Seitz, and Richard Szeliski. Building rome in a day. Commun. ACM, 54:105\u2013112, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agarwal%2C%20Sameer%20Furukawa%2C%20Yasutaka%20Snavely%2C%20Noah%20Simon%2C%20Ian%20Building%20rome%20in%20a%20day%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agarwal%2C%20Sameer%20Furukawa%2C%20Yasutaka%20Snavely%2C%20Noah%20Simon%2C%20Ian%20Building%20rome%20in%20a%20day%202011"
+        },
+        {
+            "id": "Amos_2017_a",
+            "entry": "Brandon Amos and J. Zico Kolter. OptNet: Differentiable optimization as a layer in neural networks. In International Conference on Machine Learning (ICML), volume 70, pp. 136\u2013145, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amos%2C%20Brandon%20Kolter%2C%20J.Zico%20OptNet%3A%20Differentiable%20optimization%20as%20a%20layer%20in%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amos%2C%20Brandon%20Kolter%2C%20J.Zico%20OptNet%3A%20Differentiable%20optimization%20as%20a%20layer%20in%20neural%20networks%202017"
+        },
+        {
+            "id": "Beder_2006_a",
+            "entry": "Christian Beder and Richard Steffen. Determining an initial image pair for fixing the scale of a 3d reconstruction from an image sequence. In Pattern Recognition, pp. 657\u2013666, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Beder%2C%20Christian%20Steffen%2C%20Richard%20Determining%20an%20initial%20image%20pair%20for%20fixing%20the%20scale%20of%20a%203d%20reconstruction%20from%20an%20image%20sequence%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Beder%2C%20Christian%20Steffen%2C%20Richard%20Determining%20an%20initial%20image%20pair%20for%20fixing%20the%20scale%20of%20a%203d%20reconstruction%20from%20an%20image%20sequence%202006"
+        },
+        {
+            "id": "Bloesch_et+al_2018_a",
+            "entry": "Michael Bloesch, Jan Czarnowski, Ronald Clark, Stefan Leutenegger, and Andrew J. Davison. Codeslam \u2014 learning a compact, optimisable representation for dense visual slam. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bloesch%2C%20Michael%20Czarnowski%2C%20Jan%20Clark%2C%20Ronald%20Leutenegger%2C%20Stefan%20Codeslam%20%E2%80%94%20learning%20a%20compact%2C%20optimisable%20representation%20for%20dense%20visual%20slam%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bloesch%2C%20Michael%20Czarnowski%2C%20Jan%20Clark%2C%20Ronald%20Leutenegger%2C%20Stefan%20Codeslam%20%E2%80%94%20learning%20a%20compact%2C%20optimisable%20representation%20for%20dense%20visual%20slam%202018"
+        },
+        {
+            "id": "Brown_1958_a",
+            "entry": "D.C. Brown. A Solution to the General Problem of Multiple Station Analytical Stereo triangulation. D. Brown Associates, Incorporated, 1958.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brown%2C%20D.C.%20A%20Solution%20to%20the%20General%20Problem%20of%20Multiple%20Station%20Analytical%20Stereo%20triangulation%201958"
+        },
+        {
+            "id": "Burri_et+al_2016_a",
+            "entry": "Michael Burri, Janosch Nikolic, Pascal Gohl, Thomas Schneider, Joern Rehder, Sammy Omari, Markus W Achtelik, and Roland Siegwart. Euroc micro aerial vehicle datasets. International Journal of Robotics Research, 35, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Burri%2C%20Michael%20Nikolic%2C%20Janosch%20Gohl%2C%20Pascal%20Schneider%2C%20Thomas%20Euroc%20micro%20aerial%20vehicle%20datasets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Burri%2C%20Michael%20Nikolic%2C%20Janosch%20Gohl%2C%20Pascal%20Schneider%2C%20Thomas%20Euroc%20micro%20aerial%20vehicle%20datasets%202016"
+        },
+        {
+            "id": "Chang_et+al_2015_a",
+            "entry": "Angel X. Chang, Thomas A. Funkhouser, Leonidas J. Guibas, Pat Hanrahan, Qi-Xing Huang, Zimo Li, Silvio Savarese, Manolis Savva, Shuran Song, Hao Su, Jianxiong Xiao, Li Yi, and Fisher Yu. Shapenet: An information-rich 3d model repository. CoRR, abs/1512.03012, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.03012"
+        },
+        {
+            "id": "Clark_et+al_2018_a",
+            "entry": "Ronald Clark, Michael Bloesch, Jan Czarnowski, Stefan Leutenegger, and Andrew J. Davison. Learning to solve nonlinear least squares for monocular stereo. In European Conference on Computer Vision (ECCV), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Clark%2C%20Ronald%20Bloesch%2C%20Michael%20Czarnowski%2C%20Jan%20Leutenegger%2C%20Stefan%20Learning%20to%20solve%20nonlinear%20least%20squares%20for%20monocular%20stereo%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Clark%2C%20Ronald%20Bloesch%2C%20Michael%20Czarnowski%2C%20Jan%20Leutenegger%2C%20Stefan%20Learning%20to%20solve%20nonlinear%20least%20squares%20for%20monocular%20stereo%202018"
+        },
+        {
+            "id": "Czarnowski_et+al_2017_a",
+            "entry": "J. Czarnowski, S. Leutenegger, and A. J. Davison. Semantic texture for robust dense tracking. In IEEE International Conference on Computer Vision Workshops (ICCVW), pp. 851\u2013859, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Czarnowski%2C%20J.%20Leutenegger%2C%20S.%20Davison%2C%20A.J.%20Semantic%20texture%20for%20robust%20dense%20tracking%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Czarnowski%2C%20J.%20Leutenegger%2C%20S.%20Davison%2C%20A.J.%20Semantic%20texture%20for%20robust%20dense%20tracking%202017"
+        },
+        {
+            "id": "Dai_et+al_2017_a",
+            "entry": "A. Dai, A. X. Chang, M. Savva, M. Halber, T. Funkhouser, and M. Nie\u00dfner. Scannet: Richlyannotated 3d reconstructions of indoor scenes. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 2432\u20132443, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20A.%20Chang%2C%20A.X.%20Savva%2C%20M.%20Halber%2C%20M.%20Scannet%3A%20Richlyannotated%203d%20reconstructions%20of%20indoor%20scenes%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20A.%20Chang%2C%20A.X.%20Savva%2C%20M.%20Halber%2C%20M.%20Scannet%3A%20Richlyannotated%203d%20reconstructions%20of%20indoor%20scenes%202017"
+        },
+        {
+            "id": "Dai_et+al_0000_a",
+            "entry": "Angela Dai, Matthias Niessner, Michael Zollh\u00f6fer, Shahram Izadi, and Christian Theobalt. Bundlefusion: Real-time globally consistent 3d reconstruction using on-the-fly surface reintegration. ACM Transactions on Graphics, 36, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Angela%20Niessner%2C%20Matthias%20Zollh%C3%B6fer%2C%20Michael%20Izadi%2C%20Shahram%20Bundlefusion%3A%20Real-time%20globally%20consistent%203d%20reconstruction%20using%20on-the-fly%20surface%20reintegration",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Angela%20Niessner%2C%20Matthias%20Zollh%C3%B6fer%2C%20Michael%20Izadi%2C%20Shahram%20Bundlefusion%3A%20Real-time%20globally%20consistent%203d%20reconstruction%20using%20on-the-fly%20surface%20reintegration"
+        },
+        {
+            "id": "Delaunoy_2014_a",
+            "entry": "A. Delaunoy and M. Pollefeys. Photometric bundle adjustment for dense multi-view 3d modeling. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 1486\u20131493, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Delaunoy%2C%20A.%20Pollefeys%2C%20M.%20Photometric%20bundle%20adjustment%20for%20dense%20multi-view%203d%20modeling%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Delaunoy%2C%20A.%20Pollefeys%2C%20M.%20Photometric%20bundle%20adjustment%20for%20dense%20multi-view%203d%20modeling%202014"
+        },
+        {
+            "id": "Domke_2012_a",
+            "entry": "Justin Domke. Generic methods for optimization-based modeling. In AISTATS, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Domke%2C%20Justin%20Generic%20methods%20for%20optimization-based%20modeling%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Domke%2C%20Justin%20Generic%20methods%20for%20optimization-based%20modeling%202012"
+        },
+        {
+            "id": "Eigen_2015_a",
+            "entry": "D. Eigen and R. Fergus. Predicting depth, surface normals and semantic labels with a common multi-scale convolutional architecture. In IEEE International Conference on Computer Vision (ICCV), pp. 2650\u20132658, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eigen%2C%20D.%20Fergus%2C%20R.%20Predicting%20depth%2C%20surface%20normals%20and%20semantic%20labels%20with%20a%20common%20multi-scale%20convolutional%20architecture%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eigen%2C%20D.%20Fergus%2C%20R.%20Predicting%20depth%2C%20surface%20normals%20and%20semantic%20labels%20with%20a%20common%20multi-scale%20convolutional%20architecture%202015"
+        },
+        {
+            "id": "Eigen_et+al_2014_a",
+            "entry": "David Eigen, Christian Puhrsch, and Rob Fergus. Depth map prediction from a single image using a multi-scale deep network. In International Conference on Neural Information Processing Systems (NIPS), pp. 2366\u20132374, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eigen%2C%20David%20Puhrsch%2C%20Christian%20Fergus%2C%20Rob%20Depth%20map%20prediction%20from%20a%20single%20image%20using%20a%20multi-scale%20deep%20network%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eigen%2C%20David%20Puhrsch%2C%20Christian%20Fergus%2C%20Rob%20Depth%20map%20prediction%20from%20a%20single%20image%20using%20a%20multi-scale%20deep%20network%202014"
+        },
+        {
+            "id": "Engel_et+al_2018_a",
+            "entry": "J. Engel, V. Koltun, and D. Cremers. Direct sparse odometry. IEEE Transactions on Pattern Analysis and Machine Intelligence, 40:611\u2013625, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Engel%2C%20J.%20Koltun%2C%20V.%20Cremers%2C%20D.%20Direct%20sparse%20odometry%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Engel%2C%20J.%20Koltun%2C%20V.%20Cremers%2C%20D.%20Direct%20sparse%20odometry%202018"
+        },
+        {
+            "id": "Engel_et+al_2014_a",
+            "entry": "Jakob Engel, Thomas Sch\u00f6ps, and Daniel Cremers. Lsd-slam: Large-scale direct monocular slam. In European Conference on Computer Vision (ECCV), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Engel%2C%20Jakob%20Sch%C3%B6ps%2C%20Thomas%20Cremers%2C%20Daniel%20Lsd-slam%3A%20Large-scale%20direct%20monocular%20slam%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Engel%2C%20Jakob%20Sch%C3%B6ps%2C%20Thomas%20Cremers%2C%20Daniel%20Lsd-slam%3A%20Large-scale%20direct%20monocular%20slam%202014"
+        },
+        {
+            "id": "Engel_et+al_2016_a",
+            "entry": "Jakob Engel, Vladyslav C. Usenko, and Daniel Cremers. A photometrically calibrated benchmark for monocular visual odometry. CoRR, abs/1607.02555, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.02555"
+        },
+        {
+            "id": "Geiger_et+al_2011_a",
+            "entry": "Andreas Geiger, Julius Ziegler, and Christoph Stiller. Stereoscan: Dense 3d reconstruction in real-time. In Intelligent Vehicles Symposium (IV), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Geiger%2C%20Andreas%20Ziegler%2C%20Julius%20Stiller%2C%20Christoph%20Stereoscan%3A%20Dense%203d%20reconstruction%20in%20real-time%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Geiger%2C%20Andreas%20Ziegler%2C%20Julius%20Stiller%2C%20Christoph%20Stereoscan%3A%20Dense%203d%20reconstruction%20in%20real-time%202011"
+        },
+        {
+            "id": "Geiger_et+al_2012_a",
+            "entry": "Andreas Geiger, Philip Lenz, and Raquel Urtasun. Are we ready for autonomous driving? the kitti vision benchmark suite. In Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3354\u20133361, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Geiger%2C%20Andreas%20Lenz%2C%20Philip%20Urtasun%2C%20Raquel%20Are%20we%20ready%20for%20autonomous%20driving%3F%20the%20kitti%20vision%20benchmark%20suite%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Geiger%2C%20Andreas%20Lenz%2C%20Philip%20Urtasun%2C%20Raquel%20Are%20we%20ready%20for%20autonomous%20driving%3F%20the%20kitti%20vision%20benchmark%20suite%202012"
+        },
+        {
+            "id": "Godard_et+al_2017_a",
+            "entry": "Cl\u00e9ment Godard, Oisin Mac Aodha, and Gabriel J. Brostow. Unsupervised monocular depth estimation with left-right consistency. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Godard%2C%20Cl%C3%A9ment%20Aodha%2C%20Oisin%20Mac%20Brostow%2C%20Gabriel%20J.%20Unsupervised%20monocular%20depth%20estimation%20with%20left-right%20consistency%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Godard%2C%20Cl%C3%A9ment%20Aodha%2C%20Oisin%20Mac%20Brostow%2C%20Gabriel%20J.%20Unsupervised%20monocular%20depth%20estimation%20with%20left-right%20consistency%202017"
+        },
+        {
+            "id": "Handa_et+al_2016_a",
+            "entry": "Ankur Handa, Michael Bloesch, Viorica Patraucean, Simon Stent, John McCormac, and Andrew Davison. gvnn: Neural network library for geometric computer vision. In European Conference on Computer Vision Workshop (ECCVW), pp. 67\u201382, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Handa%2C%20Ankur%20Bloesch%2C%20Michael%20Patraucean%2C%20Viorica%20Stent%2C%20Simon%20gvnn%3A%20Neural%20network%20library%20for%20geometric%20computer%20vision%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Handa%2C%20Ankur%20Bloesch%2C%20Michael%20Patraucean%2C%20Viorica%20Stent%2C%20Simon%20gvnn%3A%20Neural%20network%20library%20for%20geometric%20computer%20vision%202016"
+        },
+        {
+            "id": "Hartley_1997_a",
+            "entry": "R. I. Hartley. In defense of the eight-point algorithm. IEEE Transactions on Pattern Analysis and Machine Intelligence, 19:580\u2013593, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hartley%2C%20R.I.%20In%20defense%20of%20the%20eight-point%20algorithm%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hartley%2C%20R.I.%20In%20defense%20of%20the%20eight-point%20algorithm%201997"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hirschmuller_2005_a",
+            "entry": "H. Hirschmuller. Accurate and efficient stereo processing by semi-global matching and mutual information. In IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR), volume 2, pp. 807\u2013814, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hirschmuller%2C%20H.%20Accurate%20and%20efficient%20stereo%20processing%20by%20semi-global%20matching%20and%20mutual%20information%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hirschmuller%2C%20H.%20Accurate%20and%20efficient%20stereo%20processing%20by%20semi-global%20matching%20and%20mutual%20information%202005"
+        },
+        {
+            "id": "Sepp_2001_a",
+            "entry": "Sepp Hochreiter, A. Steven Younger, and Peter R. Conwell. Learning to learn using gradient descent. In International Conference on Artificial Neural Networks (ICANN), pp. 87\u201394, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sepp%20Hochreiter%2C%20A.Steven%20Younger%20Conwell%2C%20Peter%20R.%20Learning%20to%20learn%20using%20gradient%20descent%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sepp%20Hochreiter%2C%20A.Steven%20Younger%20Conwell%2C%20Peter%20R.%20Learning%20to%20learn%20using%20gradient%20descent%202001"
+        },
+        {
+            "id": "Hoiem_et+al_2005_a",
+            "entry": "Derek Hoiem, Alexei A. Efros, and Martial Hebert. Automatic photo pop-up. In ACM SIGGRAPH, pp. 577\u2013584, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoiem%2C%20Derek%20Efros%2C%20Alexei%20A.%20Hebert%2C%20Martial%20Automatic%20photo%20pop-up%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoiem%2C%20Derek%20Efros%2C%20Alexei%20A.%20Hebert%2C%20Martial%20Automatic%20photo%20pop-up%202005"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Ladick_et+al_2014_a",
+            "entry": "L\u2019ubor Ladick\u00fd, Jianbo Shi, and Marc Pollefeys. Pulling things out of perspective. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 89\u201396, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ladick%C3%BD%2C%20L.%E2%80%99ubor%20Shi%2C%20Jianbo%20Pollefeys%2C%20Marc%20Pulling%20things%20out%20of%20perspective%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ladick%C3%BD%2C%20L.%E2%80%99ubor%20Shi%2C%20Jianbo%20Pollefeys%2C%20Marc%20Pulling%20things%20out%20of%20perspective%202014"
+        },
+        {
+            "id": "Laina_et+al_2016_a",
+            "entry": "I. Laina, C. Rupprecht, V. Belagiannis, F. Tombari, and N. Navab. Deeper depth prediction with fully convolutional residual networks. In International Conference on 3D Vision (3DV), pp. 239\u2013248, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Laina%2C%20I.%20Rupprecht%2C%20C.%20Belagiannis%2C%20V.%20Tombari%2C%20F.%20Deeper%20depth%20prediction%20with%20fully%20convolutional%20residual%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Laina%2C%20I.%20Rupprecht%2C%20C.%20Belagiannis%2C%20V.%20Tombari%2C%20F.%20Deeper%20depth%20prediction%20with%20fully%20convolutional%20residual%20networks%202016"
+        },
+        {
+            "id": "T_2017_a",
+            "entry": "T. Y. Lin, P. Doll\u00e1r, R. Girshick, K. He, B. Hariharan, and S. Belongie. Feature pyramid networks for object detection. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 936\u2013944, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=T%20Y%20Lin%20P%20Doll%C3%A1r%20R%20Girshick%20K%20He%20B%20Hariharan%20and%20S%20Belongie%20Feature%20pyramid%20networks%20for%20object%20detection%20In%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20CVPR%20pp%20936944%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=T%20Y%20Lin%20P%20Doll%C3%A1r%20R%20Girshick%20K%20He%20B%20Hariharan%20and%20S%20Belongie%20Feature%20pyramid%20networks%20for%20object%20detection%20In%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20CVPR%20pp%20936944%202017"
+        },
+        {
+            "id": "Lourakis_2005_a",
+            "entry": "M. L. A. Lourakis and A. A. Argyros. Is levenberg-marquardt the most efficient optimization algorithm for implementing bundle adjustment? In IEEE International Conference on Computer Vision (ICCV), volume 2, pp. 1526\u20131531, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lourakis%2C%20M.L.A.%20Argyros%2C%20A.A.%20Is%20levenberg-marquardt%20the%20most%20efficient%20optimization%20algorithm%20for%20implementing%20bundle%20adjustment%3F%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lourakis%2C%20M.L.A.%20Argyros%2C%20A.A.%20Is%20levenberg-marquardt%20the%20most%20efficient%20optimization%20algorithm%20for%20implementing%20bundle%20adjustment%3F%202005"
+        },
+        {
+            "id": "Ra_2015_a",
+            "entry": "Ra\u00fal Mur-Artal, J. M. M. Montiel, and Juan D. Tard\u00f3s. Orb-slam: a versatile and accurate monocular slam system. IEEE Transactions on Robotics, 31:1147\u20131163, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ra%C3%BAl%20Mur-Artal%2C%20J.M.M.Montiel%20Tard%C3%B3s%2C%20Juan%20D.%20Orb-slam%3A%20a%20versatile%20and%20accurate%20monocular%20slam%20system%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ra%C3%BAl%20Mur-Artal%2C%20J.M.M.Montiel%20Tard%C3%B3s%2C%20Juan%20D.%20Orb-slam%3A%20a%20versatile%20and%20accurate%20monocular%20slam%20system%202015"
+        },
+        {
+            "id": "Nister_2004_a",
+            "entry": "D. Nister. An efficient solution to the five-point relative pose problem. IEEE Transactions on Pattern Analysis and Machine Intelligence, 26:756\u2013770, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nister%2C%20D.%20An%20efficient%20solution%20to%20the%20five-point%20relative%20pose%20problem%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nister%2C%20D.%20An%20efficient%20solution%20to%20the%20five-point%20relative%20pose%20problem%202004"
+        },
+        {
+            "id": "Nocedal_2006_a",
+            "entry": "J. Nocedal and S. J. Wright. Numerical Optimization. Springer, second edition, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=J%20Nocedal%20and%20S%20J%20Wright%20Numerical%20Optimization%20Springer%20second%20edition%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=J%20Nocedal%20and%20S%20J%20Wright%20Numerical%20Optimization%20Springer%20second%20edition%202006"
+        },
+        {
+            "id": "Saxena_et+al_2009_a",
+            "entry": "A. Saxena, M. Sun, and A. Y. Ng. Make3d: Learning 3d scene structure from a single still image. IEEE Transactions on Pattern Analysis and Machine Intelligence, 31:824\u2013840, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Saxena%2C%20A.%20Sun%2C%20M.%20Ng%2C%20A.Y.%20Make3d%3A%20Learning%203d%20scene%20structure%20from%20a%20single%20still%20image%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saxena%2C%20A.%20Sun%2C%20M.%20Ng%2C%20A.Y.%20Make3d%3A%20Learning%203d%20scene%20structure%20from%20a%20single%20still%20image%202009"
+        },
+        {
+            "id": "Saxena_et+al_2005_a",
+            "entry": "Ashutosh Saxena, Sung H. Chung, and Andrew Y. Ng. Learning depth from single monocular images. In International Conference on Neural Information Processing Systems (NIPS), pp. 1161\u20131168, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Saxena%2C%20Ashutosh%20Chung%2C%20Sung%20H.%20Ng%2C%20Andrew%20Y.%20Learning%20depth%20from%20single%20monocular%20images%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saxena%2C%20Ashutosh%20Chung%2C%20Sung%20H.%20Ng%2C%20Andrew%20Y.%20Learning%20depth%20from%20single%20monocular%20images%202005"
+        },
+        {
+            "id": "Schmidt_2014_a",
+            "entry": "U. Schmidt and S. Roth. Shrinkage fields for effective image restoration. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 2774\u20132781, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidt%2C%20U.%20Roth%2C%20S.%20Shrinkage%20fields%20for%20effective%20image%20restoration%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidt%2C%20U.%20Roth%2C%20S.%20Shrinkage%20fields%20for%20effective%20image%20restoration%202014"
+        },
+        {
+            "id": "Schoenberger_2016_a",
+            "entry": "Johannes Lutz Sch\u00f6nberger and Jan-Michael Frahm. Structure-from-motion revisited. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4104\u20134113, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sch%C3%B6nberger%2C%20Johannes%20Lutz%20Frahm%2C%20Jan-Michael%20Structure-from-motion%20revisited%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sch%C3%B6nberger%2C%20Johannes%20Lutz%20Frahm%2C%20Jan-Michael%20Structure-from-motion%20revisited%202016"
+        },
+        {
+            "id": "Steinbruecker_et+al_2011_a",
+            "entry": "F. Steinbruecker, J. Sturm, and D. Cremers. Real-time visual odometry from dense rgb-d images. In International Conference on Computer Vision Workshop on Live Dense Reconstruction with Moving Cameras(ICCVW), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Steinbruecker%2C%20F.%20Sturm%2C%20J.%20Cremers%2C%20D.%20Real-time%20visual%20odometry%20from%20dense%20rgb-d%20images%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Steinbruecker%2C%20F.%20Sturm%2C%20J.%20Cremers%2C%20D.%20Real-time%20visual%20odometry%20from%20dense%20rgb-d%20images%202011"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "C. Tang, O. Wang, and P. Tan. Gslam: Initialization-robust monocular visual slam via global structure-from-motion. In International Conference on 3D Vision (3DV), pp. 239\u2013248, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20C.%20Wang%2C%20O.%20Tan%2C%20P.%20Gslam%3A%20Initialization-robust%20monocular%20visual%20slam%20via%20global%20structure-from-motion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20C.%20Wang%2C%20O.%20Tan%2C%20P.%20Gslam%3A%20Initialization-robust%20monocular%20visual%20slam%20via%20global%20structure-from-motion%202017"
+        },
+        {
+            "id": "Tateno_et+al_2017_a",
+            "entry": "K. Tateno, F. Tombari, I. Laina, and N. Navab. Cnn-slam: Real-time dense monocular slam with learned depth prediction. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 6565\u20136574, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tateno%2C%20K.%20Tombari%2C%20F.%20Laina%2C%20I.%20Navab%2C%20N.%20Cnn-slam%3A%20Real-time%20dense%20monocular%20slam%20with%20learned%20depth%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tateno%2C%20K.%20Tombari%2C%20F.%20Laina%2C%20I.%20Navab%2C%20N.%20Cnn-slam%3A%20Real-time%20dense%20monocular%20slam%20with%20learned%20depth%20prediction%202017"
+        },
+        {
+            "id": "Triggs_et+al_2000_a",
+            "entry": "Bill Triggs, Philip F. McLauchlan, Richard I. Hartley, and Andrew W. Fitzgibbon. Bundle adjustment - a modern synthesis. In Vision Algorithms: Theory and Practice, pp. 298\u2013372, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Triggs%2C%20Bill%20McLauchlan%2C%20Philip%20F.%20Hartley%2C%20Richard%20I.%20Fitzgibbon%2C%20Andrew%20W.%20Bundle%20adjustment%20-%20a%20modern%20synthesis%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Triggs%2C%20Bill%20McLauchlan%2C%20Philip%20F.%20Hartley%2C%20Richard%20I.%20Fitzgibbon%2C%20Andrew%20W.%20Bundle%20adjustment%20-%20a%20modern%20synthesis%202000"
+        },
+        {
+            "id": "Ummenhofer_et+al_2017_a",
+            "entry": "Benjamin Ummenhofer, Huizhong Zhou, Jonas Uhrig, Nikolaus Mayer, Eddy Ilg, Alexey Dosovitskiy, and Thomas Brox. Demon: Depth and motion network for learning monocular stereo. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 5622\u20135631, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ummenhofer%2C%20Benjamin%20Zhou%2C%20Huizhong%20Uhrig%2C%20Jonas%20Mayer%2C%20Nikolaus%20Demon%3A%20Depth%20and%20motion%20network%20for%20learning%20monocular%20stereo%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ummenhofer%2C%20Benjamin%20Zhou%2C%20Huizhong%20Uhrig%2C%20Jonas%20Mayer%2C%20Nikolaus%20Demon%3A%20Depth%20and%20motion%20network%20for%20learning%20monocular%20stereo%202017"
+        },
+        {
+            "id": "Chaoyang_2018_a",
+            "entry": "Chaoyang Wang, Buenaposada, Miguel Jose, Rui Zhu,, and Simon Lucey. Learning depth from monocular videos using direct methods. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 851\u2013859, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chaoyang%20Wang%20Buenaposada%20Miguel%20Jose%20Rui%20Zhu%20and%20Simon%20Lucey%20Learning%20depth%20from%20monocular%20videos%20using%20direct%20methods%20In%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20CVPR%20pp%20851859%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chaoyang%20Wang%20Buenaposada%20Miguel%20Jose%20Rui%20Zhu%20and%20Simon%20Lucey%20Learning%20depth%20from%20monocular%20videos%20using%20direct%20methods%20In%20IEEE%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20CVPR%20pp%20851859%202018"
+        },
+        {
+            "id": "Wu_et+al_2011_a",
+            "entry": "C. Wu, S. Agarwal, B. Curless, and S. M. Seitz. Multicore bundle adjustment. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3057\u20133064, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20C.%20Agarwal%2C%20S.%20Curless%2C%20B.%20Seitz%2C%20S.M.%20Multicore%20bundle%20adjustment%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20C.%20Agarwal%2C%20S.%20Curless%2C%20B.%20Seitz%2C%20S.M.%20Multicore%20bundle%20adjustment%202011"
+        },
+        {
+            "id": "Xu_et+al_2017_a",
+            "entry": "D. Xu, E. Ricci, W. Ouyang, X. Wang, and N. Sebe. Multi-scale continuous crfs as sequential deep networks for monocular depth estimation. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 161\u2013169, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20D.%20Ricci%2C%20E.%20Ouyang%2C%20W.%20Wang%2C%20X.%20Multi-scale%20continuous%20crfs%20as%20sequential%20deep%20networks%20for%20monocular%20depth%20estimation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20D.%20Ricci%2C%20E.%20Ouyang%2C%20W.%20Wang%2C%20X.%20Multi-scale%20continuous%20crfs%20as%20sequential%20deep%20networks%20for%20monocular%20depth%20estimation%202017"
+        },
+        {
+            "id": "Yang_et+al_2018_a",
+            "entry": "Nan Yang, Rui Wang, Jorg Stuckler, and Daniel Cremers. Deep virtual stereo odometry: Leveraging deep depth prediction for monocular direct sparse odometry. In European Conference on Computer Vision (ECCV), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Nan%20Wang%2C%20Rui%20Stuckler%2C%20Jorg%20Cremers%2C%20Daniel%20Deep%20virtual%20stereo%20odometry%3A%20Leveraging%20deep%20depth%20prediction%20for%20monocular%20direct%20sparse%20odometry%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Nan%20Wang%2C%20Rui%20Stuckler%2C%20Jorg%20Cremers%2C%20Daniel%20Deep%20virtual%20stereo%20odometry%3A%20Leveraging%20deep%20depth%20prediction%20for%20monocular%20direct%20sparse%20odometry%202018"
+        },
+        {
+            "id": "Yu_et+al_2017_a",
+            "entry": "F. Yu, V. Koltun, and T. Funkhouser. Dilated residual networks. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 636\u2013644, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20F.%20Koltun%2C%20V.%20Funkhouser%2C%20T.%20Dilated%20residual%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20F.%20Koltun%2C%20V.%20Funkhouser%2C%20T.%20Dilated%20residual%20networks%202017"
+        },
+        {
+            "id": "Zhou_et+al_2017_a",
+            "entry": "Tinghui Zhou, Matthew Brown, Noah Snavely, and David G. Lowe. Unsupervised learning of depth and ego-motion from video. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 6612\u20136619, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Tinghui%20Brown%2C%20Matthew%20Snavely%2C%20Noah%20Lowe%2C%20David%20G.%20Unsupervised%20learning%20of%20depth%20and%20ego-motion%20from%20video%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Tinghui%20Brown%2C%20Matthew%20Snavely%2C%20Noah%20Lowe%2C%20David%20G.%20Unsupervised%20learning%20of%20depth%20and%20ego-motion%20from%20video%202017"
+        },
+        {
+            "id": "Zwald_2012_a",
+            "entry": "L. Zwald and S. Lambert-Lacroix. The berhu penalty and the grouped effect. CoRR, abs/1207.6868, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1207.6868"
+        }
+    ]
+}

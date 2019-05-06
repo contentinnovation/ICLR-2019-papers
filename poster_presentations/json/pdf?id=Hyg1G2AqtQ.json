@@ -1,0 +1,420 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "VARIANCE REDUCTION FOR REINFORCEMENT LEARNING IN INPUT-DRIVEN ENVIRONMENTS",
+        "author": "Hongzi Mao, Shaileshh Bojja Venkatakrishnan, Malte Schwarzkopf, Mohammad Alizadeh MIT Computer Science and Artificial Intelligence Laboratory {hongzi,bjjvnkt,malte,alizadeh}@csail.mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Hyg1G2AqtQ"
+        },
+        "abstract": "We consider reinforcement learning in input-driven environments, where an exogenous, stochastic input process affects the dynamics of the system. Input processes arise in many applications, including queuing systems, robotics control with disturbances, and object tracking. Since the state dynamics and rewards depend on the input process, the state alone provides limited information for the expected future returns. Therefore, policy gradient methods with standard state-dependent baselines suffer high variance during training. We derive a bias-free, input-dependent baseline to reduce this variance, and analytically show its benefits over state-dependent baselines. We then propose a meta-learning approach to overcome the complexity of learning a baseline that depends on a long sequence of inputs. Our experimental results show that across environments from queuing systems, computer networks, and MuJoCo robotic locomotion, input-dependent baselines consistently improve training stability and result in better eventual policies."
+    },
+    "keywords": [
+        {
+            "term": "Symposium",
+            "url": "https://en.wikipedia.org/wiki/Symposium"
+        },
+        {
+            "term": "Markov decision process",
+            "url": "https://en.wikipedia.org/wiki/Markov_decision_process"
+        },
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "OSDI",
+            "url": "https://en.wikipedia.org/wiki/OSDI"
+        },
+        {
+            "term": "exogenous",
+            "url": "https://en.wikipedia.org/wiki/exogenous"
+        },
+        {
+            "term": "policy gradient method",
+            "url": "https://en.wikipedia.org/wiki/policy_gradient_method"
+        },
+        {
+            "term": "variance reduction",
+            "url": "https://en.wikipedia.org/wiki/variance_reduction"
+        },
+        {
+            "term": "USENIX",
+            "url": "https://en.wikipedia.org/wiki/USENIX"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        }
+    ],
+    "abbreviations": {
+        "RL": "reinforcement learning",
+        "TRPO": "Trust Region Policy Optimization",
+        "MDP": "Markov decision process",
+        "MAML": "Model-Agnostic Meta-Learning"
+    },
+    "highlights": [
+        "Deep reinforcement learning (RL) has emerged as a powerful approach for sequential decision-making problems, achieving impressive results in domains such as game playing (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>) and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\">Levine et al, 2016</a></a>; <a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\"><a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\">Schulman et al, 2015a</a></a>; <a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>)",
+        "We introduced input-driven Markov Decision Processes in which stochastic input processes influence state dynamics and rewards",
+        "We demonstrated that an input-dependent baseline can significantly reduce variance for policy gradient methods, improving training stability and the quality of learned policies",
+        "Our work provides an important ingredient for using reinforcement learning successfully in a variety of domains, including queuing networks and computer systems, where an input workload is a fundamental aspect of the system, as well as domains where the input process is more implicit, like robotics control with disturbances or random obstacles",
+        "We showed that meta-learning provides an efficient way to learn input-dependent baselines for applications where input sequences can be repeated during training",
+        "Investigating efficient architectures for input-dependent baselines for cases where the input process cannot be repeated in training is an interesting direction for future work"
+    ],
+    "key_statements": [
+        "Deep reinforcement learning (RL) has emerged as a powerful approach for sequential decision-making problems, achieving impressive results in domains such as game playing (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>) and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\">Levine et al, 2016</a></a>; <a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\"><a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\">Schulman et al, 2015a</a></a>; <a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>)",
+        "Input-driven environments have dynamics that are partially dictated by an exogenous, stochastic input process",
+        "We formally define input-driven Markov decision processes, and we prove that an input-dependent baseline does not introduce bias in standard policy gradient algorithms such as Advantage Actor",
+        "Our results show that input-dependent baselines consistently provide improved training stability and better eventual policies",
+        "Input-dependent baselines are bias-free for policy optimization methods such as Trust Region Policy Optimization (<a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\">Schulman et al, 2015a</a>), as we show in Appendix F",
+        "Input-dependent baselines are generally applicable to reducing variance for policy gradient methods in input-driven environments",
+        "We introduced input-driven Markov Decision Processes in which stochastic input processes influence state dynamics and rewards",
+        "We demonstrated that an input-dependent baseline can significantly reduce variance for policy gradient methods, improving training stability and the quality of learned policies",
+        "Our work provides an important ingredient for using reinforcement learning successfully in a variety of domains, including queuing networks and computer systems, where an input workload is a fundamental aspect of the system, as well as domains where the input process is more implicit, like robotics control with disturbances or random obstacles",
+        "We showed that meta-learning provides an efficient way to learn input-dependent baselines for applications where input sequences can be repeated during training",
+        "Investigating efficient architectures for input-dependent baselines for cases where the input process cannot be repeated in training is an interesting direction for future work"
+    ],
+    "summary": [
+        "Deep reinforcement learning (RL) has emerged as a powerful approach for sequential decision-making problems, achieving impressive results in domains such as game playing (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>) and robotics (<a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\"><a class=\"ref-link\" id=\"cLevine_et+al_2016_a\" href=\"#rLevine_et+al_2016_a\">Levine et al, 2016</a></a>; <a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\"><a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\">Schulman et al, 2015a</a></a>; <a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>).",
+        "We train two A2C agents (<a class=\"ref-link\" id=\"cMnih_et+al_2016_a\" href=\"#rMnih_et+al_2016_a\">Mnih et al, 2016</a>), one with the standard value function baseline and the other with an input-dependent baseline tailored for each specific instantiation of the job arrival process.",
+        "Since the the input-dependent baseline takes each input sequence into account explicitly, it reduces the variance of the policy gradient estimation much more effectively (Figure 2b, left).",
+        "We formally define input-driven MDPs and derive variance-reducing baselines for policy gradient methods in environments with input processes.",
+        "Input-dependent baselines are generally applicable to reducing variance for policy gradient methods in input-driven environments.",
+        "In Appendix M, we empirically show that if an adversary generates high-variance noise, RARL with a standard state-based baseline cannot train good controllers, but the input-dependent baseline helps improve the policy\u2019s performance.",
+        "Input-dependent baselines can improve meta-policy optimization in environments with stochastic disturbances, as we show in Appendix N.",
+        "To learn a separate baseline function for each input sequence, we use N value networks with independent parameters \u03b8V1 , \u03b8V2 , \u00b7 \u00b7 \u00b7 , \u03b8VN , and single policy network with parameter \u03b8.",
+        "2. We perform rollouts k times with the same input sequence z; we use the first k/2 rollouts to customize the meta value network for this instantiation of z, and apply the customized value network on the states of the other k/2 rollouts to compute the baseline for those rollouts; we swap the two groups of rollouts and repeat the same process.",
+        "With the input-dependent baseline, by contrast, performance in unseen testing environments improves by up to 3\u00d7, as the agent learns a policy robust against disturbances.",
+        "The meta-baseline eventually outperforms 10-value networks as it effectively learns from a large number of input processes and generalizes better.",
+        "In Appendix M we show that adversarial RL (e.g., RARL (<a class=\"ref-link\" id=\"cPinto_et+al_2017_a\" href=\"#rPinto_et+al_2017_a\">Pinto et al, 2017</a>)) alone is not adequate to solve the high variance problem, and the input-dependent baseline helps improve the policy performance (Figure 9).",
+        "The learning curves in Figure 5 illustrate that directly applying A2C with a standard value network as the baseline results in unstable test reward and underperforms the traditional heuristic in both environments.",
+        "Their state-action-dependent baseline improves training efficiency and model performance on high-dimensional control tasks by explicitly factoring out, for each action, the effect due to other actions.",
+        "We demonstrated that an input-dependent baseline can significantly reduce variance for policy gradient methods, improving training stability and the quality of learned policies.",
+        "Investigating efficient architectures for input-dependent baselines for cases where the input process cannot be repeated in training is an interesting direction for future work"
+    ],
+    "headline": "We propose a meta-learning approach to overcome the complexity of learning a baseline that depends on a long sequence of inputs",
+    "reference_links": [
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. arXiv preprint arXiv:1409.0473, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Belletti_et+al_2018_a",
+            "entry": "Francois Belletti, Daniel Haziza, Gabriel Gomes, and Alexandre M. Bayen. Expert level control of ramp metering based on multi-task deep reinforcement learning. IEEE Transactions on Intelligent Transportation Systems, 19(4):1198\u20131207, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belletti%2C%20Francois%20Haziza%2C%20Daniel%20Gomes%2C%20Gabriel%20Bayen%2C%20Alexandre%20M.%20Expert%20level%20control%20of%20ramp%20metering%20based%20on%20multi-task%20deep%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belletti%2C%20Francois%20Haziza%2C%20Daniel%20Gomes%2C%20Gabriel%20Bayen%2C%20Alexandre%20M.%20Expert%20level%20control%20of%20ramp%20metering%20based%20on%20multi-task%20deep%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. OpenAI Gym. https://gym.openai.com/docs/, 2016.",
+            "url": "https://gym.openai.com/docs/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Greg%20Brockman%20Vicki%20Cheung%20Ludwig%20Pettersson%20Jonas%20Schneider%20John%20Schulman%20Jie%20Tang%20and%20Wojciech%20Zaremba%20OpenAI%20Gym%20httpsgymopenaicomdocs%202016"
+        },
+        {
+            "id": "Chilimbi_et+al_0000_a",
+            "entry": "Trishul Chilimbi, Yutaka Suzue, Johnson Apacible, and Karthik Kalyanaraman. Project adam: Building an efficient and scalable deep learning training system. In Proceedings of the 11th",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chilimbi%2C%20Trishul%20Suzue%2C%20Yutaka%20Apacible%2C%20Johnson%20Kalyanaraman%2C%20Karthik%20Project%20adam%3A%20Building%20an%20efficient%20and%20scalable%20deep%20learning%20training%20system",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chilimbi%2C%20Trishul%20Suzue%2C%20Yutaka%20Apacible%2C%20Johnson%20Kalyanaraman%2C%20Karthik%20Project%20adam%3A%20Building%20an%20efficient%20and%20scalable%20deep%20learning%20training%20system"
+        },
+        {
+            "id": "USENIX_2014_a",
+            "entry": "USENIX Symposium on Operating Systems Design and Implementation (OSDI), pp. 571\u2013582, October 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=USENIX%20Symposium%20on%20Operating%20Systems%20Design%20and%20Implementation%20OSDI%20pp%20571582%20October%202014"
+        },
+        {
+            "id": "Clavera_et+al_0000_a",
+            "entry": "Ignasi Clavera, Anusha Nagabandi, Ronald S Fearing, Pieter Abbeel, Sergey Levine, and Chelsea Finn. Learning to adapt: Meta-learning for model-based control. arXiv preprint arXiv:1803.11347, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.11347"
+        },
+        {
+            "id": "Clavera_et+al_0000_b",
+            "entry": "Ignasi Clavera, Jonas Rothfuss, John Schulman, Yasuhiro Fujita, Tamim Asfour, and Pieter Abbeel. Model-based reinforcement learning via meta-policy optimization. arXiv preprint arXiv:1809.05214, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.05214"
+        },
+        {
+            "id": "Daley_1987_a",
+            "entry": "D.J. Daley. Certain optimality properties of the first-come first-served discipline for G/G/s queues. Stochastic Processes and their Applications, 25:301\u2013308, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daley%2C%20D.J.%20Certain%20optimality%20properties%20of%20the%20first-come%20first-served%20discipline%20for%20G/G/s%20queues%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Daley%2C%20D.J.%20Certain%20optimality%20properties%20of%20the%20first-come%20first-served%20discipline%20for%20G/G/s%20queues%201987"
+        },
+        {
+            "id": "Form_2016_a",
+            "entry": "DASH Industry Form. Reference Client 2.4.0. http://mediapm.edgesuite.net/dash/public/nightly/samples/dash-if-reference-player/index.html, 2016.",
+            "url": "http://mediapm.edgesuite.net/dash/public/nightly/samples/dash-if-reference-player/index.html"
+        },
+        {
+            "id": "Dhariwal_et+al_2017_a",
+            "entry": "Prafulla Dhariwal, Christopher Hesse, Oleg Klimov, Alex Nichol, Matthias Plappert, Alec Radford, John Schulman, Szymon Sidor, and Yuhuai Wu. OpenAI Baselines. https://github.com/openai/baselines, 2017.",
+            "url": "https://github.com/openai/baselines"
+        },
+        {
+            "id": "Duan_et+al_2016_a",
+            "entry": "Yan Duan, Xi Chen, Rein Houthooft, John Schulman, and Pieter Abbeel. Benchmarking deep reinforcement learning for continuous control. In International Conference on Machine Learning, pp. 1329\u20131338, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "https://deepmind.com/blog/",
+            "url": "https://deepmind.com/blog/"
+        },
+        {
+            "id": "Deepmind-Ai-Reduces-Google-Data-Centre-Cooling-Bill-_2016_a",
+            "entry": "deepmind-ai-reduces-google-data-centre-cooling-bill-40/, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=deepmindaireducesgoogledatacentrecoolingbill40%202016"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning, pp. 1126\u20131135, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Gers_et+al_1999_a",
+            "entry": "Felix A. Gers, J\u00fcrgen Schmidhuber, and Fred Cummins. Learning to forget: Continual prediction with lstm. 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gers%2C%20Felix%20A.%20Schmidhuber%2C%20J%C3%BCrgen%20Cummins%2C%20Fred%20Learning%20to%20forget%3A%20Continual%20prediction%20with%20lstm%201999"
+        },
+        {
+            "id": "Grandl_et+al_0000_a",
+            "entry": "Robert Grandl, Srikanth Kandula, Sriram Rao, Aditya Akella, and Janardhan Kulkarni. Graphene: Packing and dependency-aware scheduling for data-parallel clusters. In Proceedings of the 12th",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grandl%2C%20Robert%20Kandula%2C%20Srikanth%20Rao%2C%20Sriram%20Akella%2C%20Aditya%20Graphene%3A%20Packing%20and%20dependency-aware%20scheduling%20for%20data-parallel%20clusters",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grandl%2C%20Robert%20Kandula%2C%20Srikanth%20Rao%2C%20Sriram%20Akella%2C%20Aditya%20Graphene%3A%20Packing%20and%20dependency-aware%20scheduling%20for%20data-parallel%20clusters"
+        },
+        {
+            "id": "USENIX_2016_a",
+            "entry": "USENIX Symposium on Operating Systems Design and Implementation (OSDI), pp. 81\u201397, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=USENIX%20Symposium%20on%20Operating%20Systems%20Design%20and%20Implementation%20OSDI%20pp%208197%202016"
+        },
+        {
+            "id": "Greensmith_et+al_2004_a",
+            "entry": "Evan Greensmith, Peter L Bartlett, and Jonathan Baxter. Variance reduction techniques for gradient estimates in reinforcement learning. Journal of Machine Learning Research, 5(Nov):1471\u20131530, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Greensmith%2C%20Evan%20Bartlett%2C%20Peter%20L.%20Baxter%2C%20Jonathan%20Variance%20reduction%20techniques%20for%20gradient%20estimates%20in%20reinforcement%20learning%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Greensmith%2C%20Evan%20Bartlett%2C%20Peter%20L.%20Baxter%2C%20Jonathan%20Variance%20reduction%20techniques%20for%20gradient%20estimates%20in%20reinforcement%20learning%202004"
+        },
+        {
+            "id": "Gu_et+al_2017_a",
+            "entry": "Shixiang Gu, Timothy P. Lillicrap, Richard E Turner, Zoubin Ghahramani, Bernhard Sch\u00f6lkopf, and Sergey Levine. Interpolated policy gradient: Merging on-policy and off-policy gradient estimation for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 3849\u20133858, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Lillicrap%2C%20Timothy%20P.%20Turner%2C%20Richard%20E.%20Ghahramani%2C%20Zoubin%20Interpolated%20policy%20gradient%3A%20Merging%20on-policy%20and%20off-policy%20gradient%20estimation%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Lillicrap%2C%20Timothy%20P.%20Turner%2C%20Richard%20E.%20Ghahramani%2C%20Zoubin%20Interpolated%20policy%20gradient%3A%20Merging%20on-policy%20and%20off-policy%20gradient%20estimation%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Harchol-Balter_2010_a",
+            "entry": "Mor Harchol-Balter and Rein Vesilo. To balance or unbalance load in size-interval task allocation. Probability in the Engineering and Informational Sciences, 24(2):219\u2013244, April 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harchol-Balter%2C%20Mor%20Vesilo%2C%20Rein%20To%20balance%20or%20unbalance%20load%20in%20size-interval%20task%20allocation%202010-04",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Harchol-Balter%2C%20Mor%20Vesilo%2C%20Rein%20To%20balance%20or%20unbalance%20load%20in%20size-interval%20task%20allocation%202010-04"
+        },
+        {
+            "id": "Harrison_et+al_2017_a",
+            "entry": "James Harrison, Animesh Garg, Boris Ivanovic, Yuke Zhu, Silvio Savarese, Li Fei-Fei, and Marco Pavone. Adapt: zero-shot adaptive policy transfer for stochastic dynamical systems. arXiv preprint arXiv:1707.04674, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.04674"
+        },
+        {
+            "id": "Heess_et+al_2017_a",
+            "entry": "Nicolas Heess, Srinivasan Sriram, Jay Lemmon, Josh Merel, Greg Wayne, Yuval Tassa, Tom Erez, Ziyu Wang, Ali Eslami, Martin Riedmiller, et al. Emergence of locomotion behaviours in rich environments. arXiv preprint arXiv:1707.02286, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.02286"
+        },
+        {
+            "id": "Kakade_2002_a",
+            "entry": "Sham M. Kakade. A natural policy gradient. In Advances in Neural Information Processing Systems, pp. 1531\u20131538, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kakade%2C%20Sham%20M.%20A%20natural%20policy%20gradient%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kakade%2C%20Sham%20M.%20A%20natural%20policy%20gradient%202002"
+        },
+        {
+            "id": "Kelly_2011_a",
+            "entry": "Frank P. Kelly. Reversibility and stochastic networks. Cambridge University Press, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kelly%2C%20Frank%20P.%20Reversibility%20and%20stochastic%20networks%202011"
+        },
+        {
+            "id": "Wiley,_1976_a",
+            "entry": "Wiley, New York, 1976.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wiley%20New%20York%201976"
+        },
+        {
+            "id": "Levine_et+al_2016_a",
+            "entry": "Sergey Levine, Chelsea Finn, Trevor Darrell, and Pieter Abbeel. End-to-end training of deep visuomotor policies. Journal of Machine Learning Research, 17(1):1334\u20131373, January 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Finn%2C%20Chelsea%20Darrell%2C%20Trevor%20Abbeel%2C%20Pieter%20End-to-end%20training%20of%20deep%20visuomotor%20policies%202016-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Finn%2C%20Chelsea%20Darrell%2C%20Trevor%20Abbeel%2C%20Pieter%20End-to-end%20training%20of%20deep%20visuomotor%20policies%202016-01"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "Timothy P. Lillicrap, Jonathan J Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. arXiv preprint arXiv:1509.02971, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Mao_et+al_2016_a",
+            "entry": "Hongzi Mao, Mohammad Alizadeh, Ishai Menache, and Srikanth Kandula. Resource management with deep reinforcement learning. In Proceedings of the 15th ACM Workshop on Hot Topics in Networks (HotNets), November 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mao%2C%20Hongzi%20Alizadeh%2C%20Mohammad%20Menache%2C%20Ishai%20Kandula%2C%20Srikanth%20Resource%20management%20with%20deep%20reinforcement%20learning%202016-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mao%2C%20Hongzi%20Alizadeh%2C%20Mohammad%20Menache%2C%20Ishai%20Kandula%2C%20Srikanth%20Resource%20management%20with%20deep%20reinforcement%20learning%202016-11"
+        },
+        {
+            "id": "Mao_et+al_2017_a",
+            "entry": "Hongzi Mao, Ravi Netravali, and Mohammad Alizadeh. Neural adaptive video streaming with pensieve. In Proceedings of the ACM SIGCOMM 2017 Conference, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mao%2C%20Hongzi%20Netravali%2C%20Ravi%20Alizadeh%2C%20Mohammad%20Neural%20adaptive%20video%20streaming%20with%20pensieve%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mao%2C%20Hongzi%20Netravali%2C%20Ravi%20Alizadeh%2C%20Mohammad%20Neural%20adaptive%20video%20streaming%20with%20pensieve%202017"
+        },
+        {
+            "id": "Mcgough_et+al_2017_a",
+            "entry": "Stephen McGough, Noura Al Moubayed, and Matthew Forshaw. Using machine learning in tracedriven energy-aware simulations of high-throughput computing systems. In Proceedings of the 8th ACM/SPEC on International Conference on Performance Engineering (ICPE), pp. 55\u201360. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McGough%2C%20Stephen%20Moubayed%2C%20Noura%20Al%20Forshaw%2C%20Matthew%20Using%20machine%20learning%20in%20tracedriven%20energy-aware%20simulations%20of%20high-throughput%20computing%20systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McGough%2C%20Stephen%20Moubayed%2C%20Noura%20Al%20Forshaw%2C%20Matthew%20Using%20machine%20learning%20in%20tracedriven%20energy-aware%20simulations%20of%20high-throughput%20computing%20systems%202017"
+        },
+        {
+            "id": "Mirhoseini_et+al_2017_a",
+            "entry": "Azalia Mirhoseini, Hieu Pham, Quoc V. Le, Benoit Steiner, Rasmus Larsen, Yuefeng Zhou, Naveen Kumar, Mohammad Norouzi, Samy Bengio, and Jeff Dean. Device placement optimization with reinforcement learning. In Proceedings of the 33rd International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mirhoseini%2C%20Azalia%20Pham%2C%20Hieu%20Le%2C%20Quoc%20V.%20Steiner%2C%20Benoit%20Device%20placement%20optimization%20with%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mirhoseini%2C%20Azalia%20Pham%2C%20Hieu%20Le%2C%20Quoc%20V.%20Steiner%2C%20Benoit%20Device%20placement%20optimization%20with%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg, Demis Hassabis Ioannis Antonoglou, Daan Wierstra, and Martin A. Riedmiller. Human-level control through deep reinforcement learning. Nature, 518:529\u2013533, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adri\u00e0 Puigdom\u00e8nech Badia, Mehdi Mirza, Alex Graves, Tim Harley, Timothy P. Lillicrap, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In Proceedings of the 33rd International Conference on Machine Learning (ICML), pp. 1928\u20131937, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adri%C3%A0%20Puigdom%C3%A8nech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adri%C3%A0%20Puigdom%C3%A8nech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Nair_2010_a",
+            "entry": "Vinod Nair and Geoffrey E. Hinton. Rectified linear units improve restricted boltzmann machines. In Proceedings of the 27th International Conference on Machine Learning (ICML), pp. 807\u2013814, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Pinto_et+al_2017_a",
+            "entry": "Lerrel Pinto, James Davidson, Rahul Sukthankar, and Abhinav Gupta. Robust adversarial reinforcement learning. In Proceedings of the 34th International Conference on Machine Learning (ICML), pp. 2817\u20132826, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pinto%2C%20Lerrel%20Davidson%2C%20James%20Sukthankar%2C%20Rahul%20Gupta%2C%20Abhinav%20Robust%20adversarial%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pinto%2C%20Lerrel%20Davidson%2C%20James%20Sukthankar%2C%20Rahul%20Gupta%2C%20Abhinav%20Robust%20adversarial%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Haakon_2013_a",
+            "entry": "Haakon Riiser, Paul Vigmostad, Carsten Griwodz, and P\u00e5l Halvorsen. Commute Path Bandwidth Traces from 3G Networks: Analysis and Applications. In Proceedings of the 4th ACM Multimedia Systems Conference (MMSys), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Haakon%20Riiser%2C%20Paul%20Vigmostad%2C%20Carsten%20Griwodz%20Halvorsen%2C%20P%C3%A5l%20Commute%20Path%20Bandwidth%20Traces%20from%203G%20Networks%3A%20Analysis%20and%20Applications%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Haakon%20Riiser%2C%20Paul%20Vigmostad%2C%20Carsten%20Griwodz%20Halvorsen%2C%20P%C3%A5l%20Commute%20Path%20Bandwidth%20Traces%20from%203G%20Networks%3A%20Analysis%20and%20Applications%202013"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Philipp Moritz, Michael I. Jordan, and Pieter Abbeel. Trust region policy optimization. arXiv preprint arXiv:1502.05477, 2015a.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.05477"
+        },
+        {
+            "id": "Schulman_et+al_0000_a",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. High-dimensional continuous control using generalized advantage estimation. arXiv preprint arXiv:1506.02438, 2015b.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02438"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Sutton_2017_a",
+            "entry": "Richard S. Sutton and Andrew G. Barto. Reinforcement Learning: An Introduction, Second Edition. MIT Press, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20Learning%3A%20An%20Introduction%2C%20Second%20Edition%202017"
+        },
+        {
+            "id": "Sutton_et+al_2000_a",
+            "entry": "Richard S. Sutton, David A. McAllester, Satinder P. Singh, and Yishay Mansour. Policy gradient methods for reinforcement learning with function approximation. In Advances in Neural Information Processing Systems, pp. 1057\u20131063. 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20Richard%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%202000"
+        },
+        {
+            "id": "Tesauro_1995_a",
+            "entry": "Gerald Tesauro. Temporal difference learning and td-gammon. Communications of the ACM, 38(3): 58\u201368, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tesauro%2C%20Gerald%20Temporal%20difference%20learning%20and%20td-gammon%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tesauro%2C%20Gerald%20Temporal%20difference%20learning%20and%20td-gammon%201995"
+        },
+        {
+            "id": "Thomas_2014_a",
+            "entry": "Philip Thomas. Bias in natural actor-critic algorithms. In International Conference on Machine Learning, pp. 441\u2013448, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thomas%2C%20Philip%20Bias%20in%20natural%20actor-critic%20algorithms%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thomas%2C%20Philip%20Bias%20in%20natural%20actor-critic%20algorithms%202014"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. MuJoCo: A physics engine for model-based control. In Proceedings of the 2012 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), pp. 5026\u20135033, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20MuJoCo%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20MuJoCo%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Tucker_et+al_2018_a",
+            "entry": "George Tucker, Surya Bhupatiraju, Shixiang Gu, Richard E. Turner, Zoubin Ghahramani, and Sergey Levine. The mirage of action-dependent baselines in reinforcement learning. arXiv preprint arXiv:1802.10031, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.10031"
+        },
+        {
+            "id": "Vilalta_2002_a",
+            "entry": "Ricardo Vilalta and Youssef Drissi. A perspective view and survey of meta-learning. Artificial Intelligence Review, 18(2):77\u201395, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vilalta%2C%20Ricardo%20Drissi%2C%20Youssef%20A%20perspective%20view%20and%20survey%20of%20meta-learning%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vilalta%2C%20Ricardo%20Drissi%2C%20Youssef%20A%20perspective%20view%20and%20survey%20of%20meta-learning%202002"
+        },
+        {
+            "id": "Weaver_2001_a",
+            "entry": "Lex Weaver and Nigel Tao. The optimal reward baseline for gradient-based reinforcement learning. In Proceedings of the 17th Conference on Uncertainty in Artificial Intelligence, pp. 538\u2013545. Morgan Kaufmann Publishers Inc., 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weaver%2C%20Lex%20Tao%2C%20Nigel%20The%20optimal%20reward%20baseline%20for%20gradient-based%20reinforcement%20learning%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weaver%2C%20Lex%20Tao%2C%20Nigel%20The%20optimal%20reward%20baseline%20for%20gradient-based%20reinforcement%20learning%202001"
+        },
+        {
+            "id": "Williams_1992_a",
+            "entry": "Ronald J. Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 8(3-4):229\u2013256, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992"
+        },
+        {
+            "id": "Winstein_2013_a",
+            "entry": "Keith Winstein and Hari Balakrishnan. TCP ex machina: Computer-generated congestion control. In ACM SIGCOMM Computer Communication Review, volume 43, pp. 123\u2013134. ACM, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Winstein%2C%20Keith%20Balakrishnan%2C%20Hari%20TCP%20ex%20machina%3A%20Computer-generated%20congestion%20control%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Winstein%2C%20Keith%20Balakrishnan%2C%20Hari%20TCP%20ex%20machina%3A%20Computer-generated%20congestion%20control%202013"
+        },
+        {
+            "id": "Wu_et+al_2017_a",
+            "entry": "Cathy Wu, Aboudy Kreidieh, Kanaad Parvate, Eugene Vinitsky, and Alexandre M Bayen. Flow: Architecture and benchmarking for reinforcement learning in traffic control. arXiv preprint arXiv:1710.05465, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.05465"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Cathy Wu, Aravind Rajeswaran, Yan Duan, Vikash Kumar, Alexandre M. Bayen, Sham Kakade, Igor Mordatch, and Pieter Abbeel. Variance reduction for policy gradient with action-dependent factorized baselines. In Proceedings of the 6th International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Cathy%20Rajeswaran%2C%20Aravind%20Duan%2C%20Yan%20Kumar%2C%20Vikash%20Variance%20reduction%20for%20policy%20gradient%20with%20action-dependent%20factorized%20baselines%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Cathy%20Rajeswaran%2C%20Aravind%20Duan%2C%20Yan%20Kumar%2C%20Vikash%20Variance%20reduction%20for%20policy%20gradient%20with%20action-dependent%20factorized%20baselines%202018"
+        },
+        {
+            "id": "Published_2017_a",
+            "entry": "Published as a conference paper at ICLR 2019 Yuxin Wu and Yuandong Tian. Training agent for first-person shooter game with actor-critic curriculum learning. In Submitted to International Conference on Learning Representations, 2017. Xiaoqi Yin, Abhishek Jindal, Vyas Sekar, and Bruno Sinopoli. A Control-Theoretic Approach for",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Yuxin%20Wu%20and%20Yuandong%20Tian%20Training%20agent%20for%20firstperson%20shooter%20game%20with%20actorcritic%20curriculum%20learning%20In%20Submitted%20to%20International%20Conference%20on%20Learning%20Representations%202017%20Xiaoqi%20Yin%20Abhishek%20Jindal%20Vyas%20Sekar%20and%20Bruno%20Sinopoli%20A%20ControlTheoretic%20Approach%20for",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Yuxin%20Wu%20and%20Yuandong%20Tian%20Training%20agent%20for%20firstperson%20shooter%20game%20with%20actorcritic%20curriculum%20learning%20In%20Submitted%20to%20International%20Conference%20on%20Learning%20Representations%202017%20Xiaoqi%20Yin%20Abhishek%20Jindal%20Vyas%20Sekar%20and%20Bruno%20Sinopoli%20A%20ControlTheoretic%20Approach%20for"
+        },
+        {
+            "id": "Dynamic_2015_a",
+            "entry": "Dynamic Adaptive Video Streaming over HTTP. In Proceedings of the 2015 ACM SIGCOMM Conference, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dynamic%20Adaptive%20Video%20Streaming%20over%20HTTP%20In%20Proceedings%20of%20the%202015%20ACM%20SIGCOMM%20Conference%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dynamic%20Adaptive%20Video%20Streaming%20over%20HTTP%20In%20Proceedings%20of%20the%202015%20ACM%20SIGCOMM%20Conference%202015"
+        },
+        {
+            "id": "Proof_0000_a",
+            "entry": "Proof. Expanding the Policy Gradient Theorem (Sutton & Barto, 2017), we have",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Proof%20Expanding%20the%20Policy%20Gradient%20Theorem"
+        },
+        {
+            "id": "We_2015_b",
+            "entry": "We show that the input-dependent baselines are bias-free for Trust Region Policy Optimization (TRPO) (Schulman et al., 2015a).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20show%20that%20the%20inputdependent%20baselines%20are%20biasfree%20for%20Trust%20Region%20Policy%20Optimization%20TRPO%20Schulman%20et%20al%202015a",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20show%20that%20the%20inputdependent%20baselines%20are%20biasfree%20for%20Trust%20Region%20Policy%20Optimization%20TRPO%20Schulman%20et%20al%202015a"
+        }
+    ]
+}

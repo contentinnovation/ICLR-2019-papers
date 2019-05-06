@@ -1,0 +1,239 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "GAMEPAD: A LEARNING ENVIRONMENT FOR THEOREM PROVING",
+        "author": "Daniel Huang",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=r1xwKoR9Y7"
+        },
+        "abstract": "In this paper, we introduce a system called GamePad that can be used to explore the application of machine learning methods to theorem proving in the Coq proof assistant. Interactive theorem provers such as Coq enable users to construct machine-checkable proofs in a step-by-step manner. Hence, they provide an opportunity to explore theorem proving with human supervision. We use GamePad to synthesize proofs for a simple algebraic rewrite problem and train baseline models for a formalization of the Feit-Thompson theorem. We address position evaluation (i.e., predict the number of proof steps left) and tactic prediction (i.e., predict the next proof step) tasks, which arise naturally in tactic-based theorem proving."
+    },
+    "keywords": [
+        {
+            "term": "abstract syntax trees",
+            "url": "https://en.wikipedia.org/wiki/abstract_syntax_trees"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "theorem proving",
+            "url": "https://en.wikipedia.org/wiki/theorem_proving"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "formal proof",
+            "url": "https://en.wikipedia.org/wiki/formal_proof"
+        },
+        {
+            "term": "formal system",
+            "url": "https://en.wikipedia.org/wiki/formal_system"
+        },
+        {
+            "term": "product term",
+            "url": "https://en.wikipedia.org/wiki/product_term"
+        },
+        {
+            "term": "Tactics",
+            "url": "https://en.wikipedia.org/wiki/Tactics"
+        }
+    ],
+    "abbreviations": {
+        "ITPs": "interactive theorem provers",
+        "ASTs": "abstract syntax trees",
+        "RNNs": "recurrent neural networks",
+        "Prod": "product term"
+    },
+    "highlights": [
+        "Theorem proving is a challenging AI task that involves symbolic reasoning (e.g., SMT solvers (De Moura & Bj\u00f8rner, 2008)) and intuition guided search",
+        "Our work focuses on interactive theorem provers (ITPs), which are software tools that enable human users to construct formal proofs",
+        "We look at theorem proving problem through the lens of a system that enables learning with proofs constructed with human supervision",
+        "The second involves building models that employ the game-like structure of interactive theorem provers proofs",
+        "As a consequence of theorem proving at a higher-level, we will need to be careful to distinguish the syntax from the semantics of terms",
+        "While our results are preliminary, our hope is that GamePad provides an accessible starting point to explore the application of machine learning in the context of interactive theorem proving.\n10 FUTURE WORK"
+    ],
+    "key_statements": [
+        "Theorem proving is a challenging AI task that involves symbolic reasoning (e.g., SMT solvers (De Moura & Bj\u00f8rner, 2008)) and intuition guided search",
+        "We look at theorem proving in the realm of formal proofs",
+        "A formal proof is systematically derived in a formal system, which makes it possible to algorithmically check these proofs for correctness",
+        "Our work focuses on interactive theorem provers (ITPs), which are software tools that enable human users to construct formal proofs",
+        "We introduce a system called GamePad1 that exposes parts of the Coq interactive theorem provers to enable machine learning tasks and explore a few use cases",
+        "We introduce GamePad, which provides a structured Python representation of Coq proofs (Section 3), including all the proof states encountered in a proof, the steps taken, and expression abstract syntax trees (ASTs)",
+        "We apply baseline models for position evaluation and tactic prediction to the FeitThompson formalization using data extracted by GamePad (Section 7)",
+        "We apply baseline position evaluation and tactic prediction models to data extracted from the FeitThompson formalization",
+        "We were able to improve upon the SVM baseline, which indicates that it is possible to learn useful representations using the human supervision data and utilizing our proof state embeddings",
+        "We look at theorem proving problem through the lens of a system that enables learning with proofs constructed with human supervision",
+        "The second involves building models that employ the game-like structure of interactive theorem provers proofs",
+        "As a consequence of theorem proving at a higher-level, we will need to be careful to distinguish the syntax from the semantics of terms",
+        "While our results are preliminary, our hope is that GamePad provides an accessible starting point to explore the application of machine learning in the context of interactive theorem proving.\n10 FUTURE WORK"
+    ],
+    "summary": [
+        "Theorem proving is a challenging AI task that involves symbolic reasoning (e.g., SMT solvers (De Moura & Bj\u00f8rner, 2008)) and intuition guided search.",
+        "We demonstrate the synthesis of Coq proof scripts that makes use of a tactic prediction model for a hand-crafted algebraic rewriting problem (Section 6).",
+        "We apply baseline models for position evaluation and tactic prediction to the FeitThompson formalization using data extracted by GamePad (Section 7).",
+        "When we move from the pencil-paper setting to an ITP such as Coq, we will still have such a scratchpad, but use the ITP\u2019s term language to express mathematical statements and the rules of the ITP\u2019s formal system to construct the proof instead.",
+        "As the granularity of a proof step has consequences for setting up a tactic prediction task (Section 4), we made the choice to obtain the finer-grained proof states by modifying Coq directly while maintaining the mapping to the human-level proof script.",
+        "Given a data set of steps taken by a human prover, we aim to learn PTh by supervised learning on N training tuples {}1\u2264n\u2264N , where each sn is a proof state and each dn is the binned size of the proof tree below the corresponding sn.",
+        "One manner in which the structured representation of proofs states provided by GamePad can be leveraged is to apply recurrent neural networks (RNNs) in a similar manner to how they are applied to parse trees in natural language processing to obtain an embedding vector.",
+        "We use the trained model to do inference on the current Coq proof state to obtain a position to rewrite and the identity law to apply.",
+        "We extract the proof states using GamePad and train the tactic prediction model.",
+        "We apply baseline position evaluation and tactic prediction models to data extracted from the FeitThompson formalization.",
+        "We use the interpreter-inspired embeddings to embed proof states into RD, and aim to train models for position evaluation and tactic prediction tasks.",
+        "We train GRU (<a class=\"ref-link\" id=\"cCho_et+al_2014_a\" href=\"#rCho_et+al_2014_a\">Cho et al, 2014</a>) and TreeLSTM (Tai et al, 2015) models using mini-batches of 32 proof states, set the RNN state size to 128, and use the Adam optimizer Kingma & Ba (2015) with a learning rate of 0.001.",
+        "We were able to improve upon the SVM baseline, which indicates that it is possible to learn useful representations using the human supervision data and utilizing our proof state embeddings.",
+        "Note that you can define a new domain inside Coq and use GamePad to build provers that learn from example proofs.",
+        "While our results are preliminary, our hope is that GamePad provides an accessible starting point to explore the application of machine learning in the context of interactive theorem proving"
+    ],
+    "headline": "We introduce a system called GamePad that can be used to explore the application of machine learning methods to theorem proving in the Coq proof assistant",
+    "reference_links": [
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart van Merrienboer, Calar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning Phrase Representations using RNN Encoder\u2013Decoder for Statistical Machine Translation. In Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP), pp. 1724\u20131734, Doha, Qatar, 2014. Association for Computational Linguistics. URL http://www.aclweb.org/anthology/D14-1179.",
+            "url": "http://www.aclweb.org/anthology/D14-1179",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cho%2C%20Kyunghyun%20van%20Merrienboer%2C%20Bart%20Gulcehre%2C%20Calar%20Bahdanau%2C%20Dzmitry%20Learning%20Phrase%20Representations%20using%20RNN%20Encoder%E2%80%93Decoder%20for%20Statistical%20Machine%20Translation%202014"
+        },
+        {
+            "id": "Cortes_1995_a",
+            "entry": "Corinna Cortes and Vladimir Vapnik. Support-vector networks. Machine learning, 20(3):273\u2013297, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cortes%2C%20Corinna%20Vapnik%2C%20Vladimir%20Support-vector%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cortes%2C%20Corinna%20Vapnik%2C%20Vladimir%20Support-vector%20networks%201995"
+        },
+        {
+            "id": "Duncan_2002_a",
+            "entry": "Hazel Duncan. The use of Data-Mining for the Automatic Formation of Tactics. PhD thesis, University of Edinburgh, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duncan%2C%20Hazel%20The%20use%20of%20Data-Mining%20for%20the%20Automatic%20Formation%20of%20Tactics%202002"
+        },
+        {
+            "id": "Gauthier_et+al_2017_a",
+            "entry": "Thibault Gauthier, Cezary Kaliszyk, and Josef Urban. TacticToe: Learning to reason with HOL4 Tactics. In 21st International Conference on Logic for Programming, Artificial Intelligence and Reasoning, volume 46, pp. 125\u2013143, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gauthier%2C%20Thibault%20Kaliszyk%2C%20Cezary%20Urban%2C%20Josef%20TacticToe%3A%20Learning%20to%20reason%20with%20HOL4%20Tactics%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gauthier%2C%20Thibault%20Kaliszyk%2C%20Cezary%20Urban%2C%20Josef%20TacticToe%3A%20Learning%20to%20reason%20with%20HOL4%20Tactics%202017"
+        },
+        {
+            "id": "Gonthier_2009_a",
+            "entry": "Georges Gonthier and Roux Stephane Le. An Ssreflect Tutorial. Technical Report RT-0367, INRIA, 2009. URL https://hal.inria.fr/inria-00407778.",
+            "url": "https://hal.inria.fr/inria-00407778"
+        },
+        {
+            "id": "Concurrent_2018_a",
+            "entry": "Concurrent to our work, such techniques have been shown to work for tableau-based theorem provers (Kaliszyk et al., 2018).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Concurrent%20to%20our%20work%20such%20techniques%20have%20been%20shown%20to%20work%20for%20tableaubased%20theorem%20provers%20Kaliszyk%20et%20al%202018"
+        },
+        {
+            "id": "Irving_et+al_2016_a",
+            "entry": "Geoffrey Irving, Christian Szegedy, Alexander A Alemi, Niklas Een, Francois Chollet, and Josef Urban. Deepmath-deep sequence models for premise selection. In Advances in Neural Information Processing Systems, pp. 2235\u20132243, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Irving%2C%20Geoffrey%20Szegedy%2C%20Christian%20Alemi%2C%20Alexander%20A.%20Een%2C%20Niklas%20Deepmath-deep%20sequence%20models%20for%20premise%20selection%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Irving%2C%20Geoffrey%20Szegedy%2C%20Christian%20Alemi%2C%20Alexander%20A.%20Een%2C%20Niklas%20Deepmath-deep%20sequence%20models%20for%20premise%20selection%202016"
+        },
+        {
+            "id": "Kaliszyk_2014_a",
+            "entry": "Cezary Kaliszyk and Josef Urban. Learning-assisted automated reasoning with flyspeck. Journal of Automated Reasoning, 53(2):173\u2013213, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaliszyk%2C%20Cezary%20Urban%2C%20Josef%20Learning-assisted%20automated%20reasoning%20with%20flyspeck%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaliszyk%2C%20Cezary%20Urban%2C%20Josef%20Learning-assisted%20automated%20reasoning%20with%20flyspeck%202014"
+        },
+        {
+            "id": "Kaliszyk_et+al_2017_a",
+            "entry": "Cezary Kaliszyk, Francois Chollet, and Christian Szegedy. Holstep: A Machine Learning Dataset for Higher-order Logic Theorem Proving. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaliszyk%2C%20Cezary%20Chollet%2C%20Francois%20Szegedy%2C%20Christian%20Holstep%3A%20A%20Machine%20Learning%20Dataset%20for%20Higher-order%20Logic%20Theorem%20Proving%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaliszyk%2C%20Cezary%20Chollet%2C%20Francois%20Szegedy%2C%20Christian%20Holstep%3A%20A%20Machine%20Learning%20Dataset%20for%20Higher-order%20Logic%20Theorem%20Proving%202017"
+        },
+        {
+            "id": "Kaliszyk_et+al_2018_a",
+            "entry": "Cezary Kaliszyk, Josef Urban, Henryk Michalewski, and Mirek Olk. Reinforcement Learning of Theorem Proving. arXiv preprint arXiv:1805.07563, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07563"
+        },
+        {
+            "id": "Kingma_0000_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. Proceedings of the International Conference on Learning Representations 2015, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization"
+        },
+        {
+            "id": "Komendantskaya_et+al_2012_a",
+            "entry": "Ekaterina Komendantskaya, Jonathan Heras, and Gudmund Grov. Machine Learning in Proof General: Interfacing Interfaces. arXiv preprint arXiv:1212.3618, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1212.3618"
+        },
+        {
+            "id": "Leroy_2012_a",
+            "entry": "Xavier Leroy et al. The compcert verified compiler. Documentation and users manual. INRIA Paris-Rocquencourt, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leroy%2C%20Xavier%20The%20compcert%20verified%20compiler.%20Documentation%20and%20users%20manual%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leroy%2C%20Xavier%20The%20compcert%20verified%20compiler.%20Documentation%20and%20users%20manual%202012"
+        },
+        {
+            "id": "Looks_et+al_2017_a",
+            "entry": "Moshe Looks, Marcello Herreshoff, DeLesley Hutchins, and Peter Norvig. Deep learning with dynamic computation graphs. Proceedings of the International Conference on Learning Representations 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Looks%2C%20Moshe%20Herreshoff%2C%20Marcello%20Hutchins%2C%20DeLesley%20Norvig%2C%20Peter%20Deep%20learning%20with%20dynamic%20computation%20graphs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Looks%2C%20Moshe%20Herreshoff%2C%20Marcello%20Hutchins%2C%20DeLesley%20Norvig%2C%20Peter%20Deep%20learning%20with%20dynamic%20computation%20graphs%202017"
+        },
+        {
+            "id": "Loos_et+al_2017_a",
+            "entry": "Sarah M. Loos, Geoffrey Irving, Christian Szegedy, and Cezary Kaliszyk. Deep network guided proof search. In LPAR, volume 46 of EPiC Series in Computing, pp. 85\u2013105. EasyChair, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Loos%2C%20Sarah%20M.%20Irving%2C%20Geoffrey%20Szegedy%2C%20Christian%20Kaliszyk%2C%20Cezary%20Deep%20network%20guided%20proof%20search%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Loos%2C%20Sarah%20M.%20Irving%2C%20Geoffrey%20Szegedy%2C%20Christian%20Kaliszyk%2C%20Cezary%20Deep%20network%20guided%20proof%20search%202017"
+        },
+        {
+            "id": "Lulu_2007_a",
+            "entry": "Lulu Press, Morrisville, North Carolina, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lulu%20Press%20Morrisville%20North%20Carolina%202007"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "http://us.metamath.org/downloads/metamath.pdf.",
+            "url": "http://us.metamath.org/downloads/metamath.pdf"
+        },
+        {
+            "id": "Merity_et+al_2017_a",
+            "entry": "Stephen Merity, Nitish Shirish Keskar, and Richard Socher. Regularizing and Optimizing LSTM Language Models. arXiv preprint arXiv:1708.02182, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02182"
+        },
+        {
+            "id": "Nagashima_2018_a",
+            "entry": "Yutaka Nagashima and Yilun He. Pamper: Proof method recommendation system for isabelle/hol. arXiv preprint arXiv:1806.07239, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.07239"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in PyTorch. In NIPS-W, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20PyTorch%20In%20NIPSW%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20PyTorch%20In%20NIPSW%202017"
+        },
+        {
+            "id": "Polosukhin_2018_a",
+            "entry": "Illia Polosukhin and Maksym Zavershynskyi. Pytorch fold. https://github.com/nearai/pytorch-tools, 2018.",
+            "url": "https://github.com/nearai/pytorch-tools"
+        },
+        {
+            "id": "Rocktaschel_2017_a",
+            "entry": "Tim Rocktaschel and Sebastian Riedel. End-to-end differentiable proving. In Advances in Neural Information Processing Systems, pp. 3791\u20133803, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rocktaschel%2C%20Tim%20Riedel%2C%20Sebastian%20End-to-end%20differentiable%20proving%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rocktaschel%2C%20Tim%20Riedel%2C%20Sebastian%20End-to-end%20differentiable%20proving%202017"
+        },
+        {
+            "id": "Schulz_2002_a",
+            "entry": "Stephan Schulz. E\u2013a brainiac theorem prover. AI Communications, 15(2, 3):111\u2013126, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulz%2C%20Stephan%20E%E2%80%93a%20brainiac%20theorem%20prover%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulz%2C%20Stephan%20E%E2%80%93a%20brainiac%20theorem%20prover%202002"
+        },
+        {
+            "id": "Selsam_et+al_2018_a",
+            "entry": "Daniel Selsam, Matthew Lamm, Benedikt Bunz, Percy Liang, Leonardo de Moura, and David L. Dill. Learning a SAT Solver from Single-Bit Supervision. arXiv preprint arXiv:1802.03685, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03685"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A Simple Way to Prevent Neural Networks from Overfitting. The Journal of Machine Learning Research, 15(1):1929\u20131958, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20Simple%20Way%20to%20Prevent%20Neural%20Networks%20from%20Overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20Simple%20Way%20to%20Prevent%20Neural%20Networks%20from%20Overfitting%202014"
+        },
+        {
+            "id": "Tai_et+al_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Kai Sheng Tai, Richard Socher, and Christopher D. Manning. Improved semantic representations from tree-structured long short-term memory networks. In ACL (1), pp. 1556\u20131566. The Association for Computer Linguistics, 2015. Mingzhe Wang, Yihe Tang, Jian Wang, and Jia Deng. Premise Selection for Theorem Proving by Deep Graph Embedding. In Advances in Neural Information Processing Systems, pp. 2783\u20132793, 2017. Daniel Whalen. Holophrasm: a neural Automated Theorem Prover for higher-order logic. arXiv preprint arXiv:1608.02644, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.02644"
+        }
+    ]
+}

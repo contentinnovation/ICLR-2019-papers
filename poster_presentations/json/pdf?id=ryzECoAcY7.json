@@ -1,0 +1,180 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING MULTI-LEVEL HIERARCHIES WITH HINDSIGHT",
+        "author": "Andrew Levy Department of Computer Science Brown University Providence, RI, USA andrew levy,@brown.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ryzECoAcY7"
+        },
+        "abstract": "Multi-level hierarchies have the potential to accelerate learning in sparse reward tasks because they can divide a problem into a set of short horizon subproblems. In order to realize this potential, Hierarchical Reinforcement Learning (HRL) algorithms need to be able to learn the multiple levels within a hierarchy in parallel, so these simpler subproblems can be solved simultaneously. Yet most existing HRL methods that can learn hierarchies are not able to efficiently learn multiple levels of policies at the same time, particularly in continuous domains. To address this problem, we introduce a framework that can learn multiple levels of policies in parallel. Our approach consists of two main components: (i) a particular hierarchical architecture and (ii) a method for jointly learning multiple levels of policies. The hierarchies produced by our framework are comprised of a set of nested, goal-conditioned policies that use the state space to decompose a task into short subtasks. All policies in the hierarchy are learned simultaneously using two types of hindsight transitions. We demonstrate experimentally in both grid world and simulated robotics domains that our approach can significantly accelerate learning relative to other non-hierarchical and hierarchical methods. Indeed, our framework is the first to successfully learn 3-level hierarchies in parallel in tasks with continuous state and action spaces. We also present a video of our results and software to implement our framework."
+    },
+    "keywords": [
+        {
+            "term": "multiple level",
+            "url": "https://en.wikipedia.org/wiki/multiple_level"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "decompose",
+            "url": "https://en.wikipedia.org/wiki/decompose"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        }
+    ],
+    "abbreviations": {
+        "HRL": "Hierarchical Reinforcement Learning",
+        "FUN": "FeUdal Networks",
+        "MDP": "Markov Decision Process",
+        "UMDP": "Universal MDP",
+        "UVFA": "Universal Value Function Approximator",
+        "HAC": "Hierarchical Actor-Critic",
+        "HierQ": "Hierarchical Q-Learning"
+    },
+    "highlights": [
+        "Hierarchy has the potential to greatly accelerate reinforcement learning in sparse reward tasks because hierarchical agents can decompose problems into smaller subproblems",
+        "In order to take advantage of the sample efficiency benefits of multi-level hierarchies, an Hierarchical Reinforcement Learning algorithm must be able to learn the multiple levels within the hierarchy in parallel",
+        "We introduce a new Hierarchical Reinforcement Learning framework that can significantly accelerate learning by enabling hierarchical agents to jointly learn a hierarchy of policies",
+        "We introduce a Hierarchical Reinforcement Learning framework that can learn the levels in a multi-level hierarchy in parallel",
+        "Hierarchy has the potential to accelerate learning in sparse reward tasks because hierarchy can decompose tasks into short horizon subtasks",
+        "We proposed a new Hierarchical Reinforcement Learning framework that can solve those simpler subtasks simultaneously"
+    ],
+    "key_statements": [
+        "Hierarchy has the potential to greatly accelerate reinforcement learning in sparse reward tasks because hierarchical agents can decompose problems into smaller subproblems",
+        "In order to take advantage of the sample efficiency benefits of multi-level hierarchies, an Hierarchical Reinforcement Learning algorithm must be able to learn the multiple levels within the hierarchy in parallel",
+        "We introduce a new Hierarchical Reinforcement Learning framework that can significantly accelerate learning by enabling hierarchical agents to jointly learn a hierarchy of policies",
+        "We define an Markov Decision Process augmented with a set of goals as a Universal Markov Decision Process (UMDP)",
+        "We introduce a Hierarchical Reinforcement Learning framework that can learn the levels in a multi-level hierarchy in parallel",
+        "Hierarchy has the potential to accelerate learning in sparse reward tasks because hierarchy can decompose tasks into short horizon subtasks",
+        "We proposed a new Hierarchical Reinforcement Learning framework that can solve those simpler subtasks simultaneously"
+    ],
+    "summary": [
+        "Hierarchy has the potential to greatly accelerate reinforcement learning in sparse reward tasks because hierarchical agents can decompose problems into smaller subproblems.",
+        "Hindsight action transitions help agents learn multiple levels of policies simultaneously by training each subgoal policy with respect to a transition function that simulates the optimal lower level policy hierarchy.",
+        "In order to overcome these non-stationary issues that hinder the joint learning of policies, HAC instead trains each subgoal policy assuming a transition function that uses the optimal lower level policy hierarchy, \u03a0i\u2217\u22121.",
+        "In the example above, the high level of the robot would receive the hindsight action transition [initial state = s0, action = s1, reward = -1, state = s1, goal = yellow flag, discount rate = gamma], which is the same transition that would have been created had the high level originally proposed state s1 as a subgoal and the transition function used the optimal lower level policy hierarchy to achieve it.",
+        "A second, less significant shortcoming is that hindsight action and goal transitions do not incentivize a subgoal level to propose paths to the goal state that the lower levels can execute with its current policy hierarchy.",
+        "While hindsight actions transitions help a subgoal level learn the value of a subgoal state when lower level policies are optimal, subgoal testing transitions enable a level to understand whether a subgoal state can be achieved by the current set of lower level policies.",
+        "Subgoal testing transitions can overcome the issues caused by only training with hindsight goal and hindsight action transitions while still enabling all policies of the hierarchy to be learned in parallel.",
+        "Each subgoal level can still learn simultaneously with lower levels because Q-values are predominately decided by hindsight action and goal transitions, but each level will have a preference for paths of subgoals that can be achieved by the current lower level policy hierarchy.",
+        "Instead of replacing the original proposed action with the hindsight action as in our approach, HIRO uses a subgoal action from a set of candidates that when provided to the current level 0 policy would most likely cause the sequence of tuples that originally occurred at level 0 when the level 0 policy was trying to achieve its original subgoal.",
+        "HIRO values subgoal actions with respect to a transition function that essentially uses the current lower level policy hierarchy, not the optimal lower level policy hierarchy as in our approach.",
+        "Our approach significantly outperformed flat agents and a leading HRL algorithm and was the first to successfully learn 3-level hierarchies in parallel in tasks with continuous state and action spaces."
+    ],
+    "headline": "We introduce a framework that can learn multiple levels of policies in parallel",
+    "reference_links": [
+        {
+            "id": "Andrychowicz_et+al_2017_a",
+            "entry": "M. Andrychowicz, F. Wolski, A. Ray, J. Schneider, R. Fong, P. Welinder, B. McGrew, J. Tobin, P. Abbeel, and W. Zaremba. Hindsight experience replay. In Advances in Neural Information Processing Systems 30, pp. 5048\u20135058. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20M.%20Wolski%2C%20F.%20Ray%2C%20A.%20Schneider%2C%20J.%20Hindsight%20experience%20replay%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20M.%20Wolski%2C%20F.%20Ray%2C%20A.%20Schneider%2C%20J.%20Hindsight%20experience%20replay%202017"
+        },
+        {
+            "id": "Bacon_et+al_2017_a",
+            "entry": "P-L Bacon, J. Harb, and D. Precup. The option-critic architecture. In Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence, pp. 1726\u20131734, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bacon%2C%20P.-L.%20Harb%2C%20J.%20Precup%2C%20D.%20The%20option-critic%20architecture%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bacon%2C%20P.-L.%20Harb%2C%20J.%20Precup%2C%20D.%20The%20option-critic%20architecture%202017"
+        },
+        {
+            "id": "Bakker_2004_a",
+            "entry": "Bram Bakker and Jurgen Schmidhuber. Hierarchical reinforcement learning with subpolicies specializing for learned subgoals. In Neural Networks and Computational Intelligence, pp. 125\u2013130, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bakker%2C%20Bram%20Schmidhuber%2C%20Jurgen%20Hierarchical%20reinforcement%20learning%20with%20subpolicies%20specializing%20for%20learned%20subgoals%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bakker%2C%20Bram%20Schmidhuber%2C%20Jurgen%20Hierarchical%20reinforcement%20learning%20with%20subpolicies%20specializing%20for%20learned%20subgoals%202004"
+        },
+        {
+            "id": "Dietterich_2000_a",
+            "entry": "T.G. Dietterich. Hierarchical reinforcement learning with the MAXQ value function decomposition. Journal of Artificial Intelligence Research, 13:227\u2013303, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dietterich%2C%20T.G.%20Hierarchical%20reinforcement%20learning%20with%20the%20MAXQ%20value%20function%20decomposition%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dietterich%2C%20T.G.%20Hierarchical%20reinforcement%20learning%20with%20the%20MAXQ%20value%20function%20decomposition%202000"
+        },
+        {
+            "id": "Konidaris_2009_a",
+            "entry": "G.D. Konidaris and A.G. Barto. Skill discovery in continuous reinforcement learning domains using skill chaining. In Advances in Neural Information Processing Systems 22, pp. 1015\u20131023, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Konidaris%2C%20G.D.%20Barto%2C%20A.G.%20Skill%20discovery%20in%20continuous%20reinforcement%20learning%20domains%20using%20skill%20chaining%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Konidaris%2C%20G.D.%20Barto%2C%20A.G.%20Skill%20discovery%20in%20continuous%20reinforcement%20learning%20domains%20using%20skill%20chaining%202009"
+        },
+        {
+            "id": "Kulkarni_et+al_2016_a",
+            "entry": "T.D. Kulkarni, K. Narasimhan, A. Saeedi, and J. Tenenbaum. Hierarchical deep reinforcement learning: Integrating temporal abstraction and intrinsic motivation. In Advances in Neural Information Processing Systems 29, pp. 3675\u20133683. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulkarni%2C%20T.D.%20Narasimhan%2C%20K.%20Saeedi%2C%20A.%20Tenenbaum%2C%20J.%20Hierarchical%20deep%20reinforcement%20learning%3A%20Integrating%20temporal%20abstraction%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulkarni%2C%20T.D.%20Narasimhan%2C%20K.%20Saeedi%2C%20A.%20Tenenbaum%2C%20J.%20Hierarchical%20deep%20reinforcement%20learning%3A%20Integrating%20temporal%20abstraction%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "T.P. Lillicrap, J.J. Hunt, A. Pritzel, N. Heess, T. Erez, Y. Tassa, D. Silver, and D. Wierstra. Continuous control with deep reinforcement learning. CoRR, abs/1509.02971, 2015. URL http://arxiv.org/abs/1509.02971.",
+            "url": "http://arxiv.org/abs/1509.02971",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Mcgovern_2001_a",
+            "entry": "A. McGovern and A.G. Barto. Automatic discovery of subgoals in reinforcement learning using diverse density. In Proceedings of the Eighteenth International Conference on Machine Learning, pp. 361\u2013368, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McGovern%2C%20A.%20Barto%2C%20A.G.%20Automatic%20discovery%20of%20subgoals%20in%20reinforcement%20learning%20using%20diverse%20density%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McGovern%2C%20A.%20Barto%2C%20A.G.%20Automatic%20discovery%20of%20subgoals%20in%20reinforcement%20learning%20using%20diverse%20density%202001"
+        },
+        {
+            "id": "Menache_et+al_2002_a",
+            "entry": "I. Menache, S. Mannor, and N. Shimkin. Q-cut\u2014dynamic discovery of sub-goals in reinforcement learning. In Proceedings of the Thirteenth European Conference on Machine Learning, pp. 295\u2013 306, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Menache%2C%20I.%20Mannor%2C%20S.%20Shimkin%2C%20N.%20Q-cut%E2%80%94dynamic%20discovery%20of%20sub-goals%20in%20reinforcement%20learning%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Menache%2C%20I.%20Mannor%2C%20S.%20Shimkin%2C%20N.%20Q-cut%E2%80%94dynamic%20discovery%20of%20sub-goals%20in%20reinforcement%20learning%202002"
+        },
+        {
+            "id": "Nachum_et+al_2018_a",
+            "entry": "O. Nachum, S. Gu, H. Lee, and S. Levine. Data-efficient hierarchical reinforcement learning. In Advances in Neural Information Processing Systems 31, pp. 3303\u20133313. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nachum%2C%20O.%20Gu%2C%20S.%20Lee%2C%20H.%20Levine%2C%20S.%20Data-efficient%20hierarchical%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nachum%2C%20O.%20Gu%2C%20S.%20Lee%2C%20H.%20Levine%2C%20S.%20Data-efficient%20hierarchical%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Schaul_et+al_2015_a",
+            "entry": "T. Schaul, D. Horgan, K. Gregor, and D. Silver. Universal value function approximators. In Proceedings of the 32nd International Conference on Machine Learning, volume 37, pp. 1312\u20131320, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=T%20Schaul%20D%20Horgan%20K%20Gregor%20and%20D%20Silver%20Universal%20value%20function%20approximators%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%20volume%2037%20pp%2013121320%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=T%20Schaul%20D%20Horgan%20K%20Gregor%20and%20D%20Silver%20Universal%20value%20function%20approximators%20In%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%20volume%2037%20pp%2013121320%202015"
+        },
+        {
+            "id": "Schmidhuber_1991_a",
+            "entry": "Jurgen Schmidhuber. Learning to generate sub-goals for action sequences. Artificial Neural Networks, pp. 967\u2013972, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Learning%20to%20generate%20sub-goals%20for%20action%20sequences%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20Learning%20to%20generate%20sub-goals%20for%20action%20sequences%201991"
+        },
+        {
+            "id": "Simsek_et+al_2005_a",
+            "entry": "O. Simsek, A.P. Wolfe, and A.G. Barto. Identifying useful subgoals in reinforcement learning by local graph partitioning. In Proceedings of the Twenty-Second International Conference on Machine Learning, pp. 816\u2013 823, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simsek%2C%20O.%20Wolfe%2C%20A.P.%20Barto%2C%20A.G.%20Identifying%20useful%20subgoals%20in%20reinforcement%20learning%20by%20local%20graph%20partitioning%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simsek%2C%20O.%20Wolfe%2C%20A.P.%20Barto%2C%20A.G.%20Identifying%20useful%20subgoals%20in%20reinforcement%20learning%20by%20local%20graph%20partitioning%202005"
+        },
+        {
+            "id": "Sutton_et+al_1999_a",
+            "entry": "R. S. Sutton, D. Precup, and S. Singh. Between MDPs and semi-MDPs: a framework for temporal abstraction in reinforcement learning. Artificial Intelligence Journal, 112:181\u2013211, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20R.S.%20Precup%2C%20D.%20Singh%2C%20S.%20Between%20MDPs%20and%20semi-MDPs%3A%20a%20framework%20for%20temporal%20abstraction%20in%20reinforcement%20learning%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20R.S.%20Precup%2C%20D.%20Singh%2C%20S.%20Between%20MDPs%20and%20semi-MDPs%3A%20a%20framework%20for%20temporal%20abstraction%20in%20reinforcement%20learning%201999"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "E. Todorov, T. Erez, and Y. Tassa. MuJoCo: A physics engine for model-based control. Proceedings of the 2012 IEEE/RSJ International Conference on Intelligent Robots and Systems, pp. 5026\u2013 5033, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20E.%20Erez%2C%20T.%20Tassa%2C%20Y.%20MuJoCo%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20E.%20Erez%2C%20T.%20Tassa%2C%20Y.%20MuJoCo%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Vezhnevets_et+al_2017_a",
+            "entry": "A. Vezhnevets, S. Osindero, T. Schaul, N. Heess, M. Jaderberg, D. Silver, and K. Kavukcuoglu. FeUdal networks for hierarchical reinforcement learning. In Proceedings of the 34th International Conference on Machine Learning, pp. 3540\u20133549, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vezhnevets%2C%20A.%20Osindero%2C%20S.%20Schaul%2C%20T.%20Heess%2C%20N.%20FeUdal%20networks%20for%20hierarchical%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vezhnevets%2C%20A.%20Osindero%2C%20S.%20Schaul%2C%20T.%20Heess%2C%20N.%20FeUdal%20networks%20for%20hierarchical%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Watkins_1992_a",
+            "entry": "Christopher J. C. H. Watkins and Peter Dayan. Q-learning. In Machine Learning, pp. 279\u2013292, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christopher%20J%20C%20H%20Watkins%20and%20Peter%20Dayan%20Qlearning%20In%20Machine%20Learning%20pp%20279292%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christopher%20J%20C%20H%20Watkins%20and%20Peter%20Dayan%20Qlearning%20In%20Machine%20Learning%20pp%20279292%201992"
+        },
+        {
+            "id": "Wiering_1997_a",
+            "entry": "Marco Wiering and Jurgen Schmidhuber. HQ-learning. Adaptive Behaviour, 6(2):219\u2013246, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marco%20Wiering%20and%20Jurgen%20Schmidhuber%20HQlearning%20Adaptive%20Behaviour%2062219246%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marco%20Wiering%20and%20Jurgen%20Schmidhuber%20HQlearning%20Adaptive%20Behaviour%2062219246%201997"
+        }
+    ]
+}

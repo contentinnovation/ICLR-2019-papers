@@ -1,0 +1,274 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "FEED-FORWARD PROPAGATION IN PROBABILISTIC NEURAL NETWORKS WITH CATEGORICAL AND MAX LAYERS",
+        "author": "Alexander Shekhovtsov & Boris Flach Department of Cybernectics, Czech Technical University in Prague Zikova 4, 166 36 Prague {shekhole,flachbor}@fel.cvut.cz",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkMuPjRcKQ"
+        },
+        "abstract": "Probabilistic Neural Networks deal with various sources of stochasticity: input noise, dropout, stochastic neurons, parameter uncertainties modeled as random variables, etc. In this paper we revisit a feed-forward propagation approach that allows one to estimate for each neuron its mean and variance w.r.t. all mentioned sources of stochasticity. In contrast, standard NNs propagate only point estimates, discarding the uncertainty. Methods propagating also the variance have been proposed by several authors in different context. The view presented here attempts to clarify the assumptions and derivation behind such methods, relate them to classical NNs and broaden their scope of applicability. The main technical contributions are new approximations for the distributions of argmax and max-related transforms, which allow for fully analytic uncertainty propagation in networks with softmax and max-pooling layers as well as leaky ReLU activations. We evaluate the accuracy of the approximation and suggest a simple calibration. Applying the method to networks with dropout allows for faster training and gives improved test likelihoods without the need of sampling."
+    },
+    "keywords": [
+        {
+            "term": "probabilistic neural networks",
+            "url": "https://en.wikipedia.org/wiki/Probabilistic_Neural_Network"
+        },
+        {
+            "term": "random variable",
+            "url": "https://en.wikipedia.org/wiki/random_variable"
+        },
+        {
+            "term": "uncertainty propagation",
+            "url": "https://en.wikipedia.org/wiki/uncertainty_propagation"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Neural_Networks"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        },
+        {
+            "term": "analytic",
+            "url": "https://en.wikipedia.org/wiki/analytic"
+        },
+        {
+            "term": "bayesian neural network",
+            "url": "https://en.wikipedia.org/wiki/bayesian_neural_network"
+        }
+    ],
+    "abbreviations": {
+        "NNs": "Neural Networks",
+        "MC": "Monte Carlo"
+    },
+    "highlights": [
+        "Despite the massive success of Neural Networks (NNs) considered as deterministic predictors, there are many scenarios where a probabilistic treatment is highly desirable",
+        "We propose a latent variable view of probabilistic Neural Networks, which shows the connection to standard Neural Networks and allows us to develop better approximations",
+        "A similar effect to propagating input noise is observed: the Monte Carlo std \u03c3\u2217 grows with depth; a significant drop of accuracy is observed in convolutional and pooling layers, which rely on the independence assumption.\n5.3",
+        "We have described uncertainty propagation method for approximate inference in probabilistic neural networks that takes into account all noises analytically",
+        "Latent variable models allow a transparent interpretation of standard propagation in Neural Networks as the simplest approximation and facilitate the devel-",
+        "The accuracy is improved compared to standard propagation and is sufficient for several use cases such as estimating statistics over the dataset and dropout training, where we report improved test likelihoods"
+    ],
+    "key_statements": [
+        "Despite the massive success of Neural Networks (NNs) considered as deterministic predictors, there are many scenarios where a probabilistic treatment is highly desirable",
+        "We propose a latent variable view of probabilistic Neural Networks, which shows the connection to standard Neural Networks and allows us to develop better approximations",
+        "A similar effect to propagating input noise is observed: the Monte Carlo std \u03c3\u2217 grows with depth; a significant drop of accuracy is observed in convolutional and pooling layers, which rely on the independence assumption.\n5.3",
+        "We have described uncertainty propagation method for approximate inference in probabilistic neural networks that takes into account all noises analytically",
+        "Latent variable models allow a transparent interpretation of standard propagation in Neural Networks as the simplest approximation and facilitate the devel-",
+        "The accuracy is improved compared to standard propagation and is sufficient for several use cases such as estimating statistics over the dataset and dropout training, where we report improved test likelihoods"
+    ],
+    "summary": [
+        "Despite the massive success of Neural Networks (NNs) considered as deterministic predictors, there are many scenarios where a probabilistic treatment is highly desirable.",
+        "We develop numerically suitable approximations for propagating means and variances through multivariate functions such as softmax, argmax and log-sum-exp to handle categorical distributions as well as max-related non-linearities: max-pooling and leaky ReLU.",
+        "This verification shows that our approximations are accurate in comparison with sampling and that the variance propagation method estimates the output distribution of the network significantly better than the standard NN.",
+        "AP1 and AP2 The standard NN can be viewed as a further simplification of the proposed method: it makes the same factorization assumption but does not compute variances of the activations (6b) and propagates only the means.",
+        "We propose a new approximation for the argmax posterior probability that takes into account uncertainty of the activations and enables propagation through argmax and softmax layers.",
+        "The expressions for the moments are known and have been used in the literature, e.g., (HernandezLobato & Adams, 2015; <a class=\"ref-link\" id=\"cGast_2018_a\" href=\"#rGast_2018_a\">Gast & Roth, 2018</a>), we propose approximations that are more practical for end-to-end learning: cheap to compute and having asymptotically correct output to input variance ratio for small noises.",
+        "We conduct two experiments: how well the proposed method approximates the real posterior of neurons, w.r.t. noise in the network input and w.r.t. dropout.",
+        "We verify the efficiency of this method for a network that includes the proposed approximations for LReLU and max pooling layers in \u00a7 C.5 and use it in the end-to-end learning experiment below.",
+        "A similar effect to propagating input noise is observed: the MC std \u03c3\u2217 grows with depth; a significant drop of accuracy is observed in convolutional and pooling layers, which rely on the independence assumption.",
+        "In this experiment we approximate the dropout analytically at training time similar to <a class=\"ref-link\" id=\"cWang_2013_a\" href=\"#rWang_2013_a\"><a class=\"ref-link\" id=\"cWang_2013_a\" href=\"#rWang_2013_a\">Wang & Manning (2013</a></a>) but including the new approximations for LReLU and softmax layers.",
+        "From <a class=\"ref-link\" id=\"cWang_2013_a\" href=\"#rWang_2013_a\"><a class=\"ref-link\" id=\"cWang_2013_a\" href=\"#rWang_2013_a\">Wang & Manning (2013</a></a>), we find that when trained with standard dropout, all test methods achieve approximately the same accuracy and only differ in likelihoods.",
+        "We have described uncertainty propagation method for approximate inference in probabilistic neural networks that takes into account all noises analytically.",
+        "We proposed new such approximations allowing to handle max, argmax, softmax and log-softmax layers using latent variable models (\u00a7 4 and \u00a7 A.2).",
+        "The accuracy is improved compared to standard propagation and is sufficient for several use cases such as estimating statistics over the dataset and dropout training, where we report improved test likelihoods.",
+        "Latent variable models allow a transparent interpretation of standard propagation in NNs as the simplest approximation and facilitate the devel-"
+    ],
+    "headline": "We evaluate the accuracy of the approximation and suggest a simple calibration",
+    "reference_links": [
+        {
+            "id": "Astudillo_et+al_2014_a",
+            "entry": "R. F. Astudillo, A. Abad, and I. Trancoso. Accounting for the residual uncertainty of multi-layer perceptron based features. In ICASSP, pp. 6859\u20136863, May 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Astudillo%2C%20R.F.%20Abad%2C%20A.%20Trancoso%2C%20I.%20Accounting%20for%20the%20residual%20uncertainty%20of%20multi-layer%20perceptron%20based%20features%202014-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Astudillo%2C%20R.F.%20Abad%2C%20A.%20Trancoso%2C%20I.%20Accounting%20for%20the%20residual%20uncertainty%20of%20multi-layer%20perceptron%20based%20features%202014-05"
+        },
+        {
+            "id": "Astudillo_2011_a",
+            "entry": "Ramn Fernndez Astudillo and Joo Paulo da Silva Neto. Propagation of uncertainty through multilayer perceptrons for robust automatic speech recognition. In INTERSPEECH, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Astudillo%2C%20Ramn%20Fernndez%20da%20Silva%20Neto%2C%20Joo%20Paulo%20Propagation%20of%20uncertainty%20through%20multilayer%20perceptrons%20for%20robust%20automatic%20speech%20recognition%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Astudillo%2C%20Ramn%20Fernndez%20da%20Silva%20Neto%2C%20Joo%20Paulo%20Propagation%20of%20uncertainty%20through%20multilayer%20perceptrons%20for%20robust%20automatic%20speech%20recognition%202011"
+        },
+        {
+            "id": "Anirban_2014_a",
+            "entry": "Anirban DasGupta, S.N. Lahiri, and Jordan Stoyanov. Sharp fixed n bounds and asymptotic expansions for the mean and the median of a Gaussian sample maximum, and applications to the Donoho-Jin model. Statistical Methodology, 20:40\u201362, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anirban%20DasGupta%2C%20S.N.Lahiri%20Stoyanov%2C%20Jordan%20Sharp%20fixed%20n%20bounds%20and%20asymptotic%20expansions%20for%20the%20mean%20and%20the%20median%20of%20a%20Gaussian%20sample%20maximum%2C%20and%20applications%20to%20the%20Donoho-Jin%20model%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anirban%20DasGupta%2C%20S.N.Lahiri%20Stoyanov%2C%20Jordan%20Sharp%20fixed%20n%20bounds%20and%20asymptotic%20expansions%20for%20the%20mean%20and%20the%20median%20of%20a%20Gaussian%20sample%20maximum%2C%20and%20applications%20to%20the%20Donoho-Jin%20model%202014"
+        },
+        {
+            "id": "Fawzi_et+al_2016_a",
+            "entry": "Alhussein Fawzi, Seyed-Mohsen Moosavi-Dezfooli, and Pascal Frossard. Robustness of classifiers: from adversarial to random noise. In NIPS, pp. 1632\u20131640. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20Alhussein%20Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Frossard%2C%20Pascal%20Robustness%20of%20classifiers%3A%20from%20adversarial%20to%20random%20noise%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20Alhussein%20Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Frossard%2C%20Pascal%20Robustness%20of%20classifiers%3A%20from%20adversarial%20to%20random%20noise%202016"
+        },
+        {
+            "id": "Fu_2006_a",
+            "entry": "Michael C. Fu. Chapter 19 gradient estimation. In Shane G. Henderson and Barry L. Nelson (eds.), Simulation, volume 13 of Handbooks in Operations Research and Management Science, pp. 575 \u2013 616. 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fu%2C%20Michael%20C.%20Chapter%2019%20gradient%20estimation%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fu%2C%20Michael%20C.%20Chapter%2019%20gradient%20estimation%202006"
+        },
+        {
+            "id": "Gal_0000_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Bayesian convolutional neural networks with Bernoulli approximate variational inference. arXiv:1506.02158, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02158"
+        },
+        {
+            "id": "Gast_2018_a",
+            "entry": "Jochen Gast and Stefan Roth. Lightweight probabilistic deep networks. In CVPR, June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gast%2C%20Jochen%20Roth%2C%20Stefan%20Lightweight%20probabilistic%20deep%20networks%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gast%2C%20Jochen%20Roth%2C%20Stefan%20Lightweight%20probabilistic%20deep%20networks%202018-06"
+        },
+        {
+            "id": "Ghosh_et+al_2016_a",
+            "entry": "Soumya Ghosh, Francesco Maria Delle Fave, and Jonathan S. Yedidia. Assumed density filtering methods for learning Bayesian neural networks. In AAAI, pp. 1589\u20131595, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ghosh%2C%20Soumya%20Fave%2C%20Francesco%20Maria%20Delle%20Yedidia%2C%20Jonathan%20S.%20Assumed%20density%20filtering%20methods%20for%20learning%20Bayesian%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ghosh%2C%20Soumya%20Fave%2C%20Francesco%20Maria%20Delle%20Yedidia%2C%20Jonathan%20S.%20Assumed%20density%20filtering%20methods%20for%20learning%20Bayesian%20neural%20networks%202016"
+        },
+        {
+            "id": "Glasserman_2004_a",
+            "entry": "Paul Glasserman. Monte Carlo methods in financial engineering. Springer, New York, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glasserman%2C%20Paul%20Monte%20Carlo%20methods%20in%20financial%20engineering%202004"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In AISTATS, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Hernandez-Lobato_2015_a",
+            "entry": "Jose Miguel Hernandez-Lobato and Ryan P. Adams. Probabilistic backpropagation for scalable learning of Bayesian neural networks. In ICML, pp. 1861\u20131869, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hernandez-Lobato%2C%20Jose%20Miguel%20Adams%2C%20Ryan%20P.%20Probabilistic%20backpropagation%20for%20scalable%20learning%20of%20Bayesian%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hernandez-Lobato%2C%20Jose%20Miguel%20Adams%2C%20Ryan%20P.%20Probabilistic%20backpropagation%20for%20scalable%20learning%20of%20Bayesian%20neural%20networks%202015"
+        },
+        {
+            "id": "Ilg_et+al_2018_a",
+            "entry": "Eddy Ilg, Ozgun Cicek, Silvio Galesso, Aaron Klein, Osama Makansi, Frank Hutter, and Thomas Brox. Uncertainty estimates and multi-hypotheses networks for optical flow. In ECCV, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ilg%2C%20Eddy%20Cicek%2C%20Ozgun%20Galesso%2C%20Silvio%20Klein%2C%20Aaron%20Uncertainty%20estimates%20and%20multi-hypotheses%20networks%20for%20optical%20flow%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ilg%2C%20Eddy%20Cicek%2C%20Ozgun%20Galesso%2C%20Silvio%20Klein%2C%20Aaron%20Uncertainty%20estimates%20and%20multi-hypotheses%20networks%20for%20optical%20flow%202018"
+        },
+        {
+            "id": "Ioffe_2017_a",
+            "entry": "Sergey Ioffe. Batch renormalization: Towards reducing minibatch dependence in batch-normalized models. CoRR, abs/1702.03275, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.03275"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In ICML, volume 37, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Kendall_2017_a",
+            "entry": "Alex Kendall and Yarin Gal. What uncertainties do we need in Bayesian deep learning for computer vision? In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kendall%2C%20Alex%20Gal%2C%20Yarin%20What%20uncertainties%20do%20we%20need%20in%20Bayesian%20deep%20learning%20for%20computer%20vision%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kendall%2C%20Alex%20Gal%2C%20Yarin%20What%20uncertainties%20do%20we%20need%20in%20Bayesian%20deep%20learning%20for%20computer%20vision%3F%202017"
+        },
+        {
+            "id": "Kingma_et+al_2015_a",
+            "entry": "Diederik P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In NIPS, pp. 2575\u20132583. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015"
+        },
+        {
+            "id": "Lecun_et+al_2001_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. In Intelligent signal processing, pp. 306\u2013351, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%202001"
+        },
+        {
+            "id": "Malik_1973_a",
+            "entry": "Henrick J. Malik and Bovas Abraham. Multivariate logistic distributions. The Annals of Statistics, 1(3):588\u2013590, 1973.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Malik%2C%20Henrick%20J.%20Abraham%2C%20Bovas%20Multivariate%20logistic%20distributions%201973",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Malik%2C%20Henrick%20J.%20Abraham%2C%20Bovas%20Multivariate%20logistic%20distributions%201973"
+        },
+        {
+            "id": "Minka_2001_a",
+            "entry": "Thomas P. Minka. Expectation propagation for approximate Bayesian inference. In Uncertainty in Artificial Intelligence, pp. 362\u2013369, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Minka%2C%20Thomas%20P.%20Expectation%20propagation%20for%20approximate%20Bayesian%20inference%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Minka%2C%20Thomas%20P.%20Expectation%20propagation%20for%20approximate%20Bayesian%20inference%202001"
+        },
+        {
+            "id": "Moosavi-Dezfooli_et+al_2017_a",
+            "entry": "Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, Omar Fawzi, and Pascal Frossard. Universal adversarial perturbations. In CVPR, July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Universal%20adversarial%20perturbations%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Universal%20adversarial%20perturbations%202017-07"
+        },
+        {
+            "id": "Nadarajah_2008_a",
+            "entry": "Saralees Nadarajah and Samuel Kotz. Exact distribution of the max/min of two Gaussian random variables. IEEE Trans. VLSI Syst., 16(2):210\u2013212, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nadarajah%2C%20Saralees%20Kotz%2C%20Samuel%20Exact%20distribution%20of%20the%20max/min%20of%20two%20Gaussian%20random%20variables%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nadarajah%2C%20Saralees%20Kotz%2C%20Samuel%20Exact%20distribution%20of%20the%20max/min%20of%20two%20Gaussian%20random%20variables%202008"
+        },
+        {
+            "id": "Neal_1992_a",
+            "entry": "Radford M. Neal. Connectionist learning of belief networks. Artif. Intell., 56(1):71\u2013113, July 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20Connectionist%20learning%20of%20belief%20networks%201992-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neal%2C%20Radford%20M.%20Connectionist%20learning%20of%20belief%20networks%201992-07"
+        },
+        {
+            "id": "Rezende_2015_a",
+            "entry": "Danilo Jimenez Rezende and Shakir Mohamed. Variational inference with normalizing flows. In ICML, pp. 1530\u20131538, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015"
+        },
+        {
+            "id": "Rodner_et+al_2016_a",
+            "entry": "Erik Rodner, Marcel Simon, Bob Fisher, and Joachim Denzler. Fine-grained recognition in the noisy wild: Sensitivity analysis of convolutional neural networks approaches. In BMVC, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rodner%2C%20Erik%20Simon%2C%20Marcel%20Fisher%2C%20Bob%20Denzler%2C%20Joachim%20Fine-grained%20recognition%20in%20the%20noisy%20wild%3A%20Sensitivity%20analysis%20of%20convolutional%20neural%20networks%20approaches%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rodner%2C%20Erik%20Simon%2C%20Marcel%20Fisher%2C%20Bob%20Denzler%2C%20Joachim%20Fine-grained%20recognition%20in%20the%20noisy%20wild%3A%20Sensitivity%20analysis%20of%20convolutional%20neural%20networks%20approaches%202016"
+        },
+        {
+            "id": "Ross_2010_a",
+            "entry": "Andrew M. Ross. Computing bounds on the expected maximum of correlated normal variables. Methodology and Computing in Applied Probability, 12(1):111\u2013138, Mar 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Andrew%20M.%20Computing%20bounds%20on%20the%20expected%20maximum%20of%20correlated%20normal%20variables%202010-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Andrew%20M.%20Computing%20bounds%20on%20the%20expected%20maximum%20of%20correlated%20normal%20variables%202010-03"
+        },
+        {
+            "id": "Sabour_et+al_2017_a",
+            "entry": "Sara Sabour, Nicholas Frosst, and Geoffrey E Hinton. Dynamic routing between capsules. In NIPS, pp. 3856\u20133866. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sabour%2C%20Sara%20Frosst%2C%20Nicholas%20Hinton%2C%20Geoffrey%20E.%20Dynamic%20routing%20between%20capsules%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sabour%2C%20Sara%20Frosst%2C%20Nicholas%20Hinton%2C%20Geoffrey%20E.%20Dynamic%20routing%20between%20capsules%202017"
+        },
+        {
+            "id": "Schoenholz_et+al_2016_a",
+            "entry": "Samuel S. Schoenholz, Justin Gilmer, Surya Ganguli, and Jascha Sohl-Dickstein. Deep information propagation. CoRR, abs/1611.01232, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01232"
+        },
+        {
+            "id": "Shekhovtsov_2018_a",
+            "entry": "Alexander Shekhovtsov and Boris Flach. Normalization of neural networks using analytic variance propagation. In Computer Vision Winter Workshop, pp. 45\u201353, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shekhovtsov%2C%20Alexander%20Flach%2C%20Boris%20Normalization%20of%20neural%20networks%20using%20analytic%20variance%20propagation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shekhovtsov%2C%20Alexander%20Flach%2C%20Boris%20Normalization%20of%20neural%20networks%20using%20analytic%20variance%20propagation%202018"
+        },
+        {
+            "id": "Springenberg_et+al_2015_a",
+            "entry": "J.T. Springenberg, A. Dosovitskiy, T. Brox, and M. Riedmiller. Striving for simplicity: The all convolutional net. In ICLR (workshop track), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springenberg%2C%20J.T.%20Dosovitskiy%2C%20A.%20Brox%2C%20T.%20Riedmiller%2C%20M.%20Striving%20for%20simplicity%3A%20The%20all%20convolutional%20net%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Springenberg%2C%20J.T.%20Dosovitskiy%2C%20A.%20Brox%2C%20T.%20Riedmiller%2C%20M.%20Striving%20for%20simplicity%3A%20The%20all%20convolutional%20net%202015"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. JMLR, 15:1929\u20131958, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Hao Wang, Xingjian SHI, and Dit-Yan Yeung. Natural-parameter networks: A class of probabilistic neural networks. In NIPS, pp. 118\u2013126, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Hao%20SHI%2C%20Xingjian%20Yeung%2C%20Dit-Yan%20Natural-parameter%20networks%3A%20A%20class%20of%20probabilistic%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Hao%20SHI%2C%20Xingjian%20Yeung%2C%20Dit-Yan%20Natural-parameter%20networks%3A%20A%20class%20of%20probabilistic%20neural%20networks%202016"
+        },
+        {
+            "id": "Wang_2013_a",
+            "entry": "Sida Wang and Christopher Manning. Fast dropout training. In ICML, pp. 118\u2013126, 2013. Ronald J. Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning, 8(3):229\u2013256, May 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Sida%20Manning%2C%20Christopher%20Fast%20dropout%20training%202013-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Sida%20Manning%2C%20Christopher%20Fast%20dropout%20training%202013-05"
+        }
+    ]
+}

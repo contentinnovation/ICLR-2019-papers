@@ -1,0 +1,532 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LANCZOSNET: MULTI-SCALE DEEP GRAPH CONVOLUTIONAL NETWORKS",
+        "author": "Renjie Liao, Zhizhen Zhao, Raquel Urtasun, Richard S. Zemel, University of Toronto, Uber ATG Toronto, Vector Institute, University of Illinois at Urbana-Champaign, Canadian Institute for Advanced Research, {rjliao, urtasun, zemel}@cs.toronto.edu, zhizhenz@illinois.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BkedznAqKQ"
+        },
+        "abstract": "We propose the Lanczos network (LanczosNet), which uses the Lanczos algorithm to construct low rank approximations of the graph Laplacian for graph convolution. Relying on the tridiagonal decomposition of the Lanczos algorithm, we not only efficiently exploit multi-scale information via fast approximated computation of matrix power but also design learnable spectral filters. Being fully differentiable, LanczosNet facilitates both graph kernel learning as well as learning node embeddings. We show the connection between our LanczosNet and graph based manifold learning methods, especially the diffusion maps. We benchmark our model against several recent deep graph networks on citation networks and QM8 quantum chemistry dataset. Experimental results show that our model achieves the state-of-the-art performance in most tasks."
+    },
+    "keywords": [
+        {
+            "term": "diffusion map",
+            "url": "https://en.wikipedia.org/wiki/diffusion_map"
+        },
+        {
+            "term": "geometry",
+            "url": "https://en.wikipedia.org/wiki/geometry"
+        },
+        {
+            "term": "locally linear embedding",
+            "url": "https://en.wikipedia.org/wiki/locally_linear_embedding"
+        },
+        {
+            "term": "mean absolute error",
+            "url": "https://en.wikipedia.org/wiki/mean_absolute_error"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "Intelligence Advanced Research Projects Activity",
+            "url": "https://en.wikipedia.org/wiki/Intelligence_Advanced_Research_Projects_Activity"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "convolutional neural networks",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_networks"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "mean squared error",
+            "url": "https://en.wikipedia.org/wiki/mean_squared_error"
+        },
+        {
+            "term": "lanczos algorithm",
+            "url": "https://en.wikipedia.org/wiki/lanczos_algorithm"
+        },
+        {
+            "term": "multi-layer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptron"
+        },
+        {
+            "term": "positive semi-definite",
+            "url": "https://en.wikipedia.org/wiki/positive_semi-definite"
+        }
+    ],
+    "abbreviations": {
+        "RNN": "recurrent neural networks",
+        "GNN": "Graph neural networks",
+        "GSP": "graph signal processing",
+        "CNN": "convolutional neural networks",
+        "PSD": "positive semi-definite",
+        "MLP": "multi-layer perceptron",
+        "GCN": "graph convolutional networks",
+        "DCNN": "diffusion convolutional neural networks",
+        "GGNN": "gated graph neural networks",
+        "LLE": "locally linear embedding",
+        "GCN-FP": "graph convolution networks for fingerprint",
+        "MPNN": "message passing neural networks",
+        "GPNN": "graph partition neural networks",
+        "GAT": "graph attention networks",
+        "MSE": "mean squared error",
+        "MAE": "mean absolute error",
+        "IARPA": "Intelligence Advanced Research Projects Activity",
+        "DoI/IBC": "Department of Interior/Interior Business Center"
+    },
+    "highlights": [
+        "Graph-structured data is ubiquitous in real world applications, social networks, gene expression regulatory networks, protein-protein interactions, and many other physical systems",
+        "In scenarios where one wants to learn the graph kernel and/or node embeddings, we propose another variant, i.e., adaptive Lanczos network (AdaLanczosNet), which back-propagates through the Lanczos algorithm",
+        "Lanczos Step: We investigate the Lanczos step since it will have an impact on the accuracy of the low rank approximation induced by the Lanczos algorithm",
+        "We propose LanczosNet which leverages the Lanczos algorithm to construct a low rank approximation of the graph Laplacian",
+        "We show that our model has a close relationship with graph based manifold learning, especially diffusion map",
+        "Experimental results demonstrate that our model outperforms a range of other graph networks, on challenging graph problems"
+    ],
+    "key_statements": [
+        "Graph-structured data is ubiquitous in real world applications, social networks, gene expression regulatory networks, protein-protein interactions, and many other physical systems",
+        "For supervised and semi-supervised tasks such as graph or node classification and regression, learning based models can be roughly categorized into two classes, formulated either in terms of graph convolutions [<a class=\"ref-link\" id=\"c2\" href=\"#r2\">2</a>] or recurrent neural networks [<a class=\"ref-link\" id=\"c3\" href=\"#r3\">3</a>]",
+        "Based on the tridiagonal decomposition implied by the Lanczos algorithm, our model exploits the low rank approximation of the graph Laplacian",
+        "In scenarios where one wants to learn the graph kernel and/or node embeddings, we propose another variant, i.e., adaptive Lanczos network (AdaLanczosNet), which back-propagates through the Lanczos algorithm",
+        "We show that our proposed model is closely related to graph based manifold learning approaches such as diffusion maps which could potentially inspire more work from the intersection between deep graph networks and manifold learning",
+        "We present our first model, called Lanczos network (LanczosNet), in which we execute the Lanczos algorithm once per graph and fix the basis throughout inference and learning",
+        "We introduce the adaptive Lanczos network (AdaLanczosNet) in which we learn the graph kernel and/or node embedding by back-propagating through the Lanczos algorithm",
+        "The Lanczos algorithm is run beforehand once per graph to construct the network and will not be invoked during inference and learning. We explain another variant which back-propagates through the Lanczos algorithm",
+        "Graph based Manifold Learning The non-linear dimensionality reduction methods, such as locally linear embedding (LLE) [<a class=\"ref-link\" id=\"c47\" href=\"#r47\">47</a>], ISOMAP [<a class=\"ref-link\" id=\"c48\" href=\"#r48\">48</a>], Hessian locally linear embedding [<a class=\"ref-link\" id=\"c49\" href=\"#r49\">49</a>], Laplacian eigenmaps [<a class=\"ref-link\" id=\"c50\" href=\"#r50\">50</a>], and diffusion maps [<a class=\"ref-link\" id=\"c17\" href=\"#r17\">17</a>], assume that the high-dimensional data lie on or close to a low dimensional manifold and use the local affinities in the weighted graph to learn the global features of the data",
+        "Lanczos Step: We investigate the Lanczos step since it will have an impact on the accuracy of the low rank approximation induced by the Lanczos algorithm",
+        "We propose LanczosNet which leverages the Lanczos algorithm to construct a low rank approximation of the graph Laplacian",
+        "We show that our model has a close relationship with graph based manifold learning, especially diffusion map",
+        "Experimental results demonstrate that our model outperforms a range of other graph networks, on challenging graph problems"
+    ],
+    "summary": [
+        "Graph-structured data is ubiquitous in real world applications, social networks, gene expression regulatory networks, protein-protein interactions, and many other physical systems.",
+        "Based on the tridiagonal decomposition implied by the Lanczos algorithm, our model exploits the low rank approximation of the graph Laplacian.",
+        "We introduce the adaptive Lanczos network (AdaLanczosNet) in which we learn the graph kernel and/or node embedding by back-propagating through the Lanczos algorithm.",
+        "Spectral Filter Ideally, we would like to compute Lanczos vectors only once during the inference of a deep graph convolutional network.",
+        "With the above parameterization of the graph Laplacian and tridiagonal decomposition, we can back-propagate the loss through the Lanczos algorithm to either the graph kernel parameters \u03b8 or the node embedding X.",
+        "Connection to Graph Convolution Apart from using diffusion maps to embed node features X at different time scales, one can use it to compute the frequency representations of X as below, X = \u039btU X, (10)",
+        "Recall that in the convolution layer Eq (5) of LanczosNet, we use multiple such frequency representations with different scales t and replace the eigenvalues \u039b in Eq (10) with their approximation, i.e., Ritz values.",
+        "In LanczosNet, spectral filters are applied to the frequency representations which are obtained by projecting the node features X onto multiple diffusion maps with different scales.",
+        "They only consider the localized polynomial filter case in our LanczosNet variant and do not explore the low rank decomposition, learnable spectral filter and graph kernel/node embedding learning as we do.",
+        "Graph based Manifold Learning The non-linear dimensionality reduction methods, such as locally linear embedding (LLE) [<a class=\"ref-link\" id=\"c47\" href=\"#r47\">47</a>], ISOMAP [<a class=\"ref-link\" id=\"c48\" href=\"#r48\">48</a>], Hessian LLE [<a class=\"ref-link\" id=\"c49\" href=\"#r49\">49</a>], Laplacian eigenmaps [<a class=\"ref-link\" id=\"c50\" href=\"#r50\">50</a>], and diffusion maps [<a class=\"ref-link\" id=\"c17\" href=\"#r17\">17</a>], assume that the high-dimensional data lie on or close to a low dimensional manifold and use the local affinities in the weighted graph to learn the global features of the data.",
+        "As shown in the 3-rd and 4th rows of the table, learning node embeddings significantly improves the performance for both LanczosNet and AdaLanczosNet and is more effective than learning graph kernels.",
+        "We propose LanczosNet which leverages the Lanczos algorithm to construct a low rank approximation of the graph Laplacian.",
+        "It not only provides an efficient way to gather multi-scale information for graph convolution but enables learning spectral filters.",
+        "We are currently exploring customized eigen-decomposition methods for tridiagonal matrices, which will potentially further improve our AdaLanczosNet. Overall, work in this direction holds promise for allowing deep learning to scale up to very large graph problems.",
+        "Work in this direction holds promise for allowing deep learning to scale up to very large graph problems"
+    ],
+    "headline": "We propose the Lanczos network, which uses the Lanczos algorithm to construct low rank approximations of the graph Laplacian for graph convolution",
+    "reference_links": [
+        {
+            "id": "1",
+            "entry": "[1] Peter W Battaglia, Jessica B Hamrick, Victor Bapst, Alvaro Sanchez-Gonzalez, Vinicius Zambaldi, Mateusz Malinowski, Andrea Tacchetti, David Raposo, Adam Santoro, Ryan Faulkner, et al. Relational inductive biases, deep learning, and graph networks. arXiv preprint arXiv:1806.01261, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01261"
+        },
+        {
+            "id": "2",
+            "entry": "[2] Joan Bruna, Wojciech Zaremba, Arthur Szlam, and Yann LeCun. Spectral networks and locally connected networks on graphs. ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bruna%2C%20Joan%20Zaremba%2C%20Wojciech%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Spectral%20networks%20and%20locally%20connected%20networks%20on%20graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bruna%2C%20Joan%20Zaremba%2C%20Wojciech%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Spectral%20networks%20and%20locally%20connected%20networks%20on%20graphs%202014"
+        },
+        {
+            "id": "3",
+            "entry": "[3] Franco Scarselli, Marco Gori, Ah Chung Tsoi, Markus Hagenbuchner, and Gabriele Monfardini. The graph neural network model. IEEE TNN, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scarselli%2C%20Franco%20Gori%2C%20Marco%20Tsoi%2C%20Ah%20Chung%20Hagenbuchner%2C%20Markus%20The%20graph%20neural%20network%20model%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scarselli%2C%20Franco%20Gori%2C%20Marco%20Tsoi%2C%20Ah%20Chung%20Hagenbuchner%2C%20Markus%20The%20graph%20neural%20network%20model%202009"
+        },
+        {
+            "id": "4",
+            "entry": "[4] Antonio Ortega, Pascal Frossard, Jelena Kovacevic, Jose MF Moura, and Pierre Vandergheynst. Graph signal processing: Overview, challenges, and applications. Proceedings of the IEEE, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ortega%2C%20Antonio%20Frossard%2C%20Pascal%20Kovacevic%2C%20Jelena%20Moura%2C%20Jose%20M.F.%20Graph%20signal%20processing%3A%20Overview%2C%20challenges%2C%20and%20applications%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ortega%2C%20Antonio%20Frossard%2C%20Pascal%20Kovacevic%2C%20Jelena%20Moura%2C%20Jose%20M.F.%20Graph%20signal%20processing%3A%20Overview%2C%20challenges%2C%20and%20applications%202018"
+        },
+        {
+            "id": "5",
+            "entry": "[5] Andrew P Witkin. Scale-space filtering. In IJCAI, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Witkin%2C%20Andrew%20P.%20Scale-space%20filtering%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Witkin%2C%20Andrew%20P.%20Scale-space%20filtering%201983"
+        },
+        {
+            "id": "6",
+            "entry": "[6] Ronald R Coifman, Stephane Lafon, Ann B Lee, Mauro Maggioni, Boaz Nadler, Frederick Warner, and Steven W Zucker. Geometric diffusions as a tool for harmonic analysis and structure definition of data: Multiscale methods. PNAS, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coifman%2C%20Ronald%20R.%20Lafon%2C%20Stephane%20Lee%2C%20Ann%20B.%20Maggioni%2C%20Mauro%20Geometric%20diffusions%20as%20a%20tool%20for%20harmonic%20analysis%20and%20structure%20definition%20of%20data%3A%20Multiscale%20methods%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coifman%2C%20Ronald%20R.%20Lafon%2C%20Stephane%20Lee%2C%20Ann%20B.%20Maggioni%2C%20Mauro%20Geometric%20diffusions%20as%20a%20tool%20for%20harmonic%20analysis%20and%20structure%20definition%20of%20data%3A%20Multiscale%20methods%202005"
+        },
+        {
+            "id": "7",
+            "entry": "[7] Michael Defferrard, Xavier Bresson, and Pierre Vandergheynst. Convolutional neural networks on graphs with fast localized spectral filtering. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Defferrard%2C%20Michael%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Defferrard%2C%20Michael%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016"
+        },
+        {
+            "id": "8",
+            "entry": "[8] James Atwood and Don Towsley. Diffusion-convolutional neural networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Atwood%2C%20James%20Towsley%2C%20Don%20Diffusion-convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Atwood%2C%20James%20Towsley%2C%20Don%20Diffusion-convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "9",
+            "entry": "[9] Amit Singer, Yoel Shkolnisky, and Boaz Nadler. Diffusion interpretation of nonlocal neighborhood filters for signal denoising. SIAM Journal on Imaging Sciences, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singer%2C%20Amit%20Shkolnisky%2C%20Yoel%20Nadler%2C%20Boaz%20Diffusion%20interpretation%20of%20nonlocal%20neighborhood%20filters%20for%20signal%20denoising%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singer%2C%20Amit%20Shkolnisky%2C%20Yoel%20Nadler%2C%20Boaz%20Diffusion%20interpretation%20of%20nonlocal%20neighborhood%20filters%20for%20signal%20denoising%202009"
+        },
+        {
+            "id": "10",
+            "entry": "[10] Neta Rabin and Dalia Fishelov. Multi-scale kernels for nystrom based extension schemes. Applied Mathematics and Computation, 319:165\u2013177, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rabin%2C%20Neta%20Fishelov%2C%20Dalia%20Multi-scale%20kernels%20for%20nystrom%20based%20extension%20schemes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rabin%2C%20Neta%20Fishelov%2C%20Dalia%20Multi-scale%20kernels%20for%20nystrom%20based%20extension%20schemes%202018"
+        },
+        {
+            "id": "11",
+            "entry": "[11] Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-supervised%20classification%20with%20graph%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-supervised%20classification%20with%20graph%20convolutional%20networks%202017"
+        },
+        {
+            "id": "12",
+            "entry": "[12] David I Shuman, Sunil K Narang, Pascal Frossard, Antonio Ortega, and Pierre Vandergheynst. The emerging field of signal processing on graphs: Extending high-dimensional data analysis to networks and other irregular domains. IEEE Signal Processing Magazine, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shuman%2C%20David%20I.%20Narang%2C%20Sunil%20K.%20Frossard%2C%20Pascal%20Ortega%2C%20Antonio%20The%20emerging%20field%20of%20signal%20processing%20on%20graphs%3A%20Extending%20high-dimensional%20data%20analysis%20to%20networks%20and%20other%20irregular%20domains%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shuman%2C%20David%20I.%20Narang%2C%20Sunil%20K.%20Frossard%2C%20Pascal%20Ortega%2C%20Antonio%20The%20emerging%20field%20of%20signal%20processing%20on%20graphs%3A%20Extending%20high-dimensional%20data%20analysis%20to%20networks%20and%20other%20irregular%20domains%202013"
+        },
+        {
+            "id": "13",
+            "entry": "[13] Cornelius Lanczos. An iteration method for the solution of the eigenvalue problem of linear differential and integral operators. United States Governm. Press Office Los Angeles, CA, 1950.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lanczos%2C%20Cornelius%20An%20iteration%20method%20for%20the%20solution%20of%20the%20eigenvalue%20problem%20of%20linear%20differential%20and%20integral%20operators%201950"
+        },
+        {
+            "id": "14",
+            "entry": "[14] Horst D Simon and Hongyuan Zha. Low-rank matrix approximation using the lanczos bidiagonalization process with applications. SIAM Journal on Scientific Computing, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simon%2C%20Horst%20D.%20Zha%2C%20Hongyuan%20Low-rank%20matrix%20approximation%20using%20the%20lanczos%20bidiagonalization%20process%20with%20applications%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simon%2C%20Horst%20D.%20Zha%2C%20Hongyuan%20Low-rank%20matrix%20approximation%20using%20the%20lanczos%20bidiagonalization%20process%20with%20applications%202000"
+        },
+        {
+            "id": "15",
+            "entry": "[15] Lihi Zelnik-Manor and Pietro Perona. Self-tuning spectral clustering. In NIPS, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zelnik-Manor%2C%20Lihi%20Perona%2C%20Pietro%20Self-tuning%20spectral%20clustering%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zelnik-Manor%2C%20Lihi%20Perona%2C%20Pietro%20Self-tuning%20spectral%20clustering%202005"
+        },
+        {
+            "id": "16",
+            "entry": "[16] Kilian Q Weinberger and Gerald Tesauro. Metric learning for kernel regression. In AISTATS, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weinberger%2C%20Kilian%20Q.%20Tesauro%2C%20Gerald%20Metric%20learning%20for%20kernel%20regression%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weinberger%2C%20Kilian%20Q.%20Tesauro%2C%20Gerald%20Metric%20learning%20for%20kernel%20regression%202007"
+        },
+        {
+            "id": "17",
+            "entry": "[17] Ronald R Coifman and Stephane Lafon. Diffusion maps. Applied and computational harmonic analysis, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coifman%2C%20Ronald%20R.%20Lafon%2C%20Stephane%20Diffusion%20maps%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coifman%2C%20Ronald%20R.%20Lafon%2C%20Stephane%20Diffusion%20maps%202006"
+        },
+        {
+            "id": "18",
+            "entry": "[18] Amit Singer. From graph to manifold laplacian: The convergence rate. Applied and Computational Harmonic Analysis, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singer%2C%20Amit%20From%20graph%20to%20manifold%20laplacian%3A%20The%20convergence%20rate%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singer%2C%20Amit%20From%20graph%20to%20manifold%20laplacian%3A%20The%20convergence%20rate%202006"
+        },
+        {
+            "id": "19",
+            "entry": "[19] S Vichy N Vishwanathan, Nicol N Schraudolph, Risi Kondor, and Karsten M Borgwardt. Graph kernels. JMLR, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%20Vichy%20N%20Vishwanathan%20Nicol%20N%20Schraudolph%20Risi%20Kondor%20and%20Karsten%20M%20Borgwardt%20Graph%20kernels%20JMLR%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%20Vichy%20N%20Vishwanathan%20Nicol%20N%20Schraudolph%20Risi%20Kondor%20and%20Karsten%20M%20Borgwardt%20Graph%20kernels%20JMLR%202010"
+        },
+        {
+            "id": "20",
+            "entry": "[20] Michael M Bronstein, Joan Bruna, Yann LeCun, Arthur Szlam, and Pierre Vandergheynst. Geometric deep learning: going beyond euclidean data. IEEE Signal Processing Magazine, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bronstein%2C%20Michael%20M.%20Bruna%2C%20Joan%20LeCun%2C%20Yann%20Szlam%2C%20Arthur%20Geometric%20deep%20learning%3A%20going%20beyond%20euclidean%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bronstein%2C%20Michael%20M.%20Bruna%2C%20Joan%20LeCun%2C%20Yann%20Szlam%2C%20Arthur%20Geometric%20deep%20learning%3A%20going%20beyond%20euclidean%20data%202017"
+        },
+        {
+            "id": "21",
+            "entry": "[21] Victor Garcia and Joan Bruna. Few-shot learning with graph neural networks. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garcia%2C%20Victor%20Bruna%2C%20Joan%20Few-shot%20learning%20with%20graph%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garcia%2C%20Victor%20Bruna%2C%20Joan%20Few-shot%20learning%20with%20graph%20neural%20networks%202018"
+        },
+        {
+            "id": "22",
+            "entry": "[22] Aditya Grover and Jure Leskovec. node2vec: Scalable feature learning for networks. In KDD, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grover%2C%20Aditya%20Leskovec%2C%20Jure%20node2vec%3A%20Scalable%20feature%20learning%20for%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grover%2C%20Aditya%20Leskovec%2C%20Jure%20node2vec%3A%20Scalable%20feature%20learning%20for%20networks%202016"
+        },
+        {
+            "id": "23",
+            "entry": "[23] Alberto Garcia Duran and Mathias Niepert. Learning graph representations with embedding propagation. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duran%2C%20Alberto%20Garcia%20Niepert%2C%20Mathias%20Learning%20graph%20representations%20with%20embedding%20propagation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duran%2C%20Alberto%20Garcia%20Niepert%2C%20Mathias%20Learning%20graph%20representations%20with%20embedding%20propagation%202017"
+        },
+        {
+            "id": "24",
+            "entry": "[24] Yujia Li, Oriol Vinyals, Chris Dyer, Razvan Pascanu, and Peter Battaglia. Learning deep generative models of graphs. In ICLR Workshop, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yujia%20Vinyals%2C%20Oriol%20Dyer%2C%20Chris%20Pascanu%2C%20Razvan%20Learning%20deep%20generative%20models%20of%20graphs%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yujia%20Vinyals%2C%20Oriol%20Dyer%2C%20Chris%20Pascanu%2C%20Razvan%20Learning%20deep%20generative%20models%20of%20graphs%202018"
+        },
+        {
+            "id": "25",
+            "entry": "[25] Wengong Jin, Regina Barzilay, and Tommi Jaakkola. Junction tree variational autoencoder for molecular graph generation. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jin%2C%20Wengong%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Junction%20tree%20variational%20autoencoder%20for%20molecular%20graph%20generation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jin%2C%20Wengong%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Junction%20tree%20variational%20autoencoder%20for%20molecular%20graph%20generation%202018"
+        },
+        {
+            "id": "26",
+            "entry": "[26] Fan RK Chung. Spectral graph theory. American Mathematical Soc., 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Fan%20R.K.%20Spectral%20graph%20theory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Fan%20R.K.%20Spectral%20graph%20theory%201997"
+        },
+        {
+            "id": "27",
+            "entry": "[27] David K. Hammond, Pierre Vandergheynst, and Rmi Gribonval. Wavelets on graphs via spectral graph theory. Applied and Computational Harmonic Analysis, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hammond%2C%20David%20K.%20Vandergheynst%2C%20Pierre%20Gribonval%2C%20Rmi%20Wavelets%20on%20graphs%20via%20spectral%20graph%20theory%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hammond%2C%20David%20K.%20Vandergheynst%2C%20Pierre%20Gribonval%2C%20Rmi%20Wavelets%20on%20graphs%20via%20spectral%20graph%20theory%202011"
+        },
+        {
+            "id": "28",
+            "entry": "[28] Mikael Henaff, Joan Bruna, and Yann LeCun. Deep convolutional networks on graph-structured data. arXiv preprint arXiv:1506.05163, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.05163"
+        },
+        {
+            "id": "29",
+            "entry": "[29] David K Duvenaud, Dougal Maclaurin, Jorge Iparraguirre, Rafael Bombarell, Timothy Hirzel, Alan Aspuru-Guzik, and Ryan P Adams. Convolutional networks on graphs for learning molecular fingerprints. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015"
+        },
+        {
+            "id": "30",
+            "entry": "[30] Mathias Niepert, Mohamed Ahmed, and Konstantin Kutzkov. Learning convolutional neural networks for graphs. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niepert%2C%20Mathias%20Ahmed%2C%20Mohamed%20Kutzkov%2C%20Konstantin%20Learning%20convolutional%20neural%20networks%20for%20graphs%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niepert%2C%20Mathias%20Ahmed%2C%20Mohamed%20Kutzkov%2C%20Konstantin%20Learning%20convolutional%20neural%20networks%20for%20graphs%202016"
+        },
+        {
+            "id": "31",
+            "entry": "[31] Jie Chen, Tengfei Ma, and Cao Xiao. FastGCN: Fast learning with graph convolutional networks via importance sampling. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Jie%20Ma%2C%20Tengfei%20Xiao%2C%20Cao%20FastGCN%3A%20Fast%20learning%20with%20graph%20convolutional%20networks%20via%20importance%20sampling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Jie%20Ma%2C%20Tengfei%20Xiao%2C%20Cao%20FastGCN%3A%20Fast%20learning%20with%20graph%20convolutional%20networks%20via%20importance%20sampling%202018"
+        },
+        {
+            "id": "32",
+            "entry": "[32] Jianfei Chen, Jun Zhu, and Le Song. Stochastic training of graph convolutional networks with variance reduction. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Jianfei%20Zhu%2C%20Jun%20Song%2C%20Le%20Stochastic%20training%20of%20graph%20convolutional%20networks%20with%20variance%20reduction%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Jianfei%20Zhu%2C%20Jun%20Song%2C%20Le%20Stochastic%20training%20of%20graph%20convolutional%20networks%20with%20variance%20reduction%202018"
+        },
+        {
+            "id": "33",
+            "entry": "[33] Petar Velickovic, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Lio, and Yoshua Bengio. Graph attention networks. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Petar%20Velickovic%20Guillem%20Cucurull%20Arantxa%20Casanova%20Adriana%20Romero%20Pietro%20Lio%20and%20Yoshua%20Bengio%20Graph%20attention%20networks%20In%20ICLR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Petar%20Velickovic%20Guillem%20Cucurull%20Arantxa%20Casanova%20Adriana%20Romero%20Pietro%20Lio%20and%20Yoshua%20Bengio%20Graph%20attention%20networks%20In%20ICLR%202018"
+        },
+        {
+            "id": "34",
+            "entry": "[34] Shenlong Wang, Simon Suo, Wei-Chiu Ma, Andrei Pokrovsky, and Raquel Urtasun. Deep parametric continuous convolutional neural networks. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Shenlong%20Suo%2C%20Simon%20Ma%2C%20Wei-Chiu%20Pokrovsky%2C%20Andrei%20Deep%20parametric%20continuous%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Shenlong%20Suo%2C%20Simon%20Ma%2C%20Wei-Chiu%20Pokrovsky%2C%20Andrei%20Deep%20parametric%20continuous%20convolutional%20neural%20networks%202018"
+        },
+        {
+            "id": "35",
+            "entry": "[35] Ana Susnjara, Nathanael Perraudin, Daniel Kressner, and Pierre Vandergheynst. Accelerated filtering on graphs using lanczos method. arXiv preprint arXiv:1509.04537, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.04537"
+        },
+        {
+            "id": "36",
+            "entry": "[36] Jordan B Pollack. Recursive distributed representations. Artificial Intelligence, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pollack%2C%20Jordan%20B.%20Recursive%20distributed%20representations%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pollack%2C%20Jordan%20B.%20Recursive%20distributed%20representations%201990"
+        },
+        {
+            "id": "37",
+            "entry": "[37] Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel. Gated graph sequence neural networks. ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yujia%20Tarlow%2C%20Daniel%20Brockschmidt%2C%20Marc%20Zemel%2C%20Richard%20Gated%20graph%20sequence%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yujia%20Tarlow%2C%20Daniel%20Brockschmidt%2C%20Marc%20Zemel%2C%20Richard%20Gated%20graph%20sequence%20neural%20networks%202016"
+        },
+        {
+            "id": "38",
+            "entry": "[38] Hanjun Dai, Bo Dai, and Le Song. Discriminative embeddings of latent variable models for structured data. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Hanjun%20Dai%2C%20Bo%20Song%2C%20Le%20Discriminative%20embeddings%20of%20latent%20variable%20models%20for%20structured%20data%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Hanjun%20Dai%2C%20Bo%20Song%2C%20Le%20Discriminative%20embeddings%20of%20latent%20variable%20models%20for%20structured%20data%202016"
+        },
+        {
+            "id": "39",
+            "entry": "[39] William L. Hamilton, Rex Ying, and Jure Leskovec. Inductive representation learning on large graphs. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hamilton%2C%20William%20L.%20Ying%2C%20Rex%20Leskovec%2C%20Jure%20Inductive%20representation%20learning%20on%20large%20graphs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hamilton%2C%20William%20L.%20Ying%2C%20Rex%20Leskovec%2C%20Jure%20Inductive%20representation%20learning%20on%20large%20graphs%202017"
+        },
+        {
+            "id": "40",
+            "entry": "[40] Renjie Liao, Marc Brockschmidt, Daniel Tarlow, Alexander L Gaunt, Raquel Urtasun, and Richard Zemel. Graph partition neural networks for semi-supervised classification. In ICLR Workshop, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liao%2C%20Renjie%20Brockschmidt%2C%20Marc%20Tarlow%2C%20Daniel%20Gaunt%2C%20Alexander%20L.%20Graph%20partition%20neural%20networks%20for%20semi-supervised%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liao%2C%20Renjie%20Brockschmidt%2C%20Marc%20Tarlow%2C%20Daniel%20Gaunt%2C%20Alexander%20L.%20Graph%20partition%20neural%20networks%20for%20semi-supervised%20classification%202018"
+        },
+        {
+            "id": "41",
+            "entry": "[41] Joan Bruna and Xiang Li. Community detection with graph neural networks. arXiv preprint arXiv:1705.08415, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.08415"
+        },
+        {
+            "id": "42",
+            "entry": "[42] Ruiyu Li, Makarand Tapaswi, Renjie Liao, Jiaya Jia, Raquel Urtasun, and Sanja Fidler. Situation recognition with graph neural networks. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Ruiyu%20Tapaswi%2C%20Makarand%20Liao%2C%20Renjie%20Jia%2C%20Jiaya%20Situation%20recognition%20with%20graph%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Ruiyu%20Tapaswi%2C%20Makarand%20Liao%2C%20Renjie%20Jia%2C%20Jiaya%20Situation%20recognition%20with%20graph%20neural%20networks%202017"
+        },
+        {
+            "id": "43",
+            "entry": "[43] Xiaojuan Qi, Renjie Liao, Jiaya Jia, Sanja Fidler, and Raquel Urtasun. 3d graph neural networks for rgbd semantic segmentation. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qi%2C%20Xiaojuan%20Liao%2C%20Renjie%20Jia%2C%20Jiaya%20Fidler%2C%20Sanja%203d%20graph%20neural%20networks%20for%20rgbd%20semantic%20segmentation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qi%2C%20Xiaojuan%20Liao%2C%20Renjie%20Jia%2C%20Jiaya%20Fidler%2C%20Sanja%203d%20graph%20neural%20networks%20for%20rgbd%20semantic%20segmentation%202017"
+        },
+        {
+            "id": "44",
+            "entry": "[44] KiJung Yoon, Renjie Liao, Yuwen Xiong, Lisa Zhang, Ethan Fetaya, Raquel Urtasun, Richard Zemel, and Xaq Pitkow. Inference in probabilistic graphical models by graph neural networks. arXiv preprint arXiv:1803.07710, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.07710"
+        },
+        {
+            "id": "45",
+            "entry": "[45] Tingwu Wang, Renjie Liao, Jimmy Ba, and Sanja Fidler. Nervenet: Learning structured policy with graph neural networks. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Tingwu%20Liao%2C%20Renjie%20Ba%2C%20Jimmy%20Fidler%2C%20Sanja%20Nervenet%3A%20Learning%20structured%20policy%20with%20graph%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Tingwu%20Liao%2C%20Renjie%20Ba%2C%20Jimmy%20Fidler%2C%20Sanja%20Nervenet%3A%20Learning%20structured%20policy%20with%20graph%20neural%20networks%202018"
+        },
+        {
+            "id": "46",
+            "entry": "[46] Alvaro Sanchez-Gonzalez, Nicolas Heess, Jost Tobias Springenberg, Josh Merel, Martin Riedmiller, Raia Hadsell, and Peter Battaglia. Graph networks as learnable physics engines for inference and control. arXiv preprint arXiv:1806.01242, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01242"
+        },
+        {
+            "id": "47",
+            "entry": "[47] Sam T Roweis and Lawrence K Saul. Nonlinear dimensionality reduction by locally linear embedding. science, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roweis%2C%20Sam%20T.%20Saul%2C%20Lawrence%20K.%20Nonlinear%20dimensionality%20reduction%20by%20locally%20linear%20embedding%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roweis%2C%20Sam%20T.%20Saul%2C%20Lawrence%20K.%20Nonlinear%20dimensionality%20reduction%20by%20locally%20linear%20embedding%202000"
+        },
+        {
+            "id": "48",
+            "entry": "[48] Joshua B Tenenbaum, Vin De Silva, and John C Langford. A global geometric framework for nonlinear dimensionality reduction. science, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tenenbaum%2C%20Joshua%20B.%20Silva%2C%20Vin%20De%20Langford%2C%20John%20C.%20A%20global%20geometric%20framework%20for%20nonlinear%20dimensionality%20reduction%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tenenbaum%2C%20Joshua%20B.%20Silva%2C%20Vin%20De%20Langford%2C%20John%20C.%20A%20global%20geometric%20framework%20for%20nonlinear%20dimensionality%20reduction%202000"
+        },
+        {
+            "id": "49",
+            "entry": "[49] David L Donoho and Carrie Grimes. Hessian eigenmaps: Locally linear embedding techniques for high-dimensional data. PNAS, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Donoho%2C%20David%20L.%20Grimes%2C%20Carrie%20Hessian%20eigenmaps%3A%20Locally%20linear%20embedding%20techniques%20for%202003"
+        },
+        {
+            "id": "50",
+            "entry": "[50] Mikhail Belkin and Partha Niyogi. Laplacian eigenmaps and spectral techniques for embedding and clustering. In NIPS, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belkin%2C%20Mikhail%20Niyogi%2C%20Partha%20Laplacian%20eigenmaps%20and%20spectral%20techniques%20for%20embedding%20and%20clustering%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belkin%2C%20Mikhail%20Niyogi%2C%20Partha%20Laplacian%20eigenmaps%20and%20spectral%20techniques%20for%20embedding%20and%20clustering%202002"
+        },
+        {
+            "id": "51",
+            "entry": "[51] Boaz Nadler, Stephane Lafon, Ioannis Kevrekidis, and Ronald R Coifman. Diffusion maps, spectral clustering and eigenfunctions of fokker-planck operators. In NIPS, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nadler%2C%20Boaz%20Lafon%2C%20Stephane%20Kevrekidis%2C%20Ioannis%20Coifman%2C%20Ronald%20R.%20Diffusion%20maps%2C%20spectral%20clustering%20and%20eigenfunctions%20of%20fokker-planck%20operators%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nadler%2C%20Boaz%20Lafon%2C%20Stephane%20Kevrekidis%2C%20Ioannis%20Coifman%2C%20Ronald%20R.%20Diffusion%20maps%2C%20spectral%20clustering%20and%20eigenfunctions%20of%20fokker-planck%20operators%202006"
+        },
+        {
+            "id": "52",
+            "entry": "[52] Ulrike Von Luxburg. A tutorial on spectral clustering. Statistics and computing, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luxburg%2C%20Ulrike%20Von%20A%20tutorial%20on%20spectral%20clustering%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luxburg%2C%20Ulrike%20Von%20A%20tutorial%20on%20spectral%20clustering%202007"
+        },
+        {
+            "id": "53",
+            "entry": "[53] Xiaojin Zhu. Semi-supervised learning literature survey. Computer Science, University of Wisconsin-Madison, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Xiaojin%20Semi-supervised%20learning%20literature%20survey%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Xiaojin%20Semi-supervised%20learning%20literature%20survey%202006"
+        },
+        {
+            "id": "54",
+            "entry": "[54] Mikhail Belkin, Partha Niyogi, and Vikas Sindhwani. Manifold regularization: A geometric framework for learning from labeled and unlabeled examples. JMLR, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belkin%2C%20Mikhail%20Niyogi%2C%20Partha%20Sindhwani%2C%20Vikas%20Manifold%20regularization%3A%20A%20geometric%20framework%20for%20learning%20from%20labeled%20and%20unlabeled%20examples%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belkin%2C%20Mikhail%20Niyogi%2C%20Partha%20Sindhwani%2C%20Vikas%20Manifold%20regularization%3A%20A%20geometric%20framework%20for%20learning%20from%20labeled%20and%20unlabeled%20examples%202006"
+        },
+        {
+            "id": "55",
+            "entry": "[55] Amit Singer and Ronald R Coifman. Non-linear independent component analysis with diffusion maps. Applied and Computational Harmonic Analysis, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singer%2C%20Amit%20Coifman%2C%20Ronald%20R.%20Non-linear%20independent%20component%20analysis%20with%20diffusion%20maps%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singer%2C%20Amit%20Coifman%2C%20Ronald%20R.%20Non-linear%20independent%20component%20analysis%20with%20diffusion%20maps%202008"
+        },
+        {
+            "id": "56",
+            "entry": "[56] Amit Singer, Radek Erban, Ioannis G Kevrekidis, and Ronald R Coifman. Detecting intrinsic slow variables in stochastic dynamical systems by anisotropic diffusion maps. PNAS, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singer%2C%20Amit%20Erban%2C%20Radek%20Kevrekidis%2C%20Ioannis%20G.%20Coifman%2C%20Ronald%20R.%20Detecting%20intrinsic%20slow%20variables%20in%20stochastic%20dynamical%20systems%20by%20anisotropic%20diffusion%20maps%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singer%2C%20Amit%20Erban%2C%20Radek%20Kevrekidis%2C%20Ioannis%20G.%20Coifman%2C%20Ronald%20R.%20Detecting%20intrinsic%20slow%20variables%20in%20stochastic%20dynamical%20systems%20by%20anisotropic%20diffusion%20maps%202009"
+        },
+        {
+            "id": "57",
+            "entry": "[57] Ronen Talmon and Ronald R Coifman. Empirical intrinsic geometry for nonlinear modeling and time series filtering. PNAS, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Talmon%2C%20Ronen%20Coifman%2C%20Ronald%20R.%20Empirical%20intrinsic%20geometry%20for%20nonlinear%20modeling%20and%20time%20series%20filtering%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Talmon%2C%20Ronen%20Coifman%2C%20Ronald%20R.%20Empirical%20intrinsic%20geometry%20for%20nonlinear%20modeling%20and%20time%20series%20filtering%202013"
+        },
+        {
+            "id": "58",
+            "entry": "[58] Dimitrios Giannakis. Dynamics-adapted cone kernels. SIAM Journal on Applied Dynamical Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Giannakis%2C%20Dimitrios%20Dynamics-adapted%20cone%20kernels%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Giannakis%2C%20Dimitrios%20Dynamics-adapted%20cone%20kernels%202015"
+        },
+        {
+            "id": "59",
+            "entry": "[59] Zhizhen Zhao and Dimitrios Giannakis. Analog forecasting with dynamics-adapted kernels. Nonlinearity, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhao%2C%20Zhizhen%20Giannakis%2C%20Dimitrios%20Analog%20forecasting%20with%20dynamics-adapted%20kernels%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhao%2C%20Zhizhen%20Giannakis%2C%20Dimitrios%20Analog%20forecasting%20with%20dynamics-adapted%20kernels%202016"
+        },
+        {
+            "id": "60",
+            "entry": "[60] John Lafferty and Guy Lebanon. Diffusion kernels on statistical manifolds. JMLR, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lafferty%2C%20John%20Lebanon%2C%20Guy%20Diffusion%20kernels%20on%20statistical%20manifolds%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lafferty%2C%20John%20Lebanon%2C%20Guy%20Diffusion%20kernels%20on%20statistical%20manifolds%202005"
+        },
+        {
+            "id": "61",
+            "entry": "[61] Shun-ichi Amari and Hiroshi Nagaoka. Methods of information geometry. American Mathematical Soc., 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-ichi%20Nagaoka%2C%20Hiroshi%20Methods%20of%20information%20geometry%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-ichi%20Nagaoka%2C%20Hiroshi%20Methods%20of%20information%20geometry%202007"
+        },
+        {
+            "id": "62",
+            "entry": "[62] Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, and George E. Dahl. Neural message passing for quantum chemistry. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017"
+        },
+        {
+            "id": "63",
+            "entry": "[63] Zhilin Yang, William W Cohen, and Ruslan Salakhutdinov. Revisiting semi-supervised learning with graph embeddings. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zhilin%20Cohen%2C%20William%20W.%20Salakhutdinov%2C%20Ruslan%20Revisiting%20semi-supervised%20learning%20with%20graph%20embeddings%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zhilin%20Cohen%2C%20William%20W.%20Salakhutdinov%2C%20Ruslan%20Revisiting%20semi-supervised%20learning%20with%20graph%20embeddings%202016"
+        },
+        {
+            "id": "64",
+            "entry": "[64] Raghunathan Ramakrishnan, Mia Hartmann, Enrico Tapavicza, and O Anatole von Lilienfeld. Electronic spectra from tddft and machine learning in chemical space. The Journal of chemical physics, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramakrishnan%2C%20Raghunathan%20Hartmann%2C%20Mia%20Tapavicza%2C%20Enrico%20von%20Lilienfeld%2C%20O.Anatole%20Electronic%20spectra%20from%20tddft%20and%20machine%20learning%20in%20chemical%20space%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ramakrishnan%2C%20Raghunathan%20Hartmann%2C%20Mia%20Tapavicza%2C%20Enrico%20von%20Lilienfeld%2C%20O.Anatole%20Electronic%20spectra%20from%20tddft%20and%20machine%20learning%20in%20chemical%20space%202015"
+        },
+        {
+            "id": "65",
+            "entry": "[65] Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. In NIPS Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPS%20Workshop%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPS%20Workshop%202017"
+        },
+        {
+            "id": "66",
+            "entry": "[66] Zhenqin Wu, Bharath Ramsundar, Evan N Feinberg, Joseph Gomes, Caleb Geniesse, Aneesh S Pappu, Karl Leswing, and Vijay Pande. Moleculenet: a benchmark for molecular machine learning. Chemical science, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Zhenqin%20Ramsundar%2C%20Bharath%20Feinberg%2C%20Evan%20N.%20Gomes%2C%20Joseph%20Moleculenet%3A%20a%20benchmark%20for%20molecular%20machine%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Zhenqin%20Ramsundar%2C%20Bharath%20Feinberg%2C%20Evan%20N.%20Gomes%2C%20Joseph%20Moleculenet%3A%20a%20benchmark%20for%20molecular%20machine%20learning%202018"
+        },
+        {
+            "id": "67",
+            "entry": "[67] Beresford N Parlett. The Symmetric Eigenvalue Problem. SIAM, 1980.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parlett%2C%20Beresford%20N.%20The%20Symmetric%20Eigenvalue%20Problem%201980",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parlett%2C%20Beresford%20N.%20The%20Symmetric%20Eigenvalue%20Problem%201980"
+        },
+        {
+            "id": "68",
+            "entry": "[68] William H Press, Saul A Teukolsky, William T Vetterling, and Brian P Flannery. Numerical recipes 3rd edition: The art of scientific computing. Cambridge university press, 2007. ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Press%2C%20William%20H.%20Teukolsky%2C%20Saul%20A.%20Vetterling%2C%20William%20T.%20Flannery%2C%20Brian%20P.%20Numerical%20recipesThe%20art%20of%20scientific%20computing%202007"
+        }
+    ]
+}

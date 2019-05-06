@@ -1,0 +1,363 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TRANSFERRING KNOWLEDGE ACROSS LEARNING PROCESSES",
+        "author": "Sebastian Flennerhag, The Alan Turing Institute London, UK sflennerhag@turing.ac.uk",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HygBZnRctX"
+        },
+        "abstract": "In complex transfer learning scenarios new tasks might not be tightly linked to previous tasks. Approaches that transfer information contained only in the final parameters of a source model will therefore struggle. Instead, transfer learning at a higher level of abstraction is needed. We propose Leap, a framework that achieves this by transferring knowledge across learning processes. We associate each task with a manifold on which the training process travels from initialization to final parameters and construct a meta-learning objective that minimizes the expected length of this path. Our framework leverages only information obtained during training and can be computed on the fly at negligible cost. We demonstrate that our framework outperforms competing methods, both in meta-learning and transfer learning, on a set of computer vision tasks. Finally, we demonstrate that Leap can transfer knowledge across learning processes in demanding reinforcement learning environments (Atari) that involve millions of gradient steps."
+    },
+    "keywords": [
+        {
+            "term": "high level",
+            "url": "https://en.wikipedia.org/wiki/high_level"
+        },
+        {
+            "term": "Metrics",
+            "url": "https://en.wikipedia.org/wiki/Metrics"
+        },
+        {
+            "term": "knowledge transfer",
+            "url": "https://en.wikipedia.org/wiki/knowledge_transfer"
+        },
+        {
+            "term": "learning process",
+            "url": "https://en.wikipedia.org/wiki/learning_process"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "meta learning",
+            "url": "https://en.wikipedia.org/wiki/meta_learning"
+        },
+        {
+            "term": "catastrophic forgetting",
+            "url": "https://en.wikipedia.org/wiki/Catastrophic_Forgetting"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "MAML": "Model Agnostic Meta Learner",
+        "FOMAML": "first-order approximation of MAML"
+    },
+    "highlights": [
+        "Transfer learning is the process of transferring knowledge encoded in one model trained on one set of tasks to another model that is applied to a new task",
+        "Since a trained model encodes information in its learned parameters, transfer learning typically transfers knowledge by encouraging the target model\u2019s parameters to resemble those of a previous model(s) (Pan & Yang, 2009). This approach limits transfer learning to settings where good parameters for a new task can be found in the neighborhood of parameters that were learned from a previous task",
+        "Gradients that largely point in the same direction indicate a well-behaved loss surface, whereas gradients with frequently opposing directions indicate an ill-conditioned loss surface\u2014something we would like to avoid. Leveraging this insight, we propose a framework for transfer learning that exploits the accumulation of geometric information by constructing a meta objective that minimizes the expected length of the gradient descent path across tasks",
+        "Transfer learning typically ignores the learning process itself, restricting knowledge transfer to scenarios where target tasks are very similar to source tasks",
+        "We present Leap, a framework for knowledge transfer at a higher level of abstraction",
+        "By formalizing knowledge transfer as minimizing the expected length of gradient paths, we propose a method for meta-learning that scales to highly demanding problems"
+    ],
+    "key_statements": [
+        "Transfer learning is the process of transferring knowledge encoded in one model trained on one set of tasks to another model that is applied to a new task",
+        "Since a trained model encodes information in its learned parameters, transfer learning typically transfers knowledge by encouraging the target model\u2019s parameters to resemble those of a previous model(s) (Pan & Yang, 2009). This approach limits transfer learning to settings where good parameters for a new task can be found in the neighborhood of parameters that were learned from a previous task",
+        "Since a trained model encodes information in its learned parameters, transfer learning typically transfers knowledge by encouraging the target model\u2019s parameters to resemble those of a previous model(s) (Pan & Yang, 2009). This approach limits transfer learning to settings where good parameters for a new task can be found in the neighborhood of parameters that were learned from a previous task. For this to be a viable assumption, the two tasks must have a high degree of structural affinity, such as when a new task can be learned by extracting features from a pretrained model (<a class=\"ref-link\" id=\"cGirshick_et+al_2014_a\" href=\"#rGirshick_et+al_2014_a\">Girshick et al, 2014</a>; <a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a>; <a class=\"ref-link\" id=\"cMahajan_et+al_2018_a\" href=\"#rMahajan_et+al_2018_a\">Mahajan et al, 2018</a>)",
+        "This approach limits transfer learning to settings where good parameters for a new task can be found in the neighborhood of parameters that were learned from a previous task. For this to be a viable assumption, the two tasks must have a high degree of structural affinity, such as when a new task can be learned by extracting features from a pretrained model (<a class=\"ref-link\" id=\"cGirshick_et+al_2014_a\" href=\"#rGirshick_et+al_2014_a\">Girshick et al, 2014</a>; <a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a>; <a class=\"ref-link\" id=\"cMahajan_et+al_2018_a\" href=\"#rMahajan_et+al_2018_a\">Mahajan et al, 2018</a>). This approach has been observed to limit knowledge transfer since the training process on one task will discard information that was irrelevant for the task at hand, but that would be relevant for another task (<a class=\"ref-link\" id=\"cHiggins_et+al_2017_a\" href=\"#rHiggins_et+al_2017_a\">Higgins et al, 2017</a>; <a class=\"ref-link\" id=\"cAchille_et+al_2018_a\" href=\"#rAchille_et+al_2018_a\">Achille et al, 2018</a>)",
+        "We argue that as the training process grows longer in terms of the distance traversed on the loss landscape, the geometry of this landscape grows increasingly important",
+        "Gradients that largely point in the same direction indicate a well-behaved loss surface, whereas gradients with frequently opposing directions indicate an ill-conditioned loss surface\u2014something we would like to avoid. Leveraging this insight, we propose a framework for transfer learning that exploits the accumulation of geometric information by constructing a meta objective that minimizes the expected length of the gradient descent path across tasks",
+        "Our framework is built on the idea that we can transfer knowledge across learning processes via the local geometry by aggregating information obtained along observed gradient paths",
+        "In theorem 1, we show that gradient descent on Fyields solutions that always lie in \u0398",
+        "Transfer learning typically ignores the learning process itself, restricting knowledge transfer to scenarios where target tasks are very similar to source tasks",
+        "We present Leap, a framework for knowledge transfer at a higher level of abstraction",
+        "By formalizing knowledge transfer as minimizing the expected length of gradient paths, we propose a method for meta-learning that scales to highly demanding problems"
+    ],
+    "summary": [
+        "Transfer learning is the process of transferring knowledge encoded in one model trained on one set of tasks to another model that is applied to a new task.",
+        "To accurately describe the length of a gradient-based learning process, it is sufficient to define the task manifold as the loss surface.",
+        "Leveraging this insight, we propose a framework for transfer learning that exploits the accumulation of geometric information by constructing a meta objective that minimizes the expected length of the gradient descent path across tasks.",
+        "Our framework is built on the idea that we can transfer knowledge across learning processes via the local geometry by aggregating information obtained along observed gradient paths.",
+        "Assuming two candidate initializations converge to limit points with equivalent performance on each task, the initialization with shortest expected gradient path distance encodes more knowledge sharing.",
+        "The initialization with shortest expected gradient path distance maximally transfers knowledge across learning processes and is Pareto optimal in this regard.",
+        "Leap starts from a given second-best initialization \u03c80, shared across all tasks, and constructs baseline gradient paths \u03a8\u03c4 = {\u03c8\u03c4i }Ki=\u03c40 for each task \u03c4 in a batch B.",
+        "We use these baselines, corresponding to task-specific learning processes, to modify the gradient path distance metric in eq 3 by freezing the forward point \u03b3\u03c4i+1 in all norms, K\u03c4 \u22121 dp(\u03b80; M\u03c4 , \u03a8\u03c4 ) =",
+        "This surrogate distance metric encodes the feasibility constraint; optimizing \u03b80 with respect to \u03a8 pulls the initialization forward along each task-specific gradient path in an unconstrained variant of eq 4 that replaces \u0398 with \u03a8, min F(\u03b80; \u03a8) = E\u03c4\u223cp(\u03c4) d(\u03b80; M\u03c4 , \u03a8\u03c4 ) , \u03b80 (6)",
+        "In contrast to our work, these methods focus exclusively on few-shot learning, where the gradient path is trivial as only a single or a handful of training steps are allowed, limiting them to settings where the current task is closely related to previous ones.",
+        "We vary the number of alphabets used for meta-learning / pretraining from 1 to 25 and compare final performance and rate of convergence on held-out tasks.",
+        "Leap outperforms all baselines on all but one transfer learning tasks (Facescrub), where Progressive Nets does marginally better than a random initialization owing to its increased parameter count.",
+        "This suggests that transferring knowledge at a higher level of abstraction, such as in the space of gradient paths, generalizes to unseen task variations as long as underlying learning dynamics agree.",
+        "By formalizing knowledge transfer as minimizing the expected length of gradient paths, we propose a method for meta-learning that scales to highly demanding problems.",
+        "We find empirically that Leap has superior generalizing properties to finetuning and competing meta-learners"
+    ],
+    "headline": "We propose Leap, a framework that achieves this by transferring knowledge across learning processes",
+    "reference_links": [
+        {
+            "id": "Abbati_et+al_2018_a",
+            "entry": "Gabriele Abbati, Alessandra Tosi, Michael Osborne, and Seth Flaxman. Adageo: Adaptive geometric learning for optimization and sampling. In International Conference on Artificial Intelligence and Statistics, pp. 226\u2013234, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abbati%2C%20Gabriele%20Tosi%2C%20Alessandra%20Osborne%2C%20Michael%20Flaxman%2C%20Seth%20Adageo%3A%20Adaptive%20geometric%20learning%20for%20optimization%20and%20sampling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abbati%2C%20Gabriele%20Tosi%2C%20Alessandra%20Osborne%2C%20Michael%20Flaxman%2C%20Seth%20Adageo%3A%20Adaptive%20geometric%20learning%20for%20optimization%20and%20sampling%202018"
+        },
+        {
+            "id": "Achille_et+al_2018_a",
+            "entry": "Alessandro Achille, Tom Eccles, Loic Matthey, Christopher P. Burgess, Nick Watters, Alexander Lerchner, and Irina Higgins. Life-long disentangled representation learning with cross-domain latent homologies. arXiv preprint arXiv:1808.06508, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.06508"
+        },
+        {
+            "id": "Ahlberg_et+al_1967_a",
+            "entry": "J Harold Ahlberg, Edwin Norman Nilson, and Joseph Leonard Walsh. The Theory of Splines and Their Applications. Academic Press, 1967. p. 51.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ahlberg%2C%20J.Harold%20Nilson%2C%20Edwin%20Norman%20Walsh%2C%20Joseph%20Leonard%20The%20Theory%20of%20Splines%20and%20Their%20Applications%201967"
+        },
+        {
+            "id": "Al-Shedivat_et+al_2017_a",
+            "entry": "Maruan Al-Shedivat, Trapit Bansal, Yuri Burda, Ilya Sutskever, Igor Mordatch, and Pieter Abbeel. Continuous Adaptation via Meta-Learning in Nonstationary and Competitive Environments. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Al-Shedivat%2C%20Maruan%20Bansal%2C%20Trapit%20Burda%2C%20Yuri%20Sutskever%2C%20Ilya%20Continuous%20Adaptation%20via%20Meta-Learning%20in%20Nonstationary%20and%20Competitive%20Environments%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Al-Shedivat%2C%20Maruan%20Bansal%2C%20Trapit%20Burda%2C%20Yuri%20Sutskever%2C%20Ilya%20Continuous%20Adaptation%20via%20Meta-Learning%20in%20Nonstationary%20and%20Competitive%20Environments%202017"
+        },
+        {
+            "id": "Amari_1998_a",
+            "entry": "Shun-Ichi Amari. Natural gradient works efficiently in learning. Neural computation, 10(2):251\u2013276, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998"
+        },
+        {
+            "id": "Amari_2007_a",
+            "entry": "Shun-ichi Amari and Hiroshi Nagaoka. Methods of information geometry, volume 191. American Mathematical Society, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-ichi%20Nagaoka%2C%20Hiroshi%20Methods%20of%20information%20geometry%2C%20volume%20191%202007"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan Shillingford, and Nando De Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Georgios_2018_a",
+            "entry": "Georgios Arvanitidis, Lars Kai Hansen, and S\u00f8ren Hauberg. Latent Space Oddity: on the Curvature of Deep Generative Models. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Georgios%20Arvanitidis%2C%20Lars%20Kai%20Hansen%20Hauberg%2C%20S%C3%B8ren%20Latent%20Space%20Oddity%3A%20on%20the%20Curvature%20of%20Deep%20Generative%20Models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Georgios%20Arvanitidis%2C%20Lars%20Kai%20Hansen%20Hauberg%2C%20S%C3%B8ren%20Latent%20Space%20Oddity%3A%20on%20the%20Curvature%20of%20Deep%20Generative%20Models%202018"
+        },
+        {
+            "id": "Bellemare_et+al_2013_a",
+            "entry": "M. G. Bellemare, Y. Naddaf, J. Veness, and M. Bowling. The arcade learning environment: An evaluation platform for general agents. Journal of Artificial Intelligence Research, 47:253\u2013279, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20M.G.%20Naddaf%2C%20Y.%20Veness%2C%20J.%20Bowling%2C%20M.%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20M.G.%20Naddaf%2C%20Y.%20Veness%2C%20J.%20Bowling%2C%20M.%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013"
+        },
+        {
+            "id": "Bengio_et+al_1991_a",
+            "entry": "Yoshua Bengio, Samy Bengio, and Jocelyn Cloutier. Learning a synaptic learning rule. Universit\u00e9 de Montr\u00e9al, D\u00e9partement d\u2019informatique et de recherche op\u00e9rationnelle, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Bengio%2C%20Samy%20Cloutier%2C%20Jocelyn%20Learning%20a%20synaptic%20learning%20rule.%20Universit%C3%A9%20de%20Montr%C3%A9al%2C%20D%C3%A9partement%20d%E2%80%99informatique%20et%20de%20recherche%20op%C3%A9rationnelle%201991"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Nutan Chen, Alexej Klushyn, Richard Kurle, Xueyan Jiang, Justin Bayer, and Patrick van der Smagt. Metrics for Deep Generative Models. In International Conference on Artificial Intelligence and Statistics, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Nutan%20Klushyn%2C%20Alexej%20Kurle%2C%20Richard%20Jiang%2C%20Xueyan%20Metrics%20for%20Deep%20Generative%20Models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Nutan%20Klushyn%2C%20Alexej%20Kurle%2C%20Richard%20Jiang%2C%20Xueyan%20Metrics%20for%20Deep%20Generative%20Models%202018"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-Agnostic%20Meta-Learning%20for%20Fast%20Adaptation%20of%20Deep%20Networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-Agnostic%20Meta-Learning%20for%20Fast%20Adaptation%20of%20Deep%20Networks%202017"
+        },
+        {
+            "id": "Girshick_et+al_2014_a",
+            "entry": "Ross Girshick, Jeff Donahue, Trevor Darrell, and Jitendra Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In International Conference on Computer Vision and Pattern Recognition, pp. 580\u2013587, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Girshick%2C%20Ross%20Donahue%2C%20Jeff%20Darrell%2C%20Trevor%20Malik%2C%20Jitendra%20Rich%20feature%20hierarchies%20for%20accurate%20object%20detection%20and%20semantic%20segmentation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Girshick%2C%20Ross%20Donahue%2C%20Jeff%20Darrell%2C%20Trevor%20Malik%2C%20Jitendra%20Rich%20feature%20hierarchies%20for%20accurate%20object%20detection%20and%20semantic%20segmentation%202014"
+        },
+        {
+            "id": "Goodfellow_et+al_2013_a",
+            "entry": "Ian J Goodfellow, Mehdi Mirza, Da Xiao, Aaron Courville, and Yoshua Bengio. An empirical investigation of catastrophic forgetting in gradient-based neural networks. arXiv preprint arXiv:1312.6211, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6211"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Kaiming He, Georgia Gkioxari, Piotr Doll\u00e1r, and Ross Girshick. Mask r-cnn. In International Conference on Computer Vision, pp. 2980\u20132988, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Doll%C3%A1r%20and%20Ross%20Girshick%20Mask%20rcnn%20In%20International%20Conference%20on%20Computer%20Vision%20pp%2029802988%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Doll%C3%A1r%20and%20Ross%20Girshick%20Mask%20rcnn%20In%20International%20Conference%20on%20Computer%20Vision%20pp%2029802988%202017"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Arka Pal, Andrei A Rusu, Loic Matthey, Christopher P Burgess, Alexander Pritzel, Matthew Botvinick, Charles Blundell, and Alexander Lerchner. Darla: Improving zero-shot transfer in reinforcement learning. arXiv preprint arXiv:1707.08475, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.08475"
+        },
+        {
+            "id": "Sepp_2001_a",
+            "entry": "Sepp Hochreiter, A Steven Younger, and Peter R Conwell. Learning to learn using gradient descent. In International Conference on Artificial Neural Networks, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sepp%20Hochreiter%2C%20A.Steven%20Younger%20Conwell%2C%20Peter%20R.%20Learning%20to%20learn%20using%20gradient%20descent%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sepp%20Hochreiter%2C%20A.Steven%20Younger%20Conwell%2C%20Peter%20R.%20Learning%20to%20learn%20using%20gradient%20descent%202001"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A Method for Stochastic Optimization. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20Method%20for%20Stochastic%20Optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20Method%20for%20Stochastic%20Optimization%202015"
+        },
+        {
+            "id": "Kirkpatrick_et+al_2017_a",
+            "entry": "James Kirkpatrick, Razvan Pascanu, Neil Rabinowitz, Joel Veness, Guillaume Desjardins, Andrei A. Rusu, Kieran Milan, John Quan, Tiago Ramalho, Agnieszka Grabska-Barwinska, Demis Hassabis, Claudia Clopath, Dharshan Kumaran, and Raia Hadsell. Overcoming catastrophic forgetting in neural networks. Proceedings of the National Academy of Sciences, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kirkpatrick%2C%20James%20Pascanu%2C%20Razvan%20Rabinowitz%2C%20Neil%20Veness%2C%20Joel%20Overcoming%20catastrophic%20forgetting%20in%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kirkpatrick%2C%20James%20Pascanu%2C%20Razvan%20Rabinowitz%2C%20Neil%20Veness%2C%20Joel%20Overcoming%20catastrophic%20forgetting%20in%20neural%20networks%202017"
+        },
+        {
+            "id": "Kumar_et+al_2017_a",
+            "entry": "Abhishek Kumar, Prasanna Sattigeri, and P Thomas Fletcher. Improved Semi-supervised Learning with GANs using Manifold Invariances. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kumar%2C%20Abhishek%20Sattigeri%2C%20Prasanna%20Fletcher%2C%20P.Thomas%20Improved%20Semi-supervised%20Learning%20with%20GANs%20using%20Manifold%20Invariances%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kumar%2C%20Abhishek%20Sattigeri%2C%20Prasanna%20Fletcher%2C%20P.Thomas%20Improved%20Semi-supervised%20Learning%20with%20GANs%20using%20Manifold%20Invariances%202017"
+        },
+        {
+            "id": "Lake_et+al_2011_a",
+            "entry": "Brenden Lake, Ruslan Salakhutdinov, Jason Gross, and Joshua Tenenbaum. One shot learning of simple visual concepts. In Proceedings of the Annual Meeting of the Cognitive Science Society, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20Salakhutdinov%2C%20Ruslan%20Gross%2C%20Jason%20Tenenbaum%2C%20Joshua%20One%20shot%20learning%20of%20simple%20visual%20concepts%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20Salakhutdinov%2C%20Ruslan%20Gross%2C%20Jason%20Tenenbaum%2C%20Joshua%20One%20shot%20learning%20of%20simple%20visual%20concepts%202011"
+        },
+        {
+            "id": "Lake_et+al_2015_a",
+            "entry": "Brenden M. Lake, Ruslan Salakhutdinov, and Joshua B. Tenenbaum. Human-level concept learning through probabilistic program induction. Science, 350(6266):1332\u20131338, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20Tenenbaum%2C%20Joshua%20B.%20Human-level%20concept%20learning%20through%20probabilistic%20program%20induction%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20Tenenbaum%2C%20Joshua%20B.%20Human-level%20concept%20learning%20through%20probabilistic%20program%20induction%202015"
+        },
+        {
+            "id": "Lee_et+al_2017_a",
+            "entry": "Sang-Woo Lee, Jin-Hwa Kim, JungWoo Ha, and Byoung-Tak Zhang. Overcoming Catastrophic Forgetting by Incremental Moment Matching. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Sang-Woo%20Kim%2C%20Jin-Hwa%20Ha%2C%20JungWoo%20Zhang%2C%20Byoung-Tak%20Overcoming%20Catastrophic%20Forgetting%20by%20Incremental%20Moment%20Matching%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Sang-Woo%20Kim%2C%20Jin-Hwa%20Ha%2C%20JungWoo%20Zhang%2C%20Byoung-Tak%20Overcoming%20Catastrophic%20Forgetting%20by%20Incremental%20Moment%20Matching%202017"
+        },
+        {
+            "id": "Lee_2018_a",
+            "entry": "Yoonho Lee and Seungjin Choi. Meta-Learning with Adaptive Layerwise Metric and Subspace. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Yoonho%20Choi%2C%20Seungjin%20Meta-Learning%20with%20Adaptive%20Layerwise%20Metric%20and%20Subspace%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Yoonho%20Choi%2C%20Seungjin%20Meta-Learning%20with%20Adaptive%20Layerwise%20Metric%20and%20Subspace%202018"
+        },
+        {
+            "id": "Loshchilov_2017_a",
+            "entry": "Ilya Loshchilov and Frank Hutter. SGDR: stochastic gradient descent with restarts. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Loshchilov%2C%20Ilya%20Hutter%2C%20Frank%20SGDR%3A%20stochastic%20gradient%20descent%20with%20restarts%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Loshchilov%2C%20Ilya%20Hutter%2C%20Frank%20SGDR%3A%20stochastic%20gradient%20descent%20with%20restarts%202017"
+        },
+        {
+            "id": "Luk_2018_a",
+            "entry": "Kevin Luk and Roger Grosse. A coordinate-free construction of scalable natural gradient. arXiv preprint arXiv:1808.10340, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.10340"
+        },
+        {
+            "id": "Mahajan_et+al_2018_a",
+            "entry": "Dhruv Mahajan, Ross B. Girshick, Vignesh Ramanathan, Kaiming He, Manohar Paluri, Yixuan Li, Ashwin Bharambe, and Laurens van der Maaten. Exploring the limits of weakly supervised pretraining. arXiv preprint arXiv:1805.00932, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.00932"
+        },
+        {
+            "id": "Martens_2010_a",
+            "entry": "James Martens. Deep learning via hessian-free optimization. In International Conference on Machine Learning, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Deep%20learning%20via%20hessian-free%20optimization%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Deep%20learning%20via%20hessian-free%20optimization%202010"
+        },
+        {
+            "id": "Miconi_et+al_2018_a",
+            "entry": "Thomas Miconi, Jeff Clune, and Kenneth O. Stanley. Differentiable plasticity: training plastic neural networks with backpropagation. International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miconi%2C%20Thomas%20Clune%2C%20Jeff%20Stanley%2C%20Kenneth%20O.%20Differentiable%20plasticity%3A%20training%20plastic%20neural%20networks%20with%20backpropagation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miconi%2C%20Thomas%20Clune%2C%20Jeff%20Stanley%2C%20Kenneth%20O.%20Differentiable%20plasticity%3A%20training%20plastic%20neural%20networks%20with%20backpropagation%202018"
+        },
+        {
+            "id": "Mishra_et+al_2018_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. A Simple Neural Attentive Meta-Learner. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nikhil%20Mishra%20Mostafa%20Rohaninejad%20Xi%20Chen%20and%20Pieter%20Abbeel%20A%20Simple%20Neural%20Attentive%20MetaLearner%20In%20International%20Conference%20on%20Learning%20Representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nikhil%20Mishra%20Mostafa%20Rohaninejad%20Xi%20Chen%20and%20Pieter%20Abbeel%20A%20Simple%20Neural%20Attentive%20MetaLearner%20In%20International%20Conference%20on%20Learning%20Representations%202018"
+        },
+        {
+            "id": "Mnih_et+al_2013_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. Playing atari with deep reinforcement learning. arXiv preprint arXiv:1312.5602, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.5602"
+        },
+        {
+            "id": "Nichol_et+al_2018_a",
+            "entry": "Alex Nichol, Joshua Achiam, and John Schulman. On First-Order Meta-Learning Algorithms. arXiv preprint ArXiv:1803.02999, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02999"
+        },
+        {
+            "id": "Sinno_2009_a",
+            "entry": "Sinno Jialin Pan and Qiang Yang. A survey on transfer learning. IEEE Transactions on Knowledge & Data Engineering, (10):1345\u20131359, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sinno%20Jialin%20Pan%20and%20Qiang%20Yang%20A%20survey%20on%20transfer%20learning%20IEEE%20Transactions%20on%20Knowledge%20%20Data%20Engineering%201013451359%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sinno%20Jialin%20Pan%20and%20Qiang%20Yang%20A%20survey%20on%20transfer%20learning%20IEEE%20Transactions%20on%20Knowledge%20%20Data%20Engineering%201013451359%202009"
+        },
+        {
+            "id": "Pascanu_2014_a",
+            "entry": "Razvan Pascanu and Yoshua Bengio. Revisiting natural gradient for deep networks. In International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Bengio%2C%20Yoshua%20Revisiting%20natural%20gradient%20for%20deep%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Bengio%2C%20Yoshua%20Revisiting%20natural%20gradient%20for%20deep%20networks%202014"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Rusu_et+al_2016_a",
+            "entry": "Andrei A Rusu, Neil C Rabinowitz, Guillaume Desjardins, Hubert Soyer, James Kirkpatrick, Koray Kavukcuoglu, Razvan Pascanu, and Raia Hadsell. Progressive neural networks. arXiv preprint arXiv:1606.04671, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.04671"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Metalearning with memory-augmented neural networks. In International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016"
+        },
+        {
+            "id": "Schmidhuber_1987_a",
+            "entry": "J\u00fcrgen Schmidhuber. Evolutionary principles in self-referential learning. PhD thesis, Technische Universit\u00e4t M\u00fcnchen, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Evolutionary%20principles%20in%20self-referential%20learning%201987"
+        },
+        {
+            "id": "Schwarz_et+al_2018_a",
+            "entry": "Jonathan Schwarz, Jelena Luketina, Wojciech M Czarnecki, Agnieszka Grabska-Barwinska, Yee Whye Teh, Razvan Pascanu, and Raia Hadsell. Progress & compress: A scalable framework for continual learning. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schwarz%2C%20Jonathan%20Luketina%2C%20Jelena%20Czarnecki%2C%20Wojciech%20M.%20Grabska-Barwinska%2C%20Agnieszka%20Progress%20%26%20compress%3A%20A%20scalable%20framework%20for%20continual%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schwarz%2C%20Jonathan%20Luketina%2C%20Jelena%20Czarnecki%2C%20Wojciech%20M.%20Grabska-Barwinska%2C%20Agnieszka%20Progress%20%26%20compress%3A%20A%20scalable%20framework%20for%20continual%20learning%202018"
+        },
+        {
+            "id": "Serr_et+al_2018_a",
+            "entry": "Joan Serr\u00e0, D\u00eddac Sur\u00eds, Marius Miron, and Alexandros Karatzoglou. Overcoming catastrophic forgetting with hard attention to the task. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Serr%C3%A0%2C%20Joan%20Sur%C3%ADs%2C%20D%C3%ADdac%20Miron%2C%20Marius%20Karatzoglou%2C%20Alexandros%20Overcoming%20catastrophic%20forgetting%20with%20hard%20attention%20to%20the%20task%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Serr%C3%A0%2C%20Joan%20Sur%C3%ADs%2C%20D%C3%ADdac%20Miron%2C%20Marius%20Karatzoglou%2C%20Alexandros%20Overcoming%20catastrophic%20forgetting%20with%20hard%20attention%20to%20the%20task%202018"
+        },
+        {
+            "id": "Shao_et+al_2017_a",
+            "entry": "Hang Shao, Abhishek Kumar, and P Thomas Fletcher. The Riemannian Geometry of Deep Generative Models. arXiv preprint ArXiv:1711.08014, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.08014"
+        },
+        {
+            "id": "Snell_et+al_2017_a",
+            "entry": "Jake Snell, Kevin Swersky, and Richard S Zemel. Prototypical Networks for Few-shot Learning. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20S.%20Prototypical%20Networks%20for%20Few-shot%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20S.%20Prototypical%20Networks%20for%20Few-shot%20Learning%202017"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S Sutton, Andrew G Barto, et al. Reinforcement learning: An introduction. MIT Press, Cambridge, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20learning%3A%20An%20introduction%201998"
+        },
+        {
+            "id": "Tosi_et+al_2014_a",
+            "entry": "Alessandra Tosi, S\u00f8ren Hauberg, Alfredo Vellido, and Neil D Lawrence. Metrics for Probabilistic Geometries. Conference on Uncertainty in Artificial Intelligence, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tosi%2C%20Alessandra%20Hauberg%2C%20S%C3%B8ren%20Vellido%2C%20Alfredo%20Lawrence%2C%20Neil%20D.%20Metrics%20for%20Probabilistic%20Geometries%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tosi%2C%20Alessandra%20Hauberg%2C%20S%C3%B8ren%20Vellido%2C%20Alfredo%20Lawrence%2C%20Neil%20D.%20Metrics%20for%20Probabilistic%20Geometries%202014"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Charles Blundell, Timothy Lillicrap, Koray Kavukcuoglu, and Daan Wierstra. Matching Networks for One Shot Learning. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Timothy%20Kavukcuoglu%2C%20Koray%20Matching%20Networks%20for%20One%20Shot%20Learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Timothy%20Kavukcuoglu%2C%20Koray%20Matching%20Networks%20for%20One%20Shot%20Learning%202016"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Yuhuai Wu, Mengye Ren, Renjie Liao, and Roger B. Grosse. Understanding short-horizon bias in stochastic meta-optimization. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Yuhuai%20Ren%2C%20Mengye%20Liao%2C%20Renjie%20Grosse%2C%20Roger%20B.%20Understanding%20short-horizon%20bias%20in%20stochastic%20meta-optimization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Yuhuai%20Ren%2C%20Mengye%20Liao%2C%20Renjie%20Grosse%2C%20Roger%20B.%20Understanding%20short-horizon%20bias%20in%20stochastic%20meta-optimization%202018"
+        },
+        {
+            "id": "Zenke_et+al_2017_a",
+            "entry": "Friedemann Zenke, Ben Poole, and Surya Ganguli. Continual Learning Through Synaptic Intelligence. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zenke%2C%20Friedemann%20Poole%2C%20Ben%20Ganguli%2C%20Surya%20Continual%20Learning%20Through%20Synaptic%20Intelligence%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zenke%2C%20Friedemann%20Poole%2C%20Ben%20Ganguli%2C%20Surya%20Continual%20Learning%20Through%20Synaptic%20Intelligence%202017"
+        }
+    ]
+}

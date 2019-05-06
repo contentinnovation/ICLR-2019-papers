@@ -1,0 +1,323 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "M3RL: MIND-AWARE MULTI-AGENT MANAGEMENT REINFORCEMENT LEARNING",
+        "author": "Tianmin Shu \u2217 University of California, Los Angeles tianmin.shu@ucla.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BkzeUiRcY7"
+        },
+        "abstract": "Most of the prior work on multi-agent reinforcement learning (MARL) achieves optimal collaboration by directly learning a policy for each agent to maximize a common reward. In this paper, we aim to address this from a different angle. In particular, we consider scenarios where there are self-interested agents (i.e., worker agents) which have their own minds (preferences, intentions, skills, etc.) and can not be dictated to perform tasks they do not want to do. For achieving optimal coordination among these agents, we train a super agent (i.e., the manager) to manage them by first inferring their minds based on both current and past observations and then initiating contracts to assign suitable tasks to workers and promise to reward them with corresponding bonuses so that they will agree to work together. The objective of the manager is to maximize the overall productivity as well as minimize payments made to the workers for ad-hoc worker teaming. To train the manager, we propose Mind-aware Multi-agent Management Reinforcement Learning (M3RL), which consists of agent modeling and policy learning. We have evaluated our approach in two environments, Resource Collection and Crafting, to simulate multi-agent management problems with various task settings and multiple designs for the worker agents. The experimental results have validated the effectiveness of our approach in modeling worker agents\u2019 minds online, and in achieving optimal ad-hoc teaming with good generalization and fast adaptation.1"
+    },
+    "keywords": [
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        }
+    ],
+    "abbreviations": {
+        "MARL": "multi-agent reinforcement learning",
+        "IL": "imitation learning",
+        "RL": "reinforcement learning",
+        "SR": "successor representation",
+        "MDP": "Markov Decision Process",
+        "UCB": "upper confidence bound"
+    },
+    "highlights": [
+        "As the main assumption and building block in economics, self-interested agents play a central roles in our daily life",
+        "With their private beliefs, preferences, intentions, and skills, could collaborate effectively to make great achievement with proper incentives and contracts, an amazing phenomenon that happens every day in every corner of the world",
+        "Most existing multi-agent reinforcement learning (MARL) methods focus on collaboration when agents selflessly share a common goal, expose its complete states and are willing to be trained towards the goal",
+        "We propose Mind-aware Multi-agent Management Reinforcement Learning (M3RL) for solving the collaboration problems among self-interested workers with different skills and preferences",
+        "We improve the model performance by a few techniques including learning high-level successor representation, agent-wise -greedy exploration, and agent identification based on performance history",
+        "Results from extensive experiments demonstrate that our approach learns effectively, generalizes well, and has a fast and continuous adaptation"
+    ],
+    "key_statements": [
+        "As the main assumption and building block in economics, self-interested agents play a central roles in our daily life",
+        "With their private beliefs, preferences, intentions, and skills, could collaborate effectively to make great achievement with proper incentives and contracts, an amazing phenomenon that happens every day in every corner of the world",
+        "Most existing multi-agent reinforcement learning (MARL) methods focus on collaboration when agents selflessly share a common goal, expose its complete states and are willing to be trained towards the goal",
+        "While this is plausible in certain games, few papers address the more practical situations, in which agents are self-interested and inclined to show off, and only get motivated to work with proper incentives",
+        "To improve the learning efficiency and adaptation, we propose high-level successor representation (SR) learning (<a class=\"ref-link\" id=\"cKulkarni_et+al_2016_a\" href=\"#rKulkarni_et+al_2016_a\">Kulkarni et al, 2016</a>) and agent-wise -greedy exploration",
+        "We model a worker\u2019s mind by its preferences, intentions, and skills",
+        "We propose performance history for agent identification, which is inspired by the upper confidence bound (UCB) algorithm (<a class=\"ref-link\" id=\"cAuer_et+al_2002_a\" href=\"#rAuer_et+al_2002_a\">Auer et al, 2002</a>) for multi-bandit arm (MAB) problems",
+        "As our experimental results in Section 5 and Appendix C show, in difficult settings such as random preferences and multiple bonus levels, the policies based on the mental state representation trained with imitation learning have a much better performance than the ones without it",
+        "In more difficult settings, e.g., S3 of Resource Collection and Crafting, the benefits of imitation learning, successor representation, agent-wise -greedy exploration, and the history representations based on the performance history are more significant",
+        "The population of worker agents and their skills may evolve over time, which requires the manager to continuously and quickly adapt its policy to the unforeseeable changes through a good exploration",
+        "To have a better sense of the upper bound in the testing case, we show the performance of the baseline that knows ground-truth agent information where no exploration is need",
+        "We propose Mind-aware Multi-agent Management Reinforcement Learning (M3RL) for solving the collaboration problems among self-interested workers with different skills and preferences",
+        "We improve the model performance by a few techniques including learning high-level successor representation, agent-wise -greedy exploration, and agent identification based on performance history",
+        "Results from extensive experiments demonstrate that our approach learns effectively, generalizes well, and has a fast and continuous adaptation"
+    ],
+    "summary": [
+        "As the main assumption and building block in economics, self-interested agents play a central roles in our daily life.",
+        "The manager must infer the workers\u2019 minds and learn a good policy of goal and reward assignment.",
+        "Our approach has three main components as shown in Figure 2: i) performance history module for identification, ii) mind tracker module for agent modeling, and iii) manager module for learning goal and bonus assignment policies.",
+        "The manager uses an independent mind tracker module with shared weights to update its belief of a worker\u2019s current mental state online by encoding both current and past information: M (\u0393it, hi), where \u0393ti = { : \u03c4 = 1, \u00b7 \u00b7 \u00b7 , t} is a trajectory of the worker\u2019s behavior and the contracts it has received upon current time t in the current episode.",
+        "As our experimental results in Section 5 and Appendix C show, in difficult settings such as random preferences and multiple bonus levels, the policies based on the mental state representation trained with IL have a much better performance than the ones without it.",
+        "The manager receives a reward of 3 for every resource collected under the contracts, and can choose to pay a worker with a bonus of 1 or 2.",
+        "In more difficult settings, e.g., S3 of Resource Collection and Crafting, the benefits of IL, SR, agent-wise -greedy exploration, and the history representations based on the performance history are more significant.",
+        "The population of worker agents and their skills may evolve over time, which requires the manager to continuously and quickly adapt its policy to the unforeseeable changes through a good exploration.",
+        "In Crafting random policies make the workers unlikely to achieve assigned goals within the time limit, the manager may never get top-level items if the policies are too random.",
+        "In addition to the main experimental results discussed above, we further test our approach from different perspectives: i) showing the effect of the minimum valid period of a contract, ii) multiple bonus levels, and iii) training RL agents as workers.",
+        "We propose Mind-aware Multi-agent Management Reinforcement Learning (M3RL) for solving the collaboration problems among self-interested workers with different skills and preferences.",
+        "We train a manager to simultaneously infer workers\u2019 minds and optimally assign contracts to workers for maximizing the overall productivity, for which we combine imitation learning and reinforcement learning for a joint training of agent modeling and management policy optimization.",
+        "Results from extensive experiments demonstrate that our approach learns effectively, generalizes well, and has a fast and continuous adaptation"
+    ],
+    "headline": "We aim to address this from a different angle",
+    "reference_links": [
+        {
+            "id": "Al-Shedivat_et+al_2018_a",
+            "entry": "Maruan Al-Shedivat, Trapit Bansal, Yuri Burda, Ilya Sutskever, Igor Mordatch, and Pieter Abbeel. Continuous adaptation via meta-learning in nonstationary and competitive environments. In The Sixth International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Al-Shedivat%2C%20Maruan%20Bansal%2C%20Trapit%20Burda%2C%20Yuri%20Sutskever%2C%20Ilya%20Continuous%20adaptation%20via%20meta-learning%20in%20nonstationary%20and%20competitive%20environments%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Al-Shedivat%2C%20Maruan%20Bansal%2C%20Trapit%20Burda%2C%20Yuri%20Sutskever%2C%20Ilya%20Continuous%20adaptation%20via%20meta-learning%20in%20nonstationary%20and%20competitive%20environments%202018"
+        },
+        {
+            "id": "Andreas_et+al_2017_a",
+            "entry": "Jacob Andreas, Dan Klein, and Sergey Levine. Modular multitask reinforcement learning with policy sketches. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andreas%2C%20Jacob%20Klein%2C%20Dan%20Levine%2C%20Sergey%20Modular%20multitask%20reinforcement%20learning%20with%20policy%20sketches%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andreas%2C%20Jacob%20Klein%2C%20Dan%20Levine%2C%20Sergey%20Modular%20multitask%20reinforcement%20learning%20with%20policy%20sketches%202017"
+        },
+        {
+            "id": "Auer_et+al_2002_a",
+            "entry": "Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem. Machine Learning, 47(2-3):235\u2013256, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Auer%2C%20Peter%20Cesa-Bianchi%2C%20Nicolo%20Fischer%2C%20Paul%20Finite-time%20analysis%20of%20the%20multiarmed%20bandit%20problem%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Auer%2C%20Peter%20Cesa-Bianchi%2C%20Nicolo%20Fischer%2C%20Paul%20Finite-time%20analysis%20of%20the%20multiarmed%20bandit%20problem%202002"
+        },
+        {
+            "id": "Baker_et+al_2017_a",
+            "entry": "Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architectures using reinforcement learning. In The Fifth International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baker%2C%20Bowen%20Gupta%2C%20Otkrist%20Naik%2C%20Nikhil%20Raskar%2C%20Ramesh%20Designing%20neural%20network%20architectures%20using%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baker%2C%20Bowen%20Gupta%2C%20Otkrist%20Naik%2C%20Nikhil%20Raskar%2C%20Ramesh%20Designing%20neural%20network%20architectures%20using%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Baker_et+al_2009_a",
+            "entry": "Chris L Baker, Rebecca Saxe, and Joshua B Tenenbaum. Action understanding as inverse planning. Cognition, 113(3):329\u2013349, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baker%2C%20Chris%20L.%20Saxe%2C%20Rebecca%20Tenenbaum%2C%20Joshua%20B.%20Action%20understanding%20as%20inverse%20planning%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baker%2C%20Chris%20L.%20Saxe%2C%20Rebecca%20Tenenbaum%2C%20Joshua%20B.%20Action%20understanding%20as%20inverse%20planning%202009"
+        },
+        {
+            "id": "Barreto_et+al_2017_a",
+            "entry": "Andre Barreto, Will Dabney, Remi Munos, Jonathan J. Hunt, Tom Schaul, Hado van Hasselt, and David Silver. Successor features for transfer in reinforcement learning. In Advances in Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barreto%2C%20Andre%20Dabney%2C%20Will%20Munos%2C%20Remi%20Hunt%2C%20Jonathan%20J.%20Successor%20features%20for%20transfer%20in%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barreto%2C%20Andre%20Dabney%2C%20Will%20Munos%2C%20Remi%20Hunt%2C%20Jonathan%20J.%20Successor%20features%20for%20transfer%20in%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Bowling_2005_a",
+            "entry": "Michael Bowling and Peter McCracken. Coordination and adaptation in impromptu teams. In The Twentieth National Conference on Artificial Intelligence (AAAI), 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowling%2C%20Michael%20McCracken%2C%20Peter%20Coordination%20and%20adaptation%20in%20impromptu%20teams%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowling%2C%20Michael%20McCracken%2C%20Peter%20Coordination%20and%20adaptation%20in%20impromptu%20teams%202005"
+        },
+        {
+            "id": "Busoniu_et+al_2008_a",
+            "entry": "Lucian Busoniu, Robert Babuska, and Bart De Schutter. A comprehensive survey of multiagent reinforcement learning. IEEE Trans. Systems, Man, and Cybernetics, Part C, 38(2):156\u2013172, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Busoniu%2C%20Lucian%20Babuska%2C%20Robert%20Schutter%2C%20Bart%20De%20A%20comprehensive%20survey%20of%20multiagent%20reinforcement%20learning%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Busoniu%2C%20Lucian%20Babuska%2C%20Robert%20Schutter%2C%20Bart%20De%20A%20comprehensive%20survey%20of%20multiagent%20reinforcement%20learning%202008"
+        },
+        {
+            "id": "Conitzer_2002_a",
+            "entry": "Vincent Conitzer and Tuomas Sandholm. Complexity of mechanism design. In The Eighteenth conference on Uncertainty in artificial intelligence (UAI), 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conitzer%2C%20Vincent%20Sandholm%2C%20Tuomas%20Complexity%20of%20mechanism%20design%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conitzer%2C%20Vincent%20Sandholm%2C%20Tuomas%20Complexity%20of%20mechanism%20design%202002"
+        },
+        {
+            "id": "Duan_et+al_2017_a",
+            "entry": "Yan Duan, Marcin Andrychowicz, Bradly Stadie, OpenAI Jonathan Ho, Jonas Schneider, Ilya Sutskever, Pieter Abbeel, and Wojciech Zaremba. One-shot imitation learning. In Advances in neural information processing systems (NIPS), pp. 1087\u20131098, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duan%2C%20Yan%20Andrychowicz%2C%20Marcin%20Stadie%2C%20Bradly%20Ho%2C%20OpenAI%20Jonathan%20One-shot%20imitation%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Yan%20Andrychowicz%2C%20Marcin%20Stadie%2C%20Bradly%20Ho%2C%20OpenAI%20Jonathan%20One-shot%20imitation%20learning%202017"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Foerster_et+al_2016_a",
+            "entry": "Jakob Foerster, Ioannis Alexandros Assael, Nando de Freitas, and Shimon Whiteson. Learning to communicate with deep multi-agent reinforcement learning. In Advances in Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Foerster%2C%20Jakob%20Assael%2C%20Ioannis%20Alexandros%20de%20Freitas%2C%20Nando%20Whiteson%2C%20Shimon%20Learning%20to%20communicate%20with%20deep%20multi-agent%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Foerster%2C%20Jakob%20Assael%2C%20Ioannis%20Alexandros%20de%20Freitas%2C%20Nando%20Whiteson%2C%20Shimon%20Learning%20to%20communicate%20with%20deep%20multi-agent%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Guestrin_et+al_2001_a",
+            "entry": "Carlos Guestrin, Daphne Koller, and Ronald Parr. Multiagent planning with factored mdps. In Advances in Neural Information Processing Systems (NIPS), 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guestrin%2C%20Carlos%20Koller%2C%20Daphne%20Parr%2C%20Ronald%20Multiagent%20planning%20with%20factored%20mdps%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guestrin%2C%20Carlos%20Koller%2C%20Daphne%20Parr%2C%20Ronald%20Multiagent%20planning%20with%20factored%20mdps%202001"
+        },
+        {
+            "id": "Hariharan_2017_a",
+            "entry": "Bharath Hariharan and Ross Girshick. Low-shot visual recognition by shrinking and hallucinating features. In IEEE International Conference on Computer Vision (ICCV), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hariharan%2C%20Bharath%20Girshick%2C%20Ross%20Low-shot%20visual%20recognition%20by%20shrinking%20and%20hallucinating%20features%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hariharan%2C%20Bharath%20Girshick%2C%20Ross%20Low-shot%20visual%20recognition%20by%20shrinking%20and%20hallucinating%20features%202017"
+        },
+        {
+            "id": "Hlmstrom_1979_a",
+            "entry": "Bengt Hlmstrom. Moral hazard and observability. The Bell journal of economics, pp. 74\u201391, 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hlmstrom%2C%20Bengt%20Moral%20hazard%20and%20observability%201979",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hlmstrom%2C%20Bengt%20Moral%20hazard%20and%20observability%201979"
+        },
+        {
+            "id": "Hlmstrom_1991_a",
+            "entry": "Bengt Hlmstrom and Paul Milgrom. Multitask principal-agent analyses: Incentive contracts, asset ownership, and job design. Journal of Law, Economics, and Organization, 7:24\u201352, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hlmstrom%2C%20Bengt%20Milgrom%2C%20Paul%20Multitask%20principal-agent%20analyses%3A%20Incentive%20contracts%2C%20asset%20ownership%2C%20and%20job%20design%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hlmstrom%2C%20Bengt%20Milgrom%2C%20Paul%20Multitask%20principal-agent%20analyses%3A%20Incentive%20contracts%2C%20asset%20ownership%2C%20and%20job%20design%201991"
+        },
+        {
+            "id": "Koller_1999_a",
+            "entry": "Daphne Koller and Ronald Parr. Computing factored value functions for policies in structured mdps. In International Joint Conference on Aritificial Intelligence (IJCAI), 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koller%2C%20Daphne%20Parr%2C%20Ronald%20Computing%20factored%20value%20functions%20for%20policies%20in%20structured%20mdps%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koller%2C%20Daphne%20Parr%2C%20Ronald%20Computing%20factored%20value%20functions%20for%20policies%20in%20structured%20mdps%201999"
+        },
+        {
+            "id": "Kulkarni_et+al_2016_a",
+            "entry": "Tejas D. Kulkarni, Ardavan Saeedi, Simanta Gautam, and Samuel J Gershman. Deep successor reinforcement learning. arXiv preprint arXiv:1606.02396, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.02396"
+        },
+        {
+            "id": "Laffont_2002_a",
+            "entry": "Jean-Jacques Laffont and D. Martimort. The theory of incentives: the principal-agent model. Princeton University Press, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Laffont%2C%20Jean-Jacques%20Martimort%2C%20D.%20The%20theory%20of%20incentives%3A%20the%20principal-agent%20model%202002"
+        },
+        {
+            "id": "Littman_1994_a",
+            "entry": "Michael L Littman. Markov games as a framework for multi-agent reinforcement learning. In The 11th International Conference on Machine Learning (ICML), pp. 157\u2013163, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Littman%2C%20Michael%20L.%20Markov%20games%20as%20a%20framework%20for%20multi-agent%20reinforcement%20learning%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Littman%2C%20Michael%20L.%20Markov%20games%20as%20a%20framework%20for%20multi-agent%20reinforcement%20learning%201994"
+        },
+        {
+            "id": "Lowe_et+al_2017_a",
+            "entry": "Ryan Lowe, Yi Wu, Aviv Tamar, Jean Harb, Pieter Abbeel, and Igor Mordatch. Multi-agent actorcritic for mixed cooperative-competitive environments. In Advances in Neural Information Processing Systems (NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lowe%2C%20Ryan%20Wu%2C%20Yi%20Tamar%2C%20Aviv%20Harb%2C%20Jean%20Multi-agent%20actorcritic%20for%20mixed%20cooperative-competitive%20environments%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lowe%2C%20Ryan%20Wu%2C%20Yi%20Tamar%2C%20Aviv%20Harb%2C%20Jean%20Multi-agent%20actorcritic%20for%20mixed%20cooperative-competitive%20environments%202017"
+        },
+        {
+            "id": "Ma_et+al_2018_a",
+            "entry": "Chen Ma, Junfeng Wen, and Yoshua Bengio. Universal successor representations for transfer reinforcement learning. arXiv preprint arXiv:1804.03758, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.03758"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan P. Adams. Gradient-based hyperparameter optimization through reversible learning. In International Conference on Machine Learning (ICML), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20P.%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20P.%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International Conference on Machine Learning (ICML), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Myerson_1981_a",
+            "entry": "Roger B. Myerson. Optimal auction design. Mathematics of operations research, 6(1):58\u201373, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Myerson%2C%20Roger%20B.%20Optimal%20auction%20design%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Myerson%2C%20Roger%20B.%20Optimal%20auction%20design%201981"
+        },
+        {
+            "id": "Myerson_1982_a",
+            "entry": "Roger B. Myerson. Optimal coordination mechanisms in generalized principalagent problems. Journal of mathematical economics, 10(1):67\u201381, 1982.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Myerson%2C%20Roger%20B.%20Optimal%20coordination%20mechanisms%20in%20generalized%20principalagent%20problems%201982",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Myerson%2C%20Roger%20B.%20Optimal%20coordination%20mechanisms%20in%20generalized%20principalagent%20problems%201982"
+        },
+        {
+            "id": "Oliehoek_et+al_2008_a",
+            "entry": "Frans A. Oliehoek, Matthijs TJ Spaan, and Nikos Vlassis. Optimal and approximate q-value functions for decentralized pomdps. Journal of Artificial Intelligence Research, 32:289\u2013353, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oliehoek%2C%20Frans%20A.%20Spaan%2C%20Matthijs%20T.J.%20Vlassis%2C%20Nikos%20Optimal%20and%20approximate%20q-value%20functions%20for%20decentralized%20pomdps%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oliehoek%2C%20Frans%20A.%20Spaan%2C%20Matthijs%20T.J.%20Vlassis%2C%20Nikos%20Optimal%20and%20approximate%20q-value%20functions%20for%20decentralized%20pomdps%202008"
+        },
+        {
+            "id": "Omidshafiei_et+al_2017_a",
+            "entry": "Shayegan Omidshafiei, Jason Pazis, Christopher Amato, Jonathan P. How, and John Vian. Deep decentralized multi-task multi-agent reinforcement learning under partial observability. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omidshafiei%2C%20Shayegan%20Pazis%2C%20Jason%20Amato%2C%20Christopher%20How%2C%20Jonathan%20P.%20Deep%20decentralized%20multi-task%20multi-agent%20reinforcement%20learning%20under%20partial%20observability%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Omidshafiei%2C%20Shayegan%20Pazis%2C%20Jason%20Amato%2C%20Christopher%20How%2C%20Jonathan%20P.%20Deep%20decentralized%20multi-task%20multi-agent%20reinforcement%20learning%20under%20partial%20observability%202017"
+        },
+        {
+            "id": "Peng_et+al_2017_a",
+            "entry": "Peng Peng, Ying Wen, Yaodong Yang, Yuan Quan, Zhenkun Tang, Haitao Long, and Jun Wang. Multiagent bidirectionally-coordinated nets emergence of human-level coordination in learning to play starcraft combat games. arXiv preprint arXiv:1703.10069, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.10069"
+        },
+        {
+            "id": "Rabinowitz_et+al_2018_a",
+            "entry": "Neil C. Rabinowitz, Frank Perbet, H. Francis Song, Chiyuan Zhang, S.M. Ali Eslami, and Matthew Botvinick. Machine theory of mind. arXiv preprint arXiv:1802.07740, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.07740"
+        },
+        {
+            "id": "Rashid_et+al_2018_a",
+            "entry": "Tabish Rashid, Mikayel Samvelyan, Christian Schroeder de Witt, Gregory Farquhar, Jakob Foerster, and Shimon Whiteson. Qmix: Monotonic value function factorisation for deep multi-agent reinforcement learning. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rashid%2C%20Tabish%20Samvelyan%2C%20Mikayel%20de%20Witt%2C%20Christian%20Schroeder%20Farquhar%2C%20Gregory%20Qmix%3A%20Monotonic%20value%20function%20factorisation%20for%20deep%20multi-agent%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rashid%2C%20Tabish%20Samvelyan%2C%20Mikayel%20de%20Witt%2C%20Christian%20Schroeder%20Farquhar%2C%20Gregory%20Qmix%3A%20Monotonic%20value%20function%20factorisation%20for%20deep%20multi-agent%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Ratner_et+al_2018_a",
+            "entry": "Ellis Ratner, Dylan Hadfield-Menell, and Anca D. Dragan. Simplifying reward design through divide-and-conquer. In Robotics: Science and Systems (RSS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ratner%2C%20Ellis%20Hadfield-Menell%2C%20Dylan%20Dragan%2C%20Anca%20D.%20Simplifying%20reward%20design%20through%20divide-and-conquer%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ratner%2C%20Ellis%20Hadfield-Menell%2C%20Dylan%20Dragan%2C%20Anca%20D.%20Simplifying%20reward%20design%20through%20divide-and-conquer%202018"
+        },
+        {
+            "id": "Sannikov_2008_a",
+            "entry": "Yuliy Sannikov. A continuous-time version of the principal-agent problem. The Review of Economic Studies, 75(3):957\u2013984, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sannikov%2C%20Yuliy%20A%20continuous-time%20version%20of%20the%20principal-agent%20problem%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sannikov%2C%20Yuliy%20A%20continuous-time%20version%20of%20the%20principal-agent%20problem%202008"
+        },
+        {
+            "id": "Sorg_et+al_2010_a",
+            "entry": "Jonathan Sorg, Richard L. Lewis, and Satinder P. Singh. Reward design via online gradient ascent. In Advances in Neural Information Processing Systems (NIPS), 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sorg%2C%20Jonathan%20Lewis%2C%20Richard%20L.%20Singh%2C%20Satinder%20P.%20Reward%20design%20via%20online%20gradient%20ascent%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sorg%2C%20Jonathan%20Lewis%2C%20Richard%20L.%20Singh%2C%20Satinder%20P.%20Reward%20design%20via%20online%20gradient%20ascent%202010"
+        },
+        {
+            "id": "Stone_et+al_2010_a",
+            "entry": "Peter Stone, Gal A. Kaminka, Sarit Kraus, and Jeffrey S. Rosenschein. Ad hoc autonomous agent teams: Collaboration without pre-coordination. In The Twenty-Fourth Conference on Artificial Intelligence (AAAI), 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stone%2C%20Peter%20Kaminka%2C%20Gal%20A.%20Kraus%2C%20Sarit%20Rosenschein%2C%20Jeffrey%20S.%20Ad%20hoc%20autonomous%20agent%20teams%3A%20Collaboration%20without%20pre-coordination%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stone%2C%20Peter%20Kaminka%2C%20Gal%20A.%20Kraus%2C%20Sarit%20Rosenschein%2C%20Jeffrey%20S.%20Ad%20hoc%20autonomous%20agent%20teams%3A%20Collaboration%20without%20pre-coordination%202010"
+        },
+        {
+            "id": "Sunehag_et+al_2018_a",
+            "entry": "Peter Sunehag, Guy Lever, Audrunas Gruslys, Wojciech Marian Czarnecki, Vinicius Zambaldi, Max Jaderberg, Marc Lanctot, Nicolas SOnnerat, Joel Z. Leibo, Karl Tuyls, and Thore Graepel. Valuedecomposition networks for cooperative multi-agent learning based on team reward. In International Conference on Autonomous Agents and MultiAgent Systems (AAMAS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sunehag%2C%20Peter%20Lever%2C%20Guy%20Gruslys%2C%20Audrunas%20Czarnecki%2C%20Wojciech%20Marian%20Valuedecomposition%20networks%20for%20cooperative%20multi-agent%20learning%20based%20on%20team%20reward%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sunehag%2C%20Peter%20Lever%2C%20Guy%20Gruslys%2C%20Audrunas%20Czarnecki%2C%20Wojciech%20Marian%20Valuedecomposition%20networks%20for%20cooperative%20multi-agent%20learning%20based%20on%20team%20reward%202018"
+        },
+        {
+            "id": "Tieleman_2012_a",
+            "entry": "Tijmen Tieleman and Geoffrey Hinto. Lecture 6.5\u2014rmsprop: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural Networks for Machine Learning, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tieleman%2C%20Tijmen%20Hinto%2C%20Geoffrey%20Lecture%206.5%E2%80%94rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tieleman%2C%20Tijmen%20Hinto%2C%20Geoffrey%20Lecture%206.5%E2%80%94rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Jane X Wang, Zeb Kurth-Nelson, Dhruva Tirumala, Hubert Soyer, Joel Z Leibo, Remi Munos, Charles Blundell, Dharshan Kumaran, and Matt Botvinick. Learning to reinforcement learn. arXiv preprint arXiv:1611.05763, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05763"
+        },
+        {
+            "id": "Wichrowska_et+al_2017_a",
+            "entry": "Olga Wichrowska, Niru Maheswaranathan, Matthew W Hoffman, Sergio Gomez Colmenarejo, Misha Denil, Nando de Freitas, and Jascha Sohl-Dickstein. Learned optimizers that scale and generalize. arXiv preprint arXiv:1703.04813, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04813"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "Tianhe Yu, Chelsea Finn, Annie Xie, Sudeep Dasari, Pieter Abbeel, and Sergey Levine. One-shot imitation from observing humans via domain-adaptive meta-learning. In Robotics: Science and Systems (RSS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Tianhe%20Finn%2C%20Chelsea%20Xie%2C%20Annie%20Dasari%2C%20Sudeep%20One-shot%20imitation%20from%20observing%20humans%20via%20domain-adaptive%20meta-learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Tianhe%20Finn%2C%20Chelsea%20Xie%2C%20Annie%20Dasari%2C%20Sudeep%20One-shot%20imitation%20from%20observing%20humans%20via%20domain-adaptive%20meta-learning%202018"
+        },
+        {
+            "id": "Zhang_2008_a",
+            "entry": "Haoqi Zhang and David Parkes. Value-based policy teaching with active indirect elicitation. In AAAI Conference on Artificial Intelligence (AAAI), 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Haoqi%20Parkes%2C%20David%20Value-based%20policy%20teaching%20with%20active%20indirect%20elicitation%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Haoqi%20Parkes%2C%20David%20Value-based%20policy%20teaching%20with%20active%20indirect%20elicitation%202008"
+        },
+        {
+            "id": "Zhang_et+al_2009_a",
+            "entry": "Haoqi Zhang, David C. Parkes, and Yiling Chen. Policy teaching through reward function learning. In The 10th ACM conference on Electronic commerce, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Haoqi%20Parkes%2C%20David%20C.%20Chen%2C%20Yiling%20Policy%20teaching%20through%20reward%20function%20learning%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Haoqi%20Parkes%2C%20David%20C.%20Chen%2C%20Yiling%20Policy%20teaching%20through%20reward%20function%20learning%202009"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Yuke Zhu, Daniel Gordon, Eric Kolve, Dieter Fox, Li Fei-Fei, Abhinav Gupta, Roozbeh Mottaghi, and Ali Farhadi. Visual semantic planning using deep successor representations. In International Conference on Computer Vision (ICCV), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Yuke%20Gordon%2C%20Daniel%20Kolve%2C%20Eric%20Fox%2C%20Dieter%20Visual%20semantic%20planning%20using%20deep%20successor%20representations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Yuke%20Gordon%2C%20Daniel%20Kolve%2C%20Eric%20Fox%2C%20Dieter%20Visual%20semantic%20planning%20using%20deep%20successor%20representations%202017"
+        }
+    ]
+}

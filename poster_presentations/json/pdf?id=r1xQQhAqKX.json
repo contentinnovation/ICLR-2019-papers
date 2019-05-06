@@ -1,0 +1,150 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MODELING UNCERTAINTY WITH HEDGED INSTANCE EMBEDDING",
+        "author": "Seong Joon Oh",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=r1xQQhAqKX"
+        },
+        "abstract": "Instance embeddings are an efficient and versatile image representation that facilitates applications like recognition, verification, retrieval, and clustering. Many metric learning methods represent the input as a single point in the embedding space. Often the distance between points is used as a proxy for match confidence. However, this can fail to represent uncertainty which can arise when the input is ambiguous, e.g., due to occlusion or blurriness. This work addresses this issue and explicitly models the uncertainty by \u201chedging\u201d the location of each input in the embedding space. We introduce the hedged instance embedding (HIB) in which embeddings are modeled as random variables and the model is trained under the variational information bottleneck principle (<a class=\"ref-link\" id=\"cAlemi_et+al_2016_a\" href=\"#rAlemi_et+al_2016_a\">Alemi et al., 2016</a>; <a class=\"ref-link\" id=\"cAchille_2018_a\" href=\"#rAchille_2018_a\">Achille & Soatto, 2018</a>). Empirical results on our new N-digit MNIST dataset show that our method leads to the desired behavior of \u201chedging its bets\u201d across the embedding space upon encountering ambiguous inputs. This results in improved performance for image matching and classification tasks, more structure in the learned embedding space, and an ability to compute a per-exemplar uncertainty measure which is correlated with downstream performance."
+    },
+    "keywords": [
+        {
+            "term": "average precision",
+            "url": "https://en.wikipedia.org/wiki/average_precision"
+        },
+        {
+            "term": "face recognition",
+            "url": "https://en.wikipedia.org/wiki/face_recognition"
+        },
+        {
+            "term": "Mixture of Gaussians",
+            "url": "https://en.wikipedia.org/wiki/Mixture_of_Gaussians"
+        }
+    ],
+    "abbreviations": {
+        "HIB": "hedged instance embedding",
+        "VIB": "variational information bottleneck",
+        "MoG": "Mixture of Gaussians",
+        "AP": "average precision"
+    },
+    "highlights": [
+        "An instance embedding is a mapping f from an input x, such as an image, to a vector representation, z \u2208 RD, such that \u201csimilar\u201d inputs are mapped to nearby points in space",
+        "We show that hedged instance embedding exhibits several desirable properties compared to point embeddings: (1) downstream task performance improves for uncertain inputs; (2) the embedding space exhibits enhanced structural regularity; and (3) a per-exemplar uncertainty measure that predicts when the output of the system is reliable",
+        "In the Appendix, Section C, we describe additional experiments, including where hedged instance embedding is applied to a dataset of cat and dog images of over 100K distinct animals and the embedding is directed towards identifying specific animals.\n4.1",
+        "Hedged instance embedding is a stochastic embedding that captures the uncertainty of the mapping of an image to a latent embedding space, by spreading density across plausible locations",
+        "It allows for a simple way to estimate the uncertainty of the embedding that is correlated with performance on downstream tasks",
+        "As an early look at these tasks, in the Appendix, Section C.3, we apply hedged instance embedding towards cat and dog instance embedding directed towards identifying specific animals with 20D embeddings"
+    ],
+    "key_statements": [
+        "An instance embedding is a mapping f from an input x, such as an image, to a vector representation, z \u2208 RD, such that \u201csimilar\u201d inputs are mapped to nearby points in space",
+        "We propose a new method, called hedged instance embedding (HIB), which achieves this goal",
+        "We propose a training scheme for the hedged instance embedding with a learnable-margin contrastive loss and the variational information bottleneck (VIB) principle (<a class=\"ref-link\" id=\"cAlemi_et+al_2016_a\" href=\"#rAlemi_et+al_2016_a\">Alemi et al, 2016</a>; <a class=\"ref-link\" id=\"cAchille_2018_a\" href=\"#rAchille_2018_a\">Achille & Soatto, 2018</a>)",
+        "We show that hedged instance embedding exhibits several desirable properties compared to point embeddings: (1) downstream task performance improves for uncertain inputs; (2) the embedding space exhibits enhanced structural regularity; and (3) a per-exemplar uncertainty measure that predicts when the output of the system is reliable",
+        "In the Appendix, Section C, we describe additional experiments, including where hedged instance embedding is applied to a dataset of cat and dog images of over 100K distinct animals and the embedding is directed towards identifying specific animals.\n4.1",
+        "In the N = 2 digit case, when using D = 2 dimensions, point embeddings achieve 88.0% average precision on corrupt test images, while hedged instance embeddings improves to 90.7% with C = 1 Gaussian, and 91.2% with C = 2 Gaussians",
+        "Hedged instance embedding is a stochastic embedding that captures the uncertainty of the mapping of an image to a latent embedding space, by spreading density across plausible locations",
+        "It allows for a simple way to estimate the uncertainty of the embedding that is correlated with performance on downstream tasks",
+        "As an early look at these tasks, in the Appendix, Section C.3, we apply hedged instance embedding towards cat and dog instance embedding directed towards identifying specific animals with 20D embeddings"
+    ],
+    "summary": [
+        "An instance embedding is a mapping f from an input x, such as an image, to a vector representation, z \u2208 RD, such that \u201csimilar\u201d inputs are mapped to nearby points in space.",
+        "We show that HIB exhibits several desirable properties compared to point embeddings: (1) downstream task performance improves for uncertain inputs; (2) the embedding space exhibits enhanced structural regularity; and (3) a per-exemplar uncertainty measure that predicts when the output of the system is reliable.",
+        "For training our stochastic embedding, we combine two ingredients: soft contrastive loss in Equation 3 and the VIB principle <a class=\"ref-link\" id=\"cAlemi_et+al_2016_a\" href=\"#rAlemi_et+al_2016_a\">Alemi et al (2016</a>); <a class=\"ref-link\" id=\"cAchille_2018_a\" href=\"#rAchille_2018_a\">Achille & Soatto (2018</a>).",
+        "We train a discriminative model based on matching or mismatching pairs of inputs (x1, x2), by minimizing the following loss: LVIBEmb := \u2212 Ez1\u223cp(z1|x1),z2\u223cp(z2|x2) [log p(m = m |z1, z2)]",
+        "One useful property of our method is that the embedding is a distribution and encodes the level of uncertainty for given inputs.",
+        "Prior works (Vilnis & McCallum, 2014; <a class=\"ref-link\" id=\"cBojchevski_2018_a\" href=\"#rBojchevski_2018_a\">Bojchevski & Gunnemann, 2018</a>) have computed uncertainty for Gaussian embeddings based on volumetric measures like trace or determinant of covariance matrix.",
+        "We compute a parametric representation of the uncertainty and use Monte Carlo to approximate the probability of two points matching.",
+        "In the Appendix, Section C, we describe additional experiments, including where HIB is applied to a dataset of cat and dog images of over 100K distinct animals and the embedding is directed towards identifying specific animals.",
+        "Figure 3 shows HIB 2D Gaussian embeddings for the clean and corrupt subsets of the test set.",
+        "We first measure performance on the verification task, where the network is used to compute p(m|x1, x2) for 10k pairs of test images, half of which are matches and half are not.",
+        "In the N = 2 digit case, when using D = 2 dimensions, point embeddings achieve 88.0% AP on corrupt test images, while hedged instance embeddings improves to 90.7% with C = 1 Gaussian, and 91.2% with C = 2 Gaussians.",
+        "In the N = 2 digit case, when using D = 2 dimensions, point embeddings achieve 58.3% AP on corrupt test images, while HIB improves to 76.0% with C = 1 Gaussian, and 75.7% with C = 2 Gaussians.",
+        "To measure the utility of \u03b7(x) for the verification task, we take random pairs of samples, (x1, x2), and compute the mean of their uncertainties, \u03b7(x1, x2)",
+        "The HIB uncertainty metric correlates with task accuracy even in within the subset of clean input images having no corrupted digits, indicating that HIB\u2019s understanding of uncertainty goes beyond detecting which images are corrupted."
+    ],
+    "headline": "We introduce the hedged instance embedding in which embeddings are modeled as random variables and the model is trained under the variational information bottleneck principle",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2015_a",
+            "entry": "Mart\u0131n Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Mane, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viegas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-scale machine learning on heterogeneous systems, 2015. URL https://www.tensorflow.org/. Software available from tensorflow.org.",
+            "url": "https://www.tensorflow.org/"
+        },
+        {
+            "id": "Achille_2018_a",
+            "entry": "Alessandro Achille and Stefano Soatto. On the emergence of invariance and disentangling in deep representations. JMLR, 18:1\u201334, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Achille%2C%20Alessandro%20Soatto%2C%20Stefano%20On%20the%20emergence%20of%20invariance%20and%20disentangling%20in%20deep%20representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Achille%2C%20Alessandro%20Soatto%2C%20Stefano%20On%20the%20emergence%20of%20invariance%20and%20disentangling%20in%20deep%20representations%202018"
+        },
+        {
+            "id": "Alemi_et+al_2016_a",
+            "entry": "Alexander A. Alemi, Ian Fischer, Joshua V. Dillon, and Kevin Murphy. Deep variational information bottleneck. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alemi%2C%20Alexander%20A.%20Fischer%2C%20Ian%20Dillon%2C%20Joshua%20V.%20Murphy%2C%20Kevin%20Deep%20variational%20information%20bottleneck%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alemi%2C%20Alexander%20A.%20Fischer%2C%20Ian%20Dillon%2C%20Joshua%20V.%20Murphy%2C%20Kevin%20Deep%20variational%20information%20bottleneck%202016"
+        },
+        {
+            "id": "Alemi_et+al_2018_a",
+            "entry": "Alexander A Alemi, Ian Fischer, and Joshua V Dillon. Uncertainty in the variational information bottleneck. In UAI Workshop on Uncertainty in Deep Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alemi%2C%20Alexander%20A.%20Fischer%2C%20Ian%20Dillon%2C%20Joshua%20V.%20Uncertainty%20in%20the%20variational%20information%20bottleneck%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alemi%2C%20Alexander%20A.%20Fischer%2C%20Ian%20Dillon%2C%20Joshua%20V.%20Uncertainty%20in%20the%20variational%20information%20bottleneck%202018"
+        },
+        {
+            "id": "Babenko_et+al_2014_a",
+            "entry": "Artem Babenko, Anton Slesarev, Alexandr Chigorin, and Victor Lempitsky. Neural codes for image retrieval. In ECCV, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Artem%20Babenko%20Anton%20Slesarev%20Alexandr%20Chigorin%20and%20Victor%20Lempitsky%20Neural%20codes%20for%20image%20retrieval%20In%20ECCV%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Artem%20Babenko%20Anton%20Slesarev%20Alexandr%20Chigorin%20and%20Victor%20Lempitsky%20Neural%20codes%20for%20image%20retrieval%20In%20ECCV%202014"
+        },
+        {
+            "id": "Bertinetto_et+al_2016_a",
+            "entry": "Luca Bertinetto, Jack Valmadre, Joao F Henriques, Andrea Vedaldi, and Philip HS Torr. Fullyconvolutional siamese networks for object tracking. arXiv preprint arXiv:1606.09549, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.09549"
+        },
+        {
+            "id": "Bojchevski_2018_a",
+            "entry": "Aleksandar Bojchevski and Stephan Gunnemann. Deep gaussian embedding of attributed graphs: Unsupervised inductive learning via ranking. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bojchevski%2C%20Aleksandar%20Gunnemann%2C%20Stephan%20Deep%20gaussian%20embedding%20of%20attributed%20graphs%3A%20Unsupervised%20inductive%20learning%20via%20ranking%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bojchevski%2C%20Aleksandar%20Gunnemann%2C%20Stephan%20Deep%20gaussian%20embedding%20of%20attributed%20graphs%3A%20Unsupervised%20inductive%20learning%20via%20ranking%202018"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a bayesian approximation: Representing model uncertainty in deep learning. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Gunther_et+al_2017_a",
+            "entry": "Manuel Gunther, Steve Cruz, Ethan M Rudd, and Terrance E Boult. Toward Open-Set face recognition. In CVPR Biometrics Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gunther%2C%20Manuel%20Cruz%2C%20Steve%20Rudd%2C%20Ethan%20M.%20Boult%2C%20Terrance%20E.%20Toward%20Open-Set%20face%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gunther%2C%20Manuel%20Cruz%2C%20Steve%20Rudd%2C%20Ethan%20M.%20Boult%2C%20Terrance%20E.%20Toward%20Open-Set%20face%20recognition%202017"
+        },
+        {
+            "id": "Hadsell_et+al_2006_a",
+            "entry": "R. Hadsell, S. Chopra, and Y. LeCun. Dimensionality reduction by learning an invariant mapping. In CVPR, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hadsell%2C%20R.%20Chopra%2C%20S.%20LeCun%2C%20Y.%20Dimensionality%20reduction%20by%20learning%20an%20invariant%20mapping%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hadsell%2C%20R.%20Chopra%2C%20S.%20LeCun%2C%20Y.%20Dimensionality%20reduction%20by%20learning%20an%20invariant%20mapping%202006"
+        },
+        {
+            "id": "Howard_et+al_2017_a",
+            "entry": "Andrew G. Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, and Hartwig Adam. Mobilenets: Efficient convolutional neural networks for mobile vision applications. arXiv preprint arXiv:1704.04861, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04861"
+        },
+        {
+            "id": "Karaletsos_et+al_2015_a",
+            "entry": "Theofanis Karaletsos, Serge Belongie, and Gunnar Ratsch. Bayesian representation learning with oracle constraints. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karaletsos%2C%20Theofanis%20Belongie%2C%20Serge%20Ratsch%2C%20Gunnar%20Bayesian%20representation%20learning%20with%20oracle%20constraints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karaletsos%2C%20Theofanis%20Belongie%2C%20Serge%20Ratsch%2C%20Gunnar%20Bayesian%20representation%20learning%20with%20oracle%20constraints%202015"
+        },
+        {
+            "id": "Kendall_2017_a",
+            "entry": "Alex Kendall and Yarin Gal. What uncertainties do we need in bayesian deep learning for computer vision? In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett (eds.), NIPS. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kendall%2C%20Alex%20Gal%2C%20Yarin%20What%20uncertainties%20do%20we%20need%20in%20bayesian%20deep%20learning%20for%20computer%20vision%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kendall%2C%20Alex%20Gal%2C%20Yarin%20What%20uncertainties%20do%20we%20need%20in%20bayesian%20deep%20learning%20for%20computer%20vision%3F%202017"
+        },
+        {
+            "id": "On_et+al_1999_a",
+            "entry": "Allerton Conf. on Communication, Control, and Computing, 1999. Luke Vilnis and Andrew McCallum. Word representations via gaussian embedding. In ICLR, 2014. Weitao Wan, Yuanyi Zhong, Tianpeng Li, and Jiansheng Chen. Rethinking feature distribution for loss functions in image classification. In CVPR, 2018. Chao-Yuan Wu, R Manmatha, Alexander J Smola, and Philipp Krahenbuhl. Sampling matters in deep embedding learning. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=on%20Communication%2C%20Allerton%20Conf%20Control%20Computing%20Luke%20Vilnis%20and%20Andrew%20McCallum.%20Word%20representations%20via%20gaussian%20embedding%201999"
+        }
+    ]
+}

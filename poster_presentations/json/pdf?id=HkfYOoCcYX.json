@@ -1,0 +1,246 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DOUBLE VITERBI: WEIGHT ENCODING FOR HIGH COMPRESSION RATIO AND FAST ON-CHIP RECONSTRUCTION FOR DEEP NEURAL NETWORK",
+        "author": "Daehyun Ahn, Dongsoo Lee, Taesu Kim, Jae-Joon Kim, 1POSTECH, Department of Creative IT Engineering, Korea, 2Samsung Research, Korea daehyun.ahn@postech.ac.kr, dslee,@gmail.com, {taesukim,jaejoon}@postech.ac.kr",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkfYOoCcYX"
+        },
+        "abstract": "Weight pruning has been introduced as an efficient model compression technique. Even though pruning removes significant amount of weights in a network, memory requirement reduction was limited since conventional sparse matrix formats require significant amount of memory to store index-related information. Moreover, computations associated with such sparse matrix formats are slow because sequential sparse matrix decoding process does not utilize highly parallel computing systems efficiently. As an attempt to compress index information while keeping the decoding process parallelizable, Viterbi-based pruning was suggested. Decoding non-zero weights, however, is still sequential in Viterbi-based pruning. In this paper, we propose a new sparse matrix format in order to enable a highly parallel decoding process of the entire sparse matrix. The proposed sparse matrix is constructed by combining pruning and weight quantization. For the latest RNN models on PTB and WikiText-2 corpus, LSTM parameter storage requirement is compressed 19\u00d7 using the proposed sparse matrix format compared to the baseline model. Compressed weight and indices can be reconstructed into a dense matrix fast using Viterbi encoders. Simulation results show that the proposed scheme can feed parameters to processing elements 20 % to 106 % faster than the case where the dense matrix values directly come from DRAM."
+    },
+    "keywords": [
+        {
+            "term": "compression ratio",
+            "url": "https://en.wikipedia.org/wiki/compression_ratio"
+        },
+        {
+            "term": "Convolutional Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "most significant bit",
+            "url": "https://en.wikipedia.org/wiki/most_significant_bit"
+        },
+        {
+            "term": "dense matrix",
+            "url": "https://en.wikipedia.org/wiki/dense_matrix"
+        },
+        {
+            "term": "non zero",
+            "url": "https://en.wikipedia.org/wiki/non_zero"
+        },
+        {
+            "term": "Deep neural networks",
+            "url": "https://en.wikipedia.org/wiki/Deep_neural_networks"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "Deep neural networks",
+        "CSR": "compressed sparse row",
+        "CSC": "compressed sparse column",
+        "VD": "Viterbi Decompressor",
+        "RNNs": "Recurrent Neural Networks",
+        "CNNs": "Convolutional Neural Networks",
+        "VCM": "Viterbi Compression Matrix",
+        "MSB": "most significant bit",
+        "VWM": "Viterbi Weight Matrix",
+        "RNN": "RECURRENT NEURAL NETWORKS",
+        "PTB": "Penn Tree Bank",
+        "PPW": "perplexity per word",
+        "CNN": "CONVOLUTIONAL NEURAL NETWORKS",
+        "PEs": "processing elements"
+    },
+    "highlights": [
+        "Deep neural networks (DNNs) require significant amounts of memory and computation as the number of training data and the complexity of task increases (<a class=\"ref-link\" id=\"cBengio_2007_a\" href=\"#rBengio_2007_a\"><a class=\"ref-link\" id=\"cBengio_2007_a\" href=\"#rBengio_2007_a\">Bengio & Lecun, 2007</a></a>)",
+        "The pruned results are usually stored in a sparse matrix format such as compressed sparse row (CSR) format or compressed sparse column (CSC) format, which consists of non-zero values and indices that represent the location of non-zeros",
+        "(c) We demonstrate that the proposed method can be applied to Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs) with various sizes and depths",
+        "We proposed a Deep neural networks model compression technique with high compression rate and fast dense matrix reconstruction process",
+        "As the non-zero values and the corresponding indices are generated in parallel by multiple Viterbi encoders, the sparse-to-dense matrix conversion can be done very fast",
+        "We demonstrated that the proposed scheme significantly reduces the memory requirements of the parameters for both Recurrent Neural Networks and Convolutional Neural Networks"
+    ],
+    "key_statements": [
+        "Deep neural networks (DNNs) require significant amounts of memory and computation as the number of training data and the complexity of task increases (<a class=\"ref-link\" id=\"cBengio_2007_a\" href=\"#rBengio_2007_a\"><a class=\"ref-link\" id=\"cBengio_2007_a\" href=\"#rBengio_2007_a\">Bengio & Lecun, 2007</a></a>)",
+        "The pruned results are usually stored in a sparse matrix format such as compressed sparse row (CSR) format or compressed sparse column (CSC) format, which consists of non-zero values and indices that represent the location of non-zeros",
+        "(c) We demonstrate that the proposed method can be applied to Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs) with various sizes and depths",
+        "This experiment on CIFAR-10 shows that our proposed method can be applied to Deep neural networks with various types and sizes",
+        "We proposed a Deep neural networks model compression technique with high compression rate and fast dense matrix reconstruction process",
+        "As the non-zero values and the corresponding indices are generated in parallel by multiple Viterbi encoders, the sparse-to-dense matrix conversion can be done very fast",
+        "We demonstrated that the proposed scheme significantly reduces the memory requirements of the parameters for both Recurrent Neural Networks and Convolutional Neural Networks"
+    ],
+    "summary": [
+        "Deep neural networks (DNNs) require significant amounts of memory and computation as the number of training data and the complexity of task increases (<a class=\"ref-link\" id=\"cBengio_2007_a\" href=\"#rBengio_2007_a\"><a class=\"ref-link\" id=\"cBengio_2007_a\" href=\"#rBengio_2007_a\">Bengio & Lecun, 2007</a></a>).",
+        "(a) To reduce the memory footprint of neural networks further, we propose to combine the Viterbibased pruning (<a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\"><a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al, 2018</a></a>) with a novel weight-encoding scheme, which uses the Viterbi-based approach to encode the quantized non-zero values.",
+        "<a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\"><a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al (2018</a></a>) succeeded in reducing the amount of index-related information using a Viterbi-algorithm based pruning method and corresponding custom sparse matrix format.",
+        "By quantizing the weight values to 3 bits with proposed method, the memory footprint of RNN models were reduced \u223c10.5\u00d7 with negligible performance degradation.",
+        "Several magnitude-based pruning methods showed high compression rate, computation time did not improve much, because it takes time to decode the sparse matrix formats that describe irregular weight indices of pruned networks.",
+        "<a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\"><a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al (2018</a></a>) could use the Viterbi encoder to construct the index matrix fast, the process of pairing the non-zero weight values with the corresponding indices is still sequential, and relatively slow.",
+        "As the first step of the proposed weight encoding scheme, we compress the indices of the non-zero values in sparse weight matrix using the Viterbi-based pruning (Figure 1) (<a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\"><a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al, 2018</a></a>).",
+        "After Viterbi-based pruning is finished, the alternating multi-bit quantization (<a class=\"ref-link\" id=\"cXu_et+al_2018_a\" href=\"#rXu_et+al_2018_a\">Xu et al, 2018</a>) is applied to the sparse matrix (Figure 1).",
+        "It is difficult to parallelize the process of reconstructing sparse matrix from the representation in VCM format, because assigning each non-zero value to its corresponding index requires a sequential process of counting ones in indices generated by the Viterbi encoder.",
+        "While using VD structures to generate binary weight codes allows parallel sparse-to-dense matrix conversion, it requires the quantization method to satisfy a specific condition to minimize accuracy out4",
+        "Compared to <a class=\"ref-link\" id=\"cHan_et+al_2016_b\" href=\"#rHan_et+al_2016_b\">Han et al (2016b</a>), the VWM format generated by the proposed scheme has 39 % smaller memory footprint due to the compressed indices, smaller number of bits for quantization, and encoded binary weight codes.",
+        "Additional \"Viterbi-based binary code encoding\" process for the VWM format allows parallel sparse-to-dense matrix conversion, which increases the parameter feeding rate up to 40.5 % compared to <a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\"><a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al (2018</a></a>).",
+        "We adopted the Viterbi-based pruning and alternating multi-bit quantization technique to reduce the memory requirement for both non-zeros and indices of sparse matrices.",
+        "As the non-zero values and the corresponding indices are generated in parallel by multiple Viterbi encoders, the sparse-to-dense matrix conversion can be done very fast."
+    ],
+    "headline": "We propose a new sparse matrix format in order to enable a highly parallel decoding process of the entire sparse matrix",
+    "reference_links": [
+        {
+            "id": "Bengio_2007_a",
+            "entry": "Yoshua Bengio and Yann Lecun. Scaling learning algorithms towards AI, 2007. Matthieu Courbariaux, Itay Hubara, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Binarized neural networks: Training deep neural networks with weights and activations constrained to+ 1 or-1. arXiv preprint arXiv:1602.02830, 2016. Misha Denil, Babak Shakibi, Laurent Dinh, Marc\u2019Aurelio Ranzato, and Nando de Freitas. Predicting parameters in deep learning. In Advances in Neural Information Processing Systems, pp. 2148\u2013 2156, 2013. G. D. Forney. The Viterbi algorithm. Proc. of the IEEE, 61:268 \u2013 278, March 1973. Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Yee Whye Teh and Mike Titterington (eds.), Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics, volume 9 of Proceedings of Machine Learning Research, pp. 249\u2013256, Chia Laguna Resort, Sardinia, Italy, 13\u201315 May 2010. PMLR.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02830"
+        },
+        {
+            "id": "Guo_et+al_2017_a",
+            "entry": "Yiwen Guo, Anbang Yao, Hao Zhao, and Yurong Chen. Network sketching: Exploiting binary structure in deep cnns. International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Yiwen%20Yao%2C%20Anbang%20Zhao%2C%20Hao%20Chen%2C%20Yurong%20Network%20sketching%3A%20Exploiting%20binary%20structure%20in%20deep%20cnns%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Yiwen%20Yao%2C%20Anbang%20Zhao%2C%20Hao%20Chen%2C%20Yurong%20Network%20sketching%3A%20Exploiting%20binary%20structure%20in%20deep%20cnns%202017"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Jeff Pool, John Tran, and William Dally. Learning both weights and connections for efficient neural network. In Advances in Neural Information Processing Systems (NIPS), pp. 1135\u20131143, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Xingyu Liu, Huizi Mao, Jing Pu, Ardavan Pedram, Mark A Horowitz, and William J Dally. EIE: efficient inference engine on compressed deep neural network. International Conference on Computer Architecture (ISCA), 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20EIE%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20EIE%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016"
+        },
+        {
+            "id": "Han_et+al_2016_b",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and Huffman coding. International Conference on Learning Representations (ICLR), 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20networks%20with%20pruning%2C%20trained%20quantization%20and%20Huffman%20coding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Mao%2C%20Huizi%20Dally%2C%20William%20J.%20Deep%20compression%3A%20Compressing%20deep%20neural%20networks%20with%20pruning%2C%20trained%20quantization%20and%20Huffman%20coding%202016"
+        },
+        {
+            "id": "Song_2017_a",
+            "entry": "Song Han, Junlong Kang, Huizi Mao, Yiming Hu, Xin Li, Yubin Li, Dongliang Xie, Hong Luo, Song Yao, Yu Wang, Huazhong Yang, and William (Bill) J. Dally. Ese: Efficient speech recognition engine with sparse lstm on fpga. In Proceedings of the 2017 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays, FPGA \u201917, pp. 75\u201384, New York, NY, USA, 2017. ACM. ISBN 978-1-4503-4354-1. doi: 10.1145/3020078.3021745. URL http://doi.acm.org/10.1145/3020078.3021745.",
+            "crossref": "https://dx.doi.org/10.1145/3020078.3021745",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3020078.3021745"
+        },
+        {
+            "id": "Hanson_1989_a",
+            "entry": "Stephen Jos\u00e9 Hanson and Lorien Y Pratt. Comparing biases for minimal network construction with back-propagation. In Advances in neural information processing systems, pp. 177\u2013185, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hanson%2C%20Stephen%20Jos%C3%A9%20Pratt%2C%20Lorien%20Y.%20Comparing%20biases%20for%20minimal%20network%20construction%20with%20back-propagation%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hanson%2C%20Stephen%20Jos%C3%A9%20Pratt%2C%20Lorien%20Y.%20Comparing%20biases%20for%20minimal%20network%20construction%20with%20back-propagation%201989"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the 2015 IEEE International Conference on Computer Vision (ICCV), ICCV \u201915, pp. 1026\u20131034, Washington, DC, USA, 2015. IEEE Computer Society. ISBN 978-1-4673-8391-2. doi: 10.1109/ICCV.2015.123. URL http://dx.doi.org/10.1109/ICCV.2015.123.",
+            "crossref": "https://dx.doi.org/10.1109/ICCV.2015.123",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/ICCV.2015.123"
+        },
+        {
+            "id": "Krause_et+al_2017_a",
+            "entry": "Ben Krause, Emmanuel Kahembwe, Iain Murray, and Steve Renals. Dynamic evaluation of neural sequence models. CoRR, abs/1709.07432, 2017. URL http://arxiv.org/abs/1709.07432.",
+            "url": "http://arxiv.org/abs/1709.07432",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07432"
+        },
+        {
+            "id": "Lee_2012_a",
+            "entry": "Dongsoo Lee and Kaushik Roy. Viterbi-based efficient test data compression. IEEE Trans. on CAD of Integrated Circuits and Systems, 31(4):610\u2013619, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Dongsoo%20Roy%2C%20Kaushik%20Viterbi-based%20efficient%20test%20data%20compression%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Dongsoo%20Roy%2C%20Kaushik%20Viterbi-based%20efficient%20test%20data%20compression%202012"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Dongsoo Lee, Daehyun Ahn, Taesu Kim, Pierce I. Chuang, and Jae-Joon Kim. Viterbi-based pruning for sparse matrix with fixed and high index compression ratio. International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Dongsoo%20Ahn%2C%20Daehyun%20Kim%2C%20Taesu%20Chuang%2C%20Pierce%20I.%20Viterbi-based%20pruning%20for%20sparse%20matrix%20with%20fixed%20and%20high%20index%20compression%20ratio%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Dongsoo%20Ahn%2C%20Daehyun%20Kim%2C%20Taesu%20Chuang%2C%20Pierce%20I.%20Viterbi-based%20pruning%20for%20sparse%20matrix%20with%20fixed%20and%20high%20index%20compression%20ratio%202018"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Fengfu Li, Bo Zhang, and Bin Liu. Ternary weight networks. arXiv preprint arXiv:1605.04711, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.04711"
+        },
+        {
+            "id": "Lin_et+al_2016_a",
+            "entry": "Darryl D. Lin, Sachin S. Talathi, and V. Sreekanth Annapureddy. Fixed point quantization of deep convolutional networks. In Proceedings of the 33rd International Conference on International Conference on Machine Learning - Volume 48, ICML\u201916, pp. 2849\u20132858. JMLR.org, 2016. URL http://dl.acm.org/citation.cfm?id=3045390.3045690.",
+            "url": "http://dl.acm.org/citation.cfm?id=3045390.3045690",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Darryl%20D.%20Talathi%2C%20Sachin%20S.%20Annapureddy%2C%20V.Sreekanth%20Fixed%20point%20quantization%20of%20deep%20convolutional%20networks%202016"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P. Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: The penn treebank. Computational Linguistics, 19(2):313\u2013330, June 1993. ISSN 0891-2017. URL http://dl.acm.org/citation.cfm?id=972470.972475.",
+            "url": "http://dl.acm.org/citation.cfm?id=972470.972475",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993-06"
+        },
+        {
+            "id": "Mikolov_2012_a",
+            "entry": "Tom\u00e1\u0161 Mikolov. Statistical language models based on neural networks. PhD thesis, Brno University of Technology, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tom%C3%A1%C5%A1%20Statistical%20language%20models%20based%20on%20neural%20networks%202012"
+        },
+        {
+            "id": "Miyashita_et+al_2016_a",
+            "entry": "Daisuke Miyashita, Edward H. Lee, and Boris Murmann. Convolutional neural networks using logarithmic data representation. CoRR, abs/1603.01025, 2016. URL http://arxiv.org/abs/1603.01025.",
+            "url": "http://arxiv.org/abs/1603.01025",
+            "arxiv_url": "https://arxiv.org/pdf/1603.01025"
+        },
+        {
+            "id": "Rastegari_et+al_2016_a",
+            "entry": "Mohammad Rastegari, Vicente Ordonez, Joseph Redmon, and Ali Farhadi. Xnor-net: Imagenet classification using binary convolutional neural networks. In Computer Vision - ECCV 2016 14th European Conference, Amsterdam, The Netherlands, October 11-14, 2016, Proceedings, Part IV, pp. 525\u2013542, 2016. doi: 10.1007/978-3-319-46493-0_32. URL https://doi.org/10.1007/978-3-319-46493-0_32.",
+            "crossref": "https://dx.doi.org/10.1007/978-3-319-46493-0_32",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/978-3-319-46493-0_32"
+        },
+        {
+            "id": "Wu_et+al_2016_a",
+            "entry": "Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V. Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, Jeff Klingner, Apurva Shah, Melvin Johnson, Xiaobing Liu, \u0141ukasz Kaiser, Stephan Gouws, Yoshikiyo Kato, Taku Kudo, Hideto Kazawa, Keith Stevens, George Kurian, Nishant Patil, Wei Wang, Cliff Young, Jason Smith, Jason Riesa, Alex Rudnick, Oriol Vinyals, Greg Corrado, Macduff Hughes, and Jeffrey Dean. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. CoRR, abs/1609.08144, 2016. URL http://arxiv.org/abs/1609.08144.",
+            "url": "http://arxiv.org/abs/1609.08144",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        },
+        {
+            "id": "Xu_et+al_2018_a",
+            "entry": "Chen Xu, Jianqiang Yao, Zouchen Lin, Wenwu Qu, Yuanbin Cao, Zhirong Wang, and Hongbin Zha. Alternating multi-bit quantization for recurrent neural networks. International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Chen%20Yao%2C%20Jianqiang%20Lin%2C%20Zouchen%20Qu%2C%20Wenwu%20Alternating%20multi-bit%20quantization%20for%20recurrent%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Chen%20Yao%2C%20Jianqiang%20Lin%2C%20Zouchen%20Qu%2C%20Wenwu%20Alternating%20multi-bit%20quantization%20for%20recurrent%20neural%20networks%202018"
+        },
+        {
+            "id": "Yang_et+al_2018_a",
+            "entry": "Zhilin Yang, Zihang Dai, Ruslan Salakhutdinov, and William W. Cohen. Breaking the softmax bottleneck: A high-rank RNN language model. International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zhilin%20Dai%2C%20Zihang%20Salakhutdinov%2C%20Ruslan%20Cohen%2C%20William%20W.%20Breaking%20the%20softmax%20bottleneck%3A%20A%20high-rank%20RNN%20language%20model%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zhilin%20Dai%2C%20Zihang%20Salakhutdinov%2C%20Ruslan%20Cohen%2C%20William%20W.%20Breaking%20the%20softmax%20bottleneck%3A%20A%20high-rank%20RNN%20language%20model%202018"
+        },
+        {
+            "id": "Yu_et+al_2017_a",
+            "entry": "Jiecao Yu, Andrew Lukefahr, David Palframan, Ganesh Dasika, Reetuparna Das, and Scott Mahlke. Scalpel: Customizing DNN pruning to the underlying hardware parallelism. In Proceedings of the 44th Annual International Symposium on Computer Architecture, pp. 548\u2013560, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Jiecao%20Lukefahr%2C%20Andrew%20Palframan%2C%20David%20Dasika%2C%20Ganesh%20Scalpel%3A%20Customizing%20DNN%20pruning%20to%20the%20underlying%20hardware%20parallelism%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Jiecao%20Lukefahr%2C%20Andrew%20Palframan%2C%20David%20Dasika%2C%20Ganesh%20Scalpel%3A%20Customizing%20DNN%20pruning%20to%20the%20underlying%20hardware%20parallelism%202017"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Shuchang Zhou, Zekun Ni, Xinyu Zhou, He Wen, Yuxin Wu, and Yuheng Zou. Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients. CoRR, abs/1606.06160, 2016. URL http://arxiv.org/abs/1606.06160.",
+            "url": "http://arxiv.org/abs/1606.06160",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        },
+        {
+            "id": "Where_2018_a",
+            "entry": "where Wti,j,m is the magnitude of a parameter at the mth VD output and time index t, normalized by the maximum absolute value of all elements in target weight matrix, and THp is the pruning threshold value determined heuristically. As \u03b2ti,j,m gives additional points (penalties) to the parameters with large magnitude to survive (be pruned), the possibility to prune small-magnitude parameters is maximized. S1 and S2 are the scaling factors which is empirically determined. (Lee et al. (2018) uses 5.0 and 104 each). After computing the cost function through the whole time steps, the state with the maximum path metric is chosen, and we trace the previous state by selecting the surviving branch and corresponding indices backward until the first state is reached.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=where%20Wti%20j%20m%20is%20the%20magnitude%20of%20a%20parameter%20at%20the%20mth%20VD%20output%20and%20time%20index%202018"
+        },
+        {
+            "id": "It_2018_a",
+            "entry": "It is reported that a low Nind is desired to prune weights of convolutional layers while high Nind can be used to prune the weights of fully-connected layers because of the trade-off between the index compression ratio and the accuracy (Lee et al., 2018). Thus, in our paper, we use Nind = 50 and Nc = 5 to prune weights of LSTMs and fully-connected layers in VGG-6 on CIFAR-10. On the other hand, we use Nind = 10 and Nc = 5 to prune weights of convolutional layers in VGG-6 on CIFAR-10.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=It%20is%20reported%20that%20a%20low%20Nind%20is%20desired%20to%20prune%20weights%20of%20convolutional%20layers%20while%20high%20Nind%20can%20be%20used%20to%20prune%20the%20weights%20of%20fullyconnected%20layers%20because%20of%20the%20tradeoff%20between%20the%20index%20compression%20ratio%20and%20the%20accuracy%20Lee%20et%20al%202018%20Thus%20in%20our%20paper%20we%20use%20Nind%20%2050%20and%20Nc%20%205%20to%20prune%20weights%20of%20LSTMs%20and%20fullyconnected%20layers%20in%20VGG6%20on%20CIFAR10%20On%20the%20other%20hand%20we%20use%20Nind%20%2010%20and%20Nc%20%205%20to%20prune%20weights%20of%20convolutional%20layers%20in%20VGG6%20on%20CIFAR10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=It%20is%20reported%20that%20a%20low%20Nind%20is%20desired%20to%20prune%20weights%20of%20convolutional%20layers%20while%20high%20Nind%20can%20be%20used%20to%20prune%20the%20weights%20of%20fullyconnected%20layers%20because%20of%20the%20tradeoff%20between%20the%20index%20compression%20ratio%20and%20the%20accuracy%20Lee%20et%20al%202018%20Thus%20in%20our%20paper%20we%20use%20Nind%20%2050%20and%20Nc%20%205%20to%20prune%20weights%20of%20LSTMs%20and%20fullyconnected%20layers%20in%20VGG6%20on%20CIFAR10%20On%20the%20other%20hand%20we%20use%20Nind%20%2010%20and%20Nc%20%205%20to%20prune%20weights%20of%20convolutional%20layers%20in%20VGG6%20on%20CIFAR10"
+        },
+        {
+            "id": "Algorithm_2018_b",
+            "entry": "Algorithm is a derivative of the alternating multi-bit quantization algorithm (Xu et al., 2018) with some consideration for sparse matrix. First, {\u03b1i}ki=1 is initialized with the average norm-1 value of non-zeros in w instead of the average norm-1 value of entire elements in a dense matrix, which was the case in Xu et al. (2018). Also, if the inverse matrix of BT B does not exist due to high pruning rate, Algorithm 1 does not proceed to the second alternating quantization step. Note that the model performance was not degraded much without running the second quantization step. Pruned components are represented with \u20180\u2019 during the quantization. After the quantization, {bi}ik=1 for the pruned components are set to \u2018+1\u2019 because bi \u2208 {\u22121, +1}n. It does not matter whether pruned components are represented as \u2018-1\u2019 or \u2018+1\u2019, because they will be eventually masked by the binary index matrix indicating the location of non-zeros.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Algorithm%20is%20a%20derivative%20of%20the%20alternating%20multibit%20quantization%20algorithm%20Xu%20et%20al%202018%20with%20some%20consideration%20for%20sparse%20matrix%20First%20%CE%B1iki1%20is%20initialized%20with%20the%20average%20norm1%20value%20of%20nonzeros%20in%20w%20instead%20of%20the%20average%20norm1%20value%20of%20entire%20elements%20in%20a%20dense%20matrix%20which%20was%20the%20case%20in%20Xu%20et%20al%202018%20Also%20if%20the%20inverse%20matrix%20of%20BT%20B%20does%20not%20exist%20due%20to%20high%20pruning%20rate%20Algorithm%201%20does%20not%20proceed%20to%20the%20second%20alternating%20quantization%20step%20Note%20that%20the%20model%20performance%20was%20not%20degraded%20much%20without%20running%20the%20second%20quantization%20step%20Pruned%20components%20are%20represented%20with%200%20during%20the%20quantization%20After%20the%20quantization%20biik1%20for%20the%20pruned%20components%20are%20set%20to%201%20because%20bi%20%201%201n%20It%20does%20not%20matter%20whether%20pruned%20components%20are%20represented%20as%201%20or%201%20because%20they%20will%20be%20eventually%20masked%20by%20the%20binary%20index%20matrix%20indicating%20the%20location%20of%20nonzeros",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Algorithm%20is%20a%20derivative%20of%20the%20alternating%20multibit%20quantization%20algorithm%20Xu%20et%20al%202018%20with%20some%20consideration%20for%20sparse%20matrix%20First%20%CE%B1iki1%20is%20initialized%20with%20the%20average%20norm1%20value%20of%20nonzeros%20in%20w%20instead%20of%20the%20average%20norm1%20value%20of%20entire%20elements%20in%20a%20dense%20matrix%20which%20was%20the%20case%20in%20Xu%20et%20al%202018%20Also%20if%20the%20inverse%20matrix%20of%20BT%20B%20does%20not%20exist%20due%20to%20high%20pruning%20rate%20Algorithm%201%20does%20not%20proceed%20to%20the%20second%20alternating%20quantization%20step%20Note%20that%20the%20model%20performance%20was%20not%20degraded%20much%20without%20running%20the%20second%20quantization%20step%20Pruned%20components%20are%20represented%20with%200%20during%20the%20quantization%20After%20the%20quantization%20biik1%20for%20the%20pruned%20components%20are%20set%20to%201%20because%20bi%20%201%201n%20It%20does%20not%20matter%20whether%20pruned%20components%20are%20represented%20as%201%20or%201%20because%20they%20will%20be%20eventually%20masked%20by%20the%20binary%20index%20matrix%20indicating%20the%20location%20of%20nonzeros"
+        },
+        {
+            "id": "The_2018_c",
+            "entry": "The RNN model in Yang et al. (2018) is composed of three LSTM layers, and use various learning techniques such as mixture-of-softmaxes (MoS) to achieve better perplexity. As shown in Table A1 and Table A2, the parameters in the first layer have high sparsity, so we use No = 6. In the remaining layers, however, we use No = 3 because the parameters are pruned with only about 70 % pruning rate. We repeat the process of quantization, binary code encoding, and retraining only once.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20RNN%20model%20in%20Yang%20et%20al%202018%20is%20composed%20of%20three%20LSTM%20layers%20and%20use%20various%20learning%20techniques%20such%20as%20mixtureofsoftmaxes%20MoS%20to%20achieve%20better%20perplexity%20As%20shown%20in%20Table%20A1%20and%20Table%20A2%20the%20parameters%20in%20the%20first%20layer%20have%20high%20sparsity%20so%20we%20use%20No%20%206%20In%20the%20remaining%20layers%20however%20we%20use%20No%20%203%20because%20the%20parameters%20are%20pruned%20with%20only%20about%2070%20%20pruning%20rate%20We%20repeat%20the%20process%20of%20quantization%20binary%20code%20encoding%20and%20retraining%20only%20once",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20RNN%20model%20in%20Yang%20et%20al%202018%20is%20composed%20of%20three%20LSTM%20layers%20and%20use%20various%20learning%20techniques%20such%20as%20mixtureofsoftmaxes%20MoS%20to%20achieve%20better%20perplexity%20As%20shown%20in%20Table%20A1%20and%20Table%20A2%20the%20parameters%20in%20the%20first%20layer%20have%20high%20sparsity%20so%20we%20use%20No%20%206%20In%20the%20remaining%20layers%20however%20we%20use%20No%20%203%20because%20the%20parameters%20are%20pruned%20with%20only%20about%2070%20%20pruning%20rate%20We%20repeat%20the%20process%20of%20quantization%20binary%20code%20encoding%20and%20retraining%20only%20once"
+        }
+    ]
+}

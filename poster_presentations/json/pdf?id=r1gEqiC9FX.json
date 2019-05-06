@@ -1,0 +1,356 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "EQUI-NORMALIZATION OF NEURAL NETWORKS",
+        "author": "Pierre Stock, Benjamin Graham, Remi Gribonval, and Herve Jegou, 1Facebook AI Research 2Univ Rennes, Inria, CNRS, IRISA E-mail correspondance: pstock@fb.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=r1gEqiC9FX"
+        },
+        "abstract": "Modern neural networks are over-parametrized. In particular, each rectified linear hidden unit can be modified by a multiplicative factor by adjusting input and output weights, without changing the rest of the network. Inspired by the SinkhornKnopp algorithm, we introduce a fast iterative method for minimizing the 2 norm of the weights, equivalently the weight decay regularizer. It provably converges to a unique solution. Interleaving our algorithm with SGD during training improves the test accuracy. For small batches, our approach offers an alternative to batchand group- normalization on CIFAR-10 and ImageNet with a ResNet-18."
+    },
+    "keywords": [
+        {
+            "term": "weight decay",
+            "url": "https://en.wikipedia.org/wiki/weight_decay"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "speech recognition",
+            "url": "https://en.wikipedia.org/wiki/speech_recognition"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        },
+        {
+            "term": "iterative method",
+            "url": "https://en.wikipedia.org/wiki/iterative_method"
+        },
+        {
+            "term": "natural language processing",
+            "url": "https://en.wikipedia.org/wiki/natural_language_processing"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "image classification",
+            "url": "https://en.wikipedia.org/wiki/image_classification"
+        },
+        {
+            "term": "convolutional neural networks",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_networks"
+        },
+        {
+            "term": "Recurrent Neural networks",
+            "url": "https://en.wikipedia.org/wiki/Recurrent_Neural_Network"
+        },
+        {
+            "term": "neural networks",
+            "url": "https://en.wikipedia.org/wiki/neural_networks"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "Deep Neural Networks",
+        "RNNs": "Recurrent Neural networks",
+        "ReLUs": "rectified linear units",
+        "BN": "Batch Normalization",
+        "GN": "Group Normalization",
+        "CNNs": "convolutional neural networks",
+        "BR": "Batch Renormalization",
+        "WN": "Weight Norm"
+    },
+    "highlights": [
+        "Deep Neural Networks (DNNs) have achieved outstanding performance across a wide range of empirical tasks such as image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a></a></a>), image segmentation (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\"><a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a></a>), speech recognition (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012a</a></a>), natural language processing (<a class=\"ref-link\" id=\"cCollobert_et+al_2011_a\" href=\"#rCollobert_et+al_2011_a\"><a class=\"ref-link\" id=\"cCollobert_et+al_2011_a\" href=\"#rCollobert_et+al_2011_a\">Collobert et al, 2011</a></a>) or playing the game of Go (<a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>)",
+        "While ENorm alone obtains competitive results compared to Batch Normalization and Group Normalization, ENorm + Batch Normalization outperforms all other methods, including Weight Norm + Batch Normalization",
+        "Note that here ENorm refers to ENorm in the uniform setup with the parameter c = 1.2 whereas ENorm + Batch Normalization refers to the uniform setup with c = 1",
+        "While Batch Normalization and Group Normalization are faster to converge than ENorm, our method achieves better results after convergence in this case",
+        "We presented Equi-normalization, an iterative method that balances the energy of the weights of a network while preserving the function it implements",
+        "ENorm provably converges towards a unique equivalent network that minimizes the p norm of its weights and it can be applied to modern convolutional neural networks architectures"
+    ],
+    "key_statements": [
+        "Deep Neural Networks (DNNs) have achieved outstanding performance across a wide range of empirical tasks such as image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a></a></a>), image segmentation (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\"><a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a></a>), speech recognition (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012a</a></a>), natural language processing (<a class=\"ref-link\" id=\"cCollobert_et+al_2011_a\" href=\"#rCollobert_et+al_2011_a\"><a class=\"ref-link\" id=\"cCollobert_et+al_2011_a\" href=\"#rCollobert_et+al_2011_a\">Collobert et al, 2011</a></a>) or playing the game of Go (<a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>)",
+        "We extend ENorm to modern convolutional architectures, including the widely used ResNets, and show that the theoretical computational overhead is lower compared to Batch Normalization (\u00d750) and even compared to Group Normalization (\u00d73);",
+        "While ENorm alone obtains competitive results compared to Batch Normalization and Group Normalization, ENorm + Batch Normalization outperforms all other methods, including Weight Norm + Batch Normalization",
+        "Note that here ENorm refers to Enorm using the adaptive c parameter as described in Subsection 3.6, whereas for ENorm + Batch Normalization we use the uniform setup with c = 1",
+        "Without Batch Normalization, the adaptive setup outperforms all other setups, which may be due to the strong bottleneck structure of the network",
+        "Note that here ENorm as well as ENorm + Batch Normalization refers to ENorm in the uniform setup with c = 1.2",
+        "Note that here ENorm refers to ENorm in the uniform setup with the parameter c = 1.2 whereas ENorm + Batch Normalization refers to the uniform setup with c = 1",
+        "Performance of Batch Normalization decreases with small batches, which concurs with prior observations (Wu & He, 2018)",
+        "While Batch Normalization and Group Normalization are faster to converge than ENorm, our method achieves better results after convergence in this case",
+        "Note that ENorm overfits the training set less than Batch Normalization and Group Normalization, but more than the Baseline case",
+        "We presented Equi-normalization, an iterative method that balances the energy of the weights of a network while preserving the function it implements",
+        "ENorm provably converges towards a unique equivalent network that minimizes the p norm of its weights and it can be applied to modern convolutional neural networks architectures"
+    ],
+    "summary": [
+        "Deep Neural Networks (DNNs) have achieved outstanding performance across a wide range of empirical tasks such as image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a></a></a>), image segmentation (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\"><a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a></a>), speech recognition (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\"><a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012a</a></a>), natural language processing (<a class=\"ref-link\" id=\"cCollobert_et+al_2011_a\" href=\"#rCollobert_et+al_2011_a\"><a class=\"ref-link\" id=\"cCollobert_et+al_2011_a\" href=\"#rCollobert_et+al_2011_a\">Collobert et al, 2011</a></a>) or playing the game of Go (<a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2017_a\" href=\"#rSilver_et+al_2017_a\">Silver et al, 2017</a></a>).",
+        "We introduce an iterative, batch-independent algorithm that re-parametrizes the network within the space of rescaling equivalent networks, preserving the function implemented by the network;",
+        "We prove that the proposed Equi-normalization algorithm converges to a unique canonical parameterization of the network that minimizes the global p norm of the weights, or equivalently, when p = 2, the weight decay regularizer;",
+        "This section reviews methods improving neural network training and compares them with ENorm.",
+        "Note that Weight Norm (WN) does require mean-only BN to get competitive results, as well as a greedy layer-wise initialization as mentioned in the paper.",
+        "We first define Equi-normalization in the context of simple feed forward networks that consist of two operators: linear layers and ReLUs. The algorithm is inspired by Sinkhorn-Knopp and is designed to balance the energy of a network, i.e., the p-norm of its weights, while preserving its function.",
+        "For rescaling-equivalent weights satisfying (2), in order to preserve the inputoutput function, we define matched rescaling equivalent biases bk = bkDk. In Appendix B.2, we show by recurrence that for every layer k, yk = ykDk, (5)",
+        "In order to maintain functional equivalence, we only consider ResNet architectures of type C as defined in (<a class=\"ref-link\" id=\"cHe_et+al_2015_b\" href=\"#rHe_et+al_2015_b\">He et al, 2015b</a>), where all shortcuts are learned 1 \u00d7 1 convolutions.",
+        "In Appendix D, we explore a method to jointly learn the rescaling coefficients and the weights with SGD, and report corresponding results.",
+        "We use a batch size of 256 and SGD with no momentum and a weight decay of 0.001.",
+        "We train for 60 epochs using SGD with no momentum, a batch size of 256 and weight decay of 10\u22123.",
+        "We train for 128 epochs using SGD and an initial learning rate cross-validated on a held-out set among {0.01, 0.05, 0.1}, along with a weight decay of 0.001.",
+        "In order for the training to be stable and faster, we added a BatchNorm at the end of the network after the FC layer for the Baseline and ENorm cases.",
+        "We observed that learnt skip-connections, even initialized to identity, make it harder to train without BN, even with careful layer-wise initialization or learning rate warmup.",
+        "We presented Equi-normalization, an iterative method that balances the energy of the weights of a network while preserving the function it implements.",
+        "ENorm provably converges towards a unique equivalent network that minimizes the p norm of its weights and it can be applied to modern CNN architectures.",
+        "These limitations suggest that further research is required in this direction"
+    ],
+    "headline": "Inspired by the SinkhornKnopp algorithm, we introduce a fast iterative method for minimizing the 2 norm of the weights, equivalently the weight decay regularizer",
+    "reference_links": [
+        {
+            "id": "Amari_1998_a",
+            "entry": "Shun-Ichi Amari. Natural gradient works efficiently in learning. Neural Comput., 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998"
+        },
+        {
+            "id": "Arpit_et+al_2016_a",
+            "entry": "Devansh Arpit, Yingbo Zhou, Bhargava U. Kota, and Venu Govindaraju. Normalization propagation: A parametric technique for removing internal covariate shift in deep networks. In Proceedings of the 33rd International Conference on International Conference on Machine Learning - Volume 48, ICML\u201916, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arpit%2C%20Devansh%20Zhou%2C%20Yingbo%20Kota%2C%20Bhargava%20U.%20Govindaraju%2C%20Venu%20Normalization%20propagation%3A%20A%20parametric%20technique%20for%20removing%20internal%20covariate%20shift%20in%20deep%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arpit%2C%20Devansh%20Zhou%2C%20Yingbo%20Kota%2C%20Bhargava%20U.%20Govindaraju%2C%20Venu%20Normalization%20propagation%3A%20A%20parametric%20technique%20for%20removing%20internal%20covariate%20shift%20in%20deep%20networks%202016"
+        },
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Lei Jimmy Ba, Ryan Kiros, and Geoffrey E. Hinton. Layer normalization. CoRR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ba%2C%20Lei%20Jimmy%20Kiros%2C%20Ryan%20Hinton%2C%20Geoffrey%20E.%20Layer%20normalization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ba%2C%20Lei%20Jimmy%20Kiros%2C%20Ryan%20Hinton%2C%20Geoffrey%20E.%20Layer%20normalization%202016"
+        },
+        {
+            "id": "Bottou_2010_a",
+            "entry": "Leon Bottou. Large-scale machine learning with stochastic gradient descent. In COMPSTAT, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bottou%2C%20Leon%20Large-scale%20machine%20learning%20with%20stochastic%20gradient%20descent%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bottou%2C%20Leon%20Large-scale%20machine%20learning%20with%20stochastic%20gradient%20descent%202010"
+        },
+        {
+            "id": "Carreira_2017_a",
+            "entry": "Joao Carreira and Andrew Zisserman. Quo vadis, action recognition? A new model and the kinetics dataset. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carreira%2C%20Joao%20Zisserman%2C%20Andrew%20Quo%20vadis%2C%20action%20recognition%3F%20A%20new%20model%20and%20the%20kinetics%20dataset%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carreira%2C%20Joao%20Zisserman%2C%20Andrew%20Quo%20vadis%2C%20action%20recognition%3F%20A%20new%20model%20and%20the%20kinetics%20dataset%202017"
+        },
+        {
+            "id": "Collobert_et+al_2011_a",
+            "entry": "Ronan Collobert, Jason Weston, Leon Bottou, Michael Karlen, Koray Kavukcuoglu, and Pavel Kuksa. Natural language processing (almost) from scratch. J. Mach. Learn. Res., 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collobert%2C%20Ronan%20Weston%2C%20Jason%20Bottou%2C%20Leon%20Karlen%2C%20Michael%20Natural%20language%20processing%20%28almost%29%20from%20scratch%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collobert%2C%20Ronan%20Weston%2C%20Jason%20Bottou%2C%20Leon%20Karlen%2C%20Michael%20Natural%20language%20processing%20%28almost%29%20from%20scratch%202011"
+        },
+        {
+            "id": "Desjardins_et+al_2015_a",
+            "entry": "Guillaume Desjardins, Karen Simonyan, Razvan Pascanu, and koray kavukcuoglu. Natural neural networks. In Advances in Neural Information Processing Systems 28, pp. 2071\u20132079. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guillaume%20Desjardins%20Karen%20Simonyan%20Razvan%20Pascanu%20and%20koray%20kavukcuoglu%20Natural%20neural%20networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2028%20pp%2020712079%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guillaume%20Desjardins%20Karen%20Simonyan%20Razvan%20Pascanu%20and%20koray%20kavukcuoglu%20Natural%20neural%20networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2028%20pp%2020712079%202015"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. J. Mach. Learn. Res., 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Gitman_2017_a",
+            "entry": "Igor Gitman and Boris Ginsburg. Comparison of batch normalization and weight normalization algorithms for the large-scale image classification. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gitman%2C%20Igor%20Ginsburg%2C%20Boris%20Comparison%20of%20batch%20normalization%20and%20weight%20normalization%20algorithms%20for%20the%20large-scale%20image%20classification%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gitman%2C%20Igor%20Ginsburg%2C%20Boris%20Comparison%20of%20batch%20normalization%20and%20weight%20normalization%20algorithms%20for%20the%20large-scale%20image%20classification%202017"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Dollar, Ross B. Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch SGD: training imagenet in 1 hour. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Priya%20Dollar%2C%20Piotr%20Girshick%2C%20Ross%20B.%20Noordhuis%2C%20Pieter%20Accurate%2C%20large%20minibatch%20SGD%3A%20training%20imagenet%20in%201%20hour%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Priya%20Dollar%2C%20Piotr%20Girshick%2C%20Ross%20B.%20Noordhuis%2C%20Pieter%20Accurate%2C%20large%20minibatch%20SGD%3A%20training%20imagenet%20in%201%20hour%202017"
+        },
+        {
+            "id": "Hanin_2018_a",
+            "entry": "Boris Hanin and David Rolnick. How to start training: The effect of initialization and architecture. arXiv preprint, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hanin%2C%20Boris%20Rolnick%2C%20David%20How%20to%20start%20training%3A%20The%20effect%20of%20initialization%20and%20architecture.%20arXiv%20p%202018"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. CoRR, 2015a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "He_et+al_2015_b",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. CoRR, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202015"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Kaiming He, Georgia Gkioxari, Piotr Dollar, and Ross B. Girshick. Mask R-CNN. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Gkioxari%2C%20Georgia%20Dollar%2C%20Piotr%20Girshick%2C%20Ross%20B.%20Mask%20R-CNN%202017"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "Geoffrey Hinton, Li Deng, Dong Yu, George Dahl, Abdel rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara Sainath, and Brian Kingsbury. Deep neural networks for acoustic modeling in speech recognition. Signal Processing Magazine, 2012a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Deng%2C%20Li%20Yu%2C%20Dong%20Dahl%2C%20George%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20Deng%2C%20Li%20Yu%2C%20Dong%20Dahl%2C%20George%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%202012"
+        },
+        {
+            "id": "Hinton_et+al_2012_b",
+            "entry": "Geoffrey E. Hinton, Nitish Srivastava, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Improving neural networks by preventing co-adaptation of feature detectors. CoRR, 2012b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Srivastava%2C%20Nitish%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Improving%20neural%20networks%20by%20preventing%20co-adaptation%20of%20feature%20detectors%202012"
+        },
+        {
+            "id": "Hochreiter_et+al_2001_a",
+            "entry": "Sepp Hochreiter, Yoshua Bengio, Paolo Frasconi, and Jrgen Schmidhuber. Gradient flow in recurrent nets: the difficulty of learning long-term dependencies, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Bengio%2C%20Yoshua%20Frasconi%2C%20Paolo%20Schmidhuber%2C%20Jrgen%20Gradient%20flow%20in%20recurrent%20nets%3A%20the%20difficulty%20of%20learning%20long-term%20dependencies%202001"
+        },
+        {
+            "id": "Huang_et+al_2016_a",
+            "entry": "Gao Huang, Zhuang Liu, and Kilian Q. Weinberger. Densely connected convolutional networks. CoRR, 2016. URL http://arxiv.org/abs/1608.06993.",
+            "url": "http://arxiv.org/abs/1608.06993",
+            "arxiv_url": "https://arxiv.org/pdf/1608.06993"
+        },
+        {
+            "id": "Ioffe_2017_a",
+            "entry": "Sergey Ioffe. Batch renormalization: Towards reducing minibatch dependence in batch-normalized models. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Batch%20renormalization%3A%20Towards%20reducing%20minibatch%20dependence%20in%20batch-normalized%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Batch%20renormalization%3A%20Towards%20reducing%20minibatch%20dependence%20in%20batch-normalized%20models%202017"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. CoRR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. CoRR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202014"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems 25. 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Krogh_1992_a",
+            "entry": "Anders Krogh and John A. Hertz. A simple weight decay can improve generalization. In Advances in Neural Information Processing Systems 4. 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krogh%2C%20Anders%20Hertz%2C%20John%20A.%20A%20simple%20weight%20decay%20can%20improve%20generalization%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krogh%2C%20Anders%20Hertz%2C%20John%20A.%20A%20simple%20weight%20decay%20can%20improve%20generalization%201992"
+        },
+        {
+            "id": "Lafond_et+al_2017_a",
+            "entry": "Jean Lafond, Nicolas Vasilache, and Leon Bottou. Diagonal rescaling for neural networks. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lafond%2C%20Jean%20Vasilache%2C%20Nicolas%20Bottou%2C%20Leon%20Diagonal%20rescaling%20for%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lafond%2C%20Jean%20Vasilache%2C%20Nicolas%20Bottou%2C%20Leon%20Diagonal%20rescaling%20for%20neural%20networks%202017"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Genevieve B. Orr, and Klaus-Robert Muller. Efficient backprop. In Neural Networks: Tricks of the Trade, This Book is an Outgrowth of a 1996 NIPS Workshop. Springer-Verlag, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yann%20LeCun%20Leon%20Bottou%20Genevieve%20B%20Orr%20and%20KlausRobert%20Muller%20Efficient%20backprop%20In%20Neural%20Networks%20Tricks%20of%20the%20Trade%20This%20Book%20is%20an%20Outgrowth%20of%20a%201996%20NIPS%20Workshop%20SpringerVerlag%201998"
+        },
+        {
+            "id": "Marceau-Caron_2016_a",
+            "entry": "Gaetan Marceau-Caron and Yann Ollivier. Practical riemannian neural networks. CoRR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marceau-Caron%2C%20Gaetan%20Ollivier%2C%20Yann%20Practical%20riemannian%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marceau-Caron%2C%20Gaetan%20Ollivier%2C%20Yann%20Practical%20riemannian%20neural%20networks%202016"
+        },
+        {
+            "id": "Martens_2015_a",
+            "entry": "James Martens and Roger Grosse. Optimizing neural networks with kronecker-factored approximate curvature. In Proceedings of the 32nd International Conference on Machine Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015"
+        },
+        {
+            "id": "Mishkin_2015_a",
+            "entry": "Dmytro Mishkin and Jiri Matas. All you need is a good init. CoRR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mishkin%2C%20Dmytro%20Matas%2C%20Jiri%20All%20you%20need%20is%20a%20good%20init%202015"
+        },
+        {
+            "id": "Neyshabur_et+al_2015_a",
+            "entry": "Behnam Neyshabur, Ruslan Salakhutdinov, and Nathan Srebro. Path-sgd: Path-normalized optimization in deep neural networks. CoRR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neyshabur%2C%20Behnam%20Salakhutdinov%2C%20Ruslan%20Srebro%2C%20Nathan%20Path-sgd%3A%20Path-normalized%20optimization%20in%20deep%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neyshabur%2C%20Behnam%20Salakhutdinov%2C%20Ruslan%20Srebro%2C%20Nathan%20Path-sgd%3A%20Path-normalized%20optimization%20in%20deep%20neural%20networks%202015"
+        },
+        {
+            "id": "Pascanu_2013_a",
+            "entry": "Razvan Pascanu and Yoshua Bengio. Natural gradient revisited. CoRR, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Bengio%2C%20Yoshua%20Natural%20gradient%20revisited%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Bengio%2C%20Yoshua%20Natural%20gradient%20revisited%202013"
+        },
+        {
+            "id": "Pascanu_et+al_2013_b",
+            "entry": "Razvan Pascanu, Guido Montufar, and Yoshua Bengio. On the number of inference regions of deep feed forward networks with piece-wise linear activations. CoRR, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Montufar%2C%20Guido%20Bengio%2C%20Yoshua%20On%20the%20number%20of%20inference%20regions%20of%20deep%20feed%20forward%20networks%20with%20piece-wise%20linear%20activations%202013"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20Adam%20Gross%2C%20Sam%20Chintala%2C%20Soumith%20Chanan%2C%20Gregory%20Automatic%20differentiation%20in%20pytorch%202017"
+        },
+        {
+            "id": "Raghu_et+al_2017_a",
+            "entry": "Maithra Raghu, Ben Poole, Jon Kleinberg, Surya Ganguli, and Jascha Sohl-Dickstein. On the expressive power of deep neural networks. In Proceedings of the 34th International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghu%2C%20Maithra%20Poole%2C%20Ben%20Kleinberg%2C%20Jon%20Ganguli%2C%20Surya%20On%20the%20expressive%20power%20of%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghu%2C%20Maithra%20Poole%2C%20Ben%20Kleinberg%2C%20Jon%20Ganguli%2C%20Surya%20On%20the%20expressive%20power%20of%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Russakovsky_et+al_2015_a",
+            "entry": "Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg, and Li Fei-Fei. Imagenet large scale visual recognition challenge. Int. J. Comput. Vision, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Russakovsky%2C%20Olga%20Deng%2C%20Jia%20Su%2C%20Hao%20Krause%2C%20Jonathan%20Imagenet%20large%20scale%20visual%20recognition%20challenge%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Russakovsky%2C%20Olga%20Deng%2C%20Jia%20Su%2C%20Hao%20Krause%2C%20Jonathan%20Imagenet%20large%20scale%20visual%20recognition%20challenge%202015"
+        },
+        {
+            "id": "Salimans_2016_a",
+            "entry": "Tim Salimans and Diederik P. Kingma. Weight normalization: A simple reparameterization to accelerate training of deep neural networks. CoRR, 2016. URL http://arxiv.org/abs/1602.07868.",
+            "url": "http://arxiv.org/abs/1602.07868",
+            "arxiv_url": "https://arxiv.org/pdf/1602.07868"
+        },
+        {
+            "id": "Santurkar_et+al_2018_a",
+            "entry": "Shibani Santurkar, Dimitris Tsipras, Andrew Ilyas, and Aleksander Madry. How does batch normalization help optimization? (no, it is not about internal covariate shift). CoRR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santurkar%2C%20Shibani%20Tsipras%2C%20Dimitris%20Ilyas%2C%20Andrew%20Madry%2C%20Aleksander%20How%20does%20batch%20normalization%20help%20optimization%3F%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santurkar%2C%20Shibani%20Tsipras%2C%20Dimitris%20Ilyas%2C%20Andrew%20Madry%2C%20Aleksander%20How%20does%20batch%20normalization%20help%20optimization%3F%202018"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, Yutian Chen, Timothy Lillicrap, Fan Hui, Laurent Sifre, George van den Driessche, Thore Graepel, and Demis Hassabis. Mastering the game of go without human knowledge. Nature, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. CoRR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202014"
+        },
+        {
+            "id": "Sutskever_et+al_2013_a",
+            "entry": "Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In Proceedings of the 30th International Conference on International Conference on Machine Learning - Volume 28, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013"
+        },
+        {
+            "id": "Szegedy_et+al_2014_a",
+            "entry": "Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott E. Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich. Going deeper with convolutions. CoRR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Liu%2C%20Wei%20Jia%2C%20Yangqing%20Sermanet%2C%20Pierre%20Going%20deeper%20with%20convolutions%202014"
+        },
+        {
+            "id": "Tseng_2016_a",
+            "entry": "Published as a conference paper at ICLR 2019 Matus Telgarsky. Benefits of depth in neural networks. CoRR, 2016. P. Tseng. Convergence of a block coordinate descent method for nondifferentiable minimization. J.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Matus%20Telgarsky%20Benefits%20of%20depth%20in%20neural%20networks%20CoRR%202016%20P%20Tseng%20Convergence%20of%20a%20block%20coordinate%20descent%20method%20for%20nondifferentiable%20minimization%20J",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Matus%20Telgarsky%20Benefits%20of%20depth%20in%20neural%20networks%20CoRR%202016%20P%20Tseng%20Convergence%20of%20a%20block%20coordinate%20descent%20method%20for%20nondifferentiable%20minimization%20J"
+        },
+        {
+            "id": "Optim_2001_a",
+            "entry": "Optim. Theory Appl., 2001. Dmitry Ulyanov, Andrea Vedaldi, and Victor S. Lempitsky. Instance normalization: The missing ingredient for fast stylization. CoRR, 2016. Yuxin Wu and Kaiming He. Group normalization. CoRR, abs/1803.08494, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.08494"
+        }
+    ]
+}

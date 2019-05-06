@@ -1,0 +1,310 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "A CLOSER LOOK AT DEEP LEARNING HEURISTICS: LEARNING RATE RESTARTS, WARMUP AND DISTILLA-",
+        "author": "Akhilesh Gotmare, Department of Computer Science EPFL, Switzerland akhilesh.gotmare@epfl.ch",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=r14EOsCqKX"
+        },
+        "abstract": "The convergence rate and final performance of common deep learning models have significantly benefited from heuristics such as learning rate schedules, knowledge distillation, skip connections, and normalization layers. In the absence of theoretical underpinnings, controlled experiments aimed at explaining these strategies can aid our understanding of deep learning landscapes and the training dynamics. Existing approaches for empirical analysis rely on tools of linear interpolation and visualizations with dimensionality reduction, each with their limitations. Instead, we revisit such analysis of heuristics through the lens of recently proposed methods for loss surface and representation analysis, viz., mode connectivity and canonical correlation analysis (CCA), and hypothesize reasons for the success of the heuristics. In particular, we explore knowledge distillation and learning rate heuristics of (cosine) restarts and warmup using mode connectivity and CCA. Our empirical analysis suggests that: (a) the reasons often quoted for the success of cosine annealing are not evidenced in practice; (b) that the effect of learning rate warmup is to prevent the deeper layers from creating training instability; and (c) that the latent knowledge shared by the teacher is primarily disbursed to the deeper layers."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "Discrete Fourier Transform",
+            "url": "https://en.wikipedia.org/wiki/Discrete_Fourier_Transform"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "Singular Value Decomposition",
+            "url": "https://en.wikipedia.org/wiki/Singular_Value_Decomposition"
+        },
+        {
+            "term": "heuristics",
+            "url": "https://en.wikipedia.org/wiki/heuristics"
+        },
+        {
+            "term": "deep layer",
+            "url": "https://en.wikipedia.org/wiki/deep_layer"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "canonical correlation analysis",
+            "url": "https://en.wikipedia.org/wiki/canonical_correlation_analysis"
+        },
+        {
+            "term": "linear interpolation",
+            "url": "https://en.wikipedia.org/wiki/linear_interpolation"
+        },
+        {
+            "term": "empirical analysis",
+            "url": "https://en.wikipedia.org/wiki/empirical_analysis"
+        }
+    ],
+    "abbreviations": {
+        "CCA": "Canonical correlation analysis",
+        "SVCCA": "singular value canonical correlation analysis",
+        "SGDR": "STOCHASTIC GRADIENT DESCENT WITH RESTARTS",
+        "KD": "knowledge distillation",
+        "MC": "Mode connectivity",
+        "SVD": "Singular Value Decomposition",
+        "DFT": "Discrete Fourier Transform",
+        "LB": "large batch"
+    },
+    "highlights": [
+        "The introduction of heuristics such as normalization layers (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\"><a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a></a>; <a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\"><a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\">Ba et al, 2016</a></a>), residual connections (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), and learning rate strategies (<a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\"><a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\">Loshchilov & Hutter, 2016</a></a>; <a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSmith_2017_a\" href=\"#rSmith_2017_a\"><a class=\"ref-link\" id=\"cSmith_2017_a\" href=\"#rSmith_2017_a\">Smith, 2017</a></a>) have greatly accelerated progress in Deep Learning",
+        "We investigate three strategies in detail: (a) cosine learning rate decay, (b) learning rate warmup, and (c) knowledge distillation, and list the summary of our contributions at the end of this section",
+        "Using Canonical correlation analysis as a tool to study the learning dynamics of neural networks through training iterations, we investigate the differences and similarities for the following 3 training configurations (a) large batch training with warmup (LB + warmup), (b) large batch training without warmup (LB no warmup) and (c) small batch training without warmup (SB no warmup)",
+        "Heuristics have played an important role in accelerating progress of deep learning",
+        "The primary goal of our work was the investigation of three such heuristics using sophisticated tools for landscape analysis",
+        "Our empirical analysis sheds light on these heuristics and suggests that: (a) the reasons often quoted for the success of cosine annealing are not evidenced in practice; (b) that the effect of learning rate warmup is to prevent the deeper layers from creating training instability; and (c) that the latent knowledge shared by the teacher is primarily disbursed in the deeper layers"
+    ],
+    "key_statements": [
+        "The introduction of heuristics such as normalization layers (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\"><a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a></a>; <a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\"><a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\">Ba et al, 2016</a></a>), residual connections (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), and learning rate strategies (<a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\"><a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\">Loshchilov & Hutter, 2016</a></a>; <a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSmith_2017_a\" href=\"#rSmith_2017_a\"><a class=\"ref-link\" id=\"cSmith_2017_a\" href=\"#rSmith_2017_a\">Smith, 2017</a></a>) have greatly accelerated progress in Deep Learning",
+        "Existing attempts at explaining these strategies empirically have been limited to intuitive explanations and the use of tools such as spectrum analysis (<a class=\"ref-link\" id=\"cSagun_et+al_2017_a\" href=\"#rSagun_et+al_2017_a\">Sagun et al, 2017</a>), linear interpolation between two models and low-dimensional visualizations (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>) of the loss surface",
+        "We investigate three strategies in detail: (a) cosine learning rate decay, (b) learning rate warmup, and (c) knowledge distillation, and list the summary of our contributions at the end of this section",
+        "We demonstrate that the reasons often quoted for the success of cosine annealing are not substantiated by our experiments, and that the iterates move over barriers after restarts but the explanation of escaping local minima might be an oversimplification",
+        "We show that learning rate warmup primarily limits weight changes in the deeper layers and that freezing them achieves similar outcomes as warmup",
+        "We empirically investigate if this is the case by interpolating the loss surface between parameters at different epochs and studying the training and validation loss for parameters on the hyperplane passing through2 the two modes found by STOCHASTIC GRADIENT DESCENT WITH RESTARTS and their connectivity",
+        "In order to understand the loss landscape on the optimization path of STOCHASTIC GRADIENT DESCENT WITH RESTARTS, the pairs of iterates obtained just before the restarts {w30, w70}, {w70, w150} and {w30, w150} are given as inputs to the mode connectivity algorithm, where wn is the model corresponding to parameters at the n-th epoch of training",
+        "To further understand the STOCHASTIC GRADIENT DESCENT WITH RESTARTS trajectory, we evaluate the intermediate points on the hyperplane in the D-dimensional space defined by the three points: w70, w150 and w70\u2212150, where w70\u2212150 is the bend point that defines the high accuracy connection for the pair {w70, w150}",
+        "The question we aim to investigate here is: How does learning rate warmup impact different layers of the network?",
+        "Using Canonical correlation analysis as a tool to study the learning dynamics of neural networks through training iterations, we investigate the differences and similarities for the following 3 training configurations (a) large batch training with warmup (LB + warmup), (b) large batch training without warmup (LB no warmup) and (c) small batch training without warmup (SB no warmup)",
+        "We study knowledge distillation as proposed by <a class=\"ref-link\" id=\"cHinton_et+al_2015_a\" href=\"#rHinton_et+al_2015_a\">Hinton et al (2015</a>) using Canonical correlation analysis to measure representational similarity between layers of the teacher and student model",
+        "Heuristics have played an important role in accelerating progress of deep learning",
+        "The primary goal of our work was the investigation of three such heuristics using sophisticated tools for landscape analysis",
+        "Our empirical analysis sheds light on these heuristics and suggests that: (a) the reasons often quoted for the success of cosine annealing are not evidenced in practice; (b) that the effect of learning rate warmup is to prevent the deeper layers from creating training instability; and (c) that the latent knowledge shared by the teacher is primarily disbursed in the deeper layers"
+    ],
+    "summary": [
+        "The introduction of heuristics such as normalization layers (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\"><a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a></a>; <a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\"><a class=\"ref-link\" id=\"cBa_et+al_2016_a\" href=\"#rBa_et+al_2016_a\">Ba et al, 2016</a></a>), residual connections (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), and learning rate strategies (<a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\"><a class=\"ref-link\" id=\"cLoshchilov_2016_a\" href=\"#rLoshchilov_2016_a\">Loshchilov & Hutter, 2016</a></a>; <a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSmith_2017_a\" href=\"#rSmith_2017_a\"><a class=\"ref-link\" id=\"cSmith_2017_a\" href=\"#rSmith_2017_a\">Smith, 2017</a></a>) have greatly accelerated progress in Deep Learning.",
+        "We use mode connectivity and CCA to improve understanding of cosine annealing, learning rate warmup and knowledge distillation.",
+        "We experiment with different initializations, optimizers, data augmentation choices, and hyperparameter settings including regularization, training batch sizes, and learning rate schemes.",
+        "We build 6 variants of the reference mode G as follows: we obtain mode A using a training batch size of 4000, mode B by using the Adam optimizer instead of SGD, mode C with a linearly decaying learning rate instead of the step decay used in mode G, mode D using a smaller weight decay of 5 \u00d7 10\u22126, mode E by increasing the variance of the initialization distribution to 3 \u00d7 2/n and mode F using no data augmentation.",
+        "We empirically investigate if this is the case by interpolating the loss surface between parameters at different epochs and studying the training and validation loss for parameters on the hyperplane passing through2 the two modes found by SGDR and their connectivity.",
+        "In order to understand the loss landscape on the optimization path of SGDR, the pairs of iterates obtained just before the restarts {w30, w70}, {w70, w150} and {w30, w150} are given as inputs to the mode connectivity algorithm, where wn is the model corresponding to parameters at the n-th epoch of training.",
+        "Figure 2(b) shows the training loss for models along the line segment joining these pairs and those on the curve found through mode connectivity.",
+        "For the baseline case of SGD train- Figure 3: (a) Training loss surface and (b) valiing, we connect the iterates around the epochs dation loss surface, log scales, for points on the when we decrease our learning rate in the step plane defined by {w70, w150, w70\u2212150} including decay learning rate scheme.",
+        "Our empirical analysis sheds light on these heuristics and suggests that: (a) the reasons often quoted for the success of cosine annealing are not evidenced in practice; (b) that the effect of learning rate warmup is to prevent the deeper layers from creating training instability; and (c) that the latent knowledge shared by the teacher is primarily disbursed in the deeper layers.",
+        "Given the empirical results suggesting the localization of the knowledge transfer between teacher and student in the process of distillation, a heuristic can be designed that only trains portions of the student networks instead of the whole network."
+    ],
+    "headline": "We explore knowledge distillation and learning rate heuristics of restarts and warmup using mode connectivity and Canonical correlation analysis",
+    "reference_links": [
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Balduzzi_et+al_2017_a",
+            "entry": "David Balduzzi, Marcus Frean, Lennox Leary, JP Lewis, Kurt Wan-Duo Ma, and Brian McWilliams. The shattered gradients problem: If resnets are the answer, then what is the question? arXiv preprint arXiv:1702.08591, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08591"
+        },
+        {
+            "id": "Bogoychev_et+al_2018_a",
+            "entry": "Nikolay Bogoychev, Marcin Junczys-Dowmunt, Kenneth Heafield, and Alham Fikri Aji. Accelerating asynchronous stochastic gradient descent for neural machine translation. arXiv preprint arXiv:1808.08859, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.08859"
+        },
+        {
+            "id": "Coleman_et+al_2018_a",
+            "entry": "Cody Coleman, Daniel Kang, Deepak Narayanan, Luigi Nardi, Tian Zhao, Jian Zhang, Peter Bailis, Kunle Olukotun, Chris Re, and Matei Zaharia. Analysis of dawnbench, a time-to-accuracy machine learning performance benchmark. arXiv preprint arXiv:1806.01427, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01427"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "Laurent Dinh, Razvan Pascanu, Samy Bengio, and Yoshua Bengio. Sharp minima can generalize for deep nets. arXiv preprint arXiv:1703.04933, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04933"
+        },
+        {
+            "id": "Draxler_et+al_2018_a",
+            "entry": "Felix Draxler, Kambis Veschgini, Manfred Salmhofer, and Fred A Hamprecht. Essentially no barriers in neural network energy landscape. arXiv preprint arXiv:1803.00885, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00885"
+        },
+        {
+            "id": "Furlanello_et+al_2018_a",
+            "entry": "Tommaso Furlanello, Zachary C Lipton, Michael Tschannen, Laurent Itti, and Anima Anandkumar. Born again neural networks. arXiv preprint arXiv:1805.04770, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.04770"
+        },
+        {
+            "id": "Garipov_et+al_2018_a",
+            "entry": "Timur Garipov, Pavel Izmailov, Dmitrii Podoprikhin, Dmitry P Vetrov, and Andrew Gordon Wilson. Loss surfaces, mode connectivity, and fast ensembling of dnns. arXiv preprint arXiv:1802.10026, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.10026"
+        },
+        {
+            "id": "Goodfellow_et+al_2016_a",
+            "entry": "Ian Goodfellow, Yoshua Bengio, Aaron Courville, and Yoshua Bengio. Deep learning, volume 1. MIT Press, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Bengio%2C%20Yoshua%20Deep%20learning%2C%20volume%201%202016"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Dollar, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch sgd: training imagenet in 1 hour. arXiv preprint arXiv:1706.02677, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "Hardt_2016_a",
+            "entry": "Moritz Hardt and Tengyu Ma. Identity matters in deep learning. arXiv preprint arXiv:1611.04231, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.04231"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Heusel_et+al_2017_a",
+            "entry": "Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, Gunter Klambauer, and Sepp Hochreiter. Gans trained by a two time-scale update rule converge to a nash equilibrium. arXiv preprint arXiv:1706.08500, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.08500"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Hoffer_et+al_2017_a",
+            "entry": "Elad Hoffer, Itay Hubara, and Daniel Soudry. Train longer, generalize better: closing the generalization gap in large batch training of neural networks. In Advances in Neural Information Processing Systems, pp. 1731\u20131741, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoffer%2C%20Elad%20Hubara%2C%20Itay%20Soudry%2C%20Daniel%20Train%20longer%2C%20generalize%20better%3A%20closing%20the%20generalization%20gap%20in%20large%20batch%20training%20of%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoffer%2C%20Elad%20Hubara%2C%20Itay%20Soudry%2C%20Daniel%20Train%20longer%2C%20generalize%20better%3A%20closing%20the%20generalization%20gap%20in%20large%20batch%20training%20of%20neural%20networks%202017"
+        },
+        {
+            "id": "Hoffer_et+al_2018_a",
+            "entry": "Elad Hoffer, Itay Hubara, and Daniel Soudry. Fix your classifier: the marginal value of training the last weight layer. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=S1Dh8Tg0-.",
+            "url": "https://openreview.net/forum?id=S1Dh8Tg0-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoffer%2C%20Elad%20Hubara%2C%20Itay%20Soudry%2C%20Daniel%20Fix%20your%20classifier%3A%20the%20marginal%20value%20of%20training%20the%20last%20weight%20layer%202018"
+        },
+        {
+            "id": "Hotelling_1936_a",
+            "entry": "Harold Hotelling. Relations between two sets of variates. Biometrika, 28(3/4):321\u2013377, 1936.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hotelling%2C%20Harold%20Relations%20between%20two%20sets%20of%20variates%201936",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hotelling%2C%20Harold%20Relations%20between%20two%20sets%20of%20variates%201936"
+        },
+        {
+            "id": "Howard_2018_a",
+            "entry": "Jeremy Howard and Sebastian Ruder. Universal language model fine-tuning for text classification. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 328\u2013339, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Howard%2C%20Jeremy%20Ruder%2C%20Sebastian%20Universal%20language%20model%20fine-tuning%20for%20text%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Howard%2C%20Jeremy%20Ruder%2C%20Sebastian%20Universal%20language%20model%20fine-tuning%20for%20text%20classification%202018"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Yixuan Li, Geoff Pleiss, Zhuang Liu, John E Hopcroft, and Kilian Q Weinberger. Snapshot ensembles: Train 1, get m for free. arXiv preprint arXiv:1704.00109, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.00109"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Izmailov_et+al_2018_a",
+            "entry": "Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry Vetrov, and Andrew Gordon Wilson. Averaging weights leads to wider optima and better generalization. arXiv preprint arXiv:1803.05407, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05407"
+        },
+        {
+            "id": "Jastrzebski_et+al_2017_a",
+            "entry": "Stanis\u0142aw Jastrzebski, Zachary Kenton, Devansh Arpit, Nicolas Ballas, Asja Fischer, Yoshua Bengio, and Amos Storkey. Three factors influencing minima in sgd. arXiv preprint arXiv:1711.04623, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.04623"
+        },
+        {
+            "id": "Keskar_et+al_2016_a",
+            "entry": "Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, and Ping Tak Peter Tang. On large-batch training for deep learning: Generalization gap and sharp minima. arXiv preprint arXiv:1609.04836, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.04836"
+        },
+        {
+            "id": "Krizhevsky_et+al_2014_a",
+            "entry": "Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. The cifar-10 dataset. online: http://www.cs.toronto.edu/kriz/cifar.html, 2014.",
+            "url": "http://www.cs.toronto.edu/kriz/cifar.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20The%20cifar-10%20dataset%202014"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Zheng Xu, Gavin Taylor, and Tom Goldstein. Visualizing the loss landscape of neural nets. arXiv preprint arXiv:1712.09913, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.09913"
+        },
+        {
+            "id": "Li_et+al_2015_a",
+            "entry": "Yixuan Li, Jason Yosinski, Jeff Clune, Hod Lipson, and John E Hopcroft. Convergent learning: Do different neural networks learn the same representations? In FE@ NIPS, pp. 196\u2013212, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yixuan%20Yosinski%2C%20Jason%20Clune%2C%20Jeff%20Lipson%2C%20Hod%20Convergent%20learning%3A%20Do%20different%20neural%20networks%20learn%20the%20same%20representations%3F%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yixuan%20Yosinski%2C%20Jason%20Clune%2C%20Jeff%20Lipson%2C%20Hod%20Convergent%20learning%3A%20Do%20different%20neural%20networks%20learn%20the%20same%20representations%3F%202015"
+        },
+        {
+            "id": "Loshchilov_2016_a",
+            "entry": "Ilya Loshchilov and Frank Hutter. Sgdr: stochastic gradient descent with restarts. arXiv preprint arXiv:1608.03983, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.03983"
+        },
+        {
+            "id": "Van_2008_a",
+            "entry": "Laurens van der Maaten and Geoffrey Hinton. Visualizing data using t-sne. Journal of machine learning research, 9(Nov):2579\u20132605, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-sne%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-sne%202008"
+        },
+        {
+            "id": "Poggio_2017_a",
+            "entry": "Tomaso Poggio and Qianli Liao. Theory ii: Landscape of the empirical risk in deep learning. PhD thesis, Center for Brains, Minds and Machines (CBMM), arXiv, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Poggio%2C%20Tomaso%20Liao%2C%20Qianli%20Theory%20ii%3A%20Landscape%20of%20the%20empirical%20risk%20in%20deep%20learning%202017"
+        },
+        {
+            "id": "Raghu_et+al_2017_a",
+            "entry": "Maithra Raghu, Justin Gilmer, Jason Yosinski, and Jascha Sohl-Dickstein. Svcca: Singular vector canonical correlation analysis for deep learning dynamics and interpretability. In Advances in Neural Information Processing Systems, pp. 6076\u20136085, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghu%2C%20Maithra%20Gilmer%2C%20Justin%20Yosinski%2C%20Jason%20Sohl-Dickstein%2C%20Jascha%20Svcca%3A%20Singular%20vector%20canonical%20correlation%20analysis%20for%20deep%20learning%20dynamics%20and%20interpretability%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghu%2C%20Maithra%20Gilmer%2C%20Justin%20Yosinski%2C%20Jason%20Sohl-Dickstein%2C%20Jascha%20Svcca%3A%20Singular%20vector%20canonical%20correlation%20analysis%20for%20deep%20learning%20dynamics%20and%20interpretability%202017"
+        },
+        {
+            "id": "Sagun_et+al_2017_a",
+            "entry": "Levent Sagun, Utku Evci, V Ugur Guney, Yann Dauphin, and Leon Bottou. Empirical analysis of the hessian of over-parametrized neural networks. arXiv preprint arXiv:1706.04454, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.04454"
+        },
+        {
+            "id": "Santurkar_et+al_2018_a",
+            "entry": "Shibani Santurkar, Dimitris Tsipras, Andrew Ilyas, and Aleksander Madry. How does batch normalization help optimization?(no, it is not about internal covariate shift). arXiv preprint arXiv:1805.11604, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11604"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Smith_2017_a",
+            "entry": "Leslie N Smith. Cyclical learning rates for training neural networks. In Applications of Computer Vision (WACV), 2017 IEEE Winter Conference on, pp. 464\u2013472. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20Leslie%20N.%20Cyclical%20learning%20rates%20for%20training%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smith%2C%20Leslie%20N.%20Cyclical%20learning%20rates%20for%20training%20neural%20networks%202017"
+        },
+        {
+            "id": "Smith_et+al_2017_b",
+            "entry": "Samuel L Smith, Pieter-Jan Kindermans, and Quoc V Le. Don\u2019t decay the learning rate, increase the batch size. arXiv preprint arXiv:1711.00489, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00489"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pp. 5998\u20136008, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nati Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. In Advances in Neural Information Processing Systems, pp. 4151\u20134161, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041514161%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041514161%202017"
+        },
+        {
+            "id": "Yosinski_et+al_2014_a",
+            "entry": "Jason Yosinski, Jeff Clune, Yoshua Bengio, and Hod Lipson. How transferable are features in deep neural networks? In Advances in neural information processing systems, pp. 3320\u20133328, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yosinski%2C%20Jason%20Clune%2C%20Jeff%20Bengio%2C%20Yoshua%20Lipson%2C%20Hod%20How%20transferable%20are%20features%20in%20deep%20neural%20networks%3F%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yosinski%2C%20Jason%20Clune%2C%20Jeff%20Bengio%2C%20Yoshua%20Lipson%2C%20Hod%20How%20transferable%20are%20features%20in%20deep%20neural%20networks%3F%202014"
+        }
+    ]
+}

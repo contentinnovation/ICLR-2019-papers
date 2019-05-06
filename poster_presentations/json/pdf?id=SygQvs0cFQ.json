@@ -1,0 +1,211 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "VARIATIONAL SMOOTHING IN RECURRENT NEURAL NETWORK LANGUAGE MODELS",
+        "author": "Lingpeng Kong, Gabor Melis, Wang Ling, Lei Yu, Dani Yogatama DeepMind {lingpenk, melisgl, lingwang, leiyu, dyogatama}@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SygQvs0cFQ"
+        },
+        "abstract": "We present a new theoretical perspective of data noising in recurrent neural network language models (Xie et al., 2017). We show that each variant of data noising is an instance of Bayesian recurrent neural networks with a particular variational distribution (i.e., a mixture of Gaussians whose weights depend on statistics derived from the corpus such as the unigram distribution). We use this insight to propose a more principled method to apply at prediction time and propose natural extensions to data noising under the variational framework. In particular, we propose variational smoothing with tied input and output embedding matrices and an element-wise variational smoothing method. We empirically verify our analysis on two benchmark language modeling datasets and demonstrate performance improvements over existing data noising methods."
+    },
+    "keywords": [
+        {
+            "term": "language processing",
+            "url": "https://en.wikipedia.org/wiki/language_processing"
+        },
+        {
+            "term": "Penn Treebank",
+            "url": "https://en.wikipedia.org/wiki/Penn_Treebank"
+        },
+        {
+            "term": "language modeling",
+            "url": "https://en.wikipedia.org/wiki/language_modeling"
+        },
+        {
+            "term": "Recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/Recurrent_neural_networks"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "RNNs": "Recurrent neural networks",
+        "PTB": "Penn Treebank",
+        "DN": "Data noising",
+        "VS": "Variational smoothing"
+    },
+    "highlights": [
+        "Recurrent neural networks (RNNs) are state of the art models in various language processing tasks",
+        "Variational smoothing improves over data noising in all cases, both for linear interpolation and Kneser-Ney",
+        "Recall that the main differences between variational smoothing and data noising are: (1) using the mean at test time, (2) having a data dependent 2 regularization coefficient that comes from the KL term,5 and (3) how each method interacts with the input and output embedding tying mechanism.6",
+        "Our results suggest that the choice of the proposal distribution to sample from is less important for variational smoothing",
+        "We showed that data noising in recurrent neural network language models can be understood as a Bayesian recurrent neural network with a variational distribution that consists of a mixture of Gaussians whose mixture weights are a function of the proposal distribution used in data noising",
+        "We proposed using the mean of the variational distribution at prediction time as a better alternative to using the mode"
+    ],
+    "key_statements": [
+        "Recurrent neural networks (RNNs) are state of the art models in various language processing tasks",
+        "We can use the unigram distribution which models the number of word occurrences in the training corpus, or a more sophisticated proposal distribution that takes into account the number of bigram types in the corpus",
+        "Data noising has been shown to improve perplexity on small and large corpora, and that this improvement is complementary to other regularization techniques and translates to improvements on downstream models such as machine translation",
+        "We provide a new theoretical foundation for data noising and show that it can be understood as a form of Bayesian recurrent neural network with a particular variational distribution (\u00a74.1 and \u00a74.2)",
+        "We evaluate our approaches on two standard language modeling datasets: Penn Treebank (PTB) and Wikitext-2",
+        "Variational element-wise smoothing: for the smaller Penn Treebank dataset, we evaluate an LSTM language model that uses elementwise Kneser-Ney variational smoothing and dropout",
+        "While our numbers are generally better, the results are consistent with Xie et al (2017) that show linear interpolation data noising is slightly better than vanilla LSTM with dropout, and that Kneser-Ney data noising outperforms these methods for both the medium (512) and large (1024) models",
+        "Variational smoothing improves over data noising in all cases, both for linear interpolation and Kneser-Ney",
+        "Recall that the main differences between variational smoothing and data noising are: (1) using the mean at test time, (2) having a data dependent 2 regularization coefficient that comes from the KL term,5 and (3) how each method interacts with the input and output embedding tying mechanism.6",
+        "Our results suggest that the choice of the proposal distribution to sample from is less important for variational smoothing",
+        "Kneser-Ney outperforms linear interpolation on Penn Treebank but linear interpolation is slightly better on Wikitext-2",
+        "While we focus on language modeling in this paper, the proposed technique is applicable to other language processing tasks",
+        "We showed that data noising in recurrent neural network language models can be understood as a Bayesian recurrent neural network with a variational distribution that consists of a mixture of Gaussians whose mixture weights are a function of the proposal distribution used in data noising",
+        "We proposed using the mean of the variational distribution at prediction time as a better alternative to using the mode"
+    ],
+    "summary": [
+        "Recurrent neural networks (RNNs) are state of the art models in various language processing tasks.",
+        "Xie et al (2017) proposed a method to regularize recurrent neural network language models by noising the data.",
+        "We have fewer parameters to train due to this sharing mechanism, but we still have different samples of input and output embedding matrices per sequence.2 Similar to previous results in language modeling (<a class=\"ref-link\" id=\"cInan_et+al_2017_a\" href=\"#rInan_et+al_2017_a\"><a class=\"ref-link\" id=\"cInan_et+al_2017_a\" href=\"#rInan_et+al_2017_a\">Inan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMelis_et+al_2018_b\" href=\"#rMelis_et+al_2018_b\"><a class=\"ref-link\" id=\"cMelis_et+al_2018_b\" href=\"#rMelis_et+al_2018_b\">Melis et al, 2018b</a></a>), our experiments demonstrate that tying improves the performance considerably.",
+        "Data noising (DN): an LSTM language model trained with data noising using linear interpolation smoothing or bigram Kneser-Ney smoothing (Xie et al, 2017).",
+        "Variational smoothing (VS): an LSTM language model with variational smoothing using linear interpolation or Kneser-Ney. For both models, we use the mean of the variational distribution at test time.4",
+        "3Our preliminary experiments are consistent with previous work (<a class=\"ref-link\" id=\"cInan_et+al_2017_a\" href=\"#rInan_et+al_2017_a\"><a class=\"ref-link\" id=\"cInan_et+al_2017_a\" href=\"#rInan_et+al_2017_a\">Inan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMelis_et+al_2018_b\" href=\"#rMelis_et+al_2018_b\"><a class=\"ref-link\" id=\"cMelis_et+al_2018_b\" href=\"#rMelis_et+al_2018_b\">Melis et al, 2018b</a></a>; <a class=\"ref-link\" id=\"cMerity_et+al_2018_a\" href=\"#rMerity_et+al_2018_a\">Merity et al, 2018</a>) that show tying the input and output embedding matrices results in better models with fewer numbers of parameters.",
+        "Variational element-wise smoothing: for the smaller PTB dataset, we evaluate an LSTM language model that uses elementwise Kneser-Ney variational smoothing and dropout.",
+        "While our numbers are generally better, the results are consistent with Xie et al (2017) that show linear interpolation data noising is slightly better than vanilla LSTM with dropout, and that Kneser-Ney data noising outperforms these methods for both the medium (512) and large (1024) models.",
+        "Variational smoothing improves over data noising in all cases, both for linear interpolation and Kneser-Ney. Recall that the main differences between variational smoothing and data noising are: (1) using the mean at test time, (2) having a data dependent 2 regularization coefficient that comes from the KL term,5 and (3) how each method interacts with the input and output embedding tying mechanism.6 Our results suggest that the choice of the proposal distribution to sample from is less important for variational smoothing.",
+        "6 In the variational framework, if we sample one matrix for the input and output embeddings, it effectively noises the output words even for linear interpolation.",
+        "In order to better understand another prediction method for these models, we perform experiments where we sample at test time for both data noising and variational smoothing.",
+        "Both our results and Xie et al (2017) suggest that introducing data dependent noise at test time is detrimental for recurrent neural network language models.",
+        "We combined it with variational dropout, presented two extensions, and demonstrated language modeling improvements on Penn Treebank and Wikitext-2"
+    ],
+    "headline": "We present a new theoretical perspective of data noising in recurrent neural network language models",
+    "reference_links": [
+        {
+            "id": "Chen_1996_a",
+            "entry": "Stanley F. Chen and Joshua Goodman. An empirical study of smoothing techniques for language modeling. In Proc. of ACL, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Stanley%20F.%20Goodman%2C%20Joshua%20An%20empirical%20study%20of%20smoothing%20techniques%20for%20language%20modeling%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Stanley%20F.%20Goodman%2C%20Joshua%20An%20empirical%20study%20of%20smoothing%20techniques%20for%20language%20modeling%201996"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder\u2013decoder for statistical machine translation. In Proc. of EMNLP, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20van%20Merrienboer%2C%20Bart%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder%E2%80%93decoder%20for%20statistical%20machine%20translation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cho%2C%20Kyunghyun%20van%20Merrienboer%2C%20Bart%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder%E2%80%93decoder%20for%20statistical%20machine%20translation%202014"
+        },
+        {
+            "id": "Dai_2015_a",
+            "entry": "Andrew M. Dai and Quoc V. Le. Semi-supervised sequence learning. In Proc. of NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Andrew%20M.%20Le%2C%20Quoc%20V.%20Semi-supervised%20sequence%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Andrew%20M.%20Le%2C%20Quoc%20V.%20Semi-supervised%20sequence%20learning%202015"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a bayesian approximation: Representing model uncertainty in deep learning. In Proc. of ICML, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Gal_2016_b",
+            "entry": "Yarin Gal and Zoubin Ghahramani. A theoretically grounded application of dropout in recurrent neural networks. In Proc. of NIPS, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Grave_et+al_2017_a",
+            "entry": "Edouard Grave, Armand Joulin, and Nicolas Usunier. Improving neural language models with a continuous cache. In Proc. of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Usunier%2C%20Nicolas%20Improving%20neural%20language%20models%20with%20a%20continuous%20cache%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grave%2C%20Edouard%20Joulin%2C%20Armand%20Usunier%2C%20Nicolas%20Improving%20neural%20language%20models%20with%20a%20continuous%20cache%202017"
+        },
+        {
+            "id": "Hinton_2012_a",
+            "entry": "Geoffrey Hinton. Neural networks for machine learning, 2012. Lecture 6.5.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Neural%20networks%20for%20machine%20learning%202012"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Hoerl_1970_a",
+            "entry": "Arthur E. Hoerl and Robert W. Kennard. Ridge regression: Biased estimation for nonorthogonal problems. Technometrics, 12(1):55\u201367, 1970.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoerl%2C%20Arthur%20E.%20Kennard%2C%20Robert%20W.%20Ridge%20regression%3A%20Biased%20estimation%20for%20nonorthogonal%20problems%201970",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoerl%2C%20Arthur%20E.%20Kennard%2C%20Robert%20W.%20Ridge%20regression%3A%20Biased%20estimation%20for%20nonorthogonal%20problems%201970"
+        },
+        {
+            "id": "Inan_et+al_2017_a",
+            "entry": "Hakan Inan, Khashayar Khosravi, and Richard Socher. Tying word vectors and word classifiers: A loss framework for language modeling. In Proc. of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Inan%2C%20Hakan%20Khosravi%2C%20Khashayar%20Socher%2C%20Richard%20Tying%20word%20vectors%20and%20word%20classifiers%3A%20A%20loss%20framework%20for%20language%20modeling%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Inan%2C%20Hakan%20Khosravi%2C%20Khashayar%20Socher%2C%20Richard%20Tying%20word%20vectors%20and%20word%20classifiers%3A%20A%20loss%20framework%20for%20language%20modeling%202017"
+        },
+        {
+            "id": "Iyyer_et+al_2015_a",
+            "entry": "Mohit Iyyer, Varun Manjunatha, Jordan Boyd-Graber, and Hal Daume III. Deep unordered composition rivals syntactic methods for text classification. In Proc. of ACL, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Iyyer%2C%20Mohit%20Manjunatha%2C%20Varun%20Boyd-Graber%2C%20Jordan%20Daume%2C%20III%2C%20Hal%20Deep%20unordered%20composition%20rivals%20syntactic%20methods%20for%20text%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Iyyer%2C%20Mohit%20Manjunatha%2C%20Varun%20Boyd-Graber%2C%20Jordan%20Daume%2C%20III%2C%20Hal%20Deep%20unordered%20composition%20rivals%20syntactic%20methods%20for%20text%20classification%202015"
+        },
+        {
+            "id": "Kumar_et+al_2016_a",
+            "entry": "Ankit Kumar, Ozan Irsoy, Jonathan Su, James Bradbury, Robert English, Brian Pierce, Peter Ondruska, Ishaan Gulrajani, and Richard Socher. Ask me anything: Dynamic memory networks for natural language processing. In Proc. of ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kumar%2C%20Ankit%20Irsoy%2C%20Ozan%20Su%2C%20Jonathan%20Bradbury%2C%20James%20Ask%20me%20anything%3A%20Dynamic%20memory%20networks%20for%20natural%20language%20processing%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kumar%2C%20Ankit%20Irsoy%2C%20Ozan%20Su%2C%20Jonathan%20Bradbury%2C%20James%20Ask%20me%20anything%3A%20Dynamic%20memory%20networks%20for%20natural%20language%20processing%202016"
+        },
+        {
+            "id": "Marcus_et+al_1994_a",
+            "entry": "Mitchell Marcus, Grace Kim, Mary Ann Marcinkiewicz, Robert MacIntyre, Ann Bies, Mark Ferguson, Karen Katz, and Britta Schasberger. The penn treebank: Annotating predicate argument structure. In Proc. of the Workshop on Human Language Technology, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20Kim%2C%20Grace%20Marcinkiewicz%2C%20Mary%20Ann%20MacIntyre%2C%20Robert%20The%20penn%20treebank%3A%20Annotating%20predicate%20argument%20structure%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20Kim%2C%20Grace%20Marcinkiewicz%2C%20Mary%20Ann%20MacIntyre%2C%20Robert%20The%20penn%20treebank%3A%20Annotating%20predicate%20argument%20structure%201994"
+        },
+        {
+            "id": "Melis_et+al_2018_a",
+            "entry": "Gabor Melis, Charles Blundell, Tomas Kocisky, Karl Moritz Hermann, Chris Dyer, and Phil Blunsom. Pushing the bounds of dropout. arXiv preprint, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Melis%2C%20Gabor%20Blundell%2C%20Charles%20Kocisky%2C%20Tomas%20Hermann%2C%20Karl%20Moritz%20Pushing%20the%20bounds%20of%20dropout.%20arXiv%20p%202018"
+        },
+        {
+            "id": "Melis_et+al_2018_b",
+            "entry": "Gabor Melis, Chris Dyer, and Phil Blusom. On the state of the art of evaluation in neural language models. In Proc. of ICLR, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Melis%2C%20Gabor%20Dyer%2C%20Chris%20Blusom%2C%20Phil%20On%20the%20state%20of%20the%20art%20of%20evaluation%20in%20neural%20language%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Melis%2C%20Gabor%20Dyer%2C%20Chris%20Blusom%2C%20Phil%20On%20the%20state%20of%20the%20art%20of%20evaluation%20in%20neural%20language%20models%202018"
+        },
+        {
+            "id": "Merity_et+al_2017_a",
+            "entry": "Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. In Proc. of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Merity%2C%20Stephen%20Xiong%2C%20Caiming%20Bradbury%2C%20James%20Socher%2C%20Richard%20Pointer%20sentinel%20mixture%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Merity%2C%20Stephen%20Xiong%2C%20Caiming%20Bradbury%2C%20James%20Socher%2C%20Richard%20Pointer%20sentinel%20mixture%20models%202017"
+        },
+        {
+            "id": "Merity_et+al_2018_a",
+            "entry": "Stephen Merity, Nitish Shirish Keskar, and Richard Socher. Regularizing and optimizing lstm language models. In Proc. of ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Merity%2C%20Stephen%20Keskar%2C%20Nitish%20Shirish%20Socher%2C%20Richard%20Regularizing%20and%20optimizing%20lstm%20language%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Merity%2C%20Stephen%20Keskar%2C%20Nitish%20Shirish%20Socher%2C%20Richard%20Regularizing%20and%20optimizing%20lstm%20language%20models%202018"
+        },
+        {
+            "id": "Press_2017_a",
+            "entry": "Ofir Press and Lior Wolf. Using the output embedding to improve language models. In Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics: Volume 2, Short Papers, pp. 157\u2013163. Association for Computational Linguistics, 2017. URL http://aclweb.org/anthology/E17-2025.",
+            "url": "http://aclweb.org/anthology/E17-2025",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Press%2C%20Ofir%20Wolf%2C%20Lior%20Using%20the%20output%20embedding%20to%20improve%20language%20models%202017"
+        },
+        {
+            "id": "Semeniuta_et+al_2016_a",
+            "entry": "Stanislau Semeniuta, Aliaksei Severyn, and Erhardt Barth. Recurrent dropout without memory loss. In Proc. of COLING, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Semeniuta%2C%20Stanislau%20Severyn%2C%20Aliaksei%20Barth%2C%20Erhardt%20Recurrent%20dropout%20without%20memory%20loss%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Semeniuta%2C%20Stanislau%20Severyn%2C%20Aliaksei%20Barth%2C%20Erhardt%20Recurrent%20dropout%20without%20memory%20loss%202016"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. Journal of Machine Learning Research, 15:1929\u20131958, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Xie_et+al_2016_a",
+            "entry": "Published as a conference paper at ICLR 2019 Ke Tran, Arianna Bisazza, and Christof Monz. Recurrent memory networks for language modeling. In Proc. of NAACL-HLT, 2016. Ziang Xie, Sida I. Wang, Jiwei Li, Daniel Levy, Aiming Nie, Dan Jurafsky, and Andrew Y. Ng. Data noising as smoothing in neural network language models. In Proc. of ICLR, 2017. Zhilin Yang, Zihang Dai, Ruslan Salakhutdinov, and William W Cohen. Breaking the softmax bottleneck: A high-rank rnn language model. arXiv preprint arXiv:1711.03953, 2017. Dani Yogatama, Yishu Miao, Gabor Melis, Wang Ling, Adhiguna Kuncoro, Chris Dyer, and Phil",
+            "arxiv_url": "https://arxiv.org/pdf/1711.03953"
+        },
+        {
+            "id": "Blunsom_2018_a",
+            "entry": "Blunsom. Memory architectures in recurrent neural network language models. In Proc. of ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blunsom%20Memory%20architectures%20in%20recurrent%20neural%20network%20language%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blunsom%20Memory%20architectures%20in%20recurrent%20neural%20network%20language%20models%202018"
+        }
+    ]
+}

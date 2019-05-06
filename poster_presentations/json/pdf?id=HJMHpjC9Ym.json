@@ -1,0 +1,392 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "BIG-LITTLE NET: AN EFFICIENT MULTI-SCALE FEATURE REPRESENTATION FOR VISUAL AND SPEECH RECOGNITION",
+        "author": "Chun-Fu (Richard) Chen, Quanfu Fan, Neil Mallinar, Tom Sercu, Rogerio Feris IBM T.J. Watson Research Center, Yorktown Heights, NY 10598 {chenrich, qfan, neil.r.mallinar, tom.sercu, rsferis}@us.ibm.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HJMHpjC9Ym"
+        },
+        "abstract": "In this paper, we propose a novel Convolutional Neural Network (CNN) architecture for learning multi-scale feature representations with good tradeoffs between speed and accuracy. This is achieved by using a multi-branch network, which has different computational complexity at different branches with different resolutions. Through frequent merging of features from branches at distinct scales, our model obtains multi-scale features while using less computation. The proposed approach demonstrates improvement of model efficiency and performance on both object recognition and speech recognition tasks, using popular architectures including ResNet, ResNeXt and SEResNeXt. For object recognition, our approach reduces computation by 1/3 while improving accuracy significantly over 1% point than the baselines, and the computational savings can be higher up to 1/2 without compromising the accuracy. Our model also surpasses state-of-the-art CNN acceleration approaches by a large margin in terms of accuracy and FLOPs. On the task of speech recognition, our proposed multi-scale CNNs save 30% FLOPs with slightly better word error rates, showing good generalization across domains."
+    },
+    "keywords": [
+        {
+            "term": "object recognition",
+            "url": "https://en.wikipedia.org/wiki/object_recognition"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "FLOP",
+            "url": "https://en.wikipedia.org/wiki/FLOP"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "CNN": "Convolutional Neural Network",
+        "II": "image scale (or resolution);",
+        "SE": "setting of",
+        "WER": "Word Error Rate"
+    },
+    "highlights": [
+        "Deep Convolutional Neural Network (CNN) models have achieved substantial performance gains in many computer vision and speech recognition tasks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cVinyals_et+al_2017_a\" href=\"#rVinyals_et+al_2017_a\"><a class=\"ref-link\" id=\"cVinyals_et+al_2017_a\" href=\"#rVinyals_et+al_2017_a\">Vinyals et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSercu_2016_a\" href=\"#rSercu_2016_a\"><a class=\"ref-link\" id=\"cSercu_2016_a\" href=\"#rSercu_2016_a\">Sercu & Goel, 2016</a></a>)",
+        "We demonstrate that our approach reduces computation by 1/3 in models such as ResNet and ResNeXt while improving accuracy over 1% point than the baselines, and the computational savings can be higher up to 1/2 without losing any accuracy; these results outperform state-of-the-art networks that focus on Convolutional Neural Network acceleration by a large margin at the same FLOPs",
+        "We proposed an efficient multi-scale feature representation based on integrating multiple networks for object and speech recognition",
+        "We demonstrated that our approach provides approximately 2\u00d7 speedup over baselines while improving accuracy, and the result significantly outperforms the state-of-the-art networks by a large margin in terms of accuracy and FLOPs reduction",
+        "The proposed bL-Net shows that the reduced FLOPs can consistently speed up the running time on GPU",
+        "BL-Net can be integrated with those Convolutional Neural Network acceleration approaches to make models more compact and efficient"
+    ],
+    "key_statements": [
+        "Deep Convolutional Neural Network (CNN) models have achieved substantial performance gains in many computer vision and speech recognition tasks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cVinyals_et+al_2017_a\" href=\"#rVinyals_et+al_2017_a\"><a class=\"ref-link\" id=\"cVinyals_et+al_2017_a\" href=\"#rVinyals_et+al_2017_a\">Vinyals et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSercu_2016_a\" href=\"#rSercu_2016_a\"><a class=\"ref-link\" id=\"cSercu_2016_a\" href=\"#rSercu_2016_a\">Sercu & Goel, 2016</a></a>)",
+        "Multi-scale feature representations have proven successful for many vision and speech recognition tasks compared to single-scale methods (Nah et al, 2017; <a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017a</a>; T\u00f3th, 2017; <a class=\"ref-link\" id=\"cFarabet_et+al_2013_a\" href=\"#rFarabet_et+al_2013_a\">Farabet et al, 2013</a>); the computational complexity has not been addressed much in multi-scale networks",
+        "We demonstrate later that when bL-Net is integrated into state-of-the-art Convolutional Neural Network such as ResNet, ResNeXt and SEResNeXt, it yields 2\u00d7 computational savings over the baselines without losing any accuracy",
+        "We propose an efficient and effective multi-scale Convolutional Neural Network architecture for object and speech recognition",
+        "We demonstrate that our approach reduces computation by 1/3 in models such as ResNet and ResNeXt while improving accuracy over 1% point than the baselines, and the computational savings can be higher up to 1/2 without losing any accuracy; these results outperform state-of-the-art networks that focus on Convolutional Neural Network acceleration by a large margin at the same FLOPs",
+        "While our design is suitable for any number of networks, in this work we primarily focus on the case of two networks, i.e., K = 2",
+        "To control the complexity of bL-Net, we introduce two parameters to specify the complexity of the Little-Branch with respect to the Big-Branch",
+        "In Appendix A.4, we empirically show that the linear combination approach performs better than concatenation in object recognition.\n4 EXPERIMENTAL RESULTS",
+        "BL-ResNet-50 is the Big-Little net based on ResNet-50.\n4.1",
+        "As can be seen in Table 1, all the models based on ResNet-50 yield better performance over the baseline with less computation, clearly demonstrating the advantage of combining low- and highcomplexity networks to balance between speed and accuracy",
+        "From the results of both tasks, we observe the following common insights, which enable us to design an efficient multi-scale network with competitive performance: (I) The Little-Branch can be very light-weight, (II) bL-Net performs better when the Little-Branch is wide and shallow, (III) merging is effective when the feature dimension has changed, and (IV) branch merging by addition is more effective than concatenation. (I) is because the Big-Branch can extract essential information, a light Little-Branch is good enough to provide sufficient information the Big-Branch lacks",
+        "Regarding (II), wider networks have been shown to perform better than deep networks while using a similar number of parameters. (III) is well-discussed in Appendix A.4",
+        "We proposed an efficient multi-scale feature representation based on integrating multiple networks for object and speech recognition",
+        "The Big-Branches gain significant computational reduction by working at low-resolution input but still extract meaningful features while the Little-Branch enriches the features from high-resolution input but with light computation",
+        "We demonstrated that our approach provides approximately 2\u00d7 speedup over baselines while improving accuracy, and the result significantly outperforms the state-of-the-art networks by a large margin in terms of accuracy and FLOPs reduction",
+        "The proposed bL-Net shows that the reduced FLOPs can consistently speed up the running time on GPU",
+        "That evidence showed that the proposed bL-Net is an efficient multi-scale feature representation structure for competitive performance with less computation",
+        "We chose ResNet, ResNeXt and SEResNeXt as our backbone networks but bL-Net can be integrated with other advanced network structures, like DenseNet (<a class=\"ref-link\" id=\"cHuang_et+al_2017_b\" href=\"#rHuang_et+al_2017_b\">Huang et al, 2017b</a>), DualPathNet (<a class=\"ref-link\" id=\"cChen_et+al_2017_b\" href=\"#rChen_et+al_2017_b\">Chen et al, 2017b</a>) and NASNet (Zoph et al, 2018) to achieve competitive performance while saving computations",
+        "BL-Net can be integrated with those Convolutional Neural Network acceleration approaches to make models more compact and efficient"
+    ],
+    "summary": [
+        "Deep Convolutional Neural Network (CNN) models have achieved substantial performance gains in many computer vision and speech recognition tasks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; 2017; <a class=\"ref-link\" id=\"cVinyals_et+al_2017_a\" href=\"#rVinyals_et+al_2017_a\"><a class=\"ref-link\" id=\"cVinyals_et+al_2017_a\" href=\"#rVinyals_et+al_2017_a\">Vinyals et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSercu_2016_a\" href=\"#rSercu_2016_a\"><a class=\"ref-link\" id=\"cSercu_2016_a\" href=\"#rSercu_2016_a\">Sercu & Goel, 2016</a></a>).",
+        "We propose an efficient network architecture by combining image information at different scales through a multi-branch network.",
+        "We demonstrate that our approach reduces computation by 1/3 in models such as ResNet and ResNeXt while improving accuracy over 1% point than the baselines, and the computational savings can be higher up to 1/2 without losing any accuracy; these results outperform state-of-the-art networks that focus on CNN acceleration by a large margin at the same FLOPs.",
+        "\u0391 and \u03b2 control both the structural and computational complexity of the Little-Branch, which determines the overall computational cost of bL-Net. As can be seen in Table 1, all the models based on ResNet-50 yield better performance over the baseline with less computation, clearly demonstrating the advantage of combining low- and highcomplexity networks to balance between speed and accuracy.",
+        "The small performance gaps between these models suggest that a computationally light Little-Branch (< 15% of the entire network) can compensate well for the low resolution representation by providing finer image details.",
+        "NASNet achieves lower FLOPs and higher accuracy than bL-Net; the networks result in slow GPU running time since their operations are divided into small pieces, which are not friendly for parallel computations.",
+        "From the results of both tasks, we observe the following common insights, which enable us to design an efficient multi-scale network with competitive performance: (I) The Little-Branch can be very light-weight, (II) bL-Net performs better when the Little-Branch is wide and shallow, (III) merging is effective when the feature dimension has changed, and (IV) branch merging by addition is more effective than concatenation.",
+        "We proposed an efficient multi-scale feature representation based on integrating multiple networks for object and speech recognition.",
+        "We demonstrated that our approach provides approximately 2\u00d7 speedup over baselines while improving accuracy, and the result significantly outperforms the state-of-the-art networks by a large margin in terms of accuracy and FLOPs reduction.",
+        "That evidence showed that the proposed bL-Net is an efficient multi-scale feature representation structure for competitive performance with less computation.",
+        "We chose ResNet, ResNeXt and SEResNeXt as our backbone networks but bL-Net can be integrated with other advanced network structures, like DenseNet (<a class=\"ref-link\" id=\"cHuang_et+al_2017_b\" href=\"#rHuang_et+al_2017_b\">Huang et al, 2017b</a>), DualPathNet (<a class=\"ref-link\" id=\"cChen_et+al_2017_b\" href=\"#rChen_et+al_2017_b\">Chen et al, 2017b</a>) and NASNet (Zoph et al, 2018) to achieve competitive performance while saving computations.",
+        "BL-Net can be integrated with those CNN acceleration approaches to make models more compact and efficient"
+    ],
+    "headline": "We propose a novel Convolutional Neural Network architecture for learning multi-scale feature representations with good tradeoffs between speed and accuracy",
+    "reference_links": [
+        {
+            "id": "Mart_2015_a",
+            "entry": "Mart\u00edn Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dan Man\u00e9, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Vi\u00e9gas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-scale machine learning on heterogeneous systems, 2015. URL https://www.tensorflow.org/. Software available from tensorflow.org.",
+            "url": "https://www.tensorflow.org/"
+        },
+        {
+            "id": "Adelson_et+al_1984_a",
+            "entry": "Edward H Adelson, Charles H Anderson, James R Bergen, Peter J Burt, and Joan M Ogden. Pyramid methods in image processing. RCA engineer, 29(6):33\u201341, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adelson%2C%20Edward%20H.%20Anderson%2C%20Charles%20H.%20Bergen%2C%20James%20R.%20Burt%2C%20Peter%20J.%20Pyramid%20methods%20in%20image%20processing%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adelson%2C%20Edward%20H.%20Anderson%2C%20Charles%20H.%20Bergen%2C%20James%20R.%20Burt%2C%20Peter%20J.%20Pyramid%20methods%20in%20image%20processing%201984"
+        },
+        {
+            "id": "Cai_et+al_2016_a",
+            "entry": "Zhaowei Cai, Quanfu Fan, Rogerio S Feris, and Nuno Vasconcelos. A Unified Multi-scale Deep Convolutional Neural Network for Fast Object Detection. In Bastian Leibe, Jiri Matas, Nicu Sebe, and Max Welling (eds.), European Conference on Computer Vision (ECCV), pp. 354\u2013370, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cai%2C%20Zhaowei%20Fan%2C%20Quanfu%20Feris%2C%20Rogerio%20S.%20Vasconcelos%2C%20Nuno%20A%20Unified%20Multi-scale%20Deep%20Convolutional%20Neural%20Network%20for%20Fast%20Object%20Detection%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cai%2C%20Zhaowei%20Fan%2C%20Quanfu%20Feris%2C%20Rogerio%20S.%20Vasconcelos%2C%20Nuno%20A%20Unified%20Multi-scale%20Deep%20Convolutional%20Neural%20Network%20for%20Fast%20Object%20Detection%202016"
+        },
+        {
+            "id": "Chen_et+al_2015_a",
+            "entry": "Wenlin Chen, James T. Wilson, Stephen Tyree, Kilian Q. Weinberger, and Yixin Chen. Compressing neural networks with the hashing trick. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning - Volume 37, ICML\u201915, pp. 2285\u20132294. JMLR.org, 2015. URL http://dl.acm.org/citation.cfm?id=3045118.3045361.",
+            "url": "http://dl.acm.org/citation.cfm?id=3045118.3045361",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Wenlin%20Wilson%2C%20James%20T.%20Tyree%2C%20Stephen%20Weinberger%2C%20Kilian%20Q.%20Compressing%20neural%20networks%20with%20the%20hashing%20trick%202015"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Yanbei Chen, Xiatian Zhu, and Shaogang Gong. Person Re-Identification by Deep Learning Multi-Scale Representations. In The IEEE International Conference on Computer Vision (ICCV), October 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Yanbei%20Zhu%2C%20Xiatian%20Gong%2C%20Shaogang%20Person%20Re-Identification%20by%20Deep%20Learning%20Multi-Scale%20Representations%202017-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Yanbei%20Zhu%2C%20Xiatian%20Gong%2C%20Shaogang%20Person%20Re-Identification%20by%20Deep%20Learning%20Multi-Scale%20Representations%202017-10"
+        },
+        {
+            "id": "Chen_et+al_2017_b",
+            "entry": "Yunpeng Chen, Jianan Li, Huaxin Xiao, Xiaojie Jin, Shuicheng Yan, and Jiashi Feng. Dual Path Networks. In Advances in Neural Information Processing Systems 30, pp. 4467\u20134475. Curran Associates, Inc., 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yunpeng%20Chen%20Jianan%20Li%20Huaxin%20Xiao%20Xiaojie%20Jin%20Shuicheng%20Yan%20and%20Jiashi%20Feng%20Dual%20Path%20Networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2030%20pp%2044674475%20Curran%20Associates%20Inc%202017b",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yunpeng%20Chen%20Jianan%20Li%20Huaxin%20Xiao%20Xiaojie%20Jin%20Shuicheng%20Yan%20and%20Jiashi%20Feng%20Dual%20Path%20Networks%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2030%20pp%2044674475%20Curran%20Associates%20Inc%202017b"
+        },
+        {
+            "id": "Cheng_et+al_2015_a",
+            "entry": "Y Cheng, F X Yu, R S Feris, S Kumar, A Choudhary, and S F Chang. An Exploration of Parameter Redundancy in Deep Networks with Circulant Projections. In 2015 IEEE International Conference on Computer Vision (ICCV), pp. 2857\u20132865. IEEE, December 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cheng%2C%20Y.%20Yu%2C%20F.X.%20Feris%2C%20R.S.%20Kumar%2C%20S.%20An%20Exploration%20of%20Parameter%20Redundancy%20in%20Deep%20Networks%20with%20Circulant%20Projections%202015-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cheng%2C%20Y.%20Yu%2C%20F.X.%20Feris%2C%20R.S.%20Kumar%2C%20S.%20An%20Exploration%20of%20Parameter%20Redundancy%20in%20Deep%20Networks%20with%20Circulant%20Projections%202015-12"
+        },
+        {
+            "id": "Dong_et+al_2017_a",
+            "entry": "Xuanyi Dong, Junshi Huang, Yi Yang, and Shuicheng Yan. More is less: A more complicated network with less inference complexity. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dong%2C%20Xuanyi%20Huang%2C%20Junshi%20Yang%2C%20Yi%20Yan%2C%20Shuicheng%20More%20is%20less%3A%20A%20more%20complicated%20network%20with%20less%20inference%20complexity%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dong%2C%20Xuanyi%20Huang%2C%20Junshi%20Yang%2C%20Yi%20Yan%2C%20Shuicheng%20More%20is%20less%3A%20A%20more%20complicated%20network%20with%20less%20inference%20complexity%202017-07"
+        },
+        {
+            "id": "Eigen_2015_a",
+            "entry": "David Eigen and Rob Fergus. Predicting depth, surface normals and semantic labels with a common multi-scale convolutional architecture. In The IEEE International Conference on Computer Vision (ICCV), December 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eigen%2C%20David%20Fergus%2C%20Rob%20Predicting%20depth%2C%20surface%20normals%20and%20semantic%20labels%20with%20a%20common%20multi-scale%20convolutional%20architecture%202015-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eigen%2C%20David%20Fergus%2C%20Rob%20Predicting%20depth%2C%20surface%20normals%20and%20semantic%20labels%20with%20a%20common%20multi-scale%20convolutional%20architecture%202015-12"
+        },
+        {
+            "id": "Everingham_et+al_2010_a",
+            "entry": "Mark Everingham, Luc Van Gool, Christopher K I Williams, John Winn, and Andrew Zisserman. The Pascal Visual Object Classes (VOC) Challenge. International Journal of Computer Vision, 88(2):303\u2013338, June 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Everingham%2C%20Mark%20Gool%2C%20Luc%20Van%20Williams%2C%20Christopher%20K.I.%20Winn%2C%20John%20The%20Pascal%20Visual%20Object%20Classes%20%28VOC%29%20Challenge%202010-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Everingham%2C%20Mark%20Gool%2C%20Luc%20Van%20Williams%2C%20Christopher%20K.I.%20Winn%2C%20John%20The%20Pascal%20Visual%20Object%20Classes%20%28VOC%29%20Challenge%202010-06"
+        },
+        {
+            "id": "Quanfu_2017_a",
+            "entry": "Quanfu Fan, Chun-Fu (Richard) Chen, and Gwo Giun (Chris) Lee. Sparse Deep Feature Representation for Object Detection from Wearable Cameras. In Proceedings of the British Machine Vision Conference (BMVC). BMVA Press, September 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Quanfu%20Fan%20ChunFu%20Richard%20Chen%20and%20Gwo%20Giun%20Chris%20Lee%20Sparse%20Deep%20Feature%20Representation%20for%20Object%20Detection%20from%20Wearable%20Cameras%20In%20Proceedings%20of%20the%20British%20Machine%20Vision%20Conference%20BMVC%20BMVA%20Press%20September%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Quanfu%20Fan%20ChunFu%20Richard%20Chen%20and%20Gwo%20Giun%20Chris%20Lee%20Sparse%20Deep%20Feature%20Representation%20for%20Object%20Detection%20from%20Wearable%20Cameras%20In%20Proceedings%20of%20the%20British%20Machine%20Vision%20Conference%20BMVC%20BMVA%20Press%20September%202017"
+        },
+        {
+            "id": "Farabet_et+al_2013_a",
+            "entry": "Clement Farabet, Camille Couprie, Laurent Najman, and Yann LeCun. Learning hierarchical features for scene labeling. Pattern Analysis and Machine Intelligence, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Farabet%2C%20Clement%20Couprie%2C%20Camille%20Najman%2C%20Laurent%20LeCun%2C%20Yann%20Learning%20hierarchical%20features%20for%20scene%20labeling%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Farabet%2C%20Clement%20Couprie%2C%20Camille%20Najman%2C%20Laurent%20LeCun%2C%20Yann%20Learning%20hierarchical%20features%20for%20scene%20labeling%202013"
+        },
+        {
+            "id": "Figurnov_et+al_2017_a",
+            "entry": "Michael Figurnov, Maxwell D. Collins, Yukun Zhu, Li Zhang, Jonathan Huang, Dmitry Vetrov, and Ruslan Salakhutdinov. Spatially adaptive computation time for residual networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Figurnov%2C%20Michael%20Collins%2C%20Maxwell%20D.%20Zhu%2C%20Yukun%20Zhang%2C%20Li%20Spatially%20adaptive%20computation%20time%20for%20residual%20networks%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Figurnov%2C%20Michael%20Collins%2C%20Maxwell%20D.%20Zhu%2C%20Yukun%20Zhang%2C%20Li%20Spatially%20adaptive%20computation%20time%20for%20residual%20networks%202017-07"
+        },
+        {
+            "id": "Gross_2016_a",
+            "entry": "Sam Gross and Michael Wilber. Training and investigating residual nets. http://torch.ch/blog/2016/02/04/resnets.html, 2016.",
+            "url": "http://torch.ch/blog/2016/02/04/resnets.html"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep Compression: Compressing Deep Neural Network with Pruning, Trained Quantization and Huffman Coding. ArXiv, abs/1510.00149, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep Residual Learning for Image Recognition. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20Residual%20Learning%20for%20Image%20Recognition%202016-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20Residual%20Learning%20for%20Image%20Recognition%202016-06"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Kaiming He, Georgia Gkioxari, Piotr Doll\u00e1r, and Ross Girshick. Mask R-CNN. In The IEEE International Conference on Computer Vision (ICCV), October 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Doll%C3%A1r%20and%20Ross%20Girshick%20Mask%20RCNN%20In%20The%20IEEE%20International%20Conference%20on%20Computer%20Vision%20ICCV%20October%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Doll%C3%A1r%20and%20Ross%20Girshick%20Mask%20RCNN%20In%20The%20IEEE%20International%20Conference%20on%20Computer%20Vision%20ICCV%20October%202017"
+        },
+        {
+            "id": "Hinton_et+al_0000_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Hu_et+al_2018_a",
+            "entry": "Jie Hu, Li Shen, and Gang Sun. Squeeze-and-Excitation Networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Jie%20Shen%2C%20Li%20Sun%2C%20Gang%20Squeeze-and-Excitation%20Networks%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Jie%20Shen%2C%20Li%20Sun%2C%20Gang%20Squeeze-and-Excitation%20Networks%202018-06"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "G. Huang, Y. Li, Z. Liu G. Pleiss, J. E. Hopcroft, and K. Q. Weinberger. Snapshot ensembles: Train 1, get m for free. In International Conference on Learning Representations (ICLR), 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20G.%20Li%2C%20Y.%20Pleiss%2C%20Z.Liu%20G.%20Hopcroft%2C%20J.E.%20Snapshot%20ensembles%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20G.%20Li%2C%20Y.%20Pleiss%2C%20Z.Liu%20G.%20Hopcroft%2C%20J.E.%20Snapshot%20ensembles%202017"
+        },
+        {
+            "id": "Huang_et+al_2017_b",
+            "entry": "Gao Huang, Zhuang Liu, Laurens van der Maaten, and Kilian Q Weinberger. Densely Connected Convolutional Networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20Connected%20Convolutional%20Networks%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Zhuang%20van%20der%20Maaten%2C%20Laurens%20Weinberger%2C%20Kilian%20Q.%20Densely%20Connected%20Convolutional%20Networks%202017-07"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Gao Huang, Danlu Chen, Tianhong Li, Felix Wu, Laurens van der Maaten, and Kilian Weinberger. Multiscale dense networks for resource efficient image classification. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=Hk2aImxAb.",
+            "url": "https://openreview.net/forum?id=Hk2aImxAb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Chen%2C%20Danlu%20Li%2C%20Tianhong%20Wu%2C%20Felix%20Multiscale%20dense%20networks%20for%20resource%20efficient%20image%20classification%202018"
+        },
+        {
+            "id": "Hubara_et+al_2016_a",
+            "entry": "Itay Hubara, Matthieu Courbariaux, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Binarized Neural Networks. In D D Lee, M Sugiyama, U V Luxburg, I Guyon, and R Garnett (eds.), Advances in Neural Information Processing Systems 29, pp. 4107\u20134115. Curran Associates, Inc., 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubara%2C%20Itay%20Courbariaux%2C%20Matthieu%20Soudry%2C%20Daniel%20El-Yaniv%2C%20Ran%20Binarized%20Neural%20Networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubara%2C%20Itay%20Courbariaux%2C%20Matthieu%20Soudry%2C%20Daniel%20El-Yaniv%2C%20Ran%20Binarized%20Neural%20Networks%202016"
+        },
+        {
+            "id": "Ioannou_et+al_2015_a",
+            "entry": "Yani Ioannou, Duncan P Robertson, Jamie Shotton, Roberto Cipolla, and Antonio Criminisi. Training CNNs with Low-Rank Filters for Efficient Image Classification. ArXiv, abs/1511.06744, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06744"
+        },
+        {
+            "id": "Kuen_et+al_2018_a",
+            "entry": "Jason Kuen, Xiangfei Kong, Zhe Lin, Gang Wang, Jianxiong Yin, Simon See, and Yap-Peng Tan. Stochastic downsampling for cost-adjustable inference and improved regularization in convolutional networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kuen%2C%20Jason%20Kong%2C%20Xiangfei%20Lin%2C%20Zhe%20Wang%2C%20Gang%20Stochastic%20downsampling%20for%20cost-adjustable%20inference%20and%20improved%20regularization%20in%20convolutional%20networks%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kuen%2C%20Jason%20Kong%2C%20Xiangfei%20Lin%2C%20Zhe%20Wang%2C%20Gang%20Stochastic%20downsampling%20for%20cost-adjustable%20inference%20and%20improved%20regularization%20in%20convolutional%20networks%202018-06"
+        },
+        {
+            "id": "Li_2016_a",
+            "entry": "Fengfu Li and Bin Liu. Ternary weight networks. CoRR, abs/1605.04711, 2016. URL http://arxiv.org/abs/1605.04711.",
+            "url": "http://arxiv.org/abs/1605.04711",
+            "arxiv_url": "https://arxiv.org/pdf/1605.04711"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. Pruning Filters for Efficient ConvNets. In International Conference on Learning Representation 2017, pp. 1\u201313, March 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Hao%20Kadav%2C%20Asim%20Durdanovic%2C%20Igor%20Samet%2C%20Hanan%20Pruning%20Filters%20for%20Efficient%20ConvNets%202017-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Hao%20Kadav%2C%20Asim%20Durdanovic%2C%20Igor%20Samet%2C%20Hanan%20Pruning%20Filters%20for%20Efficient%20ConvNets%202017-03"
+        },
+        {
+            "id": "Lin_et+al_2014_a",
+            "entry": "Tsung-Yi Lin, Michael Maire, Serge Belongie, James Hays, Pietro Perona, Deva Ramanan, Piotr Doll\u00e1r, and C Lawrence Zitnick. Microsoft COCO: Common Objects in Context. In David Fleet, Tomas Pajdla, Bernt Schiele, and Tinne Tuytelaars (eds.), Computer Vision \u2013 ECCV 2014: 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part V, pp. 740\u2013755. Springer International Publishing, Cham, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Tsung-Yi%20Maire%2C%20Michael%20Belongie%2C%20Serge%20Hays%2C%20James%20Microsoft%20COCO%3A%20Common%20Objects%20in%20Context%202014-09-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Tsung-Yi%20Maire%2C%20Michael%20Belongie%2C%20Serge%20Hays%2C%20James%20Microsoft%20COCO%3A%20Common%20Objects%20in%20Context%202014-09-06"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie. Feature pyramid networks for object detection. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Tsung-Yi%20Dollar%2C%20Piotr%20Girshick%2C%20Ross%20He%2C%20Kaiming%20Feature%20pyramid%20networks%20for%20object%20detection%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Tsung-Yi%20Dollar%2C%20Piotr%20Girshick%2C%20Ross%20He%2C%20Kaiming%20Feature%20pyramid%20networks%20for%20object%20detection%202017-07"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Chenxi Liu, Barret Zoph, Maxim Neumann, Jonathon Shlens, Wei Hua, Li-Jia Li, Li Fei-Fei, Alan Yuille, Jonathan Huang, and Kevin Murphy. Progressive Neural Architecture Search. In The European Conference on Computer Vision (ECCV), September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chenxi%20Liu%20Barret%20Zoph%20Maxim%20Neumann%20Jonathon%20Shlens%20Wei%20Hua%20LiJia%20Li%20Li%20FeiFei%20Alan%20Yuille%20Jonathan%20Huang%20and%20Kevin%20Murphy%20Progressive%20Neural%20Architecture%20Search%20In%20The%20European%20Conference%20on%20Computer%20Vision%20ECCV%20September%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chenxi%20Liu%20Barret%20Zoph%20Maxim%20Neumann%20Jonathon%20Shlens%20Wei%20Hua%20LiJia%20Li%20Li%20FeiFei%20Alan%20Yuille%20Jonathan%20Huang%20and%20Kevin%20Murphy%20Progressive%20Neural%20Architecture%20Search%20In%20The%20European%20Conference%20on%20Computer%20Vision%20ECCV%20September%202018"
+        },
+        {
+            "id": "Loshchilov_2017_a",
+            "entry": "I. Loshchilov and F. Hutter. Sgdr. Stochastic Gradient Descent with Restarts. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Loshchilov%2C%20I.%20Sgdr%2C%20F.Hutter%20Stochastic%20Gradient%20Descent%20with%20Restarts%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Loshchilov%2C%20I.%20Sgdr%2C%20F.Hutter%20Stochastic%20Gradient%20Descent%20with%20Restarts%202017"
+        },
+        {
+            "id": "Ma_et+al_2018_a",
+            "entry": "Ningning Ma, Xiangyu Zhang, Hai-Tao Zheng, and Jian Sun. ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design. In The European Conference on Computer Vision (ECCV), September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ma%2C%20Ningning%20Zhang%2C%20Xiangyu%20Zheng%2C%20Hai-Tao%20Sun%2C%20Jian%20ShuffleNet%20V2%3A%20Practical%20Guidelines%20for%20Efficient%20CNN%20Architecture%20Design%202018-09",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ma%2C%20Ningning%20Zhang%2C%20Xiangyu%20Zheng%2C%20Hai-Tao%20Sun%2C%20Jian%20ShuffleNet%20V2%3A%20Practical%20Guidelines%20for%20Efficient%20CNN%20Architecture%20Design%202018-09"
+        },
+        {
+            "id": "Nah_2017_a",
+            "entry": "Seungjun Nah, Tae Hyun Kim, and Kyoung Mu Lee. Deep Multi-Scale Convolutional Neural Network for Dynamic Scene Deblurring. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nah%2C%20Seungjun%20Kim%2C%20Tae%20Hyun%20and%20Kyoung%20Mu%20Lee.%20Deep%20Multi-Scale%20Convolutional%20Neural%20Network%20for%20Dynamic%20Scene%20Deblurring%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nah%2C%20Seungjun%20Kim%2C%20Tae%20Hyun%20and%20Kyoung%20Mu%20Lee.%20Deep%20Multi-Scale%20Convolutional%20Neural%20Network%20for%20Dynamic%20Scene%20Deblurring%202017-07"
+        },
+        {
+            "id": "Newell_et+al_2016_a",
+            "entry": "Alejandro Newell, Kaiyu Yang, and Jia Deng. Stacked Hourglass Networks for Human Pose Estimation. In Computer Vision \u2013 ECCV 2016, pp. 483\u2013499, Cham, 2016. Springer International Publishing.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Newell%2C%20Alejandro%20Yang%2C%20Kaiyu%20Deng%2C%20Jia%20Stacked%20Hourglass%20Networks%20for%20Human%20Pose%20Estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Newell%2C%20Alejandro%20Yang%2C%20Kaiyu%20Deng%2C%20Jia%20Stacked%20Hourglass%20Networks%20for%20Human%20Pose%20Estimation%202016"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. In NIPS-W, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPSW%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPSW%202017"
+        },
+        {
+            "id": "Russakovsky_et+al_2015_a",
+            "entry": "Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg, and Li Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. International Journal of Computer Vision (IJCV), 115(3):211\u2013252, 2015. doi: 10.1007/s11263-015-0816-y.",
+            "crossref": "https://dx.doi.org/10.1007/s11263-015-0816-y",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11263-015-0816-y"
+        },
+        {
+            "id": "Sandler_et+al_2018_a",
+            "entry": "Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, and Liang Chieh Chen. MobileNetV2: Inverted Residuals and Linear Bottlenecks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sandler%2C%20Mark%20Howard%2C%20Andrew%20Zhu%2C%20Menglong%20Zhmoginov%2C%20Andrey%20MobileNetV2%3A%20Inverted%20Residuals%20and%20Linear%20Bottlenecks%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sandler%2C%20Mark%20Howard%2C%20Andrew%20Zhu%2C%20Menglong%20Zhmoginov%2C%20Andrey%20MobileNetV2%3A%20Inverted%20Residuals%20and%20Linear%20Bottlenecks%202018-06"
+        },
+        {
+            "id": "Saon_et+al_2017_a",
+            "entry": "George Saon, Gakuto Kurata, Tom Sercu, Kartik Audhkhasi, Samuel Thomas, Dimitrios Dimitriadis, Xiaodong Cui, Bhuvana Ramabhadran, Michael Picheny, Lynn-Li Lim, et al. English conversational telephone speech recognition by humans and machines. arXiv preprint arXiv:1703.02136, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.02136"
+        },
+        {
+            "id": "Saxena_2016_a",
+            "entry": "Shreyas Saxena and Jakob Verbeek. Convolutional neural fabrics. In Proceedings of the 30th International Conference on Neural Information Processing Systems, NIPS\u201916, pp. 4060\u20134068, USA, 2016. Curran Associates Inc. ISBN 978-1-5108-3881-9. URL http://dl.acm.org/citation.cfm?id=3157382.3157551.",
+            "url": "http://dl.acm.org/citation.cfm?id=3157382.3157551",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saxena%2C%20Shreyas%20Verbeek%2C%20Jakob%20Convolutional%20neural%20fabrics%202016"
+        },
+        {
+            "id": "Sercu_2016_a",
+            "entry": "Tom Sercu and Vaibhava Goel. Dense prediction on sequences with time-dilated convolutions for speech recognition. NIPS End-to-end Learning for Speech and Audio Processing Workshop, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sercu%2C%20Tom%20Goel%2C%20Vaibhava%20Dense%20prediction%20on%20sequences%20with%20time-dilated%20convolutions%20for%20speech%20recognition.%20NIPS%20End-to-end%20Learning%20for%20Speech%20and%20Audio%20Processing%20Workshop%202016"
+        },
+        {
+            "id": "Sindhwani_et+al_2015_a",
+            "entry": "Vikas Sindhwani, Tara Sainath, and Sanjiv Kumar. Structured Transforms for Small-Footprint Deep Learning. In C Cortes, N d Lawrence, D D Lee, M Sugiyama, and R Garnett (eds.), Advances in Neural Information Processing Systems 28, pp. 3088\u20133096. Curran Associates, Inc., 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sindhwani%2C%20Vikas%20Sainath%2C%20Tara%20Kumar%2C%20Sanjiv%20Structured%20Transforms%20for%20Small-Footprint%20Deep%20Learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sindhwani%2C%20Vikas%20Sainath%2C%20Tara%20Kumar%2C%20Sanjiv%20Structured%20Transforms%20for%20Small-Footprint%20Deep%20Learning%202015"
+        },
+        {
+            "id": "Szegedy_et+al_2015_a",
+            "entry": "C Szegedy, Wei Liu, Yangqing Jia, P Sermanet, S Reed, D Anguelov, D Erhan, V Vanhoucke, and A Rabinovich. Going deeper with convolutions. In 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 1\u20139, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20C.%20Liu%2C%20Wei%20Yangqing%20Jia%2C%20P.Sermanet%20Reed%2C%20S.%20Going%20deeper%20with%20convolutions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20C.%20Liu%2C%20Wei%20Yangqing%20Jia%2C%20P.Sermanet%20Reed%2C%20S.%20Going%20deeper%20with%20convolutions%202015"
+        },
+        {
+            "id": "Szegedy_et+al_2016_a",
+            "entry": "Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, and Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20Inception%20Architecture%20for%20Computer%20Vision%202016-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20Inception%20Architecture%20for%20Computer%20Vision%202016-06"
+        },
+        {
+            "id": "Szegedy_et+al_2016_b",
+            "entry": "Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, and Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20Inception%20Architecture%20for%20Computer%20Vision%202016-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20Inception%20Architecture%20for%20Computer%20Vision%202016-06"
+        },
+        {
+            "id": "Szegedy_et+al_2017_a",
+            "entry": "Christian Szegedy, Sergey Ioffe, Vincent Vanhoucke, and Alexander Alemi. Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning. In Conference on Artificial Intelligence (AAAI), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Ioffe%2C%20Sergey%20Vanhoucke%2C%20Vincent%20Inception-v4%2C%20Alexander%20Alemi%20Inception-ResNet%20and%20the%20Impact%20of%20Residual%20Connections%20on%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Ioffe%2C%20Sergey%20Vanhoucke%2C%20Vincent%20Inception-v4%2C%20Alexander%20Alemi%20Inception-ResNet%20and%20the%20Impact%20of%20Residual%20Connections%20on%20Learning%202017"
+        },
+        {
+            "id": "T_2017_a",
+            "entry": "L\u00e1szl\u00f3 T\u00f3th. Multi-resolution spectral input for convolutional neural network-based speech recognition. In Speech Technology and Human-Computer Dialogue (SpeD), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=T%C3%B3th%2C%20L%C3%A1szl%C3%B3%20Multi-resolution%20spectral%20input%20for%20convolutional%20neural%20network-based%20speech%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=T%C3%B3th%2C%20L%C3%A1szl%C3%B3%20Multi-resolution%20spectral%20input%20for%20convolutional%20neural%20network-based%20speech%20recognition%202017"
+        },
+        {
+            "id": "Veit_2018_a",
+            "entry": "Andreas Veit and Serge Belongie. Convolutional Networks with Adaptive Inference Graphs. In The European Conference on Computer Vision (ECCV), September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Veit%2C%20Andreas%20Belongie%2C%20Serge%20Convolutional%20Networks%20with%20Adaptive%20Inference%20Graphs%202018-09",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Veit%2C%20Andreas%20Belongie%2C%20Serge%20Convolutional%20Networks%20with%20Adaptive%20Inference%20Graphs%202018-09"
+        },
+        {
+            "id": "Vinyals_et+al_2017_a",
+            "entry": "O Vinyals, A Toshev, S Bengio, and D Erhan. Show and Tell: Lessons Learned from the 2015 MSCOCO Image Captioning Challenge. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 39(4): 652\u2013663, April 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=O%20Vinyals%20A%20Toshev%20S%20Bengio%20and%20D%20Erhan%20Show%20and%20Tell%20Lessons%20Learned%20from%20the%202015%20MSCOCO%20Image%20Captioning%20Challenge%20IEEE%20Transactions%20on%20Pattern%20Analysis%20and%20Machine%20Intelligence%20TPAMI%20394%20652663%20April%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=O%20Vinyals%20A%20Toshev%20S%20Bengio%20and%20D%20Erhan%20Show%20and%20Tell%20Lessons%20Learned%20from%20the%202015%20MSCOCO%20Image%20Captioning%20Challenge%20IEEE%20Transactions%20on%20Pattern%20Analysis%20and%20Machine%20Intelligence%20TPAMI%20394%20652663%20April%202017"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Fei Wang, Mengqing Jiang, Chen Qian, Shuo Yang, Cheng Li, Honggang Zhang, Xiaogang Wang, and Xiaoou Tang. Residual Attention Network for Image Classification. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Fei%20Jiang%2C%20Mengqing%20Qian%2C%20Chen%20Yang%2C%20Shuo%20Residual%20Attention%20Network%20for%20Image%20Classification%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Fei%20Jiang%2C%20Mengqing%20Qian%2C%20Chen%20Yang%2C%20Shuo%20Residual%20Attention%20Network%20for%20Image%20Classification%202017-07"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Xin Wang, Fisher Yu, Zi-Yi Dou, and Joseph E. Gonzalez. Skipnet: Learning dynamic routing in convolutional networks. In SysML, Feb 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Xin%20Yu%2C%20Fisher%20Dou%2C%20Zi-Yi%20Gonzalez%2C%20Joseph%20E.%20Skipnet%3A%20Learning%20dynamic%20routing%20in%20convolutional%20networks%202018-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Xin%20Yu%2C%20Fisher%20Dou%2C%20Zi-Yi%20Gonzalez%2C%20Joseph%20E.%20Skipnet%3A%20Learning%20dynamic%20routing%20in%20convolutional%20networks%202018-02"
+        },
+        {
+            "id": "Wen_et+al_2017_a",
+            "entry": "Wei Wen, Cong Xu, Chunpeng Wu, Yandan Wang, Yiran Chen, and Hai Li. Coordinating Filters for Faster Deep Neural Networks. In The IEEE International Conference on Computer Vision (ICCV), October 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Wei%20Xu%2C%20Cong%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Coordinating%20Filters%20for%20Faster%20Deep%20Neural%20Networks%202017-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Wei%20Xu%2C%20Cong%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Coordinating%20Filters%20for%20Faster%20Deep%20Neural%20Networks%202017-10"
+        },
+        {
+            "id": "Woo_et+al_2018_a",
+            "entry": "Sanghyun Woo, Jongchan Park, Joon-Young Lee, and In So Kweon. CBAM: Convolutional Block Attention Module. In The European Conference on Computer Vision (ECCV), September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Woo%2C%20Sanghyun%20Park%2C%20Jongchan%20Lee%2C%20Joon-Young%20Kweon%2C%20In%20So%20CBAM%3A%20Convolutional%20Block%20Attention%20Module%202018-09",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Woo%2C%20Sanghyun%20Park%2C%20Jongchan%20Lee%2C%20Joon-Young%20Kweon%2C%20In%20So%20CBAM%3A%20Convolutional%20Block%20Attention%20Module%202018-09"
+        },
+        {
+            "id": "Tensorpack_2017_a",
+            "entry": "Yuxin Wu. Tensorpack. https://github.com/ppwwyyxx/tensorpack, 2017. Zuxuan Wu, Tushar Nagarajan, Abhishek Kumar, Steven Rennie, Larry S Davis, Kristen Grauman, and Rogerio",
+            "url": "https://github.com/ppwwyyxx/tensorpack"
+        }
+    ]
+}

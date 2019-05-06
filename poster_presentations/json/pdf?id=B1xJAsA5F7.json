@@ -1,0 +1,400 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING MULTIMODAL GRAPH-TO-GRAPH TRANSLATION FOR MOLECULAR OPTIMIZATION",
+        "author": "Wengong Jin, Kevin Yang, Regina Barzilay, Tommi Jaakkola Computer Science and Artificial Intelligence Lab, Massachusetts Institute of Technology {wengong, regina, tommi}@csail.mit.edu; yangk@mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1xJAsA5F7"
+        },
+        "abstract": "We view molecular optimization as a graph-to-graph translation problem. The goal is to learn to map from one molecular graph to another with better properties based on an available corpus of paired molecules. Since molecules can be optimized in different ways, there are multiple viable translations for each input graph. A key challenge is therefore to model diverse translation outputs. Our primary contributions include a junction tree encoder-decoder for learning diverse graph translations along with a novel adversarial training method for aligning distributions of molecules. Diverse output distributions in our model are explicitly realized by low-dimensional latent vectors that modulate the translation process. We evaluate our model on multiple molecular optimization tasks and show that our model outperforms previous state-of-the-art baselines."
+    },
+    "keywords": [
+        {
+            "term": "junction tree",
+            "url": "https://en.wikipedia.org/wiki/junction_tree"
+        },
+        {
+            "term": "molecular graph",
+            "url": "https://en.wikipedia.org/wiki/molecular_graph"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "open source",
+            "url": "https://en.wikipedia.org/wiki/open_source"
+        },
+        {
+            "term": "matched molecular pair analysis",
+            "url": "https://en.wikipedia.org/wiki/matched_molecular_pair_analysis"
+        },
+        {
+            "term": "drug discovery",
+            "url": "https://en.wikipedia.org/wiki/drug_discovery"
+        },
+        {
+            "term": "chemical property",
+            "url": "https://en.wikipedia.org/wiki/chemical_property"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "MMPA": "matched molecular pair analysis",
+        "VJTNN": "VARIATIONAL JUNCTION TREE ENCODER-DECODER"
+    },
+    "highlights": [
+        "The goal of drug discovery is to design molecules with desirable chemical properties",
+        "The setup is analogous to machine translation: matched molecular pair analysis takes as input molecular pairs {(X, Y )}, where Y is a paraphrase of X with better chemical properties",
+        "Current matched molecular pair analysis methods distill the matched pairs into graph transformation rules rather than treating it as a general translation problem over graphs based on parallel data",
+        "We propose junction tree encoder-decoder, a refined graph-to-graph neural architecture that decodes molecular graphs with neural attention",
+        "We evaluate our model on three molecular optimization tasks, with target properties ranging from drug likeness to biological activity.1"
+    ],
+    "key_statements": [
+        "The goal of drug discovery is to design molecules with desirable chemical properties",
+        "The setup is analogous to machine translation: matched molecular pair analysis takes as input molecular pairs {(X, Y )}, where Y is a paraphrase of X with better chemical properties",
+        "Current matched molecular pair analysis methods distill the matched pairs into graph transformation rules rather than treating it as a general translation problem over graphs based on parallel data",
+        "We propose junction tree encoder-decoder, a refined graph-to-graph neural architecture that decodes molecular graphs with neural attention",
+        "We evaluate our model on three molecular optimization tasks, with target properties ranging from drug likeness to biological activity.1"
+    ],
+    "summary": [
+        "The goal of drug discovery is to design molecules with desirable chemical properties.",
+        "To avoid invalid translations, we propose a novel adversarial training method to align the distribution of graphs generated from the model using randomly selected latent codes with the observed distribution of valid targets.",
+        "We evaluate our model on three molecular optimization tasks, with target properties ranging from drug likeness to biological activity.1 As baselines, we utilize state-of-the-art graph generation methods (<a class=\"ref-link\" id=\"cJin_et+al_2018_a\" href=\"#rJin_et+al_2018_a\"><a class=\"ref-link\" id=\"cJin_et+al_2018_a\" href=\"#rJin_et+al_2018_a\">Jin et al, 2018</a></a>; You et al, 2018a) and MMPA (<a class=\"ref-link\" id=\"cDalke_et+al_2018_a\" href=\"#rDalke_et+al_2018_a\">Dalke et al, 2018</a>).",
+        "Our model can translate a given molecule into a diverse set of compounds, demonstrating the diversity of learned output distributions.",
+        "Our translation model extends the junction tree variational autoencoder (<a class=\"ref-link\" id=\"cJin_et+al_2018_a\" href=\"#rJin_et+al_2018_a\"><a class=\"ref-link\" id=\"cJin_et+al_2018_a\" href=\"#rJin_et+al_2018_a\">Jin et al, 2018</a></a>) to an encoder-decoder architecture for learning graph-to-graph mappings.",
+        "In terms of model architecture, the encoder is a graph message passing network that embeds both nodes in the tree and graph into continuous vectors.",
+        "Applying the above message passing network to junction tree T and graph G yields two sets of vectors {xT1 , \u00b7 \u00b7 \u00b7 , xnT } and {x1G, \u00b7 \u00b7 \u00b7 , xnG}.",
+        "We design the following scoring function f (\u00b7) for ranking candidate attachments within the set Gi. We first apply a graph message passing network over graph Gi to compute atom representations {\u03bcGv i }.",
+        "We apply teacher forcing by feeding the graph decoder with ground truth junction tree as input.",
+        "To avoid invalid translations, we force molecules decoded from latent codes z \u223c N (0, I) to follow the distribution of the target domain through adversarial training (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a>).",
+        "5: For each i, unroll the decoder by feeding the predicted labels and tree topologies to construct the translated junction tree T (i), and compute its continuous representation h(i).",
+        "After the tree T is completely decoded, we derive its continuous representation hT by concatenating the root label distribution qroot and the sum of its inward messages: sroot =",
+        "Junction Tree VAE: Jin et al (2018) is a state-of-the-art generative model over molecules that applies gradient ascent over the learned latent space to generate molecules with improved properties.",
+        "VSeq2Seq: Our second baseline is a variational sequence-to-sequence translation model that uses SMILES strings to represent molecules and has been successfully applied to other molecule generation tasks (<a class=\"ref-link\" id=\"cGomez-Bombarelli_et+al_2016_a\" href=\"#rGomez-Bombarelli_et+al_2016_a\">Gomez-Bombarelli et al, 2016</a>).",
+        "By combining the variational junction tree encoder-decoder with adversarial training, we can generate better and more diverse molecules than the baselines."
+    ],
+    "headline": "We evaluate our model on multiple molecular optimization tasks and show that our model outperforms previous state-of-the-art baselines",
+    "reference_links": [
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein gan. arXiv preprint arXiv:1701.07875, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07875"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. arXiv preprint arXiv:1409.0473, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Nicholas Leonard, and Aaron Courville. Estimating or propagating gradients through stochastic neurons for conditional computation. arXiv preprint arXiv:1308.3432, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.3432"
+        },
+        {
+            "id": "Bickerton_et+al_2012_a",
+            "entry": "G Richard Bickerton, Gaia V Paolini, Jeremy Besnard, Sorel Muresan, and Andrew L Hopkins. Quantifying the chemical beauty of drugs. Nature chemistry, 4(2):90, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bickerton%2C%20G.Richard%20Paolini%2C%20Gaia%20V.%20Besnard%2C%20Jeremy%20Muresan%2C%20Sorel%20Quantifying%20the%20chemical%20beauty%20of%20drugs%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bickerton%2C%20G.Richard%20Paolini%2C%20Gaia%20V.%20Besnard%2C%20Jeremy%20Muresan%2C%20Sorel%20Quantifying%20the%20chemical%20beauty%20of%20drugs%202012"
+        },
+        {
+            "id": "Bruna_et+al_2013_a",
+            "entry": "Joan Bruna, Wojciech Zaremba, Arthur Szlam, and Yann LeCun. Spectral networks and locally connected networks on graphs. arXiv preprint arXiv:1312.6203, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6203"
+        },
+        {
+            "id": "Chung_et+al_2016_a",
+            "entry": "Junyoung Chung, Sungjin Ahn, and Yoshua Bengio. Hierarchical multiscale recurrent neural networks. arXiv preprint arXiv:1609.01704, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.01704"
+        },
+        {
+            "id": "Courbariaux_et+al_2016_a",
+            "entry": "Matthieu Courbariaux, Itay Hubara, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Binarized neural networks: Training deep neural networks with weights and activations constrained to+ 1 or-1. arXiv preprint arXiv:1602.02830, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02830"
+        },
+        {
+            "id": "Dai_et+al_2016_a",
+            "entry": "Hanjun Dai, Bo Dai, and Le Song. Discriminative embeddings of latent variable models for structured data. In International Conference on Machine Learning, pp. 2702\u20132711, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Hanjun%20Dai%2C%20Bo%20Song%2C%20Le%20Discriminative%20embeddings%20of%20latent%20variable%20models%20for%20structured%20data%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Hanjun%20Dai%2C%20Bo%20Song%2C%20Le%20Discriminative%20embeddings%20of%20latent%20variable%20models%20for%20structured%20data%202016"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Hanjun Dai, Yingtao Tian, Bo Dai, Steven Skiena, and Le Song. Syntax-directed variational autoencoder for structured data. arXiv preprint arXiv:1802.08786, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08786"
+        },
+        {
+            "id": "Dalke_et+al_2018_a",
+            "entry": "Andrew Dalke, Jerome Hert, and Christian Kramer. mmpdb: An open-source matched molecular pair platform for large multiproperty data sets. Journal of chemical information and modeling, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dalke%2C%20Andrew%20Hert%2C%20Jerome%20Kramer%2C%20Christian%20mmpdb%3A%20An%20open-source%20matched%20molecular%20pair%20platform%20for%20large%20multiproperty%20data%20sets%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dalke%2C%20Andrew%20Hert%2C%20Jerome%20Kramer%2C%20Christian%20mmpdb%3A%20An%20open-source%20matched%20molecular%20pair%20platform%20for%20large%20multiproperty%20data%20sets%202018"
+        },
+        {
+            "id": "Defferrard_et+al_2016_a",
+            "entry": "Michael Defferrard, Xavier Bresson, and Pierre Vandergheynst. Convolutional neural networks on graphs with fast localized spectral filtering. In Advances in Neural Information Processing Systems, pp. 3844\u20133852, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Defferrard%2C%20Michael%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Defferrard%2C%20Michael%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20neural%20networks%20on%20graphs%20with%20fast%20localized%20spectral%20filtering%202016"
+        },
+        {
+            "id": "Dossetter_et+al_2013_a",
+            "entry": "Alexander G Dossetter, Edward J Griffen, and Andrew G Leach. Matched molecular pair analysis in drug discovery. Drug Discovery Today, 18(15-16):724\u2013731, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dossetter%2C%20Alexander%20G.%20Griffen%2C%20Edward%20J.%20Leach%2C%20Andrew%20G.%20Matched%20molecular%20pair%20analysis%20in%20drug%20discovery%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dossetter%2C%20Alexander%20G.%20Griffen%2C%20Edward%20J.%20Leach%2C%20Andrew%20G.%20Matched%20molecular%20pair%20analysis%20in%20drug%20discovery%202013"
+        },
+        {
+            "id": "Duvenaud_et+al_2015_a",
+            "entry": "David K Duvenaud, Dougal Maclaurin, Jorge Iparraguirre, Rafael Bombarell, Timothy Hirzel, Alan Aspuru-Guzik, and Ryan P Adams. Convolutional networks on graphs for learning molecular fingerprints. In Advances in neural information processing systems, pp. 2224\u20132232, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S Schoenholz, Patrick F Riley, Oriol Vinyals, and George E Dahl. Neural message passing for quantum chemistry. arXiv preprint arXiv:1704.01212, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.01212"
+        },
+        {
+            "id": "Gomez-Bombarelli_et+al_2016_a",
+            "entry": "Rafael Gomez-Bombarelli, Jennifer N Wei, David Duvenaud, Jose Miguel Hernandez-Lobato, Benjam\u0131n Sanchez-Lengeling, Dennis Sheberla, Jorge Aguilera-Iparraguirre, Timothy D Hirzel, Ryan P Adams, and Alan Aspuru-Guzik. Automatic chemical design using a data-driven continuous representation of molecules. ACS Central Science, 2016. doi: 10.1021/acscentsci.7b00572.",
+            "crossref": "https://dx.doi.org/10.1021/acscentsci.7b00572",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1021/acscentsci.7b00572"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Griffen_2011_a",
+            "entry": "Ed Griffen, Andrew G Leach, Graeme R Robb, and Daniel J Warner. Matched molecular pairs as a medicinal chemistry tool: miniperspective. Journal of medicinal chemistry, 54(22):7739\u20137750, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ed%20Griffen%20Andrew%20G%20Leach%20Graeme%20R%20Robb%20and%20Daniel%20J%20Warner%20Matched%20molecular%20pairs%20as%20a%20medicinal%20chemistry%20tool%20miniperspective%20Journal%20of%20medicinal%20chemistry%20542277397750%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ed%20Griffen%20Andrew%20G%20Leach%20Graeme%20R%20Robb%20and%20Daniel%20J%20Warner%20Matched%20molecular%20pairs%20as%20a%20medicinal%20chemistry%20tool%20miniperspective%20Journal%20of%20medicinal%20chemistry%20542277397750%202011"
+        },
+        {
+            "id": "Guimaraes_et+al_2017_a",
+            "entry": "Gabriel Lima Guimaraes, Benjamin Sanchez-Lengeling, Pedro Luis Cunha Farias, and Alan AspuruGuzik. Objective-reinforced generative adversarial networks (organ) for sequence generation models. arXiv preprint arXiv:1705.10843, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10843"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of wasserstein gans. In Advances in Neural Information Processing Systems, pp. 5767\u20135777, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017"
+        },
+        {
+            "id": "Hamilton_et+al_2017_a",
+            "entry": "William L Hamilton, Rex Ying, and Jure Leskovec. Inductive representation learning on large graphs. arXiv preprint arXiv:1706.02216, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02216"
+        },
+        {
+            "id": "Henaff_et+al_2015_a",
+            "entry": "Mikael Henaff, Joan Bruna, and Yann LeCun. Deep convolutional networks on graph-structured data. arXiv preprint arXiv:1506.05163, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.05163"
+        },
+        {
+            "id": "Isola_et+al_2017_a",
+            "entry": "Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A Efros. Image-to-image translation with conditional adversarial networks. arXiv preprint, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks.%20arXiv%20p%202017"
+        },
+        {
+            "id": "Jin_et+al_2017_a",
+            "entry": "Wengong Jin, Connor Coley, Regina Barzilay, and Tommi Jaakkola. Predicting organic reaction outcomes with weisfeiler-lehman network. In Advances in Neural Information Processing Systems, pp. 2604\u20132613, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jin%2C%20Wengong%20Coley%2C%20Connor%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Predicting%20organic%20reaction%20outcomes%20with%20weisfeiler-lehman%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jin%2C%20Wengong%20Coley%2C%20Connor%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Predicting%20organic%20reaction%20outcomes%20with%20weisfeiler-lehman%20network%202017"
+        },
+        {
+            "id": "Jin_et+al_2018_a",
+            "entry": "Wengong Jin, Regina Barzilay, and Tommi Jaakkola. Junction tree variational autoencoder for molecular graph generation. arXiv preprint arXiv:1802.04364, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04364"
+        },
+        {
+            "id": "Kearnes_et+al_2016_a",
+            "entry": "Steven Kearnes, Kevin McCloskey, Marc Berndl, Vijay Pande, and Patrick Riley. Molecular graph convolutions: moving beyond fingerprints. Journal of computer-aided molecular design, 30(8): 595\u2013608, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kearnes%2C%20Steven%20McCloskey%2C%20Kevin%20Berndl%2C%20Marc%20Pande%2C%20Vijay%20Molecular%20graph%20convolutions%3A%20moving%20beyond%20fingerprints%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kearnes%2C%20Steven%20McCloskey%2C%20Kevin%20Berndl%2C%20Marc%20Pande%2C%20Vijay%20Molecular%20graph%20convolutions%3A%20moving%20beyond%20fingerprints%202016"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kipf_2016_a",
+            "entry": "Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks. arXiv preprint arXiv:1609.02907, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.02907"
+        },
+        {
+            "id": "Kondor_et+al_2018_a",
+            "entry": "Risi Kondor, Hy Truong Son, Horace Pan, Brandon Anderson, and Shubhendu Trivedi. Covariant compositional networks for learning graphs. arXiv preprint arXiv:1801.02144, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.02144"
+        },
+        {
+            "id": "Kusner_et+al_2017_a",
+            "entry": "Matt J Kusner, Brooks Paige, and Jose Miguel Hernandez-Lobato. Grammar variational autoencoder. arXiv preprint arXiv:1703.01925, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01925"
+        },
+        {
+            "id": "Landrum_2006_a",
+            "entry": "Greg Landrum. Rdkit: Open-source cheminformatics. Online). http://www.rdkit.org. Accessed, 3 (04):2012, 2006.",
+            "url": "http://www.rdkit.org"
+        },
+        {
+            "id": "Lei_et+al_2017_a",
+            "entry": "Tao Lei, Wengong Jin, Regina Barzilay, and Tommi Jaakkola. Deriving neural architectures from sequence and graph kernels. arXiv preprint arXiv:1705.09037, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.09037"
+        },
+        {
+            "id": "Li_et+al_0000_a",
+            "entry": "Yibo Li, Liangren Zhang, and Zhenming Liu. Multi-objective de novo drug design with conditional graph generative model. arXiv preprint arXiv:1801.07299, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.07299"
+        },
+        {
+            "id": "Li_et+al_2015_a",
+            "entry": "Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel. Gated graph sequence neural networks. arXiv preprint arXiv:1511.05493, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05493"
+        },
+        {
+            "id": "Li_et+al_0000_b",
+            "entry": "Yujia Li, Oriol Vinyals, Chris Dyer, Razvan Pascanu, and Peter Battaglia. Learning deep generative models of graphs. arXiv preprint arXiv:1803.03324, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03324"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Qi Liu, Miltiadis Allamanis, Marc Brockschmidt, and Alexander L Gaunt. Constrained graph variational autoencoders for molecule design. arXiv preprint arXiv:1805.09076, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09076"
+        },
+        {
+            "id": "Niepert_et+al_2014_a",
+            "entry": "Mathias Niepert, Mohamed Ahmed, and Konstantin Kutzkov. Learning convolutional neural networks for graphs. In International Conference on Machine Learning, pp. 2014\u20132023, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niepert%2C%20Mathias%20Ahmed%2C%20Mohamed%20Kutzkov%2C%20Konstantin%20Learning%20convolutional%20neural%20networks%20for%20graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niepert%2C%20Mathias%20Ahmed%2C%20Mohamed%20Kutzkov%2C%20Konstantin%20Learning%20convolutional%20neural%20networks%20for%20graphs%202014"
+        },
+        {
+            "id": "Olivecrona_et+al_2017_a",
+            "entry": "Marcus Olivecrona, Thomas Blaschke, Ola Engkvist, and Hongming Chen. Molecular de-novo design through deep reinforcement learning. Journal of cheminformatics, 9(1):48, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olivecrona%2C%20Marcus%20Blaschke%2C%20Thomas%20Engkvist%2C%20Ola%20Chen%2C%20Hongming%20Molecular%20de-novo%20design%20through%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olivecrona%2C%20Marcus%20Blaschke%2C%20Thomas%20Engkvist%2C%20Ola%20Chen%2C%20Hongming%20Molecular%20de-novo%20design%20through%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Popova_et+al_2018_a",
+            "entry": "Mariya Popova, Olexandr Isayev, and Alexander Tropsha. Deep reinforcement learning for de novo drug design. Science advances, 4(7):eaap7885, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Popova%2C%20Mariya%20Isayev%2C%20Olexandr%20Tropsha%2C%20Alexander%20Deep%20reinforcement%20learning%20for%20de%20novo%20drug%20design%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Popova%2C%20Mariya%20Isayev%2C%20Olexandr%20Tropsha%2C%20Alexander%20Deep%20reinforcement%20learning%20for%20de%20novo%20drug%20design%202018"
+        },
+        {
+            "id": "Rogers_2010_a",
+            "entry": "David Rogers and Mathew Hahn. Extended-connectivity fingerprints. Journal of chemical information and modeling, 50(5):742\u2013754, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rogers%2C%20David%20Hahn%2C%20Mathew%20Extended-connectivity%20fingerprints%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rogers%2C%20David%20Hahn%2C%20Mathew%20Extended-connectivity%20fingerprints%202010"
+        },
+        {
+            "id": "Samanta_et+al_2018_a",
+            "entry": "Bidisha Samanta, Abir De, Niloy Ganguly, and Manuel Gomez-Rodriguez. Designing random graph models using variational autoencoders with applications to chemical design. arXiv preprint arXiv:1802.05283, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05283"
+        },
+        {
+            "id": "Scarselli_et+al_2009_a",
+            "entry": "Franco Scarselli, Marco Gori, Ah Chung Tsoi, Markus Hagenbuchner, and Gabriele Monfardini. The graph neural network model. IEEE Transactions on Neural Networks, 20(1):61\u201380, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scarselli%2C%20Franco%20Gori%2C%20Marco%20Tsoi%2C%20Ah%20Chung%20Hagenbuchner%2C%20Markus%20The%20graph%20neural%20network%20model%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scarselli%2C%20Franco%20Gori%2C%20Marco%20Tsoi%2C%20Ah%20Chung%20Hagenbuchner%2C%20Markus%20The%20graph%20neural%20network%20model%202009"
+        },
+        {
+            "id": "Schutt_et+al_2017_a",
+            "entry": "Kristof Schutt, Pieter-Jan Kindermans, Huziel Enoc Sauceda Felix, Stefan Chmiela, Alexandre Tkatchenko, and Klaus-Robert Muller. Schnet: A continuous-filter convolutional neural network for modeling quantum interactions. In Advances in Neural Information Processing Systems, pp. 992\u20131002, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schutt%2C%20Kristof%20Kindermans%2C%20Pieter-Jan%20Felix%2C%20Huziel%20Enoc%20Sauceda%20Chmiela%2C%20Stefan%20Schnet%3A%20A%20continuous-filter%20convolutional%20neural%20network%20for%20modeling%20quantum%20interactions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schutt%2C%20Kristof%20Kindermans%2C%20Pieter-Jan%20Felix%2C%20Huziel%20Enoc%20Sauceda%20Chmiela%2C%20Stefan%20Schnet%3A%20A%20continuous-filter%20convolutional%20neural%20network%20for%20modeling%20quantum%20interactions%202017"
+        },
+        {
+            "id": "Segler_et+al_2017_a",
+            "entry": "Marwin HS Segler, Thierry Kogej, Christian Tyrchan, and Mark P Waller. Generating focussed molecule libraries for drug discovery with recurrent neural networks. arXiv preprint arXiv:1701.01329, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.01329"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Tianxiao Shen, Tao Lei, Regina Barzilay, and Tommi Jaakkola. Style transfer from non-parallel text by cross-alignment. In Advances in Neural Information Processing Systems, pp. 6830\u20136841, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Tianxiao%20Lei%2C%20Tao%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Style%20transfer%20from%20non-parallel%20text%20by%20cross-alignment%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Tianxiao%20Lei%2C%20Tao%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Style%20transfer%20from%20non-parallel%20text%20by%20cross-alignment%202017"
+        },
+        {
+            "id": "Simonovsky_2018_a",
+            "entry": "Martin Simonovsky and Nikos Komodakis. Graphvae: Towards generation of small graphs using variational autoencoders. arXiv preprint arXiv:1802.03480, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03480"
+        },
+        {
+            "id": "Sterling_2015_a",
+            "entry": "Teague Sterling and John J Irwin. Zinc 15\u2013ligand discovery for everyone. J. Chem. Inf. Model, 55 (11):2324\u20132337, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sterling%2C%20Teague%20Irwin%2C%20John%20J.%20Zinc%2015%E2%80%93ligand%20discovery%20for%20everyone%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sterling%2C%20Teague%20Irwin%2C%20John%20J.%20Zinc%2015%E2%80%93ligand%20discovery%20for%20everyone%202015"
+        },
+        {
+            "id": "Smiles_1988_a",
+            "entry": "David Weininger. Smiles, a chemical language and information system. 1. introduction to methodology and encoding rules. Journal of chemical information and computer sciences, 28(1):31\u201336, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smiles%2C%20David%20Weininger%20a%20chemical%20language%20and%20information%20system.%201.%20introduction%20to%20methodology%20and%20encoding%20rules%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smiles%2C%20David%20Weininger%20a%20chemical%20language%20and%20information%20system.%201.%20introduction%20to%20methodology%20and%20encoding%20rules%201988"
+        },
+        {
+            "id": "You_et+al_0000_a",
+            "entry": "Jiaxuan You, Bowen Liu, Rex Ying, Vijay Pande, and Jure Leskovec. Graph convolutional policy network for goal-directed molecular graph generation. arXiv preprint arXiv:1806.02473, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02473"
+        },
+        {
+            "id": "You_et+al_0000_b",
+            "entry": "Jiaxuan You, Rex Ying, Xiang Ren, William L Hamilton, and Jure Leskovec. Graphrnn: A deep generative model for graphs. arXiv preprint arXiv:1802.08773, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08773"
+        },
+        {
+            "id": "Zhao_et+al_2018_a",
+            "entry": "Junbo Jake Zhao, Yoon Kim, Kelly Zhang, Alexander M Rush, and Yann LeCun. Adversarially regularized autoencoders. arXiv preprint arXiv:1706.04223, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.04223"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Jun-Yan Zhu, Richard Zhang, Deepak Pathak, Trevor Darrell, Alexei A Efros, Oliver Wang, and Eli Shechtman. Toward multimodal image-to-image translation. In Advances in Neural Information Processing Systems, pp. 465\u2013476, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Jun-Yan%20Zhang%2C%20Richard%20Pathak%2C%20Deepak%20Darrell%2C%20Trevor%20Alexei%20A%20Efros%2C%20Oliver%20Wang%2C%20and%20Eli%20Shechtman.%20Toward%20multimodal%20image-to-image%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Jun-Yan%20Zhang%2C%20Richard%20Pathak%2C%20Deepak%20Darrell%2C%20Trevor%20Alexei%20A%20Efros%2C%20Oliver%20Wang%2C%20and%20Eli%20Shechtman.%20Toward%20multimodal%20image-to-image%20translation%202017"
+        },
+        {
+            "id": "Tree_0000_a",
+            "entry": "Tree Gated Recurrent Unit The tree GRU function GRU(\u00b7) for computing message hij in Eq.(3) is defined as follows (Jin et al., 2018): sij =",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tree%20Gated%20Recurrent%20Unit%20The%20tree%20GRU%20function%20GRU%20for%20computing%20message%20hij%20in%20Eq3%20is%20defined%20as%20follows%20Jin%20et%20al%202018%20sij"
+        },
+        {
+            "id": "Graph_2018_a",
+            "entry": "Graph Decoder We use the same graph neural architecture (Jin et al., 2018) for scoring candidate attachments. Let Gi be the graph resulting from a particular merging of cluster Ci in the tree with its neighbors Cj, j \u2208 NT (i), and let u, v denote atoms in the graph Gi. The main challenge of attachment scoring is local isomorphism: Suppose there are two neighbors Cj and Ck with the same cluster labels. Since they share the same cluster label, exchanging the position of Cj and Ck will lead to isomorphic graphs. However, these two cliques are actually not exchangeable if the subtree under j and k are different (Illustrations can be found in Jin et al. (2018)). Therefore, we need to incorporate information about those subtrees when scoring the attachments.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graph%20Decoder%20We%20use%20the%20same%20graph%20neural%20architecture%20Jin%20et%20al%202018%20for%20scoring%20candidate%20attachments%20Let%20Gi%20be%20the%20graph%20resulting%20from%20a%20particular%20merging%20of%20cluster%20Ci%20in%20the%20tree%20with%20its%20neighbors%20Cj%20j%20%20NT%20i%20and%20let%20u%20v%20denote%20atoms%20in%20the%20graph%20Gi%20The%20main%20challenge%20of%20attachment%20scoring%20is%20local%20isomorphism%20Suppose%20there%20are%20two%20neighbors%20Cj%20and%20Ck%20with%20the%20same%20cluster%20labels%20Since%20they%20share%20the%20same%20cluster%20label%20exchanging%20the%20position%20of%20Cj%20and%20Ck%20will%20lead%20to%20isomorphic%20graphs%20However%20these%20two%20cliques%20are%20actually%20not%20exchangeable%20if%20the%20subtree%20under%20j%20and%20k%20are%20different%20Illustrations%20can%20be%20found%20in%20Jin%20et%20al%202018%20Therefore%20we%20need%20to%20incorporate%20information%20about%20those%20subtrees%20when%20scoring%20the%20attachments",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graph%20Decoder%20We%20use%20the%20same%20graph%20neural%20architecture%20Jin%20et%20al%202018%20for%20scoring%20candidate%20attachments%20Let%20Gi%20be%20the%20graph%20resulting%20from%20a%20particular%20merging%20of%20cluster%20Ci%20in%20the%20tree%20with%20its%20neighbors%20Cj%20j%20%20NT%20i%20and%20let%20u%20v%20denote%20atoms%20in%20the%20graph%20Gi%20The%20main%20challenge%20of%20attachment%20scoring%20is%20local%20isomorphism%20Suppose%20there%20are%20two%20neighbors%20Cj%20and%20Ck%20with%20the%20same%20cluster%20labels%20Since%20they%20share%20the%20same%20cluster%20label%20exchanging%20the%20position%20of%20Cj%20and%20Ck%20will%20lead%20to%20isomorphic%20graphs%20However%20these%20two%20cliques%20are%20actually%20not%20exchangeable%20if%20the%20subtree%20under%20j%20and%20k%20are%20different%20Illustrations%20can%20be%20found%20in%20Jin%20et%20al%202018%20Therefore%20we%20need%20to%20incorporate%20information%20about%20those%20subtrees%20when%20scoring%20the%20attachments"
+        },
+        {
+            "id": "Training_2014_a",
+            "entry": "Training Details We elaborate on the hyper-parameters used in our experiments. For our models, the hidden state dimension is 300 and latent code dimension |z| = 8. The tree encoder runs message passing for 6 iterations, and graph encoder runs for 3 iterations. The entire model has 3.9M parameters. For VSeq2Seq, the encoder is a one-layer bidirectional LSTM and the decoder is a one-layer uni-directional LSTM. The attention scores are computed in the same way as Bahdanau et al. (2014). We set the hidden state dimension of the recurrent encoder and decoder to be 600, with 4.2M parameters in total.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Training%20Details%20We%20elaborate%20on%20the%20hyperparameters%20used%20in%20our%20experiments%20For%20our%20models%20the%20hidden%20state%20dimension%20is%20300%20and%20latent%20code%20dimension%20z%20%208%20The%20tree%20encoder%20runs%20message%20passing%20for%206%20iterations%20and%20graph%20encoder%20runs%20for%203%20iterations%20The%20entire%20model%20has%2039M%20parameters%20For%20VSeq2Seq%20the%20encoder%20is%20a%20onelayer%20bidirectional%20LSTM%20and%20the%20decoder%20is%20a%20onelayer%20unidirectional%20LSTM%20The%20attention%20scores%20are%20computed%20in%20the%20same%20way%20as%20Bahdanau%20et%20al%202014%20We%20set%20the%20hidden%20state%20dimension%20of%20the%20recurrent%20encoder%20and%20decoder%20to%20be%20600%20with%2042M%20parameters%20in%20total",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Training%20Details%20We%20elaborate%20on%20the%20hyperparameters%20used%20in%20our%20experiments%20For%20our%20models%20the%20hidden%20state%20dimension%20is%20300%20and%20latent%20code%20dimension%20z%20%208%20The%20tree%20encoder%20runs%20message%20passing%20for%206%20iterations%20and%20graph%20encoder%20runs%20for%203%20iterations%20The%20entire%20model%20has%2039M%20parameters%20For%20VSeq2Seq%20the%20encoder%20is%20a%20onelayer%20bidirectional%20LSTM%20and%20the%20decoder%20is%20a%20onelayer%20unidirectional%20LSTM%20The%20attention%20scores%20are%20computed%20in%20the%20same%20way%20as%20Bahdanau%20et%20al%202014%20We%20set%20the%20hidden%20state%20dimension%20of%20the%20recurrent%20encoder%20and%20decoder%20to%20be%20600%20with%2042M%20parameters%20in%20total"
+        },
+        {
+            "id": "Property_2018_b",
+            "entry": "Property Calculation The penalized logP is calculated using You et al. (2018a)\u2019s implementation, which utilizes RDKit (Landrum, 2006) to compute clogP and synthetic accessibility scores. The QED scores are also computed using RDKit\u2019s built-in functionality. The DRD2 activity prediction model is downloaded from https://github.com/MarcusOlivecrona/REINVENT/blob/master/data/clf.pkl.",
+            "url": "https://github.com/MarcusOlivecrona/REINVENT/blob/master/data/clf.pkl",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Property%20Calculation%20The%20penalized%20logP%20is%20calculated%20using%20You%20et%20al%202018as%20implementation%20which%20utilizes%20RDKit%20Landrum%202006%20to%20compute%20clogP%20and%20synthetic%20accessibility%20scores%20The%20QED%20scores%20are%20also%20computed%20using%20RDKits%20builtin%20functionality%20The%20DRD2%20activity%20prediction%20model%20is%20downloaded%20from%20httpsgithubcomMarcusOlivecronaREINVENTblobmasterdataclfpkl"
+        },
+        {
+            "id": "MMPA_2017_a",
+            "entry": "MMPA Procedure We utilized the open source toolkit mmpdb (Dalke et al., 2018) to perform matching molecular pair (MMP) analysis (https://github.com/rdkit/mmpdb). On the logP and QED tasks, we constructed a database of transformation rules extracted from the ZINC dataset (with test set molecules excluded). On the DRD2 task, the database is constructed from both ZINC and the dataset from Olivecrona et al. (2017). During testing, each molecule is translated K=20 times with different matching rules. When there are more than K matching rules, we choose those with the highest average property improvement. This statistic is calculated during database construction.",
+            "url": "https://github.com/rdkit/mmpdb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MMPA%20Procedure%20We%20utilized%20the%20open%20source%20toolkit%20mmpdb%20Dalke%20et%20al%202018%20to%20perform%20matching%20molecular%20pair%20MMP%20analysis%20httpsgithubcomrdkitmmpdb%20On%20the%20logP%20and%20QED%20tasks%20we%20constructed%20a%20database%20of%20transformation%20rules%20extracted%20from%20the%20ZINC%20dataset%20with%20test%20set%20molecules%20excluded%20On%20the%20DRD2%20task%20the%20database%20is%20constructed%20from%20both%20ZINC%20and%20the%20dataset%20from%20Olivecrona%20et%20al%202017%20During%20testing%20each%20molecule%20is%20translated%20K20%20times%20with%20different%20matching%20rules%20When%20there%20are%20more%20than%20K%20matching%20rules%20we%20choose%20those%20with%20the%20highest%20average%20property%20improvement%20This%20statistic%20is%20calculated%20during%20database%20construction"
+        },
+        {
+            "id": "Dataset_2018_c",
+            "entry": "Dataset Curation The training set of the penalized logP task is curated from the ZINC dataset of 250K molecules (Jin et al., 2018). A molecular pair (X, Y ) is selected into the training set if the Tanimoto similarity sim(X, Y ) \u2265 \u03b4 and the property improvement is significant enough (greater than certain threshold). On the QED and DRD2 tasks, we select training molecular pairs (X, Y ) if sim(X, Y ) \u2265 0.4 and both X and Y fall into the source and target property range. For each task, we ensured that all molecules in validation and test set had never appeared during training.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dataset%20Curation%20The%20training%20set%20of%20the%20penalized%20logP%20task%20is%20curated%20from%20the%20ZINC%20dataset%20of%20250K%20molecules%20Jin%20et%20al%202018%20A%20molecular%20pair%20X%20Y%20%20is%20selected%20into%20the%20training%20set%20if%20the%20Tanimoto%20similarity%20simX%20Y%20%20%20%CE%B4%20and%20the%20property%20improvement%20is%20significant%20enough%20greater%20than%20certain%20threshold%20On%20the%20QED%20and%20DRD2%20tasks%20we%20select%20training%20molecular%20pairs%20X%20Y%20%20if%20simX%20Y%20%20%2004%20and%20both%20X%20and%20Y%20fall%20into%20the%20source%20and%20target%20property%20range%20For%20each%20task%20we%20ensured%20that%20all%20molecules%20in%20validation%20and%20test%20set%20had%20never%20appeared%20during%20training",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dataset%20Curation%20The%20training%20set%20of%20the%20penalized%20logP%20task%20is%20curated%20from%20the%20ZINC%20dataset%20of%20250K%20molecules%20Jin%20et%20al%202018%20A%20molecular%20pair%20X%20Y%20%20is%20selected%20into%20the%20training%20set%20if%20the%20Tanimoto%20similarity%20simX%20Y%20%20%20%CE%B4%20and%20the%20property%20improvement%20is%20significant%20enough%20greater%20than%20certain%20threshold%20On%20the%20QED%20and%20DRD2%20tasks%20we%20select%20training%20molecular%20pairs%20X%20Y%20%20if%20simX%20Y%20%20%2004%20and%20both%20X%20and%20Y%20fall%20into%20the%20source%20and%20target%20property%20range%20For%20each%20task%20we%20ensured%20that%20all%20molecules%20in%20validation%20and%20test%20set%20had%20never%20appeared%20during%20training"
+        }
+    ]
+}

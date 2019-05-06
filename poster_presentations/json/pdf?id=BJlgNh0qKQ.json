@@ -1,0 +1,632 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Generating Sentences from a Continuous Space",
+        "author": "Samuel R. Bowman, Luke Vilnis, Oriol Vinyals, Andrew Dai, Rafal Jozefowicz, Samy Bengio",
+        "date": 2016,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJlgNh0qKQ",
+            "doi": "10.18653/v1/k16-1002"
+        },
+        "journal": "Proceedings of The 20th SIGNLL Conference on Computational Natural Language Learning",
+        "abstract": "Human annotation for syntactic parsing is expensive, and large resources are available only for a fraction of languages. A question we ask is whether one can leverage abundant unlabeled texts to improve syntactic parsers, beyond just using the texts to obtain more generalisable lexical features (i.e. beyond word embeddings). To this end, we propose a novel latent-variable generative model for semi-supervised syntactic dependency parsing. As exact inference is intractable, we introduce a differentiable relaxation to obtain approximate samples and compute gradients with respect to the parser parameters. Our method (Differentiable Perturb-and-Parse) relies on differentiable dynamic programming over stochastically perturbed arc weights. We demonstrate effectiveness of our approach with experiments on English, French and Swedish."
+    },
+    "keywords": [
+        {
+            "term": "Markov Random Fields",
+            "url": "https://en.wikipedia.org/wiki/Markov_Random_Field"
+        },
+        {
+            "term": "dynamic programming",
+            "url": "https://en.wikipedia.org/wiki/dynamic_programming"
+        },
+        {
+            "term": "syntactic structure",
+            "url": "https://en.wikipedia.org/wiki/syntactic_structure"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "Evidence Lower Bound",
+            "url": "https://en.wikipedia.org/wiki/Evidence_Lower_Bound"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "grammar induction",
+            "url": "https://en.wikipedia.org/wiki/grammar_induction"
+        }
+    ],
+    "abbreviations": {
+        "VAE": "Variational Auto-Encoder",
+        "ELBO": "Evidence Lower Bound",
+        "MRF": "Markov Random Fields"
+    },
+    "highlights": [
+        "A dependency tree is a lightweight syntactic structure exposing bi-lexical relations between words (<a class=\"ref-link\" id=\"cTesniere_1959_a\" href=\"#rTesniere_1959_a\">Tesniere, 1959</a>; <a class=\"ref-link\" id=\"cKaplan_1982_a\" href=\"#rKaplan_1982_a\">Kaplan & Bresnan, 1982</a>), see Figure 1. This representation has been widely studied by the NLP community leading to very efficient state-of-the-art parsers (<a class=\"ref-link\" id=\"cKiperwasser_2016_a\" href=\"#rKiperwasser_2016_a\">Kiperwasser & Goldberg, 2016</a>; <a class=\"ref-link\" id=\"cDozat_2017_a\" href=\"#rDozat_2017_a\">Dozat & Manning, 2017</a>; Ma & Hovy, 2017), motivated by the fact that dependency trees are useful in downstream tasks such as semantic parsing (<a class=\"ref-link\" id=\"cReddy_et+al_2016_a\" href=\"#rReddy_et+al_2016_a\">Reddy et al, 2016</a>; <a class=\"ref-link\" id=\"cMarcheggiani_2017_a\" href=\"#rMarcheggiani_2017_a\">Marcheggiani & Titov, 2017</a>), machine translation (<a class=\"ref-link\" id=\"cDing_2005_a\" href=\"#rDing_2005_a\">Ding & Palmer, 2005</a>; <a class=\"ref-link\" id=\"cBastings_et+al_2017_a\" href=\"#rBastings_et+al_2017_a\">Bastings et al, 2017</a>), information extraction (<a class=\"ref-link\" id=\"cCulotta_2004_a\" href=\"#rCulotta_2004_a\">Culotta & Sorensen, 2004</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2015_a\" href=\"#rLiu_et+al_2015_a\">Liu et al, 2015</a>), question answering (<a class=\"ref-link\" id=\"cCui_et+al_2005_a\" href=\"#rCui_et+al_2005_a\">Cui et al, 2005</a>) and even as a filtering method for constituency parsing (<a class=\"ref-link\" id=\"cKong_et+al_2015_a\" href=\"#rKong_et+al_2015_a\">Kong et al, 2015</a>), among others",
+        "The model assumes that a sentence is generated conditioned on a latent dependency tree",
+        "The categorical distribution over dependency trees is parametrized by a log-linear model (<a class=\"ref-link\" id=\"cLafferty_et+al_2001_a\" href=\"#rLafferty_et+al_2001_a\">Lafferty et al, 2001</a>) where the weight of an arc is given by the neural network of <a class=\"ref-link\" id=\"cKiperwasser_2016_a\" href=\"#rKiperwasser_2016_a\">Kiperwasser & Goldberg (2016</a>).The sentence embedding model is specified as a diagonal Gaussian parametrized by a LSTM, to the seq2seq framework (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a>; <a class=\"ref-link\" id=\"cBowman_et+al_2016_a\" href=\"#rBowman_et+al_2016_a\">Bowman et al, 2016</a>)",
+        "The ideas introduced in recent work are mostly orthogonal to our proposal as we can modify our Variational Auto-Encoder model",
+        "We model the dependency structure of a sentence as a latent variable and build a Variational Auto-Encoder"
+    ],
+    "key_statements": [
+        "A dependency tree is a lightweight syntactic structure exposing bi-lexical relations between words (<a class=\"ref-link\" id=\"cTesniere_1959_a\" href=\"#rTesniere_1959_a\">Tesniere, 1959</a>; <a class=\"ref-link\" id=\"cKaplan_1982_a\" href=\"#rKaplan_1982_a\">Kaplan & Bresnan, 1982</a>), see Figure 1. This representation has been widely studied by the NLP community leading to very efficient state-of-the-art parsers (<a class=\"ref-link\" id=\"cKiperwasser_2016_a\" href=\"#rKiperwasser_2016_a\">Kiperwasser & Goldberg, 2016</a>; <a class=\"ref-link\" id=\"cDozat_2017_a\" href=\"#rDozat_2017_a\">Dozat & Manning, 2017</a>; Ma & Hovy, 2017), motivated by the fact that dependency trees are useful in downstream tasks such as semantic parsing (<a class=\"ref-link\" id=\"cReddy_et+al_2016_a\" href=\"#rReddy_et+al_2016_a\">Reddy et al, 2016</a>; <a class=\"ref-link\" id=\"cMarcheggiani_2017_a\" href=\"#rMarcheggiani_2017_a\">Marcheggiani & Titov, 2017</a>), machine translation (<a class=\"ref-link\" id=\"cDing_2005_a\" href=\"#rDing_2005_a\">Ding & Palmer, 2005</a>; <a class=\"ref-link\" id=\"cBastings_et+al_2017_a\" href=\"#rBastings_et+al_2017_a\">Bastings et al, 2017</a>), information extraction (<a class=\"ref-link\" id=\"cCulotta_2004_a\" href=\"#rCulotta_2004_a\">Culotta & Sorensen, 2004</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2015_a\" href=\"#rLiu_et+al_2015_a\">Liu et al, 2015</a>), question answering (<a class=\"ref-link\" id=\"cCui_et+al_2005_a\" href=\"#rCui_et+al_2005_a\">Cui et al, 2005</a>) and even as a filtering method for constituency parsing (<a class=\"ref-link\" id=\"cKong_et+al_2015_a\" href=\"#rKong_et+al_2015_a\">Kong et al, 2015</a>), among others",
+        "The model assumes that a sentence is generated conditioned on a latent dependency tree",
+        "In order to incorporate unlabeled data in the learning process, we introduce a generative model where the dependency tree is latent (Subsection 3.1)",
+        "The categorical distribution over dependency trees is parametrized by a log-linear model (<a class=\"ref-link\" id=\"cLafferty_et+al_2001_a\" href=\"#rLafferty_et+al_2001_a\">Lafferty et al, 2001</a>) where the weight of an arc is given by the neural network of <a class=\"ref-link\" id=\"cKiperwasser_2016_a\" href=\"#rKiperwasser_2016_a\">Kiperwasser & Goldberg (2016</a>).The sentence embedding model is specified as a diagonal Gaussian parametrized by a LSTM, to the seq2seq framework (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a>; <a class=\"ref-link\" id=\"cBowman_et+al_2016_a\" href=\"#rBowman_et+al_2016_a\">Bowman et al, 2016</a>)",
+        "We introduce our Differentiable Perturb-and-Parse operator to cope with the distribution over dependency trees",
+        "The fact that T is a soft selection of arcs, and not a combinatorial structure, does not impact the decoder",
+        "We report all experiments with the weight of 0, as removing the term or heavily downweighting it was yielding the best results",
+        "The ideas introduced in recent work are mostly orthogonal to our proposal as we can modify our Variational Auto-Encoder model",
+        "We model the dependency structure of a sentence as a latent variable and build a Variational Auto-Encoder"
+    ],
+    "summary": [
+        "A dependency tree is a lightweight syntactic structure exposing bi-lexical relations between words (<a class=\"ref-link\" id=\"cTesniere_1959_a\" href=\"#rTesniere_1959_a\"><a class=\"ref-link\" id=\"cTesniere_1959_a\" href=\"#rTesniere_1959_a\">Tesniere, 1959</a></a>; <a class=\"ref-link\" id=\"cKaplan_1982_a\" href=\"#rKaplan_1982_a\"><a class=\"ref-link\" id=\"cKaplan_1982_a\" href=\"#rKaplan_1982_a\">Kaplan & Bresnan, 1982</a></a>), see Figure 1.",
+        "The model assumes that a sentence is generated conditioned on a latent dependency tree.",
+        "Dependency parsing corresponds to approximating the posterior distribution over the latent trees within this model, achieved by the encoder component of VAE, see Figure 2a.",
+        "Our main contributions can be summarized as follows: (1) we introduce a variational autoencoder for semi-supervised dependency parsing; (2) we propose the Differentiable Perturb-and-Parse method for its estimation; (3) we demonstrate the effectiveness of the approach on three different languages.",
+        "}. In order to incorporate unlabeled data in the learning process, we introduce a generative model where the dependency tree is latent (Subsection 3.1).",
+        "The categorical distribution over dependency trees is parametrized by a log-linear model (<a class=\"ref-link\" id=\"cLafferty_et+al_2001_a\" href=\"#rLafferty_et+al_2001_a\">Lafferty et al, 2001</a>) where the weight of an arc is given by the neural network of <a class=\"ref-link\" id=\"cKiperwasser_2016_a\" href=\"#rKiperwasser_2016_a\">Kiperwasser & Goldberg (2016</a>).The sentence embedding model is specified as a diagonal Gaussian parametrized by a LSTM, to the seq2seq framework (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a>; <a class=\"ref-link\" id=\"cBowman_et+al_2016_a\" href=\"#rBowman_et+al_2016_a\">Bowman et al, 2016</a>).",
+        "We introduce our Differentiable Perturb-and-Parse operator to cope with the distribution over dependency trees.",
+        "In Subsection 5.1, we propose an approximate sampling process by computing the best parse tree with respect to independently perturbed arc weights.",
+        "Where denotes a Monte-Carlo estimation of the gradient, P \u223c G(0, 1) is sampled in the last line and EISNER is an algorithm that compute the projective dependency tree with maximum weight (<a class=\"ref-link\" id=\"cEisner_1996_a\" href=\"#rEisner_1996_a\">Eisner, 1996</a>).",
+        "On the one hand, running a GCN with a matrix that represents a soft selection of arcs has the same computational cost than using a standard adjacency matrix if we use matrix multiplication on GPU.13 On the other hand, a recursive network over a soft selection of arcs requires to build a O(n2) set of RNN-cells that follow the dynamic programming chart where the possible inputs of a cell are multiplied by their corresponding weight in T, which is expensive and not GPU-friendly.",
+        "We ran a series of experiments on 3 different languages to test our method for semi-supervised dependency parsing: English, French and Swedish.",
+        "We presented a novel generative learning approach for semi-supervised dependency parsing.",
+        "We model the dependency structure of a sentence as a latent variable and build a VAE.",
+        "Future work includes research for an informative prior for the dependency tree distribution, for example by introducing linguistic knowledge (<a class=\"ref-link\" id=\"cNaseem_et+al_2010_a\" href=\"#rNaseem_et+al_2010_a\">Naseem et al, 2010</a>; <a class=\"ref-link\" id=\"cNoji_et+al_2016_a\" href=\"#rNoji_et+al_2016_a\">Noji et al, 2016</a>) or with an adversarial training criterion <a class=\"ref-link\" id=\"cMakhzani_et+al_2016_a\" href=\"#rMakhzani_et+al_2016_a\">Makhzani et al (2016</a>).",
+        "This work could be extended to the unsupervised scenario"
+    ],
+    "headline": "We propose a novel latent-variable generative model for semi-supervised syntactic dependency parsing",
+    "reference_links": [
+        {
+            "id": "Abeille_et+al_2000_a",
+            "entry": "Anne Abeille, Lionel Clement, and Alexandra Kinyon. Building a treebank for french. In Proceedings of the Second International Conference on Language Resources and Evaluation (LREC\u201900). European Language Resources Association (ELRA), 2000. URL http://www.aclweb.org/anthology/L00-1175.",
+            "url": "http://www.aclweb.org/anthology/L00-1175",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abeille%2C%20Anne%20Clement%2C%20Lionel%20Kinyon%2C%20Alexandra%20Building%20a%20treebank%20for%20french%202000"
+        },
+        {
+            "id": "Agic_et+al_2016_a",
+            "entry": "Zeljko Agic, Anders Johannsen, Barbara Plank, Hector Mart\u0131nez Alonso, Natalie Schluter, and Anders S\u00f8gaard. Multilingual projection for parsing truly low-resource languages. Transactions of the Association for Computational Linguistics, 4:301\u2013312, 2016. URL http://aclweb.org/anthology/Q16-1022.",
+            "url": "http://aclweb.org/anthology/Q16-1022",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agic%2C%20Zeljko%20Johannsen%2C%20Anders%20Plank%2C%20Barbara%20Alonso%2C%20Hector%20Mart%C4%B1nez%20Multilingual%20projection%20for%20parsing%20truly%20low-resource%20languages%202016"
+        },
+        {
+            "id": "Al-Rfou_et+al_2013_a",
+            "entry": "Rami Al-Rfou, Bryan Perozzi, and Steven Skiena. Polyglot: Distributed word representations for multilingual NLP. In Proceedings of the Seventeenth Conference on Computational Natural Language Learning, pp. 183\u2013192, Sofia, Bulgaria, August 2013. Association for Computational Linguistics. URL http://www.aclweb.org/anthology/W13-3520.",
+            "url": "http://www.aclweb.org/anthology/W13-3520",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Al-Rfou%2C%20Rami%20Perozzi%2C%20Bryan%20Skiena%2C%20Steven%20Polyglot%3A%20Distributed%20word%20representations%20for%20multilingual%20NLP%202013-08"
+        },
+        {
+            "id": "Bastings_et+al_2017_a",
+            "entry": "Joost Bastings, Ivan Titov, Wilker Aziz, Diego Marcheggiani, and Khalil Simaan. Graph convolutional encoders for syntax-aware neural machine translation. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pp. 1947\u20131957. Association for Computational Linguistics, 2017. URL http://www.aclweb.org/anthology/ D17-1208.",
+            "url": "http://www.aclweb.org/anthology/D17-1208",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bastings%2C%20Joost%20Titov%2C%20Ivan%20Aziz%2C%20Wilker%20Marcheggiani%2C%20Diego%20Graph%20convolutional%20encoders%20for%20syntax-aware%20neural%20machine%20translation%202017"
+        },
+        {
+            "id": "Bowman_et+al_2016_a",
+            "entry": "Samuel R. Bowman, Luke Vilnis, Oriol Vinyals, Andrew Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. In Proceedings of The 20th SIGNLL Conference on Computational Natural Language Learning, pp. 10\u201321. Association for Computational Linguistics, 2016. doi: 10.18653/v1/K16-1002. URL http://www.aclweb.org/anthology/K16-1002.",
+            "crossref": "https://dx.doi.org/10.18653/v1/K16-1002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/K16-1002"
+        },
+        {
+            "id": "Cai_et+al_2017_a",
+            "entry": "Jiong Cai, Yong Jiang, and Kewei Tu. CRF autoencoder for unsupervised dependency parsing. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pp. 1638\u20131643. Association for Computational Linguistics, 2017. URL http://aclweb.org/anthology/D17-1171.",
+            "url": "http://aclweb.org/anthology/D17-1171",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cai%2C%20Jiong%20Jiang%2C%20Yong%20Tu%2C%20Kewei%20CRF%20autoencoder%20for%20unsupervised%20dependency%20parsing%202017"
+        },
+        {
+            "id": "Chen_et+al_2009_a",
+            "entry": "Wenliang Chen, Daisuke Kawahara, Kiyotaka Uchimoto, Yujie Zhang, and Hitoshi Isahara. Using short dependency relations from auto-parsed data for chinese dependency parsing. ACM Transactions on Asian Language Information Processing, pp. 10:1\u201310:20, 2009. ISSN 1530-0226.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Wenliang%20Kawahara%2C%20Daisuke%20Uchimoto%2C%20Kiyotaka%20Zhang%2C%20Yujie%20Using%20short%20dependency%20relations%20from%20auto-parsed%20data%20for%20chinese%20dependency%20parsing%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Wenliang%20Kawahara%2C%20Daisuke%20Uchimoto%2C%20Kiyotaka%20Zhang%2C%20Yujie%20Using%20short%20dependency%20relations%20from%20auto-parsed%20data%20for%20chinese%20dependency%20parsing%202009"
+        },
+        {
+            "id": "Cui_et+al_2005_a",
+            "entry": "Hang Cui, Renxu Sun, Keya Li, Min-Yen Kan, and Tat-Seng Chua. Question answering passage retrieval using dependency relations. In Proceedings of the 28th annual international ACM SIGIR conference on Research and development in information retrieval, pp. 400\u2013407. ACM, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cui%2C%20Hang%20Sun%2C%20Renxu%20Li%2C%20Keya%20Kan%2C%20Min-Yen%20Question%20answering%20passage%20retrieval%20using%20dependency%20relations%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cui%2C%20Hang%20Sun%2C%20Renxu%20Li%2C%20Keya%20Kan%2C%20Min-Yen%20Question%20answering%20passage%20retrieval%20using%20dependency%20relations%202005"
+        },
+        {
+            "id": "Culotta_2004_a",
+            "entry": "Aron Culotta and Jeffrey Sorensen. Dependency tree kernels for relation extraction. In Proceedings of the 42nd Annual Meeting of the Association for Computational Linguistics (ACL-04), 2004. URL http://www.aclweb.org/anthology/P04-1054.",
+            "url": "http://www.aclweb.org/anthology/P04-1054",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Culotta%2C%20Aron%20Sorensen%2C%20Jeffrey%20Dependency%20tree%20kernels%20for%20relation%20extraction%202004"
+        },
+        {
+            "id": "Marneffe_2008_a",
+            "entry": "Marie-Catherine De Marneffe and Christopher D Manning. Stanford typed dependencies manual. Technical report, Technical report, Stanford University, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marneffe%2C%20Marie-Catherine%20De%20Manning%2C%20Christopher%20D.%20Stanford%20typed%20dependencies%20manual%202008"
+        },
+        {
+            "id": "Ding_2005_a",
+            "entry": "Yuan Ding and Martha Palmer. Machine translation using probabilistic synchronous dependency insertion grammars. In Proceedings of the 43rd Annual Meeting of the Association for Computational Linguistics (ACL\u201905), pp. 541\u2013548. Association for Computational Linguistics, 2005. URL http://www.aclweb.org/anthology/P05-1067.",
+            "url": "http://www.aclweb.org/anthology/P05-1067",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ding%2C%20Yuan%20Palmer%2C%20Martha%20Machine%20translation%20using%20probabilistic%20synchronous%20dependency%20insertion%20grammars%202005"
+        },
+        {
+            "id": "Dozat_2017_a",
+            "entry": "Timothy Dozat and Christopher D Manning. Deep biaffine attention for neural dependency parsing. In Proceedings of the 2017 International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dozat%2C%20Timothy%20Manning%2C%20Christopher%20D.%20Deep%20biaffine%20attention%20for%20neural%20dependency%20parsing%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dozat%2C%20Timothy%20Manning%2C%20Christopher%20D.%20Deep%20biaffine%20attention%20for%20neural%20dependency%20parsing%202017"
+        },
+        {
+            "id": "Dyer_et+al_2015_a",
+            "entry": "Chris Dyer, Miguel Ballesteros, Wang Ling, Austin Matthews, and Noah A. Smith. Transitionbased dependency parsing with stack long short-term memory. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers), pp. 334\u2013343. Association for Computational Linguistics, 2015. doi: 10.3115/v1/P15-1033. URL http://www.aclweb.org/anthology/P15-1033.",
+            "crossref": "https://dx.doi.org/10.3115/v1/P15-1033",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3115/v1/P15-1033"
+        },
+        {
+            "id": "Eisner_2016_a",
+            "entry": "Jason Eisner. Inside-outside and forward-backward algorithms are just backprop (tutorial paper). In Proceedings of the Workshop on Structured Prediction for NLP, pp. 1\u201317. Association for Computational Linguistics, 2016. doi: 10.18653/v1/W16-5901. URL http://www.aclweb.org/anthology/W16-5901.",
+            "crossref": "https://dx.doi.org/10.18653/v1/W16-5901",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/W16-5901"
+        },
+        {
+            "id": "Eisner_1996_a",
+            "entry": "Jason M. Eisner. Three new probabilistic models for dependency parsing: An exploration. In COLING 1996 Volume 1: The 16th International Conference on Computational Linguistics, 1996. URL http://www.aclweb.org/anthology/C96-1058.",
+            "url": "http://www.aclweb.org/anthology/C96-1058",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eisner%2C%20Jason%20M.%20Three%20new%20probabilistic%20models%20for%20dependency%20parsing%3A%20An%20exploration%201996"
+        },
+        {
+            "id": "Goodman_1999_a",
+            "entry": "Joshua Goodman. Semiring parsing. Computational Linguistics, 25(4), 1999. URL http://www.aclweb.org/anthology/J99-4004.",
+            "url": "http://www.aclweb.org/anthology/J99-4004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodman%2C%20Joshua%20Semiring%20parsing%201999"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Kartik Goyal, Chris Dyer, and Taylor Berg-Kirkpatrick. Differentiable scheduled sampling for credit assignment. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers), pp. 366\u2013371. Association for Computational Linguistics, 2017. doi: 10.18653/v1/P17-2058. URL http://www.aclweb.org/anthology/P17-2058.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-2058",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-2058"
+        },
+        {
+            "id": "Goyal_et+al_2018_a",
+            "entry": "Kartik Goyal, Graham Neubig, Chris Dyer, and Taylor Berg-Kirkpatrick. A continuous relaxation of beam search for end-to-end training of neural sequence models. In Thirty-Second AAAI Conference on Artificial Intelligence (AAAI-18), New Orleans, Louisiana, February 2018. URL https://arxiv.org/abs/1708.00111.",
+            "url": "https://arxiv.org/abs/1708.00111",
+            "arxiv_url": "https://arxiv.org/pdf/1708.00111"
+        },
+        {
+            "id": "Gumbel_1954_a",
+            "entry": "Emil Julius Gumbel. Statistical theory of extreme values and some practical applications: a series of lectures. Number 33. US Govt. Print. Office, 1954.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gumbel%2C%20Emil%20Julius%20Statistical%20theory%20of%20extreme%20values%20and%20some%20practical%20applications%3A%20a%20series%20of%20lectures.%20Number%2033.%20US%20Govt%201954"
+        },
+        {
+            "id": "Hall_et+al_2006_a",
+            "entry": "Johan Hall, Joakim Nivre, and Jens Nilsson. Discriminative classifiers for deterministic dependency parsing. In Proceedings of the COLING/ACL 2006 Main Conference Poster Sessions, pp. 316\u2013 323. Association for Computational Linguistics, 2006. URL http://www.aclweb.org/anthology/P06-2041.",
+            "url": "http://www.aclweb.org/anthology/P06-2041",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hall%2C%20Johan%20Nivre%2C%20Joakim%20Nilsson%2C%20Jens%20Discriminative%20classifiers%20for%20deterministic%20dependency%20parsing%202006"
+        },
+        {
+            "id": "Jang_et+al_2017_a",
+            "entry": "Eric Jang, Shixiang Gu, and Ben Poole. Categorical reparameterization with gumbel-softmax. In Proceedings of the 2017 International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparameterization%20with%20gumbel-softmax%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparameterization%20with%20gumbel-softmax%202017"
+        },
+        {
+            "id": "Johnson_et+al_1999_a",
+            "entry": "Mark Johnson, Stuart Geman, Stephen Canon, Zhiyi Chi, and Stefan Riezler. Estimators for stochastic \u201cunification-based\u201d grammars. In Proceedings of the 37th Annual Meeting of the Association for Computational Linguistics, 1999. URL http://www.aclweb.org/anthology/ P99-1069.",
+            "url": "http://www.aclweb.org/anthology/P99-1069",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Mark%20Geman%2C%20Stuart%20Canon%2C%20Stephen%20Chi%2C%20Zhiyi%20Estimators%20for%20stochastic%20%E2%80%9Cunification-based%E2%80%9D%20grammars%201999"
+        },
+        {
+            "id": "Kaplan_1982_a",
+            "entry": "Ronald M Kaplan and Joan Bresnan. Lexical-functional grammar: A formal system for grammatical representation. Formal Issues in Lexical-Functional Grammar, pp. 29\u2013130, 1982.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaplan%2C%20Ronald%20M.%20Bresnan%2C%20Joan%20Lexical-functional%20grammar%3A%20A%20formal%20system%20for%20grammatical%20representation%201982",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaplan%2C%20Ronald%20M.%20Bresnan%2C%20Joan%20Lexical-functional%20grammar%3A%20A%20formal%20system%20for%20grammatical%20representation%201982"
+        },
+        {
+            "id": "Kawahara_2008_a",
+            "entry": "Daisuke Kawahara and Kiyotaka Uchimoto. Learning reliability of parses for domain adaptation of dependency parsing. In Proceedings of the Third International Joint Conference on Natural Language Processing: Volume-II, 2008. URL http://www.aclweb.org/anthology/ I08-2097.",
+            "url": "http://www.aclweb.org/anthology/I08-2097",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kawahara%2C%20Daisuke%20Uchimoto%2C%20Kiyotaka%20Learning%20reliability%20of%20parses%20for%20domain%20adaptation%20of%20dependency%20parsing%202008"
+        },
+        {
+            "id": "Kim_et+al_2017_a",
+            "entry": "Yoon Kim, Carl Denton, Luong Hoang, and Alexander M Rush. Structured attention networks. In Proceedings of the 2017 International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yoon%20Denton%2C%20Carl%20Hoang%2C%20Luong%20Rush%2C%20Alexander%20M.%20Structured%20attention%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yoon%20Denton%2C%20Carl%20Hoang%2C%20Luong%20Rush%2C%20Alexander%20M.%20Structured%20attention%20networks%202017"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kingma_et+al_2014_a",
+            "entry": "Diederik P Kingma, Shakir Mohamed, Danilo Jimenez Rezende, and Max Welling. Semi-supervised learning with deep generative models. In Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger (eds.), Advances in Neural Information Processing Systems 27, pp. 3581\u20133589. Curran Associates, Inc., 2014. URL http://papers.nips.cc/paper/5352-semi-supervised-learning-with-deep-generative-models.pdf.",
+            "url": "http://papers.nips.cc/paper/5352-semi-supervised-learning-with-deep-generative-models.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Mohamed%2C%20Shakir%20Rezende%2C%20Danilo%20Jimenez%20Welling%2C%20Max%20Semi-supervised%20learning%20with%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Kiperwasser_2016_a",
+            "entry": "Eliyahu Kiperwasser and Yoav Goldberg. Simple and accurate dependency parsing using bidirectional LSTM feature representations. Transactions of the Association of Computational Linguistics, 4:313\u2013327, 2016. URL http://www.aclweb.org/anthology/Q16-1023.",
+            "url": "http://www.aclweb.org/anthology/Q16-1023",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kiperwasser%2C%20Eliyahu%20Goldberg%2C%20Yoav%20Simple%20and%20accurate%20dependency%20parsing%20using%20bidirectional%20LSTM%20feature%20representations%202016"
+        },
+        {
+            "id": "Kipf_2016_a",
+            "entry": "Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks. arXiv preprint arXiv:1609.02907, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.02907"
+        },
+        {
+            "id": "Klein_2004_a",
+            "entry": "Dan Klein and Christopher Manning. Corpus-based induction of syntactic structure: Models of dependency and constituency. In Proceedings of the 42nd Annual Meeting of the Association for Computational Linguistics (ACL-04), 2004. URL http://www.aclweb.org/anthology/P04-1061.",
+            "url": "http://www.aclweb.org/anthology/P04-1061",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klein%2C%20Dan%20Manning%2C%20Christopher%20Corpus-based%20induction%20of%20syntactic%20structure%3A%20Models%20of%20dependency%20and%20constituency%202004"
+        },
+        {
+            "id": "Kocisky_et+al_2016_a",
+            "entry": "Tomas Kocisky, Gabor Melis, Edward Grefenstette, Chris Dyer, Wang Ling, Phil Blunsom, and Karl Moritz Hermann. Semantic parsing with semi-supervised sequential autoencoders. In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, pp. 1078\u20131087. Association for Computational Linguistics, 2016. doi: 10.18653/v1/D16-1116. URL http://www.aclweb.org/anthology/D16-1116.",
+            "crossref": "https://dx.doi.org/10.18653/v1/D16-1116",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/D16-1116"
+        },
+        {
+            "id": "Kong_et+al_2015_a",
+            "entry": "Lingpeng Kong, Alexander M. Rush, and Noah A. Smith. Transforming dependencies into phrase structures. In Proceedings of the 2015 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pp. 788\u2013798. Association for Computational Linguistics, 2015. doi: 10.3115/v1/N15-1080. URL http://www.aclweb.org/anthology/N15-1080.",
+            "crossref": "https://dx.doi.org/10.3115/v1/N15-1080",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3115/v1/N15-1080"
+        },
+        {
+            "id": "Koo_et+al_2008_a",
+            "entry": "Terry Koo, Xavier Carreras, and Michael Collins. Simple semi-supervised dependency parsing. In Proceedings of ACL-08: HLT, pp. 595\u2013603. Association for Computational Linguistics, 2008. URL http://www.aclweb.org/anthology/P08-1068.",
+            "url": "http://www.aclweb.org/anthology/P08-1068",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koo%2C%20Terry%20Carreras%2C%20Xavier%20Collins%2C%20Michael%20Simple%20semi-supervised%20dependency%20parsing%202008"
+        },
+        {
+            "id": "Lafferty_et+al_2001_a",
+            "entry": "John Lafferty, Andrew McCallum, and Fernando CN Pereira. Conditional random fields: Probabilistic models for segmenting and labeling sequence data. In Proceedings of the International Conference on Machine Learning, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lafferty%2C%20John%20McCallum%2C%20Andrew%20Pereira%2C%20Fernando%20C.N.%20Conditional%20random%20fields%3A%20Probabilistic%20models%20for%20segmenting%20and%20labeling%20sequence%20data%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lafferty%2C%20John%20McCallum%2C%20Andrew%20Pereira%2C%20Fernando%20C.N.%20Conditional%20random%20fields%3A%20Probabilistic%20models%20for%20segmenting%20and%20labeling%20sequence%20data%202001"
+        },
+        {
+            "id": "Li_2009_a",
+            "entry": "Zhifei Li and Jason Eisner. First- and second-order expectation semirings with applications to minimum-risk training on translation forests. In Proceedings of the 2009 Conference on Empirical Methods in Natural Language Processing, pp. 40\u201351. Association for Computational Linguistics, 2009. URL http://aclweb.org/anthology/D09-1005.",
+            "url": "http://aclweb.org/anthology/D09-1005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Zhifei%20First%2C%20Jason%20Eisner%20and%20second-order%20expectation%20semirings%20with%20applications%20to%20minimum-risk%20training%20on%20translation%20forests%202009"
+        },
+        {
+            "id": "Ling_et+al_2015_a",
+            "entry": "Wang Ling, Chris Dyer, Alan W Black, and Isabel Trancoso. Two/too simple adaptations of word2vec for syntax problems. In Proceedings of the 2015 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pp. 1299\u20131304. Association for Computational Linguistics, 2015. doi: 10.3115/v1/N15-1142. URL http://www.aclweb.org/anthology/N15-1142.",
+            "crossref": "https://dx.doi.org/10.3115/v1/N15-1142",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3115/v1/N15-1142"
+        },
+        {
+            "id": "Linnainmaa_1976_a",
+            "entry": "Seppo Linnainmaa. Taylor expansion of the accumulated rounding error. BIT Numerical Mathematics, 16(2):146\u2013160, 1976.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Linnainmaa%2C%20Seppo%20Taylor%20expansion%20of%20the%20accumulated%20rounding%20error%201976",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Linnainmaa%2C%20Seppo%20Taylor%20expansion%20of%20the%20accumulated%20rounding%20error%201976"
+        },
+        {
+            "id": "Liu_2018_a",
+            "entry": "Yang Liu and Mirella Lapata. Learning structured text representations. Transactions of the Association for Computational Linguistics, 6:63\u201375, 2018. URL http://aclweb.org/anthology/Q18-1005.",
+            "url": "http://aclweb.org/anthology/Q18-1005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Yang%20Lapata%2C%20Mirella%20Learning%20structured%20text%20representations.%20Transactions%20of%20the%20Association%20for%202018"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Yang Liu, Furu Wei, Sujian Li, Heng Ji, Ming Zhou, and Houfeng WANG. A dependency-based neural network for relation classification. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 2: Short Papers), pp. 285\u2013290. Association for Computational Linguistics, 2015. doi: 10.3115/v1/P15-2047. URL http://www.aclweb.org/anthology/ P15-2047.",
+            "crossref": "https://dx.doi.org/10.3115/v1/P15-2047",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3115/v1/P15-2047"
+        },
+        {
+            "id": "Xuezhe_2017_a",
+            "entry": "Xuezhe Ma and Eduard Hovy. Neural probabilistic model for non-projective mst parsing. In Proceedings of the Eighth International Joint Conference on Natural Language Processing (Volume 1: Long Papers), pp. 59\u201369, Taipei, Taiwan, November 2017. Asian Federation of Natural Language Processing. URL http://www.aclweb.org/anthology/I17-1007.",
+            "url": "http://www.aclweb.org/anthology/I17-1007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xuezhe%20Ma%20and%20Eduard%20Hovy%20Neural%20probabilistic%20model%20for%20nonprojective%20mst%20parsing%20In%20Proceedings%20of%20the%20Eighth%20International%20Joint%20Conference%20on%20Natural%20Language%20Processing%20Volume%201%20Long%20Papers%20pp%205969%20Taipei%20Taiwan%20November%202017%20Asian%20Federation%20of%20Natural%20Language%20Processing%20URL%20httpwwwaclweborganthologyI171007"
+        },
+        {
+            "id": "Maddison_et+al_2014_a",
+            "entry": "Chris J. Maddison, Daniel Tarlow, and Tom Minka. A* Sampling. In Advances in Neural Information Processing Systems 27, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chris%20J%20Maddison%20Daniel%20Tarlow%20and%20Tom%20Minka%20A%20Sampling%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2027%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chris%20J%20Maddison%20Daniel%20Tarlow%20and%20Tom%20Minka%20A%20Sampling%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%2027%202014"
+        },
+        {
+            "id": "Maddison_2017_a",
+            "entry": "Chris J. Maddison, Andriy Mnih, and Yee Whye Teh. The Concrete Distribution: A Continuous Relaxation of Discrete Random Variables. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20Chris%20J.%20Mnih%2C%20Andriy%20and%20Yee%20Whye%20Teh.%20The%20Concrete%20Distribution%3A%20A%20Continuous%20Relaxation%20of%20Discrete%20Random%20Variables%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20Chris%20J.%20Mnih%2C%20Andriy%20and%20Yee%20Whye%20Teh.%20The%20Concrete%20Distribution%3A%20A%20Continuous%20Relaxation%20of%20Discrete%20Random%20Variables%202017"
+        },
+        {
+            "id": "Makhzani_et+al_2016_a",
+            "entry": "Alireza Makhzani, Jonathon Shlens, Navdeep Jaitly, Ian Goodfellow, and Brendan Frey. Adversarial autoencoders. In ICLR 2016 Workshop, International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Makhzani%2C%20Alireza%20Shlens%2C%20Jonathon%20Jaitly%2C%20Navdeep%20Goodfellow%2C%20Ian%20Adversarial%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Makhzani%2C%20Alireza%20Shlens%2C%20Jonathon%20Jaitly%2C%20Navdeep%20Goodfellow%2C%20Ian%20Adversarial%20autoencoders%202016"
+        },
+        {
+            "id": "Marcheggiani_2017_a",
+            "entry": "Diego Marcheggiani and Ivan Titov. Encoding sentences with graph convolutional networks for semantic role labeling. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pp. 1507\u20131516. Association for Computational Linguistics, 2017. URL http://www.aclweb.org/anthology/D17-1159.",
+            "url": "http://www.aclweb.org/anthology/D17-1159",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcheggiani%2C%20Diego%20Titov%2C%20Ivan%20Encoding%20sentences%20with%20graph%20convolutional%20networks%20for%20semantic%20role%20labeling%202017"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: The penn treebank. Computational linguistics, 19(2):313\u2013330, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993"
+        },
+        {
+            "id": "Martins_2016_a",
+            "entry": "Andre Martins and Ramon Astudillo. From softmax to sparsemax: A sparse model of attention and multi-label classification. In International Conference on Machine Learning, pp. 1614\u20131623, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martins%2C%20Andre%20Astudillo%2C%20Ramon%20From%20softmax%20to%20sparsemax%3A%20A%20sparse%20model%20of%20attention%20and%20multi-label%20classification%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martins%2C%20Andre%20Astudillo%2C%20Ramon%20From%20softmax%20to%20sparsemax%3A%20A%20sparse%20model%20of%20attention%20and%20multi-label%20classification%202016"
+        },
+        {
+            "id": "Mcclosky_et+al_2006_a",
+            "entry": "David McClosky, Eugene Charniak, and Mark Johnson. Reranking and self-training for parser adaptation. In Proceedings of the 21st International Conference on Computational Linguistics and 44th Annual Meeting of the Association for Computational Linguistics, pp. 337\u2013344. Association for Computational Linguistics, 2006. URL http://www.aclweb.org/anthology/ P06-1043.",
+            "url": "http://www.aclweb.org/anthology/P06-1043",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McClosky%2C%20David%20Charniak%2C%20Eugene%20Johnson%2C%20Mark%20Reranking%20and%20self-training%20for%20parser%20adaptation%202006"
+        },
+        {
+            "id": "Mcdonald_et+al_2005_a",
+            "entry": "Ryan McDonald, Fernando Pereira, Kiril Ribarov, and Jan Hajic. Non-projective dependency parsing using spanning tree algorithms. In Proceedings of Human Language Technology Conference and Conference on Empirical Methods in Natural Language Processing, 2005. URL http://www.aclweb.org/anthology/H05-1066.",
+            "url": "http://www.aclweb.org/anthology/H05-1066",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McDonald%2C%20Ryan%20Pereira%2C%20Fernando%20Ribarov%2C%20Kiril%20Hajic%2C%20Jan%20Non-projective%20dependency%20parsing%20using%20spanning%20tree%20algorithms%202005"
+        },
+        {
+            "id": "Mcdonald_et+al_2011_a",
+            "entry": "Ryan McDonald, Slav Petrov, and Keith Hall. Multi-source transfer of delexicalized dependency parsers. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing, pp. 62\u201372. Association for Computational Linguistics, 2011. URL http://www.aclweb.org/anthology/D11-1006.",
+            "url": "http://www.aclweb.org/anthology/D11-1006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McDonald%2C%20Ryan%20Petrov%2C%20Slav%20Hall%2C%20Keith%20Multi-source%20transfer%20of%20delexicalized%20dependency%20parsers%202011"
+        },
+        {
+            "id": "Mensch_2018_a",
+            "entry": "Arthur Mensch and Mathieu Blondel. Differentiable dynamic programming for structured prediction and attention. In In Proceedings of International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mensch%2C%20Arthur%20Blondel%2C%20Mathieu%20Differentiable%20dynamic%20programming%20for%20structured%20prediction%20and%20attention%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mensch%2C%20Arthur%20Blondel%2C%20Mathieu%20Differentiable%20dynamic%20programming%20for%20structured%20prediction%20and%20attention%202018"
+        },
+        {
+            "id": "Miao_et+al_2017_a",
+            "entry": "Yishu Miao, Edward Grefenstette, and Phil Blunsom. Discovering discrete latent topics with neural variational inference. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miao%2C%20Yishu%20Grefenstette%2C%20Edward%20Blunsom%2C%20Phil%20Discovering%20discrete%20latent%20topics%20with%20neural%20variational%20inference%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miao%2C%20Yishu%20Grefenstette%2C%20Edward%20Blunsom%2C%20Phil%20Discovering%20discrete%20latent%20topics%20with%20neural%20variational%20inference%202017"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. Distributed representations of words and phrases and their compositionality. In Advances in neural information processing systems, pp. 3111\u20133119, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Sutskever%2C%20Ilya%20Chen%2C%20Kai%20Corrado%2C%20Greg%20S.%20Distributed%20representations%20of%20words%20and%20phrases%20and%20their%20compositionality%202013"
+        },
+        {
+            "id": "Mnih_2014_a",
+            "entry": "Andriy Mnih and Karol Gregor. Neural variational inference and learning in belief networks. In Proceedings of the 31st International Conference on Machine Learning, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Andriy%20Gregor%2C%20Karol%20Neural%20variational%20inference%20and%20learning%20in%20belief%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Andriy%20Gregor%2C%20Karol%20Neural%20variational%20inference%20and%20learning%20in%20belief%20networks%202014"
+        },
+        {
+            "id": "Naseem_et+al_2010_a",
+            "entry": "Tahira Naseem, Harr Chen, Regina Barzilay, and Mark Johnson. Using universal linguistic knowledge to guide grammar induction. In Proceedings of the 2010 Conference on Empirical Methods in Natural Language Processing, pp. 1234\u20131244. Association for Computational Linguistics, 2010. URL http://www.aclweb.org/anthology/D10-1120.",
+            "url": "http://www.aclweb.org/anthology/D10-1120",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Naseem%2C%20Tahira%20Chen%2C%20Harr%20Barzilay%2C%20Regina%20Johnson%2C%20Mark%20Using%20universal%20linguistic%20knowledge%20to%20guide%20grammar%20induction%202010"
+        },
+        {
+            "id": "Neubig_et+al_2017_a",
+            "entry": "Graham Neubig, Chris Dyer, Yoav Goldberg, Austin Matthews, Waleed Ammar, Antonios Anastasopoulos, Miguel Ballesteros, David Chiang, Daniel Clothiaux, Trevor Cohn, Kevin Duh, Manaal Faruqui, Cynthia Gan, Dan Garrette, Yangfeng Ji, Lingpeng Kong, Adhiguna Kuncoro, Gaurav Kumar, Chaitanya Malaviya, Paul Michel, Yusuke Oda, Matthew Richardson, Naomi Saphra, Swabha Swayamdipta, and Pengcheng Yin. Dynet: The dynamic neural network toolkit. arXiv preprint arXiv:1701.03980, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.03980"
+        },
+        {
+            "id": "Niculae_et+al_2018_a",
+            "entry": "Vlad Niculae, Andre FT Martins, Mathieu Blondel, and Claire Cardie. SparseMAP: Differentiable sparse structured inference. In Proceedings of ICML 2018, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niculae%2C%20Vlad%20Martins%2C%20Andre%20F.T.%20Blondel%2C%20Mathieu%20Cardie%2C%20Claire%20SparseMAP%3A%20Differentiable%20sparse%20structured%20inference%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niculae%2C%20Vlad%20Martins%2C%20Andre%20F.T.%20Blondel%2C%20Mathieu%20Cardie%2C%20Claire%20SparseMAP%3A%20Differentiable%20sparse%20structured%20inference%202018"
+        },
+        {
+            "id": "Nivre_et+al_2006_a",
+            "entry": "J. Nivre, J. Nilsson, and J. Hall. Talbanken05: A swedish treebank with phrase structure and dependency annotation. In Proceedings of the Fifth International Conference on Language Resources and Evaluation (LREC\u201906). European Language Resources Association (ELRA), 2006. URL http://www.aclweb.org/anthology/L06-1121.",
+            "url": "http://www.aclweb.org/anthology/L06-1121",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nivre%2C%20J.%20Nilsson%2C%20J.%20Hall%2C%20J.%20Talbanken05%3A%20A%20swedish%20treebank%20with%20phrase%20structure%20and%20dependency%20annotation%202006"
+        },
+        {
+            "id": "Noji_et+al_2016_a",
+            "entry": "Hiroshi Noji, Yusuke Miyao, and Mark Johnson. Using left-corner parsing to encode universal structural constraints in grammar induction. In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, pp. 33\u201343. Association for Computational Linguistics, 2016. doi: 10.18653/v1/D16-1004. URL http://www.aclweb.org/anthology/ D16-1004.",
+            "crossref": "https://dx.doi.org/10.18653/v1/D16-1004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/D16-1004"
+        },
+        {
+            "id": "Papandreou_2011_a",
+            "entry": "George Papandreou and Alan L Yuille. Perturb-and-MAP random fields: Using discrete optimization to learn and sample from energy models. In Computer Vision (ICCV), 2011 IEEE International Conference on, pp. 193\u2013200. IEEE, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papandreou%2C%20George%20Yuille%2C%20Alan%20L.%20Perturb-and-MAP%20random%20fields%3A%20Using%20discrete%20optimization%20to%20learn%20and%20sample%20from%20energy%20models%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papandreou%2C%20George%20Yuille%2C%20Alan%20L.%20Perturb-and-MAP%20random%20fields%3A%20Using%20discrete%20optimization%20to%20learn%20and%20sample%20from%20energy%20models%202011"
+        },
+        {
+            "id": "Peng_et+al_2018_a",
+            "entry": "Hao Peng, Sam Thomson, and Noah A. Smith. Backpropagating through structured argmax using a spigot. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pp. 1863\u20131873. Association for Computational Linguistics, 2018. URL http://aclweb.org/anthology/P18-1173.",
+            "url": "http://aclweb.org/anthology/P18-1173",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Hao%20Thomson%2C%20Sam%20Smith%2C%20Noah%20A.%20Backpropagating%20through%20structured%20argmax%20using%20a%20spigot%202018"
+        },
+        {
+            "id": "Pereira_1983_a",
+            "entry": "Fernando C. N. Pereira and David H. D. Warren. Parsing as deduction. In 21st Annual Meeting of the Association for Computational Linguistics, 1983. URL http://www.aclweb.org/anthology/P83-1021.",
+            "url": "http://www.aclweb.org/anthology/P83-1021",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pereira%2C%20Fernando%20C.N.%20Warren%2C%20David%20H.D.%20Parsing%20as%20deduction.%20In%2021st%20Annual%20Meeting%20of%20the%20Association%20for%201983"
+        },
+        {
+            "id": "Peters_et+al_2018_a",
+            "entry": "Matthew Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, and Luke Zettlemoyer. Deep contextualized word representations. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers), pp. 2227\u20132237. Association for Computational Linguistics, 2018. URL http://aclweb.org/anthology/N18-1202.",
+            "url": "http://aclweb.org/anthology/N18-1202",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Matthew%20Neumann%2C%20Mark%20Iyyer%2C%20Mohit%20Gardner%2C%20Matt%20Deep%20contextualized%20word%20representations%202018"
+        },
+        {
+            "id": "Reddy_et+al_2016_a",
+            "entry": "Siva Reddy, Oscar Tackstrom, Michael Collins, Tom Kwiatkowski, Dipanjan Das, Mark Steedman, and Mirella Lapata. Transforming dependency structures to logical forms for semantic parsing. Transactions of the Association for Computational Linguistics, 4:127\u2013140, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reddy%2C%20Siva%20Tackstrom%2C%20Oscar%20Collins%2C%20Michael%20Kwiatkowski%2C%20Tom%20Transforming%20dependency%20structures%20to%20logical%20forms%20for%20semantic%20parsing%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddy%2C%20Siva%20Tackstrom%2C%20Oscar%20Collins%2C%20Michael%20Kwiatkowski%2C%20Tom%20Transforming%20dependency%20structures%20to%20logical%20forms%20for%20semantic%20parsing%202016"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In Proceedings of the 31st International Conference on Machine Learning, volume 32 of Proceedings of Machine Learning Research, pp. 1278\u20131286, Bejing, China, 22\u201324 Jun 2014. PMLR. URL http://proceedings.mlr.press/v32/rezende14.html.",
+            "url": "http://proceedings.mlr.press/v32/rezende14.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014-06"
+        },
+        {
+            "id": "Sagae_2007_a",
+            "entry": "Kenji Sagae and Jun\u2019ichi Tsujii. Dependency parsing and domain adaptation with lr models and parser ensembles. In Proceedings of the 2007 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning (EMNLP-CoNLL), 2007. URL http://www.aclweb.org/anthology/D07-1111.",
+            "url": "http://www.aclweb.org/anthology/D07-1111",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sagae%2C%20Kenji%20Tsujii%2C%20Jun%E2%80%99ichi%20Dependency%20parsing%20and%20domain%20adaptation%20with%20lr%20models%20and%20parser%20ensembles%202007"
+        },
+        {
+            "id": "Seddah_et+al_2013_a",
+            "entry": "Djame Seddah, Reut Tsarfaty, Sandra Kubler, Marie Candito, Jinho D. Choi, Richard Farkas, Jennifer Foster, Iakes Goenaga, Koldo Gojenola Galletebeitia, Yoav Goldberg, Spence Green, Nizar Habash, Marco Kuhlmann, Wolfgang Maier, Joakim Nivre, Adam Przepiorkowski, Ryan Roth, Wolfgang Seeker, Yannick Versley, Veronika Vincze, Marcin Wolinski, Alina Wroblewska, and Eric Villemonte de la Clergerie. Overview of the spmrl 2013 shared task: A cross-framework evaluation of parsing morphologically rich languages. In Proceedings of the Fourth Workshop on Statistical Parsing of Morphologically-Rich Languages, pp. 146\u2013182. Association for Computational Linguistics, 2013. URL http://www.aclweb.org/anthology/W13-4917.",
+            "url": "http://www.aclweb.org/anthology/W13-4917",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Djame%20Seddah%20Reut%20Tsarfaty%20Sandra%20Kubler%20Marie%20Candito%20Jinho%20D%20Choi%20Richard%20Farkas%20Jennifer%20Foster%20Iakes%20Goenaga%20Koldo%20Gojenola%20Galletebeitia%20Yoav%20Goldberg%20Spence%20Green%20Nizar%20Habash%20Marco%20Kuhlmann%20Wolfgang%20Maier%20Joakim%20Nivre%20Adam%20Przepiorkowski%20Ryan%20Roth%20Wolfgang%20Seeker%20Yannick%20Versley%20Veronika%20Vincze%20Marcin%20Wolinski%20Alina%20Wroblewska%20and%20Eric%20Villemonte%20de%20la%20Clergerie%20Overview%20of%20the%20spmrl%202013%20shared%20task%20A%20crossframework%20evaluation%20of%20parsing%20morphologically%20rich%20languages%20In%20Proceedings%20of%20the%20Fourth%20Workshop%20on%20Statistical%20Parsing%20of%20MorphologicallyRich%20Languages%20pp%20146182%20Association%20for%20Computational%20Linguistics%202013%20URL%20httpwwwaclweborganthologyW134917"
+        },
+        {
+            "id": "Shieber_et+al_1995_a",
+            "entry": "Stuart M Shieber, Yves Schabes, and Fernando CN Pereira. Principles and implementation of deductive parsing. The Journal of logic programming, 24(1-2):3\u201336, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shieber%2C%20Stuart%20M.%20Schabes%2C%20Yves%20Pereira%2C%20Fernando%20C.N.%20Principles%20and%20implementation%20of%20deductive%20parsing%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shieber%2C%20Stuart%20M.%20Schabes%2C%20Yves%20Pereira%2C%20Fernando%20C.N.%20Principles%20and%20implementation%20of%20deductive%20parsing%201995"
+        },
+        {
+            "id": "Smith_2008_a",
+            "entry": "David Smith and Jason Eisner. Dependency parsing by belief propagation. In Proceedings of the 2008 Conference on Empirical Methods in Natural Language Processing, pp. 145\u2013156. Association for Computational Linguistics, 2008. URL http://www.aclweb.org/anthology/ D08-1016.",
+            "url": "http://www.aclweb.org/anthology/D08-1016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smith%2C%20David%20Eisner%2C%20Jason%20Dependency%20parsing%20by%20belief%20propagation%202008"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger (eds.), Advances in Neural Information Processing Systems 27, pp. 3104\u20133112. Curran Associates, Inc., 2014. URL http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf.",
+            "url": "http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Suzuki_et+al_2011_a",
+            "entry": "Jun Suzuki, Hideki Isozaki, and Masaaki Nagata. Learning condensed feature representations from large unsupervised data sets for supervised learning. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies, pp. 636\u2013 641. Association for Computational Linguistics, 2011. URL http://www.aclweb.org/anthology/P11-2112.",
+            "url": "http://www.aclweb.org/anthology/P11-2112",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Suzuki%2C%20Jun%20Isozaki%2C%20Hideki%20Nagata%2C%20Masaaki%20Learning%20condensed%20feature%20representations%20from%20large%20unsupervised%20data%20sets%20for%20supervised%20learning%202011"
+        },
+        {
+            "id": "Tai_et+al_2015_a",
+            "entry": "Kai Sheng Tai, Richard Socher, and Christopher D. Manning. Improved semantic representations from tree-structured long short-term memory networks. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers), pp. 1556\u20131566. Association for Computational Linguistics, 2015. doi: 10.3115/v1/P15-1150. URL http://www.aclweb.org/anthology/P15-1150.",
+            "crossref": "https://dx.doi.org/10.3115/v1/P15-1150",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3115/v1/P15-1150"
+        },
+        {
+            "id": "Tarjan_1977_a",
+            "entry": "Robert Endre Tarjan. Finding optimum branchings. Networks, 7(1):25\u201335, 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tarjan%2C%20Robert%20Endre%20Finding%20optimum%20branchings%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tarjan%2C%20Robert%20Endre%20Finding%20optimum%20branchings%201977"
+        },
+        {
+            "id": "Taskar_et+al_2005_a",
+            "entry": "Ben Taskar, Vassil Chatalbashev, Daphne Koller, and Carlos Guestrin. Learning structured prediction models: A large margin approach. In Proceedings of the 22nd international conference on Machine learning, pp. 896\u2013903. ACM, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taskar%2C%20Ben%20Chatalbashev%2C%20Vassil%20Koller%2C%20Daphne%20Guestrin%2C%20Carlos%20Learning%20structured%20prediction%20models%3A%20A%20large%20margin%20approach%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taskar%2C%20Ben%20Chatalbashev%2C%20Vassil%20Koller%2C%20Daphne%20Guestrin%2C%20Carlos%20Learning%20structured%20prediction%20models%3A%20A%20large%20margin%20approach%202005"
+        },
+        {
+            "id": "Tesniere_1959_a",
+            "entry": "Lucien Tesniere. Les elements de Syntaxe structurale. Editions Klincksieck, 1959.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tesniere%2C%20Lucien%20Les%20elements%20de%20Syntaxe%20structurale%201959",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tesniere%2C%20Lucien%20Les%20elements%20de%20Syntaxe%20structurale%201959"
+        },
+        {
+            "id": "Tran_2018_a",
+            "entry": "Ke Tran and Yonatan Bisk. Inducing grammars with and for neural machine translation. In Proceedings of the 2nd Workshop on Neural Machine Translation and Generation, pp. 25\u201335. Association for Computational Linguistics, 2018. URL http://aclweb.org/anthology/ W18-2704.",
+            "url": "http://aclweb.org/anthology/W18-2704",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tran%2C%20Ke%20Bisk%2C%20Yonatan%20Inducing%20grammars%20with%20and%20for%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Williams_et+al_2018_a",
+            "entry": "Adina Williams, Andrew Drozdov, and Samuel R Bowman. Do latent tree learning models identify meaningful structure in sentences? Transactions of the Association for Computational Linguistics, 6:253\u2013267, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Adina%20Drozdov%2C%20Andrew%20Bowman%2C%20Samuel%20R.%20Do%20latent%20tree%20learning%20models%20identify%20meaningful%20structure%20in%20sentences%3F%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Adina%20Drozdov%2C%20Andrew%20Bowman%2C%20Samuel%20R.%20Do%20latent%20tree%20learning%20models%20identify%20meaningful%20structure%20in%20sentences%3F%202018"
+        },
+        {
+            "id": "Williams_1992_a",
+            "entry": "Ronald J Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 8(3-4):229\u2013256, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992"
+        },
+        {
+            "id": "Xu_et+al_2017_a",
+            "entry": "Weidi Xu, Haoze Sun, Chao Deng, and Ying Tan. Variational autoencoder for semi-supervised text classification. In AAAI, pp. 3358\u20133364, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Weidi%20Sun%2C%20Haoze%20Deng%2C%20Chao%20Tan%2C%20Ying%20Variational%20autoencoder%20for%20semi-supervised%20text%20classification%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Weidi%20Sun%2C%20Haoze%20Deng%2C%20Chao%20Tan%2C%20Ying%20Variational%20autoencoder%20for%20semi-supervised%20text%20classification%202017"
+        },
+        {
+            "id": "Yin_et+al_2018_a",
+            "entry": "Pengcheng Yin, Chunting Zhou, Junxian He, and Graham Neubig. Structvae: Tree-structured latent variable models for semi-supervised semantic parsing. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pp. 754\u2013765. Association for Computational Linguistics, 2018. URL http://aclweb.org/anthology/ P18-1070.",
+            "url": "http://aclweb.org/anthology/P18-1070",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yin%2C%20Pengcheng%20Zhou%2C%20Chunting%20He%2C%20Junxian%20Neubig%2C%20Graham%20Structvae%3A%20Tree-structured%20latent%20variable%20models%20for%20semi-supervised%20semantic%20parsing%202018"
+        },
+        {
+            "id": "Yu_et+al_2008_a",
+            "entry": "Kun Yu, Daisuke Kawahara, and Sadao Kurohashi. Chinese dependency parsing with large scale automatically constructed case structures. In Proceedings of the 22nd International Conference on Computational Linguistics (Coling 2008), pp. 1049\u20131056. Coling 2008 Organizing Committee, 2008. URL http://www.aclweb.org/anthology/C08-1132.",
+            "url": "http://www.aclweb.org/anthology/C08-1132",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Kun%20Kawahara%2C%20Daisuke%20Kurohashi%2C%20Sadao%20Chinese%20dependency%20parsing%20with%20large%20scale%20automatically%20constructed%20case%20structures%202008"
+        },
+        {
+            "id": "Zeiler_2012_a",
+            "entry": "Matthew D Zeiler. Adadelta: an adaptive learning rate method. arXiv preprint arXiv:1212.5701, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1212.5701"
+        },
+        {
+            "id": "Zhou_2017_a",
+            "entry": "Chunting Zhou and Graham Neubig. Multi-space variational encoder-decoders for semi-supervised labeled sequence transduction. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pp. 310\u2013320. Association for Computational Linguistics, 2017. doi: 10.18653/v1/P17-1029. URL http://www.aclweb.org/anthology/P17-1029.",
+            "crossref": "https://dx.doi.org/10.18653/v1/P17-1029",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.18653/v1/P17-1029"
+        },
+        {
+            "id": "Sampling_2014_a",
+            "entry": "Sampling from a diagonal Gaussian random variable with mean vector m and variance vector v can be re-expressed as: e \u223c N (0, 1) z = m+v\u00d7e where z is the sample. As such, e \u223c N (0, 1) is an input of the neural network for which we do not need to compute partial derivatives. This technique is called the reparametrization trick (Kingma & Welling, 2013; Rezende et al., 2014).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sampling%20from%20a%20diagonal%20Gaussian%20random%20variable%20with%20mean%20vector%20m%20and%20variance%20vector%20v%20can%20be%20reexpressed%20as%20e%20%20N%200%201%20z%20%20mve%20where%20z%20is%20the%20sample%20As%20such%20e%20%20N%200%201%20is%20an%20input%20of%20the%20neural%20network%20for%20which%20we%20do%20not%20need%20to%20compute%20partial%20derivatives%20This%20technique%20is%20called%20the%20reparametrization%20trick%20Kingma%20%20Welling%202013%20Rezende%20et%20al%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sampling%20from%20a%20diagonal%20Gaussian%20random%20variable%20with%20mean%20vector%20m%20and%20variance%20vector%20v%20can%20be%20reexpressed%20as%20e%20%20N%200%201%20z%20%20mve%20where%20z%20is%20the%20sample%20As%20such%20e%20%20N%200%201%20is%20an%20input%20of%20the%20neural%20network%20for%20which%20we%20do%20not%20need%20to%20compute%20partial%20derivatives%20This%20technique%20is%20called%20the%20reparametrization%20trick%20Kingma%20%20Welling%202013%20Rezende%20et%20al%202014"
+        },
+        {
+            "id": "Maddison_1954_a",
+            "entry": "Sampling from a categorical distributions can be achieved through the Gumbel-Max trick (Gumbel, 1954; Maddison et al., 2014). Randomly generated Gumbel noise is added to the log-probability of every element of the sample space. Then, the sample is simply the element with maximum perturbed log-probability. Let d \u2208 k be a random variable taking values in the corner of the unit-simplex of dimension k with probability: p(d \u2208 k) =",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%20Sampling%20from%20a%20categorical%20distributions%20can%20be%20achieved%20through%20the%20Gumbel-Max%20trick%201954",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%20Sampling%20from%20a%20categorical%20distributions%20can%20be%20achieved%20through%20the%20Gumbel-Max%20trick%201954"
+        },
+        {
+            "id": "English_1993_a",
+            "entry": "English We use the Stanford Dependency conversion (De Marneffe & Manning, 2008) of the Penn Treebank (Marcus et al., 1993) with the usual section split: 02-21 for training, 22 for development and 23 for testing. In order to simulate our framework under a low-resource setting, the annotation is kept for 10% of the training set only: a labeled sentence is the sentence which has an index (in the training set) modulo 10 equal to zero.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=English%20We%20use%20the%20Stanford%20Dependency%20conversion%20De%20Marneffe%20%20Manning%202008%20of%20the%20Penn%20Treebank%20Marcus%20et%20al%201993%20with%20the%20usual%20section%20split%200221%20for%20training%2022%20for%20development%20and%2023%20for%20testing%20In%20order%20to%20simulate%20our%20framework%20under%20a%20lowresource%20setting%20the%20annotation%20is%20kept%20for%2010%20of%20the%20training%20set%20only%20a%20labeled%20sentence%20is%20the%20sentence%20which%20has%20an%20index%20in%20the%20training%20set%20modulo%2010%20equal%20to%20zero",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=English%20We%20use%20the%20Stanford%20Dependency%20conversion%20De%20Marneffe%20%20Manning%202008%20of%20the%20Penn%20Treebank%20Marcus%20et%20al%201993%20with%20the%20usual%20section%20split%200221%20for%20training%2022%20for%20development%20and%2023%20for%20testing%20In%20order%20to%20simulate%20our%20framework%20under%20a%20lowresource%20setting%20the%20annotation%20is%20kept%20for%2010%20of%20the%20training%20set%20only%20a%20labeled%20sentence%20is%20the%20sentence%20which%20has%20an%20index%20in%20the%20training%20set%20modulo%2010%20equal%20to%20zero"
+        },
+        {
+            "id": "French_2013_a",
+            "entry": "French We use a similar setting with the French Treebank version distributed for the SPMRL 2013 shared task and the provided train/dev/test split (Abeilleet al., 2000; Seddah et al., 2013).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=French%20We%20use%20a%20similar%20setting%20with%20the%20French%20Treebank%20version%20distributed%20for%20the%20SPMRL%202013%20shared%20task%20and%20the%20provided%20traindevtest%20split%20Abeilleet%20al%202000%20Seddah%20et%20al%202013"
+        },
+        {
+            "id": "Swedish_2006_a",
+            "entry": "Swedish We use the Talbanken dataset (Nivre et al., 2006) which contains two written text parts: the professional prose part (P) and the high school students\u2019 essays part (G). We drop the annotation of (G) in order to use this section as unlabeled data. We split the (P) section in labeled train/dev/test using a pseudo-randomized scheme. We follow the splitting scheme of Hall et al. (2006) but fix section 9 as development instead of k-fold cross-validation. Sentence i is allocated to section i mod 10.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Swedish%20We%20use%20the%20Talbanken%20dataset%20Nivre%20et%20al%202006%20which%20contains%20two%20written%20text%20parts%20the%20professional%20prose%20part%20P%20and%20the%20high%20school%20students%20essays%20part%20G%20We%20drop%20the%20annotation%20of%20G%20in%20order%20to%20use%20this%20section%20as%20unlabeled%20data%20We%20split%20the%20P%20section%20in%20labeled%20traindevtest%20using%20a%20pseudorandomized%20scheme%20We%20follow%20the%20splitting%20scheme%20of%20Hall%20et%20al%202006%20but%20fix%20section%209%20as%20development%20instead%20of%20kfold%20crossvalidation%20Sentence%20i%20is%20allocated%20to%20section%20i%20mod%2010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Swedish%20We%20use%20the%20Talbanken%20dataset%20Nivre%20et%20al%202006%20which%20contains%20two%20written%20text%20parts%20the%20professional%20prose%20part%20P%20and%20the%20high%20school%20students%20essays%20part%20G%20We%20drop%20the%20annotation%20of%20G%20in%20order%20to%20use%20this%20section%20as%20unlabeled%20data%20We%20split%20the%20P%20section%20in%20labeled%20traindevtest%20using%20a%20pseudorandomized%20scheme%20We%20follow%20the%20splitting%20scheme%20of%20Hall%20et%20al%202006%20but%20fix%20section%209%20as%20development%20instead%20of%20kfold%20crossvalidation%20Sentence%20i%20is%20allocated%20to%20section%20i%20mod%2010"
+        },
+        {
+            "id": "Encoder:_2016_a",
+            "entry": "Encoder: word embeddings We concatenate trainable word embeddings of size 100 with external word embeddings.15 We use the word-dropout settings of Kiperwasser & Goldberg (2016). For English, external embeddings are pre-trained with the structured skip n-gram objective (Ling et al., 2015).16 For French and Swedish, we use the Polyglot embeddings (Al-Rfou et al., 2013).17 We stress out that no part-of-speech tag is used as input in any part of our network.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Encoder%20word%20embeddings%20We%20concatenate%20trainable%20word%20embeddings%20of%20size%20100%20with%20external%20word%20embeddings15%20We%20use%20the%20worddropout%20settings%20of%20Kiperwasser%20%20Goldberg%202016%20For%20English%20external%20embeddings%20are%20pretrained%20with%20the%20structured%20skip%20ngram%20objective%20Ling%20et%20al%20201516%20For%20French%20and%20Swedish%20we%20use%20the%20Polyglot%20embeddings%20AlRfou%20et%20al%20201317%20We%20stress%20out%20that%20no%20partofspeech%20tag%20is%20used%20as%20input%20in%20any%20part%20of%20our%20network",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Encoder%20word%20embeddings%20We%20concatenate%20trainable%20word%20embeddings%20of%20size%20100%20with%20external%20word%20embeddings15%20We%20use%20the%20worddropout%20settings%20of%20Kiperwasser%20%20Goldberg%202016%20For%20English%20external%20embeddings%20are%20pretrained%20with%20the%20structured%20skip%20ngram%20objective%20Ling%20et%20al%20201516%20For%20French%20and%20Swedish%20we%20use%20the%20Polyglot%20embeddings%20AlRfou%20et%20al%20201317%20We%20stress%20out%20that%20no%20partofspeech%20tag%20is%20used%20as%20input%20in%20any%20part%20of%20our%20network"
+        },
+        {
+            "id": "16",
+            "entry": "16 We use the pre-trained embeddings distributed by Dyer et al. (2015).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20use%20the%20pretrained%20embeddings%20distributed%20by%20Dyer%20et%20al%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20use%20the%20pretrained%20embeddings%20distributed%20by%20Dyer%20et%20al%202015"
+        },
+        {
+            "id": "17",
+            "entry": "17 We use the pre-trained embeddings distributed at https://sites.google.com/site/rmyeid/projects/polyglot on a similar setting, we refer to the reader to Kiperwasser & Goldberg (2016)for more information about the parser\u2019s architecture.",
+            "url": "https://sites.google.com/site/rmyeid/projects/polyglot",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20use%20the%20pretrained%20embeddings%20distributed%20at%20httpssitesgooglecomsitermyeidprojectspolyglot%20on%20a%20similar%20setting%20we%20refer%20to%20the%20reader%20to%20Kiperwasser%20%20Goldberg%202016for%20more%20information%20about%20the%20parsers%20architecture"
+        },
+        {
+            "id": "Training_2012_a",
+            "entry": "Training We encourage the VAE to rely on latent structures close to the targeted ones by bootstrapping the training procedure with labeled data only. In the first two epochs, we train the network with the discriminative loss only. Then, for the next two epochs, we add the supervised ELBO term (Equation 5). Finally, after the 6th epoch, we also add the unsupervised ELBO term (Equation 3). We train our network using stochastic gradient descent for 30 epochs using Adadelta (Zeiler, 2012) with default parameters as provided by the Dynet library (Neubig et al., 2017). In the semisupervised scenario, we alternate between labeled and unlabeled instances. The temperature of the PEAKED-SOFTMAX operator is fixed to \u03c4 = 1.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Training%20We%20encourage%20the%20VAE%20to%20rely%20on%20latent%20structures%20close%20to%20the%20targeted%20ones%20by%20bootstrapping%20the%20training%20procedure%20with%20labeled%20data%20only%20In%20the%20first%20two%20epochs%20we%20train%20the%20network%20with%20the%20discriminative%20loss%20only%20Then%20for%20the%20next%20two%20epochs%20we%20add%20the%20supervised%20ELBO%20term%20Equation%205%20Finally%20after%20the%206th%20epoch%20we%20also%20add%20the%20unsupervised%20ELBO%20term%20Equation%203%20We%20train%20our%20network%20using%20stochastic%20gradient%20descent%20for%2030%20epochs%20using%20Adadelta%20Zeiler%202012%20with%20default%20parameters%20as%20provided%20by%20the%20Dynet%20library%20Neubig%20et%20al%202017%20In%20the%20semisupervised%20scenario%20we%20alternate%20between%20labeled%20and%20unlabeled%20instances%20The%20temperature%20of%20the%20PEAKEDSOFTMAX%20operator%20is%20fixed%20to%20%CF%84%20%201",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Training%20We%20encourage%20the%20VAE%20to%20rely%20on%20latent%20structures%20close%20to%20the%20targeted%20ones%20by%20bootstrapping%20the%20training%20procedure%20with%20labeled%20data%20only%20In%20the%20first%20two%20epochs%20we%20train%20the%20network%20with%20the%20discriminative%20loss%20only%20Then%20for%20the%20next%20two%20epochs%20we%20add%20the%20supervised%20ELBO%20term%20Equation%205%20Finally%20after%20the%206th%20epoch%20we%20also%20add%20the%20unsupervised%20ELBO%20term%20Equation%203%20We%20train%20our%20network%20using%20stochastic%20gradient%20descent%20for%2030%20epochs%20using%20Adadelta%20Zeiler%202012%20with%20default%20parameters%20as%20provided%20by%20the%20Dynet%20library%20Neubig%20et%20al%202017%20In%20the%20semisupervised%20scenario%20we%20alternate%20between%20labeled%20and%20unlabeled%20instances%20The%20temperature%20of%20the%20PEAKEDSOFTMAX%20operator%20is%20fixed%20to%20%CF%84%20%201"
+        },
+        {
+            "id": "Dynamic_1999_a",
+            "entry": "Dynamic programs for parsing have been studied as abstract algorithms that can be instantiated with different semirings (Goodman, 1999). For example, computing the weight of the best parse relies on the R, max, + semiring. This semiring can be augmented with set-valued operations to retrieve the best derivation. However, a straightforward implementation would have a O(n5) space complexity: for each item in the chart, we also need to store the set of arcs. Under this formalism, the backpointer trick is a method to implicitly constructs these sets and maintain the optimal O(n3) complexity. Our continuous relaxation replaces the max operator with a smooth surrogate and the set values with a soft-selection of sets. Unfortunately, R, PEAKED-SOFTMAX is not a commutative monoid, therefore the semiring analogy is not transposable.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dynamic%20programs%20for%20parsing%20have%20been%20studied%20as%20abstract%20algorithms%20that%20can%20be%20instantiated%20with%20different%20semirings%20Goodman%201999%20For%20example%20computing%20the%20weight%20of%20the%20best%20parse%20relies%20on%20the%20R%20max%20%20semiring%20This%20semiring%20can%20be%20augmented%20with%20setvalued%20operations%20to%20retrieve%20the%20best%20derivation%20However%20a%20straightforward%20implementation%20would%20have%20a%20On5%20space%20complexity%20for%20each%20item%20in%20the%20chart%20we%20also%20need%20to%20store%20the%20set%20of%20arcs%20Under%20this%20formalism%20the%20backpointer%20trick%20is%20a%20method%20to%20implicitly%20constructs%20these%20sets%20and%20maintain%20the%20optimal%20On3%20complexity%20Our%20continuous%20relaxation%20replaces%20the%20max%20operator%20with%20a%20smooth%20surrogate%20and%20the%20set%20values%20with%20a%20softselection%20of%20sets%20Unfortunately%20R%20PEAKEDSOFTMAX%20is%20not%20a%20commutative%20monoid%20therefore%20the%20semiring%20analogy%20is%20not%20transposable",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dynamic%20programs%20for%20parsing%20have%20been%20studied%20as%20abstract%20algorithms%20that%20can%20be%20instantiated%20with%20different%20semirings%20Goodman%201999%20For%20example%20computing%20the%20weight%20of%20the%20best%20parse%20relies%20on%20the%20R%20max%20%20semiring%20This%20semiring%20can%20be%20augmented%20with%20setvalued%20operations%20to%20retrieve%20the%20best%20derivation%20However%20a%20straightforward%20implementation%20would%20have%20a%20On5%20space%20complexity%20for%20each%20item%20in%20the%20chart%20we%20also%20need%20to%20store%20the%20set%20of%20arcs%20Under%20this%20formalism%20the%20backpointer%20trick%20is%20a%20method%20to%20implicitly%20constructs%20these%20sets%20and%20maintain%20the%20optimal%20On3%20complexity%20Our%20continuous%20relaxation%20replaces%20the%20max%20operator%20with%20a%20smooth%20surrogate%20and%20the%20set%20values%20with%20a%20softselection%20of%20sets%20Unfortunately%20R%20PEAKEDSOFTMAX%20is%20not%20a%20commutative%20monoid%20therefore%20the%20semiring%20analogy%20is%20not%20transposable"
+        }
+    ]
+}

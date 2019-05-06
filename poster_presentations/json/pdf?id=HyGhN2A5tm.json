@@ -1,0 +1,324 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MULTI-AGENT DUAL LEARNING",
+        "author": "Yiren Wang, Yingce Xia, Tianyu He\u00a7, Fei Tian, Tao Qin, ChengXiang Zhai, Tie-Yan Liu, \u2020University of Illinois at Urbana-Champaign \u2021Microsoft Research \u00a7University of Science and Technology of China \u2020{yiren, czhai}@illinois.edu \u2021{Yingce.Xia, fetia, taoqin, tie-yan.liu}@microsoft.com \u00a7hetianyu@mail.ustc.edu.cn",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyGhN2A5tm"
+        },
+        "abstract": "Dual learning has attracted much attention in machine learning, computer vision and natural language processing communities. The core idea of dual learning is to leverage the duality between the primal task (mapping from domain X to domain Y) and dual task (mapping from domain Y to X ) to boost the performances of both tasks. Existing dual learning framework forms a system with two agents (one primal model and one dual model) to utilize such duality. In this paper, we extend this framework by introducing multiple primal and dual models, and propose the multi-agent dual learning framework. Experiments on neural machine translation and image translation tasks demonstrate the effectiveness of the new framework. In particular, we set a new record on IWSLT 2014 German-to-English translation with a 35.44 BLEU score, achieve a 31.03 BLEU score on WMT 2014 English-toGerman translation with over 2.6 BLEU improvement over the strong Transformer baseline, and set a new record of 49.61 BLEU score on the recent WMT 2018 English-to-German translation."
+    },
+    "keywords": [
+        {
+            "term": "ensemble learning",
+            "url": "https://en.wikipedia.org/wiki/ensemble_learning"
+        },
+        {
+            "term": "BLEU",
+            "url": "https://en.wikipedia.org/wiki/BLEU"
+        },
+        {
+            "term": "back translation",
+            "url": "https://en.wikipedia.org/wiki/back_translation"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "image translation",
+            "url": "https://en.wikipedia.org/wiki/image_translation"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "bleu score",
+            "url": "https://en.wikipedia.org/wiki/bleu_score"
+        }
+    ],
+    "abbreviations": {
+        "NMT": "Neural Machine Translation",
+        "Duali": "dual learning",
+        "KD-i": "knowledge distillation",
+        "BT-i": "back translation"
+    },
+    "highlights": [
+        "Motivated by the dual nature of many tasks, e.g., English-to-German vs. German-to-English in machine translation, photo-to-Monet vs. Monet-to-photo in image translation, and speech recognition vs. speech synthesis, dual learning is proposed (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a></a></a></a></a>) and applied to many applications including neural machine translation (NMT) (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a></a></a></a></a>; <a class=\"ref-link\" id=\"cXia_et+al_2017_a\" href=\"#rXia_et+al_2017_a\"><a class=\"ref-link\" id=\"cXia_et+al_2017_a\" href=\"#rXia_et+al_2017_a\">Xia et al, 2017a</a></a>;b), image-to-image translation (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a></a></a>; Yi et al, 2017; <a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\"><a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a></a>), question answering (<a class=\"ref-link\" id=\"cDuan_et+al_2017_a\" href=\"#rDuan_et+al_2017_a\"><a class=\"ref-link\" id=\"cDuan_et+al_2017_a\" href=\"#rDuan_et+al_2017_a\">Duan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSun_et+al_2019_a\" href=\"#rSun_et+al_2019_a\"><a class=\"ref-link\" id=\"cSun_et+al_2019_a\" href=\"#rSun_et+al_2019_a\">Sun et al, 2019</a></a>) and image captioning (<a class=\"ref-link\" id=\"cHuang_et+al_2018_a\" href=\"#rHuang_et+al_2018_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2018_a\" href=\"#rHuang_et+al_2018_a\">Huang et al, 2018</a></a>)",
+        "There are several differences between ensemble learning and our work: 1) ensemble learning does not use multiple agents in training as we do; 2) our multi-agent dual learning uses only one model f0 in inference, which is more efficient than ensemble learning that uses multiple agents; and 3) duality is not considered in conventional ensemble learning",
+        "We can see that the proposed algorithm achieves the best performances for all settings, and we observe that: 1) With WMT 2014 bilingual data only, the proposed multi-agent dual learning (Dual-3) achieves the state-of-the-art results to our knowledge, with 30.05",
+        "We conjecture the reason is that with feedback signals to a generated sentence in the dual learning framework, the dataset is not only enlarged through sampling, but guaranteed with good quality of generation",
+        "We proposed a new framework, multi-agent dual learning, in which multiple primal models and dual models are involved in the learning process",
+        "Extending the multi-agent dual learning framework to more applications would be an interesting direction for future research"
+    ],
+    "key_statements": [
+        "Motivated by the dual nature of many tasks, e.g., English-to-German vs. German-to-English in machine translation, photo-to-Monet vs. Monet-to-photo in image translation, and speech recognition vs. speech synthesis, dual learning is proposed (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a></a></a></a></a>) and applied to many applications including neural machine translation (NMT) (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a></a></a></a></a>; <a class=\"ref-link\" id=\"cXia_et+al_2017_a\" href=\"#rXia_et+al_2017_a\"><a class=\"ref-link\" id=\"cXia_et+al_2017_a\" href=\"#rXia_et+al_2017_a\">Xia et al, 2017a</a></a>;b), image-to-image translation (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a></a></a>; Yi et al, 2017; <a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\"><a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a></a>), question answering (<a class=\"ref-link\" id=\"cDuan_et+al_2017_a\" href=\"#rDuan_et+al_2017_a\"><a class=\"ref-link\" id=\"cDuan_et+al_2017_a\" href=\"#rDuan_et+al_2017_a\">Duan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSun_et+al_2019_a\" href=\"#rSun_et+al_2019_a\"><a class=\"ref-link\" id=\"cSun_et+al_2019_a\" href=\"#rSun_et+al_2019_a\">Sun et al, 2019</a></a>) and image captioning (<a class=\"ref-link\" id=\"cHuang_et+al_2018_a\" href=\"#rHuang_et+al_2018_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2018_a\" href=\"#rHuang_et+al_2018_a\">Huang et al, 2018</a></a>)",
+        "There are several differences between ensemble learning and our work: 1) ensemble learning does not use multiple agents in training as we do; 2) our multi-agent dual learning uses only one model f0 in inference, which is more efficient than ensemble learning that uses multiple agents; and 3) duality is not considered in conventional ensemble learning",
+        "We can see that the proposed algorithm achieves the best performances for all settings, and we observe that: 1) With WMT 2014 bilingual data only, the proposed multi-agent dual learning (Dual-3) achieves the state-of-the-art results to our knowledge, with 30.05",
+        "We conjecture the reason is that with feedback signals to a generated sentence in the dual learning framework, the dataset is not only enlarged through sampling, but guaranteed with good quality of generation",
+        "We proposed a new framework, multi-agent dual learning, in which multiple primal models and dual models are involved in the learning process",
+        "Extending the multi-agent dual learning framework to more applications would be an interesting direction for future research",
+        "It is worth studying how to apply the framework to other dual learning paradigms, including dual supervised learning (<a class=\"ref-link\" id=\"cXia_et+al_2017_b\" href=\"#rXia_et+al_2017_b\">Xia et al, 2017b</a>) and dual transfer learning (<a class=\"ref-link\" id=\"cWang_et+al_2018_a\" href=\"#rWang_et+al_2018_a\">Wang et al, 2018</a>)"
+    ],
+    "summary": [
+        "Motivated by the dual nature of many tasks, e.g., English-to-German vs. German-to-English in machine translation, photo-to-Monet vs. Monet-to-photo in image translation, and speech recognition vs. speech synthesis, dual learning is proposed (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a></a></a></a></a>) and applied to many applications including neural machine translation (NMT) (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a></a></a></a></a>; <a class=\"ref-link\" id=\"cXia_et+al_2017_a\" href=\"#rXia_et+al_2017_a\"><a class=\"ref-link\" id=\"cXia_et+al_2017_a\" href=\"#rXia_et+al_2017_a\">Xia et al, 2017a</a></a>;b), image-to-image translation (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a></a></a>; Yi et al, 2017; <a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\"><a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a></a>), question answering (<a class=\"ref-link\" id=\"cDuan_et+al_2017_a\" href=\"#rDuan_et+al_2017_a\"><a class=\"ref-link\" id=\"cDuan_et+al_2017_a\" href=\"#rDuan_et+al_2017_a\">Duan et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSun_et+al_2019_a\" href=\"#rSun_et+al_2019_a\"><a class=\"ref-link\" id=\"cSun_et+al_2019_a\" href=\"#rSun_et+al_2019_a\">Sun et al, 2019</a></a>) and image captioning (<a class=\"ref-link\" id=\"cHuang_et+al_2018_a\" href=\"#rHuang_et+al_2018_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2018_a\" href=\"#rHuang_et+al_2018_a\">Huang et al, 2018</a></a>).",
+        "In the current dual learning framework, only one agent g is used to evaluate and provide feedback signals to the mapping function f in the other direction.",
+        "On WMT 2014 translation task with 4.5M bilingual sentence, we achieve 30.05/31.03 and 33.32/35.64 BLEU scores without/with monolingual data, which are the best results of the same settings.",
+        "Following the basic framework of dual learning (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a>), for any x \u2208 X , all agents first cooperate to generate a y \u2208 Y by y = F\u03b1(x), and jointly reconstruct the x \u2208 X through x = G\u03b2(y).",
+        "We introduce how to adapt the proposed multi-agent dual learning framework to Neural Machine Translation (NMT), and present evaluation on several public translation datasets.",
+        "3) Two-agent dual learning, which uses f together with g to build the feedback signal to regularize the training), which we denote as \u201cDual-1\u201d.",
+        "We can observe that: 1) Dual learning has brought significant improvement over all the baselines (Standard, KD and BT) in both single-agent and multi-agent settings, demonstrating the effectiveness of dual learning; 2) Involving multiple agents into the learning system leads to better performances, which shows the importance of additional feedback signals from other agents.",
+        "We can see that the proposed algorithm achieves the best performances for all settings, and we observe that: 1) With WMT 2014 bilingual data only, the proposed multi-agent dual learning (Dual-3) achieves the state-of-the-art results to our knowledge, with 30.05 BLEU for En\u2192De and 33.32 BLEU for De\u2192En5.",
+        "2) Compared with the traditional two-agent dual learning in <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al (2016</a>), we can achieve 0.61 BLEU score improvement on En\u2192De and 0.33 on De\u2192En with bilingual data only.",
+        "We pre-train two unsupervised NMT models with different initialization, use them to translate the 50M monolingual sentences, and apply KD, BT and dual learning algorithms.",
+        "As is shown in Table 5, with one pair of agents, KD-1 and BT-1 obtains almost the same results as the standard baseline, while Dual-1 achieves slightly better results on En\u2192De translation.",
+        "Multi-agent dual learning (Dual-3) achieves 19.26 and 23.85 BLEU scores, setting new records for unsupervised NMT with pure NMT models.",
+        "We apply the multi-agent dual learning framework to image translation tasks.",
+        "We follow the setting of CycleGAN (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a>), the most popular implementation of image translation that combines the ideas of GAN and dual learning.",
+        "It is challenging yet important to improve the training efficiency while maintaining the substantial improvements"
+    ],
+    "headline": "We extend this framework by introducing multiple primal and dual models, and propose the multi-agent dual learning framework",
+    "reference_links": [
+        {
+            "id": "Bojanowski_et+al_2017_a",
+            "entry": "Piotr Bojanowski, Edouard Grave, Armand Joulin, and Tomas Mikolov. Enriching word vectors with subword information. Transactions of the Association for Computational Linguistics, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bojanowski%2C%20Piotr%20Grave%2C%20Edouard%20Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Enriching%20word%20vectors%20with%20subword%20information%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bojanowski%2C%20Piotr%20Grave%2C%20Edouard%20Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Enriching%20word%20vectors%20with%20subword%20information%202017"
+        },
+        {
+            "id": "Ciregan_et+al_2012_a",
+            "entry": "Dan Ciregan, Ueli Meier, and Jurgen Schmidhuber. Multi-column deep neural networks for image classification. In 2012 IEEE Conference on Computer Vision and Pattern Recognition.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ciregan%2C%20Dan%20Meier%2C%20Ueli%20Schmidhuber%2C%20Jurgen%20Multi-column%20deep%20neural%20networks%20for%20image%20classification%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ciregan%2C%20Dan%20Meier%2C%20Ueli%20Schmidhuber%2C%20Jurgen%20Multi-column%20deep%20neural%20networks%20for%20image%20classification%202012"
+        },
+        {
+            "id": "Cordts_et+al_2016_a",
+            "entry": "Marius Cordts, Mohamed Omran, Sebastian Ramos, Timo Rehfeld, Markus Enzweiler, Rodrigo Benenson, Uwe Franke, Stefan Roth, and Bernt Schiele. The cityscapes dataset for semantic urban scene understanding. In Proceedings of the IEEE conference on computer vision and pattern recognition, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016"
+        },
+        {
+            "id": "Duan_et+al_2017_a",
+            "entry": "Nan Duan, Duyu Tang, Peng Chen, and Ming Zhou. Question generation for question answering. In EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duan%2C%20Nan%20Tang%2C%20Duyu%20Chen%2C%20Peng%20Zhou%2C%20Ming%20Question%20generation%20for%20question%20answering%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Nan%20Tang%2C%20Duyu%20Chen%2C%20Peng%20Zhou%2C%20Ming%20Question%20generation%20for%20question%20answering%202017"
+        },
+        {
+            "id": "Edunov_et+al_2018_a",
+            "entry": "Sergey Edunov, Myle Ott, Michael Auli, and David Grangier. Understanding back-translation at scale. In EMNLP, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Understanding%20back-translation%20at%20scale%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Understanding%20back-translation%20at%20scale%202018"
+        },
+        {
+            "id": "Edunov_et+al_2018_b",
+            "entry": "Sergey Edunov, Myle Ott, Michael Auli, David Grangier, and Marc\u2019Aurelio Ranzato. Classical structured prediction losses for sequence to sequence learning. In NAACL, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Classical%20structured%20prediction%20losses%20for%20sequence%20to%20sequence%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Classical%20structured%20prediction%20losses%20for%20sequence%20to%20sequence%20learning%202018"
+        },
+        {
+            "id": "Gehring_et+al_2017_a",
+            "entry": "Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N Dauphin. Convolutional sequence to sequence learning. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20sequence%20to%20sequence%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gehring%2C%20Jonas%20Auli%2C%20Michael%20Grangier%2C%20David%20Yarats%2C%20Denis%20Convolutional%20sequence%20to%20sequence%20learning%202017"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gu_et+al_2018_a",
+            "entry": "Jiatao Gu, James Bradbury, Caiming Xiong, Victor OK Li, and Richard Socher. Non-autoregressive neural machine translation. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Jiatao%20Bradbury%2C%20James%20Xiong%2C%20Caiming%20Li%2C%20Victor%20O.K.%20Non-autoregressive%20neural%20machine%20translation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Jiatao%20Bradbury%2C%20James%20Xiong%2C%20Caiming%20Li%2C%20Victor%20O.K.%20Non-autoregressive%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Guo_et+al_2019_a",
+            "entry": "Junliang Guo, Tan Xu, Di He, Tao Qin, Linli Xu, and Tie-Yan Liu. Non-autoregressive neural machine translation with enhanced decoder input. In Thirty-Third AAAI Conference on Artificial Intelligence, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Junliang%20Xu%2C%20Tan%20He%2C%20Di%20Qin%2C%20Tao%20Non-autoregressive%20neural%20machine%20translation%20with%20enhanced%20decoder%20input%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Junliang%20Xu%2C%20Tan%20He%2C%20Di%20Qin%2C%20Tao%20Non-autoregressive%20neural%20machine%20translation%20with%20enhanced%20decoder%20input%202019"
+        },
+        {
+            "id": "Hassan_et+al_2018_a",
+            "entry": "Hany Hassan, Anthony Aue, Chang Chen, Vishal Chowdhary, Jonathan Clark, Christian Federmann, Xuedong Huang, Marcin Junczys-Dowmunt, William Lewis, Mu Li, et al. Achieving human parity on automatic chinese to english news translation. arXiv preprint arXiv:1803.05567, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05567"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Di He, Yingce Xia, Tao Qin, Liwei Wang, Nenghai Yu, Tieyan Liu, and Wei-Ying Ma. Dual learning for machine translation. In Advances in neural information processing systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Di%20Xia%2C%20Yingce%20Qin%2C%20Tao%20Wang%2C%20Liwei%20and%20Wei-Ying%20Ma.%20Dual%20learning%20for%20machine%20translation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Di%20Xia%2C%20Yingce%20Qin%2C%20Tao%20Wang%2C%20Liwei%20and%20Wei-Ying%20Ma.%20Dual%20learning%20for%20machine%20translation%202016"
+        },
+        {
+            "id": "Heusel_et+al_2017_a",
+            "entry": "Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. Gans trained by a two time-scale update rule converge to a local nash equilibrium. In BIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heusel%2C%20Martin%20Ramsauer%2C%20Hubert%20Unterthiner%2C%20Thomas%20Nessler%2C%20Bernhard%20Gans%20trained%20by%20a%20two%20time-scale%20update%20rule%20converge%20to%20a%20local%20nash%20equilibrium%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heusel%2C%20Martin%20Ramsauer%2C%20Hubert%20Unterthiner%2C%20Thomas%20Nessler%2C%20Bernhard%20Gans%20trained%20by%20a%20two%20time-scale%20update%20rule%20converge%20to%20a%20local%20nash%20equilibrium%202017"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeffrey Dean. Distilling the knowledge in a neural network. In NIPS Deep Learning and Representation Learning Workshop, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Vinyals%2C%20Oriol%20Dean%2C%20Jeffrey%20Distilling%20the%20knowledge%20in%20a%20neural%20network.%20In%20NIPS%20Deep%20Learning%20and%20Representation%20Learning%20Workshop%202015"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Qiuyuan Huang, Pengchuan Zhang, Dapeng Wu, and Lei Zhang. Turbo learning for captionbot and drawingbot. In Advances in neural information processing systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Qiuyuan%20Zhang%2C%20Pengchuan%20Wu%2C%20Dapeng%20Zhang%2C%20Lei%20Turbo%20learning%20for%20captionbot%20and%20drawingbot%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Qiuyuan%20Zhang%2C%20Pengchuan%20Wu%2C%20Dapeng%20Zhang%2C%20Lei%20Turbo%20learning%20for%20captionbot%20and%20drawingbot%202018"
+        },
+        {
+            "id": "Isola_et+al_2017_a",
+            "entry": "Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A Efros. Image-to-image translation with conditional adversarial networks. In Computer Vision and Pattern Recognition (CVPR), 2017 IEEE Conference on. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Melvin Johnson, Mike Schuster, Quoc V Le, Maxim Krikun, Yonghui Wu, Zhifeng Chen, Nikhil Thorat, Fernanda Viegas, Martin Wattenberg, Greg Corrado, et al. Google\u2019s multilingual neural machine translation system: enabling zero-shot translation. TACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Melvin%20Schuster%2C%20Mike%20Le%2C%20Quoc%20V.%20Krikun%2C%20Maxim%20Google%E2%80%99s%20multilingual%20neural%20machine%20translation%20system%3A%20enabling%20zero-shot%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Melvin%20Schuster%2C%20Mike%20Le%2C%20Quoc%20V.%20Krikun%2C%20Maxim%20Google%E2%80%99s%20multilingual%20neural%20machine%20translation%20system%3A%20enabling%20zero-shot%20translation%202017"
+        },
+        {
+            "id": "Junczys-Dowmunt_2018_a",
+            "entry": "Marcin Junczys-Dowmunt. Microsoft\u2019s submission to the wmt2018 news translation task: How i learned to stop worrying and love the data. Proceedings of the Third Conference on Machine Translation (WMT), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Junczys-Dowmunt%2C%20Marcin%20Microsoft%E2%80%99s%20submission%20to%20the%20wmt2018%20news%20translation%20task%3A%20How%20i%20learned%20to%20stop%20worrying%20and%20love%20the%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Junczys-Dowmunt%2C%20Marcin%20Microsoft%E2%80%99s%20submission%20to%20the%20wmt2018%20news%20translation%20task%3A%20How%20i%20learned%20to%20stop%20worrying%20and%20love%20the%20data%202018"
+        },
+        {
+            "id": "Kim_2016_a",
+            "entry": "Yoon Kim and Alexander M Rush. Sequence-level knowledge distillation. In EMNLP, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yoon%20Rush%2C%20Alexander%20M.%20Sequence-level%20knowledge%20distillation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yoon%20Rush%2C%20Alexander%20M.%20Sequence-level%20knowledge%20distillation%202016"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Lample_et+al_2018_a",
+            "entry": "Guillaume Lample, Myle Ott, Alexis Conneau, Ludovic Denoyer, and Marc\u2019Aurelio Ranzato. Phrase-based & neural unsupervised machine translation. In EMNLP, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guillaume%20Lample%20Myle%20Ott%20Alexis%20Conneau%20Ludovic%20Denoyer%20and%20MarcAurelio%20Ranzato%20Phrasebased%20%20neural%20unsupervised%20machine%20translation%20In%20EMNLP%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guillaume%20Lample%20Myle%20Ott%20Alexis%20Conneau%20Ludovic%20Denoyer%20and%20MarcAurelio%20Ranzato%20Phrasebased%20%20neural%20unsupervised%20machine%20translation%20In%20EMNLP%202018"
+        },
+        {
+            "id": "Long_et+al_2015_a",
+            "entry": "Jonathan Long, Evan Shelhamer, and Trevor Darrell. Fully convolutional networks for semantic segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Long%2C%20Jonathan%20Shelhamer%2C%20Evan%20Darrell%2C%20Trevor%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Long%2C%20Jonathan%20Shelhamer%2C%20Evan%20Darrell%2C%20Trevor%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015"
+        },
+        {
+            "id": "Lucic_et+al_2018_a",
+            "entry": "Mario Lucic, Karol Kurach, Marcin Michalski, Sylvain Gelly, and Olivier Bousquet. Are gans created equal? a large-scale study. In Advances in neural information processing systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lucic%2C%20Mario%20Kurach%2C%20Karol%20Michalski%2C%20Marcin%20Gelly%2C%20Sylvain%20Are%20gans%20created%20equal%3F%20a%20large-scale%20study%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lucic%2C%20Mario%20Kurach%2C%20Karol%20Michalski%2C%20Marcin%20Gelly%2C%20Sylvain%20Are%20gans%20created%20equal%3F%20a%20large-scale%20study%202018"
+        },
+        {
+            "id": "Luo_et+al_2017_a",
+            "entry": "Ping Luo, Guangrun Wang, Liang Lin, and Xiaogang Wang. Deep dual learning for semantic image segmentation. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20Ping%20Wang%2C%20Guangrun%20Lin%2C%20Liang%20Wang%2C%20Xiaogang%20Deep%20dual%20learning%20for%20semantic%20image%20segmentation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20Ping%20Wang%2C%20Guangrun%20Lin%2C%20Liang%20Wang%2C%20Xiaogang%20Deep%20dual%20learning%20for%20semantic%20image%20segmentation%202017"
+        },
+        {
+            "id": "Papineni_et+al_2002_a",
+            "entry": "Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. Bleu: a method for automatic evaluation of machine translation. In Proceedings of the 40th annual meeting on association for computational linguistics, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002"
+        },
+        {
+            "id": "Sennrich_et+al_2015_a",
+            "entry": "Rico Sennrich, Barry Haddow, and Alexandra Birch. Improving neural machine translation models with monolingual data. arXiv preprint arXiv:1511.06709, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06709"
+        },
+        {
+            "id": "Sun_et+al_2019_a",
+            "entry": "Yibo Sun, Duyu Tang, Nan Duan, Shujie Liu, Zhao Yan, Ming Zhou, Yuanhua Lv, Wenpeng Yin, Xiaocheng Feng, Bing Qin, et al. Joint learning of question answering and question generation. IEEE Transactions on Knowledge and Data Engineering, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Yibo%20Tang%2C%20Duyu%20Duan%2C%20Nan%20Liu%2C%20Shujie%20Joint%20learning%20of%20question%20answering%20and%20question%20generation%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sun%2C%20Yibo%20Tang%2C%20Duyu%20Duan%2C%20Nan%20Liu%2C%20Shujie%20Joint%20learning%20of%20question%20answering%20and%20question%20generation%202019"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in neural information processing systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20neural%20information%20processing%20systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20neural%20information%20processing%20systems%202017"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Yijun Wang, Yingce Xia, Li Zhao, Jiang Bian, Tao Qin, Guiquan Liu, and T Liu. Dual transfer learning for neural machine translation with marginal distribution regularization. In Proceedings of the Thirty-Second AAAI Conference on Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yijun%20Xia%2C%20Yingce%20Zhao%2C%20Li%20Bian%2C%20Jiang%20Dual%20transfer%20learning%20for%20neural%20machine%20translation%20with%20marginal%20distribution%20regularization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yijun%20Xia%2C%20Yingce%20Zhao%2C%20Li%20Bian%2C%20Jiang%20Dual%20transfer%20learning%20for%20neural%20machine%20translation%20with%20marginal%20distribution%20regularization%202018"
+        },
+        {
+            "id": "Wang_et+al_2019_a",
+            "entry": "Yiren Wang, Fei Tian, Di He, Tao Qin, Zhai ChengXiang, and Tie-Yan Liu. Non-autoregressive machine translation with auxiliary regularization. In Thirty-Third AAAI Conference on Artificial Intelligence, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yiren%20Tian%2C%20Fei%20He%2C%20Di%20Qin%2C%20Tao%20Non-autoregressive%20machine%20translation%20with%20auxiliary%20regularization%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yiren%20Tian%2C%20Fei%20He%2C%20Di%20Qin%2C%20Tao%20Non-autoregressive%20machine%20translation%20with%20auxiliary%20regularization%202019"
+        },
+        {
+            "id": "Wu_et+al_2016_a",
+            "entry": "Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V. Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, Jeff Klingner, Apurva Shah, Melvin Johnson, Xiaobing Liu, ukasz Kaiser, Stephan Gouws, Yoshikiyo Kato, Taku Kudo, Hideto Kazawa, Keith Stevens, George Kurian, Nishant Patil, Wei Wang, Cliff Young, Jason Smith, Jason Riesa, Alex Rudnick, Oriol Vinyals, Greg Corrado, Macduff Hughes, and Jeffrey Dean. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. CoRR, 2016. URL http://arxiv.org/abs/1609.08144.",
+            "url": "http://arxiv.org/abs/1609.08144",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        },
+        {
+            "id": "Xia_et+al_2017_a",
+            "entry": "Yingce Xia, Jiang Bian, Tao Qin, Nenghai Yu, and Tie-Yan Liu. Dual inference for machine learning. In Proceedings of the 26th International Joint Conference on Artificial Intelligence, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xia%2C%20Yingce%20Bian%2C%20Jiang%20Qin%2C%20Tao%20Yu%2C%20Nenghai%20Dual%20inference%20for%20machine%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xia%2C%20Yingce%20Bian%2C%20Jiang%20Qin%2C%20Tao%20Yu%2C%20Nenghai%20Dual%20inference%20for%20machine%20learning%202017"
+        },
+        {
+            "id": "Xia_et+al_2017_b",
+            "entry": "Yingce Xia, Tao Qin, Wei Chen, Jiang Bian, Nenghai Yu, and Tie-Yan Liu. Dual supervised learning. In International Conference on Machine Learning, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xia%2C%20Yingce%20Qin%2C%20Tao%20Chen%2C%20Wei%20Bian%2C%20Jiang%20Dual%20supervised%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xia%2C%20Yingce%20Qin%2C%20Tao%20Chen%2C%20Wei%20Bian%2C%20Jiang%20Dual%20supervised%20learning%202017"
+        },
+        {
+            "id": "Xia_et+al_2018_a",
+            "entry": "Yingce Xia, Xu Tan, Fei Tian, Tao Qin, Nenghai Yu, and Tie-Yan Liu. Model-level dual learning. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xia%2C%20Yingce%20Tan%2C%20Xu%20Tian%2C%20Fei%20Qin%2C%20Tao%20Model-level%20dual%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xia%2C%20Yingce%20Tan%2C%20Xu%20Tian%2C%20Fei%20Qin%2C%20Tao%20Model-level%20dual%20learning%202018"
+        },
+        {
+            "id": "Zili_2017_a",
+            "entry": "Zili Yi, Hao (Richard) Zhang, Ping Tan, and Minglun Gong. Dualgan: Unsupervised dual learning for -image translation. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zili%20Yi%2C%20Hao%20%28Richard%29%20Zhang%2C%20Ping%20Tan%20Gong%2C%20Minglun%20Dualgan%3A%20Unsupervised%20dual%20learning%20for%20-image%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zili%20Yi%2C%20Hao%20%28Richard%29%20Zhang%2C%20Ping%20Tan%20Gong%2C%20Minglun%20Dualgan%3A%20Unsupervised%20dual%20learning%20for%20-image%20translation%202017"
+        },
+        {
+            "id": "Zhou_2012_a",
+            "entry": "Zhi-Hua Zhou. Ensemble methods: foundations and algorithms. Chapman and Hall/CRC, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Zhi-Hua%20Ensemble%20methods%3A%20foundations%20and%20algorithms%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Zhi-Hua%20Ensemble%20methods%3A%20foundations%20and%20algorithms%202012"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks%202017"
+        },
+        {
+            "id": "2",
+            "entry": "(2) Agents with different architectures (\u201cDifferent Arch\u201d): The agents have different hidden dimensions (256, 512) with different numbers of heads (2, 4). They are also trained through independent runs with different random seeds. Intuitively, this group of agents with different architectures could be more diverse than the first group.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agents%20with%20different%20architectures%20Different%20Arch%20The%20agents%20have%20different%20hidden%20dimensions%20256%20512%20with%20different%20numbers%20of%20heads%202%204%20They%20are%20also%20trained%20through%20independent%20runs%20with%20different%20random%20seeds%20Intuitively%20this%20group%20of%20agents%20with%20different%20architectures%20could%20be%20more%20diverse%20than%20the%20first%20group"
+        },
+        {
+            "id": "3",
+            "entry": "(3) Agents from a same run (\u201cHomogeneous\u201d): In comparison to the first two groups where different methods (i.e., different random seeds, different model architecture) are used to encourage diversity among agents, in this group, we use model checkpoints at different (but very close) iterations from a same run. At the late stage of training, the learning rate becomes smaller. Thus the diversity among agents would naturally be very poor.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agents%20from%20a%20same%20run%20Homogeneous%20In%20comparison%20to%20the%20first%20two%20groups%20where%20different%20methods%20ie%20different%20random%20seeds%20different%20model%20architecture%20are%20used%20to%20encourage%20diversity%20among%20agents%20in%20this%20group%20we%20use%20model%20checkpoints%20at%20different%20but%20very%20close%20iterations%20from%20a%20same%20run%20At%20the%20late%20stage%20of%20training%20the%20learning%20rate%20becomes%20smaller%20Thus%20the%20diversity%20among%20agents%20would%20naturally%20be%20very%20poor"
+        },
+        {
+            "id": "1",
+            "entry": "(1) Language model loss, implemented by a denoising autoencoder. Mathematically, L1 =Ex\u223cX [\u2212 log PX \u2192X (x|C(x))] + Ey\u223cY [\u2212 log PY\u2192Y (y|C(y))], (12)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Language%20model%20loss%20implemented%20by%20a%20denoising%20autoencoder%20Mathematically%20L1%20ExX%20%20log%20PX%20X%20xCx%20%20EyY%20%20log%20PYY%20yCy%2012"
+        },
+        {
+            "id": "2",
+            "entry": "(2) Back translation loss, implemented by back-translating the monolingual data and feeding into the reversed models. Mathematically, L2 =Ex\u223cX [\u2212 log PY\u2192X (x|y(x))] + Ey\u223cY [\u2212 log PX \u2192Y (y|x(y))], (13)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Back%20translation%20loss%20implemented%20by%20backtranslating%20the%20monolingual%20data%20and%20feeding%20into%20the%20reversed%20models%20Mathematically%20L2%20ExX%20%20log%20PYX%20xyx%20%20EyY%20%20log%20PX%20Y%20yxy%2013"
+        }
+    ]
+}

@@ -1,0 +1,204 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Semantic Foggy Scene Understanding with Synthetic Data",
+        "author": "Christos Sakaridis, Dengxin Dai, Luc Van Gool",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HJgkx2Aqt7",
+            "doi": "10.1007/s11263-018-1072-8"
+        },
+        "journal": "International Journal of Computer Vision",
+        "volume": "126",
+        "abstract": "Simulation is a useful tool in situations where training data for machine learning models is costly to annotate or even hard to acquire. In this work, we propose a reinforcement learning-based method for automatically adjusting the parameters of any (non-differentiable) simulator, thereby controlling the distribution of synthesized data in order to maximize the accuracy of a model trained on that data. In contrast to prior art that hand-crafts these simulation parameters or adjusts only parts of the available parameters, our approach fully controls the simulator with the actual underlying goal of maximizing accuracy, rather than mimicking the real data distribution or randomly generating a large volume of data. We find that our approach (i) quickly converges to the optimal simulation parameters in controlled experiments and (ii) can indeed discover good sets of parameters for an image rendering simulator in actual computer vision applications.",
+        "pages": "973-992"
+    },
+    "keywords": [
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "MTM": "main task model",
+        "GMM": "Gaussian mixture models",
+        "AMTM": "accumulated main task model"
+    },
+    "highlights": [
+        "In order to train deep neural networks, significant effort has been directed towards collecting largescale datasets for tasks such as machine translation (<a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a>), image recognition (<a class=\"ref-link\" id=\"cDeng_et+al_2009_a\" href=\"#rDeng_et+al_2009_a\">Deng et al, 2009</a>) or semantic segmentation (<a class=\"ref-link\" id=\"cGeiger_et+al_2013_a\" href=\"#rGeiger_et+al_2013_a\">Geiger et al, 2013</a>; <a class=\"ref-link\" id=\"cCordts_et+al_2016_a\" href=\"#rCordts_et+al_2016_a\">Cordts et al, 2016</a>)",
+        "We provide more details on the interface between the policy and the data generating function and give a concrete example for computer vision applications in Section 4",
+        "We demonstrate the practical impact of our learning-to-simulate approach on semantic segmentation on KITTI Geiger et al (2013) by training a main task model (MTM) h\u03b8 with a reward signal coming from real data",
+        "Learning to simulate can be seen as a meta-learning algorithm that adjusts parameters of a simulator to generate synthetic data such that a machine learning model trained on this data achieves high accuracies on validation and test sets, respectively",
+        "Given the need for large-scale data sets to feed deep learning models and the often high cost of annotation and acquisition, we believe our approach is a sensible avenue for practical applications to leverage synthetic data"
+    ],
+    "key_statements": [
+        "In order to train deep neural networks, significant effort has been directed towards collecting largescale datasets for tasks such as machine translation (<a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a>), image recognition (<a class=\"ref-link\" id=\"cDeng_et+al_2009_a\" href=\"#rDeng_et+al_2009_a\">Deng et al, 2009</a>) or semantic segmentation (<a class=\"ref-link\" id=\"cGeiger_et+al_2013_a\" href=\"#rGeiger_et+al_2013_a\">Geiger et al, 2013</a>; <a class=\"ref-link\" id=\"cCordts_et+al_2016_a\" href=\"#rCordts_et+al_2016_a\">Cordts et al, 2016</a>)",
+        "We provide more details on the interface between the policy and the data generating function and give a concrete example for computer vision applications in Section 4",
+        "The proposed approach can be seen as a meta-learner that alters the data a machine learning model is trained on to achieve high accuracy on a validation set",
+        "We demonstrate the practical impact of our learning-to-simulate approach on semantic segmentation on KITTI Geiger et al (2013) by training a main task model (MTM) h\u03b8 with a reward signal coming from real data",
+        "Learning to simulate can be seen as a meta-learning algorithm that adjusts parameters of a simulator to generate synthetic data such that a machine learning model trained on this data achieves high accuracies on validation and test sets, respectively",
+        "Given the need for large-scale data sets to feed deep learning models and the often high cost of annotation and acquisition, we believe our approach is a sensible avenue for practical applications to leverage synthetic data"
+    ],
+    "summary": [
+        "In order to train deep neural networks, significant effort has been directed towards collecting largescale datasets for tasks such as machine translation (<a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a></a>), image recognition (<a class=\"ref-link\" id=\"cDeng_et+al_2009_a\" href=\"#rDeng_et+al_2009_a\"><a class=\"ref-link\" id=\"cDeng_et+al_2009_a\" href=\"#rDeng_et+al_2009_a\">Deng et al, 2009</a></a>) or semantic segmentation (<a class=\"ref-link\" id=\"cGeiger_et+al_2013_a\" href=\"#rGeiger_et+al_2013_a\"><a class=\"ref-link\" id=\"cGeiger_et+al_2013_a\" href=\"#rGeiger_et+al_2013_a\">Geiger et al, 2013</a></a>; <a class=\"ref-link\" id=\"cCordts_et+al_2016_a\" href=\"#rCordts_et+al_2016_a\"><a class=\"ref-link\" id=\"cCordts_et+al_2016_a\" href=\"#rCordts_et+al_2016_a\">Cordts et al, 2016</a></a>).",
+        "Our goal is to generate a synthetic dataset such that the main task model (MTM) h\u03b8, when trained on this dataset until convergence, achieves maximum accuracy on the test set.",
+        "Use policy \u03c0\u03c9 to generate K model parameters \u03c8k Generate K datasets Dq(x,y| \u03c8k) of size M each Train or fine-tune K main task models (MTM) for \u03be epochs on data provided by Mk Obtain rewards R, i.e., the accuracy of the trained MTMs on the validation set Compute the advantage estimate Ak = R \u2212 b Update the policy parameters \u03c9 via equation 4 end",
+        "The proposed approach can be seen as a meta-learner that alters the data a machine learning model is trained on to achieve high accuracy on a validation set.",
+        "Another GMM distribution q(x, y| \u03c8) reflects the simulator that generates training data for the main task model (MTM) h\u03b8, which is a non-linear SVM with RBF-kernels in this case.",
+        "All baselines are accumulated main task models, but with fixed parameters for sampling data, i.e., resembling the case of generating large datasets.",
+        "For the car-counting task, is that learning to simulate is robust to lower training epochs, which means that even if the MTM has not fully converged yet the reward signal is good enough to provide guidance for our system leading to a potential wall-time speed up of the overall algorithm.",
+        "As a reference point for our proposed algorithm, we sample a few data sets with the validation set parameters \u03c8val, train MTMs and report the maximum reward (IoU of cars) achieved.",
+        "We demonstrate the practical impact of our learning-to-simulate approach on semantic segmentation on KITTI Geiger et al (2013) by training a main task model (MTM) h\u03b8 with a reward signal coming from real data.",
+        "As our baseline we train the main task model separately 600 times, with data generated by the simulator using different sets of random parameters for each one.",
+        "Learning to simulate can be seen as a meta-learning algorithm that adjusts parameters of a simulator to generate synthetic data such that a machine learning model trained on this data achieves high accuracies on validation and test sets, respectively.",
+        "We plan to expand the label space in our segmentation experiments, apply the algorithm to other tasks like object detection and to explore a dynamic memory of previously generated data for improving our learning to simulate procedure."
+    ],
+    "headline": "We propose a reinforcement learning-based method for automatically adjusting the parameters of any simulator, thereby controlling the distribution of synthesized data in order to maximize the accuracy of a model trained on that data",
+    "reference_links": [
+        {
+            "id": "Bello_et+al_2017_a",
+            "entry": "Irwan Bello, Barret Zoph, Vijay Vasudevan, and Quoc V Le. Neural optimizer search with reinforcement learning. In International Conference on Machine Learning, pp. 459\u2013468, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bello%2C%20Irwan%20Zoph%2C%20Barret%20Vasudevan%2C%20Vijay%20Le%2C%20Quoc%20V.%20Neural%20optimizer%20search%20with%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bello%2C%20Irwan%20Zoph%2C%20Barret%20Vasudevan%2C%20Vijay%20Le%2C%20Quoc%20V.%20Neural%20optimizer%20search%20with%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Bishop_2006_a",
+            "entry": "Christopher M. Bishop. Pattern Recognition and Machine Learning (Information Science and Statistics). Springer-Verlag, Berlin, Heidelberg, 2006. ISBN 0387310738.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Christopher%20M.%20Pattern%20Recognition%20and%20Machine%20Learning%20%28Information%20Science%20and%20Statistics%29%202006"
+        },
+        {
+            "id": "Bracken_1973_a",
+            "entry": "Jerome Bracken and James T. McGill. Mathematical Programs with Optimization Problems in the Constraints. Operations Research, 21:37\u201344, 1973.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bracken%2C%20Jerome%20McGill%2C%20James%20T.%20Mathematical%20Programs%20with%20Optimization%20Problems%20in%20the%20Constraints%201973",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bracken%2C%20Jerome%20McGill%2C%20James%20T.%20Mathematical%20Programs%20with%20Optimization%20Problems%20in%20the%20Constraints%201973"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Liang-Chieh Chen, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig Adam. Encoderdecoder with atrous separable convolution for semantic image segmentation. In ECCV, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Liang-Chieh%20Zhu%2C%20Yukun%20Papandreou%2C%20George%20Schroff%2C%20Florian%20Encoderdecoder%20with%20atrous%20separable%20convolution%20for%20semantic%20image%20segmentation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Liang-Chieh%20Zhu%2C%20Yukun%20Papandreou%2C%20George%20Schroff%2C%20Florian%20Encoderdecoder%20with%20atrous%20separable%20convolution%20for%20semantic%20image%20segmentation%202018"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Yi-Hsin Chen, Wei-Yu Chen, Yu-Ting Chen, Bo-Cheng Tsai, Yu-Chiang Frank Wang, and Min Sun. No more discrimination: Cross city adaptation of road scene segmenters. In The IEEE International Conference on Computer Vision (ICCV), Oct 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Yi-Hsin%20Chen%2C%20Wei-Yu%20Chen%2C%20Yu-Ting%20Tsai%2C%20Bo-Cheng%20No%20more%20discrimination%3A%20Cross%20city%20adaptation%20of%20road%20scene%20segmenters%202017-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Yi-Hsin%20Chen%2C%20Wei-Yu%20Chen%2C%20Yu-Ting%20Tsai%2C%20Bo-Cheng%20No%20more%20discrimination%3A%20Cross%20city%20adaptation%20of%20road%20scene%20segmenters%202017-10"
+        },
+        {
+            "id": "Colson_et+al_2007_a",
+            "entry": "Beno\u0131t Colson, Patrice Marcotte, and Gilles Savard. An overview of bilevel optimization. Annals of Operations Research, 153(1):235\u2013256, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Colson%2C%20Beno%C4%B1t%20Marcotte%2C%20Patrice%20Savard%2C%20Gilles%20An%20overview%20of%20bilevel%20optimization%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Colson%2C%20Beno%C4%B1t%20Marcotte%2C%20Patrice%20Savard%2C%20Gilles%20An%20overview%20of%20bilevel%20optimization%202007"
+        },
+        {
+            "id": "Cordts_et+al_2016_a",
+            "entry": "Marius Cordts, Mohamed Omran, Sebastian Ramos, Timo Rehfeld, Markus Enzweiler, Rodrigo Benenson, Uwe Franke, Stefan Roth, and Bernt Schiele. The cityscapes dataset for semantic urban scene understanding. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 3213\u20133223, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cordts%2C%20Marius%20Omran%2C%20Mohamed%20Ramos%2C%20Sebastian%20Rehfeld%2C%20Timo%20The%20cityscapes%20dataset%20for%20semantic%20urban%20scene%20understanding%202016"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, pp. 248\u2013255.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Dosovitskiy_et+al_2017_a",
+            "entry": "Alexey Dosovitskiy, German Ros, Felipe Codevilla, Antonio Lopez, and Vladlen Koltun. Carla: An open urban driving simulator. arXiv preprint arXiv:1711.03938, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.03938"
+        },
+        {
+            "id": "Epic-Games_2018_a",
+            "entry": "Epic-Games. Epic Games unreal engine 4. https://www.unrealengine.com, 2018. Accessed:2018-09-27.",
+            "url": "https://www.unrealengine.com"
+        },
+        {
+            "id": "Fan_et+al_2018_a",
+            "entry": "Yang Fan, Fei Tian, Tao Qin, Xiang-Yang Li, and Tie-Yan Liu. Learning to teach. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=HJewuJWCZ.",
+            "url": "https://openreview.net/forum?id=HJewuJWCZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fan%2C%20Yang%20Tian%2C%20Fei%20Qin%2C%20Tao%20Li%2C%20Xiang-Yang%20Learning%20to%20teach%202018"
+        },
+        {
+            "id": "Gaidon_et+al_2016_a",
+            "entry": "Adrien Gaidon, Qiao Wang, Yohann Cabon, and Eleonora Vig. Virtual worlds as proxy for multiobject tracking analysis. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 4340\u20134349, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gaidon%2C%20Adrien%20Wang%2C%20Qiao%20Cabon%2C%20Yohann%20Vig%2C%20Eleonora%20Virtual%20worlds%20as%20proxy%20for%20multiobject%20tracking%20analysis%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gaidon%2C%20Adrien%20Wang%2C%20Qiao%20Cabon%2C%20Yohann%20Vig%2C%20Eleonora%20Virtual%20worlds%20as%20proxy%20for%20multiobject%20tracking%20analysis%202016"
+        },
+        {
+            "id": "Ganin_et+al_2016_a",
+            "entry": "Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo Larochelle, Francois Laviolette, Mario Marchand, and Victor Lempitsky. Domain-adversarial training of neural networks. J. Mach. Learn. Res., 17(1):2096\u20132030, January 2016. ISSN 1532-4435. URL http://dl.acm.org/citation.cfm?id=2946645.2946704.",
+            "url": "http://dl.acm.org/citation.cfm?id=2946645.2946704",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganin%2C%20Yaroslav%20Ustinova%2C%20Evgeniya%20Ajakan%2C%20Hana%20Germain%2C%20Pascal%20Domain-adversarial%20training%20of%20neural%20networks%202016-01"
+        },
+        {
+            "id": "Ganin_et+al_2018_a",
+            "entry": "Yaroslav Ganin, Tejas Kulkarni, Igor Babuschkin, S. M. Ali Eslami, and Oriol Vinyals. Synthesizing programs for images using reinforced adversarial learning. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ganin%2C%20Yaroslav%20Kulkarni%2C%20Tejas%20Igor%20Babuschkin%2C%20S.M.Ali%20Eslami%20Vinyals%2C%20Oriol%20Synthesizing%20programs%20for%20images%20using%20reinforced%20adversarial%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganin%2C%20Yaroslav%20Kulkarni%2C%20Tejas%20Igor%20Babuschkin%2C%20S.M.Ali%20Eslami%20Vinyals%2C%20Oriol%20Synthesizing%20programs%20for%20images%20using%20reinforced%20adversarial%20learning%202018"
+        },
+        {
+            "id": "Geiger_et+al_2013_a",
+            "entry": "Andreas Geiger, Philip Lenz, Christoph Stiller, and Raquel Urtasun. Vision meets robotics: The kitti dataset. The International Journal of Robotics Research, 32(11):1231\u20131237, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Geiger%2C%20Andreas%20Lenz%2C%20Philip%20Stiller%2C%20Christoph%20Urtasun%2C%20Raquel%20Vision%20meets%20robotics%3A%20The%20kitti%20dataset%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Geiger%2C%20Andreas%20Lenz%2C%20Philip%20Stiller%2C%20Christoph%20Urtasun%2C%20Raquel%20Vision%20meets%20robotics%3A%20The%20kitti%20dataset%202013"
+        },
+        {
+            "id": "Louppe_2017_a",
+            "entry": "Gilles Louppe and Kyle Cranmer. Adversarial variational optimization of non-differentiable simulators. arXiv preprint arXiv:1707.07113, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.07113"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher D. Manning. Effective approaches to attentionbased neural machine translation. In Empirical Methods in Natural Language Processing (EMNLP), pp. 1412\u20131421, Lisbon, Portugal, September 2015. Association for Computational Linguistics. URL http://aclweb.org/anthology/D15-1166.",
+            "url": "http://aclweb.org/anthology/D15-1166",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attentionbased%20neural%20machine%20translation%202015-09"
+        },
+        {
+            "id": "Mueller_et+al_2017_a",
+            "entry": "Matthias Mueller, Vincent Casser, Jean Lahoud, Neil Smith, and Bernard Ghanem. Ue4sim: A photo-realistic simulator for computer vision applications. arXiv preprint arXiv:1708.05869, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.05869"
+        },
+        {
+            "id": "Ros_et+al_2016_a",
+            "entry": "German Ros, Laura Sellart, Joanna Materzynska, David Vazquez, and Antonio M Lopez. The synthia dataset: A large collection of synthetic images for semantic segmentation of urban scenes. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 3234\u20133243, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ros%2C%20German%20Sellart%2C%20Laura%20Materzynska%2C%20Joanna%20Vazquez%2C%20David%20The%20synthia%20dataset%3A%20A%20large%20collection%20of%20synthetic%20images%20for%20semantic%20segmentation%20of%20urban%20scenes%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ros%2C%20German%20Sellart%2C%20Laura%20Materzynska%2C%20Joanna%20Vazquez%2C%20David%20The%20synthia%20dataset%3A%20A%20large%20collection%20of%20synthetic%20images%20for%20semantic%20segmentation%20of%20urban%20scenes%202016"
+        },
+        {
+            "id": "Sakaridis_et+al_2018_a",
+            "entry": "Christos Sakaridis, Dengxin Dai, and Luc Van Gool. Semantic foggy scene understanding with synthetic data. International Journal of Computer Vision, 126(9):973\u2013992, 2018. doi: 10.1007/ s11263-018-1072-8.",
+            "crossref": "https://dx.doi.org/10.1007/s11263-018-1072-8",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11263-018-1072-8"
+        },
+        {
+            "id": "Salimans_et+al_2017_a",
+            "entry": "Tim Salimans, Jonathan Ho, Xi Chen, Szymon Sidor, and Ilya Sutskever. Evolution strategies as a scalable alternative to reinforcement learning. arXiv preprint arXiv:1703.03864, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.03864"
+        },
+        {
+            "id": "Tsai_et+al_2018_a",
+            "entry": "Yi-Hsuan Tsai, Wei-Chih Hung, Samuel Schulter, Kihyuk Sohn, Ming-Hsuan Yang, and Manmohan Chandraker. Learning to adapt structured output space for semantic segmentation. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tsai%2C%20Yi-Hsuan%20Hung%2C%20Wei-Chih%20Schulter%2C%20Samuel%20Sohn%2C%20Kihyuk%20Learning%20to%20adapt%20structured%20output%20space%20for%20semantic%20segmentation%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tsai%2C%20Yi-Hsuan%20Hung%2C%20Wei-Chih%20Schulter%2C%20Samuel%20Sohn%2C%20Kihyuk%20Learning%20to%20adapt%20structured%20output%20space%20for%20semantic%20segmentation%202018-06"
+        },
+        {
+            "id": "Williams_1992_a",
+            "entry": "Ronald J Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 8(3-4):229\u2013256, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992"
+        },
+        {
+            "id": "Zoph_2016_a",
+            "entry": "Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. arXiv preprint arXiv:1611.01578, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01578"
+        }
+    ]
+}

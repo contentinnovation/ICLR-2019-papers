@@ -1,0 +1,315 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "FEATURE INTERTWINER FOR OBJECT DETECTION",
+        "author": "Hongyang Li, Bo Dai, Shaoshuai Shi, Wanli Ouyang, & Xiaogang Wang, 1Department of Electronic Engineering The Chinese University of Hong Kong {yangli,ssshi,xgwang}@ee.cuhk.edu.hk 2Department of Information Engineering The Chinese University of Hong Kong bdai@ie.cuhk.edu.hk 3The University of Sydney, SenseTime Computer Vision Research Group wanli.ouyang@sydney.edu.au",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SyxZJn05YX"
+        },
+        "abstract": "A well-trained model should classify objects with a unanimous score for every category. This requires the high-level semantic features should be alike among samples, despite a wide span in resolution, texture, deformation, etc. Previous works focus on re-designing the loss function or proposing new regularization constraints on the loss. In this paper, we address this problem via a new perspective. For each category, it is assumed that there are two sets in the feature space: one with more reliable information and the other with a less reliable source. We argue that the reliable set could guide the feature learning of the less reliable set during training - in the spirit of student mimicking teacher\u2019s behavior and thus pushing towards a more compact class centroid in the high-dimensional space. Such a scheme also benefits the reliable set since samples become closer within the same category - implying that it is easier for the classifier to identify. We refer to this mutual learning process as feature intertwiner and embed the spirit into object detection. It is well-known that objects of low resolution are more difficult to detect due to the loss of detailed information during network forward pass. We thus regard objects of high resolution as the reliable set and objects of low resolution as the less reliable set. Specifically, an intertwiner is achieved by minimizing the distribution divergence between two sets. We design a historical buffer to represent all previous samples in the reliable set and utilize them to guide the feature learning of the less reliable set. The design of obtaining an effective feature representation for the reliable set is further investigated, where we introduce the optimal transport (OT) algorithm into the framework. Samples in the less reliable set are better aligned with the reliable set with aid of OT metric. Incorporated with such a plug-and-play intertwiner, we achieve an evident improvement over previous state-of-the-arts on the COCO object detection benchmark."
+    },
+    "keywords": [
+        {
+            "term": "high level",
+            "url": "https://en.wikipedia.org/wiki/high_level"
+        },
+        {
+            "term": "feature space",
+            "url": "https://en.wikipedia.org/wiki/feature_space"
+        },
+        {
+            "term": "high dimensional",
+            "url": "https://en.wikipedia.org/wiki/high_dimensional"
+        },
+        {
+            "term": "learning process",
+            "url": "https://en.wikipedia.org/wiki/learning_process"
+        },
+        {
+            "term": "object detection",
+            "url": "https://en.wikipedia.org/wiki/object_detection"
+        },
+        {
+            "term": "dimensional space",
+            "url": "https://en.wikipedia.org/wiki/dimensional_space"
+        },
+        {
+            "term": "semantic feature",
+            "url": "https://en.wikipedia.org/wiki/semantic_feature"
+        },
+        {
+            "term": "new perspective",
+            "url": "https://en.wikipedia.org/wiki/New_Perspective"
+        },
+        {
+            "term": "low resolution",
+            "url": "https://en.wikipedia.org/wiki/low_resolution"
+        },
+        {
+            "term": "feature learning",
+            "url": "https://en.wikipedia.org/wiki/feature_learning"
+        },
+        {
+            "term": "loss function",
+            "url": "https://en.wikipedia.org/wiki/loss_function"
+        },
+        {
+            "term": "optimal transport",
+            "url": "https://en.wikipedia.org/wiki/optimal_transport"
+        }
+    ],
+    "abbreviations": {
+        "OT": "optimal transport"
+    },
+    "highlights": [
+        "Classifying complex data in the high-dimensional feature space is the core of most machine learning problems, especially with the emergence of deep learning for better feature embedding (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\"><a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\">Li et al, 2018</a></a>)",
+        "We build on top of this choice and introduce a better alternative to build the connection between Pl and Pm|l, since the intertwiner is designed to guide the feature learning of the less reliable set on the current level",
+        "We evaluate InterNet on the object detection track of the challenging COCO benchmark (TsungYi Lin, 2015)",
+        "We propose a feature intertwiner module to leverage the features from a more reliable set to help guide the feature learning of another less reliable set",
+        "The intertwiner is applied on the object detection task, where a historical buffer is proposed to address the sample missing problem during one mini-batch and the optimal transport (OT) theory is introduced to enforce the similarity among the two sets",
+        "With aid of the feature intertwiner, we improve the detection performance by a large margin compared to previous state-of-the-arts, especially for small instances"
+    ],
+    "key_statements": [
+        "Classifying complex data in the high-dimensional feature space is the core of most machine learning problems, especially with the emergence of deep learning for better feature embedding (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a>; <a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\">Li et al, 2018</a>)",
+        "We provide a new perspective of addressing the detection of small objects - leveraging the feature guidance from high-resolution reliable samples",
+        "The input is directly the outcome of the RoI layer of the large-object feature maps Pm|l, which correspond to samples of higher level/resolution",
+        "Consider the large instances assigned to level l = 2, Pm indicates three stages m = 3, 4, 5. Among these large instances, some of them are deemed as small objects on higher level m - implying that those feature maps Pm might not carry enough information",
+        "We build on top of this choice and introduce a better alternative to build the connection between Pl and Pm|l, since the intertwiner is designed to guide the feature learning of the less reliable set on the current level",
+        "We evaluate InterNet on the object detection track of the challenging COCO benchmark (TsungYi Lin, 2015)",
+        "Increase from \u2217 to\u2217\u2217\n46.6 47.5 49.3 50.8 49.5 51.1 +0.8 (a) Baseline and proposal assignment strategy: intertwiner increases detection of both small and large objects compared to baseline",
+        "The additional cost to the overall model parameters is from the optimal transport module for each level; we find using just one conv. layer for the critic H and two conv. layers with small kernels for generator F is enough to achieve good result",
+        "We propose a feature intertwiner module to leverage the features from a more reliable set to help guide the feature learning of another less reliable set",
+        "The intertwiner is applied on the object detection task, where a historical buffer is proposed to address the sample missing problem during one mini-batch and the optimal transport (OT) theory is introduced to enforce the similarity among the two sets",
+        "With aid of the feature intertwiner, we improve the detection performance by a large margin compared to previous state-of-the-arts, especially for small instances"
+    ],
+    "summary": [
+        "Classifying complex data in the high-dimensional feature space is the core of most machine learning problems, especially with the emergence of deep learning for better feature embedding (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\"><a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\">Li et al, 2018</a></a>).",
+        "Pm|l is the input feature map of the reliable set for the RoI layer; m indicates higher level(s) than l.",
+        "The make-up unit is learned and optimized via the intertwiner unit, with aid of features from the large object set, which is shown in the upstream of Fig. 2.",
+        "The input is directly the outcome of the RoI layer of the large-object feature maps Pm|l, which correspond to samples of higher level/resolution.",
+        "Note that the feature intertwiner is proposed to optimize the feature learning of the less reliable set for each level.",
+        "How to acquire the input source, denoted as P, i.e., feature maps of large proposals, to be fed into the RoI layer on current level l?",
+        "Option (a): P = Pl. The most straightforward manner would be using features on current level as input for large object set.",
+        "Among these large instances, some of them are deemed as small objects on higher level m - implying that those feature maps Pm might not carry enough information.",
+        "We build on top of this choice and introduce a better alternative to build the connection between Pl and Pm|l, since the intertwiner is designed to guide the feature learning of the less reliable set on the current level.",
+        "Given features maps Pm from higher level, the generator network F up-samples them to match the size of Pl and outputs Pm|l.",
+        "Note that our method enhances the detection of large objects, since the last level participates in the intertwiner update by comparing its similarity feature to the history buffer, which requires features of the same category to be closer to each other.",
+        "46.6 47.5 49.3 50.8 49.5 51.1 +0.8 (a) Baseline and proposal assignment strategy: intertwiner increases detection of both small and large objects compared to baseline.",
+        "Statistics of large object features for one category cannot reflect the whole training set and it keeps alternating as network is updated.",
+        "The intertwiner is applied on the object detection task, where a historical buffer is proposed to address the sample missing problem during one mini-batch and the optimal transport (OT) theory is introduced to enforce the similarity among the two sets.",
+        "With aid of the feature intertwiner, we improve the detection performance by a large margin compared to previous state-of-the-arts, especially for small instances."
+    ],
+    "headline": "We address this problem via a new perspective",
+    "reference_links": [
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Lon Bottou. Wasserstein GAN. In arXiv preprint:1701.07875, 2017. 7",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07875"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Guobin Chen, Wongun Choi, Xiang Yu, Tony Han, and Manmohan Chandraker. Learning Efficient Object Detection Models with Knowledge Distillation. In NIPS, 2017. 5, 12",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Guobin%20Choi%2C%20Wongun%20Yu%2C%20Xiang%20Han%2C%20Tony%20Learning%20Efficient%20Object%20Detection%20Models%20with%20Knowledge%20Distillation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Guobin%20Choi%2C%20Wongun%20Yu%2C%20Xiang%20Han%2C%20Tony%20Learning%20Efficient%20Object%20Detection%20Models%20with%20Knowledge%20Distillation%202017"
+        },
+        {
+            "id": "Cuturi_2013_a",
+            "entry": "Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. In NIPS, 2013. 6, 13",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cuturi%2C%20Marco%20Sinkhorn%20distances%3A%20Lightspeed%20computation%20of%20optimal%20transport%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cuturi%2C%20Marco%20Sinkhorn%20distances%3A%20Lightspeed%20computation%20of%20optimal%20transport%202013"
+        },
+        {
+            "id": "Dai_et+al_2016_a",
+            "entry": "Jifeng Dai, Yi Li, Kaiming He, and Jian Sun. R-FCN: Object Detection via Region-based Fully Convolutional Networks. In NIPS, 2016. 3, 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Jifeng%20Li%2C%20Yi%20He%2C%20Kaiming%20Sun%2C%20Jian%20R-FCN%3A%20Object%20Detection%20via%20Region-based%20Fully%20Convolutional%20Networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Jifeng%20Li%2C%20Yi%20He%2C%20Kaiming%20Sun%2C%20Jian%20R-FCN%3A%20Object%20Detection%20via%20Region-based%20Fully%20Convolutional%20Networks%202016"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei. ImageNet: A Large-Scale Hierarchical Image Database. In CVPR, 2009. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20ImageNet%3A%20A%20Large-Scale%20Hierarchical%20Image%20Database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20ImageNet%3A%20A%20Large-Scale%20Hierarchical%20Image%20Database%202009"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Cheng-Yang Fu, Wei Liu, Ananth Ranga, Ambrish Tyagi, and Alexander C. Berg. DSSD: Deconvolutional Single Shot Detector. In arXiv preprint:1701.06659, 2017. 14",
+            "arxiv_url": "https://arxiv.org/pdf/1701.06659"
+        },
+        {
+            "id": "Genevay_et+al_2017_a",
+            "entry": "Aude Genevay, Gabriel Peyr, and Marco Cuturi. Learning generative models with sinkhorn divergences. In arXiv preprint:1706.00292, 2017. 6, 12, 13, 14",
+            "arxiv_url": "https://arxiv.org/pdf/1706.00292"
+        },
+        {
+            "id": "R-Cnn_2015_a",
+            "entry": "Ross Girshick. Fast R-CNN. In ICCV, 2015. 3, 4, 6, 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%20Girshick%20Fast%20RCNN%20In%20ICCV%202015%203%204%206%2014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%20Girshick%20Fast%20RCNN%20In%20ICCV%202015%203%204%206%2014"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Dollr, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch sgd: Training imagenet in 1 hour. arXiv preprint:1706.02677, 2017. 15",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In CVPR, 2016. 1, 3, 7, 12, 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Kaiming He, Georgia Gkioxari, Piotr Dollar, and Ross Girshick. Mask R-CNN. In ICCV, 2017. 3, 7, 9, 13, 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Dollar%20and%20Ross%20Girshick%20Mask%20RCNN%20In%20ICCV%202017%203%207%209%2013%2014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiming%20He%20Georgia%20Gkioxari%20Piotr%20Dollar%20and%20Ross%20Girshick%20Mask%20RCNN%20In%20ICCV%202017%203%207%209%2013%2014"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Jonathan Huang, Vivek Rathod, Chen Sun, Menglong Zhu, Anoop Korattikara, Alireza Fathi, Ian Fischer, Zbigniew Wojna, Yang Song, Sergio Guadarrama, and Kevin Murphy. Speed/accuracy trade-offs for modern convolutional object detectors. In CVPR, 2017. 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Jonathan%20Rathod%2C%20Vivek%20Sun%2C%20Chen%20Zhu%2C%20Menglong%20Speed/accuracy%20trade-offs%20for%20modern%20convolutional%20object%20detectors%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Jonathan%20Rathod%2C%20Vivek%20Sun%2C%20Chen%20Zhu%2C%20Menglong%20Speed/accuracy%20trade-offs%20for%20modern%20convolutional%20object%20detectors%202017"
+        },
+        {
+            "id": "Janocha_2017_a",
+            "entry": "Katarzyna Janocha and Wojciech Marian Czarneck. On loss functions for deep neural networks in classification. 2017. 1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Janocha%2C%20Katarzyna%20Czarneck%2C%20Wojciech%20Marian%20On%20loss%20functions%20for%20deep%20neural%20networks%20in%20classification%202017"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. In Technical Report, 2009. 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images.%20In%20Technical%20Report%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E. Hinton. Imagenet classification with deep convolutional neural networks. In NIPS, 2012. 1, 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Kumar_et+al_2010_a",
+            "entry": "M. Pawan Kumar, Ben Packer, and Daphne Koller. Self-paced learning for latent variable models. In NIPS, 2010. 12",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kumar%2C%20M.Pawan%20Packer%2C%20Ben%20Koller%2C%20Daphne%20Self-paced%20learning%20for%20latent%20variable%20models%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kumar%2C%20M.Pawan%20Packer%2C%20Ben%20Koller%2C%20Daphne%20Self-paced%20learning%20for%20latent%20variable%20models%202010"
+        },
+        {
+            "id": "Li_et+al_0000_a",
+            "entry": "Hongyang Li, Yu Liu, Wanli Ouyang, and Xiaogang Wang. Zoom out-and-in network with map attention decision for region proposal and object detection. International Journal of Computer Vision. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Hongyang%20Liu%2C%20Yu%20Ouyang%2C%20Wanli%20Wang%2C%20Xiaogang%20Zoom%20out-and-in%20network%20with%20map%20attention%20decision%20for%20region%20proposal%20and%20object%20detection",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Hongyang%20Liu%2C%20Yu%20Ouyang%2C%20Wanli%20Wang%2C%20Xiaogang%20Zoom%20out-and-in%20network%20with%20map%20attention%20decision%20for%20region%20proposal%20and%20object%20detection"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Hongyang Li, Xiaoyang Guo, Bo Dai, Wanli Ouyang, and Xiaogang Wang. Neural network encapsulation. In ECCV, 2018. 1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hongyang%20Li%20Xiaoyang%20Guo%20Bo%20Dai%20Wanli%20Ouyang%20and%20Xiaogang%20Wang%20Neural%20network%20encapsulation%20In%20ECCV%202018%201",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hongyang%20Li%20Xiaoyang%20Guo%20Bo%20Dai%20Wanli%20Ouyang%20and%20Xiaogang%20Wang%20Neural%20network%20encapsulation%20In%20ECCV%202018%201"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Jianan Li, Yunchao Wei, Xiaodan Liang, Jian Dong, Tingfa Xu, Jiashi Feng, and Shuicheng Yan. Attentive Contexts for Object Detection. In arXiv preprint:1603.07415, 2016. 3",
+            "arxiv_url": "https://arxiv.org/pdf/1603.07415"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Tsung-Yi Lin, Piotr Dollr, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie. Feature pyramid networks for object detection. In CVPR, 2017a. 3, 7, 12, 14, 15",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Tsung-Yi%20Dollr%2C%20Piotr%20Girshick%2C%20Ross%20He%2C%20Kaiming%20Feature%20pyramid%20networks%20for%20object%20detection%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Tsung-Yi%20Dollr%2C%20Piotr%20Girshick%2C%20Ross%20He%2C%20Kaiming%20Feature%20pyramid%20networks%20for%20object%20detection%202017"
+        },
+        {
+            "id": "Lin_et+al_2017_b",
+            "entry": "Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollr. Focal loss for dense object detection. In ICCV, 2017b. 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Tsung-Yi%20Goyal%2C%20Priya%20Girshick%2C%20Ross%20He%2C%20Kaiming%20Focal%20loss%20for%20dense%20object%20detection%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Tsung-Yi%20Goyal%2C%20Priya%20Girshick%2C%20Ross%20He%2C%20Kaiming%20Focal%20loss%20for%20dense%20object%20detection%202017"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, and Scott Reed. Ssd: Single shot multibox detector. In arXiv preprint:1512.02325, 2015. 3, 14, 15",
+            "arxiv_url": "https://arxiv.org/pdf/1512.02325"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Weiyang Liu, Yandong Wen, Zhiding Yu, Ming Li, Bhiksha Raj, and Le Song. Sphereface: Deep hypersphere embedding for face recognition. In CVPR, 2017a. 1, 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Weiyang%20Wen%2C%20Yandong%20Yu%2C%20Zhiding%20Li%2C%20Ming%20Sphereface%3A%20Deep%20hypersphere%20embedding%20for%20face%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Weiyang%20Wen%2C%20Yandong%20Yu%2C%20Zhiding%20Li%2C%20Ming%20Sphereface%3A%20Deep%20hypersphere%20embedding%20for%20face%20recognition%202017"
+        },
+        {
+            "id": "Liu_et+al_2017_b",
+            "entry": "Yu Liu, Hongyang Li, and Xiaogang Wang. Rethinking feature discrimination and polymerization for large-scale recognition. In NIPS Deep Learning Workshop, 2017b. 1, 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Yu%20Li%2C%20Hongyang%20Wang%2C%20Xiaogang%20Rethinking%20feature%20discrimination%20and%20polymerization%20for%20large-scale%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Yu%20Li%2C%20Hongyang%20Wang%2C%20Xiaogang%20Rethinking%20feature%20discrimination%20and%20polymerization%20for%20large-scale%20recognition%202017"
+        },
+        {
+            "id": "Lu_et+al_2017_a",
+            "entry": "Ying Lu, Liming Chen, and Alexandre Saidi. Optimal transport for deep joint transfer learning. In arXiv preprint:1709.02995, 2017. 12",
+            "arxiv_url": "https://arxiv.org/pdf/1709.02995"
+        },
+        {
+            "id": "Mottaghi_et+al_2014_a",
+            "entry": "Roozbeh Mottaghi, Xianjie Chen, Xiaobai Liu, Nam-Gyu Cho, Seong-Whan Lee, Sanja Fidler, Raquel Urtasun, and Alan Yuille. The role of context for object detection and semantic segmentation in the wild. In CVPR, 2014. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mottaghi%2C%20Roozbeh%20Chen%2C%20Xianjie%20Liu%2C%20Xiaobai%20Cho%2C%20Nam-Gyu%20The%20role%20of%20context%20for%20object%20detection%20and%20semantic%20segmentation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mottaghi%2C%20Roozbeh%20Chen%2C%20Xianjie%20Liu%2C%20Xiaobai%20Cho%2C%20Nam-Gyu%20The%20role%20of%20context%20for%20object%20detection%20and%20semantic%20segmentation%202014"
+        },
+        {
+            "id": "Peyr_2018_a",
+            "entry": "Gabriel Peyr and Marco Cuturi. Computational optimal transport. In arXiv preprint:1803.00567, 2018. 6",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00567"
+        },
+        {
+            "id": "Redmon_2016_a",
+            "entry": "Joseph Redmon and Ali Farhadi. Yolo9000: Better, faster, stronger. In arXiv preprint:1612.08242, 2016. 3, 14",
+            "arxiv_url": "https://arxiv.org/pdf/1612.08242"
+        },
+        {
+            "id": "Redmon_et+al_2016_b",
+            "entry": "Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi. You only look once: Unified, real-time object detection. In CVPR, 2016. 15",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Redmon%2C%20Joseph%20Divvala%2C%20Santosh%20Girshick%2C%20Ross%20Farhadi%2C%20Ali%20You%20only%20look%20once%3A%20Unified%2C%20real-time%20object%20detection%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Redmon%2C%20Joseph%20Divvala%2C%20Santosh%20Girshick%2C%20Ross%20Farhadi%2C%20Ali%20You%20only%20look%20once%3A%20Unified%2C%20real-time%20object%20detection%202016"
+        },
+        {
+            "id": "Ren_et+al_2015_a",
+            "entry": "Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun. Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks. In NIPS, 2015. 3, 7",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20R-CNN%3A%20Towards%20Real-Time%20Object%20Detection%20with%20Region%20Proposal%20Networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20R-CNN%3A%20Towards%20Real-Time%20Object%20Detection%20with%20Region%20Proposal%20Networks%202015"
+        },
+        {
+            "id": "Salimans_et+al_2018_a",
+            "entry": "Tim Salimans, Han Zhang, Alec Radford, and Dimitris Metaxas. Improving GANs using optimal transport. In ICLR, 2018. 12, 14",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Zhang%2C%20Han%20Radford%2C%20Alec%20Metaxas%2C%20Dimitris%20Improving%20GANs%20using%20optimal%20transport%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Zhang%2C%20Han%20Radford%2C%20Alec%20Metaxas%2C%20Dimitris%20Improving%20GANs%20using%20optimal%20transport%202018"
+        },
+        {
+            "id": "Shrivastava_et+al_2016_a",
+            "entry": "Abhinav Shrivastava, Rahul Sukthankar, Jitendra Malik, and Abhinav Gupta. Beyond skip connections: Top-down modulation for object detection. In arXiv preprint:1612.06851, 2016. 3, 14",
+            "arxiv_url": "https://arxiv.org/pdf/1612.06851"
+        },
+        {
+            "id": "Simonyan_2015_a",
+            "entry": "K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20K.%20Zisserman%2C%20A.%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simonyan%2C%20K.%20Zisserman%2C%20A.%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015"
+        },
+        {
+            "id": "Sinkhorn_0000_a",
+            "entry": "Richard Sinkhorn. A relationship between arbitrary positive matrices and doubly stochastic matrices. Ann. Math. Statist., 35(2):876\u2013879, 06 1964. 6",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sinkhorn%2C%20Richard%20A%20relationship%20between%20arbitrary%20positive%20matrices%20and%20doubly%20stochastic%20matrices",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sinkhorn%2C%20Richard%20A%20relationship%20between%20arbitrary%20positive%20matrices%20and%20doubly%20stochastic%20matrices"
+        },
+        {
+            "id": "Serge_2015_a",
+            "entry": "Serge Belongie Lubomir Bourdev Ross Girshick James Hays Pietro Perona Deva Ramanan C. Lawrence Zitnick Piotr Dollar Tsung-Yi Lin, Michael Maire. Microsoft COCO: Common Objects in Context. In arXiv preprint:1405.0312, 2015. 3, 7",
+            "arxiv_url": "https://arxiv.org/pdf/1405.0312"
+        },
+        {
+            "id": "Van_2008_a",
+            "entry": "Laurens van der Maaten and Geoffrey Hinton. Visualizing data using t-SNE. Journal of Machine Learning Research, 9:2579\u20132605, 2008. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-SNE%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-SNE%202008"
+        },
+        {
+            "id": "Wen_et+al_2016_a",
+            "entry": "Yandong Wen, Kaipeng Zhang, Zhifeng Li, and Yu Qiao. A discriminative feature learning approach for deep face recognition. In ECCV, 2016. 1, 3, 12",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Yandong%20Zhang%2C%20Kaipeng%20Li%2C%20Zhifeng%20Qiao%2C%20Yu%20A%20discriminative%20feature%20learning%20approach%20for%20deep%20face%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Yandong%20Zhang%2C%20Kaipeng%20Li%2C%20Zhifeng%20Qiao%2C%20Yu%20A%20discriminative%20feature%20learning%20approach%20for%20deep%20face%20recognition%202016"
+        }
+    ]
+}

@@ -1,0 +1,358 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Feature-wise transformations",
+        "author": "Vincent Dumoulin, Ethan Perez, Nathan Schucher, Florian Strub, Harm Vries, Aaron Courville, Yoshua Bengio",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1gMCsAqY7",
+            "doi": "10.23915/distill.00011"
+        },
+        "journal": "Distill",
+        "volume": "3",
+        "abstract": "We present a simple and general method to train a single neural network executable at different widths1, permitting instant and adaptive accuracy-efficiency trade-offs at runtime. Instead of training individual networks with different width configurations, we train a shared network with switchable batch normalization. At runtime, the network can adjust its width on the fly according to on-device benchmarks and resource constraints, rather than downloading and offloading different models. Our trained networks, named slimmable neural networks, achieve similar (and in many cases better) ImageNet classification accuracy than individually trained models of MobileNet v1, MobileNet v2, ShuffleNet and ResNet-50 at different widths respectively. We also demonstrate better performance of slimmable models compared with individual ones across a wide range of applications including COCO bounding-box object detection, instance segmentation and person keypoint detection without tuning hyper-parameters. Lastly we visualize and discuss the learned features of slimmable networks. Code and models are available at: https://github.com/JiahuiYu/slimmable_networks."
+    },
+    "keywords": [
+        {
+            "term": "response time",
+            "url": "https://en.wikipedia.org/wiki/response_time"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "object detection",
+            "url": "https://en.wikipedia.org/wiki/object_detection"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "Average Precision",
+            "url": "https://en.wikipedia.org/wiki/Average_Precision"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "batch normalization",
+            "url": "https://en.wikipedia.org/wiki/batch_normalization"
+        }
+    ],
+    "abbreviations": {
+        "SGD": "stochastic gradient descent",
+        "AP": "Average Precision"
+    },
+    "highlights": [
+        "Deep neural networks are prevailing in applications on mobile phones, augmented reality devices and autonomous cars",
+        "We propose a simple and effective approach, switchable batch normalization, that privatizes batch normalization for different switches of a slimmable network",
+        "Batch Normalization usually comes with two additional learnable scale and bias parameter to ensure same representation space (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a>). These two parameters may able to act as conditional parameters for different switches, since the computation graph of a slimmable network depends on the width configuration",
+        "We introduced slimmable networks that permit instant and adaptive accuracy-efficiency trade-offs at runtime",
+        "The proposed slimmable networks and slimmable training could be further applied to unsupervised learning and reinforcement learning, and may help to related fields such as network pruning and model distillation"
+    ],
+    "key_statements": [
+        "Deep neural networks are prevailing in applications on mobile phones, augmented reality devices and autonomous cars",
+        "Automated neural architecture search methods (<a class=\"ref-link\" id=\"cTan_et+al_2018_a\" href=\"#rTan_et+al_2018_a\">Tan et al, 2018</a>) integrate on-device latency into search objectives by running models on a specific phone. At runtime these networks are not re-configurable to adapt across different devices given a same response time budget",
+        "The question remains: Given budgets of resources, how to instantly, adaptively and efficiently trade off between accuracy and latency for neural networks at runtime? In this work we introduce slimmable neural networks, a new class of networks executable at different widths, as a general solution to trade off between accuracy and latency on the fly",
+        "Figure 1 shows an example of a slimmable network that can switch between four model variants with different numbers of active channels",
+        "We propose a simple and effective approach, switchable batch normalization, that privatizes batch normalization for different switches of a slimmable network",
+        "Batch Normalization usually comes with two additional learnable scale and bias parameter to ensure same representation space (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a>). These two parameters may able to act as conditional parameters for different switches, since the computation graph of a slimmable network depends on the width configuration",
+        "We first conduct comprehensive experiments on ImageNet classification task to show the effectiveness of switchable batch normalization for training slimmable neural networks",
+        "The training of slimmable models can be applied to convolutions, depthwise-separable convolutions (<a class=\"ref-link\" id=\"cChollet_2016_a\" href=\"#rChollet_2016_a\">Chollet, 2016</a>), group convolutions (<a class=\"ref-link\" id=\"cXie_et+al_2017_a\" href=\"#rXie_et+al_2017_a\">Xie et al, 2017</a>), pooling layers, fully-connectted layers, residual connections, feature concatenations and many other building blocks of deep neural networks.\n4.2",
+        "The results show that a slimmable network with more switches have similar performance, demonstrating the scalability of our proposed approach",
+        "We introduced slimmable networks that permit instant and adaptive accuracy-efficiency trade-offs at runtime",
+        "The proposed slimmable networks and slimmable training could be further applied to unsupervised learning and reinforcement learning, and may help to related fields such as network pruning and model distillation"
+    ],
+    "summary": [
+        "Deep neural networks are prevailing in applications on mobile phones, augmented reality devices and autonomous cars.",
+        "Figure 1 shows an example of a slimmable network that can switch between four model variants with different numbers of active channels.",
+        "In contrast to other solutions above, slimmable networks have several advantages: (1) For different conditions, a single model is trained, benchmarked and deployed.",
+        "Training neural networks with multiple switches has an extremely low testing accuracy around 0.1% for 1000-class ImageNet classification.",
+        "This discrepancy of feature mean and variance across different switches leads to inaccurate statistics of shared Batch Normalization layers (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a>), an important training stabilizer.",
+        "We propose a simple and effective approach, switchable batch normalization, that privatizes batch normalization for different switches of a slimmable network.",
+        "These two parameters may able to act as conditional parameters for different switches, since the computation graph of a slimmable network depends on the width configuration.",
+        "We first conduct comprehensive experiments on ImageNet classification task to show the effectiveness of switchable batch normalization for training slimmable neural networks.",
+        "Compared with individually trained networks, we demonstrate similar performances of slimmable MobileNet v1 , [0.25, 0.5, 0.75, 1.0]\u00d7 MobileNet v2 [0.35, 0.5, 0.75, , 1.0]\u00d7 ShuffleNet [0.5, 1.0, 2.0]\u00d7 and ResNet-50 [0.25, 0.5, 0.75, 1.0]\u00d7 ([\u2217]\u00d7 denotes available switches).",
+        "Experiments show that slimmable networks achieve better performance than individual ones at different widths respectively.",
+        "Compared with the naive training approach, it solves the problem of feature aggregation inconsistency between different switches by independently normalizing the feature mean and variance during testing.",
+        "Our primary objective to train a slimmable neural network is to optimize its accuracy averaged from all switches.",
+        "The training of slimmable models can be applied to convolutions, depthwise-separable convolutions (<a class=\"ref-link\" id=\"cChollet_2016_a\" href=\"#rChollet_2016_a\">Chollet, 2016</a>), group convolutions (<a class=\"ref-link\" id=\"cXie_et+al_2017_a\" href=\"#rXie_et+al_2017_a\">Xie et al, 2017</a>), pooling layers, fully-connectted layers, residual connections, feature concatenations and many other building blocks of deep neural networks.",
+        "The results show that a slimmable network with more switches have similar performance, demonstrating the scalability of our proposed approach.",
+        "Following the settings of R-50-FPN-1\u00d7 (<a class=\"ref-link\" id=\"cLin_et+al_2016_a\" href=\"#rLin_et+al_2016_a\">Lin et al, 2016</a>; <a class=\"ref-link\" id=\"cGirshick_et+al_2018_a\" href=\"#rGirshick_et+al_2018_a\">Girshick et al, 2018</a>; <a class=\"ref-link\" id=\"cChen_et+al_2018_a\" href=\"#rChen_et+al_2018_a\">Chen et al, 2018</a>), pre-trained ResNet-50 models at different widths are fine-tuned and evaluated.",
+        "We train ResNet-50 with different width multipliers on ImageNet and fine-tune them on each task individually.",
+        "Switchable batch normalization is proposed to facilitate robust training of slimmable networks.",
+        "Compared with individually trained models with same width configurations, slimmable networks have similar or better performances on tasks of classification, object detection, instance segmentation and keypoints detection.",
+        "The proposed slimmable networks and slimmable training could be further applied to unsupervised learning and reinforcement learning, and may help to related fields such as network pruning and model distillation"
+    ],
+    "headline": "We present a simple and general method to train a single neural network executable at different widths1, permitting instant and adaptive accuracy-efficiency trade-offs at runtime",
+    "reference_links": [
+        {
+            "id": "Amthor_et+al_2016_a",
+            "entry": "Manuel Amthor, Erik Rodner, and Joachim Denzler. Impatient dnns-deep neural networks with dynamic time budgets. arXiv preprint arXiv:1610.02850, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.02850"
+        },
+        {
+            "id": "Anwar_et+al_2017_a",
+            "entry": "Sajid Anwar, Kyuyeon Hwang, and Wonyong Sung. Structured pruning of deep convolutional neural networks. ACM Journal on Emerging Technologies in Computing Systems (JETC), 13(3):32, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anwar%2C%20Sajid%20Hwang%2C%20Kyuyeon%20Sung%2C%20Wonyong%20Structured%20pruning%20of%20deep%20convolutional%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anwar%2C%20Sajid%20Hwang%2C%20Kyuyeon%20Sung%2C%20Wonyong%20Structured%20pruning%20of%20deep%20convolutional%20neural%20networks%202017"
+        },
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Kai Chen, Jiangmiao Pang, Jiaqi Wang, Yu Xiong, Xiaoxiao Li, Shuyang Sun, Wansen Feng, Ziwei Liu, Jianping Shi, Wanli Ouyang, Chen Change Loy, and Dahua Lin. mmdetection. https://github.com/open-mmlab/mmdetection, 2018.",
+            "url": "https://github.com/open-mmlab/mmdetection"
+        },
+        {
+            "id": "Chollet_2016_a",
+            "entry": "Francois Chollet. Xception: Deep learning with depthwise separable convolutions. arXiv preprint arXiv:1610.02357, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.02357"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, pp. 248\u2013255.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Dumoulin_et+al_2016_a",
+            "entry": "Vincent Dumoulin, Jonathon Shlens, and Manjunath Kudlur. A learned representation for artistic style. arXiv preprint arXiv:1610.07629, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.07629"
+        },
+        {
+            "id": "Dumoulin_et+al_2018_a",
+            "entry": "Vincent Dumoulin, Ethan Perez, Nathan Schucher, Florian Strub, Harm de Vries, Aaron Courville, and Yoshua Bengio. Feature-wise transformations. Distill, 2018. doi: 10.23915/distill.00011. https://distill.pub/2018/feature-wise-transformations.",
+            "crossref": "https://dx.doi.org/10.23915/distill.00011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.23915/distill.00011"
+        },
+        {
+            "id": "Girshick_et+al_2014_a",
+            "entry": "Ross Girshick, Jeff Donahue, Trevor Darrell, and Jitendra Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 580\u2013587, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Girshick%2C%20Ross%20Donahue%2C%20Jeff%20Darrell%2C%20Trevor%20Malik%2C%20Jitendra%20Rich%20feature%20hierarchies%20for%20accurate%20object%20detection%20and%20semantic%20segmentation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Girshick%2C%20Ross%20Donahue%2C%20Jeff%20Darrell%2C%20Trevor%20Malik%2C%20Jitendra%20Rich%20feature%20hierarchies%20for%20accurate%20object%20detection%20and%20semantic%20segmentation%202014"
+        },
+        {
+            "id": "Girshick_et+al_2018_a",
+            "entry": "Ross Girshick, Ilija Radosavovic, Georgia Gkioxari, Piotr Dollar, and Kaiming He. Detectron. https://github.com/facebookresearch/detectron, 2018.",
+            "url": "https://github.com/facebookresearch/detectron"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. arXiv preprint arXiv:1510.00149, 2015a.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "Han_et+al_2015_b",
+            "entry": "Song Han, Jeff Pool, John Tran, and William Dally. Learning both weights and connections for efficient neural network. In Advances in neural information processing systems, pp. 1135\u20131143, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Yihui He, Xiangyu Zhang, and Jian Sun. Channel pruning for accelerating very deep neural networks. In Computer Vision (ICCV), 2017 IEEE International Conference on, pp. 1398\u20131406. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Howard_et+al_2017_a",
+            "entry": "Andrew G Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, and Hartwig Adam. Mobilenets: Efficient convolutional neural networks for mobile vision applications. arXiv preprint arXiv:1704.04861, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04861"
+        },
+        {
+            "id": "Hu_et+al_2017_a",
+            "entry": "Hanzhang Hu, Debadeepta Dey, J Andrew Bagnell, and Martial Hebert. Anytime neural networks via joint optimization of auxiliary losses. arXiv preprint arXiv:1708.06832, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.06832"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Danlu Chen, Tianhong Li, Felix Wu, Laurens van der Maaten, and Kilian Q Weinberger. Multi-scale dense networks for resource efficient image classification. arXiv preprint arXiv:1703.09844, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.09844"
+        },
+        {
+            "id": "Huang_2017_b",
+            "entry": "Xun Huang and Serge J Belongie. Arbitrary style transfer in real-time with adaptive instance normalization. In ICCV, pp. 1510\u20131519, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Xun%20Belongie%2C%20Serge%20J.%20Arbitrary%20style%20transfer%20in%20real-time%20with%20adaptive%20instance%20normalization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Xun%20Belongie%2C%20Serge%20J.%20Arbitrary%20style%20transfer%20in%20real-time%20with%20adaptive%20instance%20normalization%202017"
+        },
+        {
+            "id": "Ignatov_et+al_2018_a",
+            "entry": "Andrey Ignatov, Radu Timofte, Przemyslaw Szczepaniak, William Chou, Ke Wang, Max Wu, Tim Hartley, and Luc Van Gool. Ai benchmark: Running deep neural networks on android smartphones. arXiv preprint arXiv:1810.01109, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.01109"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Kim_et+al_2017_a",
+            "entry": "Eunwoo Kim, Chanho Ahn, and Songhwai Oh. Learning nested sparse structures in deep neural networks. arXiv preprint arXiv:1712.03781, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.03781"
+        },
+        {
+            "id": "Kuen_et+al_2018_a",
+            "entry": "Jason Kuen, Xiangfei Kong, Zhe Lin, Gang Wang, Jianxiong Yin, Simon See, and Yap-Peng Tan. Stochastic downsampling for cost-adjustable inference and improved regularization in convolutional networks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 7929\u20137938, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kuen%2C%20Jason%20Kong%2C%20Xiangfei%20Lin%2C%20Zhe%20Wang%2C%20Gang%20Stochastic%20downsampling%20for%20cost-adjustable%20inference%20and%20improved%20regularization%20in%20convolutional%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kuen%2C%20Jason%20Kong%2C%20Xiangfei%20Lin%2C%20Zhe%20Wang%2C%20Gang%20Stochastic%20downsampling%20for%20cost-adjustable%20inference%20and%20improved%20regularization%20in%20convolutional%20networks%202018"
+        },
+        {
+            "id": "Li_et+al_0000_a",
+            "entry": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. Pruning filters for efficient convnets. arXiv preprint arXiv:1608.08710, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.08710"
+        },
+        {
+            "id": "Li_et+al_0000_b",
+            "entry": "Yanghao Li, Naiyan Wang, Jianping Shi, Jiaying Liu, and Xiaodi Hou. Revisiting batch normalization for practical domain adaptation. arXiv preprint arXiv:1603.04779, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.04779"
+        },
+        {
+            "id": "Li_et+al_0000_c",
+            "entry": "Yanghao Li, Naiyan Wang, Jiaying Liu, and Xiaodi Hou. Demystifying neural style transfer. arXiv preprint arXiv:1701.01036, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.01036"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Yijun Li, Chen Fang, Jimei Yang, Zhaowen Wang, Xin Lu, and Ming-Hsuan Yang. Universal style transfer via feature transforms. In Advances in Neural Information Processing Systems, pp. 386\u2013 396, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yijun%20Fang%2C%20Chen%20Yang%2C%20Jimei%20Wang%2C%20Zhaowen%20Universal%20style%20transfer%20via%20feature%20transforms%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yijun%20Fang%2C%20Chen%20Yang%2C%20Jimei%20Wang%2C%20Zhaowen%20Universal%20style%20transfer%20via%20feature%20transforms%202017"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Ji Lin, Yongming Rao, Jiwen Lu, and Jie Zhou. Runtime neural pruning. In Advances in Neural Information Processing Systems, pp. 2181\u20132191, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Ji%20Rao%2C%20Yongming%20Lu%2C%20Jiwen%20Zhou%2C%20Jie%20Runtime%20neural%20pruning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Ji%20Rao%2C%20Yongming%20Lu%2C%20Jiwen%20Zhou%2C%20Jie%20Runtime%20neural%20pruning%202017"
+        },
+        {
+            "id": "Lin_et+al_2016_a",
+            "entry": "Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie. Feature pyramid networks for object detection. arXiv preprint arXiv:1612.03144, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.03144"
+        },
+        {
+            "id": "Liu_2017_a",
+            "entry": "Lanlan Liu and Jia Deng. Dynamic deep neural networks: Optimizing accuracy-efficiency trade-offs by selective execution. arXiv preprint arXiv:1701.00299, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.00299"
+        },
+        {
+            "id": "Liu_et+al_2017_b",
+            "entry": "Zhuang Liu, Jianguo Li, Zhiqiang Shen, Gao Huang, Shoumeng Yan, and Changshui Zhang. Learning efficient convolutional networks through network slimming. In Computer Vision (ICCV), 2017 IEEE International Conference on, pp. 2755\u20132763. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017"
+        },
+        {
+            "id": "Luo_et+al_2017_a",
+            "entry": "Jian-Hao Luo, Jianxin Wu, and Weiyao Lin. Thinet: A filter level pruning method for deep neural network compression. arXiv preprint arXiv:1707.06342, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06342"
+        },
+        {
+            "id": "Molchanov_et+al_2016_a",
+            "entry": "Pavlo Molchanov, Stephen Tyree, Tero Karras, Timo Aila, and Jan Kautz. Pruning convolutional neural networks for resource efficient inference. arXiv preprint arXiv:1611.06440, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.06440"
+        },
+        {
+            "id": "Perez_et+al_0000_a",
+            "entry": "Ethan Perez, Harm De Vries, Florian Strub, Vincent Dumoulin, and Aaron Courville. Learning visual reasoning without strong priors. arXiv preprint arXiv:1707.03017, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03017"
+        },
+        {
+            "id": "Perez_et+al_0000_b",
+            "entry": "Ethan Perez, Florian Strub, Harm De Vries, Vincent Dumoulin, and Aaron Courville. Film: Visual reasoning with a general conditioning layer. arXiv preprint arXiv:1709.07871, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07871"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Romero_et+al_2014_a",
+            "entry": "Adriana Romero, Nicolas Ballas, Samira Ebrahimi Kahou, Antoine Chassang, Carlo Gatta, and Yoshua Bengio. Fitnets: Hints for thin deep nets. arXiv preprint arXiv:1412.6550, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6550"
+        },
+        {
+            "id": "Sandler_et+al_2018_a",
+            "entry": "Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, and Liang-Chieh Chen. Inverted residuals and linear bottlenecks: Mobile networks for classification, detection and segmentation. arXiv preprint arXiv:1801.04381, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.04381"
+        },
+        {
+            "id": "Tan_et+al_2018_a",
+            "entry": "Mingxing Tan, Bo Chen, Ruoming Pang, Vijay Vasudevan, and Quoc V Le. Mnasnet: Platformaware neural architecture search for mobile. arXiv preprint arXiv:1807.11626, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.11626"
+        },
+        {
+            "id": "Tann_et+al_2016_a",
+            "entry": "Hokchhay Tann, Soheil Hashemi, R Bahar, and Sherief Reda. Runtime configurable deep neural networks for energy-accuracy trade-off. In Proceedings of the Eleventh IEEE/ACM/IFIP International Conference on Hardware/Software Codesign and System Synthesis, pp. 34. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tann%2C%20Hokchhay%20Soheil%20Hashemi%2C%20R.Bahar%20Reda%2C%20Sherief%20Runtime%20configurable%20deep%20neural%20networks%20for%20energy-accuracy%20trade-off%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tann%2C%20Hokchhay%20Soheil%20Hashemi%2C%20R.Bahar%20Reda%2C%20Sherief%20Runtime%20configurable%20deep%20neural%20networks%20for%20energy-accuracy%20trade-off%202016"
+        },
+        {
+            "id": "Veit_2017_a",
+            "entry": "Andreas Veit and Serge Belongie. Convolutional networks with adaptive computation graphs. arXiv preprint arXiv:1711.11503, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.11503"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Xin Wang, Fisher Yu, Zi-Yi Dou, and Joseph E Gonzalez. Skipnet: Learning dynamic routing in convolutional networks. arXiv preprint arXiv:1711.09485, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09485"
+        },
+        {
+            "id": "Wen_et+al_2016_a",
+            "entry": "Wei Wen, Chunpeng Wu, Yandan Wang, Yiran Chen, and Hai Li. Learning structured sparsity in deep neural networks. In Advances in Neural Information Processing Systems, pp. 2074\u20132082, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Wu_et+al_2017_a",
+            "entry": "Zuxuan Wu, Tushar Nagarajan, Abhishek Kumar, Steven Rennie, Larry S Davis, Kristen Grauman, and Rogerio Feris. Blockdrop: Dynamic inference paths in residual networks. arXiv preprint arXiv:1711.08393, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.08393"
+        },
+        {
+            "id": "Xie_et+al_2017_a",
+            "entry": "Saining Xie, Ross Girshick, Piotr Dollar, Zhuowen Tu, and Kaiming He. Aggregated residual transformations for deep neural networks. In Computer Vision and Pattern Recognition (CVPR), 2017 IEEE Conference on, pp. 5987\u20135995. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xie%2C%20Saining%20Girshick%2C%20Ross%20Dollar%2C%20Piotr%20Tu%2C%20Zhuowen%20Aggregated%20residual%20transformations%20for%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xie%2C%20Saining%20Girshick%2C%20Ross%20Dollar%2C%20Piotr%20Tu%2C%20Zhuowen%20Aggregated%20residual%20transformations%20for%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Yang_et+al_2018_a",
+            "entry": "Linjie Yang, Yanran Wang, Xuehan Xiong, Jianchao Yang, and Aggelos K Katsaggelos. Efficient video object segmentation via network modulation. arXiv preprint arXiv:1802.01218, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01218"
+        },
+        {
+            "id": "Ye_et+al_2018_a",
+            "entry": "Jianbo Ye, Xin Lu, Zhe Lin, and James Z Wang. Rethinking the smaller-norm-less-informative assumption in channel pruning of convolution layers. arXiv preprint arXiv:1802.00124, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.00124"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, and Jian Sun. Shufflenet: An extremely efficient convolutional neural network for mobile devices. arXiv preprint arXiv:1707.01083, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.01083"
+        },
+        {
+            "id": "Zhuang_et+al_2018_a",
+            "entry": "Bohan Zhuang, Chunhua Shen, Mingkui Tan, Lingqiao Liu, and Ian Reid. Towards effective lowbitwidth convolutional neural networks. In other words, 2:2, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhuang%2C%20Bohan%20Shen%2C%20Chunhua%20Tan%2C%20Mingkui%20Liu%2C%20Lingqiao%20Towards%20effective%20lowbitwidth%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhuang%2C%20Bohan%20Shen%2C%20Chunhua%20Tan%2C%20Mingkui%20Liu%2C%20Lingqiao%20Towards%20effective%20lowbitwidth%20convolutional%20neural%20networks%202018"
+        }
+    ]
+}

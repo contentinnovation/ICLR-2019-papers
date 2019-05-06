@@ -1,0 +1,360 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "SOFT Q-LEARNING WITH MUTUAL-INFORMATION REGULARIZATION",
+        "author": "Jordi Grau-Moya, Felix Leibfried and Peter Vrancx PROWLER.io Cambridge, United Kingdom {jordi}@prowler.io",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyEtjoCqFX"
+        },
+        "abstract": "We propose a reinforcement learning (RL) algorithm that uses mutual-information regularization to optimize a prior action distribution for better performance and exploration. Entropy-based regularization has previously been shown to improve both exploration and robustness in challenging sequential decision-making tasks. It does so by encouraging policies to put probability mass on all actions. However, entropy regularization might be undesirable when actions have significantly different importance. In this paper, we propose a theoretically motivated framework that dynamically weights the importance of actions by using the mutualinformation. In particular, we express the RL problem as an inference problem where the prior probability distribution over actions is subject to optimization. We show that the prior optimization introduces a mutual-information regularizer in the RL objective. This regularizer encourages the policy to be close to a nonuniform distribution that assigns higher probability mass to more important actions. We empirically demonstrate that our method significantly improves over entropy regularization methods and unregularized methods."
+    },
+    "keywords": [
+        {
+            "term": "rational decision",
+            "url": "https://en.wikipedia.org/wiki/rational_decision"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "optimal control",
+            "url": "https://en.wikipedia.org/wiki/optimal_control"
+        },
+        {
+            "term": "MIRL",
+            "url": "https://en.wikipedia.org/wiki/MIRL"
+        },
+        {
+            "term": "markov decision process",
+            "url": "https://en.wikipedia.org/wiki/markov_decision_process"
+        },
+        {
+            "term": "Reinforcement Learning",
+            "url": "https://en.wikipedia.org/wiki/Reinforcement_Learning"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        }
+    ],
+    "abbreviations": {
+        "RL": "Reinforcement Learning",
+        "MDP": "Markov decision process",
+        "MPO": "maximum a posteriori policy optimisation"
+    },
+    "highlights": [
+        "Reinforcement Learning (RL) (<a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\"><a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\">Sutton & Barto, 1998</a></a>) is a framework for solving sequential decision-making problems under uncertainty",
+        "We propose to overcome the previous limitation by designing a reinforcement learning algorithm that dynamically adjusts the importance of actions while learning",
+        "We show that this optimization process leads to an Reinforcement Learning objective function with a regularizer based on the mutual information between states and actions",
+        "We conduct experiments on 19 Atari games (<a class=\"ref-link\" id=\"cBrockman_et+al_2016_a\" href=\"#rBrockman_et+al_2016_a\">Brockman et al, 2016</a>) with Algorithm 1 (MIRL), and compare against DQN (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a>) and SQL (Haarnoja et al, 2018c) with a dynamic \u03b2-scheduling scheme based on loss evolution that leads to improved performance over vanilla SQL with fixed \u03b2 (<a class=\"ref-link\" id=\"cLeibfried_et+al_2018_a\" href=\"#rLeibfried_et+al_2018_a\">Leibfried et al, 2018</a>)",
+        "We show that our formulation is equivalent to applying a mutual-information regularization and derive a novel algorithm (MIRL) that learns the prior over actions",
+        "We demonstrate that MIRL significantly improves performance over SQL and DQN"
+    ],
+    "key_statements": [
+        "Reinforcement Learning (RL) (<a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\"><a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\">Sutton & Barto, 1998</a></a>) is a framework for solving sequential decision-making problems under uncertainty",
+        "We propose to overcome the previous limitation by designing a reinforcement learning algorithm that dynamically adjusts the importance of actions while learning",
+        "We show that this optimization process leads to an Reinforcement Learning objective function with a regularizer based on the mutual information between states and actions",
+        "We develop a novel algorithm that uses such mutual-information regularization to obtain an optimal action-prior for better performance and exploration in high-dimensional state spaces",
+        "In Section 3, we show that when relaxing the previous assumption, i.e. allowing for prior optimization, we obtain a novel variational inference formulation of the Reinforcement Learning problem that constrains the policy\u2019s mutual-information between states and actions",
+        "We conduct experiments on 19 Atari games (<a class=\"ref-link\" id=\"cBrockman_et+al_2016_a\" href=\"#rBrockman_et+al_2016_a\">Brockman et al, 2016</a>) with Algorithm 1 (MIRL), and compare against DQN (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a>) and SQL (Haarnoja et al, 2018c) with a dynamic \u03b2-scheduling scheme based on loss evolution that leads to improved performance over vanilla SQL with fixed \u03b2 (<a class=\"ref-link\" id=\"cLeibfried_et+al_2018_a\" href=\"#rLeibfried_et+al_2018_a\">Leibfried et al, 2018</a>)",
+        "We show that our formulation is equivalent to applying a mutual-information regularization and derive a novel algorithm (MIRL) that learns the prior over actions",
+        "We demonstrate that MIRL significantly improves performance over SQL and DQN"
+    ],
+    "summary": [
+        "Reinforcement Learning (RL) (<a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\"><a class=\"ref-link\" id=\"cSutton_1998_a\" href=\"#rSutton_1998_a\">Sutton & Barto, 1998</a></a>) is a framework for solving sequential decision-making problems under uncertainty.",
+        "We show that this optimization process leads to an RL objective function with a regularizer based on the mutual information between states and actions.",
+        "We develop a novel algorithm that uses such mutual-information regularization to obtain an optimal action-prior for better performance and exploration in high-dimensional state spaces.",
+        "The optimal value function under entropy regularization (<a class=\"ref-link\" id=\"cHaarnoja_et+al_2017_a\" href=\"#rHaarnoja_et+al_2017_a\">Haarnoja et al, 2017</a>) is defined as: V\u2217(s) = max E",
+        "One can formulate the maximum entropy RL objective as an inference problem (<a class=\"ref-link\" id=\"cLevine_2018_a\" href=\"#rLevine_2018_a\">Levine, 2018</a>) by specifying a prior distribution over trajectories that assumes a fixed uniform distribution over actions.",
+        "In Section 3, we show that when relaxing the previous assumption, i.e. allowing for prior optimization, we obtain a novel variational inference formulation of the RL problem that constrains the policy\u2019s mutual-information between states and actions.",
+        "In a one-step decision-making scenario, entropy regularization assumes the following form max p(s)\u03c0(a|s) r(s, a) \u2212 log \u03c0(a|s) , \u03c0 \u03b2 s,a where p(s) is some arbitrary distribution over states and the optimal policy balances expected reward maximization versus expected entropy maximization.",
+        "We propose an inferencebased formulation where the mutual information arises as a consequence of allowing for optimizing the action-prior distribution.",
+        "The maximum entropy RL objective is recovered when assuming a fixed uniform prior distribution over actions, i.e. for all t.",
+        "The optimal prior is the marginal distribution over actions under the discounted stationary distribution over states.",
+        "Optimal policy for a fixed prior \u03c1: We start by defining the value function with the information cost as V\u03c0,\u03c1(s) := E",
+        "The scheme for updating the prior and the behavioural policy is the same as in the tabular setting but Q-function updates and \u03b2-scheduling need to be adjusted for high-dimensional state spaces.",
+        "MIRL updates the estimate of the optimal prior by using a learning rate \u03b1\u03c1 = 2 \u00b7 10\u22123.",
+        "We conduct experiments on 19 Atari games (<a class=\"ref-link\" id=\"cBrockman_et+al_2016_a\" href=\"#rBrockman_et+al_2016_a\">Brockman et al, 2016</a>) with Algorithm 1 (MIRL), and compare against DQN (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a>) and SQL (Haarnoja et al, 2018c) with a dynamic \u03b2-scheduling scheme based on loss evolution that leads to improved performance over vanilla SQL with fixed \u03b2 (<a class=\"ref-link\" id=\"cLeibfried_et+al_2018_a\" href=\"#rLeibfried_et+al_2018_a\">Leibfried et al, 2018</a>).",
+        "MIRL updates the estimate of the optimal prior by using a learning rate \u03b1\u03c1 = 5 \u00b7 10\u22125.",
+        "We show that our formulation is equivalent to applying a mutual-information regularization and derive a novel algorithm (MIRL) that learns the prior over actions."
+    ],
+    "headline": "We propose a reinforcement learning algorithm that uses mutual-information regularization to optimize a prior action distribution for better performance and exploration",
+    "reference_links": [
+        {
+            "id": "Abdolmaleki_et+al_2018_a",
+            "entry": "Abbas Abdolmaleki, Jost Tobias Springenberg, Yuval Tassa, Remi Munos, Nicolas Heess, and Martin Riedmiller. Maximum a posteriori policy optimisation. arXiv preprint arXiv:1806.06920, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.06920"
+        },
+        {
+            "id": "Kavosh_2017_a",
+            "entry": "Kavosh Asadi and Michael L Littman. An alternative softmax operator for reinforcement learning. In Proceedings of the 34th International Conference on Machine Learning-Volume 70, pp. 243\u2013 252. JMLR. org, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kavosh%20Asadi%20and%20Michael%20L%20Littman%20An%20alternative%20softmax%20operator%20for%20reinforcement%20learning%20In%20Proceedings%20of%20the%2034th%20International%20Conference%20on%20Machine%20LearningVolume%2070%20pp%20243%20252%20JMLR%20org%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kavosh%20Asadi%20and%20Michael%20L%20Littman%20An%20alternative%20softmax%20operator%20for%20reinforcement%20learning%20In%20Proceedings%20of%20the%2034th%20International%20Conference%20on%20Machine%20LearningVolume%2070%20pp%20243%20252%20JMLR%20org%202017"
+        },
+        {
+            "id": "Bertsekas_1995_a",
+            "entry": "Dimitri P Bertsekas. Dynamic Programming and Optimal Control: Volume 2. Athena Scientific, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertsekas%2C%20Dimitri%20P.%20Dynamic%20Programming%20and%20Optimal%20Control%3A%20Volume%202%201995"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym. arXiv preprint arXiv:1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Cover_2006_a",
+            "entry": "Thomas M Cover and Joy A Thomas. Elements of information theory. John Wiley & Sons, second edition, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cover%2C%20Thomas%20M.%20Thomas%2C%20Joy%20A.%20Elements%20of%20information%20theory%202006"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Bo Dai, Albert Shaw, Lihong Li, Lin Xiao, Niao He, Zhen Liu, Jianshu Chen, and Le Song. Sbeed: Convergent reinforcement learning with nonlinear function approximation. In International Conference on Machine Learning, pp. 1133\u20131142, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Bo%20Shaw%2C%20Albert%20Li%2C%20Lihong%20Xiao%2C%20Lin%20Sbeed%3A%20Convergent%20reinforcement%20learning%20with%20nonlinear%20function%20approximation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Bo%20Shaw%2C%20Albert%20Li%2C%20Lihong%20Xiao%2C%20Lin%20Sbeed%3A%20Convergent%20reinforcement%20learning%20with%20nonlinear%20function%20approximation%202018"
+        },
+        {
+            "id": "Dayan_1997_a",
+            "entry": "Peter Dayan and Geoffrey E Hinton. Using expectation-maximization for reinforcement learning. Neural Computation, 9(2):271\u2013278, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Using%20expectation-maximization%20for%20reinforcement%20learning%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Using%20expectation-maximization%20for%20reinforcement%20learning%201997"
+        },
+        {
+            "id": "Deisenroth_et+al_2013_a",
+            "entry": "Marc Peter Deisenroth, Gerhard Neumann, Jan Peters, et al. A survey on policy search for robotics. Foundations and Trends R in Robotics, 2(1\u20132):1\u2013142, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Peter%20Neumann%2C%20Gerhard%20Peters%2C%20Jan%20A%20survey%20on%20policy%20search%20for%20robotics%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Peter%20Neumann%2C%20Gerhard%20Peters%2C%20Jan%20A%20survey%20on%20policy%20search%20for%20robotics%202013"
+        },
+        {
+            "id": "Florensa_et+al_2017_a",
+            "entry": "Carlos Florensa, Yan Duan, and Pieter Abbeel. Stochastic neural networks for hierarchical reinforcement learning. arXiv preprint arXiv:1704.03012, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03012"
+        },
+        {
+            "id": "Fox_et+al_2016_a",
+            "entry": "Roy Fox, Ari Pakman, and Naftali Tishby. Taming the noise in reinforcement learning via soft updates. In Proceedings of the Thirty-Second Conference on Uncertainty in Artificial Intelligence, pp. 202\u2013211. AUAI Press, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Roy%20Pakman%2C%20Ari%20Tishby%2C%20Naftali%20Taming%20the%20noise%20in%20reinforcement%20learning%20via%20soft%20updates%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fox%2C%20Roy%20Pakman%2C%20Ari%20Tishby%2C%20Naftali%20Taming%20the%20noise%20in%20reinforcement%20learning%20via%20soft%20updates%202016"
+        },
+        {
+            "id": "Genewein_et+al_2015_a",
+            "entry": "Tim Genewein, Felix Leibfried, Jordi Grau-Moya, and Daniel Alexander Braun. Bounded rationality, abstraction, and hierarchical decision-making: An information-theoretic optimality principle. Frontiers in Robotics and AI, 2:27, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Genewein%2C%20Tim%20Leibfried%2C%20Felix%20Grau-Moya%2C%20Jordi%20Braun%2C%20Daniel%20Alexander%20Bounded%20rationality%2C%20abstraction%2C%20and%20hierarchical%20decision-making%3A%20An%20information-theoretic%20optimality%20principle%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Genewein%2C%20Tim%20Leibfried%2C%20Felix%20Grau-Moya%2C%20Jordi%20Braun%2C%20Daniel%20Alexander%20Bounded%20rationality%2C%20abstraction%2C%20and%20hierarchical%20decision-making%3A%20An%20information-theoretic%20optimality%20principle%202015"
+        },
+        {
+            "id": "Haarnoja_et+al_2017_a",
+            "entry": "Tuomas Haarnoja, Haoran Tang, Pieter Abbeel, and Sergey Levine. Reinforcement learning with deep energy-based policies. In International Conference on Machine Learning, pp. 1352\u20131361, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Haarnoja%2C%20Tuomas%20Tang%2C%20Haoran%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Reinforcement%20learning%20with%20deep%20energy-based%20policies%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Haarnoja%2C%20Tuomas%20Tang%2C%20Haoran%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Reinforcement%20learning%20with%20deep%20energy-based%20policies%202017"
+        },
+        {
+            "id": "Haarnoja_et+al_2018_a",
+            "entry": "Tuomas Haarnoja, Kristian Hartikainen, Pieter Abbeel, and Sergey Levine. Latent space policies for hierarchical reinforcement learning. In International Conference on Machine Learning, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Haarnoja%2C%20Tuomas%20Hartikainen%2C%20Kristian%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Latent%20space%20policies%20for%20hierarchical%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Haarnoja%2C%20Tuomas%20Hartikainen%2C%20Kristian%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Latent%20space%20policies%20for%20hierarchical%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Haarnoja_et+al_0000_a",
+            "entry": "Tuomas Haarnoja, Vitchyr Pong, Aurick Zhou, Murtaza Dalal, Pieter Abbeel, and Sergey Levine. Composable deep reinforcement learning for robotic manipulation. arXiv preprint arXiv:1803.06773, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06773"
+        },
+        {
+            "id": "Haarnoja_et+al_0000_b",
+            "entry": "Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: Offpolicy maximum entropy deep reinforcement learning with a stochastic actor. arXiv preprint arXiv:1801.01290, 2018c.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01290"
+        },
+        {
+            "id": "Hachiya_et+al_2011_a",
+            "entry": "Hirotaka Hachiya, Jan Peters, and Masashi Sugiyama. Reward-weighted regression with sample reuse for direct policy search in reinforcement learning. Neural Computation, 23(11):2798\u20132832, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hachiya%2C%20Hirotaka%20Peters%2C%20Jan%20Sugiyama%2C%20Masashi%20Reward-weighted%20regression%20with%20sample%20reuse%20for%20direct%20policy%20search%20in%20reinforcement%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hachiya%2C%20Hirotaka%20Peters%2C%20Jan%20Sugiyama%2C%20Masashi%20Reward-weighted%20regression%20with%20sample%20reuse%20for%20direct%20policy%20search%20in%20reinforcement%20learning%202011"
+        },
+        {
+            "id": "Hessel_et+al_2017_a",
+            "entry": "Matteo Hessel, Joseph Modayil, Hado Van Hasselt, Tom Schaul, Georg Ostrovski, Will Dabney, Dan Horgan, Bilal Piot, Mohammad Azar, and David Silver. Rainbow: Combining improvements in deep reinforcement learning. arXiv preprint arXiv:1710.02298, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.02298"
+        },
+        {
+            "id": "Hihn_et+al_2018_a",
+            "entry": "Heinke Hihn, Sebastian Gottwald, and Daniel Alexander Braun. Bounded rational decision-making with adaptive neural network priors. In IAPR Workshop on Artificial Neural Networks in Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hihn%2C%20Heinke%20Gottwald%2C%20Sebastian%20Braun%2C%20Daniel%20Alexander%20Bounded%20rational%20decision-making%20with%20adaptive%20neural%20network%20priors%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hihn%2C%20Heinke%20Gottwald%2C%20Sebastian%20Braun%2C%20Daniel%20Alexander%20Bounded%20rational%20decision-making%20with%20adaptive%20neural%20network%20priors%202018"
+        },
+        {
+            "id": "Kappen_2005_a",
+            "entry": "Hilbert J Kappen. Path integrals and symmetry breaking for optimal control theory. Journal of statistical mechanics: theory and experiment, 2005(11):P11011, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kappen%2C%20Hilbert%20J.%20Path%20integrals%20and%20symmetry%20breaking%20for%20optimal%20control%20theory%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kappen%2C%20Hilbert%20J.%20Path%20integrals%20and%20symmetry%20breaking%20for%20optimal%20control%20theory%202005"
+        },
+        {
+            "id": "Kober_2009_a",
+            "entry": "Jens Kober and Jan R Peters. Policy search for motor primitives in robotics. In Advances in neural information processing systems, pp. 849\u2013856, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kober%2C%20Jens%20Peters%2C%20Jan%20R.%20Policy%20search%20for%20motor%20primitives%20in%20robotics%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kober%2C%20Jens%20Peters%2C%20Jan%20R.%20Policy%20search%20for%20motor%20primitives%20in%20robotics%202009"
+        },
+        {
+            "id": "Leibfried_2015_a",
+            "entry": "Felix Leibfried and Daniel Alexander Braun. A reward-maximizing spiking neuron as a bounded rational decision maker. Neural Computation, 27:1682\u20131720, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leibfried%2C%20Felix%20Braun%2C%20Daniel%20Alexander%20A%20reward-maximizing%20spiking%20neuron%20as%20a%20bounded%20rational%20decision%20maker%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leibfried%2C%20Felix%20Braun%2C%20Daniel%20Alexander%20A%20reward-maximizing%20spiking%20neuron%20as%20a%20bounded%20rational%20decision%20maker%202015"
+        },
+        {
+            "id": "Leibfried_2016_a",
+            "entry": "Felix Leibfried and Daniel Alexander Braun. Bounded rational decision-making in feedforward neural networks. In Conference on Uncertainty in Artificial Intelligence, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leibfried%2C%20Felix%20Braun%2C%20Daniel%20Alexander%20Bounded%20rational%20decision-making%20in%20feedforward%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leibfried%2C%20Felix%20Braun%2C%20Daniel%20Alexander%20Bounded%20rational%20decision-making%20in%20feedforward%20neural%20networks%202016"
+        },
+        {
+            "id": "Leibfried_et+al_2018_a",
+            "entry": "Felix Leibfried, Jordi Grau-Moya, and Haitham B Ammar. An information-theoretic optimality principle for deep reinforcement learning. arXiv preprint arXiv:1708.01867, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.01867"
+        },
+        {
+            "id": "Levine_2018_a",
+            "entry": "Sergey Levine. Reinforcement learning and control as probabilistic inference: Tutorial and review. arXiv preprint arXiv:1805.00909, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.00909"
+        },
+        {
+            "id": "Levine_2013_a",
+            "entry": "Sergey Levine and Vladlen Koltun. Variational policy search via trajectory optimization. In Advances in Neural Information Processing Systems, pp. 207\u2013215, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Variational%20policy%20search%20via%20trajectory%20optimization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Variational%20policy%20search%20via%20trajectory%20optimization%202013"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Nachum_et+al_2017_a",
+            "entry": "Ofir Nachum, Mohammad Norouzi, Kelvin Xu, and Dale Schuurmans. Bridging the gap between value and policy based reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2775\u20132785, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Neu_et+al_2017_a",
+            "entry": "Gergely Neu, Anders Jonsson, and Vicenc Gomez. A unified view of entropy-regularized markov decision processes. arXiv preprint arXiv:1705.07798, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07798"
+        },
+        {
+            "id": "Ortega_2012_a",
+            "entry": "Pedro Ortega and Daniel Alexander Braun. Thermodynamics as a theory of decision-making with information-processing costs. Proceedings of the Royal Society A, 469(2153):20120683, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ortega%2C%20Pedro%20Braun%2C%20Daniel%20Alexander%20Thermodynamics%20as%20a%20theory%20of%20decision-making%20with%20information-processing%20costs%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ortega%2C%20Pedro%20Braun%2C%20Daniel%20Alexander%20Thermodynamics%20as%20a%20theory%20of%20decision-making%20with%20information-processing%20costs%202012"
+        },
+        {
+            "id": "Peng_et+al_2017_a",
+            "entry": "Zhen Peng, Tim Genewein, Felix Leibfried, and Daniel Alexander Braun. An information-theoretic on-line update principle for perception-action coupling. In IEEE/RSJ International Conference on Intelligent Robots and Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Zhen%20Genewein%2C%20Tim%20Leibfried%2C%20Felix%20Braun%2C%20Daniel%20Alexander%20An%20information-theoretic%20on-line%20update%20principle%20for%20perception-action%20coupling%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Zhen%20Genewein%2C%20Tim%20Leibfried%2C%20Felix%20Braun%2C%20Daniel%20Alexander%20An%20information-theoretic%20on-line%20update%20principle%20for%20perception-action%20coupling%202017"
+        },
+        {
+            "id": "Puterman_1994_a",
+            "entry": "Martin Puterman. Markov decision processes: Discrete stochastic dynamic programming. 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Puterman%2C%20Martin%20Markov%20decision%20processes%3A%20Discrete%20stochastic%20dynamic%20programming%201994"
+        },
+        {
+            "id": "Rawlik_et+al_2012_a",
+            "entry": "Konrad Rawlik, Marc Toussaint, and Sethu Vijayakumar. On stochastic optimal control and reinforcement learning by approximate inference. In Robotics: science and systems, volume 13, pp. 3052\u20133056, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20On%20stochastic%20optimal%20control%20and%20reinforcement%20learning%20by%20approximate%20inference%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20On%20stochastic%20optimal%20control%20and%20reinforcement%20learning%20by%20approximate%20inference%202012"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Xi Chen, and Pieter Abbeel. Equivalence between policy gradients and soft qlearning. arXiv preprint arXiv:1704.06440, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.06440"
+        },
+        {
+            "id": "Shannon_1959_a",
+            "entry": "Claude Shannon. Coding theorems for a discrete source with a fidelity criterion. Institute of Radio Engineers, International Convention Record, 7:142\u2013163, 1959.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shannon%2C%20Claude%20Coding%20theorems%20for%20a%20discrete%20source%20with%20a%20fidelity%20criterion%201959",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shannon%2C%20Claude%20Coding%20theorems%20for%20a%20discrete%20source%20with%20a%20fidelity%20criterion%201959"
+        },
+        {
+            "id": "Sims_2011_a",
+            "entry": "Christopher Sims. Rational inattention and monetary economics. Handbook of Monetary Economics, 3, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sims%2C%20Christopher%20Rational%20inattention%20and%20monetary%20economics.%20Handbook%20of%20Monetary%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sims%2C%20Christopher%20Rational%20inattention%20and%20monetary%20economics.%20Handbook%20of%20Monetary%202011"
+        },
+        {
+            "id": "Still_2004_a",
+            "entry": "Susanne Still and William Bialek. How many clusters? an information-theoretic perspective. Neural computation, 16(12):2483\u20132506, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Still%2C%20Susanne%20Bialek%2C%20William%20How%20many%20clusters%3F%20an%20information-theoretic%20perspective%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Still%2C%20Susanne%20Bialek%2C%20William%20How%20many%20clusters%3F%20an%20information-theoretic%20perspective%202004"
+        },
+        {
+            "id": "Still_2012_a",
+            "entry": "Susanne Still and Doina Precup. An information-theoretic approach to curiosity-driven reinforcement learning. Theory in Biosciences, 131(3):139\u2013148, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Still%2C%20Susanne%20Precup%2C%20Doina%20An%20information-theoretic%20approach%20to%20curiosity-driven%20reinforcement%20learning%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Still%2C%20Susanne%20Precup%2C%20Doina%20An%20information-theoretic%20approach%20to%20curiosity-driven%20reinforcement%20learning%202012"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "R Sutton and A Barto. Reinforcement learning. MIT Press, Cambridge, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20R.%20Barto%2C%20A.%20Reinforcement%20learning%201998"
+        },
+        {
+            "id": "Teh_et+al_2017_a",
+            "entry": "Yee Teh, Victor Bapst, Wojciech M Czarnecki, John Quan, James Kirkpatrick, Raia Hadsell, Nicolas Heess, and Razvan Pascanu. Distral: Robust multitask reinforcement learning. In Advances in Neural Information Processing Systems, pp. 4496\u20134506, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Teh%2C%20Yee%20Bapst%2C%20Victor%20Czarnecki%2C%20Wojciech%20M.%20Quan%2C%20John%20Distral%3A%20Robust%20multitask%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Teh%2C%20Yee%20Bapst%2C%20Victor%20Czarnecki%2C%20Wojciech%20M.%20Quan%2C%20John%20Distral%3A%20Robust%20multitask%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Thomas_2014_a",
+            "entry": "Philip Thomas. Bias in natural actor-critic algorithms. In International Conference on Machine Learning, pp. 441\u2013448, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thomas%2C%20Philip%20Bias%20in%20natural%20actor-critic%20algorithms%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thomas%2C%20Philip%20Bias%20in%20natural%20actor-critic%20algorithms%202014"
+        },
+        {
+            "id": "Tishby_2011_a",
+            "entry": "Naftali Tishby and Daniel Polani. Information theory of decisions and actions. In Perception-Action Cycle. Springer, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tishby%2C%20Naftali%20Polani%2C%20Daniel%20Information%20theory%20of%20decisions%20and%20actions.%20In%20Perception-Action%20Cycle%202011"
+        },
+        {
+            "id": "Tishby_et+al_1999_a",
+            "entry": "Naftali Tishby, Fernando C Pereira, and William Bialek. The information bottleneck method. The 37th Annual Allerton Conference on Communication, Control, and Computing., 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tishby%2C%20Naftali%20Pereira%2C%20Fernando%20C.%20Bialek%2C%20William%20The%20information%20bottleneck%20method.%20The%2037th%20Annual%20Allerton%20Conference%20on%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tishby%2C%20Naftali%20Pereira%2C%20Fernando%20C.%20Bialek%2C%20William%20The%20information%20bottleneck%20method.%20The%2037th%20Annual%20Allerton%20Conference%20on%201999"
+        },
+        {
+            "id": "Todorov_2008_a",
+            "entry": "Emanuel Todorov. General duality between optimal control and estimation. In Decision and Control, 2008. CDC 2008. 47th IEEE Conference on, pp. 4286\u20134292. IEEE, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20General%20duality%20between%20optimal%20control%20and%20estimation.%20In%20Decision%20and%20Control%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20General%20duality%20between%20optimal%20control%20and%20estimation.%20In%20Decision%20and%20Control%202008"
+        },
+        {
+            "id": "Hasselt_et+al_2016_a",
+            "entry": "Hado Van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double qlearning. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hasselt%2C%20Hado%20Van%20Guez%2C%20Arthur%20Silver%2C%20David%20Deep%20reinforcement%20learning%20with%20double%20qlearning%202016"
+        },
+        {
+            "id": "Chicago_2008_a",
+            "entry": "Chicago, IL, USA, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chicago%20IL%20USA%202008"
+        },
+        {
+            "id": "A_1994_a",
+            "entry": "A.1 CONNECTION TO MUTUAL INFORMATION FOR \u03b3 \u2192 1. The goal of this section is to show that when \u03b3 \u2192 1, Equation (6) can be expressed as the following average-reward formulation (Puterman, 1994) with a constraint on the stationary mutual information max \u03c0",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=A1%20CONNECTION%20TO%20MUTUAL%20INFORMATION%20FOR%20%CE%B3%20%E2%86%92%201.%20The%20goal%20of%20this%20section%20is%20to%20show%20that%20when%20%CE%B3%20%E2%86%92%201%2C%20Equation%20%286%29%20can%20be%20expressed%20as%20the%20following%20average-reward%20formulation%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=A1%20CONNECTION%20TO%20MUTUAL%20INFORMATION%20FOR%20%CE%B3%20%E2%86%92%201.%20The%20goal%20of%20this%20section%20is%20to%20show%20that%20when%20%CE%B3%20%E2%86%92%201%2C%20Equation%20%286%29%20can%20be%20expressed%20as%20the%20following%20average-reward%20formulation%201994"
+        },
+        {
+            "id": "a_2006_a",
+            "entry": "a where \u03bc\u03c0 and \u03c1\u03c0 are the stationary distributions induced by the policy \u03c0 over states and actions, respectively, and thus If (\u03bc\u03c0, \u03c0, \u03c1\u03c0) is defined as the stationary mutual-information. Note that for a fixed stationary distribution over states, this problem coincides exactly with the well-known ratedistortion problem (Cover & Thomas, 2006).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=a%20where%20%CE%BC%CF%80%20and%20%CF%81%CF%80%20are%20the%20stationary%20distributions%20induced%20by%20the%20policy%20%CF%80%20over%20states%20and%20actions%20respectively%20and%20thus%20If%20%CE%BC%CF%80%20%CF%80%20%CF%81%CF%80%20is%20defined%20as%20the%20stationary%20mutualinformation%20Note%20that%20for%20a%20fixed%20stationary%20distribution%20over%20states%20this%20problem%20coincides%20exactly%20with%20the%20wellknown%20ratedistortion%20problem%20Cover%20%20Thomas%202006"
+        },
+        {
+            "id": "A_0000_a",
+            "entry": "A standard result in the MDP literature (Bertsekas, 1995) is that",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=A%20standard%20result%20in%20the%20MDP%20literature%20Bertsekas%201995%20is%20that"
+        },
+        {
+            "id": "Proof_1995_a",
+            "entry": "Proof. Following similar steps as in (Bertsekas, 1995, p.186) we have",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Proof%20Following%20similar%20steps%20as%20in%201995"
+        }
+    ]
+}

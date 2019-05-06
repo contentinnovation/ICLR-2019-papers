@@ -1,0 +1,383 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DEEPOBS: A DEEP LEARNING OPTIMIZER BENCHMARK SUITE",
+        "author": "Frank Schneider, Lukas Balles & Philipp Hennig University of Tubingen and Max Planck Institute for Intelligent Systems Tubingen, Germany {frank.schneider,lukas.balles, ph}@tue.mpg.de",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJg6ssC5Y7"
+        },
+        "abstract": "There is significant past and ongoing research on optimization methods for deep learning. Yet, perhaps surprisingly, there is no generally agreed-upon protocol for the quantitative and reproducible evaluation of such optimizers. We suggest routines and benchmarks for stochastic optimization, with special focus on the unique aspects of deep learning, such as stochasticity, tunability and generalization. As the primary contribution, we present DEEPOBS, a Python package of deep learning optimization benchmarks. The package addresses key challenges in the quantitative assessment of stochastic optimizers, and automates most steps of benchmarking. The library includes a wide and extensible set of ready-to-use realistic optimization problems, such as training Residual Networks for image classification on IMAGENET or character-level language prediction models, as well as popular classics like MNIST and CIFAR-10. The package also provides realistic baseline results for the most popular optimizers on these test problems, ensuring a fair comparison to the competition when benchmarking new optimizers, and without having to run costly experiments. It comes with output back-ends that directly produce LATEX code for inclusion in academic publications. It supports TENSORFLOW and is available open source."
+    },
+    "keywords": [
+        {
+            "term": "deep convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_convolutional_neural_network"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "open source",
+            "url": "https://en.wikipedia.org/wiki/open_source"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        },
+        {
+            "term": "ICLR",
+            "url": "https://en.wikipedia.org/wiki/ICLR"
+        }
+    ],
+    "abbreviations": {},
+    "highlights": [
+        "As deep learning has become mainstream, research on aspects like architectures (Graves et al, 2014; He et al, 2016; <a class=\"ref-link\" id=\"cSzegedy_et+al_2017_a\" href=\"#rSzegedy_et+al_2017_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2017_a\" href=\"#rSzegedy_et+al_2017_a\">Szegedy et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSabour_et+al_2017_a\" href=\"#rSabour_et+al_2017_a\"><a class=\"ref-link\" id=\"cSabour_et+al_2017_a\" href=\"#rSabour_et+al_2017_a\">Sabour et al, 2017</a></a>) and hardware (<a class=\"ref-link\" id=\"cOvtcharov_et+al_2015_a\" href=\"#rOvtcharov_et+al_2015_a\"><a class=\"ref-link\" id=\"cOvtcharov_et+al_2015_a\" href=\"#rOvtcharov_et+al_2015_a\">Ovtcharov et al, 2015</a></a>; <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\"><a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a></a>; <a class=\"ref-link\" id=\"cReagen_et+al_2016_a\" href=\"#rReagen_et+al_2016_a\"><a class=\"ref-link\" id=\"cReagen_et+al_2016_a\" href=\"#rReagen_et+al_2016_a\">Reagen et al, 2016</a></a>; Jouppi, 2016) has exploded, and helped professionalize the field",
+        "If they are not provided in packages for popular frameworks like TENSORFLOW, PYTORCH etc., they get little traction. Another problem, which we hope to address here, is that new optimization routines are often not convincingly compared to simpler alternatives in research papers, so practitioners are left wondering which of the many new choices is the best",
+        "We propose an extensible, open-source benchmark for optimization methods on deep learning architectures",
+        "For the baseline results provided with DEEPOBS, we evaluate three popular deep learning optimizers (SGD, MOMENTUM and ADAM) on the eight test problems that are part of the small and large benchmark set (cf"
+    ],
+    "key_statements": [
+        "As deep learning has become mainstream, research on aspects like architectures (Graves et al, 2014; He et al, 2016; <a class=\"ref-link\" id=\"cSzegedy_et+al_2017_a\" href=\"#rSzegedy_et+al_2017_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2017_a\" href=\"#rSzegedy_et+al_2017_a\">Szegedy et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSabour_et+al_2017_a\" href=\"#rSabour_et+al_2017_a\"><a class=\"ref-link\" id=\"cSabour_et+al_2017_a\" href=\"#rSabour_et+al_2017_a\">Sabour et al, 2017</a></a>) and hardware (<a class=\"ref-link\" id=\"cOvtcharov_et+al_2015_a\" href=\"#rOvtcharov_et+al_2015_a\"><a class=\"ref-link\" id=\"cOvtcharov_et+al_2015_a\" href=\"#rOvtcharov_et+al_2015_a\">Ovtcharov et al, 2015</a></a>; <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\"><a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a></a>; <a class=\"ref-link\" id=\"cReagen_et+al_2016_a\" href=\"#rReagen_et+al_2016_a\"><a class=\"ref-link\" id=\"cReagen_et+al_2016_a\" href=\"#rReagen_et+al_2016_a\">Reagen et al, 2016</a></a>; Jouppi, 2016) has exploded, and helped professionalize the field",
+        "If they are not provided in packages for popular frameworks like TENSORFLOW, PYTORCH etc., they get little traction. Another problem, which we hope to address here, is that new optimization routines are often not convincingly compared to simpler alternatives in research papers, so practitioners are left wondering which of the many new choices is the best",
+        "We propose an extensible, open-source benchmark for optimization methods on deep learning architectures",
+        "For the baseline results provided with DEEPOBS, we evaluate three popular deep learning optimizers (SGD, MOMENTUM and ADAM) on the eight test problems that are part of the small and large benchmark set (cf"
+    ],
+    "summary": [
+        "As deep learning has become mainstream, research on aspects like architectures (Graves et al, 2014; He et al, 2016; <a class=\"ref-link\" id=\"cSzegedy_et+al_2017_a\" href=\"#rSzegedy_et+al_2017_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2017_a\" href=\"#rSzegedy_et+al_2017_a\">Szegedy et al, 2017</a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>; <a class=\"ref-link\" id=\"cSabour_et+al_2017_a\" href=\"#rSabour_et+al_2017_a\"><a class=\"ref-link\" id=\"cSabour_et+al_2017_a\" href=\"#rSabour_et+al_2017_a\">Sabour et al, 2017</a></a>) and hardware (<a class=\"ref-link\" id=\"cOvtcharov_et+al_2015_a\" href=\"#rOvtcharov_et+al_2015_a\"><a class=\"ref-link\" id=\"cOvtcharov_et+al_2015_a\" href=\"#rOvtcharov_et+al_2015_a\">Ovtcharov et al, 2015</a></a>; <a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\"><a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a></a>; <a class=\"ref-link\" id=\"cReagen_et+al_2016_a\" href=\"#rReagen_et+al_2016_a\"><a class=\"ref-link\" id=\"cReagen_et+al_2016_a\" href=\"#rReagen_et+al_2016_a\">Reagen et al, 2016</a></a>; Jouppi, 2016) has exploded, and helped professionalize the field.",
+        "Generalization: While the optimization algorithm only ever see the training-set, the practitioner cares about performance of the trained model on the test set.",
+        "We propose an extensible, open-source benchmark for optimization methods on deep learning architectures.",
+        "We strongly recommend reporting both loss and accuracy, for both training and test set, when demonstrating a new optimizer as there is no obvious way those four learning curves are connected in general.",
+        "DEEPOBS1, a deep learning optimizer benchmark suite.",
+        "The test problems range in complexity from stochastic two dimensional functions to contemporary deep neural networks capable of delivering near state-of-the-art results on data sets such as IMAGENET.",
+        "The package provides realistic baselines results for the most popular optimizers on those test problems.",
+        "The best performing results are provided with DEEPOBS and can be used as a fair performance metric for new optimizers without the need to compute these baselines again.",
+        "In the context of deep learning, these problems provide unit tests, but do not give a realistic impression of an algorithm\u2019s performance in practice.",
+        "In DEEPOBS, we take a pragmatic approach and measure the time it takes to reach an \u201cacceptable\u201d convergence performance, which is individually defined for each test problem from the baselines SGD, MOMENTUM and ADAM each with their best hyperparameter setting.",
+        "DEEPOBS provides the full stack required for rapid, reliable, and reproducible benchmarking of deep learning optimizers.",
+        "The DEEPOBS data loading module performs all necessary processing of the data sets to return inputs and outputs for the deep learning model.",
+        "3.4 BASELINES DEEPOBS provides realistic baselines results for, currently, the three most popular optimizers in deep learning, SGD, MOMENTUM, and ADAM.",
+        "Baselines are available for all test problems in the small and large benchmark set; we plan to provide baselines for the full set of models in the near future.",
+        "For the baseline results provided with DEEPOBS, we evaluate three popular deep learning optimizers (SGD, MOMENTUM and ADAM) on the eight test problems that are part of the small and large benchmark set.",
+        "We hope that DEEPOBS can help researchers working on optimization for deep learning to build better algorithms, by simultaneously making the empirical evaluation simpler, yet more reproducible and fair.",
+        "By providing a common ground for methods to be compared on, we aim to speed up the development of deep-learning optimizers, and aid practitioners in their decision for an algorithm."
+    ],
+    "headline": "We present DEEPOBS, a Python package of deep learning optimization benchmarks",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2015_a",
+            "entry": "Mart\u0131n Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Mane, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viegas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-scale machine learning on heterogeneous systems, 2015. URL https://www.tensorflow.org/.",
+            "url": "https://www.tensorflow.org/"
+        },
+        {
+            "id": "Adolf_et+al_2016_a",
+            "entry": "Robert Adolf, Saketh Rama, Brandon Reagen, Gu-Yeon Wei, and David Brooks. Fathom: Reference workloads for modern deep learning methods. In IEEE International Symposium on Workload Characterization (IISWC), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adolf%2C%20Robert%20Rama%2C%20Saketh%20Reagen%2C%20Brandon%20Wei%2C%20Gu-Yeon%20Fathom%3A%20Reference%20workloads%20for%20modern%20deep%20learning%20methods%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adolf%2C%20Robert%20Rama%2C%20Saketh%20Reagen%2C%20Brandon%20Wei%2C%20Gu-Yeon%20Fathom%3A%20Reference%20workloads%20for%20modern%20deep%20learning%20methods%202016"
+        },
+        {
+            "id": "Research_2016_a",
+            "entry": "Baidu Research. DeepBench. online, 2016. URL https://github.com/baidu-research/ DeepBench.",
+            "url": "https://github.com/baidu-research/DeepBench",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baidu%20Research%20DeepBench%20online%202016%20URL%20httpsgithubcombaiduresearch%20DeepBench"
+        },
+        {
+            "id": "Bello_et+al_2017_a",
+            "entry": "Irwan Bello, Barret Zoph, Vijay Vasudevan, and Quoc V. Le. Neural optimizer search with reinforcement learning. In Proceedings of the 34th International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bello%2C%20Irwan%20Zoph%2C%20Barret%20Vasudevan%2C%20Vijay%20Le%2C%20Quoc%20V.%20Neural%20optimizer%20search%20with%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bello%2C%20Irwan%20Zoph%2C%20Barret%20Vasudevan%2C%20Vijay%20Le%2C%20Quoc%20V.%20Neural%20optimizer%20search%20with%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Bergstra_2012_a",
+            "entry": "James Bergstra and Yoshua Bengio. Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13(Feb):281\u2013305, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bergstra%2C%20James%20Bengio%2C%20Yoshua%20Random%20search%20for%20hyper-parameter%20optimization%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bergstra%2C%20James%20Bengio%2C%20Yoshua%20Random%20search%20for%20hyper-parameter%20optimization%202012"
+        },
+        {
+            "id": "Botev_et+al_2017_a",
+            "entry": "Aleksandar Botev, Hippolyt Ritter, and David Barber. Practical Gauss-Newton optimisation for deep learning. In Proceedings of the 34th International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Botev%2C%20Aleksandar%20Ritter%2C%20Hippolyt%20Barber%2C%20David%20Practical%20Gauss-Newton%20optimisation%20for%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Botev%2C%20Aleksandar%20Ritter%2C%20Hippolyt%20Barber%2C%20David%20Practical%20Gauss-Newton%20optimisation%20for%20deep%20learning%202017"
+        },
+        {
+            "id": "Branin_1972_a",
+            "entry": "Franklin H Branin. Widely convergent method for finding multiple solutions of simultaneous nonlinear equations. IBM Journal of Research and Development, 16(5):504\u2013522, 1972.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Branin%2C%20Franklin%20H.%20Widely%20convergent%20method%20for%20finding%20multiple%20solutions%20of%20simultaneous%20nonlinear%20equations%201972",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Branin%2C%20Franklin%20H.%20Widely%20convergent%20method%20for%20finding%20multiple%20solutions%20of%20simultaneous%20nonlinear%20equations%201972"
+        },
+        {
+            "id": "Chaudhari_et+al_2017_a",
+            "entry": "Pratik Chaudhari, Anna Choromanska, Stefano Soatto, Yann LeCun, Carlo Baldassi, Christian Borgs, Jennifer Chayes, Levent Sagun, and Riccardo Zecchina. Entropy-SGD: Biasing gradient descent into wide valleys. The International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chaudhari%2C%20Pratik%20Choromanska%2C%20Anna%20Soatto%2C%20Stefano%20LeCun%2C%20Yann%20Entropy-SGD%3A%20Biasing%20gradient%20descent%20into%20wide%20valleys%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chaudhari%2C%20Pratik%20Choromanska%2C%20Anna%20Soatto%2C%20Stefano%20LeCun%2C%20Yann%20Entropy-SGD%3A%20Biasing%20gradient%20descent%20into%20wide%20valleys%202017"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Sheng-Wei Chen, Chun-Nan Chou, and Edward Chang. BDA-PCH: Block-diagonal approximation of positive-curvature Hessian for training neural networks. arXiv preprint arXiv:1802.06502, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06502"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Yu-Hsin Chen, Tushar Krishna, Joel S Emer, and Vivienne Sze. Eyeriss: An energy-efficient reconfigurable accelerator for deep convolutional neural networks. International Solid-Sate Circuits Conference, ISSCC, 52(1):127\u2013138, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Yu-Hsin%20Krishna%2C%20Tushar%20Emer%2C%20Joel%20S.%20Sze%2C%20Vivienne%20Eyeriss%3A%20An%20energy-efficient%20reconfigurable%20accelerator%20for%20deep%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Yu-Hsin%20Krishna%2C%20Tushar%20Emer%2C%20Joel%20S.%20Sze%2C%20Vivienne%20Eyeriss%3A%20An%20energy-efficient%20reconfigurable%20accelerator%20for%20deep%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Coleman_et+al_2017_a",
+            "entry": "Cody Coleman, Deepak Narayanan, Daniel Kang, Tian Zhao, Jian Zhang, Luigi Nardi, Peter Bailis, Kunle Olukotun, Chris Re, and Matei Zaharia. DAWNBench: An end-to-end deep learning benchmark and competition. NIPS ML Systems Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coleman%2C%20Cody%20Narayanan%2C%20Deepak%20Kang%2C%20Daniel%20Zhao%2C%20Tian%20DAWNBench%3A%20An%20end-to-end%20deep%20learning%20benchmark%20and%20competition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coleman%2C%20Cody%20Narayanan%2C%20Deepak%20Kang%2C%20Daniel%20Zhao%2C%20Tian%20DAWNBench%3A%20An%20end-to-end%20deep%20learning%20benchmark%20and%20competition%202017"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition (CVPR), 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Dozat_2016_a",
+            "entry": "Timothy Dozat. Incorporating Nesterov Momentum into Adam. ICLR workshop paper, 2016. John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. Journal of Machine Learning Research, 12:2121\u20132159, 2011. Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Deep Learning. MIT Press, 2016. Alex Graves, Greg Wayne, and Ivo Danihelka. Neural Turing machines. arXiv preprint arXiv:1410.5401, 2014. Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016. Hewlett Packard Enterprise. Deep learning benchmarking suite (DLBS). Online, 2017. URL https://hewlettpackard.github.io/dlcookbook-dlbs/.",
+            "url": "https://hewlettpackard.github.io/dlcookbook-dlbs/",
+            "arxiv_url": "https://arxiv.org/pdf/1410.5401"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural Comput., 9(8):1735\u2013 1780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Google_2016_a",
+            "entry": "Google supercharges machine learning tasks with TPU custom chip, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Google%20supercharges%20machine%20learning%20tasks%20with%20TPU%20custom%20chip%202016"
+        },
+        {
+            "id": "URL_0000_a",
+            "entry": "URL https://cloudplatform.googleblog.com/2016/05/",
+            "url": "https://cloudplatform.googleblog.com/2016/05/"
+        },
+        {
+            "id": "Html_2018_a",
+            "entry": "html. Accessed 24. Sep. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=html%20Accessed%2024%20Sep%202018"
+        },
+        {
+            "id": "Karpathy_2017_a",
+            "entry": "Andrej Karpathy. A peek at trends in machine learning, April 2017. URL https://medium.com/@karpathy/a-peek-at-trends-in-machine-learning-ab8a1085a106. Accessed 24. Sep.2018.",
+            "url": "https://medium.com/@karpathy/a-peek-at-trends-in-machine-learning-ab8a1085a106"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. Proceedings of 3rd International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational Bayes. Proceedings of the International Conference on Learning Representations (ICLR), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20Bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20Bayes%202014"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. Technical report, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann Lecun, Leon Bottou, Y Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86:2278 \u2013 2324, 12 1998. doi: 10.1109/5.726791.",
+            "crossref": "https://dx.doi.org/10.1109/5.726791",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/5.726791"
+        },
+        {
+            "id": "Loshchilov_2017_a",
+            "entry": "Ilya Loshchilov and Frank Hutter. Fixing weight decay regularization in Adam. arXiv preprint arXiv:1711.05101, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.05101"
+        },
+        {
+            "id": "Mahsereci_2017_a",
+            "entry": "Maren Mahsereci and Philipp Hennig. Probabilistic line searches for stochastic optimization. Journal of Machine Learning Research, 18(119):1\u201359, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mahsereci%2C%20Maren%20Hennig%2C%20Philipp%20Probabilistic%20line%20searches%20for%20stochastic%20optimization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mahsereci%2C%20Maren%20Hennig%2C%20Philipp%20Probabilistic%20line%20searches%20for%20stochastic%20optimization%202017"
+        },
+        {
+            "id": "Marcotte_1992_a",
+            "entry": "Patrice Marcotte and Gilles Savard. Novel approaches to the discrimination problem. Zeitschrift fur Operations Research, 36(6):517\u2013545, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcotte%2C%20Patrice%20Savard%2C%20Gilles%20Novel%20approaches%20to%20the%20discrimination%20problem%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcotte%2C%20Patrice%20Savard%2C%20Gilles%20Novel%20approaches%20to%20the%20discrimination%20problem%201992"
+        },
+        {
+            "id": "Martens_2010_a",
+            "entry": "James Martens. Deep learning via Hessian-free optimization. In Proceedings of the 27th International Conference on International Conference on Machine Learning (ICML), 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Deep%20learning%20via%20Hessian-free%20optimization%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Deep%20learning%20via%20Hessian-free%20optimization%202010"
+        },
+        {
+            "id": "Martens_2015_a",
+            "entry": "James Martens and Roger Grosse. Optimizing neural networks with Kronecker-factored approximate curvature. In Proceedings of the 32nd International Conference on International Conference on Machine Learning (ICML), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20Kronecker-factored%20approximate%20curvature%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20Kronecker-factored%20approximate%20curvature%202015"
+        },
+        {
+            "id": "Learning_2018_a",
+            "entry": "Microsoft Machine Learning. Comparing deep learning frameworks: A rosetta stone approach, 2018. URL https://blogs.technet.microsoft.com/machinelearning/2018/03/14/comparing-deep-learning-frameworks-a-rosetta-stone-approach/.",
+            "url": "https://blogs.technet.microsoft.com/machinelearning/2018/03/14/comparing-deep-learning-frameworks-a-rosetta-stone-approach/"
+        },
+        {
+            "id": "Mlperf_2018_a",
+            "entry": "MLPerf, 2018. URL https://mlperf.org/.",
+            "url": "https://mlperf.org/"
+        },
+        {
+            "id": "Nesterov_1983_a",
+            "entry": "Yurii Nesterov. A method of solving a convex programming problem with convergence rate O(1/k2), 1983. URL http://www.core.ucl.ac.be/{ \u0303}nesterov/Research/ Papers/DAN83.pdf.",
+            "url": "http://www.core.ucl.ac.be/{"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading digits in natural images with unsupervised feature learning. In NIPS workshop on deep learning and unsupervised feature learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Ovtcharov_et+al_2015_a",
+            "entry": "Kalin Ovtcharov, Olatunji Ruwase, Joo-Young Kim, Jeremy Fowers, Karin Strauss, and Eric Chung. Accelerating deep convolutional neural networks using specialized hardware, February 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ovtcharov%2C%20Kalin%20Ruwase%2C%20Olatunji%20Kim%2C%20Joo-Young%20Fowers%2C%20Jeremy%20and%20Eric%20Chung.%20Accelerating%20deep%20convolutional%20neural%20networks%20using%20specialized%20hardware%202015-02"
+        },
+        {
+            "id": "Polyak_1964_a",
+            "entry": "Boris T. Polyak. Some methods of speeding up the convergence of iteration methods. USSR Computational Mathematics and Mathematical Physics, 4(5):1\u201317, 1964.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Polyak%2C%20Boris%20T.%20Some%20methods%20of%20speeding%20up%20the%20convergence%20of%20iteration%20methods%201964",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Polyak%2C%20Boris%20T.%20Some%20methods%20of%20speeding%20up%20the%20convergence%20of%20iteration%20methods%201964"
+        },
+        {
+            "id": "Rajpurkar_et+al_2018_a",
+            "entry": "Pranav Rajpurkar, Robin Jia, and Percy Liang. Know what you don\u2019t know: Unanswerable questions for SQuAD. arXiv preprint arXiv:1806.03822, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.03822"
+        },
+        {
+            "id": "Reagen_et+al_2016_a",
+            "entry": "Brandon Reagen, Paul Whatmough, Robert Adolf, Saketh Rama, Hyunkwang Lee, Sae Kyu Lee, Jose Miguel Hernandez-Lobato, Gu-Yeon Wei, and David Brooks. Minerva: Enabling low-power, highly-accurate deep neural network accelerators. In Proceedings of the 43rd International Symposium on Computer Architecture, ISCA, pp. 267\u2013278. IEEE Press, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reagen%2C%20Brandon%20Whatmough%2C%20Paul%20Adolf%2C%20Robert%20Rama%2C%20Saketh%20Minerva%3A%20Enabling%20low-power%2C%20highly-accurate%20deep%20neural%20network%20accelerators%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reagen%2C%20Brandon%20Whatmough%2C%20Paul%20Adolf%2C%20Robert%20Rama%2C%20Saketh%20Minerva%3A%20Enabling%20low-power%2C%20highly-accurate%20deep%20neural%20network%20accelerators%202016"
+        },
+        {
+            "id": "Reddi_et+al_2018_a",
+            "entry": "Sashank J. Reddi, Satyen Kale, and Sanjiv Kumar. On the convergence of Adam and beyond. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20Adam%20and%20beyond%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20Adam%20and%20beyond%202018"
+        },
+        {
+            "id": "Robbins_1951_a",
+            "entry": "Herbert Robbins and Sutton Monro. A Stochastic Approximation Method. The Annals of Mathematical Statistics, 22(3):400\u2013407, 1951.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Robbins%2C%20Herbert%20Monro%2C%20Sutton%20A%20Stochastic%20Approximation%20Method%201951",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Robbins%2C%20Herbert%20Monro%2C%20Sutton%20A%20Stochastic%20Approximation%20Method%201951"
+        },
+        {
+            "id": "Rolinek_2018_a",
+            "entry": "Michal Rolinek and Georg Martius. L4: Practical loss-based stepsize adaptation for deep learning. arXiv preprint arXiv:1802.05074, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05074"
+        },
+        {
+            "id": "Rosenbrock_1960_a",
+            "entry": "Howard H. Rosenbrock. An automatic method for finding the greatest or least value of a function. The Computer Journal, 3(3):175\u2013184, 1960.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rosenbrock%2C%20Howard%20H.%20An%20automatic%20method%20for%20finding%20the%20greatest%20or%20least%20value%20of%20a%20function%201960",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rosenbrock%2C%20Howard%20H.%20An%20automatic%20method%20for%20finding%20the%20greatest%20or%20least%20value%20of%20a%20function%201960"
+        },
+        {
+            "id": "Sabour_et+al_2017_a",
+            "entry": "Sara Sabour, Nicholas Frosst, and Geoffrey E Hinton. Dynamic routing between capsules. In Advances in Neural Information Processing Systems (NIPS), pp. 3856\u20133866, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sabour%2C%20Sara%20Frosst%2C%20Nicholas%20Hinton%2C%20Geoffrey%20E.%20Dynamic%20routing%20between%20capsules%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sabour%2C%20Sara%20Frosst%2C%20Nicholas%20Hinton%2C%20Geoffrey%20E.%20Dynamic%20routing%20between%20capsules%202017"
+        },
+        {
+            "id": "Schaul_et+al_0000_a",
+            "entry": "Tom Schaul, Ioannis Antonoglou, and David Silver. Unit tests for stochastic optimization. arXiv preprint arXiv:1312.6055, 2013a.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6055"
+        },
+        {
+            "id": "Schaul_et+al_2013_a",
+            "entry": "Tom Schaul, Sixin Zhang, and Yann LeCun. No more pesky learning rates. In Proceedings of the 30th International Conference on Machine Learning (ICML), 2013b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schaul%2C%20Tom%20Zhang%2C%20Sixin%20LeCun%2C%20Yann%20No%20more%20pesky%20learning%20rates%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schaul%2C%20Tom%20Zhang%2C%20Sixin%20LeCun%2C%20Yann%20No%20more%20pesky%20learning%20rates%202013"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. CoRR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20K.%20Zisserman%2C%20A.%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202014"
+        },
+        {
+            "id": "Snoek_et+al_2012_a",
+            "entry": "Jasper Snoek, Hugo Larochelle, and Ryan P Adams. Practical Bayesian optimization of machine learning algorithms. In Advances in neural information processing systems, pp. 2951\u20132959, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snoek%2C%20Jasper%20Larochelle%2C%20Hugo%20Adams%2C%20Ryan%20P.%20Practical%20Bayesian%20optimization%20of%20machine%20learning%20algorithms%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snoek%2C%20Jasper%20Larochelle%2C%20Hugo%20Adams%2C%20Ryan%20P.%20Practical%20Bayesian%20optimization%20of%20machine%20learning%20algorithms%202012"
+        },
+        {
+            "id": "Springenberg_et+al_2015_a",
+            "entry": "Jost T. Springenberg, Alexey Dosovitskiy, Thomas Brox, and Martin Riedmiller. Striving for simplicity: The all convolutional net. In ICLR (workshop track), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springenberg%2C%20Jost%20T.%20Dosovitskiy%2C%20Alexey%20Brox%2C%20Thomas%20Riedmiller%2C%20Martin%20Striving%20for%20simplicity%3A%20The%20all%20convolutional%20net%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Springenberg%2C%20Jost%20T.%20Dosovitskiy%2C%20Alexey%20Brox%2C%20Thomas%20Riedmiller%2C%20Martin%20Striving%20for%20simplicity%3A%20The%20all%20convolutional%20net%202015"
+        },
+        {
+            "id": "Szegedy_et+al_2016_a",
+            "entry": "Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, and Zbigniew Wojna. Rethinking the inception architecture for computer vision. In Proceedings of the IEEE conference on Computer Vision and Pattern Recognition (CVPR), pp. 2818\u20132826, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20inception%20architecture%20for%20computer%20vision%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Vanhoucke%2C%20Vincent%20Ioffe%2C%20Sergey%20Shlens%2C%20Jon%20Rethinking%20the%20inception%20architecture%20for%20computer%20vision%202016"
+        },
+        {
+            "id": "Szegedy_et+al_2017_a",
+            "entry": "Christian Szegedy, Sergey Ioffe, Vincent Vanhoucke, and Alexander A Alemi. Inception-v4, InceptionResNet and the impact of residual connections on learning. In AAAI, volume 4, pp. 12, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Ioffe%2C%20Sergey%20Vanhoucke%2C%20Vincent%20Alemi%2C%20Alexander%20A.%20Inception-v4%2C%20InceptionResNet%20and%20the%20impact%20of%20residual%20connections%20on%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Ioffe%2C%20Sergey%20Vanhoucke%2C%20Vincent%20Alemi%2C%20Alexander%20A.%20Inception-v4%2C%20InceptionResNet%20and%20the%20impact%20of%20residual%20connections%20on%20learning%202017"
+        },
+        {
+            "id": "Tieleman_2012_a",
+            "entry": "Tijmen Tieleman and Geoffrey Hinton. Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural networks for machine learning, 4(2):26\u201331, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems (NIPS), pp. 5998\u20136008, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20NIPS%20pp%2059986008%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20NIPS%20pp%2059986008%202017"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nati Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. In Advances in Neural Information Processing Systems, pp. 4148\u20134158, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041484158%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041484158%202017"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Han Xiao, Kashif Rasul, and Roland Vollgraf. Fashion-MNIST: a novel image dataset for benchmarking machine learning algorithms. arXiv preprint arXiv:1708.07747, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.07747"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Wide residual networks. arXiv preprint arXiv:1605.07146, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07146"
+        },
+        {
+            "id": "Zeiler_2012_a",
+            "entry": "Matthew D. Zeiler. ADADELTA: An adaptive learning rate method. arXiv preprint arXiv:1212.5701, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1212.5701"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Huishuai Zhang, Caiming Xiong, James Bradbury, and Richard Socher. Block-diagonal Hessian-free optimization for training neural networks. arXiv preprint arXiv:1712.07296, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.07296"
+        },
+        {
+            "id": "Published_2019_b",
+            "entry": "Published as a conference paper at ICLR 2019 Hongyu Zhu, Mohamed Akrout, Bojian Zheng, Andrew Pelegris, Amar Phanishayee, Bianca",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Hongyu%20Zhu%20Mohamed%20Akrout%20Bojian%20Zheng%20Andrew%20Pelegris%20Amar%20Phanishayee%20Bianca"
+        },
+        {
+            "id": "Schroeder_2018_a",
+            "entry": "Schroeder, and Gennady Pekhimenko. TBD: Benchmarking and analyzing deep neural network training. arXiv preprint arXiv:1803.06905, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06905"
+        }
+    ]
+}

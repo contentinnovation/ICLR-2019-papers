@@ -1,0 +1,364 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "SAMPLE EFFICIENT ADAPTIVE TEXT-TO-SPEECH",
+        "author": "Yutian Chen, Yannis Assael, Brendan Shillingford, David Budden, Scott Reed, Heiga Zen, Quan Wang, Luis C. Cobo, Andrew Trask, Ben Laurie, Caglar Gulcehre, A\u00e4ron van den Oord, Oriol Vinyals, Nando de Freitas",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkzjUoAcFX"
+        },
+        "abstract": "We present a meta-learning approach for adaptive text-to-speech (TTS) with few data. During training, we learn a multi-speaker model using a shared conditional WaveNet core and independent learned embeddings for each speaker. The aim of training is not to produce a neural network with fixed weights, which is then deployed as a TTS system. Instead, the aim is to produce a network that requires few data at deployment time to rapidly adapt to new speakers. We introduce and benchmark three strategies: (i) learning the speaker embedding while keeping the WaveNet core fixed, (ii) fine-tuning the entire architecture with stochastic gradient descent, and (iii) predicting the speaker embedding with a trained neural network encoder. The experiments show that these approaches are successful at adapting the multi-speaker neural network to new speakers, obtaining state-of-the-art results in both sample naturalness and voice similarity with merely a few minutes of audio data from new speakers."
+    },
+    "keywords": [
+        {
+            "term": "speech synthesis",
+            "url": "https://en.wikipedia.org/wiki/speech_synthesis"
+        },
+        {
+            "term": "new speaker",
+            "url": "https://en.wikipedia.org/wiki/new_speaker"
+        },
+        {
+            "term": "speech recognition",
+            "url": "https://en.wikipedia.org/wiki/speech_recognition"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "meta learning",
+            "url": "https://en.wikipedia.org/wiki/meta_learning"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "CSTR",
+            "url": "https://en.wikipedia.org/wiki/CSTR"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "Mean Opinion Score",
+            "url": "https://en.wikipedia.org/wiki/Mean_Opinion_Score"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "MAML": "model-agnostic meta learning",
+        "DRAW": "Deep Recurrent Attention Writer",
+        "MOS": "Mean Opinion Score",
+        "TI-SV": "text independent speaker verification",
+        "EER": "equal error rate",
+        "DET": "detection error trade-off"
+    },
+    "highlights": [
+        "Training a large model with lots of data and subsequently deploying this model to carry out classification or regression is an important and common methodology in machine learning",
+        "In this paper we describe a new WaveNet training procedure that facilitates adaptation to new speakers, allowing the synthesis of new voices from no more than 10 minutes of data with high sample quality",
+        "When fine-tuning by first estimating the speaker embedding and subsequently fine-tuning the entire model, we achieve state-of-the-art results in terms of sample naturalness and voice similarity to target speakers",
+        "These results are robust across speech datasets recorded under different conditions and, we demonstrate that the generated samples are capable of confusing the state-of-the-art text-independent speaker verification system (<a class=\"ref-link\" id=\"cWan_et+al_2018_a\" href=\"#rWan_et+al_2018_a\">Wan et al, 2018</a>)",
+        "This paper studied three variants of meta-learning for sample efficient adaptive TTS",
+        "When adapted with a few minutes of data, our model matches the state-of-the-art performance in sample naturalness"
+    ],
+    "key_statements": [
+        "Training a large model with lots of data and subsequently deploying this model to carry out classification or regression is an important and common methodology in machine learning",
+        "In this paper we describe a new WaveNet training procedure that facilitates adaptation to new speakers, allowing the synthesis of new voices from no more than 10 minutes of data with high sample quality",
+        "When fine-tuning by first estimating the speaker embedding and subsequently fine-tuning the entire model, we achieve state-of-the-art results in terms of sample naturalness and voice similarity to target speakers",
+        "These results are robust across speech datasets recorded under different conditions and, we demonstrate that the generated samples are capable of confusing the state-of-the-art text-independent speaker verification system (<a class=\"ref-link\" id=\"cWan_et+al_2018_a\" href=\"#rWan_et+al_2018_a\">Wan et al, 2018</a>)",
+        "Attempts of few-shot adaptation involved the attention models of <a class=\"ref-link\" id=\"cReed_et+al_2018_a\" href=\"#rReed_et+al_2018_a\">Reed et al (2018</a>) and model-agnostic meta learning (<a class=\"ref-link\" id=\"cFinn_et+al_2017_a\" href=\"#rFinn_et+al_2017_a\">Finn et al, 2017a</a>), but we found both of these strategies failed to learn informative speaker embedding in our preliminary experiments",
+        "In this study we focus on extending the autoregressive WaveNet model to the few-shot learning setting to adapt to speakers that were not presented at training time",
+        "The VoiceLoop model introduced a novel memory-based architecture that was extended by <a class=\"ref-link\" id=\"cNachmani_et+al_2018_a\" href=\"#rNachmani_et+al_2018_a\">Nachmani et al (2018</a>) to few-shot voice style adaptation, by introducing an auxiliary fitting network that predicts the embedding of a new speaker",
+        "Since our underlying WaveNet model was trained on data largely from LibriSpeech, one might expect that the generated samples on the VCTK dataset contain characteristic artifacts that make generated samples easier to distinguish from real utterances",
+        "This paper studied three variants of meta-learning for sample efficient adaptive TTS",
+        "When adapted with a few minutes of data, our model matches the state-of-the-art performance in sample naturalness",
+        "Strated that the generated samples achieved a similar level of voice similarity to real utterances from the same speaker, when measured by a text independent speaker verification model"
+    ],
+    "summary": [
+        "Training a large model with lots of data and subsequently deploying this model to carry out classification or regression is an important and common methodology in machine learning.",
+        "We present two non-parametric adaptation methods that involve fine-tuning either the speaker embeddings only or all the model parameters given few data from a new speaker.",
+        "For comparison purposes, we use a parametric approach whereby an auxiliary network is trained to predict the embedding vector of a new speaker using the demonstration data.",
+        "Inspired by few-shot learning we first pre-train a multi-speaker conditional WaveNet model on a large and diverse dataset, as described in Section 2.",
+        "In this study we focus on extending the autoregressive WaveNet model to the few-shot learning setting to adapt to speakers that were not presented at training time.",
+        "The VoiceLoop model introduced a novel memory-based architecture that was extended by <a class=\"ref-link\" id=\"cNachmani_et+al_2018_a\" href=\"#rNachmani_et+al_2018_a\">Nachmani et al (2018</a>) to few-shot voice style adaptation, by introducing an auxiliary fitting network that predicts the embedding of a new speaker.",
+        "Since our underlying WaveNet model was trained on data largely from LibriSpeech, one might expect that the generated samples on the VCTK dataset contain characteristic artifacts that make generated samples easier to distinguish from real utterances.",
+        "For reference on 16 kHz data, WaveNet trained on a 24-hour production quality speech dataset achieves a score of 4.21, while for LibriSpeech our best few-shot model attains an MOS score of 4.13 using only 5 minutes of data given a pre-trained multi-speaker model.",
+        "The addition of extra adaptation data beyond 10 seconds of audio helps performance on LibriSpeech but not VCTK, and the gap between our best model and the real utterance is wider on VCTK, possibly due to the different recording conditions.",
+        "Their model computes the embedding based on the d-vector, similar to our SEA-ENC approach, and performs competitively for the one-shot learning setting, but its performance saturates with 5 seconds of adaptation data, as explained in Section 3.2.",
+        "In our setup we fix the enrollment set together with the speaker verification model from (<a class=\"ref-link\" id=\"cWan_et+al_2018_a\" href=\"#rWan_et+al_2018_a\">Wan et al, 2018</a>), and study the performance of different verification sets that are either from real utterances or generated by a TTS system.",
+        "The adaptation method that fine-tunes the entire model, with the speaker embedding vector first optimized, shows impressive performance even with only 10 seconds of audio from new speakers.",
+        "Strated that the generated samples achieved a similar level of voice similarity to real utterances from the same speaker, when measured by a text independent speaker verification model."
+    ],
+    "headline": "We present a meta-learning approach for adaptive text-to-speech with few data",
+    "reference_links": [
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "G. Hinton, L. Deng, D. Yu, G. E. Dahl, A.-r. Mohamed, N. Jaitly, A. Senior, V. Vanhoucke, P. Nguyen, T. N. Sainath, et al. Deep neural networks for acoustic modeling in speech recognition: The shared views of four research groups. IEEE Signal Processing Magazine, 29(6):82\u201397, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20G.%20Deng%2C%20L.%20Yu%2C%20D.%20Dahl%2C%20G.E.%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%3A%20The%20shared%20views%20of%20four%20research%20groups%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20G.%20Deng%2C%20L.%20Yu%2C%20D.%20Dahl%2C%20G.E.%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%3A%20The%20shared%20views%20of%20four%20research%20groups%202012"
+        },
+        {
+            "id": "Wu_et+al_2016_a",
+            "entry": "Y. Wu, M. Schuster, Z. Chen, Q. V. Le, M. Norouzi, W. Macherey, M. Krikun, Y. Cao, Q. Gao, K. Macherey, et al. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. arXiv preprint arXiv:1609.08144, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information processing Systems, pages 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Hinton%2C%20G.E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Hinton%2C%20G.E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Szegedy_et+al_2015_a",
+            "entry": "C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, A. Rabinovich, et al. Going deeper with convolutions. In Computer Vision and Pattern Recognition, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20C.%20Liu%2C%20W.%20Jia%2C%20Y.%20Sermanet%2C%20P.%20Going%20deeper%20with%20convolutions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20C.%20Liu%2C%20W.%20Jia%2C%20Y.%20Sermanet%2C%20P.%20Going%20deeper%20with%20convolutions%202015"
+        },
+        {
+            "id": "Dutoit_1997_a",
+            "entry": "T. Dutoit. An Introduction to Text-to-speech Synthesis. Kluwer Academic Publishers, Norwell, MA, USA, 1997. ISBN 0-7923-4498-7.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dutoit%2C%20T.%20An%20Introduction%20to%20Text-to-speech%20Synthesis%201997"
+        },
+        {
+            "id": "Taylor_2009_a",
+            "entry": "P. Taylor. Text-to-Speech Synthesis. Cambridge University Press, New York, NY, USA, 1st edition, 2009. ISBN 0521899273, 9780521899277.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taylor%2C%20P.%20Text-to-Speech%20Synthesis%202009"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "A. van den Oord, S. Dieleman, H. Zen, K. Simonyan, O. Vinyals, A. Graves, N. Kalchbrenner, A. Senior, and K. Kavukcuoglu. WaveNet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Van_et+al_2017_a",
+            "entry": "A. van den Oord, Y. Li, I. Babuschkin, K. Simonyan, O. Vinyals, K. Kavukcuoglu, G. v. d. Driessche, E. Lockhart, L. C. Cobo, F. Stimberg, et al. Parallel WaveNet: Fast high-fidelity speech synthesis. arXiv preprint arXiv:1711.10433, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.10433"
+        },
+        {
+            "id": "Wan_et+al_2018_a",
+            "entry": "L. Wan, Q. Wang, A. Papir, and I. L. Moreno. Generalized end-to-end loss for speaker verification. In International Conference on Acoustics, Speech, and Signal Processing, pages 4879\u20134883. IEEE, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wan%2C%20L.%20Wang%2C%20Q.%20Papir%2C%20A.%20Moreno%2C%20I.L.%20Generalized%20end-to-end%20loss%20for%20speaker%20verification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wan%2C%20L.%20Wang%2C%20Q.%20Papir%2C%20A.%20Moreno%2C%20I.L.%20Generalized%20end-to-end%20loss%20for%20speaker%20verification%202018"
+        },
+        {
+            "id": "Zen_et+al_2016_a",
+            "entry": "H. Zen, Y. Agiomyrgiannakis, N. Egberts, F. Henderson, and P. Szczepaniak. Fast, compact, and high quality LSTM-RNN based statistical parametric speech synthesizers for mobile devices. In INTERSPEECH, pages 2273\u20132277, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zen%2C%20H.%20Agiomyrgiannakis%2C%20Y.%20Egberts%2C%20N.%20Henderson%2C%20F.%20and%20high%20quality%20LSTM-RNN%20based%20statistical%20parametric%20speech%20synthesizers%20for%20mobile%20devices%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zen%2C%20H.%20Agiomyrgiannakis%2C%20Y.%20Egberts%2C%20N.%20Henderson%2C%20F.%20and%20high%20quality%20LSTM-RNN%20based%20statistical%20parametric%20speech%20synthesizers%20for%20mobile%20devices%202016"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "L. Li, Y. Chen, Y. Shi, Z. Tang, and D. Wang. Deep speaker feature learning for text-independent speaker verification. In INTERSPEECH, pages 1542\u20131546, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20L.%20Chen%2C%20Y.%20Shi%2C%20Y.%20Tang%2C%20Z.%20Deep%20speaker%20feature%20learning%20for%20text-independent%20speaker%20verification%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20L.%20Chen%2C%20Y.%20Shi%2C%20Y.%20Tang%2C%20Z.%20Deep%20speaker%20feature%20learning%20for%20text-independent%20speaker%20verification%202017"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "A. Santoro, S. Bartunov, M. Botvinick, D. Wierstra, and T. Lillicrap. Meta-learning with memory-augmented neural networks. In International Conference on Machine Learning, pages 1842\u20131850, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20A.%20Bartunov%2C%20S.%20Botvinick%2C%20M.%20Wierstra%2C%20D.%20Meta-learning%20with%20memory-augmented%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20A.%20Bartunov%2C%20S.%20Botvinick%2C%20M.%20Wierstra%2C%20D.%20Meta-learning%20with%20memory-augmented%20neural%20networks%202016"
+        },
+        {
+            "id": "Shyam_et+al_2017_a",
+            "entry": "P. Shyam, S. Gupta, and A. Dukkipati. Attentive recurrent comparators. In International Conference on Machine Learning, pages 3173\u20133181, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shyam%2C%20P.%20Gupta%2C%20S.%20Dukkipati%2C%20A.%20Attentive%20recurrent%20comparators%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shyam%2C%20P.%20Gupta%2C%20S.%20Dukkipati%2C%20A.%20Attentive%20recurrent%20comparators%202017"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "O. Vinyals, C. Blundell, T. Lillicrap, D. Wierstra, et al. Matching networks for one shot learning. In Advances in Neural Information Processing Systems, pages 3630\u20133638, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20O.%20Blundell%2C%20C.%20Lillicrap%2C%20T.%20Wierstra%2C%20D.%20Matching%20networks%20for%20one%20shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20O.%20Blundell%2C%20C.%20Lillicrap%2C%20T.%20Wierstra%2C%20D.%20Matching%20networks%20for%20one%20shot%20learning%202016"
+        },
+        {
+            "id": "Pohlen_et+al_2018_a",
+            "entry": "T. Pohlen, B. Piot, T. Hester, M. G. Azar, D. Horgan, D. Budden, G. Barth-Maron, H. van Hasselt, J. Quan, M. Vecer\u00edk, et al. Observe and look further: Achieving consistent performance on atari. arXiv preprint arXiv:1805.11593, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11593"
+        },
+        {
+            "id": "Aytar_et+al_2018_a",
+            "entry": "Y. Aytar, T. Pfaff, D. Budden, T. L. Paine, Z. Wang, and N. de Freitas. Playing hard exploration games by watching youtube. arXiv preprint arXiv:1805.11592, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11592"
+        },
+        {
+            "id": "Harlow_1949_a",
+            "entry": "H. F. Harlow. The formation of learning sets. Psychological review, 56(1):51, 1949.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harlow%2C%20H.F.%20The%20formation%20of%20learning%20sets%201949",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Harlow%2C%20H.F.%20The%20formation%20of%20learning%20sets%201949"
+        },
+        {
+            "id": "Thrun_2012_a",
+            "entry": "S. Thrun and L. Pratt. Learning to learn. Springer Science & Business Media, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thrun%2C%20S.%20Pratt%2C%20L.%20Learning%20to%20learn%202012"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "M. Andrychowicz, M. Denil, S. Gomez, M. W. Hoffman, D. Pfau, T. Schaul, B. Shillingford, and N. De Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, pages 3981\u20133989, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20M.%20Denil%2C%20M.%20Gomez%2C%20S.%20Hoffman%2C%20M.W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20M.%20Denil%2C%20M.%20Gomez%2C%20S.%20Hoffman%2C%20M.W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Y. Chen, M. W. Hoffman, S. G. Colmenarejo, M. Denil, T. P. Lillicrap, M. Botvinick, and N. Freitas. Learning to learn without gradient descent by gradient descent. In International Conference on Machine Learning, pages 748\u2013756, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Y.%20Hoffman%2C%20M.W.%20Colmenarejo%2C%20S.G.%20Denil%2C%20M.%20Learning%20to%20learn%20without%20gradient%20descent%20by%20gradient%20descent%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Y.%20Hoffman%2C%20M.W.%20Colmenarejo%2C%20S.G.%20Denil%2C%20M.%20Learning%20to%20learn%20without%20gradient%20descent%20by%20gradient%20descent%202017"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "S. Ravi and H. Larochelle. Optimization as a model for few-shot learning. International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20S.%20Larochelle%2C%20H.%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ravi%2C%20S.%20Larochelle%2C%20H.%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "C. Finn, P. Abbeel, and S. Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning, pages 1126\u20131135, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20C.%20Abbeel%2C%20P.%20Levine%2C%20S.%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20C.%20Abbeel%2C%20P.%20Levine%2C%20S.%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Finn_et+al_0000_a",
+            "entry": "C. Finn, T. Yu, T. Zhang, P. Abbeel, and S. Levine. One-shot visual imitation learning via meta-learning. In Conference on Robot Learning, pages 357\u2013368, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20C.%20Yu%2C%20T.%20Zhang%2C%20T.%20Abbeel%2C%20P.%20One-shot%20visual%20imitation%20learning%20via%20meta-learning",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20C.%20Yu%2C%20T.%20Zhang%2C%20T.%20Abbeel%2C%20P.%20One-shot%20visual%20imitation%20learning%20via%20meta-learning"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "T. Yu, C. Finn, A. Xie, S. Dasari, T. Zhang, P. Abbeel, and S. Levine. One-shot imitation from observing humans via domain-adaptive meta-learning. In International Conference on Learning Representations Workshop, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20T.%20Finn%2C%20C.%20Xie%2C%20A.%20Dasari%2C%20S.%20One-shot%20imitation%20from%20observing%20humans%20via%20domain-adaptive%20meta-learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20T.%20Finn%2C%20C.%20Xie%2C%20A.%20Dasari%2C%20S.%20One-shot%20imitation%20from%20observing%20humans%20via%20domain-adaptive%20meta-learning%202018"
+        },
+        {
+            "id": "Bartunov_2017_a",
+            "entry": "S. Bartunov and D. P. Vetrov. Fast adaptation in generative models with generative matching networks. In International Conference on Learning Representations Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bartunov%2C%20S.%20Vetrov%2C%20D.P.%20Fast%20adaptation%20in%20generative%20models%20with%20generative%20matching%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bartunov%2C%20S.%20Vetrov%2C%20D.P.%20Fast%20adaptation%20in%20generative%20models%20with%20generative%20matching%20networks%202017"
+        },
+        {
+            "id": "Bornschein_et+al_2017_a",
+            "entry": "J. Bornschein, A. Mnih, D. Zoran, and D. J. Rezende. Variational memory addressing in generative models. In Advances in Neural Information Processing Systems, pages 3923\u20133932, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bornschein%2C%20J.%20Mnih%2C%20A.%20Zoran%2C%20D.%20Rezende%2C%20D.J.%20Variational%20memory%20addressing%20in%20generative%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bornschein%2C%20J.%20Mnih%2C%20A.%20Zoran%2C%20D.%20Rezende%2C%20D.J.%20Variational%20memory%20addressing%20in%20generative%20models%202017"
+        },
+        {
+            "id": "Rezende_et+al_2016_a",
+            "entry": "D. J. Rezende, S. Mohamed, I. Danihelka, K. Gregor, and D. Wierstra. One-shot generalization in deep generative models. In International Conference on Machine Learning, pages 1521\u20131529, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20D.J.%20Mohamed%2C%20S.%20Danihelka%2C%20I.%20Gregor%2C%20K.%20One-shot%20generalization%20in%20deep%20generative%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20D.J.%20Mohamed%2C%20S.%20Danihelka%2C%20I.%20Gregor%2C%20K.%20One-shot%20generalization%20in%20deep%20generative%20models%202016"
+        },
+        {
+            "id": "Gregor_et+al_2015_a",
+            "entry": "K. Gregor, I. Danihelka, A. Graves, D. Rezende, and D. Wierstra. DRAW: A recurrent neural network for image generation. In International Conference on Machine Learning, pages 1462\u20131471, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20K.%20Danihelka%2C%20I.%20Graves%2C%20A.%20Rezende%2C%20D.%20DRAW%3A%20A%20recurrent%20neural%20network%20for%20image%20generation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20K.%20Danihelka%2C%20I.%20Graves%2C%20A.%20Rezende%2C%20D.%20DRAW%3A%20A%20recurrent%20neural%20network%20for%20image%20generation%202015"
+        },
+        {
+            "id": "Reed_et+al_2018_a",
+            "entry": "S. Reed, Y. Chen, T. Paine, A. van den Oord, S. M. Eslami, D. Rezende, O. Vinyals, and N. de Freitas. Few-shot autoregressive density estimation: Towards learning to learn distributions. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reed%2C%20S.%20Chen%2C%20Y.%20Paine%2C%20T.%20van%20den%20Oord%2C%20A.%20Few-shot%20autoregressive%20density%20estimation%3A%20Towards%20learning%20to%20learn%20distributions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reed%2C%20S.%20Chen%2C%20Y.%20Paine%2C%20T.%20van%20den%20Oord%2C%20A.%20Few-shot%20autoregressive%20density%20estimation%3A%20Towards%20learning%20to%20learn%20distributions%202018"
+        },
+        {
+            "id": "Oord_et+al_2016_a",
+            "entry": "A. Van Oord, N. Kalchbrenner, and K. Kavukcuoglu. Pixel recurrent neural networks. In International Conference on Machine Learning, pages 1747\u20131756, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oord%2C%20A.Van%20Kalchbrenner%2C%20N.%20Kavukcuoglu%2C%20K.%20Pixel%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oord%2C%20A.Van%20Kalchbrenner%2C%20N.%20Kavukcuoglu%2C%20K.%20Pixel%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Veness_et+al_2017_a",
+            "entry": "J. Veness, T. Lattimore, A. Bhoopchand, A. Grabska-Barwinska, C. Mattern, and P. Toth. Online learning with gated linear networks. arXiv preprint arXiv:1712.01897, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.01897"
+        },
+        {
+            "id": "Skerry-Ryan_et+al_2018_a",
+            "entry": "R. Skerry-Ryan, E. Battenberg, Y. Xiao, Y. Wang, D. Stanton, J. Shor, R. J. Weiss, R. Clark, and R. A. Saurous. Towards end-to-end prosody transfer for expressive speech synthesis with tacotron. arXiv preprint arXiv:1803.09047, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.09047"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Y. Wang, R. Skerry-Ryan, D. Stanton, Y. Wu, R. J. Weiss, N. Jaitly, Z. Yang, Y. Xiao, Z. Chen, S. Bengio, Q. Le, Y. Agiomyrgiannakis, R. Clark, and R. A. Saurous. Tacotron: Towards end-to-end speech synthesis. In INTERSPEECH, pages 4006\u20134010, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Y.%20Skerry-Ryan%2C%20R.%20Stanton%2C%20D.%20Wu%2C%20Y.%20Tacotron%3A%20Towards%20end-to-end%20speech%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Y.%20Skerry-Ryan%2C%20R.%20Stanton%2C%20D.%20Wu%2C%20Y.%20Tacotron%3A%20Towards%20end-to-end%20speech%20synthesis%202017"
+        },
+        {
+            "id": "Gibiansky_et+al_2017_a",
+            "entry": "A. Gibiansky, S. Arik, G. Diamos, J. Miller, K. Peng, W. Ping, J. Raiman, and Y. Zhou. Deep voice 2: Multispeaker neural text-to-speech. In Advances in Neural Information Processing Systems, pages 2962\u20132970, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gibiansky%2C%20A.%20Arik%2C%20S.%20Diamos%2C%20G.%20Miller%2C%20J.%20Deep%20voice%202%3A%20Multispeaker%20neural%20text-to-speech%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gibiansky%2C%20A.%20Arik%2C%20S.%20Diamos%2C%20G.%20Miller%2C%20J.%20Deep%20voice%202%3A%20Multispeaker%20neural%20text-to-speech%202017"
+        },
+        {
+            "id": "Ar_et+al_2017_a",
+            "entry": "S. \u00d6. Ar\u0131k, M. Chrzanowski, A. Coates, G. Diamos, A. Gibiansky, Y. Kang, X. Li, J. Miller, A. Ng, J. Raiman, et al. Deep voice: Real-time neural text-to-speech. In International Conference on Machine Learning, pages 195\u2013204, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%20%C3%96%20Ar%C4%B1k%20M%20Chrzanowski%20A%20Coates%20G%20Diamos%20A%20Gibiansky%20Y%20Kang%20X%20Li%20J%20Miller%20A%20Ng%20J%20Raiman%20et%20al%20Deep%20voice%20Realtime%20neural%20texttospeech%20In%20International%20Conference%20on%20Machine%20Learning%20pages%20195204%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%20%C3%96%20Ar%C4%B1k%20M%20Chrzanowski%20A%20Coates%20G%20Diamos%20A%20Gibiansky%20Y%20Kang%20X%20Li%20J%20Miller%20A%20Ng%20J%20Raiman%20et%20al%20Deep%20voice%20Realtime%20neural%20texttospeech%20In%20International%20Conference%20on%20Machine%20Learning%20pages%20195204%202017"
+        },
+        {
+            "id": "Ping_et+al_2018_a",
+            "entry": "W. Ping, K. Peng, A. Gibiansky, S. O. Arik, A. Kannan, S. Narang, J. Raiman, and J. Miller. Deep voice 3: 2000-speaker neural text-to-speech. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=W%20Ping%20K%20Peng%20A%20Gibiansky%20S%20O%20Arik%20A%20Kannan%20S%20Narang%20J%20Raiman%20and%20J%20Miller%20Deep%20voice%203%202000speaker%20neural%20texttospeech%20In%20International%20Conference%20on%20Learning%20Representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=W%20Ping%20K%20Peng%20A%20Gibiansky%20S%20O%20Arik%20A%20Kannan%20S%20Narang%20J%20Raiman%20and%20J%20Miller%20Deep%20voice%203%202000speaker%20neural%20texttospeech%20In%20International%20Conference%20on%20Learning%20Representations%202018"
+        },
+        {
+            "id": "Sotelo_et+al_2017_a",
+            "entry": "J. Sotelo, S. Mehri, K. Kumar, J. F. Santos, K. Kastner, A. Courville, and Y. Bengio. Char2wav: End-to-end speech synthesis. In International Conference on Learning Representations Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sotelo%2C%20J.%20Mehri%2C%20S.%20Kumar%2C%20K.%20Santos%2C%20J.F.%20Char2wav%3A%20End-to-end%20speech%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sotelo%2C%20J.%20Mehri%2C%20S.%20Kumar%2C%20K.%20Santos%2C%20J.F.%20Char2wav%3A%20End-to-end%20speech%20synthesis%202017"
+        },
+        {
+            "id": "Taigman_et+al_2018_a",
+            "entry": "Y. Taigman, L. Wolf, A. Polyak, and E. Nachmani. Voiceloop: Voice fitting and synthesis via a phonological loop. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taigman%2C%20Y.%20Wolf%2C%20L.%20Polyak%2C%20A.%20Nachmani%2C%20E.%20Voiceloop%3A%20Voice%20fitting%20and%20synthesis%20via%20a%20phonological%20loop%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taigman%2C%20Y.%20Wolf%2C%20L.%20Polyak%2C%20A.%20Nachmani%2C%20E.%20Voiceloop%3A%20Voice%20fitting%20and%20synthesis%20via%20a%20phonological%20loop%202018"
+        },
+        {
+            "id": "Morise_et+al_2016_a",
+            "entry": "M. Morise, F. Yokomori, and K. Ozawa. World: a vocoder-based high-quality speech synthesis system for real-time applications. IEICE transactions on Information and Systems, 99(7):1877\u20131884, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morise%2C%20M.%20Yokomori%2C%20F.%20Ozawa%2C%20K.%20World%3A%20a%20vocoder-based%20high-quality%20speech%20synthesis%20system%20for%20real-time%20applications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morise%2C%20M.%20Yokomori%2C%20F.%20Ozawa%2C%20K.%20World%3A%20a%20vocoder-based%20high-quality%20speech%20synthesis%20system%20for%20real-time%20applications%202016"
+        },
+        {
+            "id": "Nachmani_et+al_2018_a",
+            "entry": "E. Nachmani, A. Polyak, Y. Taigman, and L. Wolf. Fitting new speakers based on a short untranscribed sample. arXiv preprint arXiv:1802.06984, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06984"
+        },
+        {
+            "id": "Jia_et+al_2018_a",
+            "entry": "Y. Jia, Y. Zhang, R. J. Weiss, Q. Wang, J. Shen, F. Ren, Z. Chen, P. Nguyen, R. Pang, I. L. Moreno, et al. Transfer learning from speaker verification to multispeaker text-to-speech synthesis. arXiv preprint arXiv:1806.04558, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.04558"
+        },
+        {
+            "id": "Arik_et+al_2018_a",
+            "entry": "S. O. Arik, J. Chen, K. Peng, W. Ping, and Y. Zhou. Neural voice cloning with a few samples. arXiv preprint arXiv:1802.06006, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06006"
+        },
+        {
+            "id": "Panayotov_et+al_2015_a",
+            "entry": "V. Panayotov, G. Chen, D. Povey, and S. Khudanpur. Librispeech: an asr corpus based on public domain audio books. In International Conference on Acoustics, Speech and Signal Processing, pages 5206\u20135210. IEEE, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Panayotov%2C%20V.%20Chen%2C%20G.%20Povey%2C%20D.%20Khudanpur%2C%20S.%20Librispeech%3A%20an%20asr%20corpus%20based%20on%20public%20domain%20audio%20books%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Panayotov%2C%20V.%20Chen%2C%20G.%20Povey%2C%20D.%20Khudanpur%2C%20S.%20Librispeech%3A%20an%20asr%20corpus%20based%20on%20public%20domain%20audio%20books%202015"
+        },
+        {
+            "id": "Veaux_et+al_2017_a",
+            "entry": "C. Veaux, J. Yamagishi, K. MacDonald, et al. CSTR VCTK corpus: English multi-speaker corpus for CSTR Voice Cloning Toolkit, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Veaux%2C%20C.%20Yamagishi%2C%20J.%20MacDonald%2C%20K.%20CSTR%20VCTK%20corpus%3A%20English%20multi-speaker%20corpus%20for%20CSTR%20Voice%20Cloning%20Toolkit%202017"
+        },
+        {
+            "id": "Our_2018_a",
+            "entry": "Our encoding network is illustrated as the summation of two sub-network outputs in Figure 7. The first subnetwork is a pre-trained speaker verification model (TI-SV) (Wan et al., 2018), comprising 3 LSTM layers and a single linear layer. This model maps a waveform sequence of arbitrary length to a fixed 256-dimensional d-vector with a sliding window, and is trained from approximately 36M utterances from 18K speakers extracted from anonymized voice search logs. On top of this we add a shallow MLP to project the output d-vector to the speaker embedding space. The second sub-network comprises 16 1-D convolutional layers. This network reduces the temporal resolution to 256 ms per frame (for 16 kHz audio), then averages across time and projects into the speaker embedding space. The purpose of this network is to extract residual speaker information present in the demonstration waveforms but not captured by the pre-trained TI-SV model.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Our%20encoding%20network%20is%20illustrated%20as%20the%20summation%20of%20two%20subnetwork%20outputs%20in%20Figure%207%20The%20first%20subnetwork%20is%20a%20pretrained%20speaker%20verification%20model%20TISV%20Wan%20et%20al%202018%20comprising%203%20LSTM%20layers%20and%20a%20single%20linear%20layer%20This%20model%20maps%20a%20waveform%20sequence%20of%20arbitrary%20length%20to%20a%20fixed%20256dimensional%20dvector%20with%20a%20sliding%20window%20and%20is%20trained%20from%20approximately%2036M%20utterances%20from%2018K%20speakers%20extracted%20from%20anonymized%20voice%20search%20logs%20On%20top%20of%20this%20we%20add%20a%20shallow%20MLP%20to%20project%20the%20output%20dvector%20to%20the%20speaker%20embedding%20space%20The%20second%20subnetwork%20comprises%2016%201D%20convolutional%20layers%20This%20network%20reduces%20the%20temporal%20resolution%20to%20256%20ms%20per%20frame%20for%2016%20kHz%20audio%20then%20averages%20across%20time%20and%20projects%20into%20the%20speaker%20embedding%20space%20The%20purpose%20of%20this%20network%20is%20to%20extract%20residual%20speaker%20information%20present%20in%20the%20demonstration%20waveforms%20but%20not%20captured%20by%20the%20pretrained%20TISV%20model"
+        }
+    ]
+}

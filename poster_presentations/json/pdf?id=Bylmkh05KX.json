@@ -1,0 +1,348 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "UNSUPERVISED SPEECH RECOGNITION VIA SEGMENTAL EMPIRICAL OUTPUT DISTRIBUTION MATCHING",
+        "author": "Chih-Kuan Yeh, Machine Learning Department Carnegie Mellon University Pittsburgh, PA 15213, USA",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Bylmkh05KX"
+        },
+        "abstract": "We consider the problem of training speech recognition systems without using any labeled data, under the assumption that the learner can only access to the input utterances and a phoneme language model estimated from a non-overlapping corpus. We propose a fully unsupervised learning algorithm that alternates between solving two sub-problems: (i) learn a phoneme classifier for a given set of phoneme segmentation boundaries, and (ii) refining the phoneme boundaries based on a given classifier. To solve the first sub-problem, we introduce a novel unsupervised cost function named Segmental Empirical Output Distribution Matching, which generalizes the work in (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al., 2017</a>) to segmental structures. For the second sub-problem, we develop an approximate MAP approach to refining the boundaries obtained from Wang et al. (2017). Experimental results on TIMIT dataset demonstrate the success of this fully unsupervised phoneme recognition system, which achieves a phone error rate (PER) of 41.6%. Although it is still far away from the state-of-the-art supervised systems, we show that with oracle boundaries and matching language model, the PER could be improved to 32.5%. This performance approaches the supervised system of the same model architecture, demonstrating the great potential of the proposed method."
+    },
+    "keywords": [
+        {
+            "term": "TIMIT",
+            "url": "https://en.wikipedia.org/wiki/TIMIT"
+        },
+        {
+            "term": "speech recognition",
+            "url": "https://en.wikipedia.org/wiki/speech_recognition"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "hidden Markov model",
+            "url": "https://en.wikipedia.org/wiki/hidden_Markov_model"
+        },
+        {
+            "term": "maximum a posteriori",
+            "url": "https://en.wikipedia.org/wiki/maximum_a_posteriori"
+        },
+        {
+            "term": "language model",
+            "url": "https://en.wikipedia.org/wiki/language_model"
+        },
+        {
+            "term": "automatic speech recognition",
+            "url": "https://en.wikipedia.org/wiki/automatic_speech_recognition"
+        }
+    ],
+    "abbreviations": {
+        "PER": "phone error rate",
+        "ASR": "automatic speech recognition",
+        "LM": "language model",
+        "RNN": "recurrent neural network",
+        "MAP": "maximum a posteriori",
+        "SGD": "stochastic gradient descent",
+        "GRNN": "gated RNN",
+        "HMM": "hidden Markov model",
+        "SAT": "speaker adaptation training",
+        "MFCC": "mel-frequency cepstral coefficients",
+        "FER": "frame error rate",
+        "uNMT": "unsupervised neural machine translation"
+    },
+    "highlights": [
+        "The performance of automatic speech recognition (ASR) has been improved greatly and the recognition accuracy in certain scenarios could be on par with human performance (<a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\"><a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\"><a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\">Xiong et al, 2016</a></a></a>)",
+        "A major difference of the hidden Markov model training strategy used in this work compared to the ones used in semi-supervised learning is that we use the transcripts generated from proposed unsupervised speech recognition system for bootstrapping the training of hidden Markov model-based models",
+        "Unsupervised speech recognition with oracle boundary In our proposed unsupervised learning algorithm, we use the cost function (3) to train the classifier, which is different from the cross entropy cost in supervised learning",
+        "We have developed a fully unsupervised learning algorithm for phoneme recognition",
+        "The fully unsupervised system is still far away from the state-of-the-art supervised methods, we show that with oracle boundaries the performance of our algorithm could approach that of the supervised system with the same model architecture",
+        "We want to further point out that the techniques we proposed in this paper, was evaluated in speech recognition, can be exploited to attack other similar sequence recognition problems where the source and destination sequences have different lengths and labels are not available or hard to get"
+    ],
+    "key_statements": [
+        "The performance of automatic speech recognition (ASR) has been improved greatly and the recognition accuracy in certain scenarios could be on par with human performance (<a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\">Xiong et al, 2016</a>)",
+        "Most of the state-of-the-art automatic speech recognition systems are constructed by training deep neural networks on large-scale labeled data using supervised learning (<a class=\"ref-link\" id=\"cHinton_et+al_2012_a\" href=\"#rHinton_et+al_2012_a\">Hinton et al, 2012</a>; <a class=\"ref-link\" id=\"cDahl_et+al_2012_a\" href=\"#rDahl_et+al_2012_a\">Dahl et al, 2012</a>; <a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\">Xiong et al, 2016</a>; <a class=\"ref-link\" id=\"cGraves_et+al_2013_a\" href=\"#rGraves_et+al_2013_a\">Graves et al, 2013</a>; 2006; <a class=\"ref-link\" id=\"cGraves_2012_a\" href=\"#rGraves_2012_a\">Graves, 2012</a>); they rely on a large number of human labeled data to train the recognition model",
+        "We are working towards the grand mission of training speech recognition models without any human annotated data. Such an approach could potentially save a huge amount of human labeling costs for developing automatic speech recognition systems by leveraging massive unlabeled speech data",
+        "There is no human supervision presented to the algorithm at any level; that is, we do not provide any label for input samples, nor do we provide any transcription for input utterances",
+        "To address the first challenge, we develop a novel unsupervised learning cost function for automatic speech recognition systems by extending the Empirical Output Distribution Matching (Empirical-ODM) cost in (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a>) to segmental structures",
+        "We develop a maximum a posteriori (MAP) estimator to refine the segmentation boundaries based on the current p\u03b8",
+        "Input: Phoneme language model pLM(z), Training data Dx, initial boundary binit obtained by using techniques proposed in <a class=\"ref-link\" id=\"cWang_et+al_2017_a\" href=\"#rWang_et+al_2017_a\">Wang et al (2017</a>)",
+        "To further improve the performance of proposed unsupervised speech recognition system, we explore the semi-supervised hidden Markov model (HMM) training strategy (<a class=\"ref-link\" id=\"cZavaliagkos_et+al_1998_a\" href=\"#rZavaliagkos_et+al_1998_a\">Zavaliagkos et al, 1998</a>; <a class=\"ref-link\" id=\"cKemp_1999_a\" href=\"#rKemp_1999_a\">Kemp and Waibel, 1999</a>) that has commonly been used in speech recognition",
+        "A major difference of the hidden Markov model training strategy used in this work compared to the ones used in semi-supervised learning is that we use the transcripts generated from proposed unsupervised speech recognition system for bootstrapping the training of hidden Markov model-based models",
+        "Unsupervised speech recognition with oracle boundary In our proposed unsupervised learning algorithm, we use the cost function (3) to train the classifier, which is different from the cross entropy cost in supervised learning",
+        "Other than the standard frame error rate and phone error rate, we show the evaluation result for frame error rate* where the starting and ending silences are removed following the setting in <a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al (2018</a>)",
+        "We have developed a fully unsupervised learning algorithm for phoneme recognition",
+        "The algorithm alternates between two steps: (i) learn a phoneme classifier for a given set of phoneme segmentation boundaries, and refining the phoneme boundaries based on a given classifier",
+        "We developed an approximate maximum a posteriori approach to refining the boundaries obtained from <a class=\"ref-link\" id=\"cWang_et+al_2017_a\" href=\"#rWang_et+al_2017_a\">Wang et al (2017</a>)",
+        "The fully unsupervised system is still far away from the state-of-the-art supervised methods, we show that with oracle boundaries the performance of our algorithm could approach that of the supervised system with the same model architecture",
+        "We want to further point out that the techniques we proposed in this paper, was evaluated in speech recognition, can be exploited to attack other similar sequence recognition problems where the source and destination sequences have different lengths and labels are not available or hard to get"
+    ],
+    "summary": [
+        "The performance of automatic speech recognition (ASR) has been improved greatly and the recognition accuracy in certain scenarios could be on par with human performance (<a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\"><a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\"><a class=\"ref-link\" id=\"cXiong_et+al_2016_a\" href=\"#rXiong_et+al_2016_a\">Xiong et al, 2016</a></a></a>).",
+        "This cost function allows us to learn the classifier without labeled data for a given set of phoneme segmentation boundaries.",
+        "The objective of our unsupervised learning algorithm is to learn the model parameter \u03b8 from: (i) a training set of input sequences Dx, and a pretrained phoneme language model pLM(q).",
+        "There are two main challenges for unsupervised speech recognition: (i) how to learn the classifier p\u03b8 from Dx and pLM(q) for a given set of segmentation boundaries, and how to estimate",
+        "We develop an unsupervised algorithm to learn the classification model p\u03b8 with a given set of segmentation boundaries {bt}.",
+        "Input: Phoneme language model pLM(z), Training data Dx, initial boundary binit obtained by using techniques proposed in <a class=\"ref-link\" id=\"cWang_et+al_2017_a\" href=\"#rWang_et+al_2017_a\">Wang et al (2017</a>).",
+        "A major difference of the HMM training strategy used in this work compared to the ones used in semi-supervised learning is that we use the transcripts generated from proposed unsupervised speech recognition system for bootstrapping the training of HMM-based models.",
+        "Unsupervised speech recognition with oracle boundary In our proposed unsupervised learning algorithm, we use the cost function (3) to train the classifier, which is different from the cross entropy cost in supervised learning.",
+        "Unsupervised Phoneme Segmentation To understand how much our proposed boundary refinement method in Section 2.3 improves the segmentation quality, we follow the setting in previous works and report in Table 3 the recall, precision, F-score, and R-value with a 20-ms tolerance window on TIMIT\u2019s training set (<a class=\"ref-link\" id=\"cScharenborg_et+al_2010_a\" href=\"#rScharenborg_et+al_2010_a\">Scharenborg et al, 2010</a>; <a class=\"ref-link\" id=\"cVersteegh_et+al_2016_a\" href=\"#rVersteegh_et+al_2016_a\">Versteegh et al, 2016</a>; <a class=\"ref-link\" id=\"cRasanen_2014_a\" href=\"#rRasanen_2014_a\"><a class=\"ref-link\" id=\"cRasanen_2014_a\" href=\"#rRasanen_2014_a\">Rasanen, 2014</a></a>).",
+        "We compare our results with several unsupervised phoneme segmentation methods (<a class=\"ref-link\" id=\"cDusan_2006_a\" href=\"#rDusan_2006_a\">Dusan and Rabiner, 2006</a>; <a class=\"ref-link\" id=\"cQiao_et+al_2008_a\" href=\"#rQiao_et+al_2008_a\">Qiao et al, 2008</a>; <a class=\"ref-link\" id=\"cLee_2012_a\" href=\"#rLee_2012_a\">Lee and Glass, 2012</a>; <a class=\"ref-link\" id=\"cRasanen_2014_a\" href=\"#rRasanen_2014_a\"><a class=\"ref-link\" id=\"cRasanen_2014_a\" href=\"#rRasanen_2014_a\">Rasanen, 2014</a></a>; <a class=\"ref-link\" id=\"cHoang_2015_a\" href=\"#rHoang_2015_a\">Hoang and Wang, 2015</a>; <a class=\"ref-link\" id=\"cMichel_et+al_2016_a\" href=\"#rMichel_et+al_2016_a\">Michel et al, 2016</a>; <a class=\"ref-link\" id=\"cWang_et+al_2017_a\" href=\"#rWang_et+al_2017_a\">Wang et al, 2017</a>).",
+        "<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al (2017</a>) showed that it is possible to learn a sequence classifier without any labeled data by exploiting the output sequential structure using an unsupervised cost function named Empirical-ODM.",
+        "Our approach learns a neural network model that directly maps the raw acoustic features into the output space by optimizing the Segmental Empirical-ODM cost, and outperforms the upper bound of the above cluster-based approaches.",
+        "The fully unsupervised system is still far away from the state-of-the-art supervised methods, we show that with oracle boundaries the performance of our algorithm could approach that of the supervised system with the same model architecture.",
+        "We want to further point out that the techniques we proposed in this paper, was evaluated in speech recognition, can be exploited to attack other similar sequence recognition problems where the source and destination sequences have different lengths and labels are not available or hard to get"
+    ],
+    "headline": "We propose a fully unsupervised learning algorithm that alternates between solving two sub-problems: learn a phoneme classifier for a given set of phoneme segmentation boundaries, and refining the phoneme boundaries based on a given classifier",
+    "reference_links": [
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Yu Liu, Jianshu Chen, and Li Deng. Unsupervised sequence classification using sequential output statistics. In Advances in Neural Information Processing Systems, pages 3550\u20133559, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Yu%20Chen%2C%20Jianshu%20Deng%2C%20Li%20Unsupervised%20sequence%20classification%20using%20sequential%20output%20statistics%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Yu%20Chen%2C%20Jianshu%20Deng%2C%20Li%20Unsupervised%20sequence%20classification%20using%20sequential%20output%20statistics%202017"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Yu-Hsuan Wang, Cheng-Tao Chung, and Hung-yi Lee. Gate activation signal analysis for gated recurrent neural networks and its correlation with phoneme boundaries. arXiv preprint arXiv:1703.07588, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.07588"
+        },
+        {
+            "id": "Xiong_et+al_2016_a",
+            "entry": "Wayne Xiong, Jasha Droppo, Xuedong Huang, Frank Seide, Mike Seltzer, Andreas Stolcke, Dong Yu, and Geoffrey Zweig. Achieving human parity in conversational speech recognition. arXiv preprint arXiv:1610.05256, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.05256"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "Geoffrey Hinton, Li Deng, Dong Yu, George E Dahl, Abdel-rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara N Sainath, et al. Deep neural networks for acoustic modeling in speech recognition: The shared views of four research groups. IEEE Signal processing magazine, 29(6):82\u201397, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Deng%2C%20Li%20Yu%2C%20Dong%20Dahl%2C%20George%20E.%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%3A%20The%20shared%20views%20of%20four%20research%20groups%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20Deng%2C%20Li%20Yu%2C%20Dong%20Dahl%2C%20George%20E.%20Deep%20neural%20networks%20for%20acoustic%20modeling%20in%20speech%20recognition%3A%20The%20shared%20views%20of%20four%20research%20groups%202012"
+        },
+        {
+            "id": "Dahl_et+al_2012_a",
+            "entry": "George E Dahl, Dong Yu, Li Deng, and Alex Acero. Context-dependent pre-trained deep neural networks for large-vocabulary speech recognition. IEEE Transactions on audio, speech, and language processing, 20(1):30\u201342, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dahl%2C%20George%20E.%20Yu%2C%20Dong%20Deng%2C%20Li%20Acero%2C%20Alex%20Context-dependent%20pre-trained%20deep%20neural%20networks%20for%20large-vocabulary%20speech%20recognition%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dahl%2C%20George%20E.%20Yu%2C%20Dong%20Deng%2C%20Li%20Acero%2C%20Alex%20Context-dependent%20pre-trained%20deep%20neural%20networks%20for%20large-vocabulary%20speech%20recognition%202012"
+        },
+        {
+            "id": "Graves_et+al_2013_a",
+            "entry": "Alex Graves, Abdel-rahman Mohamed, and Geoffrey Hinton. Speech recognition with deep recurrent neural networks. In Acoustics, speech and signal processing (icassp), 2013 ieee international conference on, pages 6645\u20136649. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Mohamed%2C%20Abdel-rahman%20Hinton%2C%20Geoffrey%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Mohamed%2C%20Abdel-rahman%20Hinton%2C%20Geoffrey%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Graves_et+al_2006_a",
+            "entry": "Alex Graves, Santiago Fernandez, Faustino Gomez, and Jurgen Schmidhuber. Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks. In Proceedings of the 23rd international conference on Machine learning, pages 369\u2013376. ACM, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Fernandez%2C%20Santiago%20Gomez%2C%20Faustino%20Schmidhuber%2C%20Jurgen%20Connectionist%20temporal%20classification%3A%20labelling%20unsegmented%20sequence%20data%20with%20recurrent%20neural%20networks%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Fernandez%2C%20Santiago%20Gomez%2C%20Faustino%20Schmidhuber%2C%20Jurgen%20Connectionist%20temporal%20classification%3A%20labelling%20unsegmented%20sequence%20data%20with%20recurrent%20neural%20networks%202006"
+        },
+        {
+            "id": "Graves_2012_a",
+            "entry": "Alex Graves. Sequence transduction with recurrent neural networks. arXiv preprint arXiv:1211.3711, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1211.3711"
+        },
+        {
+            "id": "Artetxe_et+al_2018_a",
+            "entry": "Mikel Artetxe, Gorka Labaka, Eneko Agirre, and Kyunghyun Cho. Unsupervised neural machine translation. In Proc. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Artetxe%2C%20Mikel%20Labaka%2C%20Gorka%20Agirre%2C%20Eneko%20Cho%2C%20Kyunghyun%20Unsupervised%20neural%20machine%20translation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Artetxe%2C%20Mikel%20Labaka%2C%20Gorka%20Agirre%2C%20Eneko%20Cho%2C%20Kyunghyun%20Unsupervised%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Lample_et+al_2018_a",
+            "entry": "Guillaume Lample, Ludovic Denoyer, and Marc\u2019Aurelio Ranzato. Unsupervised machine translation using monolingual corpora only. In Proc. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lample%2C%20Guillaume%20Denoyer%2C%20Ludovic%20Ranzato%2C%20Marc%E2%80%99Aurelio%20Unsupervised%20machine%20translation%20using%20monolingual%20corpora%20only%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lample%2C%20Guillaume%20Denoyer%2C%20Ludovic%20Ranzato%2C%20Marc%E2%80%99Aurelio%20Unsupervised%20machine%20translation%20using%20monolingual%20corpora%20only%202018"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Da-Rong Liu, Kuan-Yu Chen, Hung-yi Lee, and Lin-Shan Lee. Completely unsupervised phoneme recognition by adversarially learning mapping relationships from audio embeddings. In Interspeech 2018, 19th Annual Conference of the International Speech Communication Association, Hyderabad, India, 2-6 September 2018., pages 3748\u20133752, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Da-Rong%20Chen%2C%20Kuan-Yu%20Lee%2C%20Hung-yi%20Lee%2C%20Lin-Shan%20Completely%20unsupervised%20phoneme%20recognition%20by%20adversarially%20learning%20mapping%20relationships%20from%20audio%20embeddings%202018-09-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Da-Rong%20Chen%2C%20Kuan-Yu%20Lee%2C%20Hung-yi%20Lee%2C%20Lin-Shan%20Completely%20unsupervised%20phoneme%20recognition%20by%20adversarially%20learning%20mapping%20relationships%20from%20audio%20embeddings%202018-09-02"
+        },
+        {
+            "id": "Zavaliagkos_et+al_1998_a",
+            "entry": "George Zavaliagkos, Man-Hung Siu, Thomas Colthurst, and Jayadev Billa. Using untranscribed training data to improve performance. In Fifth International Conference on Spoken Language Processing, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zavaliagkos%2C%20George%20Siu%2C%20Man-Hung%20Colthurst%2C%20Thomas%20Billa%2C%20Jayadev%20Using%20untranscribed%20training%20data%20to%20improve%20performance%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zavaliagkos%2C%20George%20Siu%2C%20Man-Hung%20Colthurst%2C%20Thomas%20Billa%2C%20Jayadev%20Using%20untranscribed%20training%20data%20to%20improve%20performance%201998"
+        },
+        {
+            "id": "Kemp_1999_a",
+            "entry": "Thomas Kemp and Alex Waibel. Unsupervised training of a speech recognizer: Recent experiments. In Sixth European Conference on Speech Communication and Technology, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kemp%2C%20Thomas%20Waibel%2C%20Alex%20Unsupervised%20training%20of%20a%20speech%20recognizer%3A%20Recent%20experiments%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kemp%2C%20Thomas%20Waibel%2C%20Alex%20Unsupervised%20training%20of%20a%20speech%20recognizer%3A%20Recent%20experiments%201999"
+        },
+        {
+            "id": "Nallasamy_et+al_2012_a",
+            "entry": "Udhyakumar Nallasamy, Florian Metze, and Tanja Schultz. Active learning for accent adaptation in automatic speech recognition. In Spoken Language Technology Workshop (SLT), 2012 IEEE, pages 360\u2013365. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nallasamy%2C%20Udhyakumar%20Metze%2C%20Florian%20Schultz%2C%20Tanja%20Active%20learning%20for%20accent%20adaptation%20in%20automatic%20speech%20recognition%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nallasamy%2C%20Udhyakumar%20Metze%2C%20Florian%20Schultz%2C%20Tanja%20Active%20learning%20for%20accent%20adaptation%20in%20automatic%20speech%20recognition%202012"
+        },
+        {
+            "id": "Povey_et+al_2011_a",
+            "entry": "Daniel Povey, Arnab Ghoshal, Gilles Boulianne, Lukas Burget, Ondrej Glembek, Nagendra Goel, Mirko Hannemann, Petr Motlicek, Yanmin Qian, Petr Schwarz, et al. The kaldi speech recognition toolkit. In IEEE 2011 workshop on automatic speech recognition and understanding, number EPFL-CONF-192584. IEEE Signal Processing Society, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Povey%2C%20Daniel%20Ghoshal%2C%20Arnab%20Boulianne%2C%20Gilles%20Burget%2C%20Lukas%20The%20kaldi%20speech%20recognition%20toolkit%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Povey%2C%20Daniel%20Ghoshal%2C%20Arnab%20Boulianne%2C%20Gilles%20Burget%2C%20Lukas%20The%20kaldi%20speech%20recognition%20toolkit%202011"
+        },
+        {
+            "id": "Matsoukas_et+al_1997_a",
+            "entry": "Spyros Matsoukas, Rich Schwartz, Hubert Jin, and Long Nguyen. Practical implementations of speaker-adaptive training. In DARPA Speech Recognition Workshop. Citeseer, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Matsoukas%2C%20Spyros%20Schwartz%2C%20Rich%20Jin%2C%20Hubert%20Nguyen%2C%20Long%20Practical%20implementations%20of%20speaker-adaptive%20training%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Matsoukas%2C%20Spyros%20Schwartz%2C%20Rich%20Jin%2C%20Hubert%20Nguyen%2C%20Long%20Practical%20implementations%20of%20speaker-adaptive%20training%201997"
+        },
+        {
+            "id": "Lee_1989_a",
+            "entry": "K-F Lee and H-W Hon. Speaker-independent phone recognition using hidden markov models. IEEE Transactions on Acoustics, Speech, and Signal Processing, 37(11):1641\u20131648, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20K.-F.%20Hon%2C%20H.-W.%20Speaker-independent%20phone%20recognition%20using%20hidden%20markov%20models%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20K.-F.%20Hon%2C%20H.-W.%20Speaker-independent%20phone%20recognition%20using%20hidden%20markov%20models%201989"
+        },
+        {
+            "id": "Dusan_2006_a",
+            "entry": "Sorin Dusan and Lawrence Rabiner. On the relation between maximum spectral transition positions and phone boundaries. In Ninth International Conference on Spoken Language Processing, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dusan%2C%20Sorin%20Rabiner%2C%20Lawrence%20On%20the%20relation%20between%20maximum%20spectral%20transition%20positions%20and%20phone%20boundaries%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dusan%2C%20Sorin%20Rabiner%2C%20Lawrence%20On%20the%20relation%20between%20maximum%20spectral%20transition%20positions%20and%20phone%20boundaries%202006"
+        },
+        {
+            "id": "Qiao_et+al_2008_a",
+            "entry": "Yu Qiao, Naoya Shimomura, and Nobuaki Minematsu. Unsupervised optimal phoneme segmentation: Objectives, algorithm and comparisons. In Acoustics, Speech and Signal Processing, 2008. ICASSP 2008. IEEE International Conference on, pages 3989\u20133992. IEEE, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qiao%2C%20Yu%20Shimomura%2C%20Naoya%20Minematsu%2C%20Nobuaki%20Unsupervised%20optimal%20phoneme%20segmentation%3A%20Objectives%2C%20algorithm%20and%20comparisons%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qiao%2C%20Yu%20Shimomura%2C%20Naoya%20Minematsu%2C%20Nobuaki%20Unsupervised%20optimal%20phoneme%20segmentation%3A%20Objectives%2C%20algorithm%20and%20comparisons%202008"
+        },
+        {
+            "id": "Lee_2012_a",
+            "entry": "Chia-ying Lee and James Glass. A nonparametric bayesian approach to acoustic model discovery. In Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Long Papers-Volume 1, pages 40\u201349. Association for Computational Linguistics, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Chia-ying%20Glass%2C%20James%20A%20nonparametric%20bayesian%20approach%20to%20acoustic%20model%20discovery%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Chia-ying%20Glass%2C%20James%20A%20nonparametric%20bayesian%20approach%20to%20acoustic%20model%20discovery%202012"
+        },
+        {
+            "id": "Rasanen_2014_a",
+            "entry": "Okko Rasanen. Basic cuts revisited: Temporal segmentation of speech into phone-like units with statistical learning at a pre-linguistic level. In Proceedings of the Annual Meeting of the Cognitive Science Society, volume 36, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rasanen%2C%20Okko%20Basic%20cuts%20revisited%3A%20Temporal%20segmentation%20of%20speech%20into%20phone-like%20units%20with%20statistical%20learning%20at%20a%20pre-linguistic%20level%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rasanen%2C%20Okko%20Basic%20cuts%20revisited%3A%20Temporal%20segmentation%20of%20speech%20into%20phone-like%20units%20with%20statistical%20learning%20at%20a%20pre-linguistic%20level%202014"
+        },
+        {
+            "id": "Hoang_2015_a",
+            "entry": "Dac-Thang Hoang and Hsiao-Chuan Wang. Blind phone segmentation based on spectral change detection using legendre polynomial approximation. The Journal of the Acoustical Society of America, 137(2):797\u2013805, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoang%2C%20Dac-Thang%20Wang%2C%20Hsiao-Chuan%20Blind%20phone%20segmentation%20based%20on%20spectral%20change%20detection%20using%20legendre%20polynomial%20approximation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoang%2C%20Dac-Thang%20Wang%2C%20Hsiao-Chuan%20Blind%20phone%20segmentation%20based%20on%20spectral%20change%20detection%20using%20legendre%20polynomial%20approximation%202015"
+        },
+        {
+            "id": "Michel_et+al_2016_a",
+            "entry": "Paul Michel, Okko Rasanen, Roland Thiolliere, and Emmanuel Dupoux. Blind phoneme segmentation with temporal prediction errors. arXiv preprint arXiv:1608.00508, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.00508"
+        },
+        {
+            "id": "Scharenborg_et+al_2010_a",
+            "entry": "Odette Scharenborg, Vincent Wan, and Mirjam Ernestus. Unsupervised speech segmentation: An analysis of the hypothesized phone boundaries. The Journal of the Acoustical Society of America, 127(2):1084\u20131095, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scharenborg%2C%20Odette%20Wan%2C%20Vincent%20Ernestus%2C%20Mirjam%20Unsupervised%20speech%20segmentation%3A%20An%20analysis%20of%20the%20hypothesized%20phone%20boundaries%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scharenborg%2C%20Odette%20Wan%2C%20Vincent%20Ernestus%2C%20Mirjam%20Unsupervised%20speech%20segmentation%3A%20An%20analysis%20of%20the%20hypothesized%20phone%20boundaries%202010"
+        },
+        {
+            "id": "Versteegh_et+al_2016_a",
+            "entry": "Maarten Versteegh, Xavier Anguera, Aren Jansen, and Emmanuel Dupoux. The zero resource speech challenge 2015: Proposed approaches and results. Procedia Computer Science, 81:67\u2013 72, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maarten%20Versteegh%20Xavier%20Anguera%20Aren%20Jansen%20and%20Emmanuel%20Dupoux%20The%20zero%20resource%20speech%20challenge%202015%20Proposed%20approaches%20and%20results%20Procedia%20Computer%20Science%208167%2072%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maarten%20Versteegh%20Xavier%20Anguera%20Aren%20Jansen%20and%20Emmanuel%20Dupoux%20The%20zero%20resource%20speech%20challenge%202015%20Proposed%20approaches%20and%20results%20Procedia%20Computer%20Science%208167%2072%202016"
+        },
+        {
+            "id": "Khanagha_et+al_2014_a",
+            "entry": "Vahid Khanagha, Khalid Daoudi, Oriol Pont, and Hussein Yahia. Phonetic segmentation of speech signal using local singularity analysis. Digital Signal Processing, 35:86\u201394, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Khanagha%2C%20Vahid%20Daoudi%2C%20Khalid%20Pont%2C%20Oriol%20Yahia%2C%20Hussein%20Phonetic%20segmentation%20of%20speech%20signal%20using%20local%20singularity%20analysis%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Khanagha%2C%20Vahid%20Daoudi%2C%20Khalid%20Pont%2C%20Oriol%20Yahia%2C%20Hussein%20Phonetic%20segmentation%20of%20speech%20signal%20using%20local%20singularity%20analysis%202014"
+        },
+        {
+            "id": "Rasanen_et+al_2011_a",
+            "entry": "Okko Rasanen, Unto Laine, and Toomas Altosaar. Blind segmentation of speech using non-linear filtering methods. In Speech Technologies. InTech, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rasanen%2C%20Okko%20Laine%2C%20Unto%20Altosaar%2C%20Toomas%20Blind%20segmentation%20of%20speech%20using%20non-linear%20filtering%20methods.%20In%20Speech%20Technologies%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rasanen%2C%20Okko%20Laine%2C%20Unto%20Altosaar%2C%20Toomas%20Blind%20segmentation%20of%20speech%20using%20non-linear%20filtering%20methods.%20In%20Speech%20Technologies%202011"
+        },
+        {
+            "id": "Kamper_et+al_2015_a",
+            "entry": "Herman Kamper, Aren Jansen, and Sharon Goldwater. Fully unsupervised small-vocabulary speech recognition using a segmental bayesian model. In Sixteenth Annual Conference of the International Speech Communication Association, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kamper%2C%20Herman%20Jansen%2C%20Aren%20Goldwater%2C%20Sharon%20Fully%20unsupervised%20small-vocabulary%20speech%20recognition%20using%20a%20segmental%20bayesian%20model%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kamper%2C%20Herman%20Jansen%2C%20Aren%20Goldwater%2C%20Sharon%20Fully%20unsupervised%20small-vocabulary%20speech%20recognition%20using%20a%20segmental%20bayesian%20model%202015"
+        },
+        {
+            "id": "Glass_2003_a",
+            "entry": "James R Glass. A probabilistic framework for segment-based speech recognition. Computer Speech & Language, 17(2-3):137\u2013152, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glass%2C%20James%20R.%20A%20probabilistic%20framework%20for%20segment-based%20speech%20recognition%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glass%2C%20James%20R.%20A%20probabilistic%20framework%20for%20segment-based%20speech%20recognition%202003"
+        },
+        {
+            "id": "Siu_et+al_2014_a",
+            "entry": "Man-hung Siu, Herbert Gish, Arthur Chan, William Belfield, and Steve Lowe. Unsupervised training of an hmm-based self-organizing unit recognizer with applications to topic classification and keyword discovery. Computer Speech & Language, 28(1):210\u2013223, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Siu%2C%20Man-hung%20Gish%2C%20Herbert%20Chan%2C%20Arthur%20Belfield%2C%20William%20Unsupervised%20training%20of%20an%20hmm-based%20self-organizing%20unit%20recognizer%20with%20applications%20to%20topic%20classification%20and%20keyword%20discovery%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Siu%2C%20Man-hung%20Gish%2C%20Herbert%20Chan%2C%20Arthur%20Belfield%2C%20William%20Unsupervised%20training%20of%20an%20hmm-based%20self-organizing%20unit%20recognizer%20with%20applications%20to%20topic%20classification%20and%20keyword%20discovery%202014"
+        },
+        {
+            "id": "Dunbar_et+al_2017_a",
+            "entry": "Ewan Dunbar, Xuan Nga Cao, Juan Benjumea, Julien Karadayi, Mathieu Bernard, Laurent Besacier, Xavier Anguera, and Emmanuel Dupoux. The zero resource speech challenge 2017. In Automatic Speech Recognition and Understanding Workshop (ASRU), 2017 IEEE, pages 323\u2013330. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ewan%20Dunbar%20Xuan%20Nga%20Cao%20Juan%20Benjumea%20Julien%20Karadayi%20Mathieu%20Bernard%20Laurent%20Besacier%20Xavier%20Anguera%20and%20Emmanuel%20Dupoux%20The%20zero%20resource%20speech%20challenge%202017%20In%20Automatic%20Speech%20Recognition%20and%20Understanding%20Workshop%20ASRU%202017%20IEEE%20pages%20323330%20IEEE%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ewan%20Dunbar%20Xuan%20Nga%20Cao%20Juan%20Benjumea%20Julien%20Karadayi%20Mathieu%20Bernard%20Laurent%20Besacier%20Xavier%20Anguera%20and%20Emmanuel%20Dupoux%20The%20zero%20resource%20speech%20challenge%202017%20In%20Automatic%20Speech%20Recognition%20and%20Understanding%20Workshop%20ASRU%202017%20IEEE%20pages%20323330%20IEEE%202017"
+        },
+        {
+            "id": "Burget_et+al_2016_a",
+            "entry": "Lukas Burget, Sanjeev Khudanpur, Najim Dehak, Jan Trmal, Reinhold Haeb-Umbach, Graham Neubig, Shinji Watanabe, Daichi Mochihashi, Takahiro Shinozaki, Ming Sun, et al. Building speech recognition system from untranscribed data report from jhu workshop 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Burget%2C%20Lukas%20Khudanpur%2C%20Sanjeev%20Dehak%2C%20Najim%20Trmal%2C%20Jan%20Building%20speech%20recognition%20system%20from%20untranscribed%20data%20report%20from%20jhu%20workshop%202016"
+        },
+        {
+            "id": "Glass_2012_a",
+            "entry": "James Glass. Towards unsupervised speech processing. In Information Science, Signal Processing and their Applications (ISSPA), 2012 11th International Conference on, pages 1\u20134. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glass%2C%20James%20Towards%20unsupervised%20speech%20processing%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glass%2C%20James%20Towards%20unsupervised%20speech%20processing%202012"
+        },
+        {
+            "id": "Park_2008_a",
+            "entry": "Alex S Park and James R Glass. Unsupervised pattern discovery in speech. IEEE Transactions on Audio, Speech, and Language Processing, 16(1):186\u2013197, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Park%2C%20Alex%20S.%20Glass%2C%20James%20R.%20Unsupervised%20pattern%20discovery%20in%20speech%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Park%2C%20Alex%20S.%20Glass%2C%20James%20R.%20Unsupervised%20pattern%20discovery%20in%20speech%202008"
+        },
+        {
+            "id": "Driesen_2012_a",
+            "entry": "Joris Driesen et al. Fast word acquisition in an nmf-based learning framework. In Acoustics, Speech and Signal Processing (ICASSP), 2012 IEEE International Conference on, pages 5137\u20135140. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Driesen%2C%20Joris%20Fast%20word%20acquisition%20in%20an%20nmf-based%20learning%20framework%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Driesen%2C%20Joris%20Fast%20word%20acquisition%20in%20an%20nmf-based%20learning%20framework%202012"
+        },
+        {
+            "id": "Walter_et+al_2013_a",
+            "entry": "Oliver Walter, Timo Korthals, Reinhold Haeb-Umbach, and Bhiksha Raj. A hierarchical system for word discovery exploiting dtw-based initialization. In Automatic Speech Recognition and Understanding (ASRU), 2013 IEEE Workshop on, pages 386\u2013391. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Walter%2C%20Oliver%20Korthals%2C%20Timo%20Haeb-Umbach%2C%20Reinhold%20Raj%2C%20Bhiksha%20A%20hierarchical%20system%20for%20word%20discovery%20exploiting%20dtw-based%20initialization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Walter%2C%20Oliver%20Korthals%2C%20Timo%20Haeb-Umbach%2C%20Reinhold%20Raj%2C%20Bhiksha%20A%20hierarchical%20system%20for%20word%20discovery%20exploiting%20dtw-based%20initialization%202013"
+        },
+        {
+            "id": "Kamper_et+al_2017_a",
+            "entry": "Herman Kamper, Karen Livescu, and Sharon Goldwater. An embedded segmental k-means model for unsupervised segmentation and clustering of speech. In Automatic Speech Recognition and Understanding Workshop (ASRU), 2017 IEEE, pages 719\u2013726. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kamper%2C%20Herman%20Livescu%2C%20Karen%20Goldwater%2C%20Sharon%20An%20embedded%20segmental%20k-means%20model%20for%20unsupervised%20segmentation%20and%20clustering%20of%20speech%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kamper%2C%20Herman%20Livescu%2C%20Karen%20Goldwater%2C%20Sharon%20An%20embedded%20segmental%20k-means%20model%20for%20unsupervised%20segmentation%20and%20clustering%20of%20speech%202017"
+        },
+        {
+            "id": "Ondel_et+al_2016_a",
+            "entry": "Lucas Ondel, Lukas Burget, and Jan Cernocky. Variational inference for acoustic unit discovery. Procedia Computer Science, 81:80\u201386, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ondel%2C%20Lucas%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Variational%20inference%20for%20acoustic%20unit%20discovery%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ondel%2C%20Lucas%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Variational%20inference%20for%20acoustic%20unit%20discovery%202016"
+        },
+        {
+            "id": "Ondel_et+al_2017_a",
+            "entry": "Lucas Ondel, Lukas Burget, Jan Cernocky, and Santosh Kesiraju. Bayesian phonotactic language model for acoustic unit discovery. In Acoustics, Speech and Signal Processing (ICASSP), 2017 IEEE International Conference on, pages 5750\u20135754. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ondel%2C%20Lucas%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Kesiraju%2C%20Santosh%20Bayesian%20phonotactic%20language%20model%20for%20acoustic%20unit%20discovery%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ondel%2C%20Lucas%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Kesiraju%2C%20Santosh%20Bayesian%20phonotactic%20language%20model%20for%20acoustic%20unit%20discovery%202017"
+        },
+        {
+            "id": "Chung_et+al_2018_a",
+            "entry": "Yu-An Chung, Wei-Hung Weng, Schrasing Tong, and James Glass. Unsupervised cross-modal alignment of speech and text embedding spaces. arXiv preprint arXiv:1805.07467, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07467"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Yi-Chen Chen, Chia-Hao Shen, Sung-Feng Huang, and Hung-yi Lee. Towards unsupervised automatic speech recognition trained by unaligned speech and text only. arXiv preprint arXiv:1803.10952, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.10952"
+        }
+    ]
+}

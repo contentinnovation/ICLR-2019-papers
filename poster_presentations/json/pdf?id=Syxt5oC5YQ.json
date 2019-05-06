@@ -1,0 +1,307 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "AGGREGATED MOMENTUM: STABILITY THROUGH PASSIVE DAMPING",
+        "author": "James Lucas, Shengyang Sun, Richard Zemel, Roger Grosse University of Toronto; Vector Institute {jlucas, ssy, zemel, rgrosse}@cs.toronto.edu",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Syxt5oC5YQ"
+        },
+        "abstract": "Momentum is a simple and widely used trick which allows gradient-based optimizers to pick up speed along low curvature directions. Its performance depends crucially on a damping coefficient \u03b2. Large \u03b2 values can potentially deliver much larger speedups, but are prone to oscillations and instability; hence one typically resorts to small values such as 0.5 or 0.9. We propose Aggregated Momentum (AggMo), a variant of momentum which combines multiple velocity vectors with different \u03b2 parameters. AggMo is trivial to implement, but significantly dampens oscillations, enabling it to remain stable even for aggressive \u03b2 values such as 0.999. We reinterpret Nesterov\u2019s accelerated gradient descent as a special case of AggMo and analyze rates of convergence for quadratic objectives. Empirically, we find that AggMo is a suitable drop-in replacement for other momentum methods, and frequently delivers faster convergence with little to no tuning."
+    },
+    "keywords": [
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "convex optimization",
+            "url": "https://en.wikipedia.org/wiki/convex_optimization"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "convergence rate",
+            "url": "https://en.wikipedia.org/wiki/convergence_rate"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "special case",
+            "url": "https://en.wikipedia.org/wiki/special_case"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        }
+    ],
+    "abbreviations": {
+        "AggMo": "Aggregated Momentum",
+        "LSTM": "long-term short-term memory",
+        "CM": "Classical momentum"
+    },
+    "highlights": [
+        "In spite of a wide range of modern optimization research, gradient descent with momentum and its variants remain the tool of choice in machine learning",
+        "With batch normalization removed, optimization with Aggregated Momentum remained stable at larger learning rates than with Classical momentum",
+        "While gradient clipping is critical for SGD without momentum, which utilizes a large learning rate, we found that all of the momentum methods perform better without gradient clipping",
+        "Aggregated Momentum is a simple extension to classical momentum which is easy to implement and has negligible computational overhead on modern deep learning tasks",
+        "We showed empirically that Aggregated Momentum is able to remain stable even with large damping coefficients and enjoys faster convergence rates as a consequence of this",
+        "Nesterov momentum can be viewed as a special case of Aggregated Momentum. (Incidentally, we found that despite its lack of adoption by deep learning practitioners, Nesterov momentum showed substantial advantages compared to classical momentum.) On the tasks we explored, Aggregated Momentum could be used as a drop-in replacement for existing optimizers with little-to-no additional hyperparameter tuning"
+    ],
+    "key_statements": [
+        "In spite of a wide range of modern optimization research, gradient descent with momentum and its variants remain the tool of choice in machine learning",
+        "We introduce Aggregated Momentum (AggMo), a variant of classical momentum which maintains several velocity vectors with different \u03b2 parameters",
+        "We find that this combines the advantages of both small and large \u03b2 values: the large values allow significant buildup of velocity along low curvature directions, while the small values dampen the oscillations, stabilizing the algorithm",
+        "We provide theoretical convergence analysis showing that Aggregated Momentum achieves converging average regret in online convex programming (<a class=\"ref-link\" id=\"cZinkevich_2003_a\" href=\"#rZinkevich_2003_a\">Zinkevich, 2003</a>)",
+        "In all of these cases, we find that Aggregated Momentum works as a drop-in replacement for classical momentum, in the sense that it works at least as well for a given \u03b2 parameter",
+        "Aggregated Momentum We propose Aggregated Momentum (AggMo), a variant of gradient descent which aims to improve stability while providing the convergence benefits of larger damping coefficients",
+        "We evaluate the convergence rate of Aggregated Momentum in the setting of online convex programming, as proposed in <a class=\"ref-link\" id=\"cZinkevich_2003_a\" href=\"#rZinkevich_2003_a\">Zinkevich (2003</a>)",
+        "We evaluated the Aggregated Momentum optimizer on the following deep learning architectures; deep autoencoders, convolutional networks, and long-term short-term memory",
+        "We found that our proposed default hyperparameters for Aggregated Momentum (a = 0.1, K = 3) led to much faster convergence than Classical momentum and Nesterov with \u03b2 = 0.9, a common default choice",
+        "With batch normalization removed, optimization with Aggregated Momentum remained stable at larger learning rates than with Classical momentum",
+        "While gradient clipping is critical for SGD without momentum, which utilizes a large learning rate, we found that all of the momentum methods perform better without gradient clipping",
+        "Aggregated Momentum is a simple extension to classical momentum which is easy to implement and has negligible computational overhead on modern deep learning tasks",
+        "We showed empirically that Aggregated Momentum is able to remain stable even with large damping coefficients and enjoys faster convergence rates as a consequence of this",
+        "Nesterov momentum can be viewed as a special case of Aggregated Momentum. (Incidentally, we found that despite its lack of adoption by deep learning practitioners, Nesterov momentum showed substantial advantages compared to classical momentum.) On the tasks we explored, Aggregated Momentum could be used as a drop-in replacement for existing optimizers with little-to-no additional hyperparameter tuning"
+    ],
+    "summary": [
+        "In spite of a wide range of modern optimization research, gradient descent with momentum and its variants remain the tool of choice in machine learning.",
+        "Aggregated Momentum We propose Aggregated Momentum (AggMo), a variant of gradient descent which aims to improve stability while providing the convergence benefits of larger damping coefficients.",
+        "Figure 1 (d) shows the optimization along the eigenvectors of a quadratic function using AggMo. AggMo dampens oscillations quickly for all eigenvalues and converges faster than CM and Nesterov in this case.",
+        "We consider the convergence behaviour of momentum optimizers on quadratic functions with fixed hyperparameters over a range of condition numbers.",
+        "AggMo\u2019s ability to quickly kill oscillations leads to an approximately three-times faster convergence rate than Nesterov momentum in the under-damped regime without sacrificing performance on larger condition numbers.",
+        "While Adam is able to perform well on the training objective it is unable to match the performance of AggMo or Nesterov on the validation/test sets.",
+        "Increasing damping coefficients During our experiments we observed that AggMo remains stable during optimization for learning rates an order of magnitude larger than is possible for CM and Nesterov with \u03b2 equal to the max damping coefficient used in AggMo. We further investigated the effect of increasing the maximum damping coefficient of AggMo in Figure 5.",
+        "We compared to Nesterov with damping coefficients in the same range and a fixed learning rate of 0.05.",
+        "AggMo is able to take advantage of the larger damping coefficient of 0.999 and achieves the fastest overall convergence.",
+        "We used the optimal hyperparameter settings described by the authors and vary only the learning rate, momentum and whether gradient clipping is used.",
+        "Adam converged most quickly and achieved a validation perplexity which is comparable to that of AggMo. While gradient clipping is critical for SGD without momentum, which utilizes a large learning rate, we found that all of the momentum methods perform better without gradient clipping.",
+        "While existing work encourages practitioners to avoid classical momentum we found that using other momentum methods may significantly improve convergence rates and final performance.",
+        "AggMo worked especially well on this task over a large range of damping coefficients and learning rates.",
+        "We showed empirically that AggMo is able to remain stable even with large damping coefficients and enjoys faster convergence rates as a consequence of this.",
+        "(Incidentally, we found that despite its lack of adoption by deep learning practitioners, Nesterov momentum showed substantial advantages compared to classical momentum.) On the tasks we explored, AggMo could be used as a drop-in replacement for existing optimizers with little-to-no additional hyperparameter tuning.",
+        "Due to its stability at higher \u03b2 values, it often delivered substantially faster convergence than both classical and Nesterov momentum"
+    ],
+    "headline": "We propose Aggregated Momentum, a variant of momentum which combines multiple velocity vectors with different \u03b2 parameters",
+    "reference_links": [
+        {
+            "id": "Amari_1998_a",
+            "entry": "Shun-Ichi Amari. Natural gradient works efficiently in learning. Neural computation, 10(2):251\u2013276, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Tianqi Chen, Bing Xu, Chiyuan Zhang, and Carlos Guestrin. Training deep nets with sublinear memory cost. arXiv preprint arXiv:1604.06174, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.06174"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. Journal of Machine Learning Research, 12(Jul):2121\u20132159, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Goh_2017_a",
+            "entry": "Gabriel Goh. Why momentum really works. Distill, 2(4):e6, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goh%2C%20Gabriel%20Why%20momentum%20really%20works%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goh%2C%20Gabriel%20Why%20momentum%20really%20works%202017"
+        },
+        {
+            "id": "Goldstein_2011_a",
+            "entry": "Herbert Goldstein. Classical mechanics. Pearson Education India, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goldstein%2C%20Herbert%20Classical%20mechanics%202011"
+        },
+        {
+            "id": "Gomez_et+al_2017_a",
+            "entry": "Aidan N Gomez, Mengye Ren, Raquel Urtasun, and Roger B Grosse. The reversible residual network: Backpropagation without storing activations. In Advances in Neural Information Processing Systems, pp. 2211\u20132221, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gomez%2C%20Aidan%20N.%20Ren%2C%20Mengye%20Urtasun%2C%20Raquel%20Grosse%2C%20Roger%20B.%20The%20reversible%20residual%20network%3A%20Backpropagation%20without%20storing%20activations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gomez%2C%20Aidan%20N.%20Ren%2C%20Mengye%20Urtasun%2C%20Raquel%20Grosse%2C%20Roger%20B.%20The%20reversible%20residual%20network%3A%20Backpropagation%20without%20storing%20activations%202017"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Kidambi_et+al_2018_a",
+            "entry": "Rahul Kidambi, Praneeth Netrapalli, Prateek Jain, and Sham M Kakade. On the insufficiency of existing momentum schemes for stochastic optimization. arXiv preprint arXiv:1803.05591, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05591"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lessard_et+al_2016_a",
+            "entry": "Laurent Lessard, Benjamin Recht, and Andrew Packard. Analysis and design of optimization algorithms via integral quadratic constraints. SIAM Journal on Optimization, 26(1):57\u201395, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lessard%2C%20Laurent%20Recht%2C%20Benjamin%20Packard%2C%20Andrew%20Analysis%20and%20design%20of%20optimization%20algorithms%20via%20integral%20quadratic%20constraints%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lessard%2C%20Laurent%20Recht%2C%20Benjamin%20Packard%2C%20Andrew%20Analysis%20and%20design%20of%20optimization%20algorithms%20via%20integral%20quadratic%20constraints%202016"
+        },
+        {
+            "id": "Liang_et+al_2016_a",
+            "entry": "Jingwei Liang, Jalal Fadili, and Gabriel Peyre. A multi-step inertial forward-backward splitting method for non-convex optimization. In Advances in Neural Information Processing Systems, pp. 4035\u20134043, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Jingwei%20Fadili%2C%20Jalal%20Peyre%2C%20Gabriel%20A%20multi-step%20inertial%20forward-backward%20splitting%20method%20for%20non-convex%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liang%2C%20Jingwei%20Fadili%2C%20Jalal%20Peyre%2C%20Gabriel%20A%20multi-step%20inertial%20forward-backward%20splitting%20method%20for%20non-convex%20optimization%202016"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: The penn treebank. Computational linguistics, 19(2):313\u2013330, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993"
+        },
+        {
+            "id": "Martens_2010_a",
+            "entry": "James Martens. Deep learning via hessian-free optimization. In ICML, volume 27, pp. 735\u2013742, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Deep%20learning%20via%20hessian-free%20optimization%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Deep%20learning%20via%20hessian-free%20optimization%202010"
+        },
+        {
+            "id": "Martens_2014_a",
+            "entry": "James Martens. New insights and perspectives on the natural gradient method. arXiv preprint arXiv:1412.1193, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.1193"
+        },
+        {
+            "id": "Martens_2015_a",
+            "entry": "James Martens and Roger Grosse. Optimizing neural networks with kronecker-factored approximate curvature. In International conference on machine learning, pp. 2408\u20132417, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015"
+        },
+        {
+            "id": "Merity_et+al_2017_a",
+            "entry": "Stephen Merity, Nitish Shirish Keskar, and Richard Socher. Regularizing and optimizing lstm language models. arXiv preprint arXiv:1708.02182, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02182"
+        },
+        {
+            "id": "Nesterov_1983_a",
+            "entry": "Yurii Nesterov. A method of solving a convex programming problem with convergence rate o (1/k2). volume 27, pp. 372\u2013367, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nesterov%2C%20Yurii%20A%20method%20of%20solving%20a%20convex%20programming%20problem%20with%20convergence%20rate%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nesterov%2C%20Yurii%20A%20method%20of%20solving%20a%20convex%20programming%20problem%20with%20convergence%20rate%201983"
+        },
+        {
+            "id": "Nesterov_2013_a",
+            "entry": "Yurii Nesterov. Introductory lectures on convex optimization: A basic course, volume 87. Springer Science & Business Media, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nesterov%2C%20Yurii%20Introductory%20lectures%20on%20convex%20optimization%3A%20A%20basic%20course%2C%20volume%2087%202013"
+        },
+        {
+            "id": "O_2015_a",
+            "entry": "Brendan O\u2019Donoghue and Emmanuel Candes. Adaptive restart for accelerated gradient schemes. Foundations of computational mathematics, 15(3):715\u2013732, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=O%E2%80%99Donoghue%2C%20Brendan%20Candes%2C%20Emmanuel%20Adaptive%20restart%20for%20accelerated%20gradient%20schemes.%20Foundations%20of%20computational%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=O%E2%80%99Donoghue%2C%20Brendan%20Candes%2C%20Emmanuel%20Adaptive%20restart%20for%20accelerated%20gradient%20schemes.%20Foundations%20of%20computational%202015"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20Adam%20Gross%2C%20Sam%20Chintala%2C%20Soumith%20Chanan%2C%20Gregory%20Automatic%20differentiation%20in%20pytorch%202017"
+        },
+        {
+            "id": "Polyak_1964_a",
+            "entry": "Boris T Polyak. Some methods of speeding up the convergence of iteration methods. USSR Computational Mathematics and Mathematical Physics, 4(5):1\u201317, 1964.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Polyak%2C%20Boris%20T.%20Some%20methods%20of%20speeding%20up%20the%20convergence%20of%20iteration%20methods%201964",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Polyak%2C%20Boris%20T.%20Some%20methods%20of%20speeding%20up%20the%20convergence%20of%20iteration%20methods%201964"
+        },
+        {
+            "id": "Polyak_1992_a",
+            "entry": "Boris T Polyak and Anatoli B Juditsky. Acceleration of stochastic approximation by averaging. SIAM Journal on Control and Optimization, 30(4):838\u2013855, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Polyak%2C%20Boris%20T.%20Juditsky%2C%20Anatoli%20B.%20Acceleration%20of%20stochastic%20approximation%20by%20averaging%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Polyak%2C%20Boris%20T.%20Juditsky%2C%20Anatoli%20B.%20Acceleration%20of%20stochastic%20approximation%20by%20averaging%201992"
+        },
+        {
+            "id": "Reddi_et+al_2018_a",
+            "entry": "Sashank J. Reddi, Satyen Kale, and Sanjiv Kumar. On the convergence of adam and beyond. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=ryQu7f-RZ.",
+            "url": "https://openreview.net/forum?id=ryQu7f-RZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20adam%20and%20beyond%202018"
+        },
+        {
+            "id": "Srinivasan_et+al_2018_a",
+            "entry": "Vishwak Srinivasan, Adepu Ravi Sankar, and Vineeth N Balasubramanian. Adine: an adaptive momentum method for stochastic gradient descent. In Proceedings of the ACM India Joint International Conference on Data Science and Management of Data, pp. 249\u2013256. ACM, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srinivasan%2C%20Vishwak%20Sankar%2C%20Adepu%20Ravi%20Balasubramanian%2C%20Vineeth%20N.%20Adine%3A%20an%20adaptive%20momentum%20method%20for%20stochastic%20gradient%20descent%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srinivasan%2C%20Vishwak%20Sankar%2C%20Adepu%20Ravi%20Balasubramanian%2C%20Vineeth%20N.%20Adine%3A%20an%20adaptive%20momentum%20method%20for%20stochastic%20gradient%20descent%202018"
+        },
+        {
+            "id": "Su_et+al_2014_a",
+            "entry": "Weijie Su, Stephen Boyd, and Emmanuel Candes. A differential equation for modeling nesterovs accelerated gradient method: Theory and insights. In Advances in Neural Information Processing Systems, pp. 2510\u20132518, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Su%2C%20Weijie%20Boyd%2C%20Stephen%20Candes%2C%20Emmanuel%20A%20differential%20equation%20for%20modeling%20nesterovs%20accelerated%20gradient%20method%3A%20Theory%20and%20insights%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Su%2C%20Weijie%20Boyd%2C%20Stephen%20Candes%2C%20Emmanuel%20A%20differential%20equation%20for%20modeling%20nesterovs%20accelerated%20gradient%20method%3A%20Theory%20and%20insights%202014"
+        },
+        {
+            "id": "Sutskever_et+al_2013_a",
+            "entry": "Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In International conference on machine learning, pp. 1139\u20131147, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013"
+        },
+        {
+            "id": "Tieleman_2012_a",
+            "entry": "Tijmen Tieleman and Geoffrey Hinton. Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural networks for machine learning, 4(2):26\u201331, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012"
+        },
+        {
+            "id": "Werbos_1990_a",
+            "entry": "Paul J Werbos. Backpropagation through time: what it does and how to do it. Proceedings of the IEEE, 78(10):1550\u20131560, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Werbos%2C%20Paul%20J.%20Backpropagation%20through%20time%3A%20what%20it%20does%20and%20how%20to%20do%20it%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Werbos%2C%20Paul%20J.%20Backpropagation%20through%20time%3A%20what%20it%20does%20and%20how%20to%20do%20it%201990"
+        },
+        {
+            "id": "Wibisono_2015_a",
+            "entry": "Andre Wibisono and Ashia C Wilson. On accelerated methods in optimization. arXiv preprint arXiv:1509.03616, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.03616"
+        },
+        {
+            "id": "Wibisono_2016_a",
+            "entry": "Andre Wibisono, Ashia C Wilson, and Michael I Jordan. A variational perspective on accelerated methods in optimization. Proceedings of the National Academy of Sciences, 113(47):E7351\u2013E7358, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wibisono%2C%20Andre%20Wilson%2C%20Ashia%20C.%20and%20Michael%20I%20Jordan.%20A%20variational%20perspective%20on%20accelerated%20methods%20in%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wibisono%2C%20Andre%20Wilson%2C%20Ashia%20C.%20and%20Michael%20I%20Jordan.%20A%20variational%20perspective%20on%20accelerated%20methods%20in%20optimization%202016"
+        },
+        {
+            "id": "Wilson_et+al_2016_a",
+            "entry": "Ashia C Wilson, Benjamin Recht, and Michael I Jordan. A lyapunov analysis of momentum methods in optimization. arXiv preprint arXiv:1611.02635, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02635"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nati Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. In Advances in Neural Information Processing Systems, pp. 4151\u20134161, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041514161%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041514161%202017"
+        },
+        {
+            "id": "Zeiler_2012_a",
+            "entry": "Matthew D Zeiler. Adadelta: an adaptive learning rate method. arXiv preprint arXiv:1212.5701, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1212.5701"
+        },
+        {
+            "id": "Zinkevich_2003_a",
+            "entry": "Martin Zinkevich. Online convex programming and generalized infinitesimal gradient ascent. In Proceedings of the 20th International Conference on Machine Learning (ICML-03), pp. 928\u2013936, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zinkevich%2C%20Martin%20Online%20convex%20programming%20and%20generalized%20infinitesimal%20gradient%20ascent%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zinkevich%2C%20Martin%20Online%20convex%20programming%20and%20generalized%20infinitesimal%20gradient%20ascent%202003"
+        }
+    ]
+}

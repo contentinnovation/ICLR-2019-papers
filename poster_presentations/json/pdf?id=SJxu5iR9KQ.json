@@ -1,0 +1,318 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO SCHEDULE COMMUNICATION IN MULTI-AGENT REINFORCEMENT LEARNING",
+        "author": "Daewoo Kim, Sangwoo Moon, David Hostallero, Wan Ju Kang, Taeyoung Lee, Kyunghwan Son & Yung Yi School of Electrical Engineering, KAIST Daejeon, South Korea {dwkim, swmoon, ddhostallero, wjkang, taeyoung.lee, khson}@lanada.kaist. ac.kr, yiyung@kaist.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJxu5iR9KQ"
+        },
+        "abstract": "Many real-world reinforcement learning tasks require multiple agents to make sequential decisions under the agents\u2019 interaction, where well-coordinated actions among the agents are crucial to achieve the target goal better at these tasks. One way to accelerate the coordination effect is to enable multiple agents to communicate with each other in a distributed manner and behave as a group. In this paper, we study a practical scenario when (i) the communication bandwidth is limited and (ii) the agents share the communication medium so that only a restricted number of agents are able to simultaneously use the medium, as in the state-of-the-art wireless networking standards. This calls for a certain form of communication scheduling. In that regard, we propose a multi-agent deep reinforcement learning framework, called SchedNet, in which agents learn how to schedule themselves, how to encode the messages, and how to select actions based on received messages. SchedNet is capable of deciding which agents should be entitled to broadcasting their (encoded) messages, by learning the importance of each agent\u2019s partially observed information. We evaluate SchedNet against multiple baselines under two different applications, namely, cooperative communication and navigation, and predator-prey. Our experiments show a non-negligible performance gap between SchedNet and other mechanisms such as the ones without communication and with vanilla scheduling methods, e.g., round robin, ranging from 32% to 43%."
+    },
+    "keywords": [
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "Medium Access Control",
+            "url": "https://en.wikipedia.org/wiki/Medium_Access_Control"
+        },
+        {
+            "term": "Reinforcement Learning",
+            "url": "https://en.wikipedia.org/wiki/Reinforcement_Learning"
+        },
+        {
+            "term": "video streaming",
+            "url": "https://en.wikipedia.org/wiki/video_streaming"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        }
+    ],
+    "abbreviations": {
+        "RL": "Reinforcement Learning",
+        "Deep RL": "deep reinforcement learning",
+        "MARL": "multi-agent reinforcement learning",
+        "MDP": "Markov Decision Process",
+        "MAC": "Medium Access Control",
+        "CCDA": "Critic and Distributed Actor",
+        "PP": "Predator and Prey",
+        "CCN": "Communication and Navigation",
+        "IDQN": "independent DQN",
+        "DRU": "discretize/regularize unit",
+        "IITP": "Information communications Technology Promotion"
+    },
+    "highlights": [
+        "Reinforcement Learning (RL) has garnered renewed interest in recent years",
+        "In the multi-agent reinforcement learning problem commonly addressed in these works, multiple agents interact in a single environment repeatedly and improve their policy iteratively by learning from observations to achieve a common goal",
+        "Contributions In this paper, we propose a new deep multi-agent reinforcement learning architecture, called SchedNet, with the rationale of centralized training and distributed execution in order to achieve a common goal better via decentralized cooperation",
+        "While prior work on multi-agent reinforcement learning to date considers only the limited bandwidth constraint, we address the shared medium contention issue in what we believe is the first work of its kind: which nodes are granted access to the shared medium",
+        "Reinforcement Learning We consider a standard Reinforcement Learning formulation based on Markov Decision Process (MDP)",
+        "We propose a new deep multi-agent reinforcement learning framework with scheduled communications, called SchedNet, whose overall architecture is depicted in Figure 1"
+    ],
+    "key_statements": [
+        "Reinforcement Learning (RL) has garnered renewed interest in recent years",
+        "In the multi-agent reinforcement learning problem commonly addressed in these works, multiple agents interact in a single environment repeatedly and improve their policy iteratively by learning from observations to achieve a common goal",
+        "Contributions In this paper, we propose a new deep multi-agent reinforcement learning architecture, called SchedNet, with the rationale of centralized training and distributed execution in order to achieve a common goal better via decentralized cooperation",
+        "While prior work on multi-agent reinforcement learning to date considers only the limited bandwidth constraint, we address the shared medium contention issue in what we believe is the first work of its kind: which nodes are granted access to the shared medium",
+        "We evaluate SchedNet for two applications: cooperative communication and navigation and predator/prey and demonstrate that SchedNet outperforms other baseline mechanisms such as the one without any communication or with a simple scheduling mechanism such as round robin",
+        "Reinforcement Learning We consider a standard Reinforcement Learning formulation based on Markov Decision Process (MDP)",
+        "We present how to obtain distributed versions of those two rules based on weights in our supplementary material",
+        "We propose a new deep multi-agent reinforcement learning framework with scheduled communications, called SchedNet, whose overall architecture is depicted in Figure 1",
+        "Result in Communication and Navigation We examine the Communication and Navigation environment whose results are shown in Figure 3c"
+    ],
+    "summary": [
+        "Reinforcement Learning (RL) has garnered renewed interest in recent years.",
+        "Contributions In this paper, we propose a new deep multi-agent reinforcement learning architecture, called SchedNet, with the rationale of centralized training and distributed execution in order to achieve a common goal better via decentralized cooperation.",
+        "Foerster et al (2017a); <a class=\"ref-link\" id=\"cLowe_et+al_2017_a\" href=\"#rLowe_et+al_2017_a\">Lowe et al (2017</a>); <a class=\"ref-link\" id=\"cGupta_et+al_2017_a\" href=\"#rGupta_et+al_2017_a\">Gupta et al (2017</a>); <a class=\"ref-link\" id=\"cSunehag_et+al_2018_a\" href=\"#rSunehag_et+al_2018_a\">Sunehag et al (2018</a>), and Foerster et al (2017b) adopt the framework of centralized training with decentralized execution, empowering the agent to learn cooperative behavior considering other agents\u2019 policies without any communication in distributed execution.",
+        "Each agent should determine a policy described by its scheduling weights, encoded communication messages, and actions.",
+        "Their common goal is to learn the state-dependent \u201cimportance\u201d of individual agent\u2019s observation, encoders for generating compressed messages and the scheduler for being used as a basis of an external scheduling mechanism based on the weights generated by per-agent weight generators.",
+        "Weight generators, message encoders, and action selectors are strongly coupled with dependence on a specific WSA, and we train those three networks at the same time with a common critic.",
+        "Centralized critic The actor is trained by dividing it into two parts: (i) message encoders and action selectors, and weight generators.",
+        "Each agent i should be able to determine the scheduling weight wi, encoded message mi, and action selection ui in a distributed manner.",
+        "DIAL works well when there is no contention constraints, under the condition where only one agent is scheduled to broadcast the message by a simple scheduling algorithm (i.e., RR), the average number of steps to capture the prey in DIAL(1) is larger than that of SchedNet-Top(1), because the outdated messages of non-scheduled agents is noisy for the agents to decide on actions.",
+        "In SchedNet, we have the centralized critic giving feedback to the actor, which consists of message encoders, action selectors, and weight generators of each individual agent.",
+        "The message encoders and action selectors are criticized towards compressing observations more efficiently and selecting actions that are more rewarding in view of the cooperative task at hand.",
+        "The weight generators are criticized such that k agents with apparently more valuable observation are allowed to access the shared medium and broadcast their messages to all other agents.",
+        "We have observed that an intelligent, distributed communication scheduling can aid in a more efficient, coordinated, and rewarding behavior of learning agents in the MARL setting."
+    ],
+    "headline": "We study a practical scenario when the communication bandwidth is limited and the agents share the communication medium so that only a restricted number of agents are able to simultaneously use the medium, as in the state-of-the-art wireless networking standards",
+    "reference_links": [
+        {
+            "id": "Bourlard_1988_a",
+            "entry": "Herve Bourlard and Yves Kamp. Auto-association by multilayer perceptrons and singular value decomposition. Biological cybernetics, 59(4-5):291\u2013294, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bourlard%2C%20Herve%20Kamp%2C%20Yves%20Auto-association%20by%20multilayer%20perceptrons%20and%20singular%20value%20decomposition%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bourlard%2C%20Herve%20Kamp%2C%20Yves%20Auto-association%20by%20multilayer%20perceptrons%20and%20singular%20value%20decomposition%201988"
+        },
+        {
+            "id": "Busoniu_et+al_2008_a",
+            "entry": "Lucian Busoniu, Robert Babuska, and Bart De Schutter. A comprehensive survey of multiagent reinforcement learning. IEEE Transactions on Systems, Man, And Cybernetics, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Busoniu%2C%20Lucian%20Babuska%2C%20Robert%20Schutter%2C%20Bart%20De%20A%20comprehensive%20survey%20of%20multiagent%20reinforcement%20learning%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Busoniu%2C%20Lucian%20Babuska%2C%20Robert%20Schutter%2C%20Bart%20De%20A%20comprehensive%20survey%20of%20multiagent%20reinforcement%20learning%202008"
+        },
+        {
+            "id": "Dunkels_et+al_2004_a",
+            "entry": "Adam Dunkels, Bjorn Gronvall, and Thiemo Voigt. Contiki-a lightweight and flexible operating system for tiny networked sensors. In Proceedings of Local Computer Networks (LCN), 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dunkels%2C%20Adam%20Gronvall%2C%20Bjorn%20Voigt%2C%20Thiemo%20Contiki-a%20lightweight%20and%20flexible%20operating%20system%20for%20tiny%20networked%20sensors%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dunkels%2C%20Adam%20Gronvall%2C%20Bjorn%20Voigt%2C%20Thiemo%20Contiki-a%20lightweight%20and%20flexible%20operating%20system%20for%20tiny%20networked%20sensors%202004"
+        },
+        {
+            "id": "Foerster_et+al_2016_a",
+            "entry": "Jakob Foerster, Ioannis Alexandros Assael, Nando de Freitas, and Shimon Whiteson. Learning to communicate with deep multi-agent reinforcement learning. In Proceedings of Advances in Neural Information Processing Systems, pp. 2137\u20132145, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Foerster%2C%20Jakob%20Assael%2C%20Ioannis%20Alexandros%20de%20Freitas%2C%20Nando%20Whiteson%2C%20Shimon%20Learning%20to%20communicate%20with%20deep%20multi-agent%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Foerster%2C%20Jakob%20Assael%2C%20Ioannis%20Alexandros%20de%20Freitas%2C%20Nando%20Whiteson%2C%20Shimon%20Learning%20to%20communicate%20with%20deep%20multi-agent%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Foerster_et+al_0000_a",
+            "entry": "Jakob Foerster, Gregory Farquhar, Triantafyllos Afouras, Nantas Nardelli, and Shimon Whiteson. Counterfactual multi-agent policy gradients. arXiv preprint arXiv:1705.08926, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.08926"
+        },
+        {
+            "id": "Foerster_et+al_0000_b",
+            "entry": "Jakob Foerster, Nantas Nardelli, Gregory Farquhar, Philip Torr, Pushmeet Kohli, Shimon Whiteson, et al. Stabilising experience replay for deep multi-agent reinforcement learning. arXiv preprint arXiv:1702.08887, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08887"
+        },
+        {
+            "id": "Foerster_et+al_0000_c",
+            "entry": "Jakob N. Foerster, Richard Y. Chen, Maruan Al-Shedivat, Shimon Whiteson, Pieter Abbeel, and Igor Mordatch. Learning with opponent-learning awareness. arxiv preprint arXiv:1709.04326, 2017c.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.04326"
+        },
+        {
+            "id": "Gu_et+al_2017_a",
+            "entry": "Shixiang Gu, Ethan Holly, Timothy Lillicrap, and Sergey Levine. Deep reinforcement learning for robotic manipulation with asynchronous off-policy updates. In Proceedings of IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Holly%2C%20Ethan%20Lillicrap%2C%20Timothy%20Levine%2C%20Sergey%20Deep%20reinforcement%20learning%20for%20robotic%20manipulation%20with%20asynchronous%20off-policy%20updates%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Holly%2C%20Ethan%20Lillicrap%2C%20Timothy%20Levine%2C%20Sergey%20Deep%20reinforcement%20learning%20for%20robotic%20manipulation%20with%20asynchronous%20off-policy%20updates%202017"
+        },
+        {
+            "id": "Guestrin_et+al_2002_a",
+            "entry": "Carlos Guestrin, Michail Lagoudakis, and R Parr. Coordinated reinforcement learning. In Proceedings of International Conference on Machine Learning, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guestrin%2C%20Carlos%20Lagoudakis%2C%20Michail%20Parr%2C%20R.%20Coordinated%20reinforcement%20learning%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guestrin%2C%20Carlos%20Lagoudakis%2C%20Michail%20Parr%2C%20R.%20Coordinated%20reinforcement%20learning%202002"
+        },
+        {
+            "id": "Gupta_et+al_2017_a",
+            "entry": "Jayesh K Gupta, Maxim Egorov, and Mykel Kochenderfer. Cooperative multi-agent control using deep reinforcement learning. In Proceedings of International Conference on Autonomous Agents and Multiagent Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gupta%2C%20Jayesh%20K.%20Egorov%2C%20Maxim%20Kochenderfer%2C%20Mykel%20Cooperative%20multi-agent%20control%20using%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gupta%2C%20Jayesh%20K.%20Egorov%2C%20Maxim%20Kochenderfer%2C%20Mykel%20Cooperative%20multi-agent%20control%20using%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Havrylov_2017_a",
+            "entry": "Serhii Havrylov and Ivan Titov. Emergence of language with multi-agent games: learning to communicate with sequences of symbols. In Proceedings of Advances in Neural Information Processing Systems, pp. 2146\u20132156, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Havrylov%2C%20Serhii%20Titov%2C%20Ivan%20Emergence%20of%20language%20with%20multi-agent%20games%3A%20learning%20to%20communicate%20with%20sequences%20of%20symbols%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Havrylov%2C%20Serhii%20Titov%2C%20Ivan%20Emergence%20of%20language%20with%20multi-agent%20games%3A%20learning%20to%20communicate%20with%20sequences%20of%20symbols%202017"
+        },
+        {
+            "id": "Hinton_1994_a",
+            "entry": "Geoffrey E Hinton and Richard S Zemel. Autoencoders, minimum description length and helmholtz free energy. In Proceedings of Advances in Neural Information Processing Systems, pp. 3\u201310, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Zemel%2C%20Richard%20S.%20Autoencoders%2C%20minimum%20description%20length%20and%20helmholtz%20free%20energy%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Zemel%2C%20Richard%20S.%20Autoencoders%2C%20minimum%20description%20length%20and%20helmholtz%20free%20energy%201994"
+        },
+        {
+            "id": "Jang_et+al_2014_a",
+            "entry": "Hyeryung Jang, Se-Young Yun, Jinwoo Shin, and Yung Yi. Distributed learning for utility maximization over csma-based wireless multihop networks. In Proceedings of IEEE INFOCOM, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jang%2C%20Hyeryung%20Yun%2C%20Se-Young%20Shin%2C%20Jinwoo%20Yi%2C%20Yung%20Distributed%20learning%20for%20utility%20maximization%20over%20csma-based%20wireless%20multihop%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jang%2C%20Hyeryung%20Yun%2C%20Se-Young%20Shin%2C%20Jinwoo%20Yi%2C%20Yung%20Distributed%20learning%20for%20utility%20maximization%20over%20csma-based%20wireless%20multihop%20networks%202014"
+        },
+        {
+            "id": "Jiang_2018_a",
+            "entry": "Jiechuan Jiang and Zongqing Lu. Learning attentional communication for multi-agent cooperation. arXiv preprint arXiv:1805.07733, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07733"
+        },
+        {
+            "id": "Jiang_2010_a",
+            "entry": "Libin Jiang and Jean Walrand. A distributed csma algorithm for throughput and utility maximization in wireless networks. IEEE/ACM Transactions on Networking (ToN), 18(3):960\u2013972, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jiang%2C%20Libin%20Walrand%2C%20Jean%20A%20distributed%20csma%20algorithm%20for%20throughput%20and%20utility%20maximization%20in%20wireless%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jiang%2C%20Libin%20Walrand%2C%20Jean%20A%20distributed%20csma%20algorithm%20for%20throughput%20and%20utility%20maximization%20in%20wireless%20networks%202010"
+        },
+        {
+            "id": "Konda_2003_a",
+            "entry": "Vijay R Konda and John N Tsitsiklis. Actor-critic algorithms. Control Optimization, 42(4):1143\u2013 1166, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Konda%2C%20Vijay%20R.%20Tsitsiklis%2C%20John%20N.%20Actor-critic%20algorithms%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Konda%2C%20Vijay%20R.%20Tsitsiklis%2C%20John%20N.%20Actor-critic%20algorithms%202003"
+        },
+        {
+            "id": "Kurose_2005_a",
+            "entry": "James F Kurose. Computer networking: A top-down approach featuring the internet. Pearson Education India, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kurose%2C%20James%20F.%20Computer%20networking%3A%20A%20top-down%20approach%20featuring%20the%20internet%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kurose%2C%20James%20F.%20Computer%20networking%3A%20A%20top-down%20approach%20featuring%20the%20internet%202005"
+        },
+        {
+            "id": "Leibo_et+al_2017_a",
+            "entry": "Joel Z Leibo, Vinicius Zambaldi, Marc Lanctot, Janusz Marecki, and Thore Graepel. Multi-agent reinforcement learning in sequential social dilemmas. In Proceedings of International Conference on Autonomous Agents and MultiAgent Systems, pp. 464\u2013473, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leibo%2C%20Joel%20Z.%20Zambaldi%2C%20Vinicius%20Lanctot%2C%20Marc%20Marecki%2C%20Janusz%20Multi-agent%20reinforcement%20learning%20in%20sequential%20social%20dilemmas%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leibo%2C%20Joel%20Z.%20Zambaldi%2C%20Vinicius%20Lanctot%2C%20Marc%20Marecki%2C%20Janusz%20Multi-agent%20reinforcement%20learning%20in%20sequential%20social%20dilemmas%202017"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "Timothy P Lillicrap, Jonathan J Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. arXiv preprint arXiv:1509.02971, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Lowe_et+al_2017_a",
+            "entry": "Ryan Lowe, Yi Wu, Aviv Tamar, Jean Harb, Pieter Abbeel, and Igor Mordatch. Multi-agent actorcritic for mixed cooperative-competitive environments. arXiv preprint arXiv:1706.02275, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02275"
+        },
+        {
+            "id": "Mao_et+al_2017_a",
+            "entry": "Hongzi Mao, Ravi Netravali, and Mohammad Alizadeh. Neural adaptive video streaming with pensieve. In Proceedings of ACM Sigcomm, pp. 197\u2013210, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mao%2C%20Hongzi%20Netravali%2C%20Ravi%20Alizadeh%2C%20Mohammad%20Neural%20adaptive%20video%20streaming%20with%20pensieve%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mao%2C%20Hongzi%20Netravali%2C%20Ravi%20Alizadeh%2C%20Mohammad%20Neural%20adaptive%20video%20streaming%20with%20pensieve%202017"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In Proceedings of International Conference on Machine Learning, pp. 1928\u20131937, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Mordatch_2017_a",
+            "entry": "Igor Mordatch and Pieter Abbeel. Emergence of grounded compositional language in multi-agent populations. arxiv preprint arXiv:1703.10069, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.10069"
+        },
+        {
+            "id": "Omidshafiei_et+al_2017_a",
+            "entry": "Shayegan Omidshafiei, Jason Pazis, Christopher Amato, Jonathan P How, and John Vian. Deep decentralized multi-task multi-agent RL under partial observability. arXiv preprint arXiv:1703.06182, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.06182"
+        },
+        {
+            "id": "Palmer_et+al_2017_a",
+            "entry": "Gregory Palmer, Karl Tuyls, Daan Bloembergen, and Rahul Savani. Lenient multi-agent deep reinforcement learning. arxiv preprint arXiv:1707.04402, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.04402"
+        },
+        {
+            "id": "Peng_et+al_2017_a",
+            "entry": "Peng Peng, Quan Yuan, Ying Wen, Yaodong Yang, Zhenkun Tang, Haitao Long, and Jun Wang. Multiagent bidirectionally-coordinated nets for learning to play starcraft combat games. arxiv preprint arXiv:1703.10069, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.10069"
+        },
+        {
+            "id": "Rappaport_2001_a",
+            "entry": "Theodore Rappaport. Wireless Communications: Principles and Practice. Prentice Hall PTR, Upper Saddle River, NJ, USA, 2nd edition, 2001. ISBN 0130422320.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rappaport%2C%20Theodore%20Wireless%20Communications%3A%20Principles%20and%20Practice%202001"
+        },
+        {
+            "id": "Rashid_et+al_2018_a",
+            "entry": "Tabish Rashid, Mikayel Samvelyan, Christian Schroeder, Gregory Farquhar, Jakob Foerster, and Shimon Whiteson. QMIX: Monotonic value function factorisation for deep multi-agent reinforcement learning. In Proceedings of International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rashid%2C%20Tabish%20Samvelyan%2C%20Mikayel%20Schroeder%2C%20Christian%20Farquhar%2C%20Gregory%20QMIX%3A%20Monotonic%20value%20function%20factorisation%20for%20deep%20multi-agent%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rashid%2C%20Tabish%20Samvelyan%2C%20Mikayel%20Schroeder%2C%20Christian%20Farquhar%2C%20Gregory%20QMIX%3A%20Monotonic%20value%20function%20factorisation%20for%20deep%20multi-agent%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Silver_et+al_2014_a",
+            "entry": "David Silver, Guy Lever, Nicolas Heess, Thomas Degris, Daan Wierstra, and Martin Riedmiller. Deterministic policy gradient algorithms. In Proceedings of International Conference on Machine Learning, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Lever%2C%20Guy%20Heess%2C%20Nicolas%20Degris%2C%20Thomas%20Deterministic%20policy%20gradient%20algorithms%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Lever%2C%20Guy%20Heess%2C%20Nicolas%20Degris%2C%20Thomas%20Deterministic%20policy%20gradient%20algorithms%202014"
+        },
+        {
+            "id": "Stone_2000_a",
+            "entry": "Peter Stone and Manuela Veloso. Multiagent systems: A survey from a machine learning perspective. Autonomous Robots, 8(3):345\u2013383, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stone%2C%20Peter%20Veloso%2C%20Manuela%20Multiagent%20systems%3A%20A%20survey%20from%20a%20machine%20learning%20perspective%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stone%2C%20Peter%20Veloso%2C%20Manuela%20Multiagent%20systems%3A%20A%20survey%20from%20a%20machine%20learning%20perspective%202000"
+        },
+        {
+            "id": "Sukhbaatar_2016_a",
+            "entry": "Sainbayar Sukhbaatar, Rob Fergus, et al. Learning multiagent communication with backpropagation. In Proceedings of Advances in Neural Information Processing Systems, pp. 2244\u20132252, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sukhbaatar%2C%20Sainbayar%20Fergus%2C%20Rob%20Learning%20multiagent%20communication%20with%20backpropagation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sukhbaatar%2C%20Sainbayar%20Fergus%2C%20Rob%20Learning%20multiagent%20communication%20with%20backpropagation%202016"
+        },
+        {
+            "id": "Sunehag_et+al_2018_a",
+            "entry": "Peter Sunehag, Guy Lever, Audrunas Gruslys, Wojciech Marian Czarnecki, Vin\u0131cius Flores Zambaldi, Max Jaderberg, Marc Lanctot, Nicolas Sonnerat, Joel Z. Leibo, Karl Tuyls, and Thore Graepel. Value-decomposition networks for cooperative multi-agent learning based on team reward. In Proceeding of AAMAS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sunehag%2C%20Peter%20Lever%2C%20Guy%20Gruslys%2C%20Audrunas%20Czarnecki%2C%20Wojciech%20Marian%20Value-decomposition%20networks%20for%20cooperative%20multi-agent%20learning%20based%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sunehag%2C%20Peter%20Lever%2C%20Guy%20Gruslys%2C%20Audrunas%20Czarnecki%2C%20Wojciech%20Marian%20Value-decomposition%20networks%20for%20cooperative%20multi-agent%20learning%20based%202018"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S Sutton and Andrew G Barto. Reinforcement learning: An introduction. MIT press Cambridge, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20learning%3A%20An%20introduction%201998"
+        },
+        {
+            "id": "Sutton_et+al_2000_a",
+            "entry": "Richard S Sutton, David A McAllester, Satinder P Singh, and Yishay Mansour. Policy gradient methods for reinforcement learning with function approximation. In Proceedings of Advances in Neural Information Processing Systems, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20Richard%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Policy%20gradient%20methods%20for%20reinforcement%20learning%20with%20function%20approximation%202000"
+        },
+        {
+            "id": "Tampuu_et+al_2017_a",
+            "entry": "Ardi Tampuu, Tambet Matiisen, Dorian Kodelja, Ilya Kuzovkin, Kristjan Korjus, Juhan Aru, Jaan Aru, and Raul Vicente. Multiagent cooperation and competition with deep reinforcement learning. PloS one, 12(4):e0172395, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tampuu%2C%20Ardi%20Matiisen%2C%20Tambet%20Kodelja%2C%20Dorian%20Kuzovkin%2C%20Ilya%20Multiagent%20cooperation%20and%20competition%20with%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tampuu%2C%20Ardi%20Matiisen%2C%20Tambet%20Kodelja%2C%20Dorian%20Kuzovkin%2C%20Ilya%20Multiagent%20cooperation%20and%20competition%20with%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Tan_1993_a",
+            "entry": "Ming Tan. Multi-agent reinforcement learning: Independent vs. cooperative agents. In Proceedings of International Conference on Machine Learning, pp. 330\u2013337, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tan%2C%20Ming%20Multi-agent%20reinforcement%20learning%3A%20Independent%20vs.%20cooperative%20agents%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tan%2C%20Ming%20Multi-agent%20reinforcement%20learning%3A%20Independent%20vs.%20cooperative%20agents%201993"
+        },
+        {
+            "id": "Leandros_1992_a",
+            "entry": "Leandros Tassiulas and Anthony Ephremides. Stability properties of constrained queueing systems and scheduling policies for maximum throughput in multihop radio networks. IEEE transactions on automatic control, 37(12):1936\u20131948, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leandros%20Tassiulas%20and%20Anthony%20Ephremides%20Stability%20properties%20of%20constrained%20queueing%20systems%20and%20scheduling%20policies%20for%20maximum%20throughput%20in%20multihop%20radio%20networks%20IEEE%20transactions%20on%20automatic%20control%20371219361948%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leandros%20Tassiulas%20and%20Anthony%20Ephremides%20Stability%20properties%20of%20constrained%20queueing%20systems%20and%20scheduling%20policies%20for%20maximum%20throughput%20in%20multihop%20radio%20networks%20IEEE%20transactions%20on%20automatic%20control%20371219361948%201992"
+        },
+        {
+            "id": "Tesauro_1995_a",
+            "entry": "Gerald Tesauro. Temporal difference learning and td-gammon. Communications of the ACM, 38(3): 58\u201368, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tesauro%2C%20Gerald%20Temporal%20difference%20learning%20and%20td-gammon%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tesauro%2C%20Gerald%20Temporal%20difference%20learning%20and%20td-gammon%201995"
+        },
+        {
+            "id": "Yi_et+al_2008_a",
+            "entry": "Yung Yi, Alexandre Proutiere, and Mung Chiang. Complexity in wireless scheduling: Impact and tradeoffs. In Proceedings of ACM Mobihoc, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yi%2C%20Yung%20Proutiere%2C%20Alexandre%20Chiang%2C%20Mung%20Complexity%20in%20wireless%20scheduling%3A%20Impact%20and%20tradeoffs%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yi%2C%20Yung%20Proutiere%2C%20Alexandre%20Chiang%2C%20Mung%20Complexity%20in%20wireless%20scheduling%3A%20Impact%20and%20tradeoffs%202008"
+        },
+        {
+            "id": "Zhang_2013_a",
+            "entry": "Chongjie Zhang and Victor Lesser. Coordinating multi-agent reinforcement learning with limited communication. In Proceedings of International conference on Autonomous agents and multiagent systems, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Chongjie%20Lesser%2C%20Victor%20Coordinating%20multi-agent%20reinforcement%20learning%20with%20limited%20communication%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Chongjie%20Lesser%2C%20Victor%20Coordinating%20multi-agent%20reinforcement%20learning%20with%20limited%20communication%202013"
+        }
+    ]
+}

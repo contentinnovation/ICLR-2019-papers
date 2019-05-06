@@ -1,0 +1,157 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ADASHIFT: DECORRELATION AND CONVERGENCE OF ADAPTIVE LEARNING RATE METHODS",
+        "author": "Zhiming Zhou, Qingru Zhang, Guansong Lu, Hongwei Wang, Weinan Zhang, Yong Yu Shanghai Jiao Tong University \u2020heyohai@apex.sjtu.edu.cn,neverquit@sjtu.edu.cn",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkgTkhRcKQ"
+        },
+        "abstract": "Adam is shown not being able to converge to the optimal solution in certain cases. Researchers recently propose several algorithms to avoid the issue of nonconvergence of Adam, but their efficiency turns out to be unsatisfactory in practice. In this paper, we provide a new insight into the non-convergence issue of Adam as well as other adaptive learning rate methods. We argue that there exists an inappropriate correlation between gradient gt and the second moment term vt in Adam (t is the timestep), which results in that a large gradient is likely to have small step size while a small gradient may have a large step size. We demonstrate that such unbalanced step sizes are the fundamental cause of non-convergence of Adam, and we further prove that decorrelating vt and gt will lead to unbiased step size for each gradient, thus solving the non-convergence problem of Adam. Finally, we propose AdaShift, a novel adaptive learning rate method that decorrelates vt and gt by temporal shifting, i.e., using temporally shifted gradient gt\u2212n to calculate vt. The experiment results demonstrate that AdaShift is able to address the non-convergence issue of Adam, while still maintaining a competitive performance with Adam in terms of both training speed and generalization."
+    },
+    "keywords": [
+        "step size",
+        "non convergence issue",
+        "Neural Machine Translation",
+        "gradient gt\u2212n",
+        "novel adaptive learning rate method",
+        "net update factor",
+        "non convergence problem",
+        "inappropriate correlation",
+        "fundamental because",
+        "adaptive learning rate method",
+        "unbalanced step size"
+    ],
+    "abbreviations": {
+        "NMT": "Neural Machine Translation"
+    },
+    "highlights": [
+        "First-order optimization algorithms with adaptive learning rate play an important role in deep learning due to their efficiency in solving large-scale optimization problems",
+        "We show that the fundamental problem of common adaptive learning rate methods\u221ais that: vt is positively correlated to the scale of gradient gt, which results in a small step size \u03b1t/ vt for a large gradient, and a large step size for a small gradient",
+        "We argue that such an unbalanced step size is the cause of non-convergence",
+        "We study the non-convergence issue of adaptive learning rate methods from the perspective of the equivalent accumulated step size of each gradient, i.e., the net update factor defined in this paper",
+        "We show that there exists an inappropriate correlation between vt and gt, which leads to unbalanced net update factor for each gradient",
+        "We demonstrate that such unbalanced step sizes are the fundamental cause of non-convergence of Adam, and we further prove that decorrelating vt and gt will lead to unbiased expected step size for each gradient, solving the non-convergence problem of Adam"
+    ],
+    "key_statements": [
+        "First-order optimization algorithms with adaptive learning rate play an important role in deep learning due to their efficiency in solving large-scale optimization problems",
+        "We show that the unbalanced step sizes stem from the inappropriate positive correlation between vt and gt, and we argue that this is the fundamental cause of the non-convergence issue of Adam",
+        "We show that the fundamental problem of common adaptive learning rate methods\u221ais that: vt is positively correlated to the scale of gradient gt, which results in a small step size \u03b1t/ vt for a large gradient, and a large step size for a small gradient",
+        "We argue that such an unbalanced step size is the cause of non-convergence",
+        "The unbalanced net update factors cause the non-convergence problem of Adam as well as all other adaptive learning rate methods where vt correlates with gt",
+        "With the expected net update factor being a fixed constant, the convergence of the adaptive learning rate method reduces to vanilla SGD",
+        "We study the non-convergence issue of adaptive learning rate methods from the perspective of the equivalent accumulated step size of each gradient, i.e., the net update factor defined in this paper",
+        "We show that there exists an inappropriate correlation between vt and gt, which leads to unbalanced net update factor for each gradient",
+        "We demonstrate that such unbalanced step sizes are the fundamental cause of non-convergence of Adam, and we further prove that decorrelating vt and gt will lead to unbiased expected step size for each gradient, solving the non-convergence problem of Adam"
+    ],
+    "summary": [
+        "First-order optimization algorithms with adaptive learning rate play an important role in deep learning due to their efficiency in solving large-scale optimization problems.",
+        "Before further analyzing the convergence of Adam using the net update factor, we first study the pattern of vt in the sequential online optimization problem in Equation 6.",
+        "In the sequential online optimization problem in Equation 6, when n \u2192 \u221e, the limit of net update factor k of epoch n satisfies: \u2203 1 \u2264 j \u2264 d such that lim n\u2192\u221e",
+        "The unbalanced net update factors cause the non-convergence problem of Adam as well as all other adaptive learning rate methods where vt correlates with gt.",
+        "The current scheme of vt, i.e., vt = \u03b22vt\u22121 + (1 \u2212 \u03b22)gt2, brings a positive correlation between vt and gt, which results in reducing the effect of large gradients and increasing the effect of small gradients, and causes the non-convergence problem.",
+        "With the expected net update factor being a fixed constant, the convergence of the adaptive learning rate method reduces to vanilla SGD.",
+        "In our temporal decorrelation with spatial operation scheme, we can solve the \u201cdifferent gradient scales\u201d issue more naturally, by applying \u03c6 block-wisely and outputs a shared adaptive learning rate scalar vt[i] for each block: vt[i] = \u03b22vt\u22121[i] + (1 \u2212 \u03b22)\u03c6.",
+        "Summary The key difference between Adam and the proposed method is that the latter temporally shifts the gradient gt for n-step, i.e., using gt\u2212n for calculating vt and using the kept-out n gradients to evaluate mt (Equation 17), which makes vt and mt decorrelated and solves the nonconvergence issue.",
+        "Based on our new perspective on adaptive learning rate methods, vt is not necessarily the second moment and it is valid to further involve the calculation of vt with the spatial elements of previous gradients.",
+        "We study the non-convergence issue of adaptive learning rate methods from the perspective of the equivalent accumulated step size of each gradient, i.e., the net update factor defined in this paper.",
+        "We propose AdaShift, a novel adaptive learning rate method that decorrelates vt and gt via calculating vt using temporally shifted gradient gt\u2212n.",
+        "We further found that when the spatial operation \u03c6 outputs a shared scalar for each block, the resulting algorithm turns out to be closely related to SGD, where each block has an overall adaptive learning rate and the relative gradient scale in each block is maintained."
+    ],
+    "headline": "We provide a new insight into the non-convergence issue of Adam as well as other adaptive learning rate methods",
+    "reference_links": [
+        {
+            "id": "Dozat_2016_a",
+            "entry": "Timothy Dozat. Incorporating nesterov momentum into adam. International Conference on Learning Representations, Workshop track, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dozat%2C%20Timothy%20Incorporating%20nesterov%20momentum%20into%20adam%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dozat%2C%20Timothy%20Incorporating%20nesterov%20momentum%20into%20adam%202016"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of wasserstein gans. In Advances in Neural Information Processing Systems, pp. 5767\u20135777, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Laurens Van Der Maaten, and Kilian Q Weinberger. Densely connected convolutional networks. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20Maaten%2C%20Laurens%20Van%20Der%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Keskar_2017_a",
+            "entry": "Nitish Shirish Keskar and Richard Socher. Improving generalization performance by switching from adam to sgd. arXiv preprint arXiv:1712.07628, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.07628"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Luong_et+al_2017_a",
+            "entry": "Minh-Thang Luong, Eugene Brevdo, and Rui Zhao. Neural machine translation (seq2seq) tutorial. https://github.com/tensorflow/nmt, 2017.",
+            "url": "https://github.com/tensorflow/nmt"
+        },
+        {
+            "id": "Qian_1999_a",
+            "entry": "Ning Qian. On the momentum term in gradient descent learning algorithms. Neural networks, 12 (1):145\u2013151, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qian%2C%20Ning%20On%20the%20momentum%20term%20in%20gradient%20descent%20learning%20algorithms.%20Neural%20networks%2C%2012%201999"
+        },
+        {
+            "id": "Rahimi_2017_a",
+            "entry": "Ali Rahimi and Ben Recht. test of time talk at nips 2017. URL http://www.argmin.net/2017/12/11/alchemy-addendum/.",
+            "url": "http://www.argmin.net/2017/12/11/alchemy-addendum/"
+        },
+        {
+            "id": "Reddi_et+al_2018_a",
+            "entry": "Sashank J. Reddi, Satyen Kale, and Sanjiv Kumar. On the convergence of adam and beyond. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=ryQu7f-RZ.",
+            "url": "https://openreview.net/forum?id=ryQu7f-RZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20adam%20and%20beyond%202018"
+        },
+        {
+            "id": "Tieleman_2012_a",
+            "entry": "Tijmen Tieleman and Geoffrey Hinton. Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural networks for machine learning, 4(2):26\u2013 31, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tieleman%2C%20Tijmen%20Hinton%2C%20Geoffrey%20Lecture%206.5-rmsprop%3A%20Divide%20the%20gradient%20by%20a%20running%20average%20of%20its%20recent%20magnitude%202012"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nati Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. In Advances in Neural Information Processing Systems, pp. 4148\u20134158, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041484158%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nati%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2041484158%202017"
+        },
+        {
+            "id": "Zeiler_2012_a",
+            "entry": "Matthew D Zeiler. Adadelta: an adaptive learning rate method. arXiv preprint arXiv:1212.5701, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1212.5701"
+        },
+        {
+            "id": "0",
+            "entry": "0.20.6 0.040..2400..4600..620.80.0 0.0 (a) Final result of \u03b8 for sequential problem after 2000 updates, varied with \u03b21 and \u03b22.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=004024004600620800%2000%20a%20Final%20result%20of%20%CE%B8%20for%20sequential%20problem%20after%202000%20updates%20varied%20with%20%CE%B21%20and%20%CE%B22"
+        },
+        {
+            "id": "0",
+            "entry": "0.2 0.0 (c) Final result of \u03b8 for stochastic problem after 2000 updates, varied with \u03b21 and \u03b22.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=00%20c%20Final%20result%20of%20%CE%B8%20for%20stochastic%20problem%20after%202000%20updates%20varied%20with%20%CE%B21%20and%20%CE%B22"
+        }
+    ]
+}

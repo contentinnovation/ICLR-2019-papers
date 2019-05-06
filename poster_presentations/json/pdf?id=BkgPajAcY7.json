@@ -1,0 +1,433 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "NO TRAINING REQUIRED: EXPLORING RANDOM ENCODERS FOR SENTENCE CLASSIFICATION",
+        "author": "John Wieting, Carnegie Mellon University jwieting@cs.cmu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BkgPajAcY7"
+        },
+        "abstract": "We explore various methods for computing sentence representations from pretrained word embeddings without any training, i.e., using nothing but random parameterizations. Our aim is to put sentence embeddings on more solid footing by 1) looking at how much modern sentence embeddings gain over random methods\u2014as it turns out, surprisingly little; and by 2) providing the field with more appropriate baselines going forward\u2014which are, as it turns out, quite strong. We also make important observations about proper experimental protocol for sentence classification evaluation, together with recommendations for future research."
+    },
+    "keywords": [
+        {
+            "term": "sentence embedding",
+            "url": "https://en.wikipedia.org/wiki/sentence_embedding"
+        },
+        {
+            "term": "word embedding",
+            "url": "https://en.wikipedia.org/wiki/word_embedding"
+        },
+        {
+            "term": "multi-layer perceptrons",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptrons"
+        },
+        {
+            "term": "Natural Language Processing",
+            "url": "https://en.wikipedia.org/wiki/Natural_Language_Processing"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "MLP": "multi-layer perceptrons",
+        "NLP": "Natural Language Processing",
+        "BOREP": "BAG OF RANDOM EMBEDDING PROJECTIONS",
+        "Tense": "the main-clause verb"
+    },
+    "highlights": [
+        "A sentence embedding is a vector representation of the meaning of a sentence, often created by a transformation of word embeddings through a composition function",
+        "We go down a well-paved avenue of exploration in the machine learning research community, and exploit an insight originally due to <a class=\"ref-link\" id=\"cCover_1965_a\" href=\"#rCover_1965_a\">Cover (1965</a>): \u201cA complex pattern-classification problem, cast in a high-dimensional space nonlinearly, is more likely to be linearly separable than in a lowdimensional space, provided that the space is not densely populated.\u201d That is, we examine three types of models for obtaining randomly computed sentence representations from pre-trained word embeddings: bag of random embedding projections, randomly initialized recurrent networks and echo state networks",
+        "We show that a lot of information may be crammed into vectors using randomly parameterized combinations of pre-trained word embeddings: that is, most of the power in modern Natural Language Processing systems is derived from having high-quality word embeddings, rather than from having better encoders",
+        "In this work we have sought to put sentence embeddings on more solid footing by examining how much trained sentence encoders improve over random sentence encoders",
+        "Differences exist, but are smaller than we would have hoped: in comparison to sentence encoders such as SkipThought and InferSent, performance improvements are less than 2 points on average over the 10 SentEval tasks",
+        "If we as a community start focusing on more sophisticated tasks that require more sophisticated learned representations that cannot merely rely on having good pre-trained word embeddings"
+    ],
+    "key_statements": [
+        "A sentence embedding is a vector representation of the meaning of a sentence, often created by a transformation of word embeddings through a composition function",
+        "Sentence embeddings can be trained with either an unsupervised or supervised objective, and they are often evaluated using transfer tasks, where a ahallow classifier is trained on top of the learned sentence encoder",
+        "We propose to examine the following question: given a set of word embeddings, how can we maximize classification accuracy on the transfer tasks without any training, i.e. without updating any parameters except for those in the transfer task-specific linear classifier trained on top of the representation",
+        "We go down a well-paved avenue of exploration in the machine learning research community, and exploit an insight originally due to <a class=\"ref-link\" id=\"cCover_1965_a\" href=\"#rCover_1965_a\">Cover (1965</a>): \u201cA complex pattern-classification problem, cast in a high-dimensional space nonlinearly, is more likely to be linearly separable than in a lowdimensional space, provided that the space is not densely populated.\u201d That is, we examine three types of models for obtaining randomly computed sentence representations from pre-trained word embeddings: bag of random embedding projections, randomly initialized recurrent networks and echo state networks",
+        "We show that a lot of information may be crammed into vectors using randomly parameterized combinations of pre-trained word embeddings: that is, most of the power in modern Natural Language Processing systems is derived from having high-quality word embeddings, rather than from having better encoders",
+        "We explore three architectures that produce sentence embeddings from pre-trained word embeddings, without requiring any training of the encoder itself",
+        "If you want to show that your system is better than another system, use the same classifier on top with the same hyperparameters; and use the same word embeddings at the bottom; while having the same sentence embedding dimensionality",
+        "Random sentence encoders are easy to try: they require no training, and should be used as a solid baseline to be compared against when learning sentence encoders that are supposed to capture more than what is encoded in the pre-trained word embeddings",
+        "In this work we have sought to put sentence embeddings on more solid footing by examining how much trained sentence encoders improve over random sentence encoders",
+        "Differences exist, but are smaller than we would have hoped: in comparison to sentence encoders such as SkipThought and InferSent, performance improvements are less than 2 points on average over the 10 SentEval tasks",
+        "If we as a community start focusing on more sophisticated tasks that require more sophisticated learned representations that cannot merely rely on having good pre-trained word embeddings"
+    ],
+    "summary": [
+        "A sentence embedding is a vector representation of the meaning of a sentence, often created by a transformation of word embeddings through a composition function.",
+        "We go down a well-paved avenue of exploration in the machine learning research community, and exploit an insight originally due to <a class=\"ref-link\" id=\"cCover_1965_a\" href=\"#rCover_1965_a\">Cover (1965</a>): \u201cA complex pattern-classification problem, cast in a high-dimensional space nonlinearly, is more likely to be linearly separable than in a lowdimensional space, provided that the space is not densely populated.\u201d That is, we examine three types of models for obtaining randomly computed sentence representations from pre-trained word embeddings: bag of random embedding projections, randomly initialized recurrent networks and echo state networks.",
+        "We are concerned with obtaining a good sentence representation h that is computed using some function f parameterized by \u03b8 over pre-trained input word embeddings e \u2208 L, i.e. h = f\u03b8(e1, .",
+        "We point out that there are recently introduced multi-task sentence encoders that improve performance further, but these either do not use pre-trained word embeddings (GenSen (<a class=\"ref-link\" id=\"cSubramanian_et+al_2018_a\" href=\"#rSubramanian_et+al_2018_a\">Subramanian et al, 2018</a>)), or don\u2019t use SentEval (Universal Sentence Encoders (<a class=\"ref-link\" id=\"cCer_et+al_2018_a\" href=\"#rCer_et+al_2018_a\">Cer et al, 2018</a>)).",
+        "When comparing the random sentence encoders, we observe that ESNs outperform BOREP and RandLSTM on all tasks.",
+        "The performance gains over the random methods, are not as big as we might have hoped, given that InferSent requires annotated data and takes time to train, while the random sentence encoders can be applied immediately.",
+        "Maximizing the number of dimensions, might lead to overfitting, so we analyze how performance changes as a function of the dimensionality of the sentence embeddings: we sample random models for a range of dimensions, {512, 1024, 2048, 4096, 8192, 12288, 24576}, and train models for BOREP, random LSTMs, and ESNs. Performance of these models is shown in Figure 1.",
+        "Table 3 shows the performance of the random sentence encoders on these probing tasks along with bag-ofembeddings (BOE), SkipThought-LN, and InferSent.",
+        "Random sentence encoders are easy to try: they require no training, and should be used as a solid baseline to be compared against when learning sentence encoders that are supposed to capture more than what is encoded in the pre-trained word embeddings.",
+        "Differences exist, but are smaller than we would have hoped: in comparison to sentence encoders such as SkipThought and InferSent, performance improvements are less than 2 points on average over the 10 SentEval tasks.",
+        "If we as a community start focusing on more sophisticated tasks that require more sophisticated learned representations that cannot merely rely on having good pre-trained word embeddings."
+    ],
+    "headline": "We explore various methods for computing sentence representations from pretrained word embeddings without any training, i.e., using nothing but random parameterizations",
+    "reference_links": [
+        {
+            "id": "Adi_et+al_2016_a",
+            "entry": "Yossi Adi, Einat Kermany, Yonatan Belinkov, Ofer Lavi, and Yoav Goldberg. Fine-grained analysis of sentence embeddings using auxiliary prediction tasks. arXiv preprint arXiv:1608.04207, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.04207"
+        },
+        {
+            "id": "Arora_et+al_2017_a",
+            "entry": "Sanjeev Arora, Yingyu Liang, and Tengyu Ma. A simple but tough-to-beat baseline for sentence embeddings. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20simple%20but%20tough-to-beat%20baseline%20for%20sentence%20embeddings%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20simple%20but%20tough-to-beat%20baseline%20for%20sentence%20embeddings%202017"
+        },
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Baum_1988_a",
+            "entry": "Eric B Baum. On the capabilities of multilayer perceptrons. Journal of complexity, 4(3):193\u2013215, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baum%2C%20Eric%20B.%20On%20the%20capabilities%20of%20multilayer%20perceptrons%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baum%2C%20Eric%20B.%20On%20the%20capabilities%20of%20multilayer%20perceptrons%201988"
+        },
+        {
+            "id": "Belinkov_et+al_2017_a",
+            "entry": "Yonatan Belinkov, Nadir Durrani, Fahim Dalvi, Hassan Sajjad, and James Glass. What do neural machine translation models learn about morphology? arXiv preprint arXiv:1704.03471, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03471"
+        },
+        {
+            "id": "A_1961_a",
+            "entry": "A Borsellino and A Gamba. An outline of a mathematical theory of papa. Il Nuovo Cimento (19551965), 20(2):221\u2013231, 1961.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=A%20Borsellino%20and%20A%20Gamba%20An%20outline%20of%20a%20mathematical%20theory%20of%20papa%20Il%20Nuovo%20Cimento%2019551965%20202221231%201961",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=A%20Borsellino%20and%20A%20Gamba%20An%20outline%20of%20a%20mathematical%20theory%20of%20papa%20Il%20Nuovo%20Cimento%2019551965%20202221231%201961"
+        },
+        {
+            "id": "Bowman_et+al_2015_a",
+            "entry": "Samuel R Bowman, Gabor Angeli, Christopher Potts, and Christopher D Manning. A large annotated corpus for learning natural language inference. arXiv preprint arXiv:1508.05326, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1508.05326"
+        },
+        {
+            "id": "Cer_et+al_2018_a",
+            "entry": "Daniel Cer, Yinfei Yang, Sheng-yi Kong, Nan Hua, Nicole Limtiaco, Rhomni St John, Noah Constant, Mario Guajardo-Cespedes, Steve Yuan, Chris Tar, et al. Universal sentence encoder. arXiv preprint arXiv:1803.11175, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.11175"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "6http://www.argmin.net/2017/12/05/kitchen-sinks/",
+            "url": "http://www.argmin.net/2017/12/05/kitchen-sinks/"
+        },
+        {
+            "id": "Conneau_2018_a",
+            "entry": "Alexis Conneau and Douwe Kiela. Senteval: An evaluation toolkit for universal sentence representations. arXiv preprint arXiv:1803.05449, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05449"
+        },
+        {
+            "id": "Conneau_et+al_2017_a",
+            "entry": "Alexis Conneau, Douwe Kiela, Holger Schwenk, Loic Barrault, and Antoine Bordes. Supervised learning of universal sentence representations from natural language inference data. In Proceedings of EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conneau%2C%20Alexis%20Kiela%2C%20Douwe%20Schwenk%2C%20Holger%20Barrault%2C%20Loic%20Supervised%20learning%20of%20universal%20sentence%20representations%20from%20natural%20language%20inference%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conneau%2C%20Alexis%20Kiela%2C%20Douwe%20Schwenk%2C%20Holger%20Barrault%2C%20Loic%20Supervised%20learning%20of%20universal%20sentence%20representations%20from%20natural%20language%20inference%20data%202017"
+        },
+        {
+            "id": "Conneau_et+al_2018_b",
+            "entry": "Alexis Conneau, German Kruszewski, Guillaume Lample, Lo\u0131c Barrault, and Marco Baroni. What you can cram into a single vector: Probing sentence embeddings for linguistic properties. In Proceedings of ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conneau%2C%20Alexis%20Kruszewski%2C%20German%20Lample%2C%20Guillaume%20Barrault%2C%20Lo%C4%B1c%20What%20you%20can%20cram%20into%20a%20single%20vector%3A%20Probing%20sentence%20embeddings%20for%20linguistic%20properties%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conneau%2C%20Alexis%20Kruszewski%2C%20German%20Lample%2C%20Guillaume%20Barrault%2C%20Lo%C4%B1c%20What%20you%20can%20cram%20into%20a%20single%20vector%3A%20Probing%20sentence%20embeddings%20for%20linguistic%20properties%202018"
+        },
+        {
+            "id": "Cover_1965_a",
+            "entry": "Thomas M Cover. Geometrical and statistical properties of systems of linear inequalities with applications in pattern recognition. IEEE transactions on electronic computers, (3):326\u2013334, 1965.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cover%2C%20Thomas%20M.%20Geometrical%20and%20statistical%20properties%20of%20systems%20of%20linear%20inequalities%20with%20applications%20in%20pattern%20recognition%201965",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cover%2C%20Thomas%20M.%20Geometrical%20and%20statistical%20properties%20of%20systems%20of%20linear%20inequalities%20with%20applications%20in%20pattern%20recognition%201965"
+        },
+        {
+            "id": "Dai_et+al_2014_a",
+            "entry": "Bo Dai, Bo Xie, Niao He, Yingyu Liang, Anant Raj, Maria-Florina F Balcan, and Le Song. Scalable kernel methods via doubly stochastic gradients. In Advances in Neural Information Processing Systems, pp. 3041\u20133049, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Bo%20Xie%2C%20Bo%20He%2C%20Niao%20Liang%2C%20Yingyu%20Scalable%20kernel%20methods%20via%20doubly%20stochastic%20gradients%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Bo%20Xie%2C%20Bo%20He%2C%20Niao%20Liang%2C%20Yingyu%20Scalable%20kernel%20methods%20via%20doubly%20stochastic%20gradients%202014"
+        },
+        {
+            "id": "Dalvi_et+al_2017_a",
+            "entry": "Fahim Dalvi, Nadir Durrani, Hassan Sajjad, Yonatan Belinkov, and Stephan Vogel. Understanding and improving morphological learning in the neural machine translation decoder. In Proceedings of the Eighth International Joint Conference on Natural Language Processing (Volume 1: Long Papers), volume 1, pp. 142\u2013151, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dalvi%2C%20Fahim%20Durrani%2C%20Nadir%20Sajjad%2C%20Hassan%20Belinkov%2C%20Yonatan%20Understanding%20and%20improving%20morphological%20learning%20in%20the%20neural%20machine%20translation%20decoder%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dalvi%2C%20Fahim%20Durrani%2C%20Nadir%20Sajjad%2C%20Hassan%20Belinkov%2C%20Yonatan%20Understanding%20and%20improving%20morphological%20learning%20in%20the%20neural%20machine%20translation%20decoder%202017"
+        },
+        {
+            "id": "Daubigney_et+al_2013_a",
+            "entry": "Lucie Daubigney, Matthieu Geist, and Olivier Pietquin. Model-free pomdp optimisation of tutoring systems with echo-state networks. In Proceedings of the SIGDIAL 2013 Conference, pp. 102\u2013106, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daubigney%2C%20Lucie%20Geist%2C%20Matthieu%20Pietquin%2C%20Olivier%20Model-free%20pomdp%20optimisation%20of%20tutoring%20systems%20with%20echo-state%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Daubigney%2C%20Lucie%20Geist%2C%20Matthieu%20Pietquin%2C%20Olivier%20Model-free%20pomdp%20optimisation%20of%20tutoring%20systems%20with%20echo-state%20networks%202013"
+        },
+        {
+            "id": "Ettinger_et+al_2016_a",
+            "entry": "Allyson Ettinger, Ahmed Elgohary, and Philip Resnik. Probing for semantic evidence of composition by means of simple classification tasks. In Proceedings of the 1st Workshop on Evaluating Vector-Space Representations for NLP, pp. 134\u2013139, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ettinger%2C%20Allyson%20Elgohary%2C%20Ahmed%20Resnik%2C%20Philip%20Probing%20for%20semantic%20evidence%20of%20composition%20by%20means%20of%20simple%20classification%20tasks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ettinger%2C%20Allyson%20Elgohary%2C%20Ahmed%20Resnik%2C%20Philip%20Probing%20for%20semantic%20evidence%20of%20composition%20by%20means%20of%20simple%20classification%20tasks%202016"
+        },
+        {
+            "id": "Frank_2006_a",
+            "entry": "Stefan L Frank. Learn more by training less: systematicity in sentence processing by recurrent networks. Connection Science, 18(3):287\u2013302, 2006a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frank%2C%20Stefan%20L.%20Learn%20more%20by%20training%20less%3A%20systematicity%20in%20sentence%20processing%20by%20recurrent%20networks%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frank%2C%20Stefan%20L.%20Learn%20more%20by%20training%20less%3A%20systematicity%20in%20sentence%20processing%20by%20recurrent%20networks%202006"
+        },
+        {
+            "id": "Springer,_2006_a",
+            "entry": "Springer, 2006b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springer%202006b"
+        },
+        {
+            "id": "Gamba_et+al_1961_a",
+            "entry": "A. Gamba, L. Gamberini, G. Palmieri, and R. Sanna. Further experiments with papa. Il Nuovo Cimento (1955-1965), 20(2):112\u2013115, 1961.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gamba%2C%20A.%20Gamberini%2C%20L.%20Palmieri%2C%20G.%20Sanna%2C%20R.%20Further%20experiments%20with%20papa%201961",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gamba%2C%20A.%20Gamberini%2C%20L.%20Palmieri%2C%20G.%20Sanna%2C%20R.%20Further%20experiments%20with%20papa%201961"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "Hill_et+al_2016_a",
+            "entry": "Felix Hill, Kyunghyun Cho, and Anna Korhonen. Learning distributed representations of sentences from unlabelled data. arXiv preprint arXiv:1602.03483, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.03483"
+        },
+        {
+            "id": "Huang_et+al_2006_a",
+            "entry": "Guang-Bin Huang, Qin-Yu Zhu, and Chee-Kheong Siew. Extreme learning machine: theory and applications. Neurocomputing, 70(1-3):489\u2013501, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Guang-Bin%20Zhu%2C%20Qin-Yu%20Siew%2C%20Chee-Kheong%20Extreme%20learning%20machine%3A%20theory%20and%20applications%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Guang-Bin%20Zhu%2C%20Qin-Yu%20Siew%2C%20Chee-Kheong%20Extreme%20learning%20machine%3A%20theory%20and%20applications%202006"
+        },
+        {
+            "id": "Hupkes_et+al_2018_a",
+            "entry": "Dieuwke Hupkes, Sara Veldhoen, and Willem Zuidema. Visualisation and\u2019diagnostic classifiers\u2019 reveal how recurrent and recursive neural networks process hierarchical structure. Journal of Artificial Intelligence Research, 61:907\u2013926, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hupkes%2C%20Dieuwke%20Veldhoen%2C%20Sara%20Zuidema%2C%20Willem%20Visualisation%20and%E2%80%99diagnostic%20classifiers%E2%80%99%20reveal%20how%20recurrent%20and%20recursive%20neural%20networks%20process%20hierarchical%20structure%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hupkes%2C%20Dieuwke%20Veldhoen%2C%20Sara%20Zuidema%2C%20Willem%20Visualisation%20and%E2%80%99diagnostic%20classifiers%E2%80%99%20reveal%20how%20recurrent%20and%20recursive%20neural%20networks%20process%20hierarchical%20structure%202018"
+        },
+        {
+            "id": "Jaeger_2001_a",
+            "entry": "Herbert Jaeger. The \u201cecho state\u201d approach to analysing and training recurrent neural networks-with an erratum note. Technical report, German National Research Center for Information Technology, Bonn, Germany, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jaeger%2C%20Herbert%20The%20%E2%80%9Cecho%20state%E2%80%9D%20approach%20to%20analysing%20and%20training%20recurrent%20neural%20networks-with%20an%20erratum%20note%202001"
+        },
+        {
+            "id": "Jarrett_et+al_2009_a",
+            "entry": "Kevin Jarrett, Koray Kavukcuoglu, Yann LeCun, et al. What is the best multi-stage architecture for object recognition? In Computer Vision, 2009 IEEE 12th International Conference on, pp. 2146\u20132153. IEEE, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jarrett%2C%20Kevin%20Kavukcuoglu%2C%20Koray%20LeCun%2C%20Yann%20What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition%3F%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jarrett%2C%20Kevin%20Kavukcuoglu%2C%20Koray%20LeCun%2C%20Yann%20What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition%3F%202009"
+        },
+        {
+            "id": "Jernite_et+al_2017_a",
+            "entry": "Yacine Jernite, Samuel R Bowman, and David Sontag. Discourse-based objectives for fast unsupervised sentence representation learning. arXiv preprint arXiv:1705.00557, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.00557"
+        },
+        {
+            "id": "Kiela_et+al_2017_a",
+            "entry": "Douwe Kiela, Alexis Conneau, Allan Jabri, and Maximilian Nickel. Learning visually grounded sentence representations. arXiv preprint arXiv:1707.06320, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06320"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kiros_et+al_2015_a",
+            "entry": "Ryan Kiros, Yukun Zhu, Ruslan R Salakhutdinov, Richard Zemel, Raquel Urtasun, Antonio Torralba, and Sanja Fidler. Skip-thought vectors. In Advances in neural information processing systems, pp. 3294\u20133302, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kiros%2C%20Ryan%20Zhu%2C%20Yukun%20Salakhutdinov%2C%20Ruslan%20R.%20Zemel%2C%20Richard%20Skip-thought%20vectors%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kiros%2C%20Ryan%20Zhu%2C%20Yukun%20Salakhutdinov%2C%20Ruslan%20R.%20Zemel%2C%20Richard%20Skip-thought%20vectors%202015"
+        },
+        {
+            "id": "Lake_2018_a",
+            "entry": "B. M. Lake and M. Baroni. Generalization without systematicity: On the compositional skills of sequence-to-sequence recurrent networks. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20B.M.%20Baroni%2C%20M.%20Generalization%20without%20systematicity%3A%20On%20the%20compositional%20skills%20of%20sequence-to-sequence%20recurrent%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20B.M.%20Baroni%2C%20M.%20Generalization%20without%20systematicity%3A%20On%20the%20compositional%20skills%20of%20sequence-to-sequence%20recurrent%20networks%202018"
+        },
+        {
+            "id": "Quoc_2014_a",
+            "entry": "Quoc V. Le and Tomas Mikolov. Distributed representations of sentences and documents. arXiv preprint arXiv:1405.4053, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1405.4053"
+        },
+        {
+            "id": "Linzen_et+al_2016_a",
+            "entry": "Tal Linzen, Emmanuel Dupoux, and Yoav Goldberg. Assessing the ability of lstms to learn syntaxsensitive dependencies. arXiv preprint arXiv:1611.01368, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01368"
+        },
+        {
+            "id": "Lipton_2018_a",
+            "entry": "Zachary C Lipton and Jacob Steinhardt. Troubling trends in machine learning scholarship. arXiv preprint arXiv:1807.03341, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.03341"
+        },
+        {
+            "id": "Lukosevicius_2009_a",
+            "entry": "Mantas Lukosevicius and Herbert Jaeger. Reservoir computing approaches to recurrent neural network training. Computer Science Review, 3(3):127\u2013149, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lukosevicius%2C%20Mantas%20Jaeger%2C%20Herbert%20Reservoir%20computing%20approaches%20to%20recurrent%20neural%20network%20training%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lukosevicius%2C%20Mantas%20Jaeger%2C%20Herbert%20Reservoir%20computing%20approaches%20to%20recurrent%20neural%20network%20training%202009"
+        },
+        {
+            "id": "Mehta_2004_a",
+            "entry": "Madan Lal Mehta. Random matrices. Elsevier, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mehta%2C%20Madan%20Lal%20Random%20matrices%202004"
+        },
+        {
+            "id": "Marvin_2017_a",
+            "entry": "Marvin Minsky and Seymour A Papert. Perceptrons: An introduction to computational geometry. MIT press, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marvin%20Minsky%20and%20Seymour%20A%20Papert%20Perceptrons%20An%20introduction%20to%20computational%20geometry%20MIT%20press%202017"
+        },
+        {
+            "id": "Nie_et+al_2017_a",
+            "entry": "Allen Nie, Erin D Bennett, and Noah D Goodman. Dissent: Sentence representation learning from explicit discourse relations. arXiv preprint arXiv:1710.04334, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.04334"
+        },
+        {
+            "id": "Pagliardini_et+al_2017_a",
+            "entry": "Matteo Pagliardini, Prakhar Gupta, and Martin Jaggi. Unsupervised learning of sentence embeddings using compositional n-gram features. arXiv preprint arXiv:1703.02507, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.02507"
+        },
+        {
+            "id": "Pao_et+al_1994_a",
+            "entry": "Yoh-Han Pao, Gwang-Hoon Park, and Dejan J Sobajic. Learning and generalization characteristics of the random vector functional-link net. Neurocomputing, 6(2):163\u2013180, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pao%2C%20Yoh-Han%20Park%2C%20Gwang-Hoon%20Sobajic%2C%20Dejan%20J.%20Learning%20and%20generalization%20characteristics%20of%20the%20random%20vector%20functional-link%20net%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pao%2C%20Yoh-Han%20Park%2C%20Gwang-Hoon%20Sobajic%2C%20Dejan%20J.%20Learning%20and%20generalization%20characteristics%20of%20the%20random%20vector%20functional-link%20net%201994"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher Manning. Glove: Global vectors for word representation. In Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP), pp. 1532\u20131543, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014"
+        },
+        {
+            "id": "Pham_et+al_2015_a",
+            "entry": "Nghia The Pham, German Kruszewski, Angeliki Lazaridou, and Marco Baroni. Jointly optimizing word representations for lexical and sentential tasks with the c-phrase model. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pham%2C%20Nghia%20The%20Kruszewski%2C%20German%20Lazaridou%2C%20Angeliki%20Baroni%2C%20Marco%20Jointly%20optimizing%20word%20representations%20for%20lexical%20and%20sentential%20tasks%20with%20the%20c-phrase%20model%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pham%2C%20Nghia%20The%20Kruszewski%2C%20German%20Lazaridou%2C%20Angeliki%20Baroni%2C%20Marco%20Jointly%20optimizing%20word%20representations%20for%20lexical%20and%20sentential%20tasks%20with%20the%20c-phrase%20model%202015"
+        },
+        {
+            "id": "Rahimi_2008_a",
+            "entry": "Ali Rahimi and Benjamin Recht. Random features for large-scale kernel machines. In Advances in neural information processing systems, pp. 1177\u20131184, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Random%20features%20for%20large-scale%20kernel%20machines%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Random%20features%20for%20large-scale%20kernel%20machines%202008"
+        },
+        {
+            "id": "Rahimi_2009_a",
+            "entry": "Ali Rahimi and Benjamin Recht. Weighted sums of random kitchen sinks: Replacing minimization with randomization in learning. In Advances in neural information processing systems, pp. 1313\u2013 1320, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Weighted%20sums%20of%20random%20kitchen%20sinks%3A%20Replacing%20minimization%20with%20randomization%20in%20learning%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Weighted%20sums%20of%20random%20kitchen%20sinks%3A%20Replacing%20minimization%20with%20randomization%20in%20learning%202009"
+        },
+        {
+            "id": "Saxe_et+al_2011_a",
+            "entry": "Andrew M Saxe, Pang Wei Koh, Zhenghao Chen, Maneesh Bhand, Bipin Suresh, and Andrew Y Ng. On random weights and unsupervised feature learning. In ICML, pp. 1089\u20141096, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Saxe%2C%20Andrew%20M.%20Koh%2C%20Pang%20Wei%20Chen%2C%20Zhenghao%20Bhand%2C%20Maneesh%20Bipin%20Suresh%2C%20and%20Andrew%20Y%20Ng.%20On%20random%20weights%20and%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saxe%2C%20Andrew%20M.%20Koh%2C%20Pang%20Wei%20Chen%2C%20Zhenghao%20Bhand%2C%20Maneesh%20Bipin%20Suresh%2C%20and%20Andrew%20Y%20Ng.%20On%20random%20weights%20and%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Schmidt_et+al_1992_a",
+            "entry": "Wouter F Schmidt, Martin A Kraaijveld, and Robert PW Duin. Feedforward neural networks with random weights. In Proceedings of the 11th International Conference on Pattern Recognition, 1992. Vol. II. Conference B: Pattern Recognition Methodology and Systems, pp. 1\u20134, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidt%2C%20Wouter%20F.%20Kraaijveld%2C%20Martin%20A.%20Duin%2C%20Robert%20P.W.%20Feedforward%20neural%20networks%20with%20random%20weights%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidt%2C%20Wouter%20F.%20Kraaijveld%2C%20Martin%20A.%20Duin%2C%20Robert%20P.W.%20Feedforward%20neural%20networks%20with%20random%20weights%201992"
+        },
+        {
+            "id": "Sennrich_2016_a",
+            "entry": "Rico Sennrich. How grammatical is character-level neural machine translation? assessing mt quality with contrastive translation pairs. arXiv preprint arXiv:1612.04629, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.04629"
+        },
+        {
+            "id": "Shen_et+al_2018_a",
+            "entry": "Dinghan Shen, Guoyin Wang, Wenlin Wang, Martin Renqiang Min, Qinliang Su, Yizhe Zhang, Chunyuan Li, Ricardo Henao, and Lawrence Carin. Baseline needs more love: On simple wordembedding-based models and associated pooling mechanisms. In Proceedings of ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Dinghan%20Wang%2C%20Guoyin%20Wang%2C%20Wenlin%20Min%2C%20Martin%20Renqiang%20Baseline%20needs%20more%20love%3A%20On%20simple%20wordembedding-based%20models%20and%20associated%20pooling%20mechanisms%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Dinghan%20Wang%2C%20Guoyin%20Wang%2C%20Wenlin%20Min%2C%20Martin%20Renqiang%20Baseline%20needs%20more%20love%3A%20On%20simple%20wordembedding-based%20models%20and%20associated%20pooling%20mechanisms%202018"
+        },
+        {
+            "id": "Socher_et+al_2011_a",
+            "entry": "Richard Socher, Eric H. Huang, Jeffrey Pennington, Andrew Y. Ng, and Christopher D. Manning. Dynamic pooling and unfolding recursive autoencoders for paraphrase detection. In Advances in Neural Information Processing Systems, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Socher%2C%20Richard%20Huang%2C%20Eric%20H.%20Pennington%2C%20Jeffrey%20Ng%2C%20Andrew%20Y.%20Dynamic%20pooling%20and%20unfolding%20recursive%20autoencoders%20for%20paraphrase%20detection%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Socher%2C%20Richard%20Huang%2C%20Eric%20H.%20Pennington%2C%20Jeffrey%20Ng%2C%20Andrew%20Y.%20Dynamic%20pooling%20and%20unfolding%20recursive%20autoencoders%20for%20paraphrase%20detection%202011"
+        },
+        {
+            "id": "Subramanian_et+al_2018_a",
+            "entry": "Sandeep Subramanian, Adam Trischler, Yoshua Bengio, and Christopher J Pal. Learning general purpose distributed sentence representations via large scale multi-task learning. arXiv preprint arXiv:1804.00079, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00079"
+        },
+        {
+            "id": "Sutskever_et+al_2013_a",
+            "entry": "Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In International conference on machine learning, pp. 1139\u20131147, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013"
+        },
+        {
+            "id": "Tong_et+al_2007_a",
+            "entry": "Matthew H Tong, Adam D Bickett, Eric M Christiansen, and Garrison W Cottrell. Learning grammatical structure with echo state networks. Neural networks, 20(3):424\u2013432, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tong%2C%20Matthew%20H.%20Bickett%2C%20Adam%20D.%20Christiansen%2C%20Eric%20M.%20Cottrell%2C%20Garrison%20W.%20Learning%20grammatical%20structure%20with%20echo%20state%20networks%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tong%2C%20Matthew%20H.%20Bickett%2C%20Adam%20D.%20Christiansen%2C%20Eric%20M.%20Cottrell%2C%20Garrison%20W.%20Learning%20grammatical%20structure%20with%20echo%20state%20networks%202007"
+        },
+        {
+            "id": "Ulyanov_et+al_2017_a",
+            "entry": "Dmitry Ulyanov, Andrea Vedaldi, and Victor Lempitsky. Deep image prior. arXiv preprint arXiv:1711.10925, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.10925"
+        },
+        {
+            "id": "Vempala_2005_a",
+            "entry": "Santosh S Vempala. The random projection method. American Mathematical Society, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vempala%2C%20Santosh%20S.%20The%20random%20projection%20method%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vempala%2C%20Santosh%20S.%20The%20random%20projection%20method%202005"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Alex Wang, Amapreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel R Bowman. Glue: A multi-task benchmark and analysis platform for natural language understanding. arXiv preprint arXiv:1804.07461, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.07461"
+        },
+        {
+            "id": "Wang_2012_a",
+            "entry": "Sida Wang and Christopher D Manning. Baselines and bigrams: Simple, good sentiment and topic classification. In Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers-Volume 2, pp. 90\u201394. Association for Computational Linguistics, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Sida%20Manning%2C%20Christopher%20D.%20Baselines%20and%20bigrams%3A%20Simple%2C%20good%20sentiment%20and%20topic%20classification%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Sida%20Manning%2C%20Christopher%20D.%20Baselines%20and%20bigrams%3A%20Simple%2C%20good%20sentiment%20and%20topic%20classification%202012"
+        },
+        {
+            "id": "Wieting_2017_a",
+            "entry": "John Wieting and Kevin Gimpel. Pushing the limits of paraphrastic sentence embeddings with millions of machine translations. arXiv preprint arXiv:1711.05732, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.05732"
+        },
+        {
+            "id": "Wieting_et+al_2015_a",
+            "entry": "John Wieting, Mohit Bansal, Kevin Gimpel, and Karen Livescu. Towards universal paraphrastic sentence embeddings. arXiv preprint arXiv:1511.08198, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.08198"
+        },
+        {
+            "id": "Williams_et+al_2018_a",
+            "entry": "Adina Williams, Nikita Nangia, and Samuel Bowman. A broad-coverage challenge corpus for sentence understanding through inference. In Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers), pp. 1112\u20131122, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Adina%20Nangia%2C%20Nikita%20Bowman%2C%20Samuel%20A%20broad-coverage%20challenge%20corpus%20for%20sentence%20understanding%20through%20inference%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Adina%20Nangia%2C%20Nikita%20Bowman%2C%20Samuel%20A%20broad-coverage%20challenge%20corpus%20for%20sentence%20understanding%20through%20inference%202018"
+        },
+        {
+            "id": "Zhu_et+al_2018_a",
+            "entry": "Xunjie Zhu, Tingfeng Li, and Gerard Melo. Exploring semantic properties of sentence embeddings. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers), volume 2, pp. 632\u2013637, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Xunjie%20Li%2C%20Tingfeng%20Melo%2C%20Gerard%20Exploring%20semantic%20properties%20of%20sentence%20embeddings%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Xunjie%20Li%2C%20Tingfeng%20Melo%2C%20Gerard%20Exploring%20semantic%20properties%20of%20sentence%20embeddings%202018"
+        },
+        {
+            "id": "For_2014_a",
+            "entry": "For all experiments, we attempt to keep the number of tunable hyperparameters to a minimum. By being judicious with the number of tuning experiments and averaging over different seeds, we provide strong evidence that these architectures are robust and can be competitive with trained (nonrandom) sentence embedding models. In all experiments, we tune the type of pooling to use. Different tasks benefit from different types of pooling, and while many pooling mechanisms have been proposed in the literature, we just tune over the most commonly used ones: mean pooling and max pooling. We use the publicly available 300-dimensional GloVe embeddings (Pennington et al., 2014) trained on Common Crawl for all experiments. All words that are not in the vocabulary for GloVe are assigned a vector of zeros.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20all%20experiments%20we%20attempt%20to%20keep%20the%20number%20of%20tunable%20hyperparameters%20to%20a%20minimum%20By%20being%20judicious%20with%20the%20number%20of%20tuning%20experiments%20and%20averaging%20over%20different%20seeds%20we%20provide%20strong%20evidence%20that%20these%20architectures%20are%20robust%20and%20can%20be%20competitive%20with%20trained%20nonrandom%20sentence%20embedding%20models%20In%20all%20experiments%20we%20tune%20the%20type%20of%20pooling%20to%20use%20Different%20tasks%20benefit%20from%20different%20types%20of%20pooling%20and%20while%20many%20pooling%20mechanisms%20have%20been%20proposed%20in%20the%20literature%20we%20just%20tune%20over%20the%20most%20commonly%20used%20ones%20mean%20pooling%20and%20max%20pooling%20We%20use%20the%20publicly%20available%20300dimensional%20GloVe%20embeddings%20Pennington%20et%20al%202014%20trained%20on%20Common%20Crawl%20for%20all%20experiments%20All%20words%20that%20are%20not%20in%20the%20vocabulary%20for%20GloVe%20are%20assigned%20a%20vector%20of%20zeros",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20all%20experiments%20we%20attempt%20to%20keep%20the%20number%20of%20tunable%20hyperparameters%20to%20a%20minimum%20By%20being%20judicious%20with%20the%20number%20of%20tuning%20experiments%20and%20averaging%20over%20different%20seeds%20we%20provide%20strong%20evidence%20that%20these%20architectures%20are%20robust%20and%20can%20be%20competitive%20with%20trained%20nonrandom%20sentence%20embedding%20models%20In%20all%20experiments%20we%20tune%20the%20type%20of%20pooling%20to%20use%20Different%20tasks%20benefit%20from%20different%20types%20of%20pooling%20and%20while%20many%20pooling%20mechanisms%20have%20been%20proposed%20in%20the%20literature%20we%20just%20tune%20over%20the%20most%20commonly%20used%20ones%20mean%20pooling%20and%20max%20pooling%20We%20use%20the%20publicly%20available%20300dimensional%20GloVe%20embeddings%20Pennington%20et%20al%202014%20trained%20on%20Common%20Crawl%20for%20all%20experiments%20All%20words%20that%20are%20not%20in%20the%20vocabulary%20for%20GloVe%20are%20assigned%20a%20vector%20of%20zeros"
+        },
+        {
+            "id": "We_2014_b",
+            "entry": "We use the default SentEval settings, which are to train with a logistic regression classifier, use a batch size of 64, a maximum number of epochs of 200 with early stopping,8 no dropout, and use Adam (Kingma & Ba, 2014) for optimization with a learning rate of 0.001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20use%20the%20default%20SentEval%20settings%20which%20are%20to%20train%20with%20a%20logistic%20regression%20classifier%20use%20a%20batch%20size%20of%2064%20a%20maximum%20number%20of%20epochs%20of%20200%20with%20early%20stopping8%20no%20dropout%20and%20use%20Adam%20Kingma%20%20Ba%202014%20for%20optimization%20with%20a%20learning%20rate%20of%200001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20use%20the%20default%20SentEval%20settings%20which%20are%20to%20train%20with%20a%20logistic%20regression%20classifier%20use%20a%20batch%20size%20of%2064%20a%20maximum%20number%20of%20epochs%20of%20200%20with%20early%20stopping8%20no%20dropout%20and%20use%20Adam%20Kingma%20%20Ba%202014%20for%20optimization%20with%20a%20learning%20rate%20of%200001"
+        }
+    ]
+}

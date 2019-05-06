@@ -1,0 +1,387 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "LEARNING PROTEIN STRUCTURE WITH A",
+        "author": "DIFFERENTIABLE SIMULATOR",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Byg3y3C9Km"
+        },
+        "abstract": "The Boltzmann distribution is a natural model for many systems, from brains to materials and biomolecules, but is often of limited utility for fitting data because Monte Carlo algorithms are unable to simulate it in available time. This gap between the expressive capabilities and sampling practicalities of energy-based models is exemplified by the protein folding problem, since energy landscapes underlie contemporary knowledge of protein biophysics but computer simulations are challenged to fold all but the smallest proteins from first principles. In this work we aim to bridge the gap between the expressive capacity of energy functions and the practical capabilities of their simulators by using an unrolled Monte Carlo simulation as a model for data. We compose a neural energy function with a novel and efficient simulator based on Langevin dynamics to build an end-toend-differentiable model of atomic protein structure given amino acid sequence information. We introduce techniques for stabilizing backpropagation under long roll-outs and demonstrate the model\u2019s capacity to make multimodal predictions and to, in some cases, generalize to unobserved protein fold types when trained on a large corpus of protein structures."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "boltzmann distribution",
+            "url": "https://en.wikipedia.org/wiki/boltzmann_distribution"
+        },
+        {
+            "term": "roll out",
+            "url": "https://en.wikipedia.org/wiki/Roll_Out"
+        },
+        {
+            "term": "energy function",
+            "url": "https://en.wikipedia.org/wiki/energy_function"
+        },
+        {
+            "term": "boltzmann machine",
+            "url": "https://en.wikipedia.org/wiki/boltzmann_machine"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        },
+        {
+            "term": "protein structure prediction",
+            "url": "https://en.wikipedia.org/wiki/protein_structure_prediction"
+        }
+    ],
+    "abbreviations": {
+        "C-R": "common monomer structure [-(N-H)-"
+    },
+    "highlights": [
+        "Such as cells in a tissue or atoms in a protein, organize into complex structures from simple underlying interactions",
+        "The Boltzmann distribution is a foundational model for relating local interactions to system behavior, but can be difficult to fit to data",
+        "We show how an energy function provides a natural framework to integrate both kinds of constraints, which in turn is important for achieving sample-efficient structural generalization",
+        "Overview NEMO is an end-to-end differentiable model of protein structure X conditioned on sequence information s consisting of three components (Figure 1): (i) a neural energy function U\u2713[x; s] for coarse grained structure x given sequence, an unrolled simulator that generates approximate samples from U via internal coordinate Langevin dynamics (\u00a7 2.3), and an imputation network that generates an atomic model X from the final coarse-grained sample x(T ) (\u00a7 2.4)",
+        "We described a model for protein structure given sequence information that combines a coarse-grained neural energy function and an unrolled simulation into an end-to-end differentiable model",
+        "To realize this idea at the scale of real proteins, we introduced an efficient simulator for Langevin dynamics in transformed coordinate systems and stabilization techniques for backpropagating through long simulator roll-outs"
+    ],
+    "key_statements": [
+        "Such as cells in a tissue or atoms in a protein, organize into complex structures from simple underlying interactions",
+        "The Boltzmann distribution is a foundational model for relating local interactions to system behavior, but can be difficult to fit to data",
+        "We show how an energy function provides a natural framework to integrate both kinds of constraints, which in turn is important for achieving sample-efficient structural generalization",
+        "Overview NEMO is an end-to-end differentiable model of protein structure X conditioned on sequence information s consisting of three components (Figure 1): (i) a neural energy function U\u2713[x; s] for coarse grained structure x given sequence, an unrolled simulator that generates approximate samples from U via internal coordinate Langevin dynamics (\u00a7 2.3), and an imputation network that generates an atomic model X from the final coarse-grained sample x(T ) (\u00a7 2.4)",
+        "Our approach is compatible with any differentiable energy function U [x; s], though we focus on a decomposition",
+        "Empirical Risk In addition to the likelihood loss, which backpropagates through the energy function but not the whole simulation, we developed an empirical risk loss composing several measures of protein model quality",
+        "We found that the long roll-outs of our simulator were prone to chaotic dynamics and exploding gradients, as seen in other work (<a class=\"ref-link\" id=\"cMaclaurin_et+al_2015_a\" href=\"#rMaclaurin_et+al_2015_a\">Maclaurin et al, 2015</a>; <a class=\"ref-link\" id=\"cParmas_et+al_2018_a\" href=\"#rParmas_et+al_2018_a\">Parmas et al, 2018</a>)",
+        "We developed two complimentary techniques that regularize against chaotic simulator dynamics while still facilitating learning when they arise",
+        "This work presents a novel approach for protein structure prediction that combines the inductive bias of simulators with the speed of directed models",
+        "We described a model for protein structure given sequence information that combines a coarse-grained neural energy function and an unrolled simulation into an end-to-end differentiable model",
+        "To realize this idea at the scale of real proteins, we introduced an efficient simulator for Langevin dynamics in transformed coordinate systems and stabilization techniques for backpropagating through long simulator roll-outs"
+    ],
+    "summary": [
+        "Such as cells in a tissue or atoms in a protein, organize into complex structures from simple underlying interactions.",
+        "We explore a potential solution of directly training an unrolled simulator of an energy function as a model for data.",
+        "Leveraging this idea, we construct an end-to-end differentiable model of protein structure that is trained by backpropagtion through folding (Figure 1).",
+        "NEMO (Neural energy modeling and optimization) can learn at scale to generate 3D protein structures consisting of hundreds of points directly from sequence information.",
+        "Neural energy simulator model for protein structure that composes a deep energy function, unrolled Langevin dynamics, and an atomic imputation network for an end-to-end differentiable model of protein structure given sequence information",
+        "Structured Prediction Energy Networks (SPENs) with unrolled optimization (<a class=\"ref-link\" id=\"cBelanger_et+al_2017_a\" href=\"#rBelanger_et+al_2017_a\">Belanger et al, 2017</a>) are a highly similar approach to ours, differing in terms of the use of optimization rather than sampling.",
+        "Overview NEMO is an end-to-end differentiable model of protein structure X conditioned on sequence information s consisting of three components (Figure 1): (i) a neural energy function U\u2713[x; s] for coarse grained structure x given sequence, an unrolled simulator that generates approximate samples from U via internal coordinate Langevin dynamics (\u00a7 2.3), and an imputation network that generates an atomic model X from the final coarse-grained sample x(T ) (\u00a7 2.4).",
+        "The differentiable simulator generates an initial coarse-grained structure (1-position-peramino-acid) with the loss function targeted to the midpoint of the C\u21b5 carbon and the side chain center of mass.",
+        "We design the energy function to be invariant to rigid body motions) by leveraging a set of invariant base features (Figure 2C) which are: 2Since our representation x is coarse-grained at one point per position, these are virtual bonds.",
+        "@x @z t t + \u270f; end z(t); Figure 3: A transform integrator simulates Langevin dynamics in a more favorable coordinate system directly in terms of the untransformed state variables (e.g. Cartesian x).",
+        "This work presents a novel approach for protein structure prediction that combines the inductive bias of simulators with the speed of directed models.",
+        "A major advantage of the approach is that model sampling times can be considerably faster than conventional approaches to protein structure prediction (Table 4).",
+        "We described a model for protein structure given sequence information that combines a coarse-grained neural energy function and an unrolled simulation into an end-to-end differentiable model.",
+        "To realize this idea at the scale of real proteins, we introduced an efficient simulator for Langevin dynamics in transformed coordinate systems and stabilization techniques for backpropagating through long simulator roll-outs.",
+        "We find that that model is able to predict the structures of protein molecules with hundreds of atoms while capturing structural uncertainty, and that the model can structurally generalize to distant fold classifications more effectively than a strong baseline"
+    ],
+    "headline": "We introduce techniques for stabilizing backpropagation under long roll-outs and demonstrate the model\u2019s capacity to make multimodal predictions and to, in some cases, generalize to unobserved protein fold types when trained on a large corpus of protein structures",
+    "reference_links": [
+        {
+            "id": "Ackley_et+al_1985_a",
+            "entry": "David H Ackley, Geoffrey E Hinton, and Terrence J Sejnowski. A learning algorithm for boltzmann machines. Cognitive science, 9(1):147\u2013169, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ackley%2C%20David%20H.%20Hinton%2C%20Geoffrey%20E.%20Sejnowski%2C%20Terrence%20J.%20A%20learning%20algorithm%20for%20boltzmann%20machines%201985",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ackley%2C%20David%20H.%20Hinton%2C%20Geoffrey%20E.%20Sejnowski%2C%20Terrence%20J.%20A%20learning%20algorithm%20for%20boltzmann%20machines%201985"
+        },
+        {
+            "id": "Alquraishi_2018_a",
+            "entry": "Mohammed AlQuraishi. End-to-end differentiable learning of protein structure. bioRxiv, pp. 265231, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=AlQuraishi%2C%20Mohammed%20End-to-end%20differentiable%20learning%20of%20protein%20structure.%20bioRxiv%202018"
+        },
+        {
+            "id": "Amos_2017_a",
+            "entry": "Brandon Amos and J Zico Kolter. Optnet: Differentiable optimization as a layer in neural networks. In International Conference on Machine Learning, pp. 136\u2013145, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amos%2C%20Brandon%20Kolter%2C%20J.Zico%20Optnet%3A%20Differentiable%20optimization%20as%20a%20layer%20in%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amos%2C%20Brandon%20Kolter%2C%20J.Zico%20Optnet%3A%20Differentiable%20optimization%20as%20a%20layer%20in%20neural%20networks%202017"
+        },
+        {
+            "id": "Anand_2018_a",
+            "entry": "Namrata Anand and Possu Huang. Generative modeling for protein structures. In Advances in Neural Information Processing Systems, pp. 7505\u20137516, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anand%2C%20Namrata%20Huang%2C%20Possu%20Generative%20modeling%20for%20protein%20structures%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anand%2C%20Namrata%20Huang%2C%20Possu%20Generative%20modeling%20for%20protein%20structures%202018"
+        },
+        {
+            "id": "Apweiler_et+al_2004_a",
+            "entry": "R Apweiler, A Bairoch, CH Wu, WC Barker, B Boeckmann, S Ferro, E Gasteiger, H Huang, R Lopez, M Magrane, et al. Uniprot: the universal protein knowledgebase. Nucleic acids research, 32(Database issue): D115\u20139, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Apweiler%2C%20R.%20Bairoch%2C%20A.%20Wu%2C%20C.H.%20Barker%2C%20W.C.%20Uniprot%3A%20the%20universal%20protein%20knowledgebase%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Apweiler%2C%20R.%20Bairoch%2C%20A.%20Wu%2C%20C.H.%20Barker%2C%20W.C.%20Uniprot%3A%20the%20universal%20protein%20knowledgebase%202004"
+        },
+        {
+            "id": "Belanger_2016_a",
+            "entry": "David Belanger and Andrew McCallum. Structured prediction energy networks. In International Conference on Machine Learning, pp. 983\u2013992, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belanger%2C%20David%20McCallum%2C%20Andrew%20Structured%20prediction%20energy%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belanger%2C%20David%20McCallum%2C%20Andrew%20Structured%20prediction%20energy%20networks%202016"
+        },
+        {
+            "id": "Belanger_et+al_2017_a",
+            "entry": "David Belanger, Bishan Yang, and Andrew McCallum. End-to-end learning for structured prediction energy networks. In International Conference on Machine Learning, pp. 429\u2013439, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Belanger%2C%20David%20Yang%2C%20Bishan%20McCallum%2C%20Andrew%20End-to-end%20learning%20for%20structured%20prediction%20energy%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Belanger%2C%20David%20Yang%2C%20Bishan%20McCallum%2C%20Andrew%20End-to-end%20learning%20for%20structured%20prediction%20energy%20networks%202017"
+        },
+        {
+            "id": "Berman_et+al_2000_a",
+            "entry": "Helen M Berman, John Westbrook, Zukang Feng, Gary Gilliland, Talapady N Bhat, Helge Weissig, Ilya N Shindyalov, and Philip E Bourne. The protein data bank. Nucleic acids research, 28(1):235\u2013242, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Berman%2C%20Helen%20M.%20Westbrook%2C%20John%20Feng%2C%20Zukang%20Gilliland%2C%20Gary%20The%20protein%20data%20bank%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Berman%2C%20Helen%20M.%20Westbrook%2C%20John%20Feng%2C%20Zukang%20Gilliland%2C%20Gary%20The%20protein%20data%20bank%202000"
+        },
+        {
+            "id": "Chen_et+al_0000_a",
+            "entry": "Changyou Chen, Chunyuan Li, Liquan Chen, Wenlin Wang, Yunchen Pu, and Lawrence Carin Duke. Continuoustime flows for efficient inference and density estimation. In International Conference on Machine Learning, pp. 823\u2013832, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Changyou%20Li%2C%20Chunyuan%20Chen%2C%20Liquan%20Wang%2C%20Wenlin%20Continuoustime%20flows%20for%20efficient%20inference%20and%20density%20estimation",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Changyou%20Li%2C%20Chunyuan%20Chen%2C%20Liquan%20Wang%2C%20Wenlin%20Continuoustime%20flows%20for%20efficient%20inference%20and%20density%20estimation"
+        },
+        {
+            "id": "Chen_et+al_0000_b",
+            "entry": "Minmin Chen, Jeffrey Pennington, and Samuel Schoenholz. Dynamical isometry and a mean field theory of rnns: Gating enables signal propagation in recurrent neural networks. In International Conference on Machine Learning, pp. 872\u2013881, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Minmin%20Pennington%2C%20Jeffrey%20Schoenholz%2C%20Samuel%20Dynamical%20isometry%20and%20a%20mean%20field%20theory%20of%20rnns%3A%20Gating%20enables%20signal%20propagation%20in%20recurrent%20neural%20networks",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Minmin%20Pennington%2C%20Jeffrey%20Schoenholz%2C%20Samuel%20Dynamical%20isometry%20and%20a%20mean%20field%20theory%20of%20rnns%3A%20Gating%20enables%20signal%20propagation%20in%20recurrent%20neural%20networks"
+        },
+        {
+            "id": "Dai_et+al_2017_a",
+            "entry": "Zihang Dai, Amjad Almahairi, Philip Bachman, Eduard Hovy, and Aaron Courville. Calibrating energy-based generative adversarial networks. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Zihang%20Almahairi%2C%20Amjad%20Bachman%2C%20Philip%20Hovy%2C%20Eduard%20Calibrating%20energy-based%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Zihang%20Almahairi%2C%20Amjad%20Bachman%2C%20Philip%20Hovy%2C%20Eduard%20Calibrating%20energy-based%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Dill_et+al_2017_a",
+            "entry": "Ken Dill, Robert L Jernigan, and Ivet Bahar. Protein Actions: Principles and Modeling. Garland Science, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dill%2C%20Ken%20Jernigan%2C%20Robert%20L.%20Bahar%2C%20Ivet%20Protein%20Actions%3A%20Principles%20and%20Modeling%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dill%2C%20Ken%20Jernigan%2C%20Robert%20L.%20Bahar%2C%20Ivet%20Protein%20Actions%3A%20Principles%20and%20Modeling%202017"
+        },
+        {
+            "id": "Eddy_2011_a",
+            "entry": "Sean R Eddy. Accelerated profile hmm searches. PLoS computational biology, 7(10):e1002195, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eddy%2C%20Sean%20R.%20Accelerated%20profile%20hmm%20searches%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eddy%2C%20Sean%20R.%20Accelerated%20profile%20hmm%20searches%202011"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S Schoenholz, Patrick F Riley, Oriol Vinyals, and George E Dahl. Neural message passing for quantum chemistry. arXiv preprint arXiv:1704.01212, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.01212"
+        },
+        {
+            "id": "Ginalski_et+al_2003_a",
+            "entry": "Krzysztof Ginalski, Arne Elofsson, Daniel Fischer, and Leszek Rychlewski. 3d-jury: a simple approach to improve protein structure predictions. Bioinformatics, 19(8):1015\u20131018, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ginalski%2C%20Krzysztof%20Elofsson%2C%20Arne%20Fischer%2C%20Daniel%20Rychlewski%2C%20Leszek%203d-jury%3A%20a%20simple%20approach%20to%20improve%20protein%20structure%20predictions%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ginalski%2C%20Krzysztof%20Elofsson%2C%20Arne%20Fischer%2C%20Daniel%20Rychlewski%2C%20Leszek%203d-jury%3A%20a%20simple%20approach%20to%20improve%20protein%20structure%20predictions%202003"
+        },
+        {
+            "id": "Goodfellow_et+al_2016_a",
+            "entry": "Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Deep Learning. MIT Press, 2016. http://www.deeplearningbook.org.",
+            "url": "http://www.deeplearningbook.org"
+        },
+        {
+            "id": "Henaff_et+al_2016_a",
+            "entry": "Mikael Henaff, Arthur Szlam, and Yann LeCun. Recurrent orthogonal networks and long-memory tasks. In International Conference on Machine Learning, pp. 2034\u20132042, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Henaff%2C%20Mikael%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Recurrent%20orthogonal%20networks%20and%20long-memory%20tasks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Henaff%2C%20Mikael%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Recurrent%20orthogonal%20networks%20and%20long-memory%20tasks%202016"
+        },
+        {
+            "id": "Ioffe_2017_a",
+            "entry": "Sergey Ioffe. Batch renormalization: Towards reducing minibatch dependence in batch-normalized models. In Advances in Neural Information Processing Systems, pp. 1945\u20131953, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Batch%20renormalization%3A%20Towards%20reducing%20minibatch%20dependence%20in%20batch-normalized%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Batch%20renormalization%3A%20Towards%20reducing%20minibatch%20dependence%20in%20batch-normalized%20models%202017"
+        },
+        {
+            "id": "Jumper_et+al_2018_a",
+            "entry": "John M Jumper, Nabil F Faruk, Karl F Freed, and Tobin R Sosnick. Trajectory-based training enables protein simulations with accurate folding and boltzmann ensembles in cpu-hours. PLoS computational biology, 14 (12):e1006578, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jumper%2C%20John%20M.%20Faruk%2C%20Nabil%20F.%20Freed%2C%20Karl%20F.%20Sosnick%2C%20Tobin%20R.%20Trajectory-based%20training%20enables%20protein%20simulations%20with%20accurate%20folding%20and%20boltzmann%20ensembles%20in%20cpu-hours%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jumper%2C%20John%20M.%20Faruk%2C%20Nabil%20F.%20Freed%2C%20Karl%20F.%20Sosnick%2C%20Tobin%20R.%20Trajectory-based%20training%20enables%20protein%20simulations%20with%20accurate%20folding%20and%20boltzmann%20ensembles%20in%20cpu-hours%202018"
+        },
+        {
+            "id": "Kabsch_1983_a",
+            "entry": "Wolfgang Kabsch and Christian Sander. Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features. Biopolymers: Original Research on Biomolecules, 22(12): 2577\u20132637, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kabsch%2C%20Wolfgang%20Sander%2C%20Christian%20Dictionary%20of%20protein%20secondary%20structure%3A%20pattern%20recognition%20of%20hydrogen-bonded%20and%20geometrical%20features%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kabsch%2C%20Wolfgang%20Sander%2C%20Christian%20Dictionary%20of%20protein%20secondary%20structure%3A%20pattern%20recognition%20of%20hydrogen-bonded%20and%20geometrical%20features%201983"
+        },
+        {
+            "id": "Taesup_2016_a",
+            "entry": "Taesup Kim and Yoshua Bengio. Deep directed generative models with energy-based probability estimation. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taesup%20Kim%20and%20Yoshua%20Bengio%20Deep%20directed%20generative%20models%20with%20energybased%20probability%20estimation%20In%20International%20Conference%20on%20Learning%20Representations%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taesup%20Kim%20and%20Yoshua%20Bengio%20Deep%20directed%20generative%20models%20with%20energybased%20probability%20estimation%20In%20International%20Conference%20on%20Learning%20Representations%202016"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kmiecik_et+al_2016_a",
+            "entry": "Sebastian Kmiecik, Dominik Gront, Michal Kolinski, Lukasz Wieteska, Aleksandra Elzbieta Dawid, and Andrzej Kolinski. Coarse-grained protein models and their applications. Chemical Reviews, 116(14):7898\u20137936, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kmiecik%2C%20Sebastian%20Gront%2C%20Dominik%20Kolinski%2C%20Michal%20Wieteska%2C%20Lukasz%20Coarse-grained%20protein%20models%20and%20their%20applications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kmiecik%2C%20Sebastian%20Gront%2C%20Dominik%20Kolinski%2C%20Michal%20Wieteska%2C%20Lukasz%20Coarse-grained%20protein%20models%20and%20their%20applications%202016"
+        },
+        {
+            "id": "Kolinski_et+al_1998_a",
+            "entry": "Andrzej Kolinski, Lukasz Jaroszewski, Piotr Rotkiewicz, and Jeffrey Skolnick. An efficient monte carlo model of protein chains. modeling the short-range correlations between side group centers of mass. The Journal of Physical Chemistry B, 102(23):4628\u20134637, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kolinski%2C%20Andrzej%20Jaroszewski%2C%20Lukasz%20Rotkiewicz%2C%20Piotr%20Skolnick%2C%20Jeffrey%20An%20efficient%20monte%20carlo%20model%20of%20protein%20chains.%20modeling%20the%20short-range%20correlations%20between%20side%20group%20centers%20of%20mass%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kolinski%2C%20Andrzej%20Jaroszewski%2C%20Lukasz%20Rotkiewicz%2C%20Piotr%20Skolnick%2C%20Jeffrey%20An%20efficient%20monte%20carlo%20model%20of%20protein%20chains.%20modeling%20the%20short-range%20correlations%20between%20side%20group%20centers%20of%20mass%201998"
+        },
+        {
+            "id": "Pawe_2017_a",
+            "entry": "Pawe\u0142 Krupa, Anna Ha\u0142abis, Wioletta Zmudzinska, Stanis\u0142aw O\u0142dziej, Harold A Scheraga, and Adam Liwo. Maximum likelihood calibration of the unres force field for simulation of protein structure and dynamics. Journal of chemical information and modeling, 57(9):2364\u20132377, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pawe%C5%82%20Krupa%20Anna%20Ha%C5%82abis%20Wioletta%20Zmudzinska%20Stanis%C5%82aw%20O%C5%82dziej%20Harold%20A%20Scheraga%20and%20Adam%20Liwo%20Maximum%20likelihood%20calibration%20of%20the%20unres%20force%20field%20for%20simulation%20of%20protein%20structure%20and%20dynamics%20Journal%20of%20chemical%20information%20and%20modeling%2057923642377%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pawe%C5%82%20Krupa%20Anna%20Ha%C5%82abis%20Wioletta%20Zmudzinska%20Stanis%C5%82aw%20O%C5%82dziej%20Harold%20A%20Scheraga%20and%20Adam%20Liwo%20Maximum%20likelihood%20calibration%20of%20the%20unres%20force%20field%20for%20simulation%20of%20protein%20structure%20and%20dynamics%20Journal%20of%20chemical%20information%20and%20modeling%2057923642377%202017"
+        },
+        {
+            "id": "Lecun_et+al_2006_a",
+            "entry": "Yann LeCun, Sumit Chopra, Raia Hadsell, M Ranzato, and F Huang. A tutorial on energy-based learning. Predicting structured data, 1(0), 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Chopra%2C%20Sumit%20Raia%20Hadsell%2C%20M.Ranzato%20Huang%2C%20F.%20A%20tutorial%20on%20energy-based%20learning%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Chopra%2C%20Sumit%20Raia%20Hadsell%2C%20M.Ranzato%20Huang%2C%20F.%20A%20tutorial%20on%20energy-based%20learning%202006"
+        },
+        {
+            "id": "Levy_et+al_2018_a",
+            "entry": "Daniel Levy, Matthew D Hoffman, and Jascha Sohl-Dickstein. Generalizing hamiltonian monte carlo with neural networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levy%2C%20Daniel%20Hoffman%2C%20Matthew%20D.%20Sohl-Dickstein%2C%20Jascha%20Generalizing%20hamiltonian%20monte%20carlo%20with%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levy%2C%20Daniel%20Hoffman%2C%20Matthew%20D.%20Sohl-Dickstein%2C%20Jascha%20Generalizing%20hamiltonian%20monte%20carlo%20with%20neural%20networks%202018"
+        },
+        {
+            "id": "Lu_et+al_2017_a",
+            "entry": "Xiaoyu Lu, Valerio Perrone, Leonard Hasenclever, Yee Whye Teh, and Sebastian Vollmer. Relativistic monte carlo. In Artificial Intelligence and Statistics, pp. 1236\u20131245, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiaoyu%20Lu%20Valerio%20Perrone%20Leonard%20Hasenclever%20Yee%20Whye%20Teh%20and%20Sebastian%20Vollmer%20Relativistic%20monte%20carlo%20In%20Artificial%20Intelligence%20and%20Statistics%20pp%2012361245%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiaoyu%20Lu%20Valerio%20Perrone%20Leonard%20Hasenclever%20Yee%20Whye%20Teh%20and%20Sebastian%20Vollmer%20Relativistic%20monte%20carlo%20In%20Artificial%20Intelligence%20and%20Statistics%20pp%2012361245%202017"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan Adams. Gradient-based hyperparameter optimization through reversible learning. In International Conference on Machine Learning, pp. 2113\u20132122, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015"
+        },
+        {
+            "id": "Marks_et+al_2012_a",
+            "entry": "Debora S Marks, Thomas A Hopf, and Chris Sander. Protein structure prediction from sequence variation. Nature biotechnology, 30(11):1072, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marks%2C%20Debora%20S.%20Hopf%2C%20Thomas%20A.%20Sander%2C%20Chris%20Protein%20structure%20prediction%20from%20sequence%20variation%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marks%2C%20Debora%20S.%20Hopf%2C%20Thomas%20A.%20Sander%2C%20Chris%20Protein%20structure%20prediction%20from%20sequence%20variation%202012"
+        },
+        {
+            "id": "Mart_et+al_2000_a",
+            "entry": "Marc A Mart\u0131-Renom, Ashley C Stuart, Andras Fiser, Roberto Sanchez, Francisco Melo, and Andrej Sali. Comparative protein structure modeling of genes and genomes. Annual review of biophysics and biomolecular structure, 29(1):291\u2013325, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mart%C4%B1-Renom%2C%20Marc%20A.%20Stuart%2C%20Ashley%20C.%20Fiser%2C%20Andras%20Sanchez%2C%20Roberto%20Comparative%20protein%20structure%20modeling%20of%20genes%20and%20genomes%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mart%C4%B1-Renom%2C%20Marc%20A.%20Stuart%2C%20Ashley%20C.%20Fiser%2C%20Andras%20Sanchez%2C%20Roberto%20Comparative%20protein%20structure%20modeling%20of%20genes%20and%20genomes%202000"
+        },
+        {
+            "id": "Mcguffin_et+al_2000_a",
+            "entry": "Liam J McGuffin, Kevin Bryson, and David T Jones. The psipred protein structure prediction server. Bioinformatics, 16(4):404\u2013405, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McGuffin%2C%20Liam%20J.%20Bryson%2C%20Kevin%20Jones%2C%20David%20T.%20The%20psipred%20protein%20structure%20prediction%20server%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McGuffin%2C%20Liam%20J.%20Bryson%2C%20Kevin%20Jones%2C%20David%20T.%20The%20psipred%20protein%20structure%20prediction%20server%202000"
+        },
+        {
+            "id": "Mohamed_2016_a",
+            "entry": "Shakir Mohamed and Balaji Lakshminarayanan. Learning in implicit generative models. arXiv preprint arXiv:1610.03483, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.03483"
+        },
+        {
+            "id": "Orengo_et+al_1997_a",
+            "entry": "Christine A Orengo, AD Michie, S Jones, David T Jones, MB Swindells, and Janet M Thornton. Cath\u2013a hierarchic classification of protein domain structures. Structure, 5(8):1093\u20131109, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Orengo%2C%20Christine%20A.%20Michie%2C%20A.D.%20Jones%2C%20S.%20Jones%2C%20David%20T.%20Cath%E2%80%93a%20hierarchic%20classification%20of%20protein%20domain%20structures%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Orengo%2C%20Christine%20A.%20Michie%2C%20A.D.%20Jones%2C%20S.%20Jones%2C%20David%20T.%20Cath%E2%80%93a%20hierarchic%20classification%20of%20protein%20domain%20structures%201997"
+        },
+        {
+            "id": "Parmas_et+al_2018_a",
+            "entry": "Paavo Parmas, Carl Edward Rasmussen, Jan Peters, and Kenji Doya. Pipps: Flexible model-based policy search robust to the curse of chaos. In International Conference on Machine Learning, pp. 4062\u20134071, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parmas%2C%20Paavo%20Rasmussen%2C%20Carl%20Edward%20Peters%2C%20Jan%20Doya%2C%20Kenji%20Pipps%3A%20Flexible%20model-based%20policy%20search%20robust%20to%20the%20curse%20of%20chaos%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parmas%2C%20Paavo%20Rasmussen%2C%20Carl%20Edward%20Peters%2C%20Jan%20Doya%2C%20Kenji%20Pipps%3A%20Flexible%20model-based%20policy%20search%20robust%20to%20the%20curse%20of%20chaos%202018"
+        },
+        {
+            "id": "Jerod_et+al_2005_a",
+            "entry": "Jerod Parsons, J Bradley Holmes, J Maurice Rojas, Jerry Tsai, and Charlie EM Strauss. Practical conversion from torsion space to cartesian space for in silico protein synthesis. Journal of computational chemistry, 26 (10):1063\u20131068, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jerod%20Parsons%2C%20J.Bradley%20Holmes%20Rojas%2C%20J.Maurice%20Tsai%2C%20Jerry%20Strauss%2C%20Charlie%20E.M.%20Practical%20conversion%20from%20torsion%20space%20to%20cartesian%20space%20for%20in%20silico%20protein%20synthesis%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jerod%20Parsons%2C%20J.Bradley%20Holmes%20Rojas%2C%20J.Maurice%20Tsai%2C%20Jerry%20Strauss%2C%20Charlie%20E.M.%20Practical%20conversion%20from%20torsion%20space%20to%20cartesian%20space%20for%20in%20silico%20protein%20synthesis%202005"
+        },
+        {
+            "id": "Pascanu_et+al_2013_a",
+            "entry": "Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. On the difficulty of training recurrent neural networks. In International Conference on Machine Learning, pp. 1310\u20131318, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Remmert_et+al_2012_a",
+            "entry": "Michael Remmert, Andreas Biegert, Andreas Hauser, and Johannes Soding. Hhblits: lightning-fast iterative protein sequence searching by hmm-hmm alignment. Nature methods, 9(2):173, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Remmert%2C%20Michael%20Biegert%2C%20Andreas%20Hauser%2C%20Andreas%20Soding%2C%20Johannes%20Hhblits%3A%20lightning-fast%20iterative%20protein%20sequence%20searching%20by%20hmm-hmm%20alignment%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Remmert%2C%20Michael%20Biegert%2C%20Andreas%20Hauser%2C%20Andreas%20Soding%2C%20Johannes%20Hhblits%3A%20lightning-fast%20iterative%20protein%20sequence%20searching%20by%20hmm-hmm%20alignment%202012"
+        },
+        {
+            "id": "Rost_1993_a",
+            "entry": "Burkhard Rost and Chris Sander. Prediction of protein secondary structure at better than 70% accuracy. Journal of molecular biology, 232(2):584\u2013599, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rost%2C%20Burkhard%20Sander%2C%20Chris%20Prediction%20of%20protein%20secondary%20structure%20at%20better%20than%2070%25%20accuracy%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rost%2C%20Burkhard%20Sander%2C%20Chris%20Prediction%20of%20protein%20secondary%20structure%20at%20better%20than%2070%25%20accuracy%201993"
+        },
+        {
+            "id": "Salakhutdinov_2010_a",
+            "entry": "Ruslan Salakhutdinov and Hugo Larochelle. Efficient learning of deep boltzmann machines. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 693\u2013700, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salakhutdinov%2C%20Ruslan%20Larochelle%2C%20Hugo%20Efficient%20learning%20of%20deep%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salakhutdinov%2C%20Ruslan%20Larochelle%2C%20Hugo%20Efficient%20learning%20of%20deep%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Salimans_et+al_2015_a",
+            "entry": "Tim Salimans, Diederik Kingma, and Max Welling. Markov chain monte carlo and variational inference: Bridging the gap. In International Conference on Machine Learning, pp. 1218\u20131226, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20Welling%2C%20Max%20Markov%20chain%20monte%20carlo%20and%20variational%20inference%3A%20Bridging%20the%20gap%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20Welling%2C%20Max%20Markov%20chain%20monte%20carlo%20and%20variational%20inference%3A%20Bridging%20the%20gap%202015"
+        },
+        {
+            "id": "Siew_et+al_2000_a",
+            "entry": "Naomi Siew, Arne Elofsson, Leszek Rychlewski, and Daniel Fischer. Maxsub: an automated measure for the assessment of protein structure prediction quality. Bioinformatics, 16(9):776\u2013785, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Siew%2C%20Naomi%20Elofsson%2C%20Arne%20Rychlewski%2C%20Leszek%20Fischer%2C%20Daniel%20Maxsub%3A%20an%20automated%20measure%20for%20the%20assessment%20of%20protein%20structure%20prediction%20quality%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Siew%2C%20Naomi%20Elofsson%2C%20Arne%20Rychlewski%2C%20Leszek%20Fischer%2C%20Daniel%20Maxsub%3A%20an%20automated%20measure%20for%20the%20assessment%20of%20protein%20structure%20prediction%20quality%202000"
+        },
+        {
+            "id": "Song_et+al_2017_a",
+            "entry": "Jiaming Song, Shengjia Zhao, and Stefano Ermon. A-nice-mc: Adversarial training for mcmc. In Advances in Neural Information Processing Systems, pp. 5140\u20135150, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Song%2C%20Jiaming%20Zhao%2C%20Shengjia%20Ermon%2C%20Stefano%20A-nice-mc%3A%20Adversarial%20training%20for%20mcmc%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Song%2C%20Jiaming%20Zhao%2C%20Shengjia%20Ermon%2C%20Stefano%20A-nice-mc%3A%20Adversarial%20training%20for%20mcmc%202017"
+        },
+        {
+            "id": "Strogatz_2018_a",
+            "entry": "Steven H Strogatz. Nonlinear dynamics and chaos: with applications to physics, biology, chemistry, and engineering. CRC Press, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strogatz%2C%20Steven%20H.%20Nonlinear%20dynamics%20and%20chaos%3A%20with%20applications%20to%20physics%2C%20biology%2C%20chemistry%2C%20and%20engineering%202018"
+        },
+        {
+            "id": "Suzek_et+al_2014_a",
+            "entry": "Baris E Suzek, Yuqi Wang, Hongzhan Huang, Peter B McGarvey, Cathy H Wu, and UniProt Consortium. Uniref clusters: a comprehensive and scalable alternative for improving sequence similarity searches. Bioinformatics, 31(6):926\u2013932, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Suzek%2C%20Baris%20E.%20Wang%2C%20Yuqi%20Huang%2C%20Hongzhan%20McGarvey%2C%20Peter%20B.%20Uniref%20clusters%3A%20a%20comprehensive%20and%20scalable%20alternative%20for%20improving%20sequence%20similarity%20searches%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Suzek%2C%20Baris%20E.%20Wang%2C%20Yuqi%20Huang%2C%20Hongzhan%20McGarvey%2C%20Peter%20B.%20Uniref%20clusters%3A%20a%20comprehensive%20and%20scalable%20alternative%20for%20improving%20sequence%20similarity%20searches%202014"
+        },
+        {
+            "id": "Titsias_2017_a",
+            "entry": "Michalis K Titsias. Learning model reparametrizations: Implicit variational inference by fitting mcmc distributions. arXiv preprint arXiv:1708.01529, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.01529"
+        },
+        {
+            "id": "Tran_et+al_2017_a",
+            "entry": "Dustin Tran, Rajesh Ranganath, and David Blei. Hierarchical implicit models and likelihood-free variational inference. In Advances in Neural Information Processing Systems, pp. 5523\u20135533, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tran%2C%20Dustin%20Ranganath%2C%20Rajesh%20Blei%2C%20David%20Hierarchical%20implicit%20models%20and%20likelihood-free%20variational%20inference%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tran%2C%20Dustin%20Ranganath%2C%20Rajesh%20Blei%2C%20David%20Hierarchical%20implicit%20models%20and%20likelihood-free%20variational%20inference%202017"
+        },
+        {
+            "id": "Wang_2017_a",
+            "entry": "Dilin Wang and Qiang Liu. Learning to draw samples with amortized stein variational gradient descent. In Uncertainty in Artificial Intelligence, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Dilin%20Liu%2C%20Qiang%20Learning%20to%20draw%20samples%20with%20amortized%20stein%20variational%20gradient%20descent%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Dilin%20Liu%2C%20Qiang%20Learning%20to%20draw%20samples%20with%20amortized%20stein%20variational%20gradient%20descent%202017"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Shenlong Wang, Sanja Fidler, and Raquel Urtasun. Proximal deep structured models. In Advances in Neural Information Processing Systems, pp. 865\u2013873, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Shenlong%20Fidler%2C%20Sanja%20Urtasun%2C%20Raquel%20Proximal%20deep%20structured%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Shenlong%20Fidler%2C%20Sanja%20Urtasun%2C%20Raquel%20Proximal%20deep%20structured%20models%202016"
+        },
+        {
+            "id": "Zhang_2005_a",
+            "entry": "Yang Zhang and Jeffrey Skolnick. Tm-align: a protein structure alignment algorithm based on the tm-score. Nucleic acids research, 33(7):2302\u20132309, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Yang%20Skolnick%2C%20Jeffrey%20Tm-align%3A%20a%20protein%20structure%20alignment%20algorithm%20based%20on%20the%20tm-score%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Yang%20Skolnick%2C%20Jeffrey%20Tm-align%3A%20a%20protein%20structure%20alignment%20algorithm%20based%20on%20the%20tm-score%202005"
+        }
+    ]
+}

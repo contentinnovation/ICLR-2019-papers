@@ -1,0 +1,344 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "SPREADING VECTORS FOR SIMILARITY SEARCH",
+        "author": "Alexandre Sablayrolles, Matthijs Douze, Cordelia Schmid , and Herve Jegou",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkGuG2R5tm"
+        },
+        "abstract": "Discretizing multi-dimensional data distributions is a fundamental step of modern indexing methods. State-of-the-art techniques learn parameters of quantizers on training data for optimal performance, thus adapting quantizers to the data. In this work, we propose to reverse this paradigm and adapt the data to the quantizer: we train a neural net which last layer forms a fixed parameter-free quantizer, such as pre-defined points of a hyper-sphere. As a proxy objective, we design and train a neural network that favors uniformity in the spherical latent space, while preserving the neighborhood structure after the mapping. We propose a new regularizer derived from the Kozachenko\u2013Leonenko differential entropy estimator to enforce uniformity and combine it with a locality-aware triplet loss. Experiments show that our end-to-end approach outperforms most learned quantization methods, and is competitive with the state of the art on widely adopted benchmarks. Furthermore, we show that training without the quantization step results in almost no difference in accuracy, but yields a generic catalyzer that can be applied with any subsequent quantizer. The code is available online1."
+    },
+    "keywords": [
+        {
+            "term": "cumulative density function",
+            "url": "https://en.wikipedia.org/wiki/cumulative_density_function"
+        },
+        {
+            "term": "Generative Adversarial Networks",
+            "url": "https://en.wikipedia.org/wiki/Generative_Adversarial_Networks"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "similarity search",
+            "url": "https://en.wikipedia.org/wiki/similarity_search"
+        }
+    ],
+    "abbreviations": {
+        "CDF": "cumulative density function",
+        "GANs": "Generative Adversarial Networks",
+        "VAEs": "Variational Auto-Encoders",
+        "ITQ": "Iterative quantization",
+        "OPQ": "Optimized Product Quantization"
+    },
+    "highlights": [
+        "Recent work (Kraska et al, 2017) proposed to leverage the pattern-matching ability of machine learning algorithms to improve traditional index structures such as B-trees or Bloom filters, with encouraging results",
+        "We show quantitatively that our catalyzer improves performance by a significant margin for quantization-based (OPQ (<a class=\"ref-link\" id=\"cGe_et+al_2013_a\" href=\"#rGe_et+al_2013_a\">Ge et al, 2013</a>)) and binary (LSH (<a class=\"ref-link\" id=\"cCharikar_2002_a\" href=\"#rCharikar_2002_a\">Charikar, 2002</a>)) method",
+        "We evaluate the lattice-based indexing proposed in Section 4, and compare it to more conventional methods based on quantization, namely PQ (<a class=\"ref-link\" id=\"cJegou_et+al_2011_a\" href=\"#rJegou_et+al_2011_a\">Jegou et al, 2011a</a>) and Optimized Product Quantization (OPQ) (<a class=\"ref-link\" id=\"cGe_et+al_2013_a\" href=\"#rGe_et+al_2013_a\">Ge et al, 2013</a>)"
+    ],
+    "key_statements": [
+        "Recent work (Kraska et al, 2017) proposed to leverage the pattern-matching ability of machine learning algorithms to improve traditional index structures such as B-trees or Bloom filters, with encouraging results",
+        "We show quantitatively that our catalyzer improves performance by a significant margin for quantization-based (OPQ (<a class=\"ref-link\" id=\"cGe_et+al_2013_a\" href=\"#rGe_et+al_2013_a\">Ge et al, 2013</a>)) and binary (LSH (<a class=\"ref-link\" id=\"cCharikar_2002_a\" href=\"#rCharikar_2002_a\">Charikar, 2002</a>)) method",
+        "We evaluate the lattice-based indexing proposed in Section 4, and compare it to more conventional methods based on quantization, namely PQ (<a class=\"ref-link\" id=\"cJegou_et+al_2011_a\" href=\"#rJegou_et+al_2011_a\">Jegou et al, 2011a</a>) and Optimized Product Quantization (OPQ) (<a class=\"ref-link\" id=\"cGe_et+al_2013_a\" href=\"#rGe_et+al_2013_a\">Ge et al, 2013</a>)"
+    ],
+    "summary": [
+        "Recent work (Kraska et al, 2017) proposed to leverage the pattern-matching ability of machine learning algorithms to improve traditional index structures such as B-trees or Bloom filters, with encouraging results.",
+        "As illustrated by Figure 1, we aim at learning a function that maps real-valued vectors to a uniform distribution over a d-dimensional sphere, such that a fixed discretizing structure, for example a fixed binary encoding or a regular lattice quantizer, offers competitive coding performance.",
+        "We learn a mapping such that the output follows the distribution under which the subsequent discretization method, either binary or a more general quantizer, performs better.",
+        "The Iterative quantization (ITQ) (<a class=\"ref-link\" id=\"cGong_et+al_2013_a\" href=\"#rGong_et+al_2013_a\"><a class=\"ref-link\" id=\"cGong_et+al_2013_a\" href=\"#rGong_et+al_2013_a\">Gong et al, 2013</a></a>) modifies the coordinate system to improve binarization, while methods inspired by Vector Quantization and compression (<a class=\"ref-link\" id=\"cJegou_et+al_2011_a\" href=\"#rJegou_et+al_2011_a\"><a class=\"ref-link\" id=\"cJegou_et+al_2011_a\" href=\"#rJegou_et+al_2011_a\">Jegou et al, 2011a</a></a>; <a class=\"ref-link\" id=\"cBabenko_2014_a\" href=\"#rBabenko_2014_a\">Babenko & Lempitsky, 2014</a>; <a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\">Zhang et al, 2015</a>; <a class=\"ref-link\" id=\"cJain_et+al_2016_a\" href=\"#rJain_et+al_2016_a\">Jain et al, 2016</a>) have gradually emerged as strong competitors for estimating distances or similarities with compact codes.",
+        "The positive matches are obtained by computing the kpos nearest neighbors of each point x in the training set in the input space.",
+        "While Figure 2 illustrates our method with the 2D disk as an output space, we are interested in mapping input samples to a higher dimensional hyper-sphere.",
+        "We consider two parameter-free coding methods: binarization and defining a fixed set of points on the unit sphere provided by a lattice spherical quantizer.",
+        "We are closer to uniformity in the output space, making lattices an attractive choice.",
+        "We train our neural network on the training set, cross-validate dout and \u03bb on the validation set, and use a different set of vectors for evaluation.",
+        "We evaluate the lattice-based indexing proposed in Section 4, and compare it to more conventional methods based on quantization, namely PQ (<a class=\"ref-link\" id=\"cJegou_et+al_2011_a\" href=\"#rJegou_et+al_2011_a\"><a class=\"ref-link\" id=\"cJegou_et+al_2011_a\" href=\"#rJegou_et+al_2011_a\">Jegou et al, 2011a</a></a>) and Optimized Product Quantization (OPQ) (<a class=\"ref-link\" id=\"cGe_et+al_2013_a\" href=\"#rGe_et+al_2013_a\">Ge et al, 2013</a>).",
+        "Our search time is a bit slower: computing 1M asymmetric distances takes 7.5 ms with the Catalyzer+Lattice instead of 4.9 ms with PQ.",
+        "We show the interest of our method as a catalyzer for binary hashing, compared to two popular methods (<a class=\"ref-link\" id=\"cCharikar_2002_a\" href=\"#rCharikar_2002_a\">Charikar, 2002</a>; <a class=\"ref-link\" id=\"cGong_et+al_2013_a\" href=\"#rGong_et+al_2013_a\"><a class=\"ref-link\" id=\"cGong_et+al_2013_a\" href=\"#rGong_et+al_2013_a\">Gong et al, 2013</a></a>): LSH maps Euclidean vectors to binary codes that are compared with Hamming distance.",
+        "ITQ is another popular hashing method, that improves LSH by using an orthogonal projection that is optimized to maximize correlation between the original vectors and the bits.",
+        "We train a neural network that maps input features to a uniform output distribution on a unit hypersphere, making high-dimensional indexing more accurate, in particular with fast and rigid lattice quantizers or a trivial binary encoding.",
+        "We open-sourced the code corresponding to the experiments at https://github.com/facebookresearch/spreadingvectors"
+    ],
+    "headline": "We propose to reverse this paradigm and adapt the data to the quantizer: we train a neural net which last layer forms a fixed parameter-free quantizer, such as pre-defined points of a hyper-sphere",
+    "reference_links": [
+        {
+            "id": "Andoni_2006_a",
+            "entry": "Alexandr Andoni and Piotr Indyk. Near-optimal hashing algorithms for approximate nearest neighbor in high dimensions. In Symposium on the Foundations of Computer Science, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andoni%2C%20Alexandr%20Indyk%2C%20Piotr%20Near-optimal%20hashing%20algorithms%20for%20approximate%20nearest%20neighbor%20in%20high%20dimensions%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andoni%2C%20Alexandr%20Indyk%2C%20Piotr%20Near-optimal%20hashing%20algorithms%20for%20approximate%20nearest%20neighbor%20in%20high%20dimensions%202006"
+        },
+        {
+            "id": "Babenko_2014_a",
+            "entry": "Artem Babenko and Victor Lempitsky. Additive quantization for extreme vector compression. In Conference on Computer Vision and Pattern Recognition, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Babenko%2C%20Artem%20Lempitsky%2C%20Victor%20Additive%20quantization%20for%20extreme%20vector%20compression%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Babenko%2C%20Artem%20Lempitsky%2C%20Victor%20Additive%20quantization%20for%20extreme%20vector%20compression%202014"
+        },
+        {
+            "id": "Babenko_2016_a",
+            "entry": "Artem Babenko and Victor Lempitsky. Efficient indexing of billion-scale datasets of deep descriptors. In Conference on Computer Vision and Pattern Recognition, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Babenko%2C%20Artem%20Lempitsky%2C%20Victor%20Efficient%20indexing%20of%20billion-scale%20datasets%20of%20deep%20descriptors%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Babenko%2C%20Artem%20Lempitsky%2C%20Victor%20Efficient%20indexing%20of%20billion-scale%20datasets%20of%20deep%20descriptors%202016"
+        },
+        {
+            "id": "Jan_et+al_1997_a",
+            "entry": "Jan Beirlant, E J. Dudewicz, L Gyor, and E.C. Meulen. Nonparametric entropy estimation: An overview. International Journal of Mathematical and Statistical Sciences, 6, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jan%20Beirlant%2C%20E.J.Dudewicz%20Gyor%2C%20L.%20Meulen%2C%20E.C.%20Nonparametric%20entropy%20estimation%3A%20An%20overview%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jan%20Beirlant%2C%20E.J.Dudewicz%20Gyor%2C%20L.%20Meulen%2C%20E.C.%20Nonparametric%20entropy%20estimation%3A%20An%20overview%201997"
+        },
+        {
+            "id": "Bojanowski_2017_a",
+            "entry": "Piotr Bojanowski and Armand Joulin. Unsupervised learning by predicting noise. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bojanowski%2C%20Piotr%20Joulin%2C%20Armand%20Unsupervised%20learning%20by%20predicting%20noise%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bojanowski%2C%20Piotr%20Joulin%2C%20Armand%20Unsupervised%20learning%20by%20predicting%20noise%202017"
+        },
+        {
+            "id": "Charikar_2002_a",
+            "entry": "Moses Charikar. Similarity estimation techniques from rounding algorithms. In ACM symposium on Theory of computing, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Charikar%2C%20Moses%20Similarity%20estimation%20techniques%20from%20rounding%20algorithms%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Charikar%2C%20Moses%20Similarity%20estimation%20techniques%20from%20rounding%20algorithms%202002"
+        },
+        {
+            "id": "Chechik_et+al_2010_a",
+            "entry": "Gal Chechik, Varun Sharma, Uri Shalit, and Samy Bengio. Large scale online learning of image similarity through ranking. Journal of Machine Learning Research, 11(Mar), 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chechik%2C%20Gal%20Sharma%2C%20Varun%20Shalit%2C%20Uri%20Bengio%2C%20Samy%20Large%20scale%20online%20learning%20of%20image%20similarity%20through%20ranking%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chechik%2C%20Gal%20Sharma%2C%20Varun%20Shalit%2C%20Uri%20Bengio%2C%20Samy%20Large%20scale%20online%20learning%20of%20image%20similarity%20through%20ranking%202010"
+        },
+        {
+            "id": "Conway_2013_a",
+            "entry": "John Horton Conway and Neil James Alexander Sloane. Sphere packings, lattices and groups, volume 290. Springer Science & Business Media, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conway%2C%20John%20Horton%20Sloane%2C%20Neil%20James%20Alexander%20Sphere%20packings%2C%20lattices%20and%20groups%2C%20volume%20290%202013"
+        },
+        {
+            "id": "Cuturi_2013_a",
+            "entry": "Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. In Advances in Neural Information Processing Systems. 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cuturi%2C%20Marco%20Sinkhorn%20distances%3A%20Lightspeed%20computation%20of%20optimal%20transport%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cuturi%2C%20Marco%20Sinkhorn%20distances%3A%20Lightspeed%20computation%20of%20optimal%20transport%202013"
+        },
+        {
+            "id": "Doersch_2016_a",
+            "entry": "Carl Doersch. Tutorial on variational autoencoders. arXiv preprint arXiv:1606.05908, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.05908"
+        },
+        {
+            "id": "Ge_et+al_2013_a",
+            "entry": "Tiezheng Ge, Kaiming He, Qifa Ke, and Jian Sun. Optimized product quantization for approximate nearest neighbor search. In Conference on Computer Vision and Pattern Recognition, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ge%2C%20Tiezheng%20He%2C%20Kaiming%20Ke%2C%20Qifa%20Sun%2C%20Jian%20Optimized%20product%20quantization%20for%20approximate%20nearest%20neighbor%20search%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ge%2C%20Tiezheng%20He%2C%20Kaiming%20Ke%2C%20Qifa%20Sun%2C%20Jian%20Optimized%20product%20quantization%20for%20approximate%20nearest%20neighbor%20search%202013"
+        },
+        {
+            "id": "Gionis_et+al_1999_a",
+            "entry": "Arisitides Gionis, Piotr Indyk, and Rajeev Motwani. Similarity search in high dimension via hashing. In International Conference on Very Large DataBases, pp. 518\u2013529, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gionis%2C%20Arisitides%20Indyk%2C%20Piotr%20Motwani%2C%20Rajeev%20Similarity%20search%20in%20high%20dimension%20via%20hashing%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gionis%2C%20Arisitides%20Indyk%2C%20Piotr%20Motwani%2C%20Rajeev%20Similarity%20search%20in%20high%20dimension%20via%20hashing%201999"
+        },
+        {
+            "id": "Gong_et+al_2013_a",
+            "entry": "Yunchao Gong, Svetlana Lazebnik, Albert Gordo, and Florent Perronnin. Iterative quantization: A procrustean approach to learning binary codes for large-scale image retrieval. IEEE Transactions on Pattern Analysis and Machine Intelligence, 35(12), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gong%2C%20Yunchao%20Lazebnik%2C%20Svetlana%20Gordo%2C%20Albert%20Perronnin%2C%20Florent%20Iterative%20quantization%3A%20A%20procrustean%20approach%20to%20learning%20binary%20codes%20for%20large-scale%20image%20retrieval%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gong%2C%20Yunchao%20Lazebnik%2C%20Svetlana%20Gordo%2C%20Albert%20Perronnin%2C%20Florent%20Iterative%20quantization%3A%20A%20procrustean%20approach%20to%20learning%20binary%20codes%20for%20large-scale%20image%20retrieval%202013"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Hinton_2003_a",
+            "entry": "Geoffrey Hinton and Sam Roweis. Stochastic neighbor embedding. In Advances in Neural Information Processing Systems, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Roweis%2C%20Sam%20Stochastic%20neighbor%20embedding%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20Roweis%2C%20Sam%20Stochastic%20neighbor%20embedding%202003"
+        },
+        {
+            "id": "Indyk_1998_a",
+            "entry": "Piotr Indyk and Rajeev Motwani. Approximate nearest neighbors: towards removing the curse of dimensionality. In ACM symposium on Theory of computing, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Indyk%2C%20Piotr%20Motwani%2C%20Rajeev%20Approximate%20nearest%20neighbors%3A%20towards%20removing%20the%20curse%20of%20dimensionality%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Indyk%2C%20Piotr%20Motwani%2C%20Rajeev%20Approximate%20nearest%20neighbors%3A%20towards%20removing%20the%20curse%20of%20dimensionality%201998"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Jain_et+al_2016_a",
+            "entry": "Himalaya Jain, Patrick Perez, Remi Gribonval, Joaquin Zepeda, and Herve Jegou. Approximate search with quantized sparse representations. In European Conference on Computer Vision, October 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jain%2C%20Himalaya%20Perez%2C%20Patrick%20Gribonval%2C%20Remi%20Zepeda%2C%20Joaquin%20Approximate%20search%20with%20quantized%20sparse%20representations%202016-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jain%2C%20Himalaya%20Perez%2C%20Patrick%20Gribonval%2C%20Remi%20Zepeda%2C%20Joaquin%20Approximate%20search%20with%20quantized%20sparse%20representations%202016-10"
+        },
+        {
+            "id": "Jain_et+al_2017_a",
+            "entry": "Himalaya Jain, Joaquin Zepeda, Patrick Perez, and Remi Gribonval. SUBIC: A supervised, structured binary code for image search. In International Conference on Computer Vision, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jain%2C%20Himalaya%20Zepeda%2C%20Joaquin%20Perez%2C%20Patrick%20Gribonval%2C%20Remi%20SUBIC%3A%20A%20supervised%2C%20structured%20binary%20code%20for%20image%20search%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jain%2C%20Himalaya%20Zepeda%2C%20Joaquin%20Perez%2C%20Patrick%20Gribonval%2C%20Remi%20SUBIC%3A%20A%20supervised%2C%20structured%20binary%20code%20for%20image%20search%202017"
+        },
+        {
+            "id": "Jegou_et+al_2008_a",
+            "entry": "Herve Jegou, Laurent Amsaleg, Cordelia Schmid, and Patrick Gros. Query adaptative locality sensitive hashing. In International Conference on Acoustics, Speech, and Signal Processing, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jegou%2C%20Herve%20Amsaleg%2C%20Laurent%20Schmid%2C%20Cordelia%20Gros%2C%20Patrick%20Query%20adaptative%20locality%20sensitive%20hashing%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jegou%2C%20Herve%20Amsaleg%2C%20Laurent%20Schmid%2C%20Cordelia%20Gros%2C%20Patrick%20Query%20adaptative%20locality%20sensitive%20hashing%202008"
+        },
+        {
+            "id": "Jegou_et+al_2011_a",
+            "entry": "Herve Jegou, Matthijs Douze, and Cordelia Schmid. Product Quantization for Nearest Neighbor Search. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2011a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jegou%2C%20Herve%20Douze%2C%20Matthijs%20Schmid%2C%20Cordelia%20Product%20Quantization%20for%20Nearest%20Neighbor%20Search%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jegou%2C%20Herve%20Douze%2C%20Matthijs%20Schmid%2C%20Cordelia%20Product%20Quantization%20for%20Nearest%20Neighbor%20Search%202011"
+        },
+        {
+            "id": "Jegou_et+al_2011_b",
+            "entry": "Herve Jegou, Romain Tavenard, Matthijs Douze, and Laurent Amsaleg. Searching in one billion vectors: re-rank with source coding. In International Conference on Acoustics, Speech, and Signal Processing, 2011b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jegou%2C%20Herve%20Tavenard%2C%20Romain%20Douze%2C%20Matthijs%20Amsaleg%2C%20Laurent%20Searching%20in%20one%20billion%20vectors%3A%20re-rank%20with%20source%20coding%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jegou%2C%20Herve%20Tavenard%2C%20Romain%20Douze%2C%20Matthijs%20Amsaleg%2C%20Laurent%20Searching%20in%20one%20billion%20vectors%3A%20re-rank%20with%20source%20coding%202011"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Jeff Johnson, Matthijs Douze, and Herve Jegou. Billion-scale similarity search with gpus. arXiv preprint arXiv:1702.08734, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08734"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P. Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Klein_2017_a",
+            "entry": "Benjamin Klein and Lior Wolf. In defense of product quantization. arXiv preprint arXiv:1711.08589, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.08589"
+        },
+        {
+            "id": "Knuth_2005_a",
+            "entry": "Donald E Knuth. The art of computer programming, volume 4: Generating all combinations and partitions, fascicle 3, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Knuth%2C%20Donald%20E.%20The%20art%20of%20computer%20programming%2C%20volume%204%3A%20Generating%20all%20combinations%20and%20partitions%2C%20fascicle%203%202005"
+        },
+        {
+            "id": "Kohonen_et+al_2001_a",
+            "entry": "T. Kohonen, M. R. Schroeder, and T. S. Huang (eds.). Self-Organizing Maps. 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kohonen%2C%20T.%20Schroeder%2C%20M.R.%20S%2C%20T.%20Huang%20%28eds.%29.%20Self-Organizing%20Maps%202001"
+        },
+        {
+            "id": "Tim_2017_a",
+            "entry": "Tim Kraska, Alex Beutel, Ed H. Chi, Jeff Dean, and Neoklis Polyzotis. The case for learned index structures. arXiv preprint arXiv:1712.01208, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.01208"
+        },
+        {
+            "id": "Liong_et+al_2015_a",
+            "entry": "Venice Erin Liong, Jiwen Lu, Gang Wang, Pierre Moulin, Jie Zhou, et al. Deep hashing for compact binary codes learning. In Conference on Computer Vision and Pattern Recognition, volume 1, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liong%2C%20Venice%20Erin%20Lu%2C%20Jiwen%20Wang%2C%20Gang%20Moulin%2C%20Pierre%20Deep%20hashing%20for%20compact%20binary%20codes%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liong%2C%20Venice%20Erin%20Lu%2C%20Jiwen%20Wang%2C%20Gang%20Moulin%2C%20Pierre%20Deep%20hashing%20for%20compact%20binary%20codes%20learning%202015"
+        },
+        {
+            "id": "Lowe_2004_a",
+            "entry": "David G. Lowe. Distinctive image features from scale-invariant keypoints. International journal of Computer Vision, 60(2), 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lowe%2C%20David%20G.%20Distinctive%20image%20features%20from%20scale-invariant%20keypoints%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lowe%2C%20David%20G.%20Distinctive%20image%20features%20from%20scale-invariant%20keypoints%202004"
+        },
+        {
+            "id": "Lv_et+al_2004_a",
+            "entry": "Qin Lv, Moses Charikar, and Kai Li. Image similarity search with compact data structures. In International Conference on Information and Knowledge, pp. 208\u2013217, November 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lv%2C%20Qin%20Charikar%2C%20Moses%20Li%2C%20Kai%20Image%20similarity%20search%20with%20compact%20data%20structures%202004-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lv%2C%20Qin%20Charikar%2C%20Moses%20Li%2C%20Kai%20Image%20similarity%20search%20with%20compact%20data%20structures%202004-11"
+        },
+        {
+            "id": "Malkov_2016_a",
+            "entry": "Yu A Malkov and DA Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. arXiv preprint arXiv:1603.09320, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.09320"
+        },
+        {
+            "id": "Martinez_et+al_2018_a",
+            "entry": "Julieta Martinez, Shobhit Zakhmi, Holger H Hoos, and James J Little. LSQ++: Lower running time and higher recall in multi-codebook quantization. In Proceedings of the European Conference on Computer Vision (ECCV), pp. 491\u2013506, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martinez%2C%20Julieta%20Zakhmi%2C%20Shobhit%20Hoos%2C%20Holger%20H.%20Little%2C%20James%20J.%20LSQ%2B%2B%3A%20Lower%20running%20time%20and%20higher%20recall%20in%20multi-codebook%20quantization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martinez%2C%20Julieta%20Zakhmi%2C%20Shobhit%20Hoos%2C%20Holger%20H.%20Little%2C%20James%20J.%20LSQ%2B%2B%3A%20Lower%20running%20time%20and%20higher%20recall%20in%20multi-codebook%20quantization%202018"
+        },
+        {
+            "id": "Muja_2014_a",
+            "entry": "Marius Muja and David G. Lowe. Scalable nearest neighbor algorithms for high dimensional data. IEEE Transactions on Pattern Analysis and Machine Intelligence, 36, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Muja%2C%20Marius%20Lowe%2C%20David%20G.%20Scalable%20nearest%20neighbor%20algorithms%20for%20high%20dimensional%20data%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Muja%2C%20Marius%20Lowe%2C%20David%20G.%20Scalable%20nearest%20neighbor%20algorithms%20for%20high%20dimensional%20data%202014"
+        },
+        {
+            "id": "Ozan_et+al_2016_a",
+            "entry": "E. C. Ozan, S. Kiranyaz, and M. Gabbouj. Competitive quantization for approximate nearest neighbor search. IEEE Transactions on Knowledge and Data Engineering, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ozan%2C%20E.C.%20Kiranyaz%2C%20S.%20Gabbouj%2C%20M.%20Competitive%20quantization%20for%20approximate%20nearest%20neighbor%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ozan%2C%20E.C.%20Kiranyaz%2C%20S.%20Gabbouj%2C%20M.%20Competitive%20quantization%20for%20approximate%20nearest%20neighbor%20search%202016"
+        },
+        {
+            "id": "Pauleve_et+al_2010_a",
+            "entry": "Lo\u0131c Pauleve, Herve Jegou, and Laurent Amsaleg. Locality sensitive hashing: A comparison of hash function types and querying mechanisms. Pattern recognition letters, 31(11), 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pauleve%2C%20Lo%C4%B1c%20Jegou%2C%20Herve%20Amsaleg%2C%20Laurent%20Locality%20sensitive%20hashing%3A%20A%20comparison%20of%20hash%20function%20types%20and%20querying%20mechanisms%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pauleve%2C%20Lo%C4%B1c%20Jegou%2C%20Herve%20Amsaleg%2C%20Laurent%20Locality%20sensitive%20hashing%3A%20A%20comparison%20of%20hash%20function%20types%20and%20querying%20mechanisms%202010"
+        },
+        {
+            "id": "Pereyra_et+al_2017_a",
+            "entry": "Gabriel Pereyra, George Tucker, Jan Chorowski, \u0141ukasz Kaiser, and Geoffrey Hinton. Regularizing neural networks by penalizing confident output distributions. arXiv preprint arXiv:1701.06548, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.06548"
+        },
+        {
+            "id": "Ran_1998_a",
+            "entry": "Moshe Ran and Jakov Snyders. Efficient decoding of the Gosset, Coxeter-Todd and the Barnes-Wall lattices. In International Symposium on Information Theory, pp. 92, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ran%2C%20Moshe%20Snyders%2C%20Jakov%20Efficient%20decoding%20of%20the%20Gosset%2C%20Coxeter-Todd%20and%20the%20Barnes-Wall%20lattices%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ran%2C%20Moshe%20Snyders%2C%20Jakov%20Efficient%20decoding%20of%20the%20Gosset%2C%20Coxeter-Todd%20and%20the%20Barnes-Wall%20lattices%201998"
+        },
+        {
+            "id": "Sablayrolles_et+al_2017_a",
+            "entry": "Alexandre Sablayrolles, Matthijs Douze, Nicolas Usunier, and Herve Jegou. How should we evaluate supervised hashing? In International Conference on Acoustics, Speech, and Signal Processing, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sablayrolles%2C%20Alexandre%20Douze%2C%20Matthijs%20Usunier%2C%20Nicolas%20Jegou%2C%20Herve%20How%20should%20we%20evaluate%20supervised%20hashing%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sablayrolles%2C%20Alexandre%20Douze%2C%20Matthijs%20Usunier%2C%20Nicolas%20Jegou%2C%20Herve%20How%20should%20we%20evaluate%20supervised%20hashing%3F%202017"
+        },
+        {
+            "id": "Torralba_et+al_2008_a",
+            "entry": "Antonio Torralba, Rob Fergus, and Yair Weiss. Small codes and large image databases for recognition. In Conference on Computer Vision and Pattern Recognition, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Torralba%2C%20Antonio%20Fergus%2C%20Rob%20Weiss%2C%20Yair%20Small%20codes%20and%20large%20image%20databases%20for%20recognition%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Torralba%2C%20Antonio%20Fergus%2C%20Rob%20Weiss%2C%20Yair%20Small%20codes%20and%20large%20image%20databases%20for%20recognition%202008"
+        },
+        {
+            "id": "Usunier_et+al_2009_a",
+            "entry": "Nicolas Usunier, David Buffoni, and Patrick Gallinari. Ranking with ordered weighted pairwise classification. In International Conference on Machine Learning, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Usunier%2C%20Nicolas%20Buffoni%2C%20David%20Gallinari%2C%20Patrick%20Ranking%20with%20ordered%20weighted%20pairwise%20classification%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Usunier%2C%20Nicolas%20Buffoni%2C%20David%20Gallinari%2C%20Patrick%20Ranking%20with%20ordered%20weighted%20pairwise%20classification%202009"
+        },
+        {
+            "id": "Van_et+al_2017_a",
+            "entry": "Aaron van den Oord, Oriol Vinyals, and Koray Kavukcuoglu. Neural discrete representation learning. In Advances in Neural Information Processing Systems. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aaron%20van%20den%20Oord%20Oriol%20Vinyals%20and%20Koray%20Kavukcuoglu%20Neural%20discrete%20representation%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aaron%20van%20den%20Oord%20Oriol%20Vinyals%20and%20Koray%20Kavukcuoglu%20Neural%20discrete%20representation%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%202017"
+        },
+        {
+            "id": "Van_2008_a",
+            "entry": "Laurens van der Maaten and Geoffrey Hinton. Visualizing data using t-SNE. Journal of Machine Learning Research, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-SNE%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-SNE%202008"
+        },
+        {
+            "id": "Maaten_et+al_2009_a",
+            "entry": "Laurens Van Der Maaten, Eric Postma, and Jaap Van den Herik. Dimensionality reduction: a comparative review. Journal of Machine Learning Research, 10, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maaten%2C%20Laurens%20Van%20Der%20Postma%2C%20Eric%20den%20Herik%2C%20Jaap%20Van%20Dimensionality%20reduction%3A%20a%20comparative%20review%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maaten%2C%20Laurens%20Van%20Der%20Postma%2C%20Eric%20den%20Herik%2C%20Jaap%20Van%20Dimensionality%20reduction%3A%20a%20comparative%20review%202009"
+        },
+        {
+            "id": "Wang_et+al_2014_a",
+            "entry": "Jiang Wang, Yang Song, Thomas Leung, Chuck Rosenberg, Jingbin Wang, James Philbin, Bo Chen, and Ying Wu. Learning fine-grained image similarity with deep ranking. In Conference on Computer Vision and Pattern Recognition, 2014a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Jiang%20Song%2C%20Yang%20Leung%2C%20Thomas%20Rosenberg%2C%20Chuck%20Learning%20fine-grained%20image%20similarity%20with%20deep%20ranking%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Jiang%20Song%2C%20Yang%20Leung%2C%20Thomas%20Rosenberg%2C%20Chuck%20Learning%20fine-grained%20image%20similarity%20with%20deep%20ranking%202014"
+        },
+        {
+            "id": "Wang_et+al_2014_b",
+            "entry": "Jingdong Wang, Heng Tao Shen, Jingkuan Song, and Jianqiu Ji. Hashing for similarity search: A survey. arXiv preprint arXiv:1408.2927, 2014b.",
+            "arxiv_url": "https://arxiv.org/pdf/1408.2927"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Jun Wang, Wei Liu, Sanjiv Kumar, and Shih-Fu Chang. Learning to hash for indexing big data: a survey. Proceedings of the IEEE, 104(1), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Jun%20Liu%2C%20Wei%20Kumar%2C%20Sanjiv%20Chang%2C%20Shih-Fu%20Learning%20to%20hash%20for%20indexing%20big%20data%3A%20a%20survey%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Jun%20Liu%2C%20Wei%20Kumar%2C%20Sanjiv%20Chang%2C%20Shih-Fu%20Learning%20to%20hash%20for%20indexing%20big%20data%3A%20a%20survey%202016"
+        },
+        {
+            "id": "Zhang_et+al_2015_a",
+            "entry": "Ting Zhang, Guo-Jun Qi, Jinhui Tang, and Jingdong Wang. Sparse composite quantization. In Conference on Computer Vision and Pattern Recognition, June 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Ting%20Qi%2C%20Guo-Jun%20Tang%2C%20Jinhui%20Wang%2C%20Jingdong%20Sparse%20composite%20quantization%202015-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Ting%20Qi%2C%20Guo-Jun%20Tang%2C%20Jinhui%20Wang%2C%20Jingdong%20Sparse%20composite%20quantization%202015-06"
+        }
+    ]
+}

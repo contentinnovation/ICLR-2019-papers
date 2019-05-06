@@ -1,0 +1,59 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "The Singular Values of Convolutional Layers",
+        "author": "Hanie Sedghi, Vineet Gupta and Philip M. Long Google Brain Mountain View, CA 94043 {hsedghi,vineet,plong}@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJevYoA9Fm"
+        },
+        "abstract": "of Results: Our main result is a characterization of the singular values of a convolutional layer in terms of the kernel tensor K. Our characterization enables these singular values to be computed exactly in a simple and practically fast way, using O(n2m2(m + log n)) time. For comparison, the brute force solution that performs SVD on the matrix that encodes the convolutional layer\u2019s linear transformation would take O((n2m)3) = O(n6m3) time, and is impractical for commonly used network sizes. As another point of comparison, simply to compute the convolution takes O(n2m2k2) time. We prove that the following two lines of NumPy correctly compute the singular values."
+    },
+    "keywords": [
+        {
+            "term": "singular value",
+            "url": "https://en.wikipedia.org/wiki/singular_value"
+        },
+        {
+            "term": "linear transformation",
+            "url": "https://en.wikipedia.org/wiki/linear_transformation"
+        }
+    ],
+    "abbreviations": {},
+    "highlights": [
+        "We characterize the singular values of the linear transformation associated with a standard 2D multi-channel convolutional layer, enabling their efficient computation",
+        "Because of the central importance of convolutional layers to the practice of deep learning, and the fact that the singular values of the linear transformation computed by a convolutional layer are the key to its contribution to exploding and vanishing gradients, we study these singular values",
+        "Summary of Results: Our main result is a characterization of the singular values of a convolutional layer in terms of the kernel tensor K",
+        "We prove that the following two lines of NumPy correctly compute the singular values",
+        "Related work: Prior to our work, authors have responded to the difficulty of computing the singular values of convolutional layers in various ways"
+    ],
+    "key_statements": [
+        "We characterize the singular values of the linear transformation associated with a standard 2D multi-channel convolutional layer, enabling their efficient computation",
+        "Because of the central importance of convolutional layers to the practice of deep learning, and the fact that the singular values of the linear transformation computed by a convolutional layer are the key to its contribution to exploding and vanishing gradients, we study these singular values",
+        "Summary of Results: Our main result is a characterization of the singular values of a convolutional layer in terms of the kernel tensor K",
+        "We prove that the following two lines of NumPy correctly compute the singular values",
+        "In Section 4.2, we evaluate an algorithm that periodically projects each convolutional layer onto a operator-norm ball",
+        "Related work: Prior to our work, authors have responded to the difficulty of computing the singular values of convolutional layers in various ways",
+        "Theorem 6 For any K \u2208 Rn\u00d7n\u00d7m\u00d7m, let M is the matrix encoding the linear transformation computed by a convolutional layer parameterized by K, defined as in (6)",
+        "Ais the projection of A onto B; i.e. A = arg min ||A \u2212 X||F. This implies that the desired projection can be obtained by clipping the singular values of linear transformation associated with a convolutional layer to the interval [0, c]",
+        "When we wish to control the operator norm during an iterative optimization process, repeating the alternating projections does not seem to be worth it \u2013 we found that the first two projections already often produced a convolutional layer with an operator norm close to the desired value"
+    ],
+    "summary": [
+        "Related work: Prior to our work, authors have responded to the difficulty of computing the singular values of convolutional layers in various ways.",
+        "We characterize the singular values of the linear transformation associated with a standard 2D multi-channel convolutional layer, enabling their efficient computation.",
+        "This characterization leads to an algorithm for projecting a convolutional layer onto an operator-norm ball.",
+        "They reshape the given k \u00d7 k \u00d7 m \u00d7 m into a mk2 \u00d7 m matrix, and compute its largest singular value using a power iteration method, and use this as a substitute for the operator norm.",
+        "A useful heuristic for regularization, the largest singular value of the reshaped matrix is often quite different from the operator norm of the linear transform associated with K.",
+        "It is possible to project the reshaped K onto an operator-norm ball by taking its SVD and clipping its singular values \u2014 we conducted experiments with this projection and report the results in Section 4.4.",
+        "Lemma 1 Section 5.5, Goodfellow et al (2016) page 329) For any filter coefficients K, the linear transform for the convolution by K is represented by the following doubly block circulant matrix:",
+        "Since the singular values of any normal matrix are the magnitudes of its eigenvalues (Horn and Johnson (2012) page 158), applying Lemma 4 completes the proof.",
+        "Theorem 6 For any K \u2208 Rn\u00d7n\u00d7m\u00d7m, let M is the matrix encoding the linear transformation computed by a convolutional layer parameterized by K, defined as in (6).",
+        "This implies that the desired projection can be obtained by clipping the singular values of linear transformation associated with a convolutional layer to the interval [0, c].",
+        "Alternating the two projections would give a point in the intersection of the two sets, i.e., a k \u00d7 k convolution with bounded operator norm (Cheney and Goldstein (1959) Theorem 4, Boyd and Dattorro (2003) Section 2), and the projection onto that intersection could be found using the more complicated Dykstra\u2019s projection algorithm (Boyle and Dykstra, 1986).",
+        "We validated Theorem 6 with unit tests in which the output of the code given in the introduction is compared with evaluating the singular values by constructing the full matrix encoding the linear transformation corresponding to the convolutional layer and computing its SVD.",
+        "We generated 4D tensors of various shapes with random standard normal values, and computed their singular values using the full matrix method, the NumPy code given above and the equivalent TensorFlow code.",
+        "We prove that the following two lines of NumPy correctly compute the singular values"
+    ],
+    "headline": "We show that this is an effective regularizer; for example, it improves the test error of a deep residual network using batch normalization on CIFAR-10 from 6.2% to 5.3%",
+    "reference_links": []
+}

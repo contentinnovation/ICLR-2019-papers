@@ -1,0 +1,396 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "META-LEARNING WITH DIFFERENTIABLE CLOSED-FORM SOLVERS",
+        "author": "Luca Bertinetto FiveAI & University of Oxford luca@robots.ox.ac.uk",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyxnZh0ct7"
+        },
+        "abstract": "Adapting deep networks to new concepts from a few examples is challenging, due to the high computational requirements of standard fine-tuning procedures. Most work on few-shot learning has thus focused on simple learning techniques for adaptation, such as nearest neighbours or gradient descent. Nonetheless, the machine learning literature contains a wealth of methods that learn non-deep models very efficiently. In this paper, we propose to use these fast convergent methods as the main adaptation mechanism for few-shot learning. The main idea is to teach a deep network to use standard machine learning tools, such as ridge regression, as part of its own internal model, enabling it to quickly adapt to novel data. This requires back-propagating errors through the solver steps. While normally the cost of the matrix operations involved in such a process would be significant, by using the Woodbury identity we can make the small number of examples work to our advantage. We propose both closed-form and iterative solvers, based on ridge regression and logistic regression components. Our methods constitute a simple and novel approach to the problem of few-shot learning and achieve performance competitive with or superior to the state of the art on three benchmarks."
+    },
+    "keywords": [
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "R2-D2",
+            "url": "https://en.wikipedia.org/wiki/R2-D2"
+        },
+        {
+            "term": "ridge regression",
+            "url": "https://en.wikipedia.org/wiki/ridge_regression"
+        },
+        {
+            "term": "r2 d2",
+            "url": "https://en.wikipedia.org/wiki/R2_D2"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        }
+    ],
+    "abbreviations": {
+        "SGD": "stochastic gradient descent",
+        "IRLS": "Iteratively Reweighted Least Squares"
+    },
+    "highlights": [
+        "Humans can efficiently perform fast mapping (<a class=\"ref-link\" id=\"cCarey_1978_a\" href=\"#rCarey_1978_a\"><a class=\"ref-link\" id=\"cCarey_1978_a\" href=\"#rCarey_1978_a\">Carey, 1978</a></a>; <a class=\"ref-link\" id=\"cCarey_1978_b\" href=\"#rCarey_1978_b\"><a class=\"ref-link\" id=\"cCarey_1978_b\" href=\"#rCarey_1978_b\">Carey & Bartlett, 1978</a></a>), i.e. learning a new concept after a single exposure",
+        "We propose to adopt simple learning algorithms that admit a closed-form solution such as ridge regression",
+        "We provide practical details for the two novel methods introduced in Section 3.2 and 3.3, which we dub R2-D2 (Ridge Regression Differentiable Discriminator) and LR-D2 (Logistic Regression Differentiable Discriminator)",
+        "We analyze their performance against the recent literature on multi-class and binary classification problems using three few-shot learning benchmarks: Omniglot (<a class=\"ref-link\" id=\"cLake_et+al_2015_a\" href=\"#rLake_et+al_2015_a\">Lake et al, 2015</a>), miniImageNet (Vinyals et al, 2016) and CIFAR-FS, which we introduce in this paper",
+        "R2-D2, the differentiable ridge regression base learner we introduce, is almost as fast as prototypical networks and strikes a useful compromise between not performing adaptation for new episodes and conducting a costly iterative approach",
+        "We showed that our base learners work remarkably well, with excellent results on few-shot learning benchmarks, generalizing to episodes with new classes that were not seen during training"
+    ],
+    "key_statements": [
+        "Humans can efficiently perform fast mapping (<a class=\"ref-link\" id=\"cCarey_1978_a\" href=\"#rCarey_1978_a\"><a class=\"ref-link\" id=\"cCarey_1978_a\" href=\"#rCarey_1978_a\">Carey, 1978</a></a>; <a class=\"ref-link\" id=\"cCarey_1978_b\" href=\"#rCarey_1978_b\"><a class=\"ref-link\" id=\"cCarey_1978_b\" href=\"#rCarey_1978_b\">Carey & Bartlett, 1978</a></a>), i.e. learning a new concept after a single exposure",
+        "We propose to adopt simple learning algorithms that admit a closed-form solution such as ridge regression",
+        "We provide practical details for the two novel methods introduced in Section 3.2 and 3.3, which we dub R2-D2 (Ridge Regression Differentiable Discriminator) and LR-D2 (Logistic Regression Differentiable Discriminator)",
+        "We analyze their performance against the recent literature on multi-class and binary classification problems using three few-shot learning benchmarks: Omniglot (<a class=\"ref-link\" id=\"cLake_et+al_2015_a\" href=\"#rLake_et+al_2015_a\">Lake et al, 2015</a>), miniImageNet (Vinyals et al, 2016) and CIFAR-FS, which we introduce in this paper",
+        "R2-D2, the differentiable ridge regression base learner we introduce, is almost as fast as prototypical networks and strikes a useful compromise between not performing adaptation for new episodes and conducting a costly iterative approach",
+        "We showed that our base learners work remarkably well, with excellent results on few-shot learning benchmarks, generalizing to episodes with new classes that were not seen during training"
+    ],
+    "summary": [
+        "Humans can efficiently perform fast mapping (<a class=\"ref-link\" id=\"cCarey_1978_a\" href=\"#rCarey_1978_a\"><a class=\"ref-link\" id=\"cCarey_1978_a\" href=\"#rCarey_1978_a\">Carey, 1978</a></a>; <a class=\"ref-link\" id=\"cCarey_1978_b\" href=\"#rCarey_1978_b\"><a class=\"ref-link\" id=\"cCarey_1978_b\" href=\"#rCarey_1978_b\">Carey & Bartlett, 1978</a></a>), i.e. learning a new concept after a single exposure.",
+        "The base learner works at the level of individual episodes, which correspond to learning problems characterised by having only a small set of labelled training images available.",
+        "The base learner works at the level of individual episodes, which in the few-shot scenario correspond to learning problems characterised by having only a small set of labelled training images available.",
+        "\u03a9 affects the representation of the input of the base learner algorithm \u039b, while \u03c1 corresponds to its hyper-parameters, which here can be learnt by the meta-learner loop instead of being manually set, as it usually happens in a standard training scenario.",
+        "Since eq (7) takes a similar form to ridge regression, we can use it for meta-learning in the same way as in section 3.2, with the difference that a small number of steps) must be performed in order to obtain the final parameters wE .",
+        "Like most meta-learning techniques, we organize our training procedure into episodes, each of which corresponds to a few-shot classification problem.",
+        "We analyze their performance against the recent literature on multi-class and binary classification problems using three few-shot learning benchmarks: Omniglot (<a class=\"ref-link\" id=\"cLake_et+al_2015_a\" href=\"#rLake_et+al_2015_a\">Lake et al, 2015</a>), miniImageNet (Vinyals et al, 2016) and CIFAR-FS, which we introduce in this paper.",
+        "Despite the few-shot problem at test time being 5 or 20-way, in our multi-class classification experiments we train using 60 classes for Omniglot, 16 for miniImageNet and 20 for CIFAR-FS.",
+        "We report the results of methods which train their models from scratch for few-shot classification, omitting very recent work of <a class=\"ref-link\" id=\"cQiao_et+al_2018_a\" href=\"#rQiao_et+al_2018_a\">Qiao et al (2018</a>) and <a class=\"ref-link\" id=\"cGidaris_2018_a\" href=\"#rGidaris_2018_a\">Gidaris & Komodakis (2018</a>), which instead make use of pre-trained embeddings.",
+        "For both methods and prototypical networks, we report the performance obtained annealing the learning rate by a factor of 0.99, which works better than the schedule used for multi-class classification.",
+        "With the aim of allowing efficient adaptation to unseen learning problems, in this paper we explored the feasibility of incorporating fast solvers with closed-form solutions as the base learning component of a meta-learning system.",
+        "R2-D2, the differentiable ridge regression base learner we introduce, is almost as fast as prototypical networks and strikes a useful compromise between not performing adaptation for new episodes and conducting a costly iterative approach.",
+        "We showed that our base learners work remarkably well, with excellent results on few-shot learning benchmarks, generalizing to episodes with new classes that were not seen during training.",
+        "We would like to explore Newton\u2019s methods with more complicated second-order structure than ridge regression"
+    ],
+    "headline": "We propose to use these fast convergent methods as the main adaptation mechanism for few-shot learning",
+    "reference_links": [
+        {
+            "id": "Altae-Tran_et+al_2017_a",
+            "entry": "Han Altae-Tran, Bharath Ramsundar, Aneesh S Pappu, and Vijay Pande. Low data drug discovery with one-shot learning. ACS central science, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Altae-Tran%2C%20Han%20Ramsundar%2C%20Bharath%20Pappu%2C%20Aneesh%20S.%20Pande%2C%20Vijay%20Low%20data%20drug%20discovery%20with%20one-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Altae-Tran%2C%20Han%20Ramsundar%2C%20Bharath%20Pappu%2C%20Aneesh%20S.%20Pande%2C%20Vijay%20Low%20data%20drug%20discovery%20with%20one-shot%20learning%202017"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, and Nando de Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Bengio_et+al_1992_a",
+            "entry": "Samy Bengio, Yoshua Bengio, Jocelyn Cloutier, and Jan Gecsei. On the optimization of a synaptic learning rule. In Preprints Conf. Optimality in Artificial and Biological Neural Networks, pp. 6\u20138. Univ. of Texas, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992"
+        },
+        {
+            "id": "Bertinetto_et+al_2016_a",
+            "entry": "Luca Bertinetto, Jo\u00e3o F Henriques, Jack Valmadre, Philip Torr, and Andrea Vedaldi. Learning feed-forward one-shot learners. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertinetto%2C%20Luca%20Henriques%2C%20Jo%C3%A3o%20F.%20Valmadre%2C%20Jack%20Torr%2C%20Philip%20Learning%20feed-forward%20one-shot%20learners%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bertinetto%2C%20Luca%20Henriques%2C%20Jo%C3%A3o%20F.%20Valmadre%2C%20Jack%20Torr%2C%20Philip%20Learning%20feed-forward%20one-shot%20learners%202016"
+        },
+        {
+            "id": "Bishop_2006_a",
+            "entry": "Christopher M. Bishop. Pattern Recognition and Machine Learning (Information Science and Statistics). Springer-Verlag, Berlin, Heidelberg, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Christopher%20M.%20Pattern%20Recognition%20and%20Machine%20Learning%20%28Information%20Science%20and%20Statistics%29%202006"
+        },
+        {
+            "id": "Bromley_et+al_1993_a",
+            "entry": "Jane Bromley, James W Bentz, L\u00e9on Bottou, Isabelle Guyon, Yann LeCun, Cliff Moore, Eduard S\u00e4ckinger, and Roopak Shah. Signature verification using a \u201cSiamese\u201d time delay neural network. International Journal of Pattern Recognition and Artificial Intelligence, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bromley%2C%20Jane%20Bentz%2C%20James%20W.%20Bottou%2C%20L%C3%A9on%20Guyon%2C%20Isabelle%20Signature%20verification%20using%20a%20%E2%80%9CSiamese%E2%80%9D%20time%20delay%20neural%20network%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bromley%2C%20Jane%20Bentz%2C%20James%20W.%20Bottou%2C%20L%C3%A9on%20Guyon%2C%20Isabelle%20Signature%20verification%20using%20a%20%E2%80%9CSiamese%E2%80%9D%20time%20delay%20neural%20network%201993"
+        },
+        {
+            "id": "Carey_1978_a",
+            "entry": "Susan Carey. Less may never mean more. Recent advances in the psychology of language, 1978.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carey%2C%20Susan%20Less%20may%20never%20mean%20more.%20Recent%20advances%20in%20the%20psychology%20of%20language%201978"
+        },
+        {
+            "id": "Carey_1978_b",
+            "entry": "Susan Carey and Elsa Bartlett. Acquiring a single new word. 1978.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carey%2C%20Susan%20Bartlett%2C%20Elsa%20Acquiring%20a%20single%20new%20word%201978"
+        },
+        {
+            "id": "Caruana_1998_a",
+            "entry": "Rich Caruana. Multitask learning. In Learning to learn. Springer, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Caruana%2C%20Rich%20Multitask%20learning.%20In%20Learning%20to%20learn%201998"
+        },
+        {
+            "id": "Chopra_et+al_2005_a",
+            "entry": "Sumit Chopra, Raia Hadsell, and Yann LeCun. Learning a similarity metric discriminatively, with application to face verification. In IEEE Conference on Computer Vision and Pattern Recognition, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chopra%2C%20Sumit%20Hadsell%2C%20Raia%20LeCun%2C%20Yann%20Learning%20a%20similarity%20metric%20discriminatively%2C%20with%20application%20to%20face%20verification%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chopra%2C%20Sumit%20Hadsell%2C%20Raia%20LeCun%2C%20Yann%20Learning%20a%20similarity%20metric%20discriminatively%2C%20with%20application%20to%20face%20verification%202005"
+        },
+        {
+            "id": "Chu_et+al_2016_a",
+            "entry": "Brian Chu, Vashisht Madhavan, Oscar Beijbom, Judy Hoffman, and Trevor Darrell. Best practices for fine-tuning visual classifiers to new domains. In European Conference on Computer Vision workshops. Springer, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chu%2C%20Brian%20Madhavan%2C%20Vashisht%20Beijbom%2C%20Oscar%20Hoffman%2C%20Judy%20Best%20practices%20for%20fine-tuning%20visual%20classifiers%20to%20new%20domains%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chu%2C%20Brian%20Madhavan%2C%20Vashisht%20Beijbom%2C%20Oscar%20Hoffman%2C%20Judy%20Best%20practices%20for%20fine-tuning%20visual%20classifiers%20to%20new%20domains%202016"
+        },
+        {
+            "id": "Fei-Fei_et+al_2006_a",
+            "entry": "Li Fei-Fei, Rob Fergus, and Pietro Perona. One-shot learning of object categories. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fei-Fei%2C%20Li%20Fergus%2C%20Rob%20Perona%2C%20Pietro%20One-shot%20learning%20of%20object%20categories%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fei-Fei%2C%20Li%20Fergus%2C%20Rob%20Perona%2C%20Pietro%20One-shot%20learning%20of%20object%20categories%202006"
+        },
+        {
+            "id": "Finn_2018_a",
+            "entry": "Chelsea Finn and Sergey Levine. Meta-learning and universality: Deep representations and gradient descent can approximate any learning algorithm. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Meta-learning%20and%20universality%3A%20Deep%20representations%20and%20gradient%20descent%20can%20approximate%20any%20learning%20algorithm%202018"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Garcia_2018_a",
+            "entry": "Victor Garcia and Joan Bruna. Few-shot learning with graph neural networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garcia%2C%20Victor%20Bruna%2C%20Joan%20Few-shot%20learning%20with%20graph%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garcia%2C%20Victor%20Bruna%2C%20Joan%20Few-shot%20learning%20with%20graph%20neural%20networks%202018"
+        },
+        {
+            "id": "Gidaris_2018_a",
+            "entry": "Spyros Gidaris and Nikos Komodakis. Dynamic few-shot visual learning without forgetting. In IEEE Conference on Computer Vision and Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gidaris%2C%20Spyros%20Komodakis%2C%20Nikos%20Dynamic%20few-shot%20visual%20learning%20without%20forgetting%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gidaris%2C%20Spyros%20Komodakis%2C%20Nikos%20Dynamic%20few-shot%20visual%20learning%20without%20forgetting%202018"
+        },
+        {
+            "id": "Gong_et+al_2012_a",
+            "entry": "Boqing Gong, Yuan Shi, Fei Sha, and Kristen Grauman. Geodesic flow kernel for unsupervised domain adaptation. In IEEE Conference on Computer Vision and Pattern Recognition, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gong%2C%20Boqing%20Shi%2C%20Yuan%20Sha%2C%20Fei%20Grauman%2C%20Kristen%20Geodesic%20flow%20kernel%20for%20unsupervised%20domain%20adaptation%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gong%2C%20Boqing%20Shi%2C%20Yuan%20Sha%2C%20Fei%20Grauman%2C%20Kristen%20Geodesic%20flow%20kernel%20for%20unsupervised%20domain%20adaptation%202012"
+        },
+        {
+            "id": "Hariharan_2017_a",
+            "entry": "Bharath Hariharan and Ross B Girshick. Low-shot visual recognition by shrinking and hallucinating features. In IEEE International Conference on Computer Vision, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hariharan%2C%20Bharath%20Girshick%2C%20Ross%20B.%20Low-shot%20visual%20recognition%20by%20shrinking%20and%20hallucinating%20features%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hariharan%2C%20Bharath%20Girshick%2C%20Ross%20B.%20Low-shot%20visual%20recognition%20by%20shrinking%20and%20hallucinating%20features%202017"
+        },
+        {
+            "id": "Kaiser_et+al_2017_a",
+            "entry": "\u0141ukasz Kaiser, Ofir Nachum, Aurko Roy, and Samy Bengio. Learning to remember rare events. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaiser%2C%20%C5%81ukasz%20Nachum%2C%20Ofir%20Roy%2C%20Aurko%20Bengio%2C%20Samy%20Learning%20to%20remember%20rare%20events%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaiser%2C%20%C5%81ukasz%20Nachum%2C%20Ofir%20Roy%2C%20Aurko%20Bengio%2C%20Samy%20Learning%20to%20remember%20rare%20events%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Koch_et+al_2015_a",
+            "entry": "Gregory Koch, Richard Zemel, and Ruslan Salakhutdinov. Siamese neural networks for one-shot image recognition. In International Conference on Machine Learning workshops, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koch%2C%20Gregory%20Zemel%2C%20Richard%20Salakhutdinov%2C%20Ruslan%20Siamese%20neural%20networks%20for%20one-shot%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koch%2C%20Gregory%20Zemel%2C%20Richard%20Salakhutdinov%2C%20Ruslan%20Siamese%20neural%20networks%20for%20one-shot%20image%20recognition%202015"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Kumar_et+al_2005_a",
+            "entry": "BVK Vijaya Kumar, Abhijit Mahalanobis, and Richard D Juday. Correlation pattern recognition. Cambridge University Press, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kumar%2C%20B.V.K.Vijaya%20Mahalanobis%2C%20Abhijit%20Juday%2C%20Richard%20D.%20Correlation%20pattern%20recognition%202005"
+        },
+        {
+            "id": "Lake_et+al_2015_a",
+            "entry": "Brenden M Lake, Ruslan Salakhutdinov, and Joshua B Tenenbaum. Human-level concept learning through probabilistic program induction. Science, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20Tenenbaum%2C%20Joshua%20B.%20Human-level%20concept%20learning%20through%20probabilistic%20program%20induction%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20Tenenbaum%2C%20Joshua%20B.%20Human-level%20concept%20learning%20through%20probabilistic%20program%20induction%202015"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan Adams. Gradient-based hyperparameter optimization through reversible learning. In International Conference on Machine Learning, pp. 2113\u20132122, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015"
+        },
+        {
+            "id": "Mccloskey_1989_a",
+            "entry": "Michael McCloskey and Neal J Cohen. Catastrophic interference in connectionist networks: The sequential learning problem. In Psychology of learning and motivation. 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McCloskey%2C%20Michael%20Cohen%2C%20Neal%20J.%20Catastrophic%20interference%20in%20connectionist%20networks%3A%20The%20sequential%20learning%20problem.%20In%20Psychology%20of%20learning%20and%20motivation%201989"
+        },
+        {
+            "id": "Miller_et+al_2000_a",
+            "entry": "Erik G Miller, Nicholas E Matsakis, and Paul A Viola. Learning from one example through shared densities on transforms. In IEEE Conference on Computer Vision and Pattern Recognition. IEEE, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miller%2C%20Erik%20G.%20Matsakis%2C%20Nicholas%20E.%20Viola%2C%20Paul%20A.%20Learning%20from%20one%20example%20through%20shared%20densities%20on%20transforms%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miller%2C%20Erik%20G.%20Matsakis%2C%20Nicholas%20E.%20Viola%2C%20Paul%20A.%20Learning%20from%20one%20example%20through%20shared%20densities%20on%20transforms%202000"
+        },
+        {
+            "id": "Mishra_et+al_2018_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. A simple neural attentive metalearner. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mishra%2C%20Nikhil%20Rohaninejad%2C%20Mostafa%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20A%20simple%20neural%20attentive%20metalearner%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mishra%2C%20Nikhil%20Rohaninejad%2C%20Mostafa%20Chen%2C%20Xi%20Abbeel%2C%20Pieter%20A%20simple%20neural%20attentive%20metalearner%202018"
+        },
+        {
+            "id": "Mitchell_1980_a",
+            "entry": "Tom M Mitchell. The need for biases in learning generalizations. Department of Computer Science, Laboratory for Computer Science Research, Rutgers Univ. New Jersey, 1980.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mitchell%2C%20Tom%20M.%20The%20need%20for%20biases%20in%20learning%20generalizations%201980"
+        },
+        {
+            "id": "Mitchell_1997_a",
+            "entry": "Tom M Mitchell et al. Machine learning. 1997. Burr Ridge, IL: McGraw Hill, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tom%20M%20Mitchell%20et%20al%20Machine%20learning%201997%20Burr%20Ridge%20IL%20McGraw%20Hill%201997"
+        },
+        {
+            "id": "Munkhdalai_2017_a",
+            "entry": "Tsendsuren Munkhdalai and Hong Yu. Meta networks. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Munkhdalai%2C%20Tsendsuren%20Yu%2C%20Hong%20Meta%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Munkhdalai%2C%20Tsendsuren%20Yu%2C%20Hong%20Meta%20networks%202017"
+        },
+        {
+            "id": "Murphy_2012_a",
+            "entry": "Kevin P. Murphy. Machine Learning: A Probabilistic Perspective. The MIT Press, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murphy%2C%20Kevin%20P.%20Machine%20Learning%3A%20A%20Probabilistic%20Perspective%202012"
+        },
+        {
+            "id": "Naik_1992_a",
+            "entry": "Devang K Naik and RJ Mammone. Meta-neural networks that learn by learning. In Neural Networks, 1992. IJCNN., International Joint Conference on. IEEE, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Naik%2C%20Devang%20K.%20Mammone%2C%20R.J.%20Meta-neural%20networks%20that%20learn%20by%20learning%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Naik%2C%20Devang%20K.%20Mammone%2C%20R.J.%20Meta-neural%20networks%20that%20learn%20by%20learning%201992"
+        },
+        {
+            "id": "Nichol_et+al_2018_a",
+            "entry": "Alex Nichol, Joshua Achiam, and John Schulman. On first-order meta-learning algorithms. CoRR, 2018. URL http://arxiv.org/abs/1803.02999.",
+            "url": "http://arxiv.org/abs/1803.02999",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02999"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew Senior, and Koray Kavukcuoglu. Wavenet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Petersen_2008_a",
+            "entry": "Kaare Brandt Petersen, Michael Syskind Pedersen, et al. The matrix cookbook. Technical University of Denmark, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Petersen%2C%20Kaare%20Brandt%20Pedersen%2C%20Michael%20Syskind%20The%20matrix%20cookbook%202008"
+        },
+        {
+            "id": "Qiao_et+al_2018_a",
+            "entry": "Siyuan Qiao, Chenxi Liu, Wei Shen, and Alan L. Yuille. Few-shot image recognition by predicting parameters from activations. In IEEE Conference on Computer Vision and Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qiao%2C%20Siyuan%20Liu%2C%20Chenxi%20Shen%2C%20Wei%20Yuille%2C%20Alan%20L.%20Few-shot%20image%20recognition%20by%20predicting%20parameters%20from%20activations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qiao%2C%20Siyuan%20Liu%2C%20Chenxi%20Shen%2C%20Wei%20Yuille%2C%20Alan%20L.%20Few-shot%20image%20recognition%20by%20predicting%20parameters%20from%20activations%202018"
+        },
+        {
+            "id": "Ravi_2017_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202017"
+        },
+        {
+            "id": "Rebuffi_et+al_2017_a",
+            "entry": "Sylvestre-Alvise Rebuffi, Hakan Bilen, and Andrea Vedaldi. Learning multiple visual domains with residual adapters. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rebuffi%2C%20Sylvestre-Alvise%20Bilen%2C%20Hakan%20Vedaldi%2C%20Andrea%20Learning%20multiple%20visual%20domains%20with%20residual%20adapters%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rebuffi%2C%20Sylvestre-Alvise%20Bilen%2C%20Hakan%20Vedaldi%2C%20Andrea%20Learning%20multiple%20visual%20domains%20with%20residual%20adapters%202017"
+        },
+        {
+            "id": "Ren_et+al_2018_a",
+            "entry": "Mengye Ren, Eleni Triantafillou, Sachin Ravi, Jake Snell, Kevin Swersky, Joshua B Tenenbaum, Hugo Larochelle, and Richard S Zemel. Meta-learning for semi-supervised few-shot classification. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Mengye%20Triantafillou%2C%20Eleni%20Ravi%2C%20Sachin%20Snell%2C%20Jake%20Meta-learning%20for%20semi-supervised%20few-shot%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Mengye%20Triantafillou%2C%20Eleni%20Ravi%2C%20Sachin%20Snell%2C%20Jake%20Meta-learning%20for%20semi-supervised%20few-shot%20classification%202018"
+        },
+        {
+            "id": "Ruder_2017_a",
+            "entry": "Sebastian Ruder. An overview of multi-task learning in deep neural networks. arXiv preprint arXiv:1706.05098, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.05098"
+        },
+        {
+            "id": "Russakovsky_et+al_2015_a",
+            "entry": "Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, et al. Imagenet large scale visual recognition challenge. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Russakovsky%2C%20Olga%20Deng%2C%20Jia%20Su%2C%20Hao%20Krause%2C%20Jonathan%20Imagenet%20large%20scale%20visual%20recognition%20challenge%202015"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Metalearning with memory-augmented neural networks. In International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016"
+        },
+        {
+            "id": "Schmidhuber_1987_a",
+            "entry": "J\u00fcrgen Schmidhuber. Evolutionary principles in self-referential learning, or on learning how to learn: the meta-meta-... hook. PhD thesis, Technische Universit\u00e4t M\u00fcnchen, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Evolutionary%20principles%20in%20self-referential%20learning%2C%20or%20on%20learning%20how%20to%20learn%3A%20the%20meta-meta-%201987"
+        },
+        {
+            "id": "Schmidhuber_1992_a",
+            "entry": "J\u00fcrgen Schmidhuber. Learning to control fast-weight memories: An alternative to dynamic recurrent networks. Neural Computation, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Learning%20to%20control%20fast-weight%20memories%3A%20An%20alternative%20to%20dynamic%20recurrent%20networks%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20J%C3%BCrgen%20Learning%20to%20control%20fast-weight%20memories%3A%20An%20alternative%20to%20dynamic%20recurrent%20networks%201992"
+        },
+        {
+            "id": "Schmidhuber_1993_a",
+            "entry": "J\u00fcrgen Schmidhuber. A neural network that embeds its own meta-levels. In Neural Networks, 1993., IEEE International Conference on. IEEE, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20A%20neural%20network%20that%20embeds%20its%20own%20meta-levels%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20J%C3%BCrgen%20A%20neural%20network%20that%20embeds%20its%20own%20meta-levels%201993"
+        },
+        {
+            "id": "Snell_et+al_2017_a",
+            "entry": "Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017"
+        },
+        {
+            "id": "Sprechmann_et+al_2018_a",
+            "entry": "Pablo Sprechmann, Siddhant M Jayakumar, Jack W Rae, Alexander Pritzel, Adri\u00e0 Puigdom\u00e8nech Badia, Benigno Uria, Oriol Vinyals, Demis Hassabis, Razvan Pascanu, and Charles Blundell. Memory-based parameter adaptation. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sprechmann%2C%20Pablo%20Jayakumar%2C%20Siddhant%20M.%20Rae%2C%20Jack%20W.%20Pritzel%2C%20Alexander%20Demis%20Hassabis%2C%20Razvan%20Pascanu%2C%20and%20Charles%20Blundell.%20Memory-based%20parameter%20adaptation%202018"
+        },
+        {
+            "id": "Sung_et+al_2018_a",
+            "entry": "Flood Sung, Yongxin Yang, Li Zhang, Tao Xiang, Philip HS Torr, and Timothy M Hospedales. Learning to compare: Relation network for few-shot learning. In IEEE Conference on Computer Vision and Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sung%2C%20Flood%20Yang%2C%20Yongxin%20Zhang%2C%20Li%20Xiang%2C%20Tao%20Learning%20to%20compare%3A%20Relation%20network%20for%20few-shot%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sung%2C%20Flood%20Yang%2C%20Yongxin%20Zhang%2C%20Li%20Xiang%2C%20Tao%20Learning%20to%20compare%3A%20Relation%20network%20for%20few-shot%20learning%202018"
+        },
+        {
+            "id": "Tarantola_2005_a",
+            "entry": "Albert Tarantola. Inverse problem theory and methods for model parameter estimation, volume 89. siam, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tarantola%2C%20Albert%20Inverse%20problem%20theory%20and%20methods%20for%20model%20parameter%20estimation%202005"
+        },
+        {
+            "id": "Thrun_1996_a",
+            "entry": "Sebastian Thrun. Is learning the n-th thing any easier than learning the first? In Advances in Neural Information Processing Systems, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thrun%2C%20Sebastian%20Is%20learning%20the%20n-th%20thing%20any%20easier%20than%20learning%20the%20first%3F%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thrun%2C%20Sebastian%20Is%20learning%20the%20n-th%20thing%20any%20easier%20than%20learning%20the%20first%3F%201996"
+        },
+        {
+            "id": "Contributions_2006_a",
+            "entry": "Contributions within the few-shot learning paradigm. In this work, we evaluated our proposed methods R2-D2 and LR-D2 in the few-shot learning scenario (Fei-Fei et al., 2006; Lake et al., 2015; Vinyals et al., 2016; Ravi & Larochelle, 2017; Hariharan & Girshick, 2017), which consists in learning how to discriminate between images given one or very few examples. For methods tackling this problem, it is common practice to organise the training procedure in two nested loops. The inner loop is used to solve the actual few-shot classification problem, while the outer loop serves as a guidance for the former by gradually modifying the inductive bias of the base learner (Vilalta & Drissi, 2002). Differently from standard classification benchmarks, the few-shot ones enforce that classes are disjoint between dataset splits.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Contributions%20within%20the%20fewshot%20learning%20paradigm%20In%20this%20work%20we%20evaluated%20our%20proposed%20methods%20R2D2%20and%20LRD2%20in%20the%20fewshot%20learning%20scenario%20FeiFei%20et%20al%202006%20Lake%20et%20al%202015%20Vinyals%20et%20al%202016%20Ravi%20%20Larochelle%202017%20Hariharan%20%20Girshick%202017%20which%20consists%20in%20learning%20how%20to%20discriminate%20between%20images%20given%20one%20or%20very%20few%20examples%20For%20methods%20tackling%20this%20problem%20it%20is%20common%20practice%20to%20organise%20the%20training%20procedure%20in%20two%20nested%20loops%20The%20inner%20loop%20is%20used%20to%20solve%20the%20actual%20fewshot%20classification%20problem%20while%20the%20outer%20loop%20serves%20as%20a%20guidance%20for%20the%20former%20by%20gradually%20modifying%20the%20inductive%20bias%20of%20the%20base%20learner%20Vilalta%20%20Drissi%202002%20Differently%20from%20standard%20classification%20benchmarks%20the%20fewshot%20ones%20enforce%20that%20classes%20are%20disjoint%20between%20dataset%20splits",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Contributions%20within%20the%20fewshot%20learning%20paradigm%20In%20this%20work%20we%20evaluated%20our%20proposed%20methods%20R2D2%20and%20LRD2%20in%20the%20fewshot%20learning%20scenario%20FeiFei%20et%20al%202006%20Lake%20et%20al%202015%20Vinyals%20et%20al%202016%20Ravi%20%20Larochelle%202017%20Hariharan%20%20Girshick%202017%20which%20consists%20in%20learning%20how%20to%20discriminate%20between%20images%20given%20one%20or%20very%20few%20examples%20For%20methods%20tackling%20this%20problem%20it%20is%20common%20practice%20to%20organise%20the%20training%20procedure%20in%20two%20nested%20loops%20The%20inner%20loop%20is%20used%20to%20solve%20the%20actual%20fewshot%20classification%20problem%20while%20the%20outer%20loop%20serves%20as%20a%20guidance%20for%20the%20former%20by%20gradually%20modifying%20the%20inductive%20bias%20of%20the%20base%20learner%20Vilalta%20%20Drissi%202002%20Differently%20from%20standard%20classification%20benchmarks%20the%20fewshot%20ones%20enforce%20that%20classes%20are%20disjoint%20between%20dataset%20splits"
+        },
+        {
+            "id": "Within_2012_a",
+            "entry": "Within this landscape, our work proposes a novel technique (R2-D2) that does allow per-episode adaptation while at the same time being fast (Table 4) and achieving strong performance (Table 1). The key innovation is to use a simple (and differentiable) solver such as ridge regression within the inner loop, which requires back-propagating through the solution of a learning problem. Crucially, its closed-form solution and the use of the Woodbury identity (particularly advantageous in the low data regime) allow this non-trivial endeavour to be efficient. We further demonstrate that this strategy is not limited to the ridge regression case, but it can also be extended to other solvers (LR-D2) by dividing the problem into a short series of weighted least squares problems ((Murphy, 2012, Chapter 8.3.4)).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Within%20this%20landscape%20our%20work%20proposes%20a%20novel%20technique%20R2D2%20that%20does%20allow%20perepisode%20adaptation%20while%20at%20the%20same%20time%20being%20fast%20Table%204%20and%20achieving%20strong%20performance%20Table%201%20The%20key%20innovation%20is%20to%20use%20a%20simple%20and%20differentiable%20solver%20such%20as%20ridge%20regression%20within%20the%20inner%20loop%20which%20requires%20backpropagating%20through%20the%20solution%20of%20a%20learning%20problem%20Crucially%20its%20closedform%20solution%20and%20the%20use%20of%20the%20Woodbury%20identity%20particularly%20advantageous%20in%20the%20low%20data%20regime%20allow%20this%20nontrivial%20endeavour%20to%20be%20efficient%20We%20further%20demonstrate%20that%20this%20strategy%20is%20not%20limited%20to%20the%20ridge%20regression%20case%20but%20it%20can%20also%20be%20extended%20to%20other%20solvers%20LRD2%20by%20dividing%20the%20problem%20into%20a%20short%20series%20of%20weighted%20least%20squares%20problems%20Murphy%202012%20Chapter%20834",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Within%20this%20landscape%20our%20work%20proposes%20a%20novel%20technique%20R2D2%20that%20does%20allow%20perepisode%20adaptation%20while%20at%20the%20same%20time%20being%20fast%20Table%204%20and%20achieving%20strong%20performance%20Table%201%20The%20key%20innovation%20is%20to%20use%20a%20simple%20and%20differentiable%20solver%20such%20as%20ridge%20regression%20within%20the%20inner%20loop%20which%20requires%20backpropagating%20through%20the%20solution%20of%20a%20learning%20problem%20Crucially%20its%20closedform%20solution%20and%20the%20use%20of%20the%20Woodbury%20identity%20particularly%20advantageous%20in%20the%20low%20data%20regime%20allow%20this%20nontrivial%20endeavour%20to%20be%20efficient%20We%20further%20demonstrate%20that%20this%20strategy%20is%20not%20limited%20to%20the%20ridge%20regression%20case%20but%20it%20can%20also%20be%20extended%20to%20other%20solvers%20LRD2%20by%20dividing%20the%20problem%20into%20a%20short%20series%20of%20weighted%20least%20squares%20problems%20Murphy%202012%20Chapter%20834"
+        },
+        {
+            "id": "The_2016_a",
+            "entry": "The importance of considering adaptation during training. Considering adaptation during training is also one of the main traits that differentiate our approach from basic transfer learning approaches in which a neural network is first pre-trained on one dataset/task and then adapted to a different dataset/task by simply adapting the final layer(s) (e.g. Yosinski et al. (2014); Chu et al. (2016)).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20importance%20of%20considering%20adaptation%20during%20training%20Considering%20adaptation%20during%20training%20is%20also%20one%20of%20the%20main%20traits%20that%20differentiate%20our%20approach%20from%20basic%20transfer%20learning%20approaches%20in%20which%20a%20neural%20network%20is%20first%20pretrained%20on%20one%20datasettask%20and%20then%20adapted%20to%20a%20different%20datasettask%20by%20simply%20adapting%20the%20final%20layers%20eg%20Yosinski%20et%20al%202014%20Chu%20et%20al%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20importance%20of%20considering%20adaptation%20during%20training%20Considering%20adaptation%20during%20training%20is%20also%20one%20of%20the%20main%20traits%20that%20differentiate%20our%20approach%20from%20basic%20transfer%20learning%20approaches%20in%20which%20a%20neural%20network%20is%20first%20pretrained%20on%20one%20datasettask%20and%20then%20adapted%20to%20a%20different%20datasettask%20by%20simply%20adapting%20the%20final%20layers%20eg%20Yosinski%20et%20al%202014%20Chu%20et%20al%202016"
+        },
+        {
+            "id": "The_2005_a",
+            "entry": "The regularization term can be seen as a prior gaussian distribution of the parameters in a Bayesian interpretation, or more simply Tikhonov regularization (Tarantola, 2005). In the most common case of \u03bbI, it corresponds to an isotropic gaussian prior on the parameters.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20regularization%20term%20can%20be%20seen%20as%20a%20prior%20gaussian%20distribution%20of%20the%20parameters%20in%20a%20Bayesian%20interpretation%20or%20more%20simply%20Tikhonov%20regularization%20Tarantola%202005%20In%20the%20most%20common%20case%20of%20%CE%BBI%20it%20corresponds%20to%20an%20isotropic%20gaussian%20prior%20on%20the%20parameters",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20regularization%20term%20can%20be%20seen%20as%20a%20prior%20gaussian%20distribution%20of%20the%20parameters%20in%20a%20Bayesian%20interpretation%20or%20more%20simply%20Tikhonov%20regularization%20Tarantola%202005%20In%20the%20most%20common%20case%20of%20%CE%BBI%20it%20corresponds%20to%20an%20isotropic%20gaussian%20prior%20on%20the%20parameters"
+        }
+    ]
+}

@@ -1,0 +1,308 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DEEP LAYERS AS STOCHASTIC SOLVERS",
+        "author": "Adel Bibi \u2217 KAUST",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ryxxCiRqYX"
+        },
+        "abstract": "We provide a novel perspective on the forward pass through a block of layers in a deep network. In particular, we show that a forward pass through a standard dropout layer followed by a linear layer and a non-linear activation is equivalent to optimizing a convex objective with a single iteration of a \u03c4 -nice Proximal Stochastic Gradient method. We further show that replacing standard Bernoulli dropout with additive dropout is equivalent to optimizing the same convex objective with a variance-reduced proximal method. By expressing both fully-connected and convolutional layers as special cases of a high-order tensor product, we unify the underlying convex optimization problem in the tensor setting and derive a formula for the Lipschitz constant L used to determine the optimal step size of the above proximal methods. We conduct experiments with standard convolutional networks applied to the CIFAR-10 and CIFAR-100 datasets and show that replacing a block of layers with multiple iterations of the corresponding solver, with step size set via L, consistently improves classification accuracy."
+    },
+    "keywords": [
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "gradient method",
+            "url": "https://en.wikipedia.org/wiki/gradient_method"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "linear transformation",
+            "url": "https://en.wikipedia.org/wiki/linear_transformation"
+        }
+    ],
+    "abbreviations": {
+        "ML-CSC": "Multi-Layer Convolutional Sparse Coding",
+        "Prox-GD": "proximal gradient descent"
+    },
+    "highlights": [
+        "Deep learning has revolutionized computer vision and natural language processing and is increasingly applied throughout science and engineering (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>)",
+        "Can the fundamental block of layers that consists of a dropout layer followed by a linear transformation and a non-linear activation be further improved for better generalization? Can the choice of dropout layer be made independently from the linear transformation and non-linear activation? Are there systematic ways to propose new types of dropout?",
+        "We show that a block of layers that consists of dropout followed by a linear transformation and a non-linear activation has close connections to applying stochastic solvers to (1)",
+        "Our contributions can be summarized as follows. (i) We show that a forward pass through a block that consists of Bernoulli dropout followed by a linear transformation and a non-linear activation",
+        "In Section 3.2, we present a motivational example relating a single iteration of proximal gradient descent (Prox-GD) on (1) to the forward pass through a fully-connected layer followed by a nonlinear activation",
+        "We have presented equivalences between layers in deep networks and stochastic solvers, and have shown that this can be leveraged to improve accuracy"
+    ],
+    "key_statements": [
+        "Deep learning has revolutionized computer vision and natural language processing and is increasingly applied throughout science and engineering (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>)",
+        "Can the fundamental block of layers that consists of a dropout layer followed by a linear transformation and a non-linear activation be further improved for better generalization? Can the choice of dropout layer be made independently from the linear transformation and non-linear activation? Are there systematic ways to propose new types of dropout?",
+        "We show that a block of layers that consists of dropout followed by a linear transformation and a non-linear activation has close connections to applying stochastic solvers to (1)",
+        "Our contributions can be summarized as follows. (i) We show that a forward pass through a block that consists of Bernoulli dropout followed by a linear transformation and a non-linear activation",
+        "In Section 3.2, we present a motivational example relating a single iteration of proximal gradient descent (Prox-GD) on (1) to the forward pass through a fully-connected layer followed by a nonlinear activation",
+        "We have presented equivalences between layers in deep networks and stochastic solvers, and have shown that this can be leveraged to improve accuracy",
+        "Our framework shows an intimate relation between a dropout layer and the sampling S from the set [n1] in a stochastic algorithm"
+    ],
+    "summary": [
+        "Deep learning has revolutionized computer vision and natural language processing and is increasingly applied throughout science and engineering (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>).",
+        "We show that a block of layers that consists of dropout followed by a linear transformation and a non-linear activation has close connections to applying stochastic solvers to (1).",
+        "In Section 3.2, we present a motivational example relating a single iteration of proximal gradient descent (Prox-GD) on (1) to the forward pass through a fully-connected layer followed by a nonlinear activation.",
+        "Consider the lth convolutional layer in a deep network with some non-linear activation, e.g. Proxg(.), where the weights A \u2208 Rn2\u00d7n1\u00d7W \u00d7H , biases B \u2208 Rn2\u00d71\u00d7W \u00d7H , and input activations X l\u22121 \u2208 Rn1\u00d71\u00d7W \u00d7H are stacked into 4th-order tensors.",
+        "To see how (7) reduces to the functional form of BerDropoutp followed by a fully-connected layer and a non-linear activation, consider W",
+        "Note that if \u03c4 -nice Prox-SG was replaced with Prox-GD, i.e. \u03c4 = n1, this corresponds to having a BerDropoutp layer with dropout rate p = 0; (8) reduces to A BerDropoutp(X l\u22121) = AX l\u22121, which recovers our motivating example (3) that relates ProxGD with the forward pass through a fully-connected layer followed by a non-linearity.",
+        "When a block of layers is replaced with a deterministic solver, i.e. Prox-GD, the step size is set to the optimal constant 1/L, where L is computed according to Lemma 2 and updated every epoch without any zero padding as a circular convolution operator approximates a linear convolution in large dimensions (<a class=\"ref-link\" id=\"cZhu_2017_a\" href=\"#rZhu_2017_a\">Zhu & Wakin, 2017</a>).",
+        "Since Proposition 1 has established a tight connection between the dropout rate p and the sampling rate \u03c4 in (5), we observe that for different choices of dropout rate the baseline performance improves upon replacing a block of layers with a stochastic solver with the corresponding sampling rate \u03c4 .",
+        "With a sampling rate \u03c4 that corresponds to an extreme dropout rate of p = 0.95 (i.e. 95% of all input activations are masked out), the baseline network with BerDropoutp suffers a 56% reduction in accuracy while the stochastic solver declines by only 5%.",
+        "From a deep layer perspective, performing Prox-SG with importance sampling for a single iteration is equivalent to a forward pass through the same block of layers with a new dropout layer.",
+        "We have presented equivalences between stochastic solvers on a particular class of convex optimization problems and a forward pass through a dropout layer followed by a linear layer and a non-linear activation."
+    ],
+    "headline": "We provide a novel perspective on the forward pass through a block of layers in a deep network",
+    "reference_links": [
+        {
+            "id": "Amos_2017_a",
+            "entry": "Brandon Amos and J. Zico Kolter. OptNet: Differentiable optimization as a layer in neural networks. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amos%2C%20Brandon%20Kolter%2C%20J.Zico%20OptNet%3A%20Differentiable%20optimization%20as%20a%20layer%20in%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amos%2C%20Brandon%20Kolter%2C%20J.Zico%20OptNet%3A%20Differentiable%20optimization%20as%20a%20layer%20in%20neural%20networks%202017"
+        },
+        {
+            "id": "Beck_2009_a",
+            "entry": "Amir Beck and Marc Teboulle. A fast iterative shrinkage-thresholding algorithm for linear inverse problems. SIAM Journal on Imaging Sciences, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Beck%2C%20Amir%20Teboulle%2C%20Marc%20A%20fast%20iterative%20shrinkage-thresholding%20algorithm%20for%20linear%20inverse%20problems%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Beck%2C%20Amir%20Teboulle%2C%20Marc%20A%20fast%20iterative%20shrinkage-thresholding%20algorithm%20for%20linear%20inverse%20problems%202009"
+        },
+        {
+            "id": "Bibi_2017_a",
+            "entry": "Adel Bibi and Bernard Ghanem. High order tensor formulation for convolutional sparse coding. In International Conference on Computer Vision (ICCV), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bibi%2C%20Adel%20Ghanem%2C%20Bernard%20High%20order%20tensor%20formulation%20for%20convolutional%20sparse%20coding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bibi%2C%20Adel%20Ghanem%2C%20Bernard%20High%20order%20tensor%20formulation%20for%20convolutional%20sparse%20coding%202017"
+        },
+        {
+            "id": "Bottou_2012_a",
+            "entry": "Leon Bottou. Stochastic gradient descent tricks. In Neural Networks: Tricks of the Trade. Springer, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bottou%2C%20Leon%20Stochastic%20gradient%20descent%20tricks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bottou%2C%20Leon%20Stochastic%20gradient%20descent%20tricks%202012"
+        },
+        {
+            "id": "Boyd_et+al_2011_a",
+            "entry": "Stephen Boyd, Neal Parikh, Eric Chu, Borja Peleato, and Jonathan Eckstein. Distributed optimization and statistical learning via the alternating direction method of multipliers. Foundations and Trends in Machine Learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boyd%2C%20Stephen%20Parikh%2C%20Neal%20Chu%2C%20Eric%20Peleato%2C%20Borja%20Distributed%20optimization%20and%20statistical%20learning%20via%20the%20alternating%20direction%20method%20of%20multipliers%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Boyd%2C%20Stephen%20Parikh%2C%20Neal%20Chu%2C%20Eric%20Peleato%2C%20Borja%20Distributed%20optimization%20and%20statistical%20learning%20via%20the%20alternating%20direction%20method%20of%20multipliers%202011"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. ImageNet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition (CVPR), 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Fawzi_et+al_2015_a",
+            "entry": "Alhussein Fawzi, Mike Davies, and Pascal Frossard. Dictionary learning for fast classification based on soft-thresholding. International Journal of Computer Vision, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20Alhussein%20Davies%2C%20Mike%20Frossard%2C%20Pascal%20Dictionary%20learning%20for%20fast%20classification%20based%20on%20soft-thresholding%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20Alhussein%20Davies%2C%20Mike%20Frossard%2C%20Pascal%20Dictionary%20learning%20for%20fast%20classification%20based%20on%20soft-thresholding%202015"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. In International Conference on Machine Learning (ICML), 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20Bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20Bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Gal_2016_b",
+            "entry": "Yarin Gal and Zoubin Ghahramani. A theoretically grounded application of dropout in recurrent neural networks. In Advances in Neural Information Processing Systems (NIPS), 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Gower_et+al_2018_a",
+            "entry": "Robert M Gower, Peter Richtarik, and Francis Bach. Stochastic quasi-gradient methods: Variance reduction via Jacobian sketching. arXiv preprint arXiv:1805.02632, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.02632"
+        },
+        {
+            "id": "Haeffele_2017_a",
+            "entry": "Benjamin D Haeffele and Rene Vidal. Global optimality in neural network training. In Computer Vision and Pattern Recognition (CVPR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Haeffele%2C%20Benjamin%20D.%20Vidal%2C%20Rene%20Global%20optimality%20in%20neural%20network%20training%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Haeffele%2C%20Benjamin%20D.%20Vidal%2C%20Rene%20Global%20optimality%20in%20neural%20network%20training%202017"
+        },
+        {
+            "id": "Huang_2017_a",
+            "entry": "Zhiwu Huang and Luc J Van Gool. A Riemannian network for SPD matrix learning. In Association for the Advancement of Artificial Intelligence (AAAI), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Zhiwu%20Gool%2C%20Luc%20J.Van%20A%20Riemannian%20network%20for%20SPD%20matrix%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Zhiwu%20Gool%2C%20Luc%20J.Van%20A%20Riemannian%20network%20for%20SPD%20matrix%20learning%202017"
+        },
+        {
+            "id": "Johnson_2013_a",
+            "entry": "Rie Johnson and Tong Zhang. Accelerating stochastic gradient descent using predictive variance reduction. In Advances in Neural Information Processing Systems (NIPS), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Rie%20Zhang%2C%20Tong%20Accelerating%20stochastic%20gradient%20descent%20using%20predictive%20variance%20reduction%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Rie%20Zhang%2C%20Tong%20Accelerating%20stochastic%20gradient%20descent%20using%20predictive%20variance%20reduction%202013"
+        },
+        {
+            "id": "Kilmer_2011_a",
+            "entry": "Misha E Kilmer and Carla D Martin. Factorization strategies for third-order tensors. Linear Algebra and its Applications, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kilmer%2C%20Misha%20E.%20Martin%2C%20Carla%20D.%20Factorization%20strategies%20for%20third-order%20tensors%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kilmer%2C%20Misha%20E.%20Martin%2C%20Carla%20D.%20Factorization%20strategies%20for%20third-order%20tensors%202011"
+        },
+        {
+            "id": "Kobler_et+al_2017_a",
+            "entry": "Erich Kobler, Teresa Klatzer, Kerstin Hammernik, and Thomas Pock. Variational networks: Connecting variational methods and deep learning. In German Conference on Pattern Recognition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kobler%2C%20Erich%20Klatzer%2C%20Teresa%20Hammernik%2C%20Kerstin%20Pock%2C%20Thomas%20Variational%20networks%3A%20Connecting%20variational%20methods%20and%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kobler%2C%20Erich%20Klatzer%2C%20Teresa%20Hammernik%2C%20Kerstin%20Pock%2C%20Thomas%20Variational%20networks%3A%20Connecting%20variational%20methods%20and%20deep%20learning%202017"
+        },
+        {
+            "id": "Kolda_2009_a",
+            "entry": "Tamara G Kolda and Brett W Bader. Tensor decompositions and applications. SIAM Review, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kolda%2C%20Tamara%20G.%20Bader%2C%20Brett%20W.%20Tensor%20decompositions%20and%20applications%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kolda%2C%20Tamara%20G.%20Bader%2C%20Brett%20W.%20Tensor%20decompositions%20and%20applications%202009"
+        },
+        {
+            "id": "Konecny_et+al_2016_a",
+            "entry": "Jakub Konecny, Jie Liu, Peter Richtarik, and Martin Takac. Mini-batch semi-stochastic gradient descent in the proximal setting. Journal of Selected Topics in Signal Processing, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Konecny%2C%20Jakub%20Liu%2C%20Jie%20Richtarik%2C%20Peter%20Takac%2C%20Martin%20Mini-batch%20semi-stochastic%20gradient%20descent%20in%20the%20proximal%20setting%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Konecny%2C%20Jakub%20Liu%2C%20Jie%20Richtarik%2C%20Peter%20Takac%2C%20Martin%20Mini-batch%20semi-stochastic%20gradient%20descent%20in%20the%20proximal%20setting%202016"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. Technical report, Citeseer, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. ImageNet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems (NIPS), 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lecun_et+al_1999_a",
+            "entry": "Yann LeCun, Patrick Haffner, Leon Bottou, and Yoshua Bengio. Object recognition with gradientbased learning. In Shape, Contour and Grouping in Computer Vision. Springer, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Haffner%2C%20Patrick%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Object%20recognition%20with%20gradientbased%20learning%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Haffner%2C%20Patrick%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Object%20recognition%20with%20gradientbased%20learning%201999"
+        },
+        {
+            "id": "Lecun_et+al_2015_a",
+            "entry": "Yann LeCun, Yoshua Bengio, and Geoffrey E. Hinton. Deep learning. Nature, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20E.%20Deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20E.%20Deep%20learning%202015"
+        },
+        {
+            "id": "Meinhardt_et+al_2017_a",
+            "entry": "Tim Meinhardt, Michael Moller, Caner Hazirbas, and Daniel Cremers. Learning proximal operators: Using denoising networks for regularizing inverse imaging problems. In International Conference on Computer Vision (ICCV), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Meinhardt%2C%20Tim%20Moller%2C%20Michael%20Hazirbas%2C%20Caner%20Cremers%2C%20Daniel%20Learning%20proximal%20operators%3A%20Using%20denoising%20networks%20for%20regularizing%20inverse%20imaging%20problems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Meinhardt%2C%20Tim%20Moller%2C%20Michael%20Hazirbas%2C%20Caner%20Cremers%2C%20Daniel%20Learning%20proximal%20operators%3A%20Using%20denoising%20networks%20for%20regularizing%20inverse%20imaging%20problems%202017"
+        },
+        {
+            "id": "Molchanov_et+al_2017_a",
+            "entry": "Dmitry Molchanov, Arsenii Ashukha, and Dmitry P. Vetrov. Variational dropout sparsifies deep neural networks. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Molchanov%2C%20Dmitry%20Ashukha%2C%20Arsenii%20Vetrov%2C%20Dmitry%20P.%20Variational%20dropout%20sparsifies%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Molchanov%2C%20Dmitry%20Ashukha%2C%20Arsenii%20Vetrov%2C%20Dmitry%20P.%20Variational%20dropout%20sparsifies%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Papyan_et+al_2017_a",
+            "entry": "Vardan Papyan, Yaniv Romano, and Michael Elad. Convolutional neural networks analyzed via convolutional sparse coding. Journal of Machine Learning Research, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papyan%2C%20Vardan%20Romano%2C%20Yaniv%20Elad%2C%20Michael%20Convolutional%20neural%20networks%20analyzed%20via%20convolutional%20sparse%20coding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papyan%2C%20Vardan%20Romano%2C%20Yaniv%20Elad%2C%20Michael%20Convolutional%20neural%20networks%20analyzed%20via%20convolutional%20sparse%20coding%202017"
+        },
+        {
+            "id": "Papyan_et+al_2018_a",
+            "entry": "Vardan Papyan, Yaniv Romano, Jeremias Sulam, and Michael Elad. Theoretical foundations of deep learning via sparse representations: A multilayer sparse model and its connection to convolutional neural networks. IEEE Signal Processing Magazine, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papyan%2C%20Vardan%20Romano%2C%20Yaniv%20Sulam%2C%20Jeremias%20Elad%2C%20Michael%20Theoretical%20foundations%20of%20deep%20learning%20via%20sparse%20representations%3A%20A%20multilayer%20sparse%20model%20and%20its%20connection%20to%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papyan%2C%20Vardan%20Romano%2C%20Yaniv%20Sulam%2C%20Jeremias%20Elad%2C%20Michael%20Theoretical%20foundations%20of%20deep%20learning%20via%20sparse%20representations%3A%20A%20multilayer%20sparse%20model%20and%20its%20connection%20to%20convolutional%20neural%20networks%202018"
+        },
+        {
+            "id": "Richtarik_2016_a",
+            "entry": "Peter Richtarik and Martin Takac. On optimal probabilities in stochastic coordinate descent methods. Optimization Letters, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Richtarik%2C%20Peter%20Takac%2C%20Martin%20On%20optimal%20probabilities%20in%20stochastic%20coordinate%20descent%20methods%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Richtarik%2C%20Peter%20Takac%2C%20Martin%20On%20optimal%20probabilities%20in%20stochastic%20coordinate%20descent%20methods%202016"
+        },
+        {
+            "id": "Sedghi_et+al_2019_a",
+            "entry": "Hanie Sedghi, Vineet Gupta, and Philip M Long. The singular values of convolutional layers. In International Conference on Learning Representations (ICLR), 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sedghi%2C%20Hanie%20Gupta%2C%20Vineet%20Long%2C%20Philip%20M.%20The%20singular%20values%20of%20convolutional%20layers%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sedghi%2C%20Hanie%20Gupta%2C%20Vineet%20Long%2C%20Philip%20M.%20The%20singular%20values%20of%20convolutional%20layers%202019"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Soatto_2014_a",
+            "entry": "Stefano Soatto and Alessandro Chiuso. Visual representations: Defining properties and deep approximations. arXiv preprint arXiv:1411.7676, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.7676"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. Journal of Machine Learning Research, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Sulam_et+al_2018_a",
+            "entry": "Jeremias Sulam, Aviad Aberdam, and Michael Elad. On multi-layer basis pursuit, efficient algorithms and convolutional neural networks. arXiv preprint arXiv:1806.00701, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.00701"
+        },
+        {
+            "id": "Vogel_2017_a",
+            "entry": "Christoph Vogel and Thomas Pock. A primal dual network for low-level vision problems. In German Conference on Pattern Recognition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vogel%2C%20Christoph%20Pock%2C%20Thomas%20A%20primal%20dual%20network%20for%20low-level%20vision%20problems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vogel%2C%20Christoph%20Pock%2C%20Thomas%20A%20primal%20dual%20network%20for%20low-level%20vision%20problems%202017"
+        },
+        {
+            "id": "Wager_et+al_2013_a",
+            "entry": "Stefan Wager, Sida Wang, and Percy S Liang. Dropout training as adaptive regularization. In Advances in Neural Information Processing Systems (NIPS), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wager%2C%20Stefan%20Wang%2C%20Sida%20Liang%2C%20Percy%20S.%20Dropout%20training%20as%20adaptive%20regularization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wager%2C%20Stefan%20Wang%2C%20Sida%20Liang%2C%20Percy%20S.%20Dropout%20training%20as%20adaptive%20regularization%202013"
+        },
+        {
+            "id": "Wang_2013_a",
+            "entry": "Sida Wang and Christopher Manning. Fast dropout training. In International Conference on Machine Learning (ICML), 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Sida%20Manning%2C%20Christopher%20Fast%20dropout%20training%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Sida%20Manning%2C%20Christopher%20Fast%20dropout%20training%202013"
+        },
+        {
+            "id": "Xiao_2014_a",
+            "entry": "Lin Xiao and Tong Zhang. A proximal stochastic gradient method with progressive variance reduction. SIAM Journal on Optimization, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20Lin%20Zhang%2C%20Tong%20A%20proximal%20stochastic%20gradient%20method%20with%20progressive%20variance%20reduction%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiao%2C%20Lin%20Zhang%2C%20Tong%20A%20proximal%20stochastic%20gradient%20method%20with%20progressive%20variance%20reduction%202014"
+        },
+        {
+            "id": "Yang_et+al_2016_a",
+            "entry": "Yan Yang, Jian Sun, Huibin Li, and Zongben Xu. Deep ADMM-Net for compressive sensing MRI. In Advances in Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Yan%20Sun%2C%20Jian%20Li%2C%20Huibin%20Xu%2C%20Zongben%20Deep%20ADMM-Net%20for%20compressive%20sensing%20MRI%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Yan%20Sun%2C%20Jian%20Li%2C%20Huibin%20Xu%2C%20Zongben%20Deep%20ADMM-Net%20for%20compressive%20sensing%20MRI%202016"
+        },
+        {
+            "id": "Zhang_2018_a",
+            "entry": "Jian Zhang and Bernard Ghanem. ISTA-Net: Iterative shrinkage-thresholding algorithm inspired deep network for image compressive sensing. In Computer Vision and Pattern Recognition (CVPR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Jian%20Ghanem%2C%20Bernard%20ISTA-Net%3A%20Iterative%20shrinkage-thresholding%20algorithm%20inspired%20deep%20network%20for%20image%20compressive%20sensing%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Jian%20Ghanem%2C%20Bernard%20ISTA-Net%3A%20Iterative%20shrinkage-thresholding%20algorithm%20inspired%20deep%20network%20for%20image%20compressive%20sensing%202018"
+        },
+        {
+            "id": "Zhao_2015_a",
+            "entry": "Peilin Zhao and Tong Zhang. Stochastic optimization with importance sampling for regularized loss minimization. In International Conference on Machine Learning (ICML), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhao%2C%20Peilin%20Zhang%2C%20Tong%20Stochastic%20optimization%20with%20importance%20sampling%20for%20regularized%20loss%20minimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhao%2C%20Peilin%20Zhang%2C%20Tong%20Stochastic%20optimization%20with%20importance%20sampling%20for%20regularized%20loss%20minimization%202015"
+        },
+        {
+            "id": "Zhu_2017_a",
+            "entry": "Zhihui Zhu and Michael B Wakin. On the asymptotic equivalence of circulant and Toeplitz matrices. IEEE Transactions on Information Theory, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Zhihui%20Wakin%2C%20Michael%20B.%20On%20the%20asymptotic%20equivalence%20of%20circulant%20and%20Toeplitz%20matrices%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Zhihui%20Wakin%2C%20Michael%20B.%20On%20the%20asymptotic%20equivalence%20of%20circulant%20and%20Toeplitz%20matrices%202017"
+        }
+    ]
+}

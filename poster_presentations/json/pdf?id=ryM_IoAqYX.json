@@ -1,0 +1,275 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ANALYSIS OF QUANTIZED MODELS",
+        "author": "Lu Hou, Ruiliang Zhang, James T. Kwok, 1Department of Computer Science and Engineering Hong Kong University of Science and Technology Hong Kong {lhouab,jamesk}@cse.ust.hk 2TuSimple ruiliang.zhang@tusimple.ai",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ryM_IoAqYX"
+        },
+        "abstract": "Deep neural networks are usually huge, which significantly limits the deployment on low-end devices. In recent years, many weight-quantized models have been proposed. They have small storage and fast inference, but training can still be time-consuming. This can be improved with distributed learning. To reduce the high communication cost due to worker-server synchronization, recently gradient quantization has also been proposed to train deep networks with full-precision weights. In this paper, we theoretically study how the combination of both weight and gradient quantization affects convergence. We show that (i) weight-quantized models converge to an error related to the weight quantization resolution and weight dimension; (ii) quantizing gradients slows convergence by a factor related to the gradient quantization resolution and dimension; and (iii) clipping the gradient before quantization renders this factor dimension-free, thus allowing the use of fewer bits for gradient quantization. Empirical experiments confirm the theoretical convergence results, and demonstrate that quantized networks can speed up training and have comparable performance as full-precision networks."
+    },
+    "keywords": [
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "LAB": "loss-aware binarization",
+        "LAQ": "loss-aware quantization"
+    },
+    "highlights": [
+        "We relax the restrictions on the loss function, and study in an online learning setting how the gradient precision affects convergence of weight-quantized networks in a distributed environment",
+        "The larger the \u2206g or d, the slower is the convergence (Theorems 1 and 2). This can be problematic when (i) the weight quantized model has a large d; and the communication cost is a bottleneck in the distributed setting, which favors a small number of bits for the gradients, and a large \u2206g.\n3",
+        "We study the more advanced loss-aware weight quantization, with both full-precision and quantized gradients",
+        "Figure 8 shows the speedup in distributed training of a weight-quantized network with quantized/full-precision gradient compared to training with one worker using full-precision gradient",
+        "We studied loss-aware weight-quantized networks with quantized gradient for efficient communication in a distributed environment"
+    ],
+    "key_statements": [
+        "We relax the restrictions on the loss function, and study in an online learning setting how the gradient precision affects convergence of weight-quantized networks in a distributed environment",
+        "The larger the \u2206g or d, the slower is the convergence (Theorems 1 and 2). This can be problematic when (i) the weight quantized model has a large d; and the communication cost is a bottleneck in the distributed setting, which favors a small number of bits for the gradients, and a large \u2206g.\n3",
+        "We study the more advanced loss-aware weight quantization, with both full-precision and quantized gradients",
+        "Figure 8 shows the speedup in distributed training of a weight-quantized network with quantized/full-precision gradient compared to training with one worker using full-precision gradient",
+        "We studied loss-aware weight-quantized networks with quantized gradient for efficient communication in a distributed environment"
+    ],
+    "summary": [
+        "We relax the restrictions on the loss function, and study in an online learning setting how the gradient precision affects convergence of weight-quantized networks in a distributed environment.",
+        "2. With either full-precision or quantized gradients, the average regret converges with a O(1/ T ) rate to the error, where T is the number of iterations.",
+        "This can be problematic when (i) the weight quantized model has a large d; and the communication cost is a bottleneck in the distributed setting, which favors a small number of bits for the gradients, and a large \u2206g.",
+        "With quantized clipped gradients, distributed training of weight-quantized networks is much faster, while comparable accuracy with the use of full-precision gradients is maintained (Section 4).",
+        "For loss-aware weight quantization with full-precision gradients and \u03b7t = \u03b7/ t,",
+        "Comparing the average regrets in Theorems 1 and 3, gradient clipping before quantization slows convergence by a factor of",
+        "Figure 4 shows convergence of the average training loss with different numbers of bits for the quantized weight.",
+        "With full-precision or quantized gradients, weight-quantized networks have larger training losses than full-precision networks upon convergence.",
+        "Figure 5 shows convergence of the average training loss with different numbers of bits for the quantized gradients, again without gradient clipping.",
+        "Figure 7 shows convergence of the average training loss with different numbers of bits for the quantized clipped gradient, with c = 3.",
+        "We use 3-bit quantized weight (LAQ3), and gradients are full-precision or stochastically quantized to m = {2, 3, 4} bits (SQm).",
+        "We experiment with 4-bit loss-aware weight quantization (LAQ4), and the gradients are either full-precision or quantized to 3 bits (SQ3).",
+        "Figure 8 shows the speedup in distributed training of a weight-quantized network with quantized/full-precision gradient compared to training with one worker using full-precision gradient.",
+        "We do not include the server\u2019s computation effort on weight quantization and the worker\u2019s effort on gradient clipping, which are negligible compared to the forward and backward propagations in the worker.",
+        "As can be seen from the Figure, even though the number of bits used for gradients increases by one at every aggregation step in the AllReduce model, the proposed method still significantly reduces network communication and speeds up training.",
+        "We studied loss-aware weight-quantized networks with quantized gradient for efficient communication in a distributed environment.",
+        "Convergence analysis is provided for weight-quantized models with full-precision, quantized and quantized clipped gradients.",
+        "Empirical experiments confirm the theoretical results, and demonstrate that quantized networks can speed up training and have comparable performance as full-precision networks"
+    ],
+    "headline": "We theoretically study how the combination of both weight and gradient quantization affects convergence",
+    "reference_links": [
+        {
+            "id": "Aji_2017_a",
+            "entry": "A. F. Aji and K. Heafield. Sparse communication for distributed gradient descent. In International Conference on Empirical Methods in Natural Language Processing, pp. 440\u2013445, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aji%2C%20A.F.%20Heafield%2C%20K.%20Sparse%20communication%20for%20distributed%20gradient%20descent%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aji%2C%20A.F.%20Heafield%2C%20K.%20Sparse%20communication%20for%20distributed%20gradient%20descent%202017"
+        },
+        {
+            "id": "Alistarh_et+al_2017_a",
+            "entry": "D. Alistarh, D. Grubic, J. Li, R. Tomioka, and M. Vojnovic. QSGD: Communication-efficient SGD via gradient quantization and encoding. In Advances in Neural Information Processing Systems, pp. 1707\u20131718, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alistarh%2C%20D.%20Grubic%2C%20D.%20Li%2C%20J.%20Tomioka%2C%20R.%20QSGD%3A%20Communication-efficient%20SGD%20via%20gradient%20quantization%20and%20encoding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alistarh%2C%20D.%20Grubic%2C%20D.%20Li%2C%20J.%20Tomioka%2C%20R.%20QSGD%3A%20Communication-efficient%20SGD%20via%20gradient%20quantization%20and%20encoding%202017"
+        },
+        {
+            "id": "Bernstein_et+al_2018_a",
+            "entry": "J. Bernstein, Y. Wang, K. Azizzadenesheli, and A. Anandkumar. signSGD: Compressed optimisation for non-convex problems. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bernstein%2C%20J.%20Wang%2C%20Y.%20Azizzadenesheli%2C%20K.%20A.%20Anandkumar.%20signSGD%3A%20Compressed%20optimisation%20for%20non-convex%20problems%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bernstein%2C%20J.%20Wang%2C%20Y.%20Azizzadenesheli%2C%20K.%20A.%20Anandkumar.%20signSGD%3A%20Compressed%20optimisation%20for%20non-convex%20problems%202018"
+        },
+        {
+            "id": "Courbariaux_et+al_2015_a",
+            "entry": "M. Courbariaux, Y. Bengio, and J. P. David. BinaryConnect: Training deep neural networks with binary weights during propagations. In Advances in Neural Information Processing Systems, pp. 3105\u20133113, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Courbariaux%2C%20M.%20Bengio%2C%20Y.%20David%2C%20J.P.%20BinaryConnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Courbariaux%2C%20M.%20Bengio%2C%20Y.%20David%2C%20J.P.%20BinaryConnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015"
+        },
+        {
+            "id": "Dauphin_et+al_2015_a",
+            "entry": "Y. Dauphin, H. de Vries, and Y. Bengio. Equilibrated adaptive learning rates for non-convex optimization. In Advances in Neural Information Processing Systems, pp. 1504\u20131512, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dauphin%2C%20Y.%20de%20Vries%2C%20H.%20Bengio%2C%20Y.%20Equilibrated%20adaptive%20learning%20rates%20for%20non-convex%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dauphin%2C%20Y.%20de%20Vries%2C%20H.%20Bengio%2C%20Y.%20Equilibrated%20adaptive%20learning%20rates%20for%20non-convex%20optimization%202015"
+        },
+        {
+            "id": "Sa_et+al_2018_a",
+            "entry": "C. De Sa, M. Leszczynski, J. Zhang, A. Marzoev, C. R. Aberger, K. Olukotun, and C. Re. Highaccuracy low-precision training. Preprint arXiv:1803.03383, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03383"
+        },
+        {
+            "id": "Dean_et+al_2012_a",
+            "entry": "J. Dean, G. Corrado, R. Monga, K. Chen, M. Devin, Q. V. Le, M. Z. Mao, M. Ranzato, A. Senior, P. Tucker, K. Yang, and A. Y. Ng. Large scale distributed deep networks. In Advances in Neural Information Processing Systems, pp. 1223\u20131231, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dean%2C%20J.%20Corrado%2C%20G.%20Monga%2C%20R.%20Chen%2C%20K.%20Large%20scale%20distributed%20deep%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dean%2C%20J.%20Corrado%2C%20G.%20Monga%2C%20R.%20Chen%2C%20K.%20Large%20scale%20distributed%20deep%20networks%202012"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "J. Duchi, E. Hazan, and Y. Singer. Adaptive subgradient methods for online learning and stochastic optimization. Journal of Machine Learning Research, 12:2121\u20132159, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20J.%20Hazan%2C%20E.%20Singer%2C%20Y.%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20J.%20Hazan%2C%20E.%20Singer%2C%20Y.%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Guo_et+al_2017_a",
+            "entry": "Y. Guo, A. Yao, H. Zhao, and Y. Chen. Network sketching: Exploiting binary structure in deep CNNs. In International Conference on Computer Vision and Pattern Recognition, pp. 5955\u20135963, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Y.%20Yao%2C%20A.%20Zhao%2C%20H.%20Chen%2C%20Y.%20Network%20sketching%3A%20Exploiting%20binary%20structure%20in%20deep%20CNNs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Y.%20Yao%2C%20A.%20Zhao%2C%20H.%20Chen%2C%20Y.%20Network%20sketching%3A%20Exploiting%20binary%20structure%20in%20deep%20CNNs%202017"
+        },
+        {
+            "id": "Hazan_2016_a",
+            "entry": "E. Hazan. Introduction to online convex optimization. Foundations and Trends in Optimization, 2 (3-4):157\u2013325, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hazan%2C%20E.%20Introduction%20to%20online%20convex%20optimization.%20Foundations%20and%20Trends%20in%20Optimization%202016"
+        },
+        {
+            "id": "Hou_2018_a",
+            "entry": "L. Hou and J. T. Kwok. Loss-aware weight quantization of deep networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hou%2C%20L.%20Kwok%2C%20J.T.%20Loss-aware%20weight%20quantization%20of%20deep%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hou%2C%20L.%20Kwok%2C%20J.T.%20Loss-aware%20weight%20quantization%20of%20deep%20networks%202018"
+        },
+        {
+            "id": "Hou_et+al_2017_a",
+            "entry": "L. Hou, Q. Yao, and J. T. Kwok. Loss-aware binarization of deep networks. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hou%2C%20L.%20Yao%2C%20Q.%20Kwok%2C%20J.T.%20Loss-aware%20binarization%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hou%2C%20L.%20Yao%2C%20Q.%20Kwok%2C%20J.T.%20Loss-aware%20binarization%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Hubara_et+al_2017_a",
+            "entry": "I. Hubara, M. Courbariaux, D. Soudry, R. El-Yaniv, and Y. Bengio. Quantized neural networks: Training neural networks with low precision weights and activations. The Journal of Machine Learning Research, 18(1):6869\u20136898, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubara%2C%20I.%20Courbariaux%2C%20M.%20Soudry%2C%20D.%20El-Yaniv%2C%20R.%20Quantized%20neural%20networks%3A%20Training%20neural%20networks%20with%20low%20precision%20weights%20and%20activations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubara%2C%20I.%20Courbariaux%2C%20M.%20Soudry%2C%20D.%20El-Yaniv%2C%20R.%20Quantized%20neural%20networks%3A%20Training%20neural%20networks%20with%20low%20precision%20weights%20and%20activations%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "D. Kingma and J. Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20D.%20Ba%2C%20J.%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20D.%20Ba%2C%20J.%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Leng_et+al_2018_a",
+            "entry": "C. Leng, H. Li, S. Zhu, and R. Jin. Extremely low bit neural network: Squeeze the last bit out with admm. In AAAI Conference on Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leng%2C%20C.%20Li%2C%20H.%20Zhu%2C%20S.%20Jin%2C%20R.%20Extremely%20low%20bit%20neural%20network%3A%20Squeeze%20the%20last%20bit%20out%20with%20admm%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leng%2C%20C.%20Li%2C%20H.%20Zhu%2C%20S.%20Jin%2C%20R.%20Extremely%20low%20bit%20neural%20network%3A%20Squeeze%20the%20last%20bit%20out%20with%20admm%202018"
+        },
+        {
+            "id": "Li_2016_a",
+            "entry": "F. Li and B. Liu. Ternary weight networks. Preprint arXiv:1605.04711, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.04711"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "H. Li, S. De, Z. Xu, C. Studer, H. Samet, and Goldstein T. Training quantized nets: A deeper understanding. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20H.%20De%2C%20S.%20Xu%2C%20Z.%20Studer%2C%20C.%20Training%20quantized%20nets%3A%20A%20deeper%20understanding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20H.%20De%2C%20S.%20Xu%2C%20Z.%20Studer%2C%20C.%20Training%20quantized%20nets%3A%20A%20deeper%20understanding%202017"
+        },
+        {
+            "id": "Li_et+al_2014_a",
+            "entry": "M. Li, D. G. Andersen, J. W. Park, A. J. Smola, and A. Ahmed. Scaling distributed machine learning with the parameter server. In USENIX Symposium on Operating Systems Design and Implementation, volume 583, pp. 598, 2014a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20M.%20Andersen%2C%20D.G.%20Park%2C%20J.W.%20Smola%2C%20A.J.%20Scaling%20distributed%20machine%20learning%20with%20the%20parameter%20server%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20M.%20Andersen%2C%20D.G.%20Park%2C%20J.W.%20Smola%2C%20A.J.%20Scaling%20distributed%20machine%20learning%20with%20the%20parameter%20server%202014"
+        },
+        {
+            "id": "Li_et+al_0000_a",
+            "entry": "M. Li, D. G. Andersen, A. J. Smola, and K. Yu. Communication efficient distributed machine learning with the parameter server. In Advances in Neural Information Processing Systems, pp. 19\u201327, 2014b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20M.%20Andersen%2C%20D.G.%20Smola%2C%20A.J.%20Yu%2C%20K.%20Communication%20efficient%20distributed%20machine%20learning%20with%20the%20parameter%20server",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20M.%20Andersen%2C%20D.G.%20Smola%2C%20A.J.%20Yu%2C%20K.%20Communication%20efficient%20distributed%20machine%20learning%20with%20the%20parameter%20server"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "X. Lin, C. Zhao, and W. Pan. Towards accurate binary convolutional neural network. In Advances in Neural Information Processing Systems, pp. 344\u2013352, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20X.%20Zhao%2C%20C.%20Pan%2C%20W.%20Towards%20accurate%20binary%20convolutional%20neural%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20X.%20Zhao%2C%20C.%20Pan%2C%20W.%20Towards%20accurate%20binary%20convolutional%20neural%20network%202017"
+        },
+        {
+            "id": "Lin_et+al_2016_a",
+            "entry": "Z. Lin, M. Courbariaux, R. Memisevic, and Y. Bengio. Neural networks with few multiplications. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Z.%20Courbariaux%2C%20M.%20Memisevic%2C%20R.%20Bengio%2C%20Y.%20Neural%20networks%20with%20few%20multiplications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Z.%20Courbariaux%2C%20M.%20Memisevic%2C%20R.%20Bengio%2C%20Y.%20Neural%20networks%20with%20few%20multiplications%202016"
+        },
+        {
+            "id": "Polino_et+al_2018_a",
+            "entry": "A. Polino, R. Pascanu, and D. Alistarh. Model compression via distillation and quantization. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Polino%2C%20A.%20Pascanu%2C%20R.%20Alistarh%2C%20D.%20Model%20compression%20via%20distillation%20and%20quantization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Polino%2C%20A.%20Pascanu%2C%20R.%20Alistarh%2C%20D.%20Model%20compression%20via%20distillation%20and%20quantization%202018"
+        },
+        {
+            "id": "Rabenseifner_2004_a",
+            "entry": "R. Rabenseifner. Optimization of collective reduction operations. In International Conference on Computational Science, pp. 1\u20139, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rabenseifner%2C%20R.%20Optimization%20of%20collective%20reduction%20operations%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rabenseifner%2C%20R.%20Optimization%20of%20collective%20reduction%20operations%202004"
+        },
+        {
+            "id": "Rastegari_et+al_2016_a",
+            "entry": "M. Rastegari, V. Ordonez, J. Redmon, and A. Farhadi. XNOR-Net: ImageNet classification using binary convolutional neural networks. In European Conference on Computer Vision, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rastegari%2C%20M.%20Ordonez%2C%20V.%20Redmon%2C%20J.%20Farhadi%2C%20A.%20XNOR-Net%3A%20ImageNet%20classification%20using%20binary%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rastegari%2C%20M.%20Ordonez%2C%20V.%20Redmon%2C%20J.%20Farhadi%2C%20A.%20XNOR-Net%3A%20ImageNet%20classification%20using%20binary%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Reddi_et+al_2016_a",
+            "entry": "S. J. Reddi, A. Hefny, S. Sra, B. Poczos, and A. Smola. Stochastic variance reduction for nonconvex optimization. In International Conference on Machine Learning, pp. 314\u2013323, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reddi%2C%20S.J.%20Hefny%2C%20A.%20Sra%2C%20S.%20Poczos%2C%20B.%20Stochastic%20variance%20reduction%20for%20nonconvex%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20S.J.%20Hefny%2C%20A.%20Sra%2C%20S.%20Poczos%2C%20B.%20Stochastic%20variance%20reduction%20for%20nonconvex%20optimization%202016"
+        },
+        {
+            "id": "Reddi_et+al_2018_a",
+            "entry": "S. J. Reddi, S. Kale, and S. Kumar. On the convergence of Adam and beyond. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reddi%2C%20S.J.%20Kale%2C%20S.%20Kumar%2C%20S.%20On%20the%20convergence%20of%20Adam%20and%20beyond%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20S.J.%20Kale%2C%20S.%20Kumar%2C%20S.%20On%20the%20convergence%20of%20Adam%20and%20beyond%202018"
+        },
+        {
+            "id": "Seide_et+al_2014_a",
+            "entry": "F. Seide, H. Fu, J. Droppo, G. Li, and D. Yu. 1-bit stochastic gradient descent and application to data-parallel distributed training of speech DNNs. In Interspeech, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Seide%2C%20F.%20Fu%2C%20H.%20Droppo%2C%20J.%20Li%2C%20G.%201-bit%20stochastic%20gradient%20descent%20and%20application%20to%20data-parallel%20distributed%20training%20of%20speech%20DNNs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Seide%2C%20F.%20Fu%2C%20H.%20Droppo%2C%20J.%20Li%2C%20G.%201-bit%20stochastic%20gradient%20descent%20and%20application%20to%20data-parallel%20distributed%20training%20of%20speech%20DNNs%202014"
+        },
+        {
+            "id": "Snavely_et+al_2002_a",
+            "entry": "A. Snavely, L. Carrington, N. Wolter, J. Labarta, R. Badia, and A. Purkayastha. A framework for performance modeling and prediction. In ACM/IEEE Conference on Supercomputing, pp. 1\u201317, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snavely%2C%20A.%20Carrington%2C%20L.%20Wolter%2C%20N.%20Labarta%2C%20J.%20A%20framework%20for%20performance%20modeling%20and%20prediction%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snavely%2C%20A.%20Carrington%2C%20L.%20Wolter%2C%20N.%20Labarta%2C%20J.%20A%20framework%20for%20performance%20modeling%20and%20prediction%202002"
+        },
+        {
+            "id": "Wangni_et+al_2017_a",
+            "entry": "J. Wangni, J. Wang, J. Liu, and T. Zhang. Gradient sparsification for communication-efficient distributed optimization. Preprint arXiv:1710.09854, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.09854"
+        },
+        {
+            "id": "Wen_et+al_2017_a",
+            "entry": "W. Wen, C. Xu, F. Yan, C. Wu, Y. Wang, Y. Chen, and H. Li. TernGrad: Ternary gradients to reduce communication in distributed deep learning. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20W.%20Xu%2C%20C.%20Yan%2C%20F.%20Wu%2C%20C.%20TernGrad%3A%20Ternary%20gradients%20to%20reduce%20communication%20in%20distributed%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20W.%20Xu%2C%20C.%20Yan%2C%20F.%20Wu%2C%20C.%20TernGrad%3A%20Ternary%20gradients%20to%20reduce%20communication%20in%20distributed%20deep%20learning%202017"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "S. Wu, G. Li, F. Chen, and L. Shi. Training and inference with integers in deep neural networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20S.%20Li%2C%20G.%20Chen%2C%20F.%20Shi%2C%20L.%20Training%20and%20inference%20with%20integers%20in%20deep%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20S.%20Li%2C%20G.%20Chen%2C%20F.%20Shi%2C%20L.%20Training%20and%20inference%20with%20integers%20in%20deep%20neural%20networks%202018"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "H. Zhang, J. Li, K. Kara, D. Alistarh, J. Liu, and C. Zhang. The ZipML framework for training models with end-to-end low precision: The cans, the cannots, and a little bit of deep learning. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20H.%20Li%2C%20J.%20Kara%2C%20K.%20Alistarh%2C%20D.%20The%20ZipML%20framework%20for%20training%20models%20with%20end-to-end%20low%20precision%3A%20The%20cans%2C%20the%20cannots%2C%20and%20a%20little%20bit%20of%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20H.%20Li%2C%20J.%20Kara%2C%20K.%20Alistarh%2C%20D.%20The%20ZipML%20framework%20for%20training%20models%20with%20end-to-end%20low%20precision%3A%20The%20cans%2C%20the%20cannots%2C%20and%20a%20little%20bit%20of%20deep%20learning%202017"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "S. Zhou, Z. Ni, X. Zhou, H. Wen, Y. Wu, and Y. Zou. DoReFa-Net: Training low bitwidth convolutional neural networks with low bitwidth gradients. Preprint arXiv:1606.06160, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "C. Zhu, S. Han, H. Mao, and W. J. Dally. Trained ternary quantization. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20C.%20Han%2C%20S.%20Mao%2C%20H.%20Dally%2C%20W.J.%20Trained%20ternary%20quantization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20C.%20Han%2C%20S.%20Mao%2C%20H.%20Dally%2C%20W.J.%20Trained%20ternary%20quantization%202017"
+        },
+        {
+            "id": "Gt_0000_a",
+            "entry": "Lemma 2. [Lemma 10.3 in (Kingma & Ba, 2015)] Let g1:T,i = [g1,i, g2,i,..., gT,i] be the vector containing the ith element of the gradients for all iterations up to T, and gt be bounded as in Assumption A3. Then, T",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=gT%2C%20i%5D%20be%20Lemma%202.%20%5BLemma%2010.3%20in"
+        }
+    ]
+}

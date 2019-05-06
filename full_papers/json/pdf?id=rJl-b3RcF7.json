@@ -1,0 +1,395 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "THE LOTTERY TICKET HYPOTHESIS: FINDING SPARSE, TRAINABLE NEURAL NETWORKS",
+        "author": "Jonathan Frankle MIT CSAIL jfrankle@csail.mit.edu",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJl-b3RcF7"
+        },
+        "abstract": "Neural network pruning techniques can reduce the parameter counts of trained networks by over 90%, decreasing storage requirements and improving computational performance of inference without compromising accuracy. However, contemporary experience is that the sparse architectures produced by pruning are difficult to train from the start, which would similarly improve training performance."
+    },
+    "keywords": [
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "lottery ticket",
+            "url": "https://en.wikipedia.org/wiki/lottery_ticket"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        }
+    ],
+    "abbreviations": {
+        "SGD": "stochastic gradient descent"
+    },
+    "highlights": [
+        "Techniques for eliminating unnecessary weights from neural networks (<a class=\"ref-link\" id=\"cLecun_et+al_1990_a\" href=\"#rLecun_et+al_1990_a\"><a class=\"ref-link\" id=\"cLecun_et+al_1990_a\" href=\"#rLecun_et+al_1990_a\">LeCun et al, 1990</a></a>; <a class=\"ref-link\" id=\"cHassibi_1993_a\" href=\"#rHassibi_1993_a\"><a class=\"ref-link\" id=\"cHassibi_1993_a\" href=\"#rHassibi_1993_a\">Hassibi & Stork, 1993</a></a>; <a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\"><a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a></a>) can reduce parameter-counts by more than 90% without harming accuracy",
+        "We present an algorithm to identify winning tickets and a series of experiments that support the lottery ticket hypothesis and the importance of these fortuitous initializations",
+        "We identify winning tickets in a fully-connected architecture for MNIST and convolutional architectures for CIFAR10 across several optimization strategies (SGD, momentum, and Adam) with techniques like dropout, weight decay, batchnorm, and residual connections",
+        "We propose the lottery ticket hypothesis as a new perspective on the composition of neural networks to explain these findings",
+        "Existing work on neural network pruning (e.g., <a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al (2015</a>)) demonstrates that the function learned by a neural network can often be represented with fewer parameters",
+        "We find that the architectures studied in this paper reliably contain such trainable subnetworks, and the lottery ticket hypothesis proposes that this property applies in general"
+    ],
+    "key_statements": [
+        "Techniques for eliminating unnecessary weights from neural networks (<a class=\"ref-link\" id=\"cLecun_et+al_1990_a\" href=\"#rLecun_et+al_1990_a\"><a class=\"ref-link\" id=\"cLecun_et+al_1990_a\" href=\"#rLecun_et+al_1990_a\">LeCun et al, 1990</a></a>; <a class=\"ref-link\" id=\"cHassibi_1993_a\" href=\"#rHassibi_1993_a\"><a class=\"ref-link\" id=\"cHassibi_1993_a\" href=\"#rHassibi_1993_a\">Hassibi & Stork, 1993</a></a>; <a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\"><a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a></a>) can reduce parameter-counts by more than 90% without harming accuracy",
+        "We present an algorithm to identify winning tickets and a series of experiments that support the lottery ticket hypothesis and the importance of these fortuitous initializations",
+        "We identify winning tickets in a fully-connected architecture for MNIST and convolutional architectures for CIFAR10 across several optimization strategies (SGD, momentum, and Adam) with techniques like dropout, weight decay, batchnorm, and residual connections",
+        "Returning to our motivating question, we extend our hypothesis into an untested conjecture that stochastic gradient descent seeks out and trains a subset of well-initialized weights",
+        "We propose the lottery ticket hypothesis as a new perspective on the composition of neural networks to explain these findings",
+        "We empirically study the lottery ticket hypothesis",
+        "We study the lottery ticket hypothesis on networks evocative of the architectures and techniques used in practice",
+        "We study the variant VGG-19 adapted for CIFAR10 by <a class=\"ref-link\" id=\"cLiu_et+al_2019_a\" href=\"#rLiu_et+al_2019_a\">Liu et al (2019</a>); we use the the same training regime and hyperparameters: 160 epochs (112,480 iterations) with stochastic gradient descent with\n5See Figure 2 and Appendices I for details on the networks, hyperparameters, and training regimes",
+        "To bridge the gap between the lottery ticket behavior of the lower learning rate and the accuracy advantage of the higher learning rate, we explore the effect of linear learning rate warmup from 0 to the initial learning rate over k iterations",
+        "Existing work on neural network pruning (e.g., <a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al (2015</a>)) demonstrates that the function learned by a neural network can often be represented with fewer parameters",
+        "We find that the architectures studied in this paper reliably contain such trainable subnetworks, and the lottery ticket hypothesis proposes that this property applies in general"
+    ],
+    "summary": [
+        "Techniques for eliminating unnecessary weights from neural networks (<a class=\"ref-link\" id=\"cLecun_et+al_1990_a\" href=\"#rLecun_et+al_1990_a\"><a class=\"ref-link\" id=\"cLecun_et+al_1990_a\" href=\"#rLecun_et+al_1990_a\">LeCun et al, 1990</a></a>; <a class=\"ref-link\" id=\"cHassibi_1993_a\" href=\"#rHassibi_1993_a\"><a class=\"ref-link\" id=\"cHassibi_1993_a\" href=\"#rHassibi_1993_a\">Hassibi & Stork, 1993</a></a>; <a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\"><a class=\"ref-link\" id=\"cHan_et+al_2015_a\" href=\"#rHan_et+al_2015_a\">Han et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\"><a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a></a>) can reduce parameter-counts by more than 90% without harming accuracy.",
+        "We articulate the lottery ticket hypothesis: dense, randomly-initialized, feed-forward networks contain subnetworks that\u2014when trained in isolation\u2014 reach test accuracy comparable to the original network in a similar number of iterations.",
+        "The winning tickets that we find learn faster than the original network and reach higher test accuracy.",
+        "Our results show that iterative pruning finds winning tickets that match the accuracy of the original network at smaller sizes than does one-shot pruning.",
+        "We show that pruning finds winning tickets that learn faster than the original network while reaching higher test accuracy and generalizing better.",
+        "Figure 3 plots the average test accuracy when training winning tickets iteratively pruned to various extents.",
+        "At early stopping, training accuracy (Figure 4a, right) increases with pruning in a similar pattern to test accuracy, seemingly implying that winning tickets optimize more effectively but do not generalize better.",
+        "At iteration 50,000 (Figure 4b), iteratively-pruned winning tickets still see a test accuracy improvement of up to 0.35 percentage points in spite of the fact that training accuracy reaches 100% for nearly all networks (Appendix D, Figure 12).",
+        "The reinitialized networks learn increasingly slower than the original network and lose test accuracy after little pruning.",
+        "Iterativelypruned winning tickets learn faster and reach higher test accuracy at smaller network sizes.",
+        "At iteration 20,000 for Conv-2, 25,000 for Conv-4, and 30,000 for Conv-6, training accuracy reaches 100% for all networks when Pm \u2265 2% (Appendix D, Figure 13) and winning tickets still maintain higher test accuracy (Figure 5 bottom right).",
+        "Figure 7 shows the results of iterative pruning and random reinitialization on VGG-19 at two initial learning rates: 0.1) and 0.01.",
+        "At the higher learning rate, iterative pruning does not find winning tickets, and performance is no better than when the pruned networks are randomly reinitialized.",
+        "Training VGG-19 with warmup (k = 10000, green line) at learning rate 0.1 improves the test accuracy of the unpruned network by about one percentage point.",
+        "Winning tickets trained with warmup close the accuracy gap with the unpruned network at the higher learning rate, reaching 90.5% test accuracy with learning rate 0.03 at Pm = 27.1%.",
+        "A winning ticket learns more slowly and achieves lower test accuracy, suggesting that initialization is important to its success.",
+        "On deeper networks (Resnet-18 and VGG-19), iterative pruning is unable to find winning tickets unless we train the networks with learning rate warmup."
+    ],
+    "headline": "We find that a standard pruning technique naturally uncovers subnetworks whose initializations made them capable of training effectively",
+    "reference_links": [
+        {
+            "id": "Arora_et+al_2018_a",
+            "entry": "Sanjeev Arora, Rong Ge, Behnam Neyshabur, and Yi Zhang. Stronger generalization bounds for deep nets via a compression approach. ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20Sanjeev%20Ge%2C%20Rong%20Neyshabur%2C%20Behnam%20Zhang%2C%20Yi%20Stronger%20generalization%20bounds%20for%20deep%20nets%20via%20a%20compression%20approach%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arora%2C%20Sanjeev%20Ge%2C%20Rong%20Neyshabur%2C%20Behnam%20Zhang%2C%20Yi%20Stronger%20generalization%20bounds%20for%20deep%20nets%20via%20a%20compression%20approach%202018"
+        },
+        {
+            "id": "Arpit_et+al_2017_a",
+            "entry": "Devansh Arpit, Stanis\u0142aw Jastrzebski, Nicolas Ballas, David Krueger, Emmanuel Bengio, Maxinder S Kanwal, Tegan Maharaj, Asja Fischer, Aaron Courville, Yoshua Bengio, et al. A closer look at memorization in deep networks. In International Conference on Machine Learning, pp. 233\u2013242, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arpit%2C%20Devansh%20Jastrzebski%2C%20Stanis%C5%82aw%20Ballas%2C%20Nicolas%20Krueger%2C%20David%20A%20closer%20look%20at%20memorization%20in%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arpit%2C%20Devansh%20Jastrzebski%2C%20Stanis%C5%82aw%20Ballas%2C%20Nicolas%20Krueger%2C%20David%20A%20closer%20look%20at%20memorization%20in%20deep%20networks%202017"
+        },
+        {
+            "id": "Ba_2014_a",
+            "entry": "Jimmy Ba and Rich Caruana. Do deep nets really need to be deep? In Advances in neural information processing systems, pp. 2654\u20132662, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ba%2C%20Jimmy%20Caruana%2C%20Rich%20Do%20deep%20nets%20really%20need%20to%20be%20deep%3F%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ba%2C%20Jimmy%20Caruana%2C%20Rich%20Do%20deep%20nets%20really%20need%20to%20be%20deep%3F%202014"
+        },
+        {
+            "id": "Baldi_2013_a",
+            "entry": "Pierre Baldi and Peter J Sadowski. Understanding dropout. In Advances in neural information processing systems, pp. 2814\u20132822, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pierre%20Baldi%20and%20Peter%20J%20Sadowski%20Understanding%20dropout%20In%20Advances%20in%20neural%20information%20processing%20systems%20pp%2028142822%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pierre%20Baldi%20and%20Peter%20J%20Sadowski%20Understanding%20dropout%20In%20Advances%20in%20neural%20information%20processing%20systems%20pp%2028142822%202013"
+        },
+        {
+            "id": "Bellec_et+al_2018_a",
+            "entry": "Guillaume Bellec, David Kappel, Wolfgang Maass, and Robert Legenstein. Deep rewiring: Training very sparse deep networks. Proceedings of ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellec%2C%20Guillaume%20Kappel%2C%20David%20Maass%2C%20Wolfgang%20Legenstein%2C%20Robert%20Deep%20rewiring%3A%20Training%20very%20sparse%20deep%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellec%2C%20Guillaume%20Kappel%2C%20David%20Maass%2C%20Wolfgang%20Legenstein%2C%20Robert%20Deep%20rewiring%3A%20Training%20very%20sparse%20deep%20networks%202018"
+        },
+        {
+            "id": "Bengio_et+al_2006_a",
+            "entry": "Yoshua Bengio, Nicolas L Roux, Pascal Vincent, Olivier Delalleau, and Patrice Marcotte. Convex neural networks. In Advances in neural information processing systems, pp. 123\u2013130, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yoshua%20Bengio%20Nicolas%20L%20Roux%20Pascal%20Vincent%20Olivier%20Delalleau%20and%20Patrice%20Marcotte%20Convex%20neural%20networks%20In%20Advances%20in%20neural%20information%20processing%20systems%20pp%20123130%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yoshua%20Bengio%20Nicolas%20L%20Roux%20Pascal%20Vincent%20Olivier%20Delalleau%20and%20Patrice%20Marcotte%20Convex%20neural%20networks%20In%20Advances%20in%20neural%20information%20processing%20systems%20pp%20123130%202006"
+        },
+        {
+            "id": "Cohen_et+al_2016_a",
+            "entry": "Joseph Paul Cohen, Henry Z Lo, and Wei Ding. Randomout: Using a convolutional gradient norm to win the filter lottery. ICLR Workshop, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cohen%2C%20Joseph%20Paul%20Lo%2C%20Henry%20Z.%20Ding%2C%20Wei%20Randomout%3A%20Using%20a%20convolutional%20gradient%20norm%20to%20win%20the%20filter%20lottery%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cohen%2C%20Joseph%20Paul%20Lo%2C%20Henry%20Z.%20Ding%2C%20Wei%20Randomout%3A%20Using%20a%20convolutional%20gradient%20norm%20to%20win%20the%20filter%20lottery%202016"
+        },
+        {
+            "id": "Cohen_2016_b",
+            "entry": "Nadav Cohen and Amnon Shashua. Inductive bias of deep convolutional networks through pooling geometry. arXiv preprint arXiv:1605.06743, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.06743"
+        },
+        {
+            "id": "Denil_et+al_2013_a",
+            "entry": "Misha Denil, Babak Shakibi, Laurent Dinh, Nando De Freitas, et al. Predicting parameters in deep learning. In Advances in neural information processing systems, pp. 2148\u20132156, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denil%2C%20Misha%20Shakibi%2C%20Babak%20Dinh%2C%20Laurent%20Freitas%2C%20Nando%20De%20Predicting%20parameters%20in%20deep%20learning%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denil%2C%20Misha%20Shakibi%2C%20Babak%20Dinh%2C%20Laurent%20Freitas%2C%20Nando%20De%20Predicting%20parameters%20in%20deep%20learning%202013"
+        },
+        {
+            "id": "Dong_et+al_2017_a",
+            "entry": "Xin Dong, Shangyu Chen, and Sinno Pan. Learning to prune deep neural networks via layer-wise optimal brain surgeon. In Advances in Neural Information Processing Systems, pp. 4860\u20134874, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dong%2C%20Xin%20Chen%2C%20Shangyu%20Pan%2C%20Sinno%20Learning%20to%20prune%20deep%20neural%20networks%20via%20layer-wise%20optimal%20brain%20surgeon%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dong%2C%20Xin%20Chen%2C%20Shangyu%20Pan%2C%20Sinno%20Learning%20to%20prune%20deep%20neural%20networks%20via%20layer-wise%20optimal%20brain%20surgeon%202017"
+        },
+        {
+            "id": "Du_et+al_2019_a",
+            "entry": "Simon S. Du, Xiyu Zhai, Barnabas Poczos, and Aarti Singh. Gradient descent provably optimizes over-parameterized neural networks. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=S1eK3i09YQ.",
+            "url": "https://openreview.net/forum?id=S1eK3i09YQ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Du%2C%20Simon%20S.%20Zhai%2C%20Xiyu%20Poczos%2C%20Barnabas%20Singh%2C%20Aarti%20Gradient%20descent%20provably%20optimizes%20over-parameterized%20neural%20networks%202019"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a bayesian approximation: Representing model uncertainty in deep learning. In international conference on machine learning, pp. 1050\u20131059, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Gal_et+al_2017_a",
+            "entry": "Yarin Gal, Jiri Hron, and Alex Kendall. Concrete dropout. In Advances in Neural Information Processing Systems, pp. 3584\u20133593, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yarin%20Gal%20Jiri%20Hron%20and%20Alex%20Kendall%20Concrete%20dropout%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2035843593%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yarin%20Gal%20Jiri%20Hron%20and%20Alex%20Kendall%20Concrete%20dropout%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2035843593%202017"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Guo_et+al_2016_a",
+            "entry": "Yiwen Guo, Anbang Yao, and Yurong Chen. Dynamic network surgery for efficient dnns. In Advances In Neural Information Processing Systems, pp. 1379\u20131387, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Yiwen%20Yao%2C%20Anbang%20Chen%2C%20Yurong%20Dynamic%20network%20surgery%20for%20efficient%20dnns%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Yiwen%20Yao%2C%20Anbang%20Chen%2C%20Yurong%20Dynamic%20network%20surgery%20for%20efficient%20dnns%202016"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Jeff Pool, John Tran, and William Dally. Learning both weights and connections for efficient neural network. In Advances in neural information processing systems, pp. 1135\u20131143, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015"
+        },
+        {
+            "id": "Han_et+al_2017_a",
+            "entry": "Song Han, Jeff Pool, Sharan Narang, Huizi Mao, Shijian Tang, Erich Elsen, Bryan Catanzaro, John Tran, and William J Dally. Dsd: Regularizing deep neural networks with dense-sparse-dense training flow. Proceedings of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Pool%2C%20Jeff%20Narang%2C%20Sharan%20Mao%2C%20Huizi%20Dsd%3A%20Regularizing%20deep%20neural%20networks%20with%20dense-sparse-dense%20training%20flow%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Pool%2C%20Jeff%20Narang%2C%20Sharan%20Mao%2C%20Huizi%20Dsd%3A%20Regularizing%20deep%20neural%20networks%20with%20dense-sparse-dense%20training%20flow%202017"
+        },
+        {
+            "id": "Hassibi_1993_a",
+            "entry": "Babak Hassibi and David G Stork. Second order derivatives for network pruning: Optimal brain surgeon. In Advances in neural information processing systems, pp. 164\u2013171, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hassibi%2C%20Babak%20Stork%2C%20David%20G.%20Second%20order%20derivatives%20for%20network%20pruning%3A%20Optimal%20brain%20surgeon%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hassibi%2C%20Babak%20Stork%2C%20David%20G.%20Second%20order%20derivatives%20for%20network%20pruning%3A%20Optimal%20brain%20surgeon%201993"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Yihui He, Xiangyu Zhang, and Jian Sun. Channel pruning for accelerating very deep neural networks. In International Conference on Computer Vision (ICCV), volume 2, pp. 6, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "Geoffrey E Hinton, Nitish Srivastava, Alex Krizhevsky, Ilya Sutskever, and Ruslan R Salakhutdinov. Improving neural networks by preventing co-adaptation of feature detectors. arXiv preprint arXiv:1207.0580, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1207.0580"
+        },
+        {
+            "id": "Howard_et+al_2017_a",
+            "entry": "Andrew G Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, and Hartwig Adam. Mobilenets: Efficient convolutional neural networks for mobile vision applications. arXiv preprint arXiv:1704.04861, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04861"
+        },
+        {
+            "id": "Hu_et+al_2016_a",
+            "entry": "Hengyuan Hu, Rui Peng, Yu-Wing Tai, and Chi-Keung Tang. Network trimming: A data-driven neuron pruning approach towards efficient deep architectures. arXiv preprint arXiv:1607.03250, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.03250"
+        },
+        {
+            "id": "Iandola_et+al_2016_a",
+            "entry": "Forrest N Iandola, Song Han, Matthew W Moskewicz, Khalid Ashraf, William J Dally, and Kurt Keutzer. Squeezenet: Alexnet-level accuracy with 50x fewer parameters and< 0.5 mb model size. arXiv preprint arXiv:1602.07360, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.07360"
+        },
+        {
+            "id": "Jin_et+al_2016_a",
+            "entry": "Xiaojie Jin, Xiaotong Yuan, Jiashi Feng, and Shuicheng Yan. Training skinny deep neural networks with iterative hard thresholding methods. arXiv preprint arXiv:1607.05423, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.05423"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kingma_et+al_2015_a",
+            "entry": "Diederik P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In Advances in Neural Information Processing Systems, pp. 2575\u20132583, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Welling%2C%20Max%20Variational%20dropout%20and%20the%20local%20reparameterization%20trick%202015"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Lecun_et+al_1990_a",
+            "entry": "Yann LeCun, John S Denker, and Sara A Solla. Optimal brain damage. In Advances in neural information processing systems, pp. 598\u2013605, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Denker%2C%20John%20S.%20Solla%2C%20Sara%20A.%20Optimal%20brain%20damage%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Denker%2C%20John%20S.%20Solla%2C%20Sara%20A.%20Optimal%20brain%20damage%201990"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, L\u00e9on Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Chunyuan Li, Heerad Farkhoor, Rosanne Liu, and Jason Yosinski. Measuring the intrinsic dimension of objective landscapes. Proceedings of ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Chunyuan%20Farkhoor%2C%20Heerad%20Liu%2C%20Rosanne%20Yosinski%2C%20Jason%20Measuring%20the%20intrinsic%20dimension%20of%20objective%20landscapes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Chunyuan%20Farkhoor%2C%20Heerad%20Liu%2C%20Rosanne%20Yosinski%2C%20Jason%20Measuring%20the%20intrinsic%20dimension%20of%20objective%20landscapes%202018"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. Pruning filters for efficient convnets. arXiv preprint arXiv:1608.08710, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.08710"
+        },
+        {
+            "id": "Liu_et+al_2019_a",
+            "entry": "Zhuang Liu, Mingjie Sun, Tinghui Zhou, Gao Huang, and Trevor Darrell. Rethinking the value of network pruning. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=rJlnB3C5Ym.",
+            "url": "https://openreview.net/forum?id=rJlnB3C5Ym",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhuang%20Liu%20Mingjie%20Sun%20Tinghui%20Zhou%20Gao%20Huang%20and%20Trevor%20Darrell%20Rethinking%20the%20value%20of%20network%20pruning%20In%20International%20Conference%20on%20Learning%20Representations%202019%20URL%20httpsopenreviewnetforumidrJlnB3C5Ym"
+        },
+        {
+            "id": "Louizos_et+al_2017_a",
+            "entry": "Christos Louizos, Karen Ullrich, and Max Welling. Bayesian compression for deep learning. In Advances in Neural Information Processing Systems, pp. 3290\u20133300, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Ullrich%2C%20Karen%20Welling%2C%20Max%20Bayesian%20compression%20for%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Ullrich%2C%20Karen%20Welling%2C%20Max%20Bayesian%20compression%20for%20deep%20learning%202017"
+        },
+        {
+            "id": "Louizos_et+al_2018_a",
+            "entry": "Christos Louizos, Max Welling, and Diederik P Kingma. Learning sparse neural networks through l_0 regularization. Proceedings of ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Welling%2C%20Max%20Kingma%2C%20Diederik%20P.%20Learning%20sparse%20neural%20networks%20through%20l_0%20regularization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Welling%2C%20Max%20Kingma%2C%20Diederik%20P.%20Learning%20sparse%20neural%20networks%20through%20l_0%20regularization%202018"
+        },
+        {
+            "id": "Luo_et+al_2017_a",
+            "entry": "Jian-Hao Luo, Jianxin Wu, and Weiyao Lin. Thinet: A filter level pruning method for deep neural network compression. arXiv preprint arXiv:1707.06342, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06342"
+        },
+        {
+            "id": "Mariet_2016_a",
+            "entry": "Zelda Mariet and Suvrit Sra. Diversity networks. Proceedings of ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mariet%2C%20Zelda%20Sra%2C%20Suvrit%20Diversity%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mariet%2C%20Zelda%20Sra%2C%20Suvrit%20Diversity%20networks%202016"
+        },
+        {
+            "id": "Molchanov_et+al_2017_a",
+            "entry": "Dmitry Molchanov, Arsenii Ashukha, and Dmitry Vetrov. Variational dropout sparsifies deep neural networks. arXiv preprint arXiv:1701.05369, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.05369"
+        },
+        {
+            "id": "Molchanov_et+al_2016_a",
+            "entry": "Pavlo Molchanov, Stephen Tyree, Tero Karras, Timo Aila, and Jan Kautz. Pruning convolutional neural networks for resource efficient transfer learning. arXiv preprint arXiv:1611.06440, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.06440"
+        },
+        {
+            "id": "Narang_et+al_2017_a",
+            "entry": "Sharan Narang, Erich Elsen, Gregory Diamos, and Shubho Sengupta. Exploring sparsity in recurrent neural networks. Proceedings of ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Narang%2C%20Sharan%20Elsen%2C%20Erich%20Diamos%2C%20Gregory%20Sengupta%2C%20Shubho%20Exploring%20sparsity%20in%20recurrent%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Narang%2C%20Sharan%20Elsen%2C%20Erich%20Diamos%2C%20Gregory%20Sengupta%2C%20Shubho%20Exploring%20sparsity%20in%20recurrent%20neural%20networks%202017"
+        },
+        {
+            "id": "Neklyudov_et+al_2017_a",
+            "entry": "Kirill Neklyudov, Dmitry Molchanov, Arsenii Ashukha, and Dmitry P Vetrov. Structured bayesian pruning via log-normal multiplicative noise. In Advances in Neural Information Processing Systems, pp. 6778\u20136787, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neklyudov%2C%20Kirill%20Molchanov%2C%20Dmitry%20Ashukha%2C%20Arsenii%20Vetrov%2C%20Dmitry%20P.%20Structured%20bayesian%20pruning%20via%20log-normal%20multiplicative%20noise%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neklyudov%2C%20Kirill%20Molchanov%2C%20Dmitry%20Ashukha%2C%20Arsenii%20Vetrov%2C%20Dmitry%20P.%20Structured%20bayesian%20pruning%20via%20log-normal%20multiplicative%20noise%202017"
+        },
+        {
+            "id": "Neyshabur_et+al_2014_a",
+            "entry": "Behnam Neyshabur, Ryota Tomioka, and Nathan Srebro. In search of the real inductive bias: On the role of implicit regularization in deep learning. arXiv preprint arXiv:1412.6614, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6614"
+        },
+        {
+            "id": "Rasmussen_et+al_2001_a",
+            "entry": "Carl Edward Rasmussen and Zoubin Ghahramani. Occam\u2019s razor. In T. K. Leen, T. G. Dietterich, and V. Tresp (eds.), Advances in Neural Information Processing Systems 13, pp. 294\u2013300. MIT Press, 2001. URL http://papers.nips.cc/paper/1925-occams-razor.pdf.",
+            "url": "http://papers.nips.cc/paper/1925-occams-razor.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carl%20Edward%20Rasmussen%20and%20Zoubin%20Ghahramani%20Occams%20razor%20In%20T%20K%20Leen%20T%20G%20Dietterich%20and%20V%20Tresp%20eds%20Advances%20in%20Neural%20Information%20Processing%20Systems%2013%20pp%20294300%20MIT%20Press%202001%20URL%20httppapersnipsccpaper1925occamsrazorpdf"
+        },
+        {
+            "id": "1",
+            "entry": "1. Randomly initialize a neural network f (x; m \u03b8) where \u03b8 = \u03b80 and m = 1|\u03b8| is a mask.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Randomly%20initialize%20a%20neural%20network%20f%20x%20m%20%CE%B8%20where%20%CE%B8%20%20%CE%B80%20and%20m%20%201%CE%B8%20is%20a%20mask"
+        },
+        {
+            "id": "2",
+            "entry": "2. Train the network for j iterations, reaching parameters m \u03b8j. 3. Prune s% of the parameters, creating an updated mask m where Pm = (Pm \u2212 s)%. 4. Reset the weights of the remaining portion of the network to their values in \u03b80. That is, let \u03b8 = \u03b80.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Train%20the%20network%20for%20j%20iterations%20reaching%20parameters%20m%20%CE%B8j%203%20Prune%20s%20of%20the%20parameters%20creating%20an%20updated%20mask%20m%20where%20Pm%20%20Pm%20%20s%204%20Reset%20the%20weights%20of%20the%20remaining%20portion%20of%20the%20network%20to%20their%20values%20in%20%CE%B80%20That%20is%20let%20%CE%B8%20%20%CE%B80"
+        },
+        {
+            "id": "5",
+            "entry": "5. Let m = m and repeat steps 2 through 4 until a sufficiently pruned network has been obtained.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Let%20m%20%20m%20and%20repeat%20steps%202%20through%204%20until%20a%20sufficiently%20pruned%20network%20has%20been%20obtained"
+        },
+        {
+            "id": "2",
+            "entry": "2. Train the network for j iterations.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Train%20the%20network%20for%20j%20iterations"
+        },
+        {
+            "id": "3",
+            "entry": "3. Prune s% of the parameters, creating an updated mask m where Pm = (Pm \u2212 s)%. 4. Let m = m and repeat steps 2 and 3 until a sufficiently pruned network has been obtained.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Prune%20s%20of%20the%20parameters%20creating%20an%20updated%20mask%20m%20where%20Pm%20%20Pm%20%20s%204%20Let%20m%20%20m%20and%20repeat%20steps%202%20and%203%20until%20a%20sufficiently%20pruned%20network%20has%20been%20obtained"
+        },
+        {
+            "id": "5",
+            "entry": "5. Reset the weights of the remaining portion of the network to their values in \u03b80. That is, let \u03b8 = \u03b80.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reset%20the%20weights%20of%20the%20remaining%20portion%20of%20the%20network%20to%20their%20values%20in%20%CE%B80%20That%20is%20let%20%CE%B8%20%20%CE%B80"
+        },
+        {
+            "id": "1",
+            "entry": "1. Networks found via iterative pruning with the original initializations (blue in Figure 14).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Networks%20found%20via%20iterative%20pruning%20with%20the%20original%20initializations%20blue%20in%20Figure%2014"
+        },
+        {
+            "id": "2",
+            "entry": "2. Networks found via iterative pruning that are randomly reinitialized (orange in Figure 14).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Networks%20found%20via%20iterative%20pruning%20that%20are%20randomly%20reinitialized%20orange%20in%20Figure%2014"
+        },
+        {
+            "id": "3",
+            "entry": "3. Random sparse subnetworks with the same number of parameters as those found via iterative pruning (green in Figure 14).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Random%20sparse%20subnetworks%20with%20the%20same%20number%20of%20parameters%20as%20those%20found%20via%20iterative%20pruning%20green%20in%20Figure%2014"
+        },
+        {
+            "id": "2",
+            "entry": "2. To evaluate the extent to which the lottery ticket experiment patterns extend to other choices of hyperparameters.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=To%20evaluate%20the%20extent%20to%20which%20the%20lottery%20ticket%20experiment%20patterns%20extend%20to%20other%20choices%20of%20hyperparameters"
+        },
+        {
+            "id": "2",
+            "entry": "2. When running the iterative lottery ticket experiment, it should make it possible to match the early-stopping iteration and accuracy of the original network with as few parameters as possible.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=When%20running%20the%20iterative%20lottery%20ticket%20experiment%20it%20should%20make%20it%20possible%20to%20match%20the%20earlystopping%20iteration%20and%20accuracy%20of%20the%20original%20network%20with%20as%20few%20parameters%20as%20possible"
+        },
+        {
+            "id": "3",
+            "entry": "3. Of those options that meet (1) and (2), it should be on the conservative (slow) side so that it is more likely to productively optimize heavily pruned networks under a variety of conditions with a variety of hyperparameters.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Of%20those%20options%20that%20meet%201%20and%202%20it%20should%20be%20on%20the%20conservative%20slow%20side%20so%20that%20it%20is%20more%20likely%20to%20productively%20optimize%20heavily%20pruned%20networks%20under%20a%20variety%20of%20conditions%20with%20a%20variety%20of%20hyperparameters"
+        },
+        {
+            "id": "2",
+            "entry": "2. At the very highest learning rates (e.g., learning rates 0.005 and 0.008 for Conv-2 and Conv4), early-stopping times never decreased and instead remained stable before increasing; this is the same pattern we observed for the highest learning rates when training with Adam. ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=At%20the%20very%20highest%20learning%20rates%20eg%20learning%20rates%200005%20and%200008%20for%20Conv2%20and%20Conv4%20earlystopping%20times%20never%20decreased%20and%20instead%20remained%20stable%20before%20increasing%20this%20is%20the%20same%20pattern%20we%20observed%20for%20the%20highest%20learning%20rates%20when%20training%20with%20Adam"
+        }
+    ]
+}

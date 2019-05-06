@@ -1,0 +1,305 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PER-TENSOR FIXED-POINT QUANTIZATION OF THE BACK-PROPAGATION ALGORITHM",
+        "author": "Charbel Sakr & Naresh Shanbhag Department of Electrical and Computer Engineering University of Illinois at Urbana-Champaign Illinois, IL 61801, USA {sakr,shanbhag}@illinois.edu",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkxaNjA9Ym"
+        },
+        "abstract": "The high computational and parameter complexity of neural networks makes their training very slow and difficult to deploy on energy and storage-constrained computing systems. Many network complexity reduction techniques have been proposed including fixed-point implementation. However, a systematic approach for designing full fixed-point training and inference of deep neural networks remains elusive. We describe a precision assignment methodology for neural network training in which all network parameters, i.e., activations and weights in the feedforward path, gradients and weight accumulators in the feedback path, are assigned close to minimal precision. The precision assignment is derived analytically and enables tracking the convergence behavior of the full precision training, known to converge a priori. Thus, our work leads to a systematic methodology of determining suitable precision for fixed-point training. The near optimality (minimality) of the resulting precision assignment is validated empirically for four networks on the CIFAR-10, CIFAR-100, and SVHN datasets. The complexity reduction arising from our approach is compared with other fixed-point neural network designs."
+    },
+    "keywords": [
+        {
+            "term": "stochastic quantization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_quantization"
+        },
+        {
+            "term": "signal-to-quantization-noise ratio",
+            "url": "https://en.wikipedia.org/wiki/signal-to-quantization-noise_ratio"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "least significant bit",
+            "url": "https://en.wikipedia.org/wiki/least_significant_bit"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "complexity reduction",
+            "url": "https://en.wikipedia.org/wiki/complexity_reduction"
+        },
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        },
+        {
+            "term": "Semiconductor Research Corporation",
+            "url": "https://en.wikipedia.org/wiki/Semiconductor_Research_Corporation"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "deep neural networks",
+        "SGD": "stochastic gradient descent",
+        "QFL": "quantized FL",
+        "PDR": "predetermined dynamic range",
+        "LSB": "least significant bit",
+        "CW": "Cost for weights",
+        "FAs": "full adders",
+        "Yfx": "Yfx} between its predicted label",
+        "EFQN": "Equalizing Feedforward Quantization Noise",
+        "GC": "Gradient Clipping",
+        "RQB": "Relative Quantization Bias",
+        "BQN": "Back-propagated Quantization Noise",
+        "AS": "Accumulator Stopping",
+        "BN": "binarized network",
+        "SQ": "stochastic quantization",
+        "TG": "ternarized gradients",
+        "SQNR": "signal-to-quantization-noise ratio",
+        "SRC": "Semiconductor Research Corporation"
+    },
+    "highlights": [
+        "Though deep neural networks (DNNs) have established themselves as powerful predictive models achieving human-level accuracy on many machine learning tasks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a>), their excellent performance has been achieved at the expense of a very high computational and parameter complexity",
+        "deep neural networks\u2019 enormous computational and parameter complexity leads to high energy consumption (<a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>), makes their training via the stochastic gradient descent (SGD) algorithm very slow often requiring hours and days (<a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a>), and inhibits their deployment on energy and resource-constrained platforms such as mobile devices and autonomous agents",
+        "We have presented a study of precision requirements in a typical back-propagation based training procedure of neural networks",
+        "Using a set of quantization criteria, we have presented a precision assignment methodology for which FX training is made statistically similar to the FL baseline, known to converge a priori",
+        "We showed that our precision assignment is nearly minimal"
+    ],
+    "key_statements": [
+        "Though deep neural networks (DNNs) have established themselves as powerful predictive models achieving human-level accuracy on many machine learning tasks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a>), their excellent performance has been achieved at the expense of a very high computational and parameter complexity",
+        "deep neural networks\u2019 enormous computational and parameter complexity leads to high energy consumption (<a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>), makes their training via the stochastic gradient descent (SGD) algorithm very slow often requiring hours and days (<a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a>), and inhibits their deployment on energy and resource-constrained platforms such as mobile devices and autonomous agents",
+        "Many employ FX during inference but train in FL, e.g., fully binarized neural networks (<a class=\"ref-link\" id=\"cHubara_et+al_2016_a\" href=\"#rHubara_et+al_2016_a\">Hubara et al, 2016</a>) use 1-b FX in the forward inference path but the network is trained in 32-b FL",
+        "We demonstrate FX training on three deep learning benchmarks (CIFAR-10, CIFAR-100, SVHN) achieving high fidelity to our FL baseline in that we observe no loss of accuracy higher 0.56% in all of our experiments",
+        "We report Cost for weights , CA, CM , CC, and test error, for each of the four networks considered for the following training methods:",
+        "A subset of the FX training problem was addressed in binary weighted neural networks (<a class=\"ref-link\" id=\"cCourbariaux_et+al_2015_a\" href=\"#rCourbariaux_et+al_2015_a\">Courbariaux et al, 2015</a>; <a class=\"ref-link\" id=\"cRastegari_et+al_2016_a\" href=\"#rRastegari_et+al_2016_a\">Rastegari et al, 2016</a>) and fully binarized neural networks (<a class=\"ref-link\" id=\"cHubara_et+al_2016_a\" href=\"#rHubara_et+al_2016_a\">Hubara et al, 2016</a>), where direct training of neural networks with pre-determined precisions in the inference path was explored with the feedback path computations being done in 32-b FL",
+        "We have presented a study of precision requirements in a typical back-propagation based training procedure of neural networks",
+        "Using a set of quantization criteria, we have presented a precision assignment methodology for which FX training is made statistically similar to the FL baseline, known to converge a priori",
+        "We showed that our precision assignment is nearly minimal"
+    ],
+    "summary": [
+        "Though deep neural networks (DNNs) have established themselves as powerful predictive models achieving human-level accuracy on many machine learning tasks (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>), their excellent performance has been achieved at the expense of a very high computational and parameter complexity.",
+        "A fundamental problem contributing to the high computational and parameter complexity of DNNs is their realization using 32-b floating-point (FL) arithmetic in GPUs and CPUs. Reduced-precision representations such as quantized FL (QFL) and fixed-point (FX) have been employed in various combinations to both training and inference.",
+        "Hyper-precision reduction techniques such as weight and activation binarization (<a class=\"ref-link\" id=\"cHubara_et+al_2016_a\" href=\"#rHubara_et+al_2016_a\">Hubara et al, 2016</a>) or gradient ternarization (<a class=\"ref-link\" id=\"cWen_et+al_2017_a\" href=\"#rWen_et+al_2017_a\">Wen et al, 2017</a>) are not as efficient as our methodology since these do not address the fundamental problem of realizing true fixed-point DNN training.",
+        "We show that our precision assignment methodology reduces representational, computational, and communication costs of training by up to 6\u00d7, 8\u00d7, and 4\u00d7, respectively, compared to the FL baseline and related works.",
+        "The reflected quantization noise variances onto the mismatch probability pm from all feedforward weights ({VWl\u2192pm }Ll=1) and activations ({VAl\u2192pm }lL=1) should be equal: VW1\u2192pm = .",
+        "L, where rnd() denotes the rounding operation, EWl\u2192pm and EAl\u2192pm are the weight and activation quantization noise gains at layer l, respectively, B is a reference minimum precision, and E = min {EWl\u2192pm }Ll=1 , {EAl\u2192pm }lL=1 .",
+        "Additional experimental results provided in Appendix D support our contention regarding the near minimality of Co. by studying the impact of quantizing specific tensors we determine that that the accuracy is most sensitive to the precision assigned to weights and activation gradients.",
+        "As was done in (<a class=\"ref-link\" id=\"cGupta_et+al_2015_a\" href=\"#rGupta_et+al_2015_a\"><a class=\"ref-link\" id=\"cGupta_et+al_2015_a\" href=\"#rGupta_et+al_2015_a\">Gupta et al, 2015</a></a>), we quantize feedforward weights and activations as well as all gradients, but accumulators are kept in floating-point.",
+        "We assume all weight gradients use two bits they are not really fixed-point and do require computation of 32-b floating-point scalars for every tensor.",
+        "While Lin et al (2016) proposed a non-uniform precision assignment using the signal-to-quantization-noise ratio (SQNR) metric, <a class=\"ref-link\" id=\"cSakr_et+al_2017_a\" href=\"#rSakr_et+al_2017_a\">Sakr et al (2017</a>) analytically quantified the trade-off between activation and weight precisions while providing minimal precision requirements of the inference path computations that bounds the probability pm of a mismatch between predicted labels of the FX and its FL counterpart.",
+        "Reducing the complexity of training: finite-precision training was explored in (<a class=\"ref-link\" id=\"cGupta_et+al_2015_a\" href=\"#rGupta_et+al_2015_a\"><a class=\"ref-link\" id=\"cGupta_et+al_2015_a\" href=\"#rGupta_et+al_2015_a\">Gupta et al, 2015</a></a>) which employed stochastic quantization in order to counter quantization bias accumulation in the weight updates.",
+        "We propose a systematic methodology to determine close-to-minimal precision requirements for FX-only training of deep neural networks.",
+        "Using a set of quantization criteria, we have presented a precision assignment methodology for which FX training is made statistically similar to the FL baseline, known to converge a priori.",
+        "We showed that our precision assignment is nearly minimal"
+    ],
+    "headline": "We describe a precision assignment methodology for neural network training in which all network parameters, i.e., activations and weights in the feedforward path, gradients and weight accumulators in the feedback path, are assigned close to minimal precision",
+    "reference_links": [
+        {
+            "id": "Alistarh_et+al_2017_a",
+            "entry": "Alistarh, D., Grubic, D., Li, J., Tomioka, R., and Vojnovic, M. (2017). Qsgd: Communication-efficient sgd via gradient quantization and encoding. In Advances in Neural Information Processing Systems, pages 1707\u20131718.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alistarh%2C%20D.%20Grubic%2C%20D.%20Li%2C%20J.%20Tomioka%2C%20R.%20Qsgd%3A%20Communication-efficient%20sgd%20via%20gradient%20quantization%20and%20encoding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alistarh%2C%20D.%20Grubic%2C%20D.%20Li%2C%20J.%20Tomioka%2C%20R.%20Qsgd%3A%20Communication-efficient%20sgd%20via%20gradient%20quantization%20and%20encoding%202017"
+        },
+        {
+            "id": "Anderson_2017_a",
+            "entry": "Anderson, A. G. and Berg, C. P. (2017). The high-dimensional geometry of binary neural networks. arXiv preprint arXiv:1705.07199.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07199"
+        },
+        {
+            "id": "Balduzzi_et+al_2017_a",
+            "entry": "Balduzzi, D., Frean, M., Leary, L., Lewis, J. P., Ma, K. W.-D., and McWilliams, B. (2017). The shattered gradients problem: If resnets are the answer, then what is the question? In Proceedings of the 34th International Conference on Machine Learning, pages 342\u2013350.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Balduzzi%2C%20D.%20Frean%2C%20M.%20Leary%2C%20L.%20Lewis%2C%20J.P.%20The%20shattered%20gradients%20problem%3A%20If%20resnets%20are%20the%20answer%2C%20then%20what%20is%20the%20question%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Balduzzi%2C%20D.%20Frean%2C%20M.%20Leary%2C%20L.%20Lewis%2C%20J.P.%20The%20shattered%20gradients%20problem%3A%20If%20resnets%20are%20the%20answer%2C%20then%20what%20is%20the%20question%3F%202017"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Bengio, Y., L\u00e9onard, N., and Courville, A. (2013). Estimating or propagating gradients through stochastic neurons for conditional computation. arXiv preprint arXiv:1308.3432.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.3432"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Chen, Y.-H., Krishna, T., Emer, J. S., and Sze, V. (2017). Eyeriss: An energy-efficient reconfigurable accelerator for deep convolutional neural networks. IEEE Journal of Solid-State Circuits, 52(1):127\u2013 138.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Y.-H.%20Krishna%2C%20T.%20Emer%2C%20J.S.%20Sze%2C%20V.%20Eyeriss%3A%20An%20energy-efficient%20reconfigurable%20accelerator%20for%20deep%20convolutional%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Y.-H.%20Krishna%2C%20T.%20Emer%2C%20J.S.%20Sze%2C%20V.%20Eyeriss%3A%20An%20energy-efficient%20reconfigurable%20accelerator%20for%20deep%20convolutional%20neural%20networks%202017"
+        },
+        {
+            "id": "Courbariaux_et+al_2015_a",
+            "entry": "Courbariaux, M., Bengio, Y., and David, J.-P. (2015). Binaryconnect: Training deep neural networks with binary weights during propagations. In Advances in Neural Information Processing Systems, pages 3123\u20133131.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Courbariaux%2C%20M.%20Bengio%2C%20Y.%20David%2C%20J.-P.%20Binaryconnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Courbariaux%2C%20M.%20Bengio%2C%20Y.%20David%2C%20J.-P.%20Binaryconnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015"
+        },
+        {
+            "id": "Dwork_et+al_2015_a",
+            "entry": "Dwork, C., Feldman, V., Hardt, M., Pitassi, T., Reingold, O., and Roth, A. (2015). The reusable holdout: Preserving validity in adaptive data analysis. Science, 349(6248):636\u2013638.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dwork%2C%20C.%20Feldman%2C%20V.%20Hardt%2C%20M.%20Pitassi%2C%20T.%20The%20reusable%20holdout%3A%20Preserving%20validity%20in%20adaptive%20data%20analysis%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dwork%2C%20C.%20Feldman%2C%20V.%20Hardt%2C%20M.%20Pitassi%2C%20T.%20The%20reusable%20holdout%3A%20Preserving%20validity%20in%20adaptive%20data%20analysis%202015"
+        },
+        {
+            "id": "Goel_1998_a",
+            "entry": "Goel, M. and Shanbhag, N. (1998). Finite-precision analysis of the pipelined strength-reduced adaptive filter. Signal Processing, IEEE Transactions on, 46(6):1763\u20131769.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goel%2C%20M.%20Shanbhag%2C%20N.%20Finite-precision%20analysis%20of%20the%20pipelined%20strength-reduced%20adaptive%20filter%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goel%2C%20M.%20Shanbhag%2C%20N.%20Finite-precision%20analysis%20of%20the%20pipelined%20strength-reduced%20adaptive%20filter%201998"
+        },
+        {
+            "id": "Goodfellow_2013_a",
+            "entry": "Goodfellow, I. J. et al. (2013). Maxout networks. ICML (3), 28:1319\u20131327.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20I.J.%20Maxout%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20I.J.%20Maxout%20networks%202013"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Goyal, P., Doll\u00e1r, P., Girshick, R., Noordhuis, P., Wesolowski, L., Kyrola, A., Tulloch, A., Jia, Y., and He, K. (2017). Accurate, large minibatch sgd: training imagenet in 1 hour. arXiv preprint arXiv:1706.02677.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "Gupta_et+al_2015_a",
+            "entry": "Gupta, S., Agrawal, A., Gopalakrishnan, K., and Narayanan, P. (2015). Deep learning with limited numerical precision. In Proceedings of The 32nd International Conference on Machine Learning, pages 1737\u20131746.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gupta%2C%20S.%20Agrawal%2C%20A.%20Gopalakrishnan%2C%20K.%20Narayanan%2C%20P.%20Deep%20learning%20with%20limited%20numerical%20precision%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gupta%2C%20S.%20Agrawal%2C%20A.%20Gopalakrishnan%2C%20K.%20Narayanan%2C%20P.%20Deep%20learning%20with%20limited%20numerical%20precision%202015"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Han, S., Mao, H., and Dally, W. J. (2015). Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. arXiv preprint arXiv:1510.00149.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "He, K., Zhang, X., Ren, S., and Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 770\u2013778.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20K.%20Zhang%2C%20X.%20Ren%2C%20S.%20Sun%2C%20J.%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hubara_et+al_2016_a",
+            "entry": "Hubara, I., Courbariaux, M., Soudry, D., El-Yaniv, R., and Bengio, Y. (2016). Binarized neural networks. In Advances in Neural Information Processing Systems, pages 4107\u20134115.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubara%2C%20I.%20Courbariaux%2C%20M.%20Soudry%2C%20D.%20El-Yaniv%2C%20R.%20Binarized%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubara%2C%20I.%20Courbariaux%2C%20M.%20Soudry%2C%20D.%20El-Yaniv%2C%20R.%20Binarized%20neural%20networks%202016"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Ioffe, S. and Szegedy, C. (2015). Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning, pages 448\u2013 456.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20S.%20Szegedy%2C%20C.%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20S.%20Szegedy%2C%20C.%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Koester_et+al_2017_a",
+            "entry": "K\u00f6ster, U., Webb, T., Wang, X., Nassar, M., Bansal, A. K., Constable, W., Elibol, O., Hall, S., Hornof, L., Khosrowshahi, A., et al. (2017). Flexpoint: An adaptive numerical format for efficient training of deep neural networks. In Advances in Neural Information Processing Systems, pages 1740\u20131750.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=K%C3%B6ster%2C%20U.%20Webb%2C%20T.%20Wang%2C%20X.%20Nassar%2C%20M.%20Flexpoint%3A%20An%20adaptive%20numerical%20format%20for%20efficient%20training%20of%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=K%C3%B6ster%2C%20U.%20Webb%2C%20T.%20Wang%2C%20X.%20Nassar%2C%20M.%20Flexpoint%3A%20An%20adaptive%20numerical%20format%20for%20efficient%20training%20of%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Krizhevsky, A. and Hinton, G. (2009). Learning multiple layers of features from tiny images.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20A.%20Hinton%2C%20G.%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Krizhevsky, A., Sutskever, I., and Hinton, G. E. (2012). ImageNet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems, pages 1097\u20131105.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Hinton%2C%20G.E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Hinton%2C%20G.E.%20ImageNet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lin_et+al_2016_a",
+            "entry": "Lin, D., Talathi, S., and Annapureddy, S. (2016). Fixed point quantization of deep convolutional networks. In Proceedings of The 33rd International Conference on Machine Learning, pages 2849\u20132858.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20D.%20Talathi%2C%20S.%20Annapureddy%2C%20S.%20Fixed%20point%20quantization%20of%20deep%20convolutional%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20D.%20Talathi%2C%20S.%20Annapureddy%2C%20S.%20Fixed%20point%20quantization%20of%20deep%20convolutional%20networks%202016"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Netzer, Y., Wang, T., Coates, A., Bissacco, A., Wu, B., and Ng, A. Y. (2011). Reading digits in natural images with unsupervised feature learning. In NIPS workshop on deep learning and unsupervised feature learning, volume 2011, page 5.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Y.%20Wang%2C%20T.%20Coates%2C%20A.%20Bissacco%2C%20A.%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Y.%20Wang%2C%20T.%20Coates%2C%20A.%20Bissacco%2C%20A.%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Parhi_2007_a",
+            "entry": "Parhi, K. (2007). VLSI Digital Signal Processing Systems: Design and Implementation. John Wiley & Sons.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parhi%2C%20K.%20VLSI%20Digital%20Signal%20Processing%20Systems%3A%20Design%20and%20Implementation%202007"
+        },
+        {
+            "id": "Pascanu_et+al_2013_a",
+            "entry": "Pascanu, R., Mikolov, T., and Bengio, Y. (2013). On the difficulty of training recurrent neural networks. In International Conference on Machine Learning, pages 1310\u20131318.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20R.%20Mikolov%2C%20T.%20Bengio%2C%20Y.%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20R.%20Mikolov%2C%20T.%20Bengio%2C%20Y.%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Raghu_2017_a",
+            "entry": "Raghu, M. et al. (2017). On the expressive power of deep neural networks. In Proceedings of the 34th International Conference on Machine Learning, pages 2847\u20132854.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghu%2C%20M.%20On%20the%20expressive%20power%20of%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghu%2C%20M.%20On%20the%20expressive%20power%20of%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Rastegari_et+al_2016_a",
+            "entry": "Rastegari, M., Ordonez, V., Redmon, J., and Farhadi, A. (2016). XNOR-Net: Imagenet classification using binary convolutional neural networks. In European Conference on Computer Vision, pages 525\u2013542. Springer.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rastegari%2C%20M.%20Ordonez%2C%20V.%20Redmon%2C%20J.%20Farhadi%2C%20A.%20XNOR-Net%3A%20Imagenet%20classification%20using%20binary%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rastegari%2C%20M.%20Ordonez%2C%20V.%20Redmon%2C%20J.%20Farhadi%2C%20A.%20XNOR-Net%3A%20Imagenet%20classification%20using%20binary%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Sakr_et+al_2017_a",
+            "entry": "Sakr, C., Kim, Y., and Shanbhag, N. (2017). Analytical guarantees on numerical precision of deep neural networks. In Proceedings of the 34th International Conference on Machine Learning, pages 3007\u20133016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sakr%2C%20C.%20Kim%2C%20Y.%20Shanbhag%2C%20N.%20Analytical%20guarantees%20on%20numerical%20precision%20of%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sakr%2C%20C.%20Kim%2C%20Y.%20Shanbhag%2C%20N.%20Analytical%20guarantees%20on%20numerical%20precision%20of%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Simonyan, K. and Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Srivastava_2014_a",
+            "entry": "Srivastava, N. et al. (2014). Dropout: a simple way to prevent neural networks from overfitting. Journal of Machine Learning Research, 15(1):1929\u20131958.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20N.%20Dropout%3A%20a%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20N.%20Dropout%3A%20a%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Taigman_et+al_2014_a",
+            "entry": "Taigman, Y., Yang, M., Ranzato, M., and Wolf, L. (2014). Deepface: Closing the gap to human-level performance in face verification. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 1701\u20131708.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taigman%2C%20Y.%20Yang%2C%20M.%20Ranzato%2C%20M.%20Wolf%2C%20L.%20Deepface%3A%20Closing%20the%20gap%20to%20human-level%20performance%20in%20face%20verification%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taigman%2C%20Y.%20Yang%2C%20M.%20Ranzato%2C%20M.%20Wolf%2C%20L.%20Deepface%3A%20Closing%20the%20gap%20to%20human-level%20performance%20in%20face%20verification%202014"
+        },
+        {
+            "id": "Tyurin_2010_a",
+            "entry": "Tyurin, I. S. (2010). Refinement of the upper bounds of the constants in lyapunov\u2019s theorem. Russian Mathematical Surveys, 65(3):586\u2013588.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tyurin%2C%20I.S.%20Refinement%20of%20the%20upper%20bounds%20of%20the%20constants%20in%20lyapunov%E2%80%99s%20theorem%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tyurin%2C%20I.S.%20Refinement%20of%20the%20upper%20bounds%20of%20the%20constants%20in%20lyapunov%E2%80%99s%20theorem%202010"
+        },
+        {
+            "id": "Wen_et+al_2017_a",
+            "entry": "Wen, W., Xu, C., Yan, F., Wu, C., Wang, Y., Chen, Y., and Li, H. (2017). Terngrad: Ternary gradients to reduce communication in distributed deep learning. In Advances in Neural Information Processing Systems, pages 1508\u20131518.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20W.%20Xu%2C%20C.%20Yan%2C%20F.%20Wu%2C%20C.%20Terngrad%3A%20Ternary%20gradients%20to%20reduce%20communication%20in%20distributed%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20W.%20Xu%2C%20C.%20Yan%2C%20F.%20Wu%2C%20C.%20Terngrad%3A%20Ternary%20gradients%20to%20reduce%20communication%20in%20distributed%20deep%20learning%202017"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Wu, J., Wang, Y., Wu, Z., Wang, Z., Veeraraghavan, A., and Lin, Y. (2018a). Deep k-means: Retraining and parameter sharing with harder cluster assignments for compressing deep convolutions. In International Conference on Machine Learning, pages 5359\u20135368.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20J.%20Wang%2C%20Y.%20Wu%2C%20Z.%20Wang%2C%20Z.%20Deep%20k-means%3A%20Retraining%20and%20parameter%20sharing%20with%20harder%20cluster%20assignments%20for%20compressing%20deep%20convolutions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20J.%20Wang%2C%20Y.%20Wu%2C%20Z.%20Wang%2C%20Z.%20Deep%20k-means%3A%20Retraining%20and%20parameter%20sharing%20with%20harder%20cluster%20assignments%20for%20compressing%20deep%20convolutions%202018"
+        },
+        {
+            "id": "Wu_et+al_2018_b",
+            "entry": "Wu, S., Li, G., Chen, F., and Shi, L. (2018b). Training and inference with integers in deep neural networks. arXiv preprint arXiv:1802.04680.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04680"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Zagoruyko, S. and Komodakis, N. (2016). Wide residual networks. arXiv preprint arXiv:1605.07146.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07146"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Zhou, S., Wu, Y., Ni, Z., Zhou, X., Wen, H., and Zou, Y. (2016). DoReFa-Net: Training low bitwidth convolutional neural networks with low bitwidth gradients. arXiv preprint arXiv:1606.06160.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        }
+    ]
+}

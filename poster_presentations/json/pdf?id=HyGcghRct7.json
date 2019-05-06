@@ -1,0 +1,393 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "RANDOM MESH PROJECTORS FOR INVERSE PROBLEMS",
+        "author": "Konik Kothari, University of Illinois at Urbana-Champaign kkothar,@illinois.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HyGcghRct7"
+        },
+        "abstract": "We propose a new learning-based approach to solve ill-posed inverse problems in imaging. We address the case where ground truth training samples are rare and the problem is severely ill-posed\u2014both because of the underlying physics and because we can only get few measurements. This setting is common in geophysical imaging and remote sensing. We show that in this case the common approach to directly learn the mapping from the measured data to the reconstruction becomes unstable. Instead, we propose to first learn an ensemble of simpler mappings from the data to projections of the unknown image into random piecewise-constant subspaces. We then combine the projections to form a final reconstruction by solving a deconvolution-like problem. We show experimentally that the proposed method is more robust to measurement noise and corruptions not seen during training than a directly learned inverse."
+    },
+    "keywords": [
+        {
+            "term": "piecewise constant",
+            "url": "https://en.wikipedia.org/wiki/piecewise_constant"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "signal-to-noise ratio",
+            "url": "https://en.wikipedia.org/wiki/signal-to-noise_ratio"
+        },
+        {
+            "term": "tomography",
+            "url": "https://en.wikipedia.org/wiki/tomography"
+        },
+        {
+            "term": "inverse problems",
+            "url": "https://en.wikipedia.org/wiki/inverse_problems"
+        }
+    ],
+    "abbreviations": {
+        "M N": "measurement data",
+        "SNR": "signal-to-noise ratio"
+    },
+    "highlights": [
+        "We propose a two-stage method to solve ill-posed inverse problems using random low-dimensional projections and convolutional neural networks",
+        "We address situations with very sparse measurement data (M N ) so that even a coarse reconstruction of the unknown model is hard to get with traditional regularization schemes",
+        "To demonstrate our method\u2019s benefits we consider linearized traveltime tomography (<a class=\"ref-link\" id=\"cHole_1992_a\" href=\"#rHole_1992_a\">Hole (1992</a>); <a class=\"ref-link\" id=\"cBording_et+al_1987_a\" href=\"#rBording_et+al_1987_a\">Bording et al (1987</a>)), but we note that the method applies to any inverse problem with scarce data",
+        "We proposed a new approach to regularize ill-posed inverse problems in imaging, the key idea being to decompose an unstable inverse mapping into a collection of stable mappings which only estimate",
+        "Our reconstructions are better both quantitatively in terms of signal-to-noise ratio and qualitatively in the sense that they estimate correct geometric features even when measurements are corrupted in ways not seen at training time",
+        "Future work involves getting precise estimates of Lipschitz constants for various inverse problems, regularizing the reformulated problem using modern regularizers (<a class=\"ref-link\" id=\"cUlyanov_et+al_2017_a\" href=\"#rUlyanov_et+al_2017_a\">Ulyanov et al (2017</a>)), studying extensions to non-linear problems and developing concentration bounds for the equivalent convolution kernel"
+    ],
+    "key_statements": [
+        "We propose a two-stage method to solve ill-posed inverse problems using random low-dimensional projections and convolutional neural networks",
+        "We address situations with very sparse measurement data (M N ) so that even a coarse reconstruction of the unknown model is hard to get with traditional regularization schemes",
+        "To demonstrate our method\u2019s benefits we consider linearized traveltime tomography (<a class=\"ref-link\" id=\"cHole_1992_a\" href=\"#rHole_1992_a\">Hole (1992</a>); <a class=\"ref-link\" id=\"cBording_et+al_1987_a\" href=\"#rBording_et+al_1987_a\">Bording et al (1987</a>)), but we note that the method applies to any inverse problem with scarce data",
+        "We proposed a new approach to regularize ill-posed inverse problems in imaging, the key idea being to decompose an unstable inverse mapping into a collection of stable mappings which only estimate",
+        "Our reconstructions are better both quantitatively in terms of signal-to-noise ratio and qualitatively in the sense that they estimate correct geometric features even when measurements are corrupted in ways not seen at training time",
+        "Future work involves getting precise estimates of Lipschitz constants for various inverse problems, regularizing the reformulated problem using modern regularizers (<a class=\"ref-link\" id=\"cUlyanov_et+al_2017_a\" href=\"#rUlyanov_et+al_2017_a\">Ulyanov et al (2017</a>)), studying extensions to non-linear problems and developing concentration bounds for the equivalent convolution kernel"
+    ],
+    "summary": [
+        "We propose a two-stage method to solve ill-posed inverse problems using random low-dimensional projections and convolutional neural networks.",
+        "We first decompose the inverse problem into a collection of simpler learning problems of estimating projections into random low-dimensional subspaces of piecewise-constant images.",
+        "We test our method on linearized seismic traveltime tomography (<a class=\"ref-link\" id=\"cBording_et+al_1987_a\" href=\"#rBording_et+al_1987_a\"><a class=\"ref-link\" id=\"cBording_et+al_1987_a\" href=\"#rBording_et+al_1987_a\">Bording et al (1987</a></a>); <a class=\"ref-link\" id=\"cHole_1992_a\" href=\"#rHole_1992_a\"><a class=\"ref-link\" id=\"cHole_1992_a\" href=\"#rHole_1992_a\">Hole (1992</a></a>)) with sparse measurements and show that it outperforms learned direct inversion in quality of achieved reconstructions, robustness to measurement errors, andsensitivity to the training data.",
+        "The two stages of our method are (i) decomposing a \u201chard\u201d learning task of directly learning an unstable operator into an ensemble of \u201ceasy\u201d tasks of estimating projections of the unknown model into low-dimensional subspaces; and combining these projection estimates to solve a reformulated inverse problem for x.",
+        "Similar to Jin et al (2016), we do not use the measured data y \u2208 RM directly as this would require the network to first learn to map y back to the image domain; we rather warm-start the reconstruction by a non-negative least squares reconstruction, y \u2208 RN , computed from y.",
+        "We observe empirically that \u03c3min(B)\u22121 grows large as the number of subspaces increases which reflects the fact that individual projections are easier to learn, the full-resolution reconstruction remains ill-posed.",
+        "To demonstrate our method\u2019s benefits we consider linearized traveltime tomography (<a class=\"ref-link\" id=\"cHole_1992_a\" href=\"#rHole_1992_a\"><a class=\"ref-link\" id=\"cHole_1992_a\" href=\"#rHole_1992_a\">Hole (1992</a></a>); <a class=\"ref-link\" id=\"cBording_et+al_1987_a\" href=\"#rBording_et+al_1987_a\"><a class=\"ref-link\" id=\"cBording_et+al_1987_a\" href=\"#rBording_et+al_1987_a\">Bording et al (1987</a></a>)), but we note that the method applies to any inverse problem with scarce data.",
+        "We combine projection estimates from many ProjNets by regularized linear least-squares (2) to get the reconstructed model with the regularization parameter \u03bb determined on five held-out images.",
+        "We compare the ProjNet and SubNet reconstructions with a direct U-net baseline convolutional neural network that reconstructs images from their non-negative least squares reconstructions.",
+        "We proposed a new approach to regularize ill-posed inverse problems in imaging, the key idea being to decompose an unstable inverse mapping into a collection of stable mappings which only estimate",
+        "Our reconstructions are better both quantitatively in terms of SNR and qualitatively in the sense that they estimate correct geometric features even when measurements are corrupted in ways not seen at training time.",
+        "Future work involves getting precise estimates of Lipschitz constants for various inverse problems, regularizing the reformulated problem using modern regularizers (<a class=\"ref-link\" id=\"cUlyanov_et+al_2017_a\" href=\"#rUlyanov_et+al_2017_a\"><a class=\"ref-link\" id=\"cUlyanov_et+al_2017_a\" href=\"#rUlyanov_et+al_2017_a\">Ulyanov et al (2017</a></a>)), studying extensions to non-linear problems and developing concentration bounds for the equivalent convolution kernel."
+    ],
+    "headline": "We propose a new learning-based approach to solve ill-posed inverse problems in imaging",
+    "reference_links": [
+        {
+            "id": "Adler_1704_a",
+            "entry": "Jonas Adler and Ozan \u00d6ktem. Solving ill-posed inverse problems using iterative deep neural networks. arXiv preprint arXiv:1704.04058v2, April 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04058v2"
+        },
+        {
+            "id": "Adler_1707_a",
+            "entry": "Jonas Adler and Ozan \u00d6ktem. Learned Primal-dual Reconstruction. arXiv preprint arXiv:1707.06474v1, July 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06474v1"
+        },
+        {
+            "id": "Antholzer_et+al_1704_a",
+            "entry": "Stephan Antholzer, Markus Haltmeier, and Johannes Schwab. Deep Learning for Photoacoustic Tomography from Sparse Data. arXiv preprint arXiv:1704.04587v2, April 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04587v2"
+        },
+        {
+            "id": "Araya-Polo_et+al_2017_a",
+            "entry": "Mauricio Araya-Polo, Joseph Jennings, Amir Adler, and Taylor Dahlke. Deep-learning tomography. The Leading Edge, December 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Araya-Polo%2C%20Mauricio%20Jennings%2C%20Joseph%20Adler%2C%20Amir%20Dahlke%2C%20Taylor%20Deep-learning%20tomography.%20The%20Leading%20Edge%202017-12"
+        },
+        {
+            "id": "Beretta_et+al_2013_a",
+            "entry": "Elena Beretta, Maarten V de Hoop, and Lingyun Qiu. Lipschitz Stability of an Inverse Boundary Value Problem for a Schr\u00f6dinger-Type Equation. SIAM J. Math. Anal., 45(2):679\u2013699, March 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Beretta%2C%20Elena%20de%20Hoop%2C%20Maarten%20V.%20Qiu%2C%20Lingyun%20Lipschitz%20Stability%20of%20an%20Inverse%20Boundary%20Value%20Problem%20for%20a%20Schr%C3%B6dinger-Type%20Equation%202013-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Beretta%2C%20Elena%20de%20Hoop%2C%20Maarten%20V.%20Qiu%2C%20Lingyun%20Lipschitz%20Stability%20of%20an%20Inverse%20Boundary%20Value%20Problem%20for%20a%20Schr%C3%B6dinger-Type%20Equation%202013-03"
+        },
+        {
+            "id": "Bianco_2017_a",
+            "entry": "Michael Bianco and Peter Gertoft. Sparse travel time tomography with adaptive dictionaries. arXiv preprint arXiv:1712.08655, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.08655"
+        },
+        {
+            "id": "Bora_et+al_2017_a",
+            "entry": "Ashish Bora, Ajil Jalal, Eric Price, and Alexandros G Dimakis. Compressed sensing using generative models. arXiv preprint arXiv:1703.03208, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.03208"
+        },
+        {
+            "id": "Bora_et+al_2018_a",
+            "entry": "Ashish Bora, Eric Price, and Alexandros G Dimakis. Ambientgan: Generative models from lossy measurements. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bora%2C%20Ashish%20Price%2C%20Eric%20Dimakis%2C%20Alexandros%20G.%20Ambientgan%3A%20Generative%20models%20from%20lossy%20measurements%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bora%2C%20Ashish%20Price%2C%20Eric%20Dimakis%2C%20Alexandros%20G.%20Ambientgan%3A%20Generative%20models%20from%20lossy%20measurements%202018"
+        },
+        {
+            "id": "Bording_et+al_1987_a",
+            "entry": "R. Phillip Bording, Adam Gersztenkorn, Larry R Lines, John A Scales, and Sven Treitel. Applications of seismic travel-time tomography. Geophysical Journal International, 90(2):285\u2013303, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bording%2C%20R.Phillip%20Gersztenkorn%2C%20Adam%20Lines%2C%20Larry%20R.%20Scales%2C%20John%20A.%20Applications%20of%20seismic%20travel-time%20tomography%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bording%2C%20R.Phillip%20Gersztenkorn%2C%20Adam%20Lines%2C%20Larry%20R.%20Scales%2C%20John%20A.%20Applications%20of%20seismic%20travel-time%20tomography%201987"
+        },
+        {
+            "id": "Chang_et+al_2017_a",
+            "entry": "Jen-Hao Rick Chang, Chun-Liang Li, Barnabas Poczos, BVK Vijaya Kumar, and Aswin C Sankaranarayanan. One Network to Solve Them All\u2013Solving Linear Inverse Problems Using Deep Projection Models. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 5888\u20135897, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chang%2C%20Jen-Hao%20Rick%20Li%2C%20Chun-Liang%20Barnabas%20Poczos%2C%20B.V.K.Vijaya%20Kumar%20Sankaranarayanan%2C%20Aswin%20C.%20One%20Network%20to%20Solve%20Them%20All%E2%80%93Solving%20Linear%20Inverse%20Problems%20Using%20Deep%20Projection%20Models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chang%2C%20Jen-Hao%20Rick%20Li%2C%20Chun-Liang%20Barnabas%20Poczos%2C%20B.V.K.Vijaya%20Kumar%20Sankaranarayanan%2C%20Aswin%20C.%20One%20Network%20to%20Solve%20Them%20All%E2%80%93Solving%20Linear%20Inverse%20Problems%20Using%20Deep%20Projection%20Models%202017"
+        },
+        {
+            "id": "Cooper_1995_a",
+            "entry": "Duane A Cooper. Learning lipschitz functions. International Journal of Computer Mathematics, 59 (1-2):15\u201326, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cooper%2C%20Duane%20A.%20Learning%20lipschitz%20functions%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cooper%2C%20Duane%20A.%20Learning%20lipschitz%20functions%201995"
+        },
+        {
+            "id": "Cristo_2003_a",
+            "entry": "Michele Di Cristo and Luca Rondi. Examples of exponential instability for inverse inclusion and scattering problems. Inverse Problems, 19(3):685, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cristo%2C%20Michele%20Di%20Rondi%2C%20Luca%20Examples%20of%20exponential%20instability%20for%20inverse%20inclusion%20and%20scattering%20problems%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cristo%2C%20Michele%20Di%20Rondi%2C%20Luca%20Examples%20of%20exponential%20instability%20for%20inverse%20inclusion%20and%20scattering%20problems%202003"
+        },
+        {
+            "id": "Galetti_et+al_2017_a",
+            "entry": "Erica Galetti, Andrew Curtis, Brian Baptie, David Jenkins, and Heather Nicolson. Transdimensional Love-wave tomography of the British Isles and shear-velocity structure of the East Irish Sea Basin from ambient-noise interferometry. Geophys. J. Int., 208(1):36\u201358, January 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Galetti%2C%20Erica%20Curtis%2C%20Andrew%20Baptie%2C%20Brian%20Jenkins%2C%20David%20Transdimensional%20Love-wave%20tomography%20of%20the%20British%20Isles%20and%20shear-velocity%20structure%20of%20the%20East%20Irish%20Sea%20Basin%20from%20ambient-noise%20interferometry%202017-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Galetti%2C%20Erica%20Curtis%2C%20Andrew%20Baptie%2C%20Brian%20Jenkins%2C%20David%20Transdimensional%20Love-wave%20tomography%20of%20the%20British%20Isles%20and%20shear-velocity%20structure%20of%20the%20East%20Irish%20Sea%20Basin%20from%20ambient-noise%20interferometry%202017-01"
+        },
+        {
+            "id": "Greenspan_et+al_2016_a",
+            "entry": "Hayit Greenspan, Bram van Ginneken, and Ronald M Summers. Deep Learning in Medical Imaging: Overview and Future Promise of an Exciting New Technique. IEEE Trans. Med. Imag., 35(5): 1153\u20131159, may 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Greenspan%2C%20Hayit%20van%20Ginneken%2C%20Bram%20Summers%2C%20Ronald%20M.%20Deep%20Learning%20in%20Medical%20Imaging%3A%20Overview%20and%20Future%20Promise%20of%20an%20Exciting%20New%20Technique%202016-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Greenspan%2C%20Hayit%20van%20Ginneken%2C%20Bram%20Summers%2C%20Ronald%20M.%20Deep%20Learning%20in%20Medical%20Imaging%3A%20Overview%20and%20Future%20Promise%20of%20an%20Exciting%20New%20Technique%202016-05"
+        },
+        {
+            "id": "Gregor_0000_a",
+            "entry": "Karol Gregor and Yann LeCun. Learning fast approximations of sparse coding. In Proceedings of the 27th International Conference on International Conference on Machine Learning, pages 399\u2013406.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20Karol%20LeCun%2C%20Yann%20Learning%20fast%20approximations%20of%20sparse%20coding",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20Karol%20LeCun%2C%20Yann%20Learning%20fast%20approximations%20of%20sparse%20coding"
+        },
+        {
+            "id": "Omnipress_2010_a",
+            "entry": "Omnipress, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omnipress%202010"
+        },
+        {
+            "id": "Gribonval_et+al_2017_a",
+            "entry": "R\u00e9mi Gribonval, Gilles Blanchard, Nicolas Keriven, and Yann Traonmilin. Compressive statistical learning with random feature moments. arXiv preprint arXiv:1706.07180, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07180"
+        },
+        {
+            "id": "Gueler_2005_a",
+            "entry": "\u0307Inan G\u00fcler and Elif Derya \u00dcbeyl\u0131. ECG beat classifier designed by combined neural network model. Pattern Recognition, 38(2):199\u2013208, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=G%C3%BCler%2C%20Inan%20%C3%9Cbeyl%C4%B1%2C%20Elif%20Derya%20ECG%20beat%20classifier%20designed%20by%20combined%20neural%20network%20model%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=G%C3%BCler%2C%20Inan%20%C3%9Cbeyl%C4%B1%2C%20Elif%20Derya%20ECG%20beat%20classifier%20designed%20by%20combined%20neural%20network%20model%202005"
+        },
+        {
+            "id": "Han_et+al_1611_a",
+            "entry": "Yo Seob Han, Jaejun Yoo, and Jong Chul Ye. Deep Residual Learning for Compressed Sensing CT Reconstruction via Persistent Homology Analysis. arXiv preprint arXiv:1611.06391, November 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.06391"
+        },
+        {
+            "id": "Springer,_2016_a",
+            "entry": "Springer, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springer%202016a"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the Conference on Computer Vision and Pattern Recognition, pages 770\u2013778. IEEE, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hole_1992_a",
+            "entry": "John Hole. Nonlinear high-resolution three-dimensional seismic travel time tomography. Journal of Geophysical Research: Solid Earth, 97(B5):6553\u20136562, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hole%2C%20John%20Nonlinear%20high-resolution%20three-dimensional%20seismic%20travel%20time%20tomography%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hole%2C%20John%20Nonlinear%20high-resolution%20three-dimensional%20seismic%20travel%20time%20tomography%201992"
+        },
+        {
+            "id": "Hoole_1993_a",
+            "entry": "Samuel Ratnajeevan Herbert Hoole. Artificial neural networks in the solution of inverse electromagnetic field problems. IEEE Trans. Magn., 29(2):1931\u20131934, March 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoole%2C%20Samuel%20Ratnajeevan%20Herbert%20Artificial%20neural%20networks%20in%20the%20solution%20of%20inverse%20electromagnetic%20field%20problems%201993-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoole%2C%20Samuel%20Ratnajeevan%20Herbert%20Artificial%20neural%20networks%20in%20the%20solution%20of%20inverse%20electromagnetic%20field%20problems%201993-03"
+        },
+        {
+            "id": "Hudson_2000_a",
+            "entry": "Donna L Hudson and Maurice E Cohen. Neural networks and artificial intelligence for biomedical engineering. Wiley Online Library, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hudson%2C%20Donna%20L.%20Cohen%2C%20Maurice%20E.%20Neural%20networks%20and%20artificial%20intelligence%20for%20biomedical%20engineering%202000"
+        },
+        {
+            "id": "Jin_et+al_1611_a",
+            "entry": "Kyong Hwan Jin, Michael T McCann, Emmanuel Froustey, and Michael Unser. Deep Convolutional Neural Network for Inverse Problems in Imaging. arXiv preprint arXiv:1611.03679v1, November 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03679v1"
+        },
+        {
+            "id": "Kelly_et+al_1709_a",
+            "entry": "Brendan Kelly, Thomas P Matthews, and Mark A Anastasio. Deep Learning-Guided Image Reconstruction from Incomplete Data. arXiv preprint arXiv:1709.00584, September 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.00584"
+        },
+        {
+            "id": "Lewis_2017_a",
+            "entry": "Winston Lewis and Denes Vigh. Deep learning prior models from seismic images for full-waveform inversion. In SEG International Exposition and Annual Meeting. Society of Exploration Geophysicists, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lewis%2C%20Winston%20Vigh%2C%20Denes%20Deep%20learning%20prior%20models%20from%20seismic%20images%20for%20full-waveform%20inversion.%20In%20SEG%20International%20Exposition%20and%20Annual%20Meeting%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lewis%2C%20Winston%20Vigh%2C%20Denes%20Deep%20learning%20prior%20models%20from%20seismic%20images%20for%20full-waveform%20inversion.%20In%20SEG%20International%20Exposition%20and%20Annual%20Meeting%202017"
+        },
+        {
+            "id": "Li_et+al_1803_a",
+            "entry": "Housen Li, Johannes Schwab, Stephan Antholzer, and Markus Haltmeier. NETT: Solving Inverse Problems with Deep Neural Networks. arXiv preprint arXiv:1803.00092v1, February 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00092v1"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In Proceedings of International Conference on Computer Vision (ICCV), December 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015-12"
+        },
+        {
+            "id": "Lucas_et+al_2018_a",
+            "entry": "Alice Lucas, Michael Iliadis, Rafael Molina, and Aggelos K Katsaggelos. Using Deep Neural Networks for Inverse Problems in Imaging: Beyond Analytical Methods. IEEE Signal Process. Mag., 35(1):20\u201336, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lucas%2C%20Alice%20Iliadis%2C%20Michael%20Molina%2C%20Rafael%20Katsaggelos%2C%20Aggelos%20K.%20Using%20Deep%20Neural%20Networks%20for%20Inverse%20Problems%20in%20Imaging%3A%20Beyond%20Analytical%20Methods%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lucas%2C%20Alice%20Iliadis%2C%20Michael%20Molina%2C%20Rafael%20Katsaggelos%2C%20Aggelos%20K.%20Using%20Deep%20Neural%20Networks%20for%20Inverse%20Problems%20in%20Imaging%3A%20Beyond%20Analytical%20Methods%202018"
+        },
+        {
+            "id": "Sebastian_2018_a",
+            "entry": "Sebastian Lunz, Ozan \u00d6ktem, and Carola-Bibiane Sch\u00f6nlieb. Adversarial regularizers in inverse problems. arXiv preprint arXiv:1805.11572, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11572"
+        },
+        {
+            "id": "Mccann_et+al_2017_a",
+            "entry": "Michael T McCann, Kyong Hwan Jin, and Michael Unser. Convolutional neural networks for inverse problems in imaging: A review. IEEE Signal Process. Mag., 34(6):85\u201395, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McCann%2C%20Michael%20T.%20Jin%2C%20Kyong%20Hwan%20Unser%2C%20Michael%20Convolutional%20neural%20networks%20for%20inverse%20problems%20in%20imaging%3A%20A%20review%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McCann%2C%20Michael%20T.%20Jin%2C%20Kyong%20Hwan%20Unser%2C%20Michael%20Convolutional%20neural%20networks%20for%20inverse%20problems%20in%20imaging%3A%20A%20review%202017"
+        },
+        {
+            "id": "Mery_et+al_2015_a",
+            "entry": "Domingo Mery, Vladimir Riffo, Uwe Zscherpel, Germ\u00e1n Mondrag\u00f3n, Iv\u00e1n Lillo, Irene Zuccar, Hans Lobel, and Miguel Carrasco. GDXray: The Database of X-ray Images for Nondestructive Testing. Journal of Nondestructive Evaluation, 34, 11 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mery%2C%20Domingo%20Riffo%2C%20Vladimir%20Zscherpel%2C%20Uwe%20Mondrag%C3%B3n%2C%20Germ%C3%A1n%20GDXray%3A%20The%20Database%20of%20X-ray%20Images%20for%20Nondestructive%20Testing%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mery%2C%20Domingo%20Riffo%2C%20Vladimir%20Zscherpel%2C%20Uwe%20Mondrag%C3%B3n%2C%20Germ%C3%A1n%20GDXray%3A%20The%20Database%20of%20X-ray%20Images%20for%20Nondestructive%20Testing%202015"
+        },
+        {
+            "id": "Ogawa_et+al_1998_a",
+            "entry": "Takehiko Ogawa, Yukio Kosugi, and Hajime Kanada. Neural network based solution to inverse problems. In Neural Networks Proceedings, 1998. IEEE World Congress on Computational Intelligence. The 1998 IEEE International Joint Conference on, volume 3, pages 2471\u20132476. IEEE, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ogawa%2C%20Takehiko%20Kosugi%2C%20Yukio%20Kanada%2C%20Hajime%20Neural%20network%20based%20solution%20to%20inverse%20problems%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ogawa%2C%20Takehiko%20Kosugi%2C%20Yukio%20Kanada%2C%20Hajime%20Neural%20network%20based%20solution%20to%20inverse%20problems%201998"
+        },
+        {
+            "id": "Omohundro_1989_a",
+            "entry": "Stephen M. Omohundro. The Delaunay triangulation and function learning, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omohundro%2C%20Stephen%20M.%20The%20Delaunay%20triangulation%20and%20function%20learning%201989"
+        },
+        {
+            "id": "Pelt_2013_a",
+            "entry": "Daniel Maria Pelt and Kees Joost Batenburg. Fast tomographic reconstruction from limited data using artificial neural networks. IEEE Trans. on Image Process., 22(12):5238\u20135251, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pelt%2C%20Daniel%20Maria%20Batenburg%2C%20Kees%20Joost%20Fast%20tomographic%20reconstruction%20from%20limited%20data%20using%20artificial%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pelt%2C%20Daniel%20Maria%20Batenburg%2C%20Kees%20Joost%20Fast%20tomographic%20reconstruction%20from%20limited%20data%20using%20artificial%20neural%20networks%202013"
+        },
+        {
+            "id": "Pilanci_2016_a",
+            "entry": "Mert Pilanci and Martin J Wainwright. Iterative hessian sketch: Fast and accurate solution approximation for constrained least-squares. The Journal of Machine Learning Research, 17(1):1842\u20131879, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pilanci%2C%20Mert%20Wainwright%2C%20Martin%20J.%20Iterative%20hessian%20sketch%3A%20Fast%20and%20accurate%20solution%20approximation%20for%20constrained%20least-squares%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pilanci%2C%20Mert%20Wainwright%2C%20Martin%20J.%20Iterative%20hessian%20sketch%3A%20Fast%20and%20accurate%20solution%20approximation%20for%20constrained%20least-squares%202016"
+        },
+        {
+            "id": "Porikli_et+al_2017_a",
+            "entry": "Fatih Porikli, Shiguang Shan, Cees Snoek, Rahul Sukthankar, and Xiaogang Wang. Deep Learning for Visual Understanding [From the Guest Editors]. IEEE Signal Process. Mag., 34(6):24\u201325, Nov 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Porikli%2C%20Fatih%20Shan%2C%20Shiguang%20Snoek%2C%20Cees%20Sukthankar%2C%20Rahul%20Deep%20Learning%20for%20Visual%20Understanding%20%5BFrom%20the%20Guest%20Editors%5D%202017-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Porikli%2C%20Fatih%20Shan%2C%20Shiguang%20Snoek%2C%20Cees%20Sukthankar%2C%20Rahul%20Deep%20Learning%20for%20Visual%20Understanding%20%5BFrom%20the%20Guest%20Editors%5D%202017-11"
+        },
+        {
+            "id": "Porikli_et+al_2018_a",
+            "entry": "Fatih Porikli, Shiguang Shan, Cees Snoek, Rahul Sukthankar, and Xiaogang Wang. Deep Learning for Visual Understanding: Part 2 [From the Guest Editors]. IEEE Signal Process. Mag., 35(1): 17\u201319, Jan 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Porikli%2C%20Fatih%20Shan%2C%20Shiguang%20Snoek%2C%20Cees%20Sukthankar%2C%20Rahul%20Deep%20Learning%20for%20Visual%20Understanding%3A%20Part%202%20%5BFrom%20the%20Guest%20Editors%5D%202018-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Porikli%2C%20Fatih%20Shan%2C%20Shiguang%20Snoek%2C%20Cees%20Sukthankar%2C%20Rahul%20Deep%20Learning%20for%20Visual%20Understanding%3A%20Part%202%20%5BFrom%20the%20Guest%20Editors%5D%202018-01"
+        },
+        {
+            "id": "Rahimi_2008_a",
+            "entry": "Ali Rahimi and Benjamin Recht. Random features for large-scale kernel machines. Advances in Neural Information and Processing (NIPS), 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Random%20features%20for%20large-scale%20kernel%20machines%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Random%20features%20for%20large-scale%20kernel%20machines%202008"
+        },
+        {
+            "id": "Rahimi_2009_a",
+            "entry": "Ali Rahimi and Benjamin Recht. Weighted Sums of Random Kitchen Sinks: Replacing minimization with randomization in learning. Advances in Neural Information and Processing (NIPS), pages 1313\u20131320, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Weighted%20Sums%20of%20Random%20Kitchen%20Sinks%3A%20Replacing%20minimization%20with%20randomization%20in%20learning%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Weighted%20Sums%20of%20Random%20Kitchen%20Sinks%3A%20Replacing%20minimization%20with%20randomization%20in%20learning%202009"
+        },
+        {
+            "id": "Schiller_2010_a",
+            "entry": "Helmut Schiller and Roland Doerffer. Neural network for emulation of an inverse model operational derivation of Case II water properties from MERIS data. International Journal of Remote Sensing, November 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schiller%2C%20Helmut%20Doerffer%2C%20Roland%20Neural%20network%20for%20emulation%20of%20an%20inverse%20model%20operational%20derivation%20of%20Case%20II%20water%20properties%20from%20MERIS%20data%202010-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schiller%2C%20Helmut%20Doerffer%2C%20Roland%20Neural%20network%20for%20emulation%20of%20an%20inverse%20model%20operational%20derivation%20of%20Case%20II%20water%20properties%20from%20MERIS%20data%202010-11"
+        },
+        {
+            "id": "S_et+al_2016_a",
+            "entry": "Casper Kaae S\u00f8nderby, Jose Caballero, Lucas Theis, Wenzhe Shi, and Ferenc Husz\u00e1r. Amortised map inference for image super-resolution. arXiv preprint arXiv:1610.04490, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.04490"
+        },
+        {
+            "id": "Sprechmann_et+al_2013_a",
+            "entry": "Pablo Sprechmann, Roee Litman, Tal Ben Yakar, Alexander M Bronstein, and Guillermo Sapiro. Supervised sparse analysis and synthesis operators. In Advances in Neural Information Processing Systems, pages 908\u2013916, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sprechmann%2C%20Pablo%20Litman%2C%20Roee%20Yakar%2C%20Tal%20Ben%20Bronstein%2C%20Alexander%20M.%20Supervised%20sparse%20analysis%20and%20synthesis%20operators%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sprechmann%2C%20Pablo%20Litman%2C%20Roee%20Yakar%2C%20Tal%20Ben%20Bronstein%2C%20Alexander%20M.%20Supervised%20sparse%20analysis%20and%20synthesis%20operators%202013"
+        },
+        {
+            "id": "Stefanov_2009_a",
+            "entry": "Plamen Stefanov and Gunther Uhlmann. Linearizing non-linear inverse problems and an application to inverse backscattering. Journal of Functional Analysis, 256(9):2842\u20132866, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stefanov%2C%20Plamen%20Uhlmann%2C%20Gunther%20Linearizing%20non-linear%20inverse%20problems%20and%20an%20application%20to%20inverse%20backscattering%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stefanov%2C%20Plamen%20Uhlmann%2C%20Gunther%20Linearizing%20non-linear%20inverse%20problems%20and%20an%20application%20to%20inverse%20backscattering%202009"
+        },
+        {
+            "id": "Ulyanov_et+al_2017_a",
+            "entry": "Dmitry Ulyanov, Andrea Vedaldi, and Victor Lempitsky. Deep image prior. arXiv preprint arXiv:1711.10925, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.10925"
+        },
+        {
+            "id": "Venkatakrishnan_et+al_2013_a",
+            "entry": "Singanallur V Venkatakrishnan, Charles A Bouman, and Brendt Wohlberg. Plug-and-play priors for model based reconstruction. In Global Conference on Signal and Information Processing (GlobalSIP), 2013 IEEE, pages 945\u2013948. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Venkatakrishnan%2C%20Singanallur%20V.%20Bouman%2C%20Charles%20A.%20Wohlberg%2C%20Brendt%20Plug-and-play%20priors%20for%20model%20based%20reconstruction%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Venkatakrishnan%2C%20Singanallur%20V.%20Bouman%2C%20Charles%20A.%20Wohlberg%2C%20Brendt%20Plug-and-play%20priors%20for%20model%20based%20reconstruction%202013"
+        },
+        {
+            "id": "Vetterli_et+al_2014_a",
+            "entry": "Martin Vetterli, Jelena Kovacevic, and Vivek K Goyal. Foundations of signal processing. Cambridge University Press, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vetterli%2C%20Martin%20Kovacevic%2C%20Jelena%20Goyal%2C%20Vivek%20K.%20Foundations%20of%20signal%20processing%202014"
+        },
+        {
+            "id": "Wang_2016_a",
+            "entry": "Ge Wang. A perspective on deep imaging. IEEE Access, 4:8914\u20138924, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Ge%20A%20perspective%20on%20deep%20imaging%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Ge%20A%20perspective%20on%20deep%20imaging%202016"
+        },
+        {
+            "id": "Xin_et+al_2016_a",
+            "entry": "Bo Xin, Yizhou Wang, Wen Gao, David Wipf, and Baoyuan Wang. Maximal sparsity with deep networks? In Advances in Neural Information Processing Systems, pages 4340\u20134348, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xin%2C%20Bo%20Wang%2C%20Yizhou%20Gao%2C%20Wen%20Wipf%2C%20David%20Maximal%20sparsity%20with%20deep%20networks%3F%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xin%2C%20Bo%20Wang%2C%20Yizhou%20Gao%2C%20Wen%20Wipf%2C%20David%20Maximal%20sparsity%20with%20deep%20networks%3F%202016"
+        },
+        {
+            "id": "Yao_et+al_2006_a",
+            "entry": "Huajian Yao, Robert D van Der Hilst, and Maarten V De Hoop. Surface-wave array tomography in se tibet from ambient seismic noise and two-station analysis\u2014i. phase velocity maps. Geophysical Journal International, 166(2):732\u2013744, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yao%2C%20Huajian%20van%20Der%20Hilst%2C%20Robert%20D.%20Hoop%2C%20Maarten%20V.De%20Surface-wave%20array%20tomography%20in%20se%20tibet%20from%20ambient%20seismic%20noise%20and%20two-station%20analysis%E2%80%94i.%20phase%20velocity%20maps%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yao%2C%20Huajian%20van%20Der%20Hilst%2C%20Robert%20D.%20Hoop%2C%20Maarten%20V.De%20Surface-wave%20array%20tomography%20in%20se%20tibet%20from%20ambient%20seismic%20noise%20and%20two-station%20analysis%E2%80%94i.%20phase%20velocity%20maps%202006"
+        },
+        {
+            "id": "Ye_et+al_2018_a",
+            "entry": "Jong Chul Ye, Yoseob Han, and Eunju Cha. Deep convolutional framelets: A general deep learning framework for inverse problems. SIAM Journal on Imaging Sciences, 11(2):991\u20131048, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ye%2C%20Jong%20Chul%20Han%2C%20Yoseob%20Cha%2C%20Eunju%20Deep%20convolutional%20framelets%3A%20A%20general%20deep%20learning%20framework%20for%20inverse%20problems%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ye%2C%20Jong%20Chul%20Han%2C%20Yoseob%20Cha%2C%20Eunju%20Deep%20convolutional%20framelets%3A%20A%20general%20deep%20learning%20framework%20for%20inverse%20problems%202018"
+        },
+        {
+            "id": "Yu_et+al_2015_a",
+            "entry": "Fisher Yu, Yinda Zhang, Shuran Song, Ari Seff, and Jianxiong Xiao. LSUN: Construction of a Large-scale Image Dataset using Deep Learning with Humans in the Loop. arXiv preprint arXiv:1506.03365, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.03365"
+        },
+        {
+            "id": "Yurtsever_et+al_2017_a",
+            "entry": "Alp Yurtsever, Madeleine Udell, Joel A Tropp, and Volkan Cevher. Sketchy decisions: Convex low-rank matrix optimization with optimal storage. arXiv preprint arXiv:1702.06838, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.06838"
+        },
+        {
+            "id": "Zhang_et+al_1607_a",
+            "entry": "Hanming Zhang, Liang Li, Kai Qiao, Linyuan Wang, Bin Yan, Lei Li, and Guoen Hu. Image Prediction for Limited-angle Tomography via Deep Learning with Convolutional Neural Network. arXiv preprint arXiv:1607.08707v1, July 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.08707v1"
+        },
+        {
+            "id": "Zhu_et+al_2018_a",
+            "entry": "Bo Zhu, Jeremiah Z Liu, Stephen F Cauley, Bruce R Rosen, and Matthew S Rosen. Image reconstruction by domain-transform manifold learning. Nature, 555(7697):487, March 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Bo%20Liu%2C%20Jeremiah%20Z.%20Cauley%2C%20Stephen%20F.%20Rosen%2C%20Bruce%20R.%20Image%20reconstruction%20by%20domain-transform%20manifold%20learning%202018-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Bo%20Liu%2C%20Jeremiah%20Z.%20Cauley%2C%20Stephen%20F.%20Rosen%2C%20Bruce%20R.%20Image%20reconstruction%20by%20domain-transform%20manifold%20learning%202018-03"
+        }
+    ]
+}

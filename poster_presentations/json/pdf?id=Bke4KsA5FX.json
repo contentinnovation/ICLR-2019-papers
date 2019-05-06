@@ -1,0 +1,269 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "GENERATIVE CODE MODELING WITH GRAPHS",
+        "author": "Marc Brockschmidt, Miltiadis Allamanis, Alexander Gaunt Microsoft Research Cambridge, UK {mabrocks,miallama,algaunt}@microsoft.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Bke4KsA5FX"
+        },
+        "abstract": "Generative models for source code are an interesting structured prediction problem, requiring to reason about both hard syntactic and semantic constraints as well as about natural, likely programs. We present a novel model for this problem that uses a graph to represent the intermediate state of the generated output. Our model generates code by interleaving grammar-driven expansion steps with graph augmentation and neural message passing steps. An experimental evaluation shows that our new model can generate semantically meaningful expressions, outperforming a range of strong baselines."
+    },
+    "keywords": [
+        {
+            "term": "semantic parsing",
+            "url": "https://en.wikipedia.org/wiki/semantic_parsing"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "software engineering",
+            "url": "https://en.wikipedia.org/wiki/software_engineering"
+        },
+        {
+            "term": "program synthesis",
+            "url": "https://en.wikipedia.org/wiki/program_synthesis"
+        },
+        {
+            "term": "abstract syntax trees",
+            "url": "https://en.wikipedia.org/wiki/abstract_syntax_trees"
+        },
+        {
+            "term": "Semantics",
+            "url": "https://en.wikipedia.org/wiki/Semantics"
+        },
+        {
+            "term": "natural language",
+            "url": "https://en.wikipedia.org/wiki/natural_language"
+        },
+        {
+            "term": "programming language",
+            "url": "https://en.wikipedia.org/wiki/programming_language"
+        },
+        {
+            "term": "structured prediction",
+            "url": "https://en.wikipedia.org/wiki/structured_prediction"
+        },
+        {
+            "term": "source code",
+            "url": "https://en.wikipedia.org/wiki/source_code"
+        },
+        {
+            "term": "formal semantic",
+            "url": "https://en.wikipedia.org/wiki/formal_semantic"
+        },
+        {
+            "term": "natural source",
+            "url": "https://en.wikipedia.org/wiki/natural_source"
+        },
+        {
+            "term": "code generation",
+            "url": "https://en.wikipedia.org/wiki/code_generation"
+        },
+        {
+            "term": "input output",
+            "url": "https://en.wikipedia.org/wiki/input_output"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "ASTs": "abstract syntax trees",
+        "NAG": "neural attribute grammars",
+        "GGNN": "Gated Graph Neural Networks"
+    },
+    "highlights": [
+        "Learning to understand and generate programs is an important building block for procedural artificial intelligence and more intelligent software engineering tools",
+        "Works in the area have shown that approaches from natural language processing can be applied successfully to source code (<a class=\"ref-link\" id=\"cHindle_et+al_2012_a\" href=\"#rHindle_et+al_2012_a\">Hindle et al, 2012</a>), whereas the programming languages community has had successes in focusing exclusively on formal semantics",
+        "The results show a clear trend that correlates better semantic results with the amount of information about the partially generated programs employed by the generative models",
+        "We presented a generative code model that leverages known semantics of partially generated programs to direct the generative procedure",
+        "The key idea is to augment partial programs to obtain a graph, and use graph neural networks to compute a precise representation for the partial program",
+        "We have shown that this approach can be used to generate small but semantically interesting expressions from very imprecise context information"
+    ],
+    "key_statements": [
+        "Learning to understand and generate programs is an important building block for procedural artificial intelligence and more intelligent software engineering tools",
+        "Works in the area have shown that approaches from natural language processing can be applied successfully to source code (<a class=\"ref-link\" id=\"cHindle_et+al_2012_a\" href=\"#rHindle_et+al_2012_a\">Hindle et al, 2012</a>), whereas the programming languages community has had successes in focusing exclusively on formal semantics",
+        "More recent models are sidestepping this issue by using the target language\u2019s grammar to generate abstract syntax trees (ASTs) (<a class=\"ref-link\" id=\"cMaddison_2014_a\" href=\"#rMaddison_2014_a\">Maddison & Tarlow, 2014</a>; <a class=\"ref-link\" id=\"cBielik_et+al_2016_a\" href=\"#rBielik_et+al_2016_a\">Bielik et al, 2016</a>; <a class=\"ref-link\" id=\"cParisotto_et+al_2017_a\" href=\"#rParisotto_et+al_2017_a\">Parisotto et al, 2017</a>; Yin & Neubig, 2017; <a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\">Rabinovich et al, 2017</a>), which are syntactically correct by construction",
+        "Most of the type errors are due to usage of an \u201cUNK\u201d literal",
+        "The results show a clear trend that correlates better semantic results with the amount of information about the partially generated programs employed by the generative models",
+        "We presented a generative code model that leverages known semantics of partially generated programs to direct the generative procedure",
+        "The key idea is to augment partial programs to obtain a graph, and use graph neural networks to compute a precise representation for the partial program",
+        "We have shown that this approach can be used to generate small but semantically interesting expressions from very imprecise context information"
+    ],
+    "summary": [
+        "Learning to understand and generate programs is an important building block for procedural artificial intelligence and more intelligent software engineering tools.",
+        "Our method for getRepresentation from Alg. 1 factors into two parts: a deterministic procedure that turns a partial AST a<t into a graph by adding additional edges that encode attribute relationships, and a graph neural network that learns from this graph.",
+        "This can create edges from nodes of variables in the context c, or can connect AST leaf nodes that represent multiple uses of the same variable within the generated expressions.",
+        "In the second step, the attributes for the terminal token i in Fig. 2 are computed from the inherited attributes of its AST parent Expr, the attributes of the last use of the variable i, and the node label i.",
+        "Our training procedure combines an encoder, whose output is used to initialize the representation of the root and context variable nodes in our augmented syntax graph, the sequential graph propagation procedure described above, and the decoder choice functions (3) and (4).",
+        "Additional Improvements We extend (3) with an attention mechanism (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a>; <a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a>) that uses the state hv of the currently expanded node v as a key and the context token representations ht1 , .",
+        "Works approach the task by generating code as sequences of tokens (<a class=\"ref-link\" id=\"cHindle_et+al_2012_a\" href=\"#rHindle_et+al_2012_a\">Hindle et al, 2012</a>; <a class=\"ref-link\" id=\"cHellendoorn_2017_a\" href=\"#rHellendoorn_2017_a\">Hellendoorn & Devanbu, 2017</a>), whereas newer methods have focused on leveraging the known target grammar and generate code as trees (<a class=\"ref-link\" id=\"cMaddison_2014_a\" href=\"#rMaddison_2014_a\">Maddison & Tarlow, 2014</a>; <a class=\"ref-link\" id=\"cBielik_et+al_2016_a\" href=\"#rBielik_et+al_2016_a\"><a class=\"ref-link\" id=\"cBielik_et+al_2016_a\" href=\"#rBielik_et+al_2016_a\">Bielik et al, 2016</a></a>; <a class=\"ref-link\" id=\"cParisotto_et+al_2017_a\" href=\"#rParisotto_et+al_2017_a\">Parisotto et al, 2017</a>; Yin & Neubig, 2017; <a class=\"ref-link\" id=\"cRabinovich_et+al_2017_a\" href=\"#rRabinovich_et+al_2017_a\">Rabinovich et al, 2017</a>).",
+        "<a class=\"ref-link\" id=\"cParisotto_et+al_2017_a\" href=\"#rParisotto_et+al_2017_a\">Parisotto et al (2017</a>) compute a fresh representation of the partial tree at each expansion step using R3NNs. The PHOG model (<a class=\"ref-link\" id=\"cBielik_et+al_2016_a\" href=\"#rBielik_et+al_2016_a\"><a class=\"ref-link\" id=\"cBielik_et+al_2016_a\" href=\"#rBielik_et+al_2016_a\">Bielik et al, 2016</a></a>) conditions generation steps on the result of learned programs, which can do bounded AST traversals to consider nearby tokens and non-terminal nodes.",
+        "As far as we are aware, previous work has not considered a task in which a generative model fills a hole in a program with an expression.",
+        "<a class=\"ref-link\" id=\"cAllamanis_et+al_2018_b\" href=\"#rAllamanis_et+al_2018_b\">Allamanis et al (2018b</a>) consider similar context, but are only picking a single variable from a set of candidates, and require no generative modeling.",
+        "That PHOG does not consider the code context to the right of the expression to generate, and does no additional analyses to determine which variable choices are valid.",
+        "We can see that the G \u2192 NAG model correctly identifies that the relationship between paramCount and methParamCount is important, and generates comparison expressions between the two variables."
+    ],
+    "headline": "We present a novel model for this problem that uses a graph to represent the intermediate state of the generated output",
+    "reference_links": [
+        {
+            "id": "Allamanis_2018_a",
+            "entry": "Miltiadis Allamanis, Earl T Barr, Premkumar Devanbu, and Charles Sutton. A survey of machine learning for big code and naturalness. ACM Computing Surveys, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allamanis%2C%20Miltiadis%20Barr%2C%20Earl%20T.%20Premkumar%20Devanbu%2C%20and%20Charles%20Sutton.%20A%20survey%20of%20machine%20learning%20for%20big%20code%20and%20naturalness%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Barr%2C%20Earl%20T.%20Premkumar%20Devanbu%2C%20and%20Charles%20Sutton.%20A%20survey%20of%20machine%20learning%20for%20big%20code%20and%20naturalness%202018"
+        },
+        {
+            "id": "Allamanis_et+al_2018_b",
+            "entry": "Miltiadis Allamanis, Marc Brockschmidt, and Mahmoud Khademi. Learning to represent programs with graphs. In International Conference on Learning Representations (ICLR), 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Allamanis%2C%20Miltiadis%20Brockschmidt%2C%20Marc%20Khademi%2C%20Mahmoud%20Learning%20to%20represent%20programs%20with%20graphs%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Allamanis%2C%20Miltiadis%20Brockschmidt%2C%20Marc%20Khademi%2C%20Mahmoud%20Learning%20to%20represent%20programs%20with%20graphs%202018"
+        },
+        {
+            "id": "Amodio_et+al_2017_a",
+            "entry": "Matthew Amodio, Swarat Chaudhuri, and Thomas W. Reps. Neural attribute machines for program generation. arXiv preprint arXiv:1705.09231, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.09231"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In International Conference on Learning Representations (ICLR), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202014"
+        },
+        {
+            "id": "Bichsel_et+al_2016_a",
+            "entry": "Benjamin Bichsel, Veselin Raychev, Petar Tsankov, and Martin Vechev. Statistical deobfuscation of android applications. In Conference on Computer and Communications Security (CCS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bichsel%2C%20Benjamin%20Raychev%2C%20Veselin%20Tsankov%2C%20Petar%20Vechev%2C%20Martin%20Statistical%20deobfuscation%20of%20android%20applications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bichsel%2C%20Benjamin%20Raychev%2C%20Veselin%20Tsankov%2C%20Petar%20Vechev%2C%20Martin%20Statistical%20deobfuscation%20of%20android%20applications%202016"
+        },
+        {
+            "id": "Bielik_et+al_2016_a",
+            "entry": "Pavol Bielik, Veselin Raychev, and Martin Vechev. PHOG: probabilistic model for code. In International Conference on Machine Learning (ICML), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bielik%2C%20Pavol%20Raychev%2C%20Veselin%20Vechev%2C%20Martin%20PHOG%3A%20probabilistic%20model%20for%20code%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bielik%2C%20Pavol%20Raychev%2C%20Veselin%20Vechev%2C%20Martin%20PHOG%3A%20probabilistic%20model%20for%20code%202016"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart van Merri\u00ebnboer, Dzmitry Bahdanau, and Yoshua Bengio. On the properties of neural machine translation: Encoder\u2013decoder approaches. Syntax, Semantics and Structure in Statistical Translation, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20van%20Merri%C3%ABnboer%2C%20Bart%20Bahdanau%2C%20Dzmitry%20Bengio%2C%20Yoshua%20On%20the%20properties%20of%20neural%20machine%20translation%3A%20Encoder%E2%80%93decoder%20approaches.%20Syntax%2C%20Semantics%20and%20Structure%20in%20Statistical%20Translation%202014"
+        },
+        {
+            "id": "Feng_et+al_2018_a",
+            "entry": "Yu Feng, Ruben Martins, Osbert Bastani, and Isil Dillig. Program synthesis using conflict-driven learning. In Programming Languages Design and Implementation (PLDI), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Feng%2C%20Yu%20Martins%2C%20Ruben%20Bastani%2C%20Osbert%20Dillig%2C%20Isil%20Program%20synthesis%20using%20conflict-driven%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Feng%2C%20Yu%20Martins%2C%20Ruben%20Bastani%2C%20Osbert%20Dillig%2C%20Isil%20Program%20synthesis%20using%20conflict-driven%20learning%202018"
+        },
+        {
+            "id": "Feser_et+al_2015_a",
+            "entry": "John K. Feser, Swarat Chaudhuri, and Isil Dillig. Synthesizing data structure transformations from input-output examples. In Programming Languages Design and Implementation (PLDI), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Feser%2C%20John%20K.%20Chaudhuri%2C%20Swarat%20Dillig%2C%20Isil%20Synthesizing%20data%20structure%20transformations%20from%20input-output%20examples%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Feser%2C%20John%20K.%20Chaudhuri%2C%20Swarat%20Dillig%2C%20Isil%20Synthesizing%20data%20structure%20transformations%20from%20input-output%20examples%202015"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, and George E. Dahl. Neural message passing for quantum chemistry. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Vinyals%2C%20Oriol%20Neural%20message%20passing%20for%20quantum%20chemistry%202017"
+        },
+        {
+            "id": "Hellendoorn_2017_a",
+            "entry": "Vincent J. Hellendoorn and Premkumar Devanbu. Are deep neural networks the best choice for modeling source code? In Foundations of Software Engineering (FSE), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hellendoorn%2C%20Vincent%20J.%20Devanbu%2C%20Premkumar%20Are%20deep%20neural%20networks%20the%20best%20choice%20for%20modeling%20source%20code%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hellendoorn%2C%20Vincent%20J.%20Devanbu%2C%20Premkumar%20Are%20deep%20neural%20networks%20the%20best%20choice%20for%20modeling%20source%20code%3F%202017"
+        },
+        {
+            "id": "Hindle_et+al_2012_a",
+            "entry": "Abram Hindle, Earl T Barr, Zhendong Su, Mark Gabel, and Premkumar Devanbu. On the naturalness of software. In International Conference on Software Engineering (ICSE), 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hindle%2C%20Abram%20Barr%2C%20Earl%20T.%20Su%2C%20Zhendong%20Gabel%2C%20Mark%20On%20the%20naturalness%20of%20software%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hindle%2C%20Abram%20Barr%2C%20Earl%20T.%20Su%2C%20Zhendong%20Gabel%2C%20Mark%20On%20the%20naturalness%20of%20software%202012"
+        },
+        {
+            "id": "Knuth_1967_a",
+            "entry": "Donald E. Knuth. Semantics of context-free languages. Mathemtical Systems Theory, 2(2):127\u2013145, 1967.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Knuth%2C%20Donald%20E.%20Semantics%20of%20context-free%20languages%201967",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Knuth%2C%20Donald%20E.%20Semantics%20of%20context-free%20languages%201967"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel. Gated graph sequence neural networks. In International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yujia%20Tarlow%2C%20Daniel%20Brockschmidt%2C%20Marc%20Zemel%2C%20Richard%20Gated%20graph%20sequence%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yujia%20Tarlow%2C%20Daniel%20Brockschmidt%2C%20Marc%20Zemel%2C%20Richard%20Gated%20graph%20sequence%20neural%20networks%202016"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Yujia Li, Oriol Vinyals, Chris Dyer, Razvan Pascanu, and Peter Battaglia. Learning deep generative models of graphs. CoRR, abs/1803.03324, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03324"
+        },
+        {
+            "id": "Lopes_et+al_2017_a",
+            "entry": "Cristina V Lopes, Petr Maj, Pedro Martins, Vaibhav Saini, Di Yang, Jakub Zitny, Hitesh Sajnani, and Jan Vitek. D\u00e9j\u00e0Vu: a map of code duplicates on GitHub. In Object-Oriented Programming, Systems, Languages, and Applications (OOPSLA), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lopes%2C%20Cristina%20V.%20Maj%2C%20Petr%20Martins%2C%20Pedro%20Saini%2C%20Vaibhav%20D%C3%A9j%C3%A0Vu%3A%20a%20map%20of%20code%20duplicates%20on%20GitHub%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lopes%2C%20Cristina%20V.%20Maj%2C%20Petr%20Martins%2C%20Pedro%20Saini%2C%20Vaibhav%20D%C3%A9j%C3%A0Vu%3A%20a%20map%20of%20code%20duplicates%20on%20GitHub%202017"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher D Manning. Effective approaches to attention-based neural machine translation. In Conference on Empirical Methods in Natural Language Processing (EMNLP), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015"
+        },
+        {
+            "id": "Maddison_2014_a",
+            "entry": "Chris J Maddison and Daniel Tarlow. Structured generative models of natural source code. In International Conference on Machine Learning (ICML), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20Chris%20J.%20Tarlow%2C%20Daniel%20Structured%20generative%20models%20of%20natural%20source%20code%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20Chris%20J.%20Tarlow%2C%20Daniel%20Structured%20generative%20models%20of%20natural%20source%20code%202014"
+        },
+        {
+            "id": "Parisotto_et+al_2017_a",
+            "entry": "Emilio Parisotto, Abdel-rahman Mohamed, Rishabh Singh, Lihong Li, Dengyong Zhou, and Pushmeet Kohli. Neuro-symbolic program synthesis. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202017"
+        },
+        {
+            "id": "Polozov_2015_a",
+            "entry": "Oleksandr Polozov and Sumit Gulwani. FlashMeta: a framework for inductive program synthesis. In ObjectOriented Programming, Systems, Languages, and Applications (OOPSLA), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Polozov%2C%20Oleksandr%20Gulwani%2C%20Sumit%20FlashMeta%3A%20a%20framework%20for%20inductive%20program%20synthesis%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Polozov%2C%20Oleksandr%20Gulwani%2C%20Sumit%20FlashMeta%3A%20a%20framework%20for%20inductive%20program%20synthesis%202015"
+        },
+        {
+            "id": "Rabinovich_et+al_2017_a",
+            "entry": "Maxim Rabinovich, Mitchell Stern, and Dan Klein. Abstract syntax networks for code generation and semantic parsing. In Annual Meeting of the Association for Computational Linguistics (ACL), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rabinovich%2C%20Maxim%20Stern%2C%20Mitchell%20Klein%2C%20Dan%20Abstract%20syntax%20networks%20for%20code%20generation%20and%20semantic%20parsing%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rabinovich%2C%20Maxim%20Stern%2C%20Mitchell%20Klein%2C%20Dan%20Abstract%20syntax%20networks%20for%20code%20generation%20and%20semantic%20parsing%202017"
+        },
+        {
+            "id": "Raychev_et+al_2014_a",
+            "entry": "Veselin Raychev, Martin Vechev, and Eran Yahav. Code completion with statistical language models. In Programming Languages Design and Implementation (PLDI), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raychev%2C%20Veselin%20Vechev%2C%20Martin%20Yahav%2C%20Eran%20Code%20completion%20with%20statistical%20language%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raychev%2C%20Veselin%20Vechev%2C%20Martin%20Yahav%2C%20Eran%20Code%20completion%20with%20statistical%20language%20models%202014"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Veselin Raychev, Martin Vechev, and Andreas Krause. Predicting program properties from Big Code. In",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Veselin%20Raychev%20Martin%20Vechev%20and%20Andreas%20Krause%20Predicting%20program%20properties%20from%20Big%20Code%20In",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Veselin%20Raychev%20Martin%20Vechev%20and%20Andreas%20Krause%20Predicting%20program%20properties%20from%20Big%20Code%20In"
+        },
+        {
+            "id": "Samanta_et+al_2015_a",
+            "entry": "Principles of Programming Languages (POPL), 2015. Bidisha Samanta, Abir De, Niloy Ganguly, and Manuel Gomez-Rodriguez. Designing random graph models using variational autoencoders with applications to chemical design. CoRR, abs/1802.05283, 2018. Armando Solar-Lezama. Program synthesis by sketching. University of California, Berkeley, 2008. Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer networks. In Advances in Neural Information",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05283"
+        },
+        {
+            "id": "Systems_2015_a",
+            "entry": "Processing Systems, 2015. Pengcheng Yin and Graham Neubig. A syntactic neural model for general-purpose code generation. In Annual",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Systems%2C%20Processing%20Pengcheng%20Yin%20and%20Graham%20Neubig.%20A%20syntactic%20neural%20model%20for%20general-purpose%20code%20generation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Systems%2C%20Processing%20Pengcheng%20Yin%20and%20Graham%20Neubig.%20A%20syntactic%20neural%20model%20for%20general-purpose%20code%20generation%202015"
+        },
+        {
+            "id": "Meeting_2017_a",
+            "entry": "Meeting of the Association for Computational Linguistics (ACL), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Meeting%20of%20the%20Association%20for%20Computational%20Linguistics%20ACL%202017"
+        }
+    ]
+}

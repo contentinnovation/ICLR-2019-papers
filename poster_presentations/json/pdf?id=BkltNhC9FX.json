@@ -1,0 +1,234 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "POSTERIOR ATTENTION MODELS FOR SEQUENCE TO SEQUENCE LEARNING",
+        "author": "Shiv Shankar University of Massachusetts Amherst sshankar@umass.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BkltNhC9FX"
+        },
+        "abstract": "Modern neural architectures critically rely on attention for mapping structured inputs to sequences. In this paper we show that prevalent attention architectures do not adequately model the dependence among the attention and output tokens across a predicted sequence. We present an alternative architecture called Posterior Attention Models that after a principled factorization of the full joint distribution of the attention and output variables, proposes two major changes. First, the position where attention is marginalized is changed from the input to the output. Second, the attention propagated to the next decoding stage is a posterior attention distribution conditioned on the output. Empirically on five translation and two morphological inflection tasks the proposed posterior attention models yield better BLEU score and alignment accuracy than existing attention models."
+    },
+    "keywords": [
+        {
+            "term": "joint distribution",
+            "url": "https://en.wikipedia.org/wiki/joint_distribution"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "PAM": "Posterior Attention Model"
+    },
+    "highlights": [
+        "Attention is a critical module of modern neural models for sequence to sequence learning as applied to tasks like translation, grammar error correction, morphological inflection, and speech to text conversion",
+        "The multinomial probabilities serve as weights, and an attention weighted sum of input states serves as relevant context for the output and subsequent attention",
+        "We evaluate the posterior attention model on five translation tasks and two morphological inflection tasks",
+        "We discover that the entropy of posterior attention is much lower than entropy of soft attention",
+        "We show in this paper that none of the existing attention models adequately model the dependence of the output and attention along the length of the output for general sequence prediction tasks",
+        "We propose a factorization of the joint distribution, and develop practical approximations that allows the joint distribution to decompose over output tokens, much like in existing attention"
+    ],
+    "key_statements": [
+        "Attention is a critical module of modern neural models for sequence to sequence learning as applied to tasks like translation, grammar error correction, morphological inflection, and speech to text conversion",
+        "The multinomial probabilities serve as weights, and an attention weighted sum of input states serves as relevant context for the output and subsequent attention",
+        "We show that our direct coupling of output and attention gives the benefit of hard attention without its computational challenges",
+        "We introduce the notion of a posterior attention distribution, that is, the attention distribution conditioned on the current output",
+        "We show that it is both statistically sounder and more accurate to condition subsequent attention on the output corrected posterior attention, rather than the output independent prior attention as in existing models",
+        "We evaluate the posterior attention model on five translation tasks and two morphological inflection tasks",
+        "We discover that the entropy of posterior attention is much lower than entropy of soft attention",
+        "We demonstrate that by first showing some anecdotes of better alignment, showing that posterior attention is more focused, provides better alignment accuracy, and better input coverage",
+        "We show in this paper that none of the existing attention models adequately model the dependence of the output and attention along the length of the output for general sequence prediction tasks",
+        "We propose a factorization of the joint distribution, and develop practical approximations that allows the joint distribution to decompose over output tokens, much like in existing attention",
+        "The output token distribution is obtained by aggregating predictions across all attention"
+    ],
+    "summary": [
+        "Attention is a critical module of modern neural models for sequence to sequence learning as applied to tasks like translation, grammar error correction, morphological inflection, and speech to text conversion.",
+        "There have been a number of recent works (<a class=\"ref-link\" id=\"cWu_et+al_2018_a\" href=\"#rWu_et+al_2018_a\">Wu et al, 2018</a>; <a class=\"ref-link\" id=\"cDeng_et+al_2018_a\" href=\"#rDeng_et+al_2018_a\">Deng et al, 2018</a>; Shankar et al, 2018) which model attention as latent-alignment variable in the joint distribution Equation 1.",
+        "Our goal is to express the joint distribution as a product of tractable terms computed at each time step much like in existing ED model, but via a less ad hoc treatment of the attention variables a1, .",
+        "We have expressed the joint distribution as a product of factors that apply at each decoding step t while conditioning only on previous outputs and attention.",
+        "We call P = P, yt\u22121) as the posterior attention Postr since this is the attention distribution after observing the output label at the corresponding step, unlike in prior attention.",
+        "Postr-Joint The simplest of these uses the same decoder RNN to absorb the posterior attention of the previous step.",
+        "In Figure 1 we put together the final set of equations that are used to compute the output distribution and contrast with existing attention model.",
+        "First note that in PAM, we explicitly compute a joint distribution of output and attention at each step and marginalize out the attention.",
+        "Small values of K, suffice to provide good performance The second difference is that the attention distribution that is propagated to the step is posterior to observing the current output.",
+        "Computing the posterior attention does not incur any additional overheads because the joint attention-output distribution was already materialized in the first equation.",
+        "While both works model dependence between attention at different steps, our principled rewrite of the joint distribution shows that posterior attention should be the link to the attention.",
+        "Prior-Joint: suppresses the dependence on previous attention like in current ED models, reducing to methods proposed in Shankar et al (2018); <a class=\"ref-link\" id=\"cWu_et+al_2018_a\" href=\"#rWu_et+al_2018_a\">Wu et al (2018</a>) .",
+        "Models with posterior attention show improvement over those which use prior attention.",
+        "We observe small improvements over the more sophisticated and compute-intensive variational attention model likely due to the use of the exact posterior during inference instead.",
+        "For language-pairs with a natural monotonic alignment like German-English, Mono-Postr-Joint slightly outperforms other models by (0.1-0.2 BLEU points).",
+        "Using joint modeling we get significant gains (0.3 points) even against task-specific hard-monotonic attention, showing that our approach is more general than translation.",
+        "When we use Mono-Postr-Joint which has a structural bias towards task-specific monotonic attention, we obtain immense improvements over joint models.",
+        "Another promising line is to incorporate more complex biases like phrasal structure or image segments into joint attention models"
+    ],
+    "headline": "In this paper we show that prevalent attention architectures do not adequately model the dependence among the attention and output tokens across a predicted sequence",
+    "reference_links": [
+        {
+            "id": "Aharoni_2004_a",
+            "entry": "Roee Aharoni and Yoav Goldberg. Morphological inflection generation with hard monotonic attention. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics, ACL 2017, Vancouver, Canada, July 30 - August 4, Volume 1: Long Papers, pp. 2004\u20132015, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aharoni%2C%20Roee%20Goldberg%2C%20Yoav%20Morphological%20inflection%20generation%20with%20hard%20monotonic%20attention%202004-07-30",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aharoni%2C%20Roee%20Goldberg%2C%20Yoav%20Morphological%20inflection%20generation%20with%20hard%20monotonic%20attention%202004-07-30"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. CoRR, abs/1409.0473, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Cettolo_et+al_2015_a",
+            "entry": "Mauro Cettolo, Jan Niehues, Sebastian St\u00fcker, Luisa Bentivogli, Roldano Cattoni, and Marcello Federico. The iwslt 2015 evaluation campaign. In IWSLT 2015, International Workshop on Spoken Language Translation, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mauro%20Cettolo%20Jan%20Niehues%20Sebastian%20St%C3%BCker%20Luisa%20Bentivogli%20Roldano%20Cattoni%20and%20Marcello%20Federico%20The%20iwslt%202015%20evaluation%20campaign%20In%20IWSLT%202015%20International%20Workshop%20on%20Spoken%20Language%20Translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mauro%20Cettolo%20Jan%20Niehues%20Sebastian%20St%C3%BCker%20Luisa%20Bentivogli%20Roldano%20Cattoni%20and%20Marcello%20Federico%20The%20iwslt%202015%20evaluation%20campaign%20In%20IWSLT%202015%20International%20Workshop%20on%20Spoken%20Language%20Translation%202015"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Huadong Chen, Shujian Huang, David Chiang, and Jiajun Chen. Improved neural machine translation with a syntax-aware encoder and decoder. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Huadong%20Huang%2C%20Shujian%20Chiang%2C%20David%20Chen%2C%20Jiajun%20Improved%20neural%20machine%20translation%20with%20a%20syntax-aware%20encoder%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Huadong%20Huang%2C%20Shujian%20Chiang%2C%20David%20Chen%2C%20Jiajun%20Improved%20neural%20machine%20translation%20with%20a%20syntax-aware%20encoder%202017"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Kehai Chen, Rui Wang, Masao Utiyama, Eiichiro Sumita, and Tiejun Zhao. Syntax-directed attention for neural machine translation. CoRR, abs/1711.04231, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.04231"
+        },
+        {
+            "id": "Chorowski_2016_a",
+            "entry": "Jan Chorowski and Navdeep Jaitly. Towards better decoding and language model integration in sequence to sequence models. CoRR, abs/1612.02695, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.02695"
+        },
+        {
+            "id": "Deng_et+al_2018_a",
+            "entry": "Yuntian Deng, Yoon Kim, Justin Chiu, Demi Guo, and Alexander Rush. Latent alignment and variational attention. In NIPS. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Yuntian%20Kim%2C%20Yoon%20Chiu%2C%20Justin%20Guo%2C%20Demi%20Latent%20alignment%20and%20variational%20attention.%20In%20NIPS%202018"
+        },
+        {
+            "id": "Durrett_2013_a",
+            "entry": "Greg Durrett and John DeNero. Supervised learning of complete morphological paradigms. In Proceedings of the North American Chapter of the Association for Computational Linguistics, 2013. URL http://aclweb.org/anthology//N/N13/N13-1138.pdf.",
+            "url": "http://aclweb.org/anthology//N/N13/N13-1138.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Durrett%2C%20Greg%20DeNero%2C%20John%20Supervised%20learning%20of%20complete%20morphological%20paradigms%202013"
+        },
+        {
+            "id": "Chen_2018_b",
+            "entry": "Mia Chen et al. The best of both worlds: Combining recent advances in neural machine translation. In ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Mia%20The%20best%20of%20both%20worlds%3A%20Combining%20recent%20advances%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Mia%20The%20best%20of%20both%20worlds%3A%20Combining%20recent%20advances%202018"
+        },
+        {
+            "id": "Ghader_2017_a",
+            "entry": "Hamidreza Ghader and Christof Monz. What does attention in neural machine translation pay attention to. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ghader%2C%20Hamidreza%20Monz%2C%20Christof%20What%20does%20attention%20in%20neural%20machine%20translation%20pay%20attention%20to%202017"
+        },
+        {
+            "id": "Gregor_et+al_2015_a",
+            "entry": "Karol Gregor, Ivo Danihelka, Alex Graves, Danilo Rezende, and Daan Wierstra. Draw: A recurrent neural network for image generation. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20Karol%20Danihelka%2C%20Ivo%20Graves%2C%20Alex%20Rezende%2C%20Danilo%20Draw%3A%20A%20recurrent%20neural%20network%20for%20image%20generation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20Karol%20Danihelka%2C%20Ivo%20Graves%2C%20Alex%20Rezende%2C%20Danilo%20Draw%3A%20A%20recurrent%20neural%20network%20for%20image%20generation%202015"
+        },
+        {
+            "id": "Kim_et+al_2017_a",
+            "entry": "Y. Kim, C. Denton, L. Hoang, and A. Rush. Structured Attention Networks. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Y%20Kim%20C%20Denton%20L%20Hoang%20and%20A%20Rush%20Structured%20Attention%20Networks%20In%20ICLR%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Y%20Kim%20C%20Denton%20L%20Hoang%20and%20A%20Rush%20Structured%20Attention%20Networks%20In%20ICLR%202017"
+        },
+        {
+            "id": "Koehn_2010_a",
+            "entry": "Philipp Koehn. Statistical Machine Translation. Cambridge University Press, 1st edition, 2010. ISBN 0521874157, 9780521874151.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koehn%2C%20Philipp%20Statistical%20Machine%20Translation%202010"
+        },
+        {
+            "id": "Koehn_2017_a",
+            "entry": "Philipp Koehn and Rebecca Knowles. Six challenges for neural machine translation. In Proceedings of the First Workshop on Neural Machine Translation. Association for Computational Linguistics, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koehn%2C%20Philipp%20Knowles%2C%20Rebecca%20Six%20challenges%20for%20neural%20machine%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koehn%2C%20Philipp%20Knowles%2C%20Rebecca%20Six%20challenges%20for%20neural%20machine%20translation%202017"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher D. Manning. Effective approaches to attentionbased neural machine translation. EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attentionbased%20neural%20machine%20translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Minh-Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attentionbased%20neural%20machine%20translation%202015"
+        },
+        {
+            "id": "Andr\u00e9_2016_a",
+            "entry": "Andr\u00e9 F. T. Martins and Ram\u00f3n Fern\u00e1ndez Astudillo. From softmax to sparsemax: A sparse model of attention and multi-label classification. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=T%2C%20Andr%C3%A9%20F.%20Martins%20and%20Ram%C3%B3n%20Fern%C3%A1ndez%20Astudillo.%20From%20softmax%20to%20sparsemax%3A%20A%20sparse%20model%20of%20attention%20and%20multi-label%20classification%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=T%2C%20Andr%C3%A9%20F.%20Martins%20and%20Ram%C3%B3n%20Fern%C3%A1ndez%20Astudillo.%20From%20softmax%20to%20sparsemax%3A%20A%20sparse%20model%20of%20attention%20and%20multi-label%20classification%202016"
+        },
+        {
+            "id": "Nakazawa_et+al_2016_a",
+            "entry": "Toshiaki Nakazawa, Manabu Yaguchi, Kiyotaka Uchimoto, Masao Utiyama, Eiichiro Sumita, Sadao Kurohashi, and Hitoshi Isahara. Aspec: Asian scientific paper excerpt corpus. In LREC, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Toshiaki%20Nakazawa%20Manabu%20Yaguchi%20Kiyotaka%20Uchimoto%20Masao%20Utiyama%20Eiichiro%20Sumita%20Sadao%20Kurohashi%20and%20Hitoshi%20Isahara%20Aspec%20Asian%20scientific%20paper%20excerpt%20corpus%20In%20LREC%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Toshiaki%20Nakazawa%20Manabu%20Yaguchi%20Kiyotaka%20Uchimoto%20Masao%20Utiyama%20Eiichiro%20Sumita%20Sadao%20Kurohashi%20and%20Hitoshi%20Isahara%20Aspec%20Asian%20scientific%20paper%20excerpt%20corpus%20In%20LREC%202016"
+        },
+        {
+            "id": "Niculae_2017_a",
+            "entry": "Vlad Niculae and Mathieu Blondel. A regularized framework for sparse and structured neural attention. In NIPS. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niculae%2C%20Vlad%20Blondel%2C%20Mathieu%20A%20regularized%20framework%20for%20sparse%20and%20structured%20neural%20attention%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niculae%2C%20Vlad%20Blondel%2C%20Mathieu%20A%20regularized%20framework%20for%20sparse%20and%20structured%20neural%20attention%202017"
+        },
+        {
+            "id": "Sennrich_2016_a",
+            "entry": "Rico Sennrich and Barry Haddow. Linguistic input features improve neural machine translation. In WMT, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Linguistic%20input%20features%20improve%20neural%20machine%20translation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Linguistic%20input%20features%20improve%20neural%20machine%20translation%202016"
+        },
+        {
+            "id": "Serr_et+al_2018_a",
+            "entry": "Joan Serr\u00e0, D\u00eddac Sur\u00eds, Marius Miron, and Alexandros Karatzoglou. Overcoming catastrophic forgetting with hard attention to the task. CoRR, abs/1801.01423, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01423"
+        },
+        {
+            "id": "Shankar_2018_a",
+            "entry": "Shiv Shankar and Sunita Sarawagi. Labeled memory networks for online model adaptation. In AAAI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shankar%2C%20Shiv%20Sarawagi%2C%20Sunita%20Labeled%20memory%20networks%20for%20online%20model%20adaptation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shankar%2C%20Shiv%20Sarawagi%2C%20Sunita%20Labeled%20memory%20networks%20for%20online%20model%20adaptation%202018"
+        },
+        {
+            "id": "Shankar_et+al_2018_b",
+            "entry": "Shiv Shankar, Siddhant Garg, and Sunita Sarawagi. Surprisingly easy hard-attention for sequence to sequence learning. In Proceedings of the 2018 conference on Empirical Methods in Natural Language Processing. Association for Computational Linguistics, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shankar%2C%20Shiv%20Garg%2C%20Siddhant%20Sarawagi%2C%20Sunita%20Surprisingly%20easy%20hard-attention%20for%20sequence%20to%20sequence%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shankar%2C%20Shiv%20Garg%2C%20Siddhant%20Sarawagi%2C%20Sunita%20Surprisingly%20easy%20hard-attention%20for%20sequence%20to%20sequence%20learning%202018"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Weiyue Wang, Derui Zhu, Tamer Alkhouli, Zixuan Gan, and Hermann Ney. Neural hidden markov models for machine translation. In Proceedings of the 2018 Annual Meeting of the Association for Computational Linguistics. Association for Computational Linguistics, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Weiyue%20Zhu%2C%20Derui%20Alkhouli%2C%20Tamer%20Gan%2C%20Zixuan%20Neural%20hidden%20markov%20models%20for%20machine%20translation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Weiyue%20Zhu%2C%20Derui%20Alkhouli%2C%20Tamer%20Gan%2C%20Zixuan%20Neural%20hidden%20markov%20models%20for%20machine%20translation%202018"
+        },
+        {
+            "id": "Williams_1992_a",
+            "entry": "Ronald J. Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Mach. Learn., 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Ronald%20J.%20Simple%20statistical%20gradient-following%20algorithms%20for%20connectionist%20reinforcement%20learning%201992"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Shijie Wu, Pamela Shapiro, and Ryan Cotterell. Hard non-monotonic attention for character-level transduction. In Proceedings of the 2018 conference on Empirical Methods in Natural Language Processing. Association for Computational Linguistics, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Shijie%20Shapiro%2C%20Pamela%20Cotterell%2C%20Ryan%20Hard%20non-monotonic%20attention%20for%20character-level%20transduction%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Shijie%20Shapiro%2C%20Pamela%20Cotterell%2C%20Ryan%20Hard%20non-monotonic%20attention%20for%20character-level%20transduction%202018"
+        },
+        {
+            "id": "Xu_et+al_2015_a",
+            "entry": "Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and Yoshua Bengio. Show, attend and tell: Neural image caption generation with visual attention. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 of Proceedings of Machine Learning Research, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Kelvin%20Ba%2C%20Jimmy%20Kiros%2C%20Ryan%20Cho%2C%20Kyunghyun%20attend%20and%20tell%3A%20Neural%20image%20caption%20generation%20with%20visual%20attention%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Kelvin%20Ba%2C%20Jimmy%20Kiros%2C%20Ryan%20Cho%2C%20Kyunghyun%20attend%20and%20tell%3A%20Neural%20image%20caption%20generation%20with%20visual%20attention%202015"
+        },
+        {
+            "id": "Yang_et+al_2016_a",
+            "entry": "Zichao Yang, Zhiting Hu, Yuntian Deng, Chris Dyer, and Alexander J. Smola. Neural machine translation with recurrent attention modeling. In EACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zichao%20Hu%2C%20Zhiting%20Deng%2C%20Yuntian%20Dyer%2C%20Chris%20Neural%20machine%20translation%20with%20recurrent%20attention%20modeling%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zichao%20Hu%2C%20Zhiting%20Deng%2C%20Yuntian%20Dyer%2C%20Chris%20Neural%20machine%20translation%20with%20recurrent%20attention%20modeling%202016"
+        },
+        {
+            "id": "Yu_et+al_2016_a",
+            "entry": "Lei Yu, Jan Buys, and Phil Blunsom. Online segment to segment neural transduction. In EMNLP, pp. 1307\u20131316, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Lei%20Buys%2C%20Jan%20Blunsom%2C%20Phil%20Online%20segment%20to%20segment%20neural%20transduction%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Lei%20Buys%2C%20Jan%20Blunsom%2C%20Phil%20Online%20segment%20to%20segment%20neural%20transduction%202016"
+        },
+        {
+            "id": "Zaremba_2015_a",
+            "entry": "Wojciech Zaremba and Ilya Sutskever. Reinforcement learning neural turing machines. CoRR, abs/1505.00521, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1505.00521"
+        }
+    ]
+}

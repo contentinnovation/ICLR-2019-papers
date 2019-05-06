@@ -1,0 +1,340 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PREDICT THEN PROPAGATE: GRAPH NEURAL NETWORKS MEET PERSONALIZED PAGERANK",
+        "author": "Johannes Klicpera, Aleksandar Bojchevski & Stephan Gunnemann Technical University of Munich, Germany {klicpera,a.bojchevski,guennemann}@in.tum.de",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1gL-2A9Ym"
+        },
+        "abstract": "Neural message passing algorithms for semi-supervised classification on graphs have recently achieved great success. However, for classifying a node these methods only consider nodes that are a few propagation steps away and the size of this utilized neighborhood is hard to extend. In this paper, we use the relationship between graph convolutional networks (GCN) and PageRank to derive an improved propagation scheme based on personalized PageRank. We utilize this propagation procedure to construct a simple model, personalized propagation of neural predictions (PPNP), and its fast approximation, APPNP. Our model\u2019s training time is on par or faster and its number of parameters on par or lower than previous models. It leverages a large, adjustable neighborhood for classification and can be easily combined with any neural network. We show that this model outperforms several recently proposed methods for semi-supervised classification in the most thorough study done so far for GCN-like models. Our implementation is available online. 1"
+    },
+    "keywords": [
+        {
+            "term": "multilayer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multilayer_perceptron"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "neural networks",
+            "url": "https://en.wikipedia.org/wiki/neural_networks"
+        }
+    ],
+    "abbreviations": {
+        "GCN": "Graph Convolutional Network",
+        "PPNP": "propagation of neural predictions",
+        "GNN": "graph neural network",
+        "GAT": "graph attention networks",
+        "bt. FP": "bootstrapped feature propagation",
+        "MLP": "multilayer perceptron"
+    },
+    "highlights": [
+        "Graphs are ubiquitous in the real world and its description through scientific models",
+        "We propose an algorithm that utilizes a propagation scheme derived from personalized PageRank instead",
+        "Our rigorous setup might understate the improvements achieved by propagation of neural predictions and APPNP \u2013 this result is statistically significant p < 0.05, as tested via a paired t-test",
+        "propagation of neural predictions and APPNP are trained end-to-end, with the propagation scheme affecting (i) the neural network f\u03b8 during training, and the classification decision during inference",
+        "In this paper we have introduced personalized propagation of neural predictions (PPNP) and its fast approximation, APPNP",
+        "The model is computationally efficient and outperforms several state-of-the-art methods for semi-supervised classification on multiple graphs in the most thorough study which has been done for Graph Convolutional Network-like models so far"
+    ],
+    "key_statements": [
+        "Graphs are ubiquitous in the real world and its description through scientific models",
+        "We propose an algorithm that utilizes a propagation scheme derived from personalized PageRank instead",
+        "We show that this propagation scheme permits the use of far more propagation steps without leading to oversmoothing",
+        "We even found that adding our propagation scheme during inference significantly improves the accuracy of networks that were trained without using any graph information",
+        "To utilize the above influence scores for semi-supervised classification we generate predictions for each node based on its own features and propagate them via our fully personalized PageRank scheme to generate the final predictions",
+        "Our rigorous setup might understate the improvements achieved by propagation of neural predictions and APPNP \u2013 this result is statistically significant p < 0.05, as tested via a paired t-test",
+        "propagation of neural predictions and APPNP are trained end-to-end, with the propagation scheme affecting (i) the neural network f\u03b8 during training, and the classification decision during inference",
+        "In this paper we have introduced personalized propagation of neural predictions (PPNP) and its fast approximation, APPNP",
+        "The model is computationally efficient and outperforms several state-of-the-art methods for semi-supervised classification on multiple graphs in the most thorough study which has been done for Graph Convolutional Network-like models so far"
+    ],
+    "summary": [
+        "Graphs are ubiquitous in the real world and its description through scientific models.",
+        "This allows us to achieve a much higher range without changing the neural network, whereas in the message passing scheme every additional propagation step would require an additional layer.",
+        "It permits the independent development of the propagation algorithm and the neural network generating predictions from node features.",
+        "We even found that adding our propagation scheme during inference significantly improves the accuracy of networks that were trained without using any graph information.",
+        "To utilize the above influence scores for semi-supervised classification we generate predictions for each node based on its own features and propagate them via our fully personalized PageRank scheme to generate the final predictions.",
+        "As we saw when connecting GCN to PageRank, personalized PageRank can effectively use even infinitely many neighborhood aggregation layers, which is clearly not possible in the classical message passing framework.",
+        "Z(K) = softmax (1 \u2212 \u03b1)AZ(K\u22121) + \u03b1H , where the prediction matrix H acts as both the starting vector and the teleport set, K defines the number of power iteration steps and k \u2208 [0, K \u22122].",
+        "Several works have tried to improve the training of message passing algorithms and increase the neighborhood available at each node by adding skip connections (<a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a>; <a class=\"ref-link\" id=\"cPham_et+al_2017_a\" href=\"#rPham_et+al_2017_a\">Pham et al, 2017</a>; <a class=\"ref-link\" id=\"cHamilton_et+al_2017_a\" href=\"#rHamilton_et+al_2017_a\">Hamilton et al, 2017</a>; <a class=\"ref-link\" id=\"cYing_et+al_2018_a\" href=\"#rYing_et+al_2018_a\">Ying et al, 2018</a>).",
+        "To ensure a fair model comparison we used a neural network for PPNP that is structurally very similar to GCN and has the same number of parameters.",
+        "The combination of this shallow neural network with a comparatively high number of power iteration steps achieved the best results during hyperparameter optimization.",
+        "PPNP and APPNP are trained end-to-end, with the propagation scheme affecting (i) the neural network f\u03b8 during training, and the classification decision during inference.",
+        "\u201dTraining\u201d denotes the case where we use APPNP during training to learn f\u03b8; at inference time, only f\u03b8 is used to predict the class labels.",
+        "This shows that our model can be combined with pretrained neural networks that do not incorporate any graph information and still significantly improve their accuracy.",
+        "This simple model decouples prediction and propagation and solves the limited range problem inherent in many message passing models without introducing any additional parameters.",
+        "The model is computationally efficient and outperforms several state-of-the-art methods for semi-supervised classification on multiple graphs in the most thorough study which has been done for GCN-like models so far.",
+        "Faster or incremental approximations of personalized PageRank (<a class=\"ref-link\" id=\"cBahmani_et+al_2010_a\" href=\"#rBahmani_et+al_2010_a\"><a class=\"ref-link\" id=\"cBahmani_et+al_2010_a\" href=\"#rBahmani_et+al_2010_a\">Bahmani et al, 2010</a></a>; 2011; <a class=\"ref-link\" id=\"cLofgren_et+al_2014_a\" href=\"#rLofgren_et+al_2014_a\"><a class=\"ref-link\" id=\"cLofgren_et+al_2014_a\" href=\"#rLofgren_et+al_2014_a\">Lofgren et al, 2014</a></a>) and more sophisticated propagation schemes would benefit the method"
+    ],
+    "headline": "We show that this model outperforms several recently proposed methods for semi-supervised classification in the most thorough study done so far for Graph Convolutional Network-like models",
+    "reference_links": [
+        {
+            "id": "Abu-El-Haija_et+al_2018_a",
+            "entry": "Sami Abu-El-Haija, Amol Kapoor, Bryan Perozzi, and Joonseok Lee. N-GCN: Multi-scale Graph Convolution for Semi-supervised Node Classification. In International Workshop on Mining and Learning with Graphs (MLG), 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abu-El-Haija%2C%20Sami%20Kapoor%2C%20Amol%20Perozzi%2C%20Bryan%20Lee%2C%20Joonseok%20N-GCN%3A%20Multi-scale%20Graph%20Convolution%20for%20Semi-supervised%20Node%20Classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abu-El-Haija%2C%20Sami%20Kapoor%2C%20Amol%20Perozzi%2C%20Bryan%20Lee%2C%20Joonseok%20N-GCN%3A%20Multi-scale%20Graph%20Convolution%20for%20Semi-supervised%20Node%20Classification%202018"
+        },
+        {
+            "id": "Abu-El-Haija_et+al_2018_b",
+            "entry": "Sami Abu-El-Haija, Bryan Perozzi, Rami Al-Rfou, and Alex Alemi. Watch Your Step: Learning Node Embeddings via Graph Attention. In NeurIPS, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abu-El-Haija%2C%20Sami%20Perozzi%2C%20Bryan%20Al-Rfou%2C%20Rami%20Alemi%2C%20Alex%20Watch%20Your%20Step%3A%20Learning%20Node%20Embeddings%20via%20Graph%20Attention%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abu-El-Haija%2C%20Sami%20Perozzi%2C%20Bryan%20Al-Rfou%2C%20Rami%20Alemi%2C%20Alex%20Watch%20Your%20Step%3A%20Learning%20Node%20Embeddings%20via%20Graph%20Attention%202018"
+        },
+        {
+            "id": "Bahmani_et+al_2010_a",
+            "entry": "Bahman Bahmani, Abdur Chowdhury, and Ashish Goel. Fast Incremental and Personalized PageRank. VLDB, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahmani%2C%20Bahman%20Chowdhury%2C%20Abdur%20Goel%2C%20Ashish%20Fast%20Incremental%20and%20Personalized%20PageRank%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahmani%2C%20Bahman%20Chowdhury%2C%20Abdur%20Goel%2C%20Ashish%20Fast%20Incremental%20and%20Personalized%20PageRank%202010"
+        },
+        {
+            "id": "Bahmani_et+al_2011_a",
+            "entry": "Bahman Bahmani, Kaushik Chakrabarti, and Dong Xin. Fast Personalized PageRank on MapReduce. In SIGMOD, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahmani%2C%20Bahman%20Chakrabarti%2C%20Kaushik%20Xin%2C%20Dong%20Fast%20Personalized%20PageRank%20on%20MapReduce%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahmani%2C%20Bahman%20Chakrabarti%2C%20Kaushik%20Xin%2C%20Dong%20Fast%20Personalized%20PageRank%20on%20MapReduce%202011"
+        },
+        {
+            "id": "Bojchevski_2018_a",
+            "entry": "Aleksandar Bojchevski and Stephan Gunnemann. Deep Gaussian Embedding of Graphs: Unsupervised Inductive Learning via Ranking. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bojchevski%2C%20Aleksandar%20Gunnemann%2C%20Stephan%20Deep%20Gaussian%20Embedding%20of%20Graphs%3A%20Unsupervised%20Inductive%20Learning%20via%20Ranking%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bojchevski%2C%20Aleksandar%20Gunnemann%2C%20Stephan%20Deep%20Gaussian%20Embedding%20of%20Graphs%3A%20Unsupervised%20Inductive%20Learning%20via%20Ranking%202018"
+        },
+        {
+            "id": "Bojchevski_et+al_2018_b",
+            "entry": "Aleksandar Bojchevski, Oleksandr Shchur, Daniel Zugner, and Stephan Gunnemann. NetGAN: Generating Graphs via Random Walks. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bojchevski%2C%20Aleksandar%20Shchur%2C%20Oleksandr%20Zugner%2C%20Daniel%20Gunnemann%2C%20Stephan%20NetGAN%3A%20Generating%20Graphs%20via%20Random%20Walks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bojchevski%2C%20Aleksandar%20Shchur%2C%20Oleksandr%20Zugner%2C%20Daniel%20Gunnemann%2C%20Stephan%20NetGAN%3A%20Generating%20Graphs%20via%20Random%20Walks%202018"
+        },
+        {
+            "id": "Bruna_et+al_2014_a",
+            "entry": "Joan Bruna, Wojciech Zaremba, Arthur Szlam, and Yann LeCun. Spectral Networks and Deep Locally Connected Networks on Graphs. ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bruna%2C%20Joan%20Zaremba%2C%20Wojciech%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Spectral%20Networks%20and%20Deep%20Locally%20Connected%20Networks%20on%20Graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bruna%2C%20Joan%20Zaremba%2C%20Wojciech%20Szlam%2C%20Arthur%20LeCun%2C%20Yann%20Spectral%20Networks%20and%20Deep%20Locally%20Connected%20Networks%20on%20Graphs%202014"
+        },
+        {
+            "id": "Buchnik_2018_a",
+            "entry": "Eliav Buchnik and Edith Cohen. Bootstrapped Graph Diffusions: Exposing the Power of Nonlinearity. Proceedings of the ACM on Measurement and Analysis of Computing Systems (POMACS), 2 (1):1\u201319, April 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Buchnik%2C%20Eliav%20Cohen%2C%20Edith%20Bootstrapped%20Graph%20Diffusions%3A%20Exposing%20the%20Power%20of%20Nonlinearity%202018-04-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Buchnik%2C%20Eliav%20Cohen%2C%20Edith%20Bootstrapped%20Graph%20Diffusions%3A%20Exposing%20the%20Power%20of%20Nonlinearity%202018-04-02"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Jie Chen, Tengfei Ma, and Cao Xiao. FastGCN: Fast Learning with Graph Convolutional Networks via Importance Sampling. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Jie%20Ma%2C%20Tengfei%20Xiao%2C%20Cao%20FastGCN%3A%20Fast%20Learning%20with%20Graph%20Convolutional%20Networks%20via%20Importance%20Sampling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Jie%20Ma%2C%20Tengfei%20Xiao%2C%20Cao%20FastGCN%3A%20Fast%20Learning%20with%20Graph%20Convolutional%20Networks%20via%20Importance%20Sampling%202018"
+        },
+        {
+            "id": "Chen_et+al_2019_a",
+            "entry": "Zhengdao Chen, Lisha Li, and Joan Bruna. Supervised Community Detection with Line Graph Neural Networks. In ICLR, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Zhengdao%20Li%2C%20Lisha%20Bruna%2C%20Joan%20Supervised%20Community%20Detection%20with%20Line%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Zhengdao%20Li%2C%20Lisha%20Bruna%2C%20Joan%20Supervised%20Community%20Detection%20with%20Line%202019"
+        },
+        {
+            "id": "Dai_et+al_2018_a",
+            "entry": "Hanjun Dai, Zornitsa Kozareva, Bo Dai, Alexander J. Smola, and Le Song. Learning Steady-States of Iterative Algorithms over Graphs. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Hanjun%20Kozareva%2C%20Zornitsa%20Dai%2C%20Bo%20Smola%2C%20Alexander%20J.%20Learning%20Steady-States%20of%20Iterative%20Algorithms%20over%20Graphs.%20In%20ICML%202018"
+        },
+        {
+            "id": "Defferrard_et+al_2016_a",
+            "entry": "Michael Defferrard, Xavier Bresson, and Pierre Vandergheynst. Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Defferrard%2C%20Michael%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20Neural%20Networks%20on%20Graphs%20with%20Fast%20Localized%20Spectral%20Filtering%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Defferrard%2C%20Michael%20Bresson%2C%20Xavier%20Vandergheynst%2C%20Pierre%20Convolutional%20Neural%20Networks%20on%20Graphs%20with%20Fast%20Localized%20Spectral%20Filtering%202016"
+        },
+        {
+            "id": "Duvenaud_et+al_2015_a",
+            "entry": "David K. Duvenaud, Dougal Maclaurin, Jorge Aguilera-Iparraguirre, Rafael Gomez-Bombarelli, Timothy Hirzel, Alan Aspuru-Guzik, and Ryan P. Adams. Convolutional Networks on Graphs for Learning Molecular Fingerprints. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Aguilera-Iparraguirre%2C%20Jorge%20Gomez-Bombarelli%2C%20Rafael%20Convolutional%20Networks%20on%20Graphs%20for%20Learning%20Molecular%20Fingerprints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Aguilera-Iparraguirre%2C%20Jorge%20Gomez-Bombarelli%2C%20Rafael%20Convolutional%20Networks%20on%20Graphs%20for%20Learning%20Molecular%20Fingerprints%202015"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, and George E. Dahl. Neural Message Passing for Quantum Chemistry. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Justin%20Gilmer%20Samuel%20S%20Schoenholz%20Patrick%20F%20Riley%20Oriol%20Vinyals%20and%20George%20E%20Dahl%20Neural%20Message%20Passing%20for%20Quantum%20Chemistry%20In%20ICML%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Justin%20Gilmer%20Samuel%20S%20Schoenholz%20Patrick%20F%20Riley%20Oriol%20Vinyals%20and%20George%20E%20Dahl%20Neural%20Message%20Passing%20for%20Quantum%20Chemistry%20In%20ICML%202017"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In AISTATS, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Grover_2016_a",
+            "entry": "Aditya Grover and Jure Leskovec. node2vec: Scalable Feature Learning for Networks. In KDD, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grover%2C%20Aditya%20Leskovec%2C%20Jure%20node2vec%3A%20Scalable%20Feature%20Learning%20for%20Networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grover%2C%20Aditya%20Leskovec%2C%20Jure%20node2vec%3A%20Scalable%20Feature%20Learning%20for%20Networks%202016"
+        },
+        {
+            "id": "Hamilton_et+al_2017_a",
+            "entry": "William L. Hamilton, Zhitao Ying, and Jure Leskovec. Inductive Representation Learning on Large Graphs. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hamilton%2C%20William%20L.%20Ying%2C%20Zhitao%20Leskovec%2C%20Jure%20Inductive%20Representation%20Learning%20on%20Large%20Graphs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hamilton%2C%20William%20L.%20Ying%2C%20Zhitao%20Leskovec%2C%20Jure%20Inductive%20Representation%20Learning%20on%20Large%20Graphs%202017"
+        },
+        {
+            "id": "Haveliwala_2002_a",
+            "entry": "Taher H. Haveliwala. Topic-sensitive PageRank. In WWW, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taher%20H%20Haveliwala%20Topicsensitive%20PageRank%20In%20WWW%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taher%20H%20Haveliwala%20Topicsensitive%20PageRank%20In%20WWW%202002"
+        },
+        {
+            "id": "Kawamoto_et+al_2018_a",
+            "entry": "Tatsuro Kawamoto, Masashi Tsubaki, and Tomoyuki Obuchi. Mean-field theory of graph neural networks in graph partitioning. In NeurIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kawamoto%2C%20Tatsuro%20Tsubaki%2C%20Masashi%20Obuchi%2C%20Tomoyuki%20Mean-field%20theory%20of%20graph%20neural%20networks%20in%20graph%20partitioning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kawamoto%2C%20Tatsuro%20Tsubaki%2C%20Masashi%20Obuchi%2C%20Tomoyuki%20Mean-field%20theory%20of%20graph%20neural%20networks%20in%20graph%20partitioning%202018"
+        },
+        {
+            "id": "Kearnes_et+al_2016_a",
+            "entry": "Steven M. Kearnes, Kevin McCloskey, Marc Berndl, Vijay S. Pande, and Patrick Riley. Molecular graph convolutions: moving beyond fingerprints. Journal of Computer-Aided Molecular Design, 30(8):595\u2013608, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kearnes%2C%20Steven%20M.%20McCloskey%2C%20Kevin%20Berndl%2C%20Marc%20Pande%2C%20Vijay%20S.%20Molecular%20graph%20convolutions%3A%20moving%20beyond%20fingerprints%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kearnes%2C%20Steven%20M.%20McCloskey%2C%20Kevin%20Berndl%2C%20Marc%20Pande%2C%20Vijay%20S.%20Molecular%20graph%20convolutions%3A%20moving%20beyond%20fingerprints%202016"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A Method for Stochastic Optimization. ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20Method%20for%20Stochastic%20Optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20Method%20for%20Stochastic%20Optimization%202015"
+        },
+        {
+            "id": "Kipf_2017_a",
+            "entry": "Thomas N. Kipf and Max Welling. Semi-Supervised Classification with Graph Convolutional Networks. ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-Supervised%20Classification%20with%20Graph%20Convolutional%20Networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-Supervised%20Classification%20with%20Graph%20Convolutional%20Networks%202017"
+        },
+        {
+            "id": "Leskovec_et+al_2005_a",
+            "entry": "Jure Leskovec, Jon Kleinberg, and Christos Faloutsos. Graphs over Time: Densification Laws, Shrinking Diameters and Possible Explanations. In KDD, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Leskovec%2C%20Jure%20Kleinberg%2C%20Jon%20Faloutsos%2C%20Christos%20Graphs%20over%20Time%3A%20Densification%20Laws%2C%20Shrinking%20Diameters%20and%20Possible%20Explanations%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Leskovec%2C%20Jure%20Kleinberg%2C%20Jon%20Faloutsos%2C%20Christos%20Graphs%20over%20Time%3A%20Densification%20Laws%2C%20Shrinking%20Diameters%20and%20Possible%20Explanations%202005"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Qimai Li, Zhichao Han, and Xiao-Ming Wu. Deeper Insights Into Graph Convolutional Networks for Semi-Supervised Learning. In AAAI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Qimai%20Han%2C%20Zhichao%20Wu%2C%20Xiao-Ming%20Deeper%20Insights%20Into%20Graph%20Convolutional%20Networks%20for%20Semi-Supervised%20Learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Qimai%20Han%2C%20Zhichao%20Wu%2C%20Xiao-Ming%20Deeper%20Insights%20Into%20Graph%20Convolutional%20Networks%20for%20Semi-Supervised%20Learning%202018"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard S. Zemel. Gated Graph Sequence Neural Networks. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yujia%20Li%20Daniel%20Tarlow%20Marc%20Brockschmidt%20and%20Richard%20S%20Zemel%20Gated%20Graph%20Sequence%20Neural%20Networks%20In%20ICLR%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yujia%20Li%20Daniel%20Tarlow%20Marc%20Brockschmidt%20and%20Richard%20S%20Zemel%20Gated%20Graph%20Sequence%20Neural%20Networks%20In%20ICLR%202016"
+        },
+        {
+            "id": "Lofgren_et+al_2014_a",
+            "entry": "Peter Lofgren, Siddhartha Banerjee, Ashish Goel, and Seshadhri Comandur. FAST-PPR: scaling personalized pagerank estimation for large graphs. In KDD, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lofgren%2C%20Peter%20Banerjee%2C%20Siddhartha%20Goel%2C%20Ashish%20Comandur%2C%20Seshadhri%20FAST-PPR%3A%20scaling%20personalized%20pagerank%20estimation%20for%20large%20graphs%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lofgren%2C%20Peter%20Banerjee%2C%20Siddhartha%20Goel%2C%20Ashish%20Comandur%2C%20Seshadhri%20FAST-PPR%3A%20scaling%20personalized%20pagerank%20estimation%20for%20large%20graphs%202014"
+        },
+        {
+            "id": "Abadi_et+al_2015_a",
+            "entry": "Mart\u0131n Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Mane, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viegas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abadi%2C%20Mart%C4%B1n%20Agarwal%2C%20Ashish%20Barham%2C%20Paul%20Brevdo%2C%20Eugene%20TensorFlow%3A%20Large-Scale%20Machine%20Learning%20on%20Heterogeneous%20Systems%202015"
+        },
+        {
+            "id": "Mccallum_et+al_2000_a",
+            "entry": "Andrew Kachites McCallum, Kamal Nigam, Jason Rennie, and Kristie Seymore. Automating the construction of internet portals with machine learning. Information Retrieval, 3(2):127\u2013163, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McCallum%2C%20Andrew%20Kachites%20Nigam%2C%20Kamal%20Rennie%2C%20Jason%20Seymore%2C%20Kristie%20Automating%20the%20construction%20of%20internet%20portals%20with%20machine%20learning%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McCallum%2C%20Andrew%20Kachites%20Nigam%2C%20Kamal%20Rennie%2C%20Jason%20Seymore%2C%20Kristie%20Automating%20the%20construction%20of%20internet%20portals%20with%20machine%20learning%202000"
+        },
+        {
+            "id": "Monti_et+al_2017_a",
+            "entry": "Federico Monti, Davide Boscaini, Jonathan Masci, Emanuele Rodola, Jan Svoboda, and Michael M. Bronstein. Geometric Deep Learning on Graphs and Manifolds Using Mixture Model CNNs. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monti%2C%20Federico%20Boscaini%2C%20Davide%20Masci%2C%20Jonathan%20Rodola%2C%20Emanuele%20Geometric%20Deep%20Learning%20on%20Graphs%20and%20Manifolds%20Using%20Mixture%20Model%20CNNs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monti%2C%20Federico%20Boscaini%2C%20Davide%20Masci%2C%20Jonathan%20Rodola%2C%20Emanuele%20Geometric%20Deep%20Learning%20on%20Graphs%20and%20Manifolds%20Using%20Mixture%20Model%20CNNs%202017"
+        },
+        {
+            "id": "Namata_et+al_2012_a",
+            "entry": "Galileo Namata, Ben London, Lise Getoor, and Bert Huang. Query-driven Active Surveying for Collective Classification. In International Workshop on Mining and Learning with Graphs (MLG), 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Namata%2C%20Galileo%20London%2C%20Ben%20Getoor%2C%20Lise%20Huang%2C%20Bert%20Query-driven%20Active%20Surveying%20for%20Collective%20Classification%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Namata%2C%20Galileo%20London%2C%20Ben%20Getoor%2C%20Lise%20Huang%2C%20Bert%20Query-driven%20Active%20Surveying%20for%20Collective%20Classification%202012"
+        },
+        {
+            "id": "Nandanwar_2016_a",
+            "entry": "Sharad Nandanwar and M. N. Murty. Structural Neighborhood Based Classification of Nodes in a Network. In KDD, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nandanwar%2C%20Sharad%20Murty%2C%20M.N.%20Structural%20Neighborhood%20Based%20Classification%20of%20Nodes%20in%20a%20Network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nandanwar%2C%20Sharad%20Murty%2C%20M.N.%20Structural%20Neighborhood%20Based%20Classification%20of%20Nodes%20in%20a%20Network%202016"
+        },
+        {
+            "id": "Niepert_et+al_2016_a",
+            "entry": "Mathias Niepert, Mohamed Ahmed, and Konstantin Kutzkov. Learning Convolutional Neural Networks for Graphs. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mathias%20Niepert%20Mohamed%20Ahmed%20and%20Konstantin%20Kutzkov%20Learning%20Convolutional%20Neural%20Networks%20for%20Graphs%20In%20ICML%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mathias%20Niepert%20Mohamed%20Ahmed%20and%20Konstantin%20Kutzkov%20Learning%20Convolutional%20Neural%20Networks%20for%20Graphs%20In%20ICML%202016"
+        },
+        {
+            "id": "Page_et+al_1998_a",
+            "entry": "Lawrence Page, Sergey Brin, Rajeev Motwani, and Terry Winograd. The pagerank citation ranking: Bringing order to the web. Technical report, Stanford InfoLab, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Page%2C%20Lawrence%20Brin%2C%20Sergey%20Motwani%2C%20Rajeev%20Winograd%2C%20Terry%20The%20pagerank%20citation%20ranking%3A%20Bringing%20order%20to%20the%20web%201998"
+        },
+        {
+            "id": "Perozzi_et+al_2014_a",
+            "entry": "Bryan Perozzi, Rami Al-Rfou, and Steven Skiena. DeepWalk: online learning of social representations. In KDD, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Perozzi%2C%20Bryan%20Al-Rfou%2C%20Rami%20Skiena%2C%20Steven%20DeepWalk%3A%20online%20learning%20of%20social%20representations%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Perozzi%2C%20Bryan%20Al-Rfou%2C%20Rami%20Skiena%2C%20Steven%20DeepWalk%3A%20online%20learning%20of%20social%20representations%202014"
+        },
+        {
+            "id": "Pham_et+al_2017_a",
+            "entry": "Trang Pham, Truyen Tran, Dinh Q. Phung, and Svetha Venkatesh. Column Networks for Collective Classification. In AAAI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pham%2C%20Trang%20Tran%2C%20Truyen%20Phung%2C%20Dinh%20Q.%20Venkatesh%2C%20Svetha%20Column%20Networks%20for%20Collective%20Classification%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pham%2C%20Trang%20Tran%2C%20Truyen%20Phung%2C%20Dinh%20Q.%20Venkatesh%2C%20Svetha%20Column%20Networks%20for%20Collective%20Classification%202017"
+        },
+        {
+            "id": "Qiu_et+al_2018_a",
+            "entry": "Jiezhong Qiu, Yuxiao Dong, Hao Ma, Jian Li, Kuansan Wang, and Jie Tang. Network Embedding as Matrix Factorization: Unifying DeepWalk, LINE, PTE, and node2vec. In ACM International Conference on Web Search and Data Mining (WSDM), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qiu%2C%20Jiezhong%20Dong%2C%20Yuxiao%20Ma%2C%20Hao%20Li%2C%20Jian%20Network%20Embedding%20as%20Matrix%20Factorization%3A%20Unifying%20DeepWalk%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qiu%2C%20Jiezhong%20Dong%2C%20Yuxiao%20Ma%2C%20Hao%20Li%2C%20Jian%20Network%20Embedding%20as%20Matrix%20Factorization%3A%20Unifying%20DeepWalk%202018"
+        },
+        {
+            "id": "Scarselli_et+al_2009_a",
+            "entry": "F. Scarselli, M. Gori, Ah Chung Tsoi, M. Hagenbuchner, and G. Monfardini. The Graph Neural Network Model. IEEE Transactions on Neural Networks, 20(1):61\u201380, January 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scarselli%2C%20F.%20Gori%2C%20M.%20Ah%20Chung%20Tsoi%2C%20M.Hagenbuchner%20Monfardini%2C%20G.%20The%20Graph%20Neural%20Network%20Model%202009-01",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scarselli%2C%20F.%20Gori%2C%20M.%20Ah%20Chung%20Tsoi%2C%20M.Hagenbuchner%20Monfardini%2C%20G.%20The%20Graph%20Neural%20Network%20Model%202009-01"
+        },
+        {
+            "id": "Schlichtkrull_et+al_2018_a",
+            "entry": "Michael Sejr Schlichtkrull, Thomas N. Kipf, Peter Bloem, Rianne van den Berg, Ivan Titov, and Max Welling. Modeling Relational Data with Graph Convolutional Networks. In Extended Semantic Web Conference (ESWC), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schlichtkrull%2C%20Michael%20Sejr%20Kipf%2C%20Thomas%20N.%20Bloem%2C%20Peter%20van%20den%20Berg%2C%20Rianne%20Modeling%20Relational%20Data%20with%20Graph%20Convolutional%20Networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schlichtkrull%2C%20Michael%20Sejr%20Kipf%2C%20Thomas%20N.%20Bloem%2C%20Peter%20van%20den%20Berg%2C%20Rianne%20Modeling%20Relational%20Data%20with%20Graph%20Convolutional%20Networks%202018"
+        },
+        {
+            "id": "Sen_et+al_2008_a",
+            "entry": "Prithviraj Sen, Galileo Namata, Mustafa Bilgic, Lise Getoor, Brian Gallagher, and Tina Eliassi-Rad. Collective Classification in Network Data. AI Magazine, 29(3):93\u2013106, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sen%2C%20Prithviraj%20Namata%2C%20Galileo%20Bilgic%2C%20Mustafa%20Getoor%2C%20Lise%20Collective%20Classification%20in%20Network%20Data%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sen%2C%20Prithviraj%20Namata%2C%20Galileo%20Bilgic%2C%20Mustafa%20Getoor%2C%20Lise%20Collective%20Classification%20in%20Network%20Data%202008"
+        },
+        {
+            "id": "Shchur_et+al_2018_a",
+            "entry": "Oleksandr Shchur, Maximilian Mumme, Aleksandar Bojchevski, and Stephan Gunnemann. Pitfalls of Graph Neural Network Evaluation. In Relational Representation Learning Workshop (R2L 2018), NeurIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oleksandr%20Shchur%20Maximilian%20Mumme%20Aleksandar%20Bojchevski%20and%20Stephan%20Gunnemann%20Pitfalls%20of%20Graph%20Neural%20Network%20Evaluation%20In%20Relational%20Representation%20Learning%20Workshop%20R2L%202018%20NeurIPS%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oleksandr%20Shchur%20Maximilian%20Mumme%20Aleksandar%20Bojchevski%20and%20Stephan%20Gunnemann%20Pitfalls%20of%20Graph%20Neural%20Network%20Evaluation%20In%20Relational%20Representation%20Learning%20Workshop%20R2L%202018%20NeurIPS%202018"
+        },
+        {
+            "id": "Tang_et+al_2015_a",
+            "entry": "Jian Tang, Meng Qu, Mingzhe Wang, Ming Zhang, Jun Yan, and Qiaozhu Mei. LINE: Large-scale Information Network Embedding. In WWW, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jian%20Tang%20Meng%20Qu%20Mingzhe%20Wang%20Ming%20Zhang%20Jun%20Yan%20and%20Qiaozhu%20Mei%20LINE%20Largescale%20Information%20Network%20Embedding%20In%20WWW%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jian%20Tang%20Meng%20Qu%20Mingzhe%20Wang%20Ming%20Zhang%20Jun%20Yan%20and%20Qiaozhu%20Mei%20LINE%20Largescale%20Information%20Network%20Embedding%20In%20WWW%202015"
+        },
+        {
+            "id": "Velickovic_et+al_2018_a",
+            "entry": "Petar Velickovic, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Lio, and Yoshua Bengio. Graph Attention Networks. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Petar%20Velickovic%20Guillem%20Cucurull%20Arantxa%20Casanova%20Adriana%20Romero%20Pietro%20Lio%20and%20Yoshua%20Bengio%20Graph%20Attention%20Networks%20ICLR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Petar%20Velickovic%20Guillem%20Cucurull%20Arantxa%20Casanova%20Adriana%20Romero%20Pietro%20Lio%20and%20Yoshua%20Bengio%20Graph%20Attention%20Networks%20ICLR%202018"
+        },
+        {
+            "id": "Xu_et+al_2018_a",
+            "entry": "Keyulu Xu, Chengtao Li, Yonglong Tian, Tomohiro Sonobe, Ken-ichi Kawarabayashi, and Stefanie Jegelka. Representation Learning on Graphs with Jumping Knowledge Networks. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Keyulu%20Li%2C%20Chengtao%20Tian%2C%20Yonglong%20Sonobe%2C%20Tomohiro%20Representation%20Learning%20on%20Graphs%20with%20Jumping%20Knowledge%20Networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Keyulu%20Li%2C%20Chengtao%20Tian%2C%20Yonglong%20Sonobe%2C%20Tomohiro%20Representation%20Learning%20on%20Graphs%20with%20Jumping%20Knowledge%20Networks%202018"
+        },
+        {
+            "id": "Yang_et+al_2016_a",
+            "entry": "Zhilin Yang, William W. Cohen, and Ruslan Salakhutdinov. Revisiting Semi-Supervised Learning with Graph Embeddings. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zhilin%20Cohen%2C%20William%20W.%20Salakhutdinov%2C%20Ruslan%20Revisiting%20Semi-Supervised%20Learning%20with%20Graph%20Embeddings%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zhilin%20Cohen%2C%20William%20W.%20Salakhutdinov%2C%20Ruslan%20Revisiting%20Semi-Supervised%20Learning%20with%20Graph%20Embeddings%202016"
+        },
+        {
+            "id": "Ying_et+al_2018_a",
+            "entry": "Rex Ying, Ruining He, Kaifeng Chen, Pong Eksombatchai, William L. Hamilton, and Jure Leskovec. Graph Convolutional Neural Networks for Web-Scale Recommender Systems. KDD, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ying%2C%20Rex%20He%2C%20Ruining%20Chen%2C%20Kaifeng%20Eksombatchai%2C%20Pong%20Graph%20Convolutional%20Neural%20Networks%20for%20Web-Scale%20Recommender%20Systems%202018"
+        }
+    ]
+}

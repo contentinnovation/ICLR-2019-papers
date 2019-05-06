@@ -1,0 +1,397 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING IMPROVED DYNAMICS MODEL IN RE-",
+        "author": "INFORCEMENT LEARNING BY INCORPORATING THE LONG TERM FUTURE",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkgQBn0cF7"
+        },
+        "abstract": "In model-based reinforcement learning, the agent interleaves between model learning and planning. These two components are inextricably intertwined. If the model is not able to provide sensible long-term prediction, the executed planner would exploit model flaws, which can yield catastrophic failures. This paper focuses on building a model that reasons about the long-term future and demonstrates how to use this for efficient planning and exploration. To this end, we build a latent-variable autoregressive model by leveraging recent ideas in variational inference. We argue that forcing latent variables to carry future information through an auxiliary task substantially improves long-term predictions. Moreover, by planning in the latent space, the planner\u2019s solution is ensured to be within regions where the model is valid. An exploration strategy can be devised by searching for unlikely trajectories under the model. Our method achieves higher reward faster compared to baselines on a variety of tasks and environments in both the imitation learning and model-based reinforcement learning settings."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "high dimensional",
+            "url": "https://en.wikipedia.org/wiki/high_dimensional"
+        },
+        {
+            "term": "latent variable model",
+            "url": "https://en.wikipedia.org/wiki/latent_variable_model"
+        },
+        {
+            "term": "Evidence Lower Bound",
+            "url": "https://en.wikipedia.org/wiki/Evidence_Lower_Bound"
+        },
+        {
+            "term": "Model Predictive Control",
+            "url": "https://en.wikipedia.org/wiki/Model_Predictive_Control"
+        },
+        {
+            "term": "long term prediction",
+            "url": "https://en.wikipedia.org/wiki/Long_Term_Prediction"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "RL": "Reinforcement Learning",
+        "deep RL": "deep reinforcement learning",
+        "RNN": "recurrent network",
+        "ELBO": "Evidence Lower Bound",
+        "LSTM": "Long Short Term Memory",
+        "MPC": "Model Predictive Control",
+        "NLL": "negative log-likelihood"
+    },
+    "highlights": [
+        "Reinforcement Learning (RL) is an agent-oriented learning paradigm concerned with learning by interacting with an uncertain environment",
+        "We augment the dynamics model with a backward recurrent network (RNN) such that the approximate posterior of latent variables depends on the summary of future information",
+        "Our work is related in the sense that we use stochastic recurrent network where the dynamics are conditioned on latent variables, but we propose to incorporate long term future which, as we demonstrate empirically, improves over these models",
+        "In this work we considered the challenge of model learning in model-based Reinforcement Learning",
+        "The key insight in our approach involve forcing our latent variables to account for long-term future information",
+        "Through experiments in various tasks, we demonstrate the benefits of such a model to provide sensible long-term predictions and outperform baseline methods"
+    ],
+    "key_statements": [
+        "Reinforcement Learning (RL) is an agent-oriented learning paradigm concerned with learning by interacting with an uncertain environment",
+        "We augment the dynamics model with a backward recurrent network (RNN) such that the approximate posterior of latent variables depends on the summary of future information",
+        "We demonstrate that incorporating the latent plan into dynamics model can be used for planning efficiently",
+        "If we optimize directly on actions, the planner may output a sequence of actions that induces a different observation-action distribution than seen during training and end up in regions where the model may capture poorly the environment\u2019s dynamics and make prediction errors",
+        "Our work is related in the sense that we use stochastic recurrent network where the dynamics are conditioned on latent variables, but we propose to incorporate long term future which, as we demonstrate empirically, improves over these models",
+        "We propose to use the auxillary loss for improving the dynamics model in the context of reinforcement learning",
+        "In this work we considered the challenge of model learning in model-based Reinforcement Learning",
+        "The key insight in our approach involve forcing our latent variables to account for long-term future information",
+        "Through experiments in various tasks, we demonstrate the benefits of such a model to provide sensible long-term predictions and outperform baseline methods"
+    ],
+    "summary": [
+        "Reinforcement Learning (RL) is an agent-oriented learning paradigm concerned with learning by interacting with an uncertain environment.",
+        "Given an observation ot and an action at at time t, a model is trained to predict the conditional distribution over the immediate observation ot+1, i.e p.",
+        "One way to capture long-term transition dynamics is to use latent variables recurrent networks.",
+        "We make use of the recently proposed Z-forcing idea (<a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>), which uses an auxiliary cost on the latent variable to predict the long-term future.",
+        "Keeping in mind that more accurate long-term prediction is better for planning, we use two ways to inject future information into latent variables.",
+        "We augment the dynamics model with a backward recurrent network (RNN) such that the approximate posterior of latent variables depends on the summary of future information.",
+        "1. p\u03b8 is the observation decoder distribution conditioned on the last action at\u22121, the hidden state ht and the latent variable zt.",
+        "We make use of the so-called \u201cZ-forcing\u201d idea (<a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>): we consider training a conditional generative model p\u03b6(b | z) of backward states b given the inferred latent variables z \u223c q\u03b8(z | h, b).",
+        "If we optimize directly on actions, the planner may output a sequence of actions that induces a different observation-action distribution than seen during training and end up in regions where the model may capture poorly the environment\u2019s dynamics and make prediction errors.",
+        "Our work is related in the sense that we use stochastic RNNs where the dynamics are conditioned on latent variables, but we propose to incorporate long term future which, as we demonstrate empirically, improves over these models.",
+        "Many of these prior methods aim to learn the dynamics model of the environment which can be used for planning, generating synthetic experience, or policy search (Atkeson & Schaal, 1997; Peters et al, 2010; <a class=\"ref-link\" id=\"cSutton_1991_a\" href=\"#rSutton_1991_a\">Sutton, 1991</a>).",
+        "We are interested in learning better representations for the dynamics model using auxiliary losses by predicting the hidden state of the backward running RNN.",
+        "To the best of our knowledge no prior work has considered incorporating the long term future in the case of stochastic dynamics models for building better models.",
+        "4. In model-based reinforcement learning setting, how does having a better predictive model of the world help for planning and control?",
+        "We showed how to train, from raw high-dimensional observations, a latent-variable model that is robust to compounding error.",
+        "Through experiments in various tasks, we demonstrate the benefits of such a model to provide sensible long-term predictions and outperform baseline methods"
+    ],
+    "headline": "This paper focuses on building a model that reasons about the long-term future and demonstrates how to use this for efficient planning and exploration",
+    "reference_links": [
+        {
+            "id": "Asadi_et+al_2018_a",
+            "entry": "Kavosh Asadi, Dipendra Misra, and Michael L Littman. Lipschitz continuity in model-based reinforcement learning. arXiv preprint arXiv:1804.07193, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.07193"
+        },
+        {
+            "id": "Bacon_et+al_0000_a",
+            "entry": "Pierre-Luc Bacon, Jean Harb, and Doina Precup. The option-critic architecture. In AAAI, pp. 1726\u2013 1734, 2017. We build on top of the author\u2019s open-sourced at https://github.com/wyndwarrior/Sectar. We were not able to achieve the reported results for Sectar and hence we reported the numbers we achieved.",
+            "url": "https://github.com/wyndwarrior/Sectar",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bacon%2C%20Pierre-Luc%20Harb%2C%20Jean%20Precup%2C%20Doina%20The%20option-critic%20architecture"
+        },
+        {
+            "id": "Bayer_2014_a",
+            "entry": "Justin Bayer and Christian Osendorfer. Learning stochastic recurrent networks. arXiv preprint arXiv:1411.7610, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.7610"
+        },
+        {
+            "id": "Bellemare_et+al_2013_a",
+            "entry": "Marc G Bellemare, Yavar Naddaf, Joel Veness, and Michael Bowling. The arcade learning environment: An evaluation platform for general agents. Journal of Artificial Intelligence Research, 47: 253\u2013279, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20G.%20Naddaf%2C%20Yavar%20Veness%2C%20Joel%20Bowling%2C%20Michael%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20G.%20Naddaf%2C%20Yavar%20Veness%2C%20Joel%20Bowling%2C%20Michael%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013"
+        },
+        {
+            "id": "Bengio_et+al_2015_a",
+            "entry": "Samy Bengio, Oriol Vinyals, Navdeep Jaitly, and Noam Shazeer. Scheduled sampling for sequence prediction with recurrent neural networks. In Advances in Neural Information Processing Systems, pp. 1171\u20131179, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Vinyals%2C%20Oriol%20Jaitly%2C%20Navdeep%20Shazeer%2C%20Noam%20Scheduled%20sampling%20for%20sequence%20prediction%20with%20recurrent%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Vinyals%2C%20Oriol%20Jaitly%2C%20Navdeep%20Shazeer%2C%20Noam%20Scheduled%20sampling%20for%20sequence%20prediction%20with%20recurrent%20neural%20networks%202015"
+        },
+        {
+            "id": "Bowman_et+al_2015_a",
+            "entry": "Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew M Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. arXiv preprint arXiv:1511.06349, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06349"
+        },
+        {
+            "id": "Buckman_et+al_2018_a",
+            "entry": "Jacob Buckman, Danijar Hafner, George Tucker, Eugene Brevdo, and Honglak Lee. Sampleefficient reinforcement learning with stochastic ensemble value expansion. arXiv preprint arXiv:1807.01675, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.01675"
+        },
+        {
+            "id": "Buesing_et+al_2018_a",
+            "entry": "Lars Buesing, Theophane Weber, Sebastien Racaniere, SM Eslami, Danilo Rezende, David P Reichert, Fabio Viola, Frederic Besse, Karol Gregor, Demis Hassabis, et al. Learning and querying fast generative models for reinforcement learning. arXiv preprint arXiv:1802.03006, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03006"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Diederik P Kingma, Tim Salimans, Yan Duan, Prafulla Dhariwal, John Schulman, Ilya Sutskever, and Pieter Abbeel. Variational lossy autoencoder. arXiv preprint arXiv:1611.02731, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02731"
+        },
+        {
+            "id": "Chevalier-Boisvert_2018_a",
+            "entry": "Maxime Chevalier-Boisvert and Lucas Willems. Minimalistic gridworld environment for openai gym. https://github.com/maximecb/gym-minigrid, 2018.",
+            "url": "https://github.com/maximecb/gym-minigrid"
+        },
+        {
+            "id": "Chiappa_et+al_2017_a",
+            "entry": "Silvia Chiappa, Sebastien Racaniere, Daan Wierstra, and Shakir Mohamed. Recurrent environment simulators. arXiv preprint arXiv:1704.02254, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02254"
+        },
+        {
+            "id": "Chung_et+al_2015_a",
+            "entry": "Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron C Courville, and Yoshua Bengio. A recurrent latent variable model for sequential data. In Advances in neural information processing systems, pp. 2980\u20132988, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015"
+        },
+        {
+            "id": "Co-Reyes_et+al_2018_a",
+            "entry": "John D Co-Reyes, YuXuan Liu, Abhishek Gupta, Benjamin Eysenbach, Pieter Abbeel, and Sergey Levine. Self-consistent trajectory autoencoder: Hierarchical reinforcement learning with trajectory embeddings. arXiv preprint arXiv:1806.02813, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02813"
+        },
+        {
+            "id": "Deisenroth_2011_a",
+            "entry": "Marc Deisenroth and Carl E Rasmussen. Pilco: A model-based and data-efficient approach to policy search. In Proceedings of the 28th International Conference on machine learning (ICML-11), pp. 465\u2013472, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011"
+        },
+        {
+            "id": "Fraccaro_et+al_2016_a",
+            "entry": "Marco Fraccaro, S\u00f8ren Kaae S\u00f8nderby, Ulrich Paquet, and Ole Winther. Sequential neural models with stochastic layers. In Advances in neural information processing systems, pp. 2199\u20132207, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Anirudh ALIAS PARTH Goyal, Alessandro Sordoni, Marc-Alexandre Cote, Nan Ke, and Yoshua Bengio. Z-forcing: Training stochastic recurrent networks. In Advances in Neural Information Processing Systems, pp. 6713\u20136723, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Anirudh%20A.L.I.A.S.P.A.R.T.H.%20Sordoni%2C%20Alessandro%20Cote%2C%20Marc-Alexandre%20Ke%2C%20Nan%20Z-forcing%3A%20Training%20stochastic%20recurrent%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Anirudh%20A.L.I.A.S.P.A.R.T.H.%20Sordoni%2C%20Alessandro%20Cote%2C%20Marc-Alexandre%20Ke%2C%20Nan%20Z-forcing%3A%20Training%20stochastic%20recurrent%20networks%202017"
+        },
+        {
+            "id": "Gulrajani_et+al_2016_a",
+            "entry": "Ishaan Gulrajani, Kundan Kumar, Faruk Ahmed, Adrien Ali Taiga, Francesco Visin, David Vazquez, and Aaron Courville. Pixelvae: A latent variable model for natural images. arXiv preprint arXiv:1611.05013, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05013"
+        },
+        {
+            "id": "Guu_et+al_2018_a",
+            "entry": "Kelvin Guu, Tatsunori B Hashimoto, Yonatan Oren, and Percy Liang. Generating sentences by editing prototypes. Transactions of the Association of Computational Linguistics, 6:437\u2013450, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guu%2C%20Kelvin%20Hashimoto%2C%20Tatsunori%20B.%20Oren%2C%20Yonatan%20Liang%2C%20Percy%20Generating%20sentences%20by%20editing%20prototypes%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guu%2C%20Kelvin%20Hashimoto%2C%20Tatsunori%20B.%20Oren%2C%20Yonatan%20Liang%2C%20Percy%20Generating%20sentences%20by%20editing%20prototypes%202018"
+        },
+        {
+            "id": "Ha_2018_a",
+            "entry": "David Ha and Jurgen Schmidhuber. Recurrent world models facilitate policy evolution. arXiv preprint arXiv:1809.01999, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.01999"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Holland_et+al_2018_a",
+            "entry": "G Zacharias Holland, Erik Talvitie, and Michael Bowling. The effect of planning shape on dynastyle planning in high-dimensional state spaces. arXiv preprint arXiv:1806.01825, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01825"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pp. 1109\u20131117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Jaderberg_et+al_2016_a",
+            "entry": "Max Jaderberg, Volodymyr Mnih, Wojciech Marian Czarnecki, Tom Schaul, Joel Z Leibo, David Silver, and Koray Kavukcuoglu. Reinforcement learning with unsupervised auxiliary tasks. arXiv preprint arXiv:1611.05397, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05397"
+        },
+        {
+            "id": "Karl_et+al_2016_a",
+            "entry": "Maximilian Karl, Maximilian Soelch, Justin Bayer, and Patrick van der Smagt. Deep variational bayes filters: Unsupervised learning of state space models from raw data. arXiv preprint arXiv:1605.06432, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.06432"
+        },
+        {
+            "id": "Karl_et+al_2017_a",
+            "entry": "Maximilian Karl, Maximilian Soelch, Philip Becker-Ehmck, Djalel Benbouzid, Patrick van der Smagt, and Justin Bayer. Unsupervised real-time control through variational empowerment. arXiv preprint arXiv:1710.05101, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.05101"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Klimov_2016_a",
+            "entry": "Oleg Klimov. Carracing for openai gym. CarRacing-v0/, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klimov%2C%20Oleg%20Carracing%20for%20openai%20gym%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klimov%2C%20Oleg%20Carracing%20for%20openai%20gym%202016"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "https://gym.openai.com/envs/",
+            "url": "https://gym.openai.com/envs/"
+        },
+        {
+            "id": "Krishnan_et+al_2015_a",
+            "entry": "Rahul G Krishnan, Uri Shalit, and David Sontag. Deep kalman filters. arXiv preprint arXiv:1511.05121, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05121"
+        },
+        {
+            "id": "Lamb_et+al_2016_a",
+            "entry": "Alex M Lamb, Anirudh Goyal ALIAS PARTH GOYAL, Ying Zhang, Saizheng Zhang, Aaron C Courville, and Yoshua Bengio. Professor forcing: A new algorithm for training recurrent networks. In Advances In Neural Information Processing Systems, pp. 4601\u20134609, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lamb%2C%20Alex%20M.%20GOYAL%2C%20Anirudh%20Goyal%20A.L.I.A.S.P.A.R.T.H.%20Zhang%2C%20Ying%20Zhang%2C%20Saizheng%20Professor%20forcing%3A%20A%20new%20algorithm%20for%20training%20recurrent%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lamb%2C%20Alex%20M.%20GOYAL%2C%20Anirudh%20Goyal%20A.L.I.A.S.P.A.R.T.H.%20Zhang%2C%20Ying%20Zhang%2C%20Saizheng%20Professor%20forcing%3A%20A%20new%20algorithm%20for%20training%20recurrent%20networks%202016"
+        },
+        {
+            "id": "Mayne_et+al_2000_a",
+            "entry": "David Q Mayne, James B Rawlings, Christopher V Rao, and Pierre OM Scokaert. Constrained model predictive control: Stability and optimality. Automatica, 36(6):789\u2013814, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mayne%2C%20David%20Q.%20Rawlings%2C%20James%20B.%20Rao%2C%20Christopher%20V.%20Scokaert%2C%20Pierre%20O.M.%20Constrained%20model%20predictive%20control%3A%20Stability%20and%20optimality%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mayne%2C%20David%20Q.%20Rawlings%2C%20James%20B.%20Rao%2C%20Christopher%20V.%20Scokaert%2C%20Pierre%20O.M.%20Constrained%20model%20predictive%20control%3A%20Stability%20and%20optimality%202000"
+        },
+        {
+            "id": "Mikolov_et+al_2010_a",
+            "entry": "Tomas Mikolov, Martin Karafiat, Lukas Burget, Jan Cernocky, and Sanjeev Khudanpur. Recurrent neural network based language model. In Eleventh Annual Conference of the International Speech Communication Association, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Karafiat%2C%20Martin%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Recurrent%20neural%20network%20based%20language%20model%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Karafiat%2C%20Martin%20Burget%2C%20Lukas%20Cernocky%2C%20Jan%20Recurrent%20neural%20network%20based%20language%20model%202010"
+        },
+        {
+            "id": "Mishra_et+al_2017_a",
+            "entry": "Nikhil Mishra, Pieter Abbeel, and Igor Mordatch. Prediction and control with temporal segment models. arXiv preprint arXiv:1703.04070, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04070"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International conference on machine learning, pp. 1928\u20131937, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Nouri_2010_a",
+            "entry": "Ali Nouri and Michael L Littman. Dimension reduction and its application to model-based exploration in continuous spaces. Machine Learning, 81(1):85\u201398, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nouri%2C%20Ali%20Littman%2C%20Michael%20L.%20Dimension%20reduction%20and%20its%20application%20to%20model-based%20exploration%20in%20continuous%20spaces%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nouri%2C%20Ali%20Littman%2C%20Michael%20L.%20Dimension%20reduction%20and%20its%20application%20to%20model-based%20exploration%20in%20continuous%20spaces%202010"
+        },
+        {
+            "id": "Oh_et+al_2015_a",
+            "entry": "Junhyuk Oh, Xiaoxiao Guo, Honglak Lee, Richard L Lewis, and Satinder Singh. Action-conditional video prediction using deep networks in atari games. In Advances in neural information processing systems, pp. 2863\u20132871, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015"
+        },
+        {
+            "id": "Oh_et+al_2017_a",
+            "entry": "Junhyuk Oh, Satinder Singh, and Honglak Lee. Value prediction network. In Advances in Neural Information Processing Systems, pp. 6118\u20136128, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oh%2C%20Junhyuk%20Singh%2C%20Satinder%20Lee%2C%20Honglak%20Value%20prediction%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oh%2C%20Junhyuk%20Singh%2C%20Satinder%20Lee%2C%20Honglak%20Value%20prediction%20network%202017"
+        },
+        {
+            "id": "Pathak_et+al_0000_a",
+            "entry": "Deepak Pathak, Pulkit Agrawal, Alexei A Efros, and Trevor Darrell. Curiosity-driven exploration by self-supervised prediction. In International Conference on Machine Learning (ICML), volume 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction"
+        },
+        {
+            "id": "Pomerleau_1991_a",
+            "entry": "Dean A Pomerleau. Efficient training of artificial neural networks for autonomous navigation. Neural Computation, 3(1):88\u201397, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pomerleau%2C%20Dean%20A.%20Efficient%20training%20of%20artificial%20neural%20networks%20for%20autonomous%20navigation%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pomerleau%2C%20Dean%20A.%20Efficient%20training%20of%20artificial%20neural%20networks%20for%20autonomous%20navigation%201991"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. arXiv preprint arXiv:1401.4082, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1401.4082"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International Conference on Machine Learning, pp. 1889\u20131897, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Shelhamer_et+al_2016_a",
+            "entry": "Evan Shelhamer, Parsa Mahmoudieh, Max Argus, and Trevor Darrell. Loss is its own reward: Selfsupervision for reinforcement learning. arXiv preprint arXiv:1612.07307, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.07307"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Smith_2002_a",
+            "entry": "Andrew James Smith. Applications of the self-organising map to reinforcement learning. Neural networks, 15(8-9):1107\u20131124, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20Andrew%20James%20Applications%20of%20the%20self-organising%20map%20to%20reinforcement%20learning%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smith%2C%20Andrew%20James%20Applications%20of%20the%20self-organising%20map%20to%20reinforcement%20learning%202002"
+        },
+        {
+            "id": "Stadie_et+al_2015_a",
+            "entry": "Bradly C. Stadie, Sergey Levine, and Pieter Abbeel. Incentivizing exploration in reinforcement learning with deep predictive models. CoRR, abs/1507.00814, 2015. URL http://arxiv.org/abs/1507.00814.",
+            "url": "http://arxiv.org/abs/1507.00814",
+            "arxiv_url": "https://arxiv.org/pdf/1507.00814"
+        },
+        {
+            "id": "Sutton_1991_a",
+            "entry": "Richard S Sutton. Dyna, an integrated architecture for learning, planning, and reacting. ACM SIGART Bulletin, 2(4):160\u2013163, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Dyna%2C%20an%20integrated%20architecture%20for%20learning%2C%20planning%2C%20and%20reacting%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20Richard%20S.%20Dyna%2C%20an%20integrated%20architecture%20for%20learning%2C%20planning%2C%20and%20reacting%201991"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S Sutton, Andrew G Barto, et al. Reinforcement learning: An introduction. MIT press, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20learning%3A%20An%20introduction%201998"
+        },
+        {
+            "id": "Talvitie_2014_a",
+            "entry": "Erik Talvitie. Model regularization for stable sample rollouts. In UAI, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Talvitie%2C%20Erik%20Model%20regularization%20for%20stable%20sample%20rollouts%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Talvitie%2C%20Erik%20Model%20regularization%20for%20stable%20sample%20rollouts%202014"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 5026\u2013 5033. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Vezhnevets_et+al_2017_a",
+            "entry": "Alexander Sasha Vezhnevets, Simon Osindero, Tom Schaul, Nicolas Heess, Max Jaderberg, David Silver, and Koray Kavukcuoglu. Feudal networks for hierarchical reinforcement learning. arXiv preprint arXiv:1703.01161, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01161"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "Theophane Weber, Sebastien Racaniere, David P Reichert, Lars Buesing, Arthur Guez, Danilo Jimenez Rezende, Adria Puigdomenech Badia, Oriol Vinyals, Nicolas Heess, Yujia Li, et al. Imagination-augmented agents for deep reinforcement learning. arXiv preprint arXiv:1707.06203, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06203"
+        }
+    ]
+}

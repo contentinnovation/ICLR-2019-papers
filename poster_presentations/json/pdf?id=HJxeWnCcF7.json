@@ -1,0 +1,344 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING MIXED-CURVATURE REPRESENTATIONS IN PRODUCTS OF MODEL SPACES",
+        "author": "Albert Gu, Frederic Sala, Beliz Gunel & Christopher Re Computer Science Department Stanford University Stanford, CA 94305 {albertgu,fredsala,bgunel}@stanford.edu, chrismre@cs.stanford.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HJxeWnCcF7"
+        },
+        "abstract": "The quality of the representations achieved by embeddings is determined by how well the geometry of the embedding space matches the structure of the data. Euclidean space has been the workhorse for embeddings; recently hyperbolic and spherical spaces have gained popularity due to their ability to better embed new types of structured data\u2014such as hierarchical data\u2014but most data is not structured so uniformly. We address this problem by proposing learning embeddings in a product manifold combining multiple copies of these model spaces (spherical, hyperbolic, Euclidean), providing a space of heterogeneous curvature suitable for a wide variety of structures. We introduce a heuristic to estimate the sectional curvature of graph data and directly determine an appropriate signature\u2014the number of component spaces and their dimensions\u2014of the product manifold. Empirically, we jointly learn the curvature and the embedding in the product space via Riemannian optimization. We discuss how to define and compute intrinsic quantities such as means\u2014a challenging notion for product manifolds\u2014and provably learnable optimization functions. On a range of datasets and reconstruction tasks, our product space embeddings outperform single Euclidean or hyperbolic spaces used in previous works, reducing distortion by 32.55% on a Facebook social network dataset. We learn word embeddings and find that a product of hyperbolic spaces in 50 dimensions consistently improves on baseline Euclidean and hyperbolic embeddings, by 2.6 points in Spearman rank correlation on similarity tasks and 3.4 points on analogy accuracy."
+    },
+    "keywords": [
+        {
+            "term": "geometry",
+            "url": "https://en.wikipedia.org/wiki/geometry"
+        },
+        {
+            "term": "word embedding",
+            "url": "https://en.wikipedia.org/wiki/word_embedding"
+        },
+        {
+            "term": "hyperbolic space",
+            "url": "https://en.wikipedia.org/wiki/hyperbolic_space"
+        },
+        {
+            "term": "mean average precision",
+            "url": "https://en.wikipedia.org/wiki/mean_average_precision"
+        },
+        {
+            "term": "social network",
+            "url": "https://en.wikipedia.org/wiki/social_network"
+        },
+        {
+            "term": "euclidean space",
+            "url": "https://en.wikipedia.org/wiki/euclidean_space"
+        },
+        {
+            "term": "product space",
+            "url": "https://en.wikipedia.org/wiki/product_space"
+        }
+    ],
+    "abbreviations": {
+        "mAP": "mean average precision",
+        "LW": "Leimeister & Wilson (2018)",
+        "S5": "S10 (H5)2",
+        "S2": "S5 (H2)5"
+    },
+    "highlights": [
+        "With four decades of use, Euclidean space is the venerable elder of embedding spaces",
+        "The resulting embeddings offer better reconstruction metrics: higher mean average precision and lower distortion compared to their Euclidean counterparts",
+        "These three spaces are the model spaces of constant curvature (<a class=\"ref-link\" id=\"cLee_1997_a\" href=\"#rLee_1997_a\">Lee, 1997</a>), and this improvement in representation fidelity arises from the correspondence between the structure of the data and the geometry of non-Euclidean space",
+        "We extend results on hyperbolic skip-gram embeddings from <a class=\"ref-link\" id=\"cLeimeister_2018_a\" href=\"#rLeimeister_2018_a\">Leimeister & Wilson (2018</a>) (LW), who found that hyperbolic embeddings perform favorably against Euclidean word vectors in low dimensions (d = 5, 20), but less so in higher dimensions (d = 50, 100)",
+        "Product spaces enable improved representations by better matching the geometry of the embedding space to the structure of the data",
+        "We introduced a tractable Riemannian product manifold class that combines Euclidean, spherical, and hyperbolic spaces"
+    ],
+    "key_statements": [
+        "With four decades of use, Euclidean space is the venerable elder of embedding spaces",
+        "The resulting embeddings offer better reconstruction metrics: higher mean average precision and lower distortion compared to their Euclidean counterparts",
+        "These three spaces are the model spaces of constant curvature (<a class=\"ref-link\" id=\"cLee_1997_a\" href=\"#rLee_1997_a\">Lee, 1997</a>), and this improvement in representation fidelity arises from the correspondence between the structure of the data and the geometry of non-Euclidean space",
+        "We demonstrate the advantages of product space embeddings through a variety of experiments; products are at least as good as single spaces, but can offer significant improvements when applied to structures not suitable for single spaces",
+        "We apply product spaces to skip-gram word embeddings, a popular technique with numerous downstream applications, which crucially require the use of the manifold structure",
+        "We introduce a product manifold embedding space P composed of multiple copies of simple model spaces, providing heterogeneous curvature",
+        "In Section 3.2, we provide a heuristic to choose the signature by estimating a discrete notion of curvature for given data",
+        "Quality We focus on the average distortion\u2014which our loss function (2) optimizes\u2014as our main metric for reconstruction, and report the mean average precision metric for the unweighted graphs",
+        "We extend results on hyperbolic skip-gram embeddings from <a class=\"ref-link\" id=\"cLeimeister_2018_a\" href=\"#rLeimeister_2018_a\">Leimeister & Wilson (2018</a>) (LW), who found that hyperbolic embeddings perform favorably against Euclidean word vectors in low dimensions (d = 5, 20), but less so in higher dimensions (d = 50, 100)",
+        "Product spaces enable improved representations by better matching the geometry of the embedding space to the structure of the data",
+        "We introduced a tractable Riemannian product manifold class that combines Euclidean, spherical, and hyperbolic spaces"
+    ],
+    "summary": [
+        "With four decades of use, Euclidean space is the venerable elder of embedding spaces.",
+        "Analogy operations for word embeddings in Euclidean vector space (e.g., a \u2212 b + c) must be lifted to manifolds.",
+        "We propose embedding into product spaces in which each component has constant curvature.",
+        "We apply product spaces to skip-gram word embeddings, a popular technique with numerous downstream applications, which crucially require the use of the manifold structure.",
+        "Distances on P As discussed in Section 2, the product P is a Riemannian manifold defined by the structure of its components.",
+        "Without the underlying manifold structure, we cannot freely operate on the embedded points such as taking geodesics and means, but some simple applications only interact through distances.",
+        "2We write E for our Euclidean embedding space component to distinguish it from R, since our models of hyperbolic and spherical geometry use R as an ambient space.",
+        "The loss (2) depends only on squared distances on the product manifold, which are simple functions of distances in the components through (1), so we can optimize the curvature of each factor in P.",
+        "1. let the components of the points in P, pi|Sj restricted to each spherical component space Sj fall in one hemisphere of Sj. Riemannian gradient descent recovers the mean \u03bc(T ) within distance in time O.",
+        "Product manifolds of model spaces capture heterogeneous curvature while providing tractable optimization,",
+        "A signature for the product can be found by matching discrete notions of curvature on graphs with sectional curvature on manifolds,",
+        "We evaluate the intrinsic performance of product space embeddings in a skip-gram word embedding model, by defining tasks with generic manifold operations such as means.",
+        "For the former two graphs with well-defined structure, we expect optimal embeddings in spaces of positive and negative curvature, respectively.",
+        "The cities graph\u2014which has intrinsic structure close to S2\u2014embeds well into any space with a spherical component, and the treelike Ph.D.s graph embeds well into hyperbolic products.",
+        "We report the learned curvatures associated with the optimal signature, finding that the resulting curvatures are non-uniform even for products of identical spaces.",
+        "To investigate the performance of product space embeddings in applications requiring the underlying manifold structure, we learned word embeddings and evaluated them on benchmark datasets for word similarity and analogy.",
+        "We introduced a tractable Riemannian product manifold class that combines Euclidean, spherical, and hyperbolic spaces.",
+        "We showed how to learn embeddings and curvatures, estimate the product signature, and defined a tractable formulation of mean.",
+        "We hope that our techniques encourage further research on non-Euclidean embedding spaces"
+    ],
+    "headline": "We address this problem by proposing learning embeddings in a product manifold combining multiple copies of these model spaces, providing a space of heterogeneous curvature suitable for a wide variety of structures",
+    "reference_links": [
+        {
+            "id": "Bishop_1969_a",
+            "entry": "R. L. Bishop and B. O\u2019Neill. Manifolds of negative curvature. Trans. American Mathematical Society, 145:1\u201349, 1969.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20R.L.%20O%E2%80%99Neill%2C%20B.%20Manifolds%20of%20negative%20curvature%201969",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bishop%2C%20R.L.%20O%E2%80%99Neill%2C%20B.%20Manifolds%20of%20negative%20curvature%201969"
+        },
+        {
+            "id": "Bonnabel_2013_a",
+            "entry": "S. Bonnabel. Stochastic gradient descent on Riemannian manifolds. IEEE Trans. Automatic Control, 58(9):2217\u20132229, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bonnabel%2C%20S.%20Stochastic%20gradient%20descent%20on%20Riemannian%20manifolds%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bonnabel%2C%20S.%20Stochastic%20gradient%20descent%20on%20Riemannian%20manifolds%202013"
+        },
+        {
+            "id": "Bronstein_et+al_2017_a",
+            "entry": "M. M. Bronstein, J. Bruna, Y. LeCun, A. Szlam, and P. Vandergheynst. Geometric deep learning: Going beyond Euclidean data. IEEE Signal Processing Magazine, 34:18\u201342, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bronstein%2C%20M.M.%20Bruna%2C%20J.%20LeCun%2C%20Y.%20Szlam%2C%20A.%20Geometric%20deep%20learning%3A%20Going%20beyond%20Euclidean%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bronstein%2C%20M.M.%20Bruna%2C%20J.%20LeCun%2C%20Y.%20Szlam%2C%20A.%20Geometric%20deep%20learning%3A%20Going%20beyond%20Euclidean%20data%202017"
+        },
+        {
+            "id": "Bruni_et+al_2014_a",
+            "entry": "E. Bruni, N.-K. Tran, and M. Baroni. Multimodal distributional semantics. J. Artificial Intelligence Research, 49:1\u201347, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bruni%2C%20E.%20Tran%2C%20N.-K.%20Baroni%2C%20M.%20Multimodal%20distributional%20semantics%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bruni%2C%20E.%20Tran%2C%20N.-K.%20Baroni%2C%20M.%20Multimodal%20distributional%20semantics%202014"
+        },
+        {
+            "id": "Buss_2001_a",
+            "entry": "S. Buss and J. P. Fillmore. Spherical averages and applications to spherical splines and interpolation. ACM Trans. Graphics, 20(2):95\u2013126, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Buss%2C%20S.%20Fillmore%2C%20J.P.%20Spherical%20averages%20and%20applications%20to%20spherical%20splines%20and%20interpolation%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Buss%2C%20S.%20Fillmore%2C%20J.P.%20Spherical%20averages%20and%20applications%20to%20spherical%20splines%20and%20interpolation%202001"
+        },
+        {
+            "id": "Chamberlain_et+al_2017_a",
+            "entry": "B. P. Chamberlain, J. R. Clough, and M. P. Deisenroth. Neural embeddings of graphs in hyperbolic space. arXiv preprint, arXiv:1705.10359, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10359"
+        },
+        {
+            "id": "Cho_et+al_2018_a",
+            "entry": "H. Cho, B. Demeo, J. Peng, and B. Berger. Large-margin classification in hyperbolic space. CoRR, abs/1806.00437, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.00437"
+        },
+        {
+            "id": "Nooy_et+al_2011_a",
+            "entry": "W. De Nooy, A. Mrvar, and V. Batagelj. Exploratory social network analysis with Pajek. Cambridge University Press, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nooy%2C%20W.De%20Mrvar%2C%20A.%20Batagelj%2C%20V.%20Exploratory%20social%20network%20analysis%20with%20Pajek%202011"
+        },
+        {
+            "id": "Dhingra_et+al_2018_a",
+            "entry": "B. Dhingra, C. J. Shallue, M. Norouzi, A. M. Dai, and G. E. Dahl. Embedding text in hyperbolic spaces. In TextGraphs@NAACL-HLT, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dhingra%2C%20B.%20Shallue%2C%20C.J.%20Norouzi%2C%20M.%20Dai%2C%20A.M.%20Embedding%20text%20in%20hyperbolic%20spaces%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dhingra%2C%20B.%20Shallue%2C%20C.J.%20Norouzi%2C%20M.%20Dai%2C%20A.M.%20Embedding%20text%20in%20hyperbolic%20spaces%202018"
+        },
+        {
+            "id": "Do_1992_a",
+            "entry": "M. P. do Carmo. Riemannian Geometry. Birkhauser, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=M%20P%20do%20Carmo%20Riemannian%20Geometry%20Birkhauser%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=M%20P%20do%20Carmo%20Riemannian%20Geometry%20Birkhauser%201992"
+        },
+        {
+            "id": "Enokida_et+al_2018_a",
+            "entry": "Y. Enokida, A. Suzuki, and K. Yamanishi. Stable geodesic update on hyperbolic space and its application to Poincareembeddings. CoRR, abs/1805.10487, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10487"
+        },
+        {
+            "id": "Ficken_0000_a",
+            "entry": "Frederick Arthur Ficken. The Riemannian and affine differential geometry of product-spaces. Annals of Mathematics, pp. 892\u2013913, 1939.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ficken%2C%20Frederick%20Arthur%20The%20Riemannian%20and%20affine%20differential%20geometry%20of%20product-spaces",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ficken%2C%20Frederick%20Arthur%20The%20Riemannian%20and%20affine%20differential%20geometry%20of%20product-spaces"
+        },
+        {
+            "id": "Finkelstein_et+al_2001_a",
+            "entry": "L. Finkelstein, E. Gabrilovich, Y. Matias, E. Rivlin, Z. Solan, G. Wolfman, and E. Ruppin. Placing search in context: the concept revisited. In WWW, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finkelstein%2C%20L.%20Gabrilovich%2C%20E.%20Matias%2C%20Y.%20Rivlin%2C%20E.%20Placing%20search%20in%20context%3A%20the%20concept%20revisited%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finkelstein%2C%20L.%20Gabrilovich%2C%20E.%20Matias%2C%20Y.%20Rivlin%2C%20E.%20Placing%20search%20in%20context%3A%20the%20concept%20revisited%202001"
+        },
+        {
+            "id": "Fletcher_et+al_2004_a",
+            "entry": "P. Fletcher, C. Lu, S. Pizer, and S. Joshi. Principal geodesic analysis for the study of nonlinear statistics of shape. IEEE Transactions on Medical Imaging, 23(8):995\u20131005, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fletcher%2C%20P.%20Lu%2C%20C.%20Pizer%2C%20S.%20Joshi%2C%20S.%20Principal%20geodesic%20analysis%20for%20the%20study%20of%20nonlinear%20statistics%20of%20shape%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fletcher%2C%20P.%20Lu%2C%20C.%20Pizer%2C%20S.%20Joshi%2C%20S.%20Principal%20geodesic%20analysis%20for%20the%20study%20of%20nonlinear%20statistics%20of%20shape%202004"
+        },
+        {
+            "id": "Ganea_et+al_2018_a",
+            "entry": "O. Ganea, G. Becigneul, and T. Hofmann. Hyperbolic entailment cones for learning hierarchical embeddings. In 35th International Conference on Machine Learning (ICML), pp. 1646\u20131655, Stockholm, Sweden, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ganea%2C%20O.%20Becigneul%2C%20G.%20Hofmann%2C%20T.%20Hyperbolic%20entailment%20cones%20for%20learning%20hierarchical%20embeddings%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganea%2C%20O.%20Becigneul%2C%20G.%20Hofmann%2C%20T.%20Hyperbolic%20entailment%20cones%20for%20learning%20hierarchical%20embeddings%202018"
+        },
+        {
+            "id": "Ganea_et+al_2018_b",
+            "entry": "Octavian Ganea, Gary Becigneul, and Thomas Hofmann. Hyperbolic neural networks. In Advances in Neural Information Processing Systems, pp. 5350\u20135360, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ganea%2C%20Octavian%20Becigneul%2C%20Gary%20Hofmann%2C%20Thomas%20Hyperbolic%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganea%2C%20Octavian%20Becigneul%2C%20Gary%20Hofmann%2C%20Thomas%20Hyperbolic%20neural%20networks%202018"
+        },
+        {
+            "id": "Gulcehre_et+al_2018_a",
+            "entry": "C. Gulcehre, M. Denil, M. Malinowski, A. Razavi, R. Pascanu, K. M. Hermann, P. Battaglia, V. Bapst, D. Raposo, A. Santoro, and N. de Freitas. Hyperbolic attention networks. arXiv preprint, arXiv:1805.09786, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09786"
+        },
+        {
+            "id": "Hill_et+al_2015_a",
+            "entry": "Felix Hill, Roi Reichart, and Anna Korhonen. Simlex-999: Evaluating semantic models with (genuine) similarity estimation. Computational Linguistics, 41:665\u2013695, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hill%2C%20Felix%20Reichart%2C%20Roi%20Korhonen%2C%20Anna%20Simlex-%20999%3A%20Evaluating%20semantic%20models%20with%20%28genuine%29%20similarity%20estimation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hill%2C%20Felix%20Reichart%2C%20Roi%20Korhonen%2C%20Anna%20Simlex-%20999%3A%20Evaluating%20semantic%20models%20with%20%28genuine%29%20similarity%20estimation%202015"
+        },
+        {
+            "id": "Huckemann_et+al_2010_a",
+            "entry": "S. Huckemann, T. Hotz, and A. Munk. Intrinsic shape analysis: Geodesic PCA for Riemannian manifolds modulo isometric Lie group actions. Statistica Sinica, 20(1):1\u201358, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huckemann%2C%20S.%20Hotz%2C%20T.%20Munk%2C%20A.%20Intrinsic%20shape%20analysis%3A%20Geodesic%20PCA%20for%20Riemannian%20manifolds%20modulo%20isometric%20Lie%20group%20actions%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huckemann%2C%20S.%20Hotz%2C%20T.%20Munk%2C%20A.%20Intrinsic%20shape%20analysis%3A%20Geodesic%20PCA%20for%20Riemannian%20manifolds%20modulo%20isometric%20Lie%20group%20actions%202010"
+        },
+        {
+            "id": "Lamping_1994_a",
+            "entry": "J. Lamping and R. Rao. Laying out and visualizing large trees using a hyperbolic space. In Proc. of the 7th annual ACM Symposium on User Interface Software and Technology (UIST 94), pp. 13\u201314, Marina del Rey, California, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lamping%2C%20J.%20Rao%2C%20R.%20Laying%20out%20and%20visualizing%20large%20trees%20using%20a%20hyperbolic%20space%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lamping%2C%20J.%20Rao%2C%20R.%20Laying%20out%20and%20visualizing%20large%20trees%20using%20a%20hyperbolic%20space%201994"
+        },
+        {
+            "id": "Lee_1997_a",
+            "entry": "J. Lee. Riemannian Manifolds: An Introduction to Curvature. Springer, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20J.%20Riemannian%20Manifolds%3A%20An%20Introduction%20to%20Curvature%201997"
+        },
+        {
+            "id": "Lee_2012_a",
+            "entry": "J. Lee. Introduction to Smooth Manifolds. Springer, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20J.%20Introduction%20to%20Smooth%20Manifolds%202012"
+        },
+        {
+            "id": "Leimeister_2018_a",
+            "entry": "M. Leimeister and B. J. Wilson. Skip-gram word embeddings in hyperbolic space. arXiv preprint, arXiv:1809.01498, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.01498"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Weiyang Liu, Yandong Wen, Zhiding Yu, Ming Li, Bhiksha Raj, and Le Song. Sphereface: Deep hypersphere embedding for face recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 212\u2013220, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Weiyang%20Wen%2C%20Yandong%20Yu%2C%20Zhiding%20Li%2C%20Ming%20Sphereface%3A%20Deep%20hypersphere%20embedding%20for%20face%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Weiyang%20Wen%2C%20Yandong%20Yu%2C%20Zhiding%20Li%2C%20Ming%20Sphereface%3A%20Deep%20hypersphere%20embedding%20for%20face%20recognition%202017"
+        },
+        {
+            "id": "Mcauley_2012_a",
+            "entry": "J. J. McAuley and J. Leskovec. Learning to discover social circles in ego networks. In Advances in Neural Information Processing Systems 25 (NIPS 2012), pp. 4599\u20134607, Lake Tahoe, NV, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McAuley%2C%20J.J.%20Leskovec%2C%20J.%20Learning%20to%20discover%20social%20circles%20in%20ego%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McAuley%2C%20J.J.%20Leskovec%2C%20J.%20Learning%20to%20discover%20social%20circles%20in%20ego%20networks%202012"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Kai Chen, Gregory S. Corrado, and Jeffrey Dean. Efficient estimation of word representations in vector space. CoRR, abs/1301.3781, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1301.3781"
+        },
+        {
+            "id": "Nickel_2017_a",
+            "entry": "M. Nickel and D. Kiela. Poincareembeddings for learning hierarchical representations. In Advances in Neural Information Processing Systems 30 (NIPS 2017), Long Beach, CA, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nickel%2C%20M.%20Kiela%2C%20D.%20Poincareembeddings%20for%20learning%20hierarchical%20representations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nickel%2C%20M.%20Kiela%2C%20D.%20Poincareembeddings%20for%20learning%20hierarchical%20representations%202017"
+        },
+        {
+            "id": "Nickel_2018_a",
+            "entry": "M. Nickel and D. Kiela. Learning continuous hierarchies in the Lorentz model of hyperbolic geometry. In 35th International Conference on Machine Learning (ICML), pp. 3779\u20133788, Stockholm, Sweden, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nickel%2C%20M.%20Kiela%2C%20D.%20Learning%20continuous%20hierarchies%20in%20the%20Lorentz%20model%20of%20hyperbolic%20geometry%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nickel%2C%20M.%20Kiela%2C%20D.%20Learning%20continuous%20hierarchies%20in%20the%20Lorentz%20model%20of%20hyperbolic%20geometry%202018"
+        },
+        {
+            "id": "Ollivier_2009_a",
+            "entry": "Yann Ollivier. Ricci curvature of Markov chains on metric spaces. Journal of Functional Analysis, 256(3):810\u2013864, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ollivier%2C%20Yann%20Ricci%20curvature%20of%20Markov%20chains%20on%20metric%20spaces%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ollivier%2C%20Yann%20Ricci%20curvature%20of%20Markov%20chains%20on%20metric%20spaces%202009"
+        },
+        {
+            "id": "Ollivier_2011_a",
+            "entry": "Yann Ollivier. A visual introduction to Riemannian curvatures and some discrete generalizations. Analysis and Geometry of Metric Measure Spaces: Lecture Notes of the 50th Seminaire de Mathematiques Superieures (SMS), Montreal, 56:197\u2013219, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ollivier%2C%20Yann%20A%20visual%20introduction%20to%20Riemannian%20curvatures%20and%20some%20discrete%20generalizations.%20Analysis%20and%20Geometry%20of%20Metric%20Measure%20Spaces%3A%20Lecture%20Notes%20of%20the%2050th%20Seminaire%20de%20Mathematiques%20Superieures%20%28SMS%29%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ollivier%2C%20Yann%20A%20visual%20introduction%20to%20Riemannian%20curvatures%20and%20some%20discrete%20generalizations.%20Analysis%20and%20Geometry%20of%20Metric%20Measure%20Spaces%3A%20Lecture%20Notes%20of%20the%2050th%20Seminaire%20de%20Mathematiques%20Superieures%20%28SMS%29%202011"
+        },
+        {
+            "id": "Pennec_2018_a",
+            "entry": "X. Pennec. Barycentric subspace analysis on manifolds. The Annals of Statistics, 46(6A):2711\u2013 2746, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennec%2C%20X.%20Barycentric%20subspace%20analysis%20on%20manifolds%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennec%2C%20X.%20Barycentric%20subspace%20analysis%20on%20manifolds%202018"
+        },
+        {
+            "id": "Sala_et+al_2018_a",
+            "entry": "F Sala, C. De Sa, A. Gu, and C. Re. Representation tradeoffs for hyperbolic embeddings. In 35th International Conference on Machine Learning (ICML), pp. 4460\u20134469, Stockholm, Sweden, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sala%2C%20F.%20Sa%2C%20C.De%20Gu%2C%20A.%20Re%2C%20C.%20Representation%20tradeoffs%20for%20hyperbolic%20embeddings%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sala%2C%20F.%20Sa%2C%20C.De%20Gu%2C%20A.%20Re%2C%20C.%20Representation%20tradeoffs%20for%20hyperbolic%20embeddings%202018"
+        },
+        {
+            "id": "Tay_et+al_2018_a",
+            "entry": "Y. Tay, L. A. Tuan, and S. C. Hui. Hyperbolic representation learning for fast and efficient neural question answering. In Proc. of the Eleventh ACM International Conference on Web Search and Data Mining (WSDM 2018), pp. 583\u2013591, Los Angeles, California, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tay%2C%20Y.%20Tuan%2C%20L.A.%20Hui%2C%20S.C.%20Hyperbolic%20representation%20learning%20for%20fast%20and%20efficient%20neural%20question%20answering%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tay%2C%20Y.%20Tuan%2C%20L.A.%20Hui%2C%20S.C.%20Hyperbolic%20representation%20learning%20for%20fast%20and%20efficient%20neural%20question%20answering%202018"
+        },
+        {
+            "id": "Thurston_1998_a",
+            "entry": "William P Thurston. Shapes of polyhedra and triangulations of the sphere. Geometry and Topology monographs, 1:511\u2013549, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thurston%2C%20William%20P.%20Shapes%20of%20polyhedra%20and%20triangulations%20of%20the%20sphere%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thurston%2C%20William%20P.%20Shapes%20of%20polyhedra%20and%20triangulations%20of%20the%20sphere%201998"
+        },
+        {
+            "id": "Turaga_2016_a",
+            "entry": "Pavan K Turaga and Anuj Srivastava. Riemannian computing in computer vision. Springer, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Turaga%2C%20Pavan%20K.%20Srivastava%2C%20Anuj%20Riemannian%20computing%20in%20computer%20vision%202016"
+        },
+        {
+            "id": "Udriste_1994_a",
+            "entry": "C. Udriste. Convex Functions and Minimization Methods on Riemannian Manifolds. Springer, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Udriste%2C%20C.%20Convex%20Functions%20and%20Minimization%20Methods%20on%20Riemannian%20Manifolds%201994"
+        },
+        {
+            "id": "Walter_2004_a",
+            "entry": "J. A. Walter. H-MDS: a new approach for interactive visualization with multidimensional scaling in the hyperbolic space. Information Systems, 29(4):273\u2013292, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Walter%2C%20J.A.%20H-MDS%3A%20a%20new%20approach%20for%20interactive%20visualization%20with%20multidimensional%20scaling%20in%20the%20hyperbolic%20space%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Walter%2C%20J.A.%20H-MDS%3A%20a%20new%20approach%20for%20interactive%20visualization%20with%20multidimensional%20scaling%20in%20the%20hyperbolic%20space%202004"
+        },
+        {
+            "id": "Watts_1998_a",
+            "entry": "D. J. Watts and S. H. Strogatz. Collective dynamics of small-world networks. Nature, 393:440\u2013442, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Watts%2C%20D.J.%20Strogatz%2C%20S.H.%20Collective%20dynamics%20of%20small-world%20networks%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Watts%2C%20D.J.%20Strogatz%2C%20S.H.%20Collective%20dynamics%20of%20small-world%20networks%201998"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "Melanie Weber, Emil Saucan, and Jurgen Jost. Characterizing complex networks with forman-ricci curvature and associated geometric flows. Journal of Complex Networks, 5(4):527\u2013550, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weber%2C%20Melanie%20Saucan%2C%20Emil%20Jost%2C%20Jurgen%20Characterizing%20complex%20networks%20with%20forman-ricci%20curvature%20and%20associated%20geometric%20flows%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weber%2C%20Melanie%20Saucan%2C%20Emil%20Jost%2C%20Jurgen%20Characterizing%20complex%20networks%20with%20forman-ricci%20curvature%20and%20associated%20geometric%20flows%202017"
+        },
+        {
+            "id": "Wilson_2018_a",
+            "entry": "Benjamin Wilson and Matthias Leimeister. Gradient descent in hyperbolic space. arXiv preprint arXiv:1805.08207, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.08207"
+        },
+        {
+            "id": "Wilson_et+al_2014_a",
+            "entry": "R.C. Wilson, E.R. Hancock, E. Pekalska, and R. Duin. Spherical and hyperbolic embeddings of data. IEEE Transactions on Pattern Analysis and Machine Intelligence, 36(11):2255\u20132269, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wilson%2C%20R.C.%20Hancock%2C%20E.R.%20Pekalska%2C%20E.%20Duin%2C%20R.%20Spherical%20and%20hyperbolic%20embeddings%20of%20data%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wilson%2C%20R.C.%20Hancock%2C%20E.R.%20Pekalska%2C%20E.%20Duin%2C%20R.%20Spherical%20and%20hyperbolic%20embeddings%20of%20data%202014"
+        },
+        {
+            "id": "Zhang_2016_a",
+            "entry": "H. Zhang and S. Sra. First-order methods for geodesically convex optimization. In Proc. of the 29th Conference on Learning Theory (COLT), pp. 1617\u20131638, New York, NY, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20H.%20Sra%2C%20S.%20First-order%20methods%20for%20geodesically%20convex%20optimization%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20H.%20Sra%2C%20S.%20First-order%20methods%20for%20geodesically%20convex%20optimization%202016"
+        },
+        {
+            "id": "Zhang_2018_a",
+            "entry": "H. Zhang and S. Sra. Towards Riemannian accelerated gradient methods. CoRR, abs/1806.02812, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02812"
+        },
+        {
+            "id": "Zhang_et+al_2016_b",
+            "entry": "H. Zhang, S. J. Reddi, and S. Sra. Riemannian SVRG: Fast stochastic optimization on Riemannian manifolds. In Advances in Neural Information Processing Systems 29 (NIPS 2016), pp. 4599\u2013 4607, Barcelona, Spain, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20H.%20Reddi%2C%20S.J.%20Sra%2C%20S.%20Riemannian%20SVRG%3A%20Fast%20stochastic%20optimization%20on%20Riemannian%20manifolds%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20H.%20Reddi%2C%20S.J.%20Sra%2C%20S.%20Riemannian%20SVRG%3A%20Fast%20stochastic%20optimization%20on%20Riemannian%20manifolds%202016"
+        }
+    ]
+}

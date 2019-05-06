@@ -1,0 +1,420 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ANALYSING MATHEMATICAL REASONING ABILITIES OF NEURAL MODELS",
+        "author": "David Saxton DeepMind saxton@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1gR5iR5FX"
+        },
+        "abstract": "Mathematical reasoning\u2014a core ability within human intelligence\u2014presents some unique challenges as a domain: we do not come to understand and solve mathematical problems primarily on the back of experience and evidence, but on the basis of inferring, learning, and exploiting laws, axioms, and symbol manipulation rules. In this paper, we present a new challenge for the evaluation (and eventually the design) of neural architectures and similar system, developing a task suite of mathematics problems involving sequential questions and answers in a free-form textual input/output format. The structured nature of the mathematics domain, covering arithmetic, algebra, probability and calculus, enables the construction of training and test splits designed to clearly illuminate the capabilities and failure-modes of different architectures, as well as evaluate their ability to compose and relate knowledge and learned processes. Having described the data generation process and its potential future expansions, we conduct a comprehensive analysis of models from two broad classes of the most powerful sequence-to-sequence architectures and find notable differences in their ability to resolve mathematical problems and generalize their knowledge."
+    },
+    "keywords": [
+        {
+            "term": "mathematical problem",
+            "url": "https://en.wikipedia.org/wiki/mathematical_problem"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "human intelligence",
+            "url": "https://en.wikipedia.org/wiki/human_intelligence"
+        },
+        {
+            "term": "mathematics",
+            "url": "https://en.wikipedia.org/wiki/mathematics"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "RMC": "relational memory core"
+    },
+    "highlights": [
+        "Deep learning, powered by convolutional and recurrent networks, has had remarkable success in areas involving pattern matching, machine translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>), and reinforcement learning (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>))",
+        "There are some neural network-driven approaches with direct access to mathematical operations, or more complex mathematical templates like in (<a class=\"ref-link\" id=\"cKushman_et+al_2014_a\" href=\"#rKushman_et+al_2014_a\">Kushman et al, 2014</a>)), which would undoubtedly perform competitively on the tasks we present in this paper, we will limit ourselves to general sequence-processing architectures which are used in other non-mathematical tasks to present the most general baselines possible for future comparison",
+        "The second model we analyze is the encoder/decoder-withattention architecture introduced in (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a>) which has been prevalent in neural machine translation, and overcomes two problems with the simple LSTM model above, which affect both language translation and mathematical question-answering: (1) information that is presented in the input may be out-of-order for the purpose of calculations required for the output, the expression 1 + 3 must be evaluated first); and (2) all information for the answer must be contained within the single vector of cell activations of the LSTM, which is a bottleneck",
+        "The main restriction is that the answers must be well-determined, but this still allows for covering a lot of mathematics up to university level",
+        "At some point it becomes harder to cover more of mathematics while maintaining the sequence-to-sequence format, but hopefully by this point the dataset in its current format will have served its purpose in developing models that can reason mathematically",
+        "We could consider methods for assessing answers where there is not a single unique answer; for the full scope of possibilities is too large to include in this paper, but a few possibilities include metrics such as BLEU (<a class=\"ref-link\" id=\"cPapineni_et+al_2002_a\" href=\"#rPapineni_et+al_2002_a\">Papineni et al, 2002</a>), by extending the data generation process to provide several reference answers, or by obtaining human paraphrases following the data augmentation process proposed by <a class=\"ref-link\" id=\"cWang_et+al_2015_a\" href=\"#rWang_et+al_2015_a\">Wang et al (2015</a>)"
+    ],
+    "key_statements": [
+        "Deep learning, powered by convolutional and recurrent networks, has had remarkable success in areas involving pattern matching, machine translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>), and reinforcement learning (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>))",
+        "There are some neural network-driven approaches with direct access to mathematical operations, or more complex mathematical templates like in (<a class=\"ref-link\" id=\"cKushman_et+al_2014_a\" href=\"#rKushman_et+al_2014_a\">Kushman et al, 2014</a>)), which would undoubtedly perform competitively on the tasks we present in this paper, we will limit ourselves to general sequence-processing architectures which are used in other non-mathematical tasks to present the most general baselines possible for future comparison",
+        "The second model we analyze is the encoder/decoder-withattention architecture introduced in (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a>) which has been prevalent in neural machine translation, and overcomes two problems with the simple LSTM model above, which affect both language translation and mathematical question-answering: (1) information that is presented in the input may be out-of-order for the purpose of calculations required for the output, the expression 1 + 3 must be evaluated first); and (2) all information for the answer must be contained within the single vector of cell activations of the LSTM, which is a bottleneck",
+        "The main restriction is that the answers must be well-determined, but this still allows for covering a lot of mathematics up to university level",
+        "At some point it becomes harder to cover more of mathematics while maintaining the sequence-to-sequence format, but hopefully by this point the dataset in its current format will have served its purpose in developing models that can reason mathematically",
+        "We could consider methods for assessing answers where there is not a single unique answer; for the full scope of possibilities is too large to include in this paper, but a few possibilities include metrics such as BLEU (<a class=\"ref-link\" id=\"cPapineni_et+al_2002_a\" href=\"#rPapineni_et+al_2002_a\">Papineni et al, 2002</a>), by extending the data generation process to provide several reference answers, or by obtaining human paraphrases following the data augmentation process proposed by <a class=\"ref-link\" id=\"cWang_et+al_2015_a\" href=\"#rWang_et+al_2015_a\">Wang et al (2015</a>)"
+    ],
+    "summary": [
+        "Deep learning, powered by convolutional and recurrent networks, has had remarkable success in areas involving pattern matching, machine translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a></a>; <a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\"><a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a></a>), and reinforcement learning (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>)).",
+        "Experiments and model analysis We perform an experimental evaluation to investigate the algebraic abilities of state-of-the-art neural architectures, and show that they do well on some types of questions, but certainly not all, and have only moderate amounts of generalization.",
+        "Setting aside the possible brittleness or limits in scalability of traditional symbolic approaches as the complexity or linguistic diversity of questions and answers grows, we are interested here in evaluating general purpose models, rather than ones with their mathematics knowledge already inbuilt.",
+        "The second model we analyze is the encoder/decoder-withattention architecture introduced in (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a>) which has been prevalent in neural machine translation, and overcomes two problems with the simple LSTM model above, which affect both language translation and mathematical question-answering: (1) information that is presented in the input may be out-of-order for the purpose of calculations required for the output, the expression 1 + 3 must be evaluated first); and (2) all information for the answer must be contained within the single vector of cell activations of the LSTM, which is a bottleneck.",
+        "The attentional LSTM architecture consists of a recurrent encoder that encodes the question to a sequence of keys and values, and a recurrent decoder that has as input the correct answer right-shifted by 1, and at every time step attends to the encoded question, and outputs a distribution over the character.",
+        "Evidence above and below suggest that neither of the networks are doing much \u201calgorithmic reasoning\u201d, and the Transformer has various advantages over LSTM architectures, such as (1) doing more calculations with the same number of parameters, (2) having a shallower architecture, and (3) having an internal \"memory\" that is sequential, which is more pre-disposed to mathematical objects like sequences of digits.",
+        "(The models are trained on sequences of random integers up to length 10, and are capable of giving the correct answer on longer sequences of far bigger numbers, for example -34 + 53 + -936 + -297 + 162 + -242 + -128.) We do not have a good explanation for this behaviour; one hypothesis is that the models calculate subsums and combine these, but rely on different input numbers to align the subsums, and fail when the input is \u201ccamouflaged\u201d by consisting of the same number repeated multiple times.",
+        "To provide an external benchmark for the capability of neural network models trained on our dataset, we tested the trained Transformer model on a set of 40 questions selected from publicly-available maths exams for British 16 year old schoolchildren2.",
+        "We could consider methods for assessing answers where there is not a single unique answer; for the full scope of possibilities is too large to include in this paper, but a few possibilities include metrics such as BLEU (<a class=\"ref-link\" id=\"cPapineni_et+al_2002_a\" href=\"#rPapineni_et+al_2002_a\"><a class=\"ref-link\" id=\"cPapineni_et+al_2002_a\" href=\"#rPapineni_et+al_2002_a\">Papineni et al, 2002</a></a>), by extending the data generation process to provide several reference answers, or by obtaining human paraphrases following the data augmentation process proposed by <a class=\"ref-link\" id=\"cWang_et+al_2015_a\" href=\"#rWang_et+al_2015_a\"><a class=\"ref-link\" id=\"cWang_et+al_2015_a\" href=\"#rWang_et+al_2015_a\">Wang et al (2015</a></a>)"
+    ],
+    "headline": "We present a new challenge for the evaluation of neural architectures and similar system, developing a task suite of mathematics problems involving sequential questions and answers in a free-form textual input/output format",
+    "reference_links": [
+        {
+            "id": "Allamanis_et+al_2016_a",
+            "entry": "Miltiadis Allamanis, Pankajan Chanthirasegaran, Pushmeet Kohli, and Charles Sutton. Learning continuous semantic representations of symbolic expressions. arXiv preprint arXiv:1611.01423, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01423"
+        },
+        {
+            "id": "Allen_2014_a",
+            "entry": "Allen Institute for AI. Project Euclid. http://allenai.org/euclid/, 2014.",
+            "url": "http://allenai.org/euclid/"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. arXiv preprint arXiv:1409.0473, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Evans_et+al_2018_a",
+            "entry": "Richard Evans, David Saxton, David Amos, Pushmeet Kohli, and Edward Grefenstette. Can neural networks understand logical entailment? arXiv preprint arXiv:1802.08535, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08535"
+        },
+        {
+            "id": "Graves_2016_a",
+            "entry": "Alex Graves. Adaptive computation time for recurrent neural networks. arXiv preprint arXiv:1603.08983, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.08983"
+        },
+        {
+            "id": "Graves_et+al_2016_b",
+            "entry": "Alex Graves, Greg Wayne, Malcolm Reynolds, Tim Harley, Ivo Danihelka, Agnieszka GrabskaBarwinska, Sergio G\u00f3mez Colmenarejo, Edward Grefenstette, Tiago Ramalho, John Agapiou, et al. Hybrid computing using a neural network with dynamic external memory. Nature, 538(7626):471, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20Alex%20Wayne%2C%20Greg%20Reynolds%2C%20Malcolm%20Harley%2C%20Tim%20Hybrid%20computing%20using%20a%20neural%20network%20with%20dynamic%20external%20memory%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20Alex%20Wayne%2C%20Greg%20Reynolds%2C%20Malcolm%20Harley%2C%20Tim%20Hybrid%20computing%20using%20a%20neural%20network%20with%20dynamic%20external%20memory%202016"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Huang_et+al_2016_a",
+            "entry": "Danqing Huang, Shuming Shi, Chin-Yew Lin, Jian Yin, and Wei-Ying Ma. How well do computers solve math word problems? large-scale dataset construction and evaluation. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 887\u2013896, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Danqing%20Shi%2C%20Shuming%20Lin%2C%20Chin-Yew%20Yin%2C%20Jian%20and%20Wei-Ying%20Ma.%20How%20well%20do%20computers%20solve%20math%20word%20problems%3F%20large-scale%20dataset%20construction%20and%20evaluation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Danqing%20Shi%2C%20Shuming%20Lin%2C%20Chin-Yew%20Yin%2C%20Jian%20and%20Wei-Ying%20Ma.%20How%20well%20do%20computers%20solve%20math%20word%20problems%3F%20large-scale%20dataset%20construction%20and%20evaluation%202016"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Justin Johnson, Bharath Hariharan, Laurens van der Maaten, Li Fei-Fei, C Lawrence Zitnick, and Ross Girshick. Clevr: A diagnostic dataset for compositional language and elementary visual reasoning. In Computer Vision and Pattern Recognition (CVPR), 2017 IEEE Conference on, pp. 1988\u20131997. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Li%20Fei-Fei%2C%20C.Lawrence%20Zitnick%20Clevr%3A%20A%20diagnostic%20dataset%20for%20compositional%20language%20and%20elementary%20visual%20reasoning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Li%20Fei-Fei%2C%20C.Lawrence%20Zitnick%20Clevr%3A%20A%20diagnostic%20dataset%20for%20compositional%20language%20and%20elementary%20visual%20reasoning%202017"
+        },
+        {
+            "id": "Joulin_2015_a",
+            "entry": "Armand Joulin and Tomas Mikolov. Inferring algorithmic patterns with stack-augmented recurrent nets. In Advances in neural information processing systems, pp. 190\u2013198, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Inferring%20algorithmic%20patterns%20with%20stack-augmented%20recurrent%20nets%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Inferring%20algorithmic%20patterns%20with%20stack-augmented%20recurrent%20nets%202015"
+        },
+        {
+            "id": "Kaiser_2015_a",
+            "entry": "\u0141ukasz Kaiser and Ilya Sutskever. Neural gpus learn algorithms. arXiv preprint arXiv:1511.08228, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.08228"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Kushman_et+al_2014_a",
+            "entry": "Nate Kushman, Yoav Artzi, Luke Zettlemoyer, and Regina Barzilay. Learning to automatically solve algebra word problems. In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 271\u2013281, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kushman%2C%20Nate%20Artzi%2C%20Yoav%20Zettlemoyer%2C%20Luke%20Barzilay%2C%20Regina%20Learning%20to%20automatically%20solve%20algebra%20word%20problems%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kushman%2C%20Nate%20Artzi%2C%20Yoav%20Zettlemoyer%2C%20Luke%20Barzilay%2C%20Regina%20Learning%20to%20automatically%20solve%20algebra%20word%20problems%202014"
+        },
+        {
+            "id": "Ling_et+al_2017_a",
+            "entry": "Wang Ling, Dani Yogatama, Chris Dyer, and Phil Blunsom. Program induction by rationale generation: Learning to solve and explain algebraic word problems. arXiv preprint arXiv:1705.04146, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.04146"
+        },
+        {
+            "id": "Marcus_2003_a",
+            "entry": "Gary F Marcus. The algebraic mind: Integrating connectionism and cognitive science. MIT press, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Gary%20F.%20The%20algebraic%20mind%3A%20Integrating%20connectionism%20and%20cognitive%20science%202003"
+        },
+        {
+            "id": "Meurer_et+al_2017_a",
+            "entry": "Aaron Meurer, Christopher P Smith, Mateusz Paprocki, Ondrej Cert\u00edk, Sergey B Kirpichev, Matthew Rocklin, AMiT Kumar, Sergiu Ivanov, Jason K Moore, Sartaj Singh, et al. Sympy: symbolic computing in python. PeerJ Computer Science, 3:e103, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Meurer%2C%20Aaron%20Smith%2C%20Christopher%20P.%20Paprocki%2C%20Mateusz%20Cert%C3%ADk%2C%20Ondrej%20Sympy%3A%20symbolic%20computing%20in%20python%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Meurer%2C%20Aaron%20Smith%2C%20Christopher%20P.%20Paprocki%2C%20Mateusz%20Cert%C3%ADk%2C%20Ondrej%20Sympy%3A%20symbolic%20computing%20in%20python%202017"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Papineni_et+al_2002_a",
+            "entry": "Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. Bleu: a method for automatic evaluation of machine translation. In Proceedings of the 40th annual meeting on association for computational linguistics, pp. 311\u2013318. Association for Computational Linguistics, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002"
+        },
+        {
+            "id": "Santoro_et+al_0000_a",
+            "entry": "Adam Santoro, Ryan Faulkner, David Raposo, Jack Rae, Mike Chrzanowski, Theophane Weber, Daan Wierstra, Oriol Vinyals, Razvan Pascanu, and Timothy Lillicrap. Relational recurrent neural networks. arXiv preprint arXiv:1806.01822, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.01822"
+        },
+        {
+            "id": "Santoro_et+al_2018_a",
+            "entry": "Adam Santoro, Felix Hill, David Barrett, Ari Morcos, and Timothy Lillicrap. Measuring abstract reasoning in neural networks. In International Conference on Machine Learning, pp. 4477\u20134486, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Hill%2C%20Felix%20Barrett%2C%20David%20Morcos%2C%20Ari%20Measuring%20abstract%20reasoning%20in%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Hill%2C%20Felix%20Barrett%2C%20David%20Morcos%2C%20Ari%20Measuring%20abstract%20reasoning%20in%20neural%20networks%202018"
+        },
+        {
+            "id": "Selsam_et+al_2018_a",
+            "entry": "Daniel Selsam, Matthew Lamm, Benedikt Bunz, Percy Liang, Leonardo de Moura, and David L Dill. Learning a sat solver from single-bit supervision. arXiv preprint arXiv:1802.03685, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03685"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Upadhyay_2016_a",
+            "entry": "Shyam Upadhyay and Ming-Wei Chang. Annotating derivations: A new evaluation strategy and dataset for algebra word problems. arXiv preprint arXiv:1609.07197, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.07197"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pp. 6000\u20136010, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2060006010%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2060006010%202017"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Yan Wang, Xiaojiang Liu, and Shuming Shi. Deep neural solver for math word problems. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pp. 845\u2013854, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yan%20Liu%2C%20Xiaojiang%20Shi%2C%20Shuming%20Deep%20neural%20solver%20for%20math%20word%20problems%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yan%20Liu%2C%20Xiaojiang%20Shi%2C%20Shuming%20Deep%20neural%20solver%20for%20math%20word%20problems%202017"
+        },
+        {
+            "id": "Wang_et+al_2015_a",
+            "entry": "Yushi Wang, Jonathan Berant, and Percy Liang. Building a semantic parser overnight. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers), volume 1, pp. 1332\u20131342, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yushi%20Berant%2C%20Jonathan%20Liang%2C%20Percy%20Building%20a%20semantic%20parser%20overnight%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yushi%20Berant%2C%20Jonathan%20Liang%2C%20Percy%20Building%20a%20semantic%20parser%20overnight%202015"
+        },
+        {
+            "id": "Weston_et+al_2015_a",
+            "entry": "Jason Weston, Antoine Bordes, Sumit Chopra, Alexander M Rush, Bart van Merri\u00ebnboer, Armand Joulin, and Tomas Mikolov. Towards AI-complete question answering: A set of prerequisite toy tasks. arXiv preprint arXiv:1502.05698, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.05698"
+        },
+        {
+            "id": "Zaremba_2014_a",
+            "entry": "Wojciech Zaremba and Ilya Sutskever. Learning to execute. arXiv preprint arXiv:1410.4615, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1410.4615"
+        },
+        {
+            "id": "1",
+            "entry": "(1) An LSTM with hidden size k + v. The hidden state is split to obtain the keys and values.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=An%20LSTM%20with%20hidden%20size%20k%20%20v%20The%20hidden%20state%20is%20split%20to%20obtain%20the%20keys%20and%20values"
+        },
+        {
+            "id": "1",
+            "entry": "1. Factorise x2 + 7x",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%20x2%20%207x"
+        },
+        {
+            "id": "2",
+            "entry": "2. Factorise y2 \u2212 10y + 16",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%20y2%20%2010y%20%2016"
+        },
+        {
+            "id": "3",
+            "entry": "3. Factorise 2t2 + 5t + 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%202t2%20%205t%20%202"
+        },
+        {
+            "id": "4",
+            "entry": "4. Simplify (x+1) 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%20x1%202"
+        },
+        {
+            "id": "5",
+            "entry": "5. Solve 2x2 + 9x + 7",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solve%202x2%20%209x%20%207"
+        },
+        {
+            "id": "7",
+            "entry": "7. Expand 3(x + 4) + 2(5x \u2212 1)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%203x%20%204%20%2025x%20%201"
+        },
+        {
+            "id": "8",
+            "entry": "8. Expand (2x + 1)(x \u2212 4)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%202x%20%201x%20%204"
+        },
+        {
+            "id": "9",
+            "entry": "9. Factor 6y2 \u2212 9xy",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factor%206y2%20%209xy"
+        },
+        {
+            "id": "10",
+            "entry": "10. Solve 3p \u2212 7 > 11",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solve%203p%20%207%20%2011"
+        },
+        {
+            "id": "12",
+            "entry": "12. Make k the subject of m =",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Make%20k%20the%20subject%20of%20m"
+        },
+        {
+            "id": "13",
+            "entry": "13. Expand (p + 9)(p \u2212 4)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%20p%20%209p%20%204"
+        },
+        {
+            "id": "15",
+            "entry": "15. Factorise x2 \u2212 49",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%20x2%20%2049"
+        },
+        {
+            "id": "16",
+            "entry": "16. Expand (x \u2212 7)(x + 1)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%20x%20%207x%20%201"
+        },
+        {
+            "id": "17",
+            "entry": "17. Simplify 9x8y3 assuming x is positive.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%209x8y3%20assuming%20x%20is%20positive"
+        },
+        {
+            "id": "19",
+            "entry": "19. Make t the subject of 2(d \u2212 t) = 4t + 7",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Make%20t%20the%20subject%20of%202d%20%20t%20%204t%20%207"
+        },
+        {
+            "id": "20",
+            "entry": "20. Solve 3x2 \u2212 4x \u2212 2 = 0",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solve%203x2%20%204x%20%202%20%200"
+        },
+        {
+            "id": "21",
+            "entry": "21. Expand 3(2y \u2212 5)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%2032y%20%205"
+        },
+        {
+            "id": "22",
+            "entry": "22. Factorise 8x2 + 4xy",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%208x2%20%204xy"
+        },
+        {
+            "id": "23",
+            "entry": "23. Make h the subject of t = gh 10",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Make%20h%20the%20subject%20of%20t%20%20gh%2010"
+        },
+        {
+            "id": "24",
+            "entry": "24. Simplify (m\u22122)5",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%20m25"
+        },
+        {
+            "id": "25",
+            "entry": "25. Factorise x2 + 3x \u2212 10",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%20x2%20%203x%20%2010"
+        },
+        {
+            "id": "26",
+            "entry": "26. Solve 5x + 2y = 11 and 4x \u2212 3y = 18 for x",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solve%205x%20%202y%20%2011%20and%204x%20%203y%20%2018%20for%20x"
+        },
+        {
+            "id": "27",
+            "entry": "27. Simplify (x2 +3x\u22124) (2x2 \u22125x+3)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%20x2%203x4%202x2%205x3"
+        },
+        {
+            "id": "29",
+            "entry": "29. Expand 4(3x + 5)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%2043x%20%205"
+        },
+        {
+            "id": "30",
+            "entry": "30. Expand 2(x \u2212 4) + 3(x + 5)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%202x%20%204%20%203x%20%205"
+        },
+        {
+            "id": "31",
+            "entry": "31. Expand (x + 4)(x + 6)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Expand%20x%20%204x%20%206"
+        },
+        {
+            "id": "32",
+            "entry": "32. Simplify m5 m3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%20m5%20m3"
+        },
+        {
+            "id": "33",
+            "entry": "33. Simplify (5x4y3)(x2y)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%205x4y3x2y"
+        },
+        {
+            "id": "34",
+            "entry": "34. Solve 3x + 2y = 4 and 4x + 5y = 17 for x",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solve%203x%20%202y%20%204%20and%204x%20%205y%20%2017%20for%20x"
+        },
+        {
+            "id": "35",
+            "entry": "35. Complete the sequence: 3, 9, 15, 21, 27",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Complete%20the%20sequence%203%209%2015%2021%2027"
+        },
+        {
+            "id": "36",
+            "entry": "36. Simplify 5x + 4y + x \u2212 7y",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%205x%20%204y%20%20x%20%207y"
+        },
+        {
+            "id": "37",
+            "entry": "37. Complete the sequence: 3, 10, 17, 24",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Complete%20the%20sequence%203%2010%2017%2024"
+        },
+        {
+            "id": "38",
+            "entry": "38. Simplify x10x3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simplify%20x10x3"
+        },
+        {
+            "id": "39",
+            "entry": "39. Solve 7 \u2217 (x + 2) = 7",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solve%207%20%20x%20%202%20%207"
+        },
+        {
+            "id": "40",
+            "entry": "40. Factorise x2 \u2212 12x + 27 ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Factorise%20x2%20%2012x%20%2027"
+        }
+    ]
+}

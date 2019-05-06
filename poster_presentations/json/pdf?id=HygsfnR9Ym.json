@@ -1,0 +1,372 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "RECALL TRACES: BACKTRACKING MODELS FOR EFFICIENT REINFORCEMENT LEARNING",
+        "author": "Anirudh Goyal, Philemon Brakel, William Fedus, Soumye Singhal, Timothy Lillicrap, Sergey Levine, Hugo Larochelle, Yoshua Bengio",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HygsfnR9Ym"
+        },
+        "abstract": "In many environments only a tiny subset of all states yield high reward. In these cases, few of the interactions with the environment provide a relevant learning signal. Hence, we may want to preferentially train on those high-reward states and the probable trajectories leading to them. To this end, we advocate for the use of a backtracking model that predicts the preceding states that terminate at a given high-reward state. We can train a model which, starting from a high value state (or one that is estimated to have high value), predicts and samples which (state, action)-tuples may have led to that high value state. These traces of (state, action) pairs, which we refer to as Recall Traces, sampled from this backtracking model starting from a high value state, are informative as they terminate in good states, and hence we can use these traces to improve a policy. We provide a variational interpretation for this idea and a practical algorithm in which the backtracking model samples from an approximate posterior distribution over trajectories which lead to large rewards. Our method improves the sample efficiency of both on- and off-policy RL algorithms across several environments and tasks."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Markov decision process",
+            "url": "https://en.wikipedia.org/wiki/Markov_decision_process"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "Expectation Maximization",
+            "url": "https://en.wikipedia.org/wiki/Expectation_Maximization"
+        },
+        {
+            "term": "robotics",
+            "url": "https://en.wikipedia.org/wiki/robotics"
+        }
+    ],
+    "abbreviations": {
+        "RL": "reinforcement learning",
+        "MDP": "Markov decision process",
+        "EM": "Expectation Maximization",
+        "GAE": "generalized advantage estimation",
+        "PER": "Prioritized Experience Replay",
+        "TRPO": "trust region policy optimization",
+        "SAC": "Soft Actor Critic"
+    },
+    "highlights": [
+        "Training control algorithms efficiently from interactions with the environment is a central issue in reinforcement learning (RL)",
+        "We propose a method that takes advantage of unsupervised observations of state-to-state transitions for increasing the sample efficiency of current model-free reinforcement learning algorithms, as measured by the number of interactions with the environment required to learn a successful policy",
+        "Our experimental evaluation aims to understand whether our method can improve the sample complexity of off-policy as well as on-policy reinforcement learning algorithms",
+        "In our experiments, we sample fairly short traces \u03c4from the backtracking model, where the length is adjusted manually based on the time-scale of each task",
+        "We show that a random model is outperformed by a trained backtracking model, confirming its usefulness and present plots showing the effect of varying the length of recall traces"
+    ],
+    "key_statements": [
+        "Training control algorithms efficiently from interactions with the environment is a central issue in reinforcement learning (RL)",
+        "Existing model-free solutions lack sample efficiency, meaning that they require extensive interaction with the environment to achieve these levels of performance",
+        "Model-based methods in reinforcement learning can mitigate this issue. These approaches learn an unsupervised model of the underlying dynamics of the environment, which does not necessarily require rewards, as the model observes and predicts state-to-state transitions",
+        "We propose a method that takes advantage of unsupervised observations of state-to-state transitions for increasing the sample efficiency of current model-free reinforcement learning algorithms, as measured by the number of interactions with the environment required to learn a successful policy",
+        "We propose learning a backward dynamics model, which we refer to as a backtracking model, from the experiences performed by the agent",
+        "Dealing with sparse rewards States with significant return are emphasized by the backtracking model, since the traces it generates are initialized at high value states",
+        "Our experimental evaluation aims to understand whether our method can improve the sample complexity of off-policy as well as on-policy reinforcement learning algorithms",
+        "Longer traces become increasingly likely to deviate significantly from the traces that the agent can generate from its initial state",
+        "In our experiments, we sample fairly short traces \u03c4from the backtracking model, where the length is adjusted manually based on the time-scale of each task",
+        "We empirically show the following results across different experimental settings:",
+        "We show in Figure 4 that while Prioritized Experience Replay is competitive in the smaller 11x11 environment, recall traces outperform it in the larger 15x15 environment",
+        "Figure 3 shows how the use of a backtracking model and recall traces pushes the policy to visit a wider variety of grid positions than Prioritized Experience Replay.\n6.3",
+        "We show that a random model is outperformed by a trained backtracking model, confirming its usefulness and present plots showing the effect of varying the length of recall traces"
+    ],
+    "summary": [
+        "Training control algorithms efficiently from interactions with the environment is a central issue in reinforcement learning (RL).",
+        "We propose a method that takes advantage of unsupervised observations of state-to-state transitions for increasing the sample efficiency of current model-free RL algorithms, as measured by the number of interactions with the environment required to learn a successful policy.",
+        "We will investigate our approach with two methods for generating the initial high-value states.",
+        "We describe how to train the backtracking model and how it can be used to improve the efficiency of the agent\u2019s policy and aid with exploration.",
+        "We use a maximum likelihood training loss for training of the backtracking model B\u03c6 on the top k% of the agent\u2019s trajectories stored in the state buffer B.",
+        "Require: k quantile of best state values used to train backtracking model, ktraj number of trajectories filtered by returns.",
+        "Dealing with sparse rewards States with significant return are emphasized by the backtracking model, since the traces it generates are initialized at high value states.",
+        "Aiding in exploration The backtracking model can generate new ways to reach high-value states.",
+        "We parameterize the approximate posterior in this way so that we can take advantage of a model of the backwards transitions to conveniently sample from q starting from a high-value final state sT .",
+        "This recovers our algorithm, which trains the backtracking model on high-return trajectories generated by the agent.",
+        "Using off-policy trajectories By incorporating the trajectories of a separate backtracking model, our method is similar in spirit to approaches which combine on-policy learning algorithms with off-policy samples.",
+        "(<a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a>) proposed to use similar learning rule in the context of generative models to modify the parameters of transition operator to make the reverse of this heated trajectory more likely under a reverse cooling process.",
+        "Figure 3 shows how the use of a backtracking model and recall traces pushes the policy to visit a wider variety of grid positions than PER.",
+        "One situation in which states to start the backtracking model at are naturally available, is when the method is combined with an algorithm for sub-goal selection.",
+        "In this learning scenario, what changes is that high value states are generated by Goal GAN instead of being selected by a critic from a replay buffer.",
+        "We show that a random model is outperformed by a trained backtracking model, confirming its usefulness and present plots showing the effect of varying the length of recall traces."
+    ],
+    "headline": "We provide a variational interpretation for this idea and a practical algorithm in which the backtracking model samples from an approximate posterior distribution over trajectories which lead to large rewards",
+    "reference_links": [
+        {
+            "id": "A_2011_a",
+            "entry": "A reduction of imitation learning and structured prediction to no-regret online learning. In Proceedings of the fourteenth international conference on artificial intelligence and statistics, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20noregret%20online%20learning%20In%20Proceedings%20of%20the%20fourteenth%20international%20conference%20on%20artificial%20intelligence%20and%20statistics%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20noregret%20online%20learning%20In%20Proceedings%20of%20the%20fourteenth%20international%20conference%20on%20artificial%20intelligence%20and%20statistics%202011"
+        },
+        {
+            "id": "Baluja_1994_a",
+            "entry": "Shumeet Baluja. Population-based incremental learning: A method for integrating genetic search based function optimization and competitive learning. Technical report, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baluja%2C%20Shumeet%20Population-based%20incremental%20learning%3A%20A%20method%20for%20integrating%20genetic%20search%20based%20function%20optimization%20and%20competitive%20learning%201994"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bojarski_et+al_2016_a",
+            "entry": "Mariusz Bojarski, Davide Del Testa, Daniel Dworakowski, Bernhard Firner, Beat Flepp, Prasoon Goyal, Lawrence D Jackel, Mathew Monfort, Urs Muller, Jiakai Zhang, et al. End to end learning for self-driving cars. arXiv preprint arXiv:1604.07316, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.07316"
+        },
+        {
+            "id": "Chiappa_et+al_2017_a",
+            "entry": "Silvia Chiappa, Sebastien Racaniere, Daan Wierstra, and Shakir Mohamed. Recurrent environment simulators. arXiv preprint arXiv:1704.02254, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02254"
+        },
+        {
+            "id": "Dayan_1997_a",
+            "entry": "Peter Dayan and Geoffrey E Hinton. Using expectation-maximization for reinforcement learning. Neural Computation, 9(2):271\u2013278, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Using%20expectation-maximization%20for%20reinforcement%20learning%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Using%20expectation-maximization%20for%20reinforcement%20learning%201997"
+        },
+        {
+            "id": "Deisenroth_0000_a",
+            "entry": "Marc Deisenroth and Carl E Rasmussen. Pilco: A model-based and data-efficient approach to policy search. In Proceedings of the 28th International Conference on machine learning (ICML-11), pp. 465\u2013472, 2011a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Rasmussen%2C%20Carl%20E.%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search"
+        },
+        {
+            "id": "Deisenroth_2011_a",
+            "entry": "Marc Peter Deisenroth and Carl Edward Rasmussen. Pilco: A model-based and data-efficient approach to policy search. In Proceedings of the 28th International Conference on International Conference on Machine Learning, ICML\u201911, pp. 465\u2013472, USA, 2011b. Omnipress. ISBN 9781-4503-0619-5. URL http://dl.acm.org/citation.cfm?id=3104482.3104541.",
+            "url": "http://dl.acm.org/citation.cfm?id=3104482.3104541",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Peter%20Rasmussen%2C%20Carl%20Edward%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011"
+        },
+        {
+            "id": "Deisenroth_et+al_2013_a",
+            "entry": "Marc Peter Deisenroth, Gerhard Neumann, and Jan Peters. A survey on policy search for robotics. Foundations and Trends in Robotics, 2(12):1\u2013142, 2013. ISSN 1935-8253. doi: 10.1561/2300000021. URL http://dx.doi.org/10.1561/2300000021.",
+            "crossref": "https://dx.doi.org/10.1561/2300000021",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1561/2300000021"
+        },
+        {
+            "id": "Edwards_et+al_2018_a",
+            "entry": "Ashley D Edwards, Laura Downs, and James C Davidson. Forward-backward reinforcement learning. arXiv preprint arXiv:1803.10227, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.10227"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Anirudh Goyal Alias Parth Goyal, Nan Rosemary Ke, Surya Ganguli, and Yoshua Bengio. Variational walkback: Learning a transition operator as a stochastic recurrent net. In Advances in Neural Information Processing Systems, pp. 4392\u20134402, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Anirudh%20Goyal%20Alias%20Parth%20Ke%2C%20Nan%20Rosemary%20Ganguli%2C%20Surya%20Bengio%2C%20Yoshua%20Variational%20walkback%3A%20Learning%20a%20transition%20operator%20as%20a%20stochastic%20recurrent%20net%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Anirudh%20Goyal%20Alias%20Parth%20Ke%2C%20Nan%20Rosemary%20Ganguli%2C%20Surya%20Bengio%2C%20Yoshua%20Variational%20walkback%3A%20Learning%20a%20transition%20operator%20as%20a%20stochastic%20recurrent%20net%202017"
+        },
+        {
+            "id": "Gu_et+al_0000_a",
+            "entry": "Shixiang Gu, Timothy Lillicrap, Zoubin Ghahramani, Richard E Turner, and Sergey Levine. Qprop: Sample-efficient policy gradient with an off-policy critic. arXiv preprint arXiv:1611.02247, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02247"
+        },
+        {
+            "id": "Gu_et+al_0000_b",
+            "entry": "Shixiang Gu, Timothy P. Lillicrap, Ilya Sutskever, and Sergey Levine. Continuous deep q-learning with model-based acceleration. CoRR, abs/1603.00748, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.00748"
+        },
+        {
+            "id": "Gu_et+al_2017_a",
+            "entry": "Shixiang Gu, Tim Lillicrap, Richard E Turner, Zoubin Ghahramani, Bernhard Scholkopf, and Sergey Levine. Interpolated policy gradient: Merging on-policy and off-policy gradient estimation for deep reinforcement learning. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Lillicrap%2C%20Tim%20Turner%2C%20Richard%20E.%20Ghahramani%2C%20Zoubin%20Interpolated%20policy%20gradient%3A%20Merging%20on-policy%20and%20off-policy%20gradient%20estimation%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Lillicrap%2C%20Tim%20Turner%2C%20Richard%20E.%20Ghahramani%2C%20Zoubin%20Interpolated%20policy%20gradient%3A%20Merging%20on-policy%20and%20off-policy%20gradient%20estimation%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Haarnoja_et+al_2017_a",
+            "entry": "Tuomas Haarnoja, Haoran Tang, Pieter Abbeel, and Sergey Levine. Reinforcement learning with deep energy-based policies. arXiv preprint arXiv:1702.08165, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08165"
+        },
+        {
+            "id": "Haarnoja_et+al_2018_a",
+            "entry": "Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor. CoRR, abs/1801.01290, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01290"
+        },
+        {
+            "id": "Hansen_2016_a",
+            "entry": "Nikolaus Hansen. The CMA evolution strategy: A tutorial. CoRR, abs/1604.00772, 2016. URL http://arxiv.org/abs/1604.00772.",
+            "url": "http://arxiv.org/abs/1604.00772",
+            "arxiv_url": "https://arxiv.org/pdf/1604.00772"
+        },
+        {
+            "id": "Heess_et+al_1510_a",
+            "entry": "Nicolas Heess, Greg Wayne, David Silver, Timothy P. Lillicrap, Yuval Tassa, and Tom Erez. Learning continuous control policies by stochastic value gradients. abs/1510.09142, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heess%2C%20Nicolas%20Wayne%2C%20Greg%20Silver%2C%20David%20Lillicrap%2C%20Timothy%20P.%20Learning%20continuous%20control%20policies%20by%20stochastic%20value%20gradients%201510"
+        },
+        {
+            "id": "Held_et+al_2017_a",
+            "entry": "David Held, Xinyang Geng, Carlos Florensa, and Pieter Abbeel. Automatic goal generation for reinforcement learning agents. arXiv preprint arXiv:1705.06366, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.06366"
+        },
+        {
+            "id": "Henderson_et+al_2017_a",
+            "entry": "Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, and David Meger. Deep reinforcement learning that matters. abs/1709.06560, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Henderson%2C%20Peter%20Islam%2C%20Riashat%20Bachman%2C%20Philip%20Pineau%2C%20Joelle%20Deep%20reinforcement%20learning%20that%20matters%202017"
+        },
+        {
+            "id": "Hinton_et+al_1995_a",
+            "entry": "Geoffrey E Hinton, Peter Dayan, Brendan J Frey, and Radford M Neal. The\u201d wake-sleep\u201d algorithm for unsupervised neural networks. Science, 268(5214):1158\u20131161, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Dayan%2C%20Peter%20Frey%2C%20Brendan%20J.%20Neal%2C%20Radford%20M.%20The%E2%80%9D%20wake-sleep%E2%80%9D%20algorithm%20for%20unsupervised%20neural%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Dayan%2C%20Peter%20Frey%2C%20Brendan%20J.%20Neal%2C%20Radford%20M.%20The%E2%80%9D%20wake-sleep%E2%80%9D%20algorithm%20for%20unsupervised%20neural%20networks%201995"
+        },
+        {
+            "id": "Kalweit_0000_a",
+            "entry": "Gabriel Kalweit and Joschka Boedecker. Uncertainty-driven imagination for continuous deep reinforcement learning. In Proceedings of the 1st Annual Conference on Robot Learning, volume 78 of Proceedings of Machine Learning Research.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalweit%2C%20Gabriel%20Boedecker%2C%20Joschka%20Uncertainty-driven%20imagination%20for%20continuous%20deep%20reinforcement%20learning",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalweit%2C%20Gabriel%20Boedecker%2C%20Joschka%20Uncertainty-driven%20imagination%20for%20continuous%20deep%20reinforcement%20learning"
+        },
+        {
+            "id": "Kappen_et+al_2012_a",
+            "entry": "Hilbert J Kappen, Vicenc Gomez, and Manfred Opper. Optimal control as a graphical model inference problem. Machine learning, 87(2):159\u2013182, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kappen%2C%20Hilbert%20J.%20Gomez%2C%20Vicenc%20Opper%2C%20Manfred%20Optimal%20control%20as%20a%20graphical%20model%20inference%20problem%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kappen%2C%20Hilbert%20J.%20Gomez%2C%20Vicenc%20Opper%2C%20Manfred%20Optimal%20control%20as%20a%20graphical%20model%20inference%20problem%202012"
+        },
+        {
+            "id": "Jens_2013_a",
+            "entry": "Jens Kober, J Andrew Bagnell, and Jan Peters. Reinforcement learning in robotics: A survey. The International Journal of Robotics Research, 32(11):1238\u20131274, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jens%20Kober%2C%20J.Andrew%20Bagnell%20Peters%2C%20Jan%20Reinforcement%20learning%20in%20robotics%3A%20A%20survey%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jens%20Kober%2C%20J.Andrew%20Bagnell%20Peters%2C%20Jan%20Reinforcement%20learning%20in%20robotics%3A%20A%20survey%202013"
+        },
+        {
+            "id": "Konda_2002_a",
+            "entry": "Vijaymohan Konda. Actor-critic Algorithms. PhD thesis, Cambridge, MA, USA, 2002. AAI0804543.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Konda%2C%20Vijaymohan%20Actor-critic%20Algorithms%202002"
+        },
+        {
+            "id": "Levine_2013_a",
+            "entry": "Sergey Levine and Vladlen Koltun. Variational policy search via trajectory optimization. In NIPS, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Variational%20policy%20search%20via%20trajectory%20optimization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Variational%20policy%20search%20via%20trajectory%20optimization%202013"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "Timothy P Lillicrap, Jonathan J Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. arXiv preprint arXiv:1509.02971, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Moore_1993_a",
+            "entry": "Andrew W Moore and Christopher G Atkeson. Prioritized sweeping: Reinforcement learning with less data and less time. Machine learning, 13(1):103\u2013130, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moore%2C%20Andrew%20W.%20Atkeson%2C%20Christopher%20G.%20Prioritized%20sweeping%3A%20Reinforcement%20learning%20with%20less%20data%20and%20less%20time%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moore%2C%20Andrew%20W.%20Atkeson%2C%20Christopher%20G.%20Prioritized%20sweeping%3A%20Reinforcement%20learning%20with%20less%20data%20and%20less%20time%201993"
+        },
+        {
+            "id": "Nachum_et+al_2017_a",
+            "entry": "Ofir Nachum, Mohammad Norouzi, Kelvin Xu, and Dale Schuurmans. Bridging the gap between value and policy based reinforcement learning. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Nagabandi_et+al_2017_a",
+            "entry": "Anusha Nagabandi, Gregory Kahn, Ronald S Fearing, and Sergey Levine. Neural network dynamics for model-based deep reinforcement learning with model-free fine-tuning. arXiv preprint arXiv:1708.02596, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02596"
+        },
+        {
+            "id": "Neumann_2011_a",
+            "entry": "Gerhard Neumann et al. Variational inference for policy search in changing situations. In ICML 2011, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neumann%2C%20Gerhard%20Variational%20inference%20for%20policy%20search%20in%20changing%20situations%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neumann%2C%20Gerhard%20Variational%20inference%20for%20policy%20search%20in%20changing%20situations%202011"
+        },
+        {
+            "id": "O_et+al_2016_a",
+            "entry": "Brendan O\u2019Donoghue, Remi Munos, Koray Kavukcuoglu, and Volodymyr Mnih. Pgq: Combining policy gradient and q-learning. arXiv preprint arXiv:1611.01626, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01626"
+        },
+        {
+            "id": "Oh_et+al_2015_a",
+            "entry": "Junhyuk Oh, Xiaoxiao Guo, Honglak Lee, Richard L Lewis, and Satinder Singh. Action-conditional video prediction using deep networks in atari games. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015"
+        },
+        {
+            "id": "Ostrovski_et+al_2017_a",
+            "entry": "Georg Ostrovski, Marc G Bellemare, Aaron van den Oord, and Remi Munos. Count-based exploration with neural density models. arXiv preprint arXiv:1703.01310, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01310"
+        },
+        {
+            "id": "Dean_1989_a",
+            "entry": "Dean A Pomerleau. Alvinn: An autonomous land vehicle in a neural network. In Advances in neural information processing systems, pp. 305\u2013313, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dean%20A%20Pomerleau%20Alvinn%20An%20autonomous%20land%20vehicle%20in%20a%20neural%20network%20In%20Advances%20in%20neural%20information%20processing%20systems%20pp%20305313%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dean%20A%20Pomerleau%20Alvinn%20An%20autonomous%20land%20vehicle%20in%20a%20neural%20network%20In%20Advances%20in%20neural%20information%20processing%20systems%20pp%20305313%201989"
+        },
+        {
+            "id": "Rawlik_et+al_2012_a",
+            "entry": "Konrad Rawlik, Marc Toussaint, and Sethu Vijayakumar. On stochastic optimal control and reinforcement learning by approximate inference. In Robotics: science and systems, volume 13, pp. 3052\u20133056, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20On%20stochastic%20optimal%20control%20and%20reinforcement%20learning%20by%20approximate%20inference%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20On%20stochastic%20optimal%20control%20and%20reinforcement%20learning%20by%20approximate%20inference%202012"
+        },
+        {
+            "id": "Schaul_et+al_2015_a",
+            "entry": "Tom Schaul, Daniel Horgan, Karol Gregor, and David Silver. Universal value function approximators. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tom%20Schaul%20Daniel%20Horgan%20Karol%20Gregor%20and%20David%20Silver%20Universal%20value%20function%20approximators%20In%20ICML%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tom%20Schaul%20Daniel%20Horgan%20Karol%20Gregor%20and%20David%20Silver%20Universal%20value%20function%20approximators%20In%20ICML%202015"
+        },
+        {
+            "id": "Schulman_et+al_0000_a",
+            "entry": "John Schulman, Sergey Levine, Philipp Moritz, Michael I. Jordan, and Pieter Abbeel. Trust region policy optimization. CoRR, abs/1502.05477, 2015a.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.05477"
+        },
+        {
+            "id": "Schulman_et+al_0000_b",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan, and Pieter Abbeel. Highdimensional continuous control using generalized advantage estimation. CoRR, abs/1506.02438, 2015b.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02438"
+        },
+        {
+            "id": "Silver_et+al_2008_a",
+            "entry": "David Silver, Richard S. Sutton, and Martin Muller. Sample-based learning and search with permanent and transient memories. In Proceedings of the 25th International Conference on Machine Learning, ICML \u201908, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Sutton%2C%20Richard%20S.%20Muller%2C%20Martin%20Sample-based%20learning%20and%20search%20with%20permanent%20and%20transient%20memories%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Sutton%2C%20Richard%20S.%20Muller%2C%20Martin%20Sample-based%20learning%20and%20search%20with%20permanent%20and%20transient%20memories%202008"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Stengel_1986_a",
+            "entry": "Robert F Stengel. Optimal control and estimation. Courier Corporation, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stengel%2C%20Robert%20F.%20Optimal%20control%20and%20estimation%201986"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2017_a",
+            "entry": "Sainbayar Sukhbaatar, Ilya Kostrikov, Arthur Szlam, and Rob Fergus. Intrinsic motivation and automatic curricula via asymmetric self-play. arXiv preprint arXiv:1703.05407, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05407"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "E. Todorov, T. Erez, and Y. Tassa. Mujoco: A physics engine for model-based control. In IROS, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20E.%20Erez%2C%20T.%20Tassa%2C%20Y.%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20E.%20Erez%2C%20T.%20Tassa%2C%20Y.%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Todorov_2007_a",
+            "entry": "Emanuel Todorov. Linearly-solvable markov decision problems. In NIPS, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Linearly-solvable%20markov%20decision%20problems%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Linearly-solvable%20markov%20decision%20problems%202007"
+        },
+        {
+            "id": "Toussaint_2009_a",
+            "entry": "Marc Toussaint. Robot trajectory optimization using approximate inference. In Proceedings of the 26th annual international conference on machine learning, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Toussaint%2C%20Marc%20Robot%20trajectory%20optimization%20using%20approximate%20inference%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Toussaint%2C%20Marc%20Robot%20trajectory%20optimization%20using%20approximate%20inference%202009"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Ziyu Wang, Victor Bapst, Nicolas Heess, Volodymyr Mnih, Remi Munos, Koray Kavukcuoglu, and Nando de Freitas. Sample efficient actor-critic with experience replay. arXiv preprint arXiv:1611.01224, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01224"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "Published as a conference paper at ICLR 2019 Theophane Weber, Sebastien Racaniere, David P. Reichert, Lars Buesing, Arthur Guez, Danilo Jimenez Rezende, Adria Puigdomenech Badia, Oriol Vinyals, Nicolas Heess, Yujia Li, Razvan Pascanu, Peter Battaglia, David Silver, and Daan Wierstra. Imagination-augmented agents for deep reinforcement learning. CoRR, abs/1707.06203, 2017. Brian D Ziebart, Andrew L Maas, J Andrew Bagnell, and Anind K Dey. Maximum entropy inverse reinforcement learning. In AAAI, 2008.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06203"
+        }
+    ]
+}

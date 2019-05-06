@@ -1,0 +1,459 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PLAN ONLINE, LEARN OFFLINE: EFFICIENT LEARNING AND EXPLORATION VIA MODEL-BASED CONTROL",
+        "author": "Kendall Lowrey, Aravind Rajeswaran, Sham Kakade, Emanuel Todorov, Igor Mordatch, \u2217 Equal contributions 1 University of Washington 2 Roboti LLC",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Byey7n05FQ"
+        },
+        "abstract": "We propose a \u201cplan online and learn offline\u201d framework for the setting where an agent, with an internal model, needs to continually act and learn in the world. Our work builds on the synergistic relationship between local model-based control, global value function learning, and exploration. We study how local trajectory optimization can cope with approximation errors in the value function, and can stabilize and accelerate value function learning. Conversely, we also study how approximate value functions can help reduce the planning horizon and allow for better policies beyond local solutions. Finally, we also demonstrate how trajectory optimization can be used to perform temporally coordinated exploration in conjunction with estimating uncertainty in value function approximation. This exploration is critical for fast and stable learning of the value function. Combining these components enable solutions to complex control tasks, like humanoid locomotion and dexterous in-hand manipulation, in the equivalent of a few minutes of experience in the real world."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "value function",
+            "url": "https://en.wikipedia.org/wiki/value_function"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "model predictive control",
+            "url": "https://en.wikipedia.org/wiki/model_predictive_control"
+        },
+        {
+            "term": "dynamic programming",
+            "url": "https://en.wikipedia.org/wiki/dynamic_programming"
+        },
+        {
+            "term": "trajectory optimization",
+            "url": "https://en.wikipedia.org/wiki/trajectory_optimization"
+        },
+        {
+            "term": "tree search",
+            "url": "https://en.wikipedia.org/wiki/tree_search"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "function approximation",
+            "url": "https://en.wikipedia.org/wiki/function_approximation"
+        },
+        {
+            "term": "internal model",
+            "url": "https://en.wikipedia.org/wiki/internal_model"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        }
+    ],
+    "abbreviations": {
+        "POLO": "Plan Online and Learn Offline",
+        "MDP": "Markov Decision Process",
+        "MPC": "model predictive control"
+    },
+    "highlights": [
+        "We consider a setting where an agent with limited memory and computational resources is dropped into a world",
+        "Plan Online and Learn Offline is based on the tight synergistic coupling between local trajectory optimization, global value function learning, and exploration",
+        "We show that value function learning can be accelerated and stabilized by utilizing trajectory optimization integrally in the learning process, and that a trajectory optimization procedure in conjunction with an approximate value function can compute near optimal actions",
+        "We model the world as an infinite horizon discounted Markov Decision Process (MDP), which is characterized by the tuple: M = {S, A, R, T , \u03b3}",
+        "Plan Online and Learn Offline operates as follows: when acting in the world, the agent uses the internal model and always picks the optimal action suggested by model predictive control",
+        "In this work we presented Plan Online and Learn Offline, which combines the strengths of trajectory optimization and value function learning"
+    ],
+    "key_statements": [
+        "We consider a setting where an agent with limited memory and computational resources is dropped into a world",
+        "Plan Online and Learn Offline is based on the tight synergistic coupling between local trajectory optimization, global value function learning, and exploration",
+        "We show that value function learning can be accelerated and stabilized by utilizing trajectory optimization integrally in the learning process, and that a trajectory optimization procedure in conjunction with an approximate value function can compute near optimal actions",
+        "We model the world as an infinite horizon discounted Markov Decision Process (MDP), which is characterized by the tuple: M = {S, A, R, T , \u03b3}",
+        "Plan Online and Learn Offline operates as follows: when acting in the world, the agent uses the internal model and always picks the optimal action suggested by model predictive control",
+        "We find that Plan Online and Learn Offline uniformly dominates model predictive control, indicating that the agent is consolidating experience from the world into the value function",
+        "Model-free RL: Our work investigates how much training times can be reduced over model-free methods when the internal model is an accurate representation of the world model",
+        "In this work we presented Plan Online and Learn Offline, which combines the strengths of trajectory optimization and value function learning"
+    ],
+    "summary": [
+        "We consider a setting where an agent with limited memory and computational resources is dropped into a world.",
+        "POLO is based on the tight synergistic coupling between local trajectory optimization, global value function learning, and exploration.",
+        "The POLO framework combines three components: local trajectory optimization, global value function approximation, and an uncertainty and reward aware exploration strategy.",
+        "For problems in continuous control, MPC based on local dynamic programming methods (<a class=\"ref-link\" id=\"cJacobson_1970_a\" href=\"#rJacobson_1970_a\">Jacobson & Mayne, 1970</a>; <a class=\"ref-link\" id=\"cTodorov_2005_a\" href=\"#rTodorov_2005_a\">Todorov & Li, 2005</a>) provide an efficient way to approximately realize BH , which can be used to accelerate and stabilize value function learning.",
+        "We use this procedure to obtain samples from the posterior for value function approximation, and utilize them for temporally coordinated action selection using MPC.",
+        "POLO utilizes a global value function approximation scheme, a local trajectory optimization subroutine, and an optimistic exploration scheme.",
+        "POLO operates as follows: when acting in the world, the agent uses the internal model and always picks the optimal action suggested by MPC.",
+        "As described earlier, using trajectory optimization to generate the targets for fitting the value approximation accelerates the convergence and makes the learning more stable, as verified experimentally in Section 3.3.",
+        "Does trajectory optimization in conjunction with uncertainty estimation in value function approximation result in temporally coordinated exploration strategies?",
+        "We wish to understand how POLO, with its ensemble of value functions tracking uncertainties, uses MPC to perform temporally coordinated actions.",
+        "Our baseline is an agent that employs random exploration on a per-time-step basis; MPC without a value function would not move due to lack of local extrinsic rewards.",
+        "We consider the POLO agent which tracks value uncertainties and selects actions using a 32-step MPC procedure.",
+        "The value function consolidates experience over multiple target changes, and learns to give high values to states that are not just immediately good but provide a large space of affordances for the possible upcoming tasks.",
+        "Related to this, <a class=\"ref-link\" id=\"cAtkeson_1993_a\" href=\"#rAtkeson_1993_a\">Atkeson (1993</a>) uses an offline trajectory library for action selection in real-time, but do not explicitly consider learning parametric value functions.",
+        "RTDP (<a class=\"ref-link\" id=\"cBarto_et+al_1995_a\" href=\"#rBarto_et+al_1995_a\">Barto et al, 1995</a>) considers learning value functions based on states visited by the agent, but does not explicitly employ the use of planning.",
+        "An alternative set of approaches (<a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\">Ross et al, 2011</a>; <a class=\"ref-link\" id=\"cLevine_2013_a\" href=\"#rLevine_2013_a\">Levine & Koltun, 2013</a>; <a class=\"ref-link\" id=\"cMordatch_2014_a\" href=\"#rMordatch_2014_a\">Mordatch & Todorov, 2014</a>; Sun et al, 2018b) use local trajectory optimization to generate a dataset for training a global policy through imitation learning.",
+        "We show that we can learn value functions to help real-time action selection with MPC on some of the most high-dimensional continuous control tasks studied recently.",
+        "A natural step is to study the influence of approximation errors in the internal model and improving it over time using the real world interaction data"
+    ],
+    "headline": "We propose a \u201cplan online and learn offline\u201d framework for the setting where an agent, with an internal model, needs to continually act and learn in the world",
+    "reference_links": [
+        {
+            "id": "Anthony_et+al_2017_a",
+            "entry": "Thomas Anthony, Zheng Tian, and David Barber. Thinking fast and slow with deep learning and tree search. In Advances in Neural Information Processing Systems, pp. 5360\u20135370, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anthony%2C%20Thomas%20Tian%2C%20Zheng%20Barber%2C%20David%20Thinking%20fast%20and%20slow%20with%20deep%20learning%20and%20tree%20search%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anthony%2C%20Thomas%20Tian%2C%20Zheng%20Barber%2C%20David%20Thinking%20fast%20and%20slow%20with%20deep%20learning%20and%20tree%20search%202017"
+        },
+        {
+            "id": "Astrom_2004_a",
+            "entry": "Karl Johan Astrom and Richard M. Murray. Feedback systems an introduction for scientists and engineers. 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Astrom%2C%20Karl%20Johan%20Murray%2C%20Richard%20M.%20Feedback%20systems%20an%20introduction%20for%20scientists%20and%20engineers%202004"
+        },
+        {
+            "id": "Atkeson_1993_a",
+            "entry": "Christopher G. Atkeson. Using local trajectory optimizers to speed up global optimization in dynamic programming. In NIPS, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Atkeson%2C%20Christopher%20G.%20Using%20local%20trajectory%20optimizers%20to%20speed%20up%20global%20optimization%20in%20dynamic%20programming%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Atkeson%2C%20Christopher%20G.%20Using%20local%20trajectory%20optimizers%20to%20speed%20up%20global%20optimization%20in%20dynamic%20programming%201993"
+        },
+        {
+            "id": "Auer_et+al_2002_a",
+            "entry": "Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem. Machine learning, 47(2-3):235\u2013256, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Auer%2C%20Peter%20Cesa-Bianchi%2C%20Nicolo%20Fischer%2C%20Paul%20Finite-time%20analysis%20of%20the%20multiarmed%20bandit%20problem%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Auer%2C%20Peter%20Cesa-Bianchi%2C%20Nicolo%20Fischer%2C%20Paul%20Finite-time%20analysis%20of%20the%20multiarmed%20bandit%20problem%202002"
+        },
+        {
+            "id": "Azizzadenesheli_et+al_0000_a",
+            "entry": "Kamyar Azizzadenesheli, Emma Brunskill, and Anima Anandkumar. Efficient exploration through bayesian deep q-networks. CoRR, abs/1802.04412, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04412"
+        },
+        {
+            "id": "Azizzadenesheli_et+al_0000_b",
+            "entry": "Kamyar Azizzadenesheli, Brandon Yang, Weitang Liu, Emma Brunskill, Zachary Chase Lipton, and Anima Anandkumar. Sample-efficient deep rl with generative adversarial tree search. CoRR, abs/1806.05780, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.05780"
+        },
+        {
+            "id": "Bagnell_et+al_2003_a",
+            "entry": "J. Andrew Bagnell, Sham M. Kakade, Andrew Y. Ng, and Jeff G. Schneider. Policy search by dynamic programming. In NIPS, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bagnell%2C%20J.Andrew%20Kakade%2C%20Sham%20M.%20Ng%2C%20Andrew%20Y.%20Schneider%2C%20Jeff%20G.%20Policy%20search%20by%20dynamic%20programming%202003"
+        },
+        {
+            "id": "Barto_et+al_1995_a",
+            "entry": "Andrew G. Barto, Steven J. Bradtke, and Satinder P. Singh. Learning to act using real-time dynamic programming. Artif. Intell., 72:81\u2013138, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barto%2C%20Andrew%20G.%20Bradtke%2C%20Steven%20J.%20Singh%2C%20Satinder%20P.%20Learning%20to%20act%20using%20real-time%20dynamic%20programming%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barto%2C%20Andrew%20G.%20Bradtke%2C%20Steven%20J.%20Singh%2C%20Satinder%20P.%20Learning%20to%20act%20using%20real-time%20dynamic%20programming%201995"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc G. Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20G.%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20G.%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bertsekas_1996_a",
+            "entry": "Dimitri Bertsekas and John Tsitsiklis. Neuro-dynamic Programming. 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bertsekas%2C%20Dimitri%20Tsitsiklis%2C%20John%20Neuro-dynamic%20Programming%201996"
+        },
+        {
+            "id": "Buckman_et+al_2018_a",
+            "entry": "Jacob Buckman, Danijar Hafner, George Tucker, Eugene Brevdo, and Honglak Lee. Sampleefficient reinforcement learning with stochastic ensemble value expansion. arXiv preprint arXiv:1807.01675, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.01675"
+        },
+        {
+            "id": "Chentanez_et+al_2005_a",
+            "entry": "Nuttapong Chentanez, Andrew G Barto, and Satinder P Singh. Intrinsically motivated reinforcement learning. In Advances in neural information processing systems, pp. 1281\u20131288, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chentanez%2C%20Nuttapong%20Barto%2C%20Andrew%20G.%20Singh%2C%20Satinder%20P.%20Intrinsically%20motivated%20reinforcement%20learning%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chentanez%2C%20Nuttapong%20Barto%2C%20Andrew%20G.%20Singh%2C%20Satinder%20P.%20Intrinsically%20motivated%20reinforcement%20learning%202005"
+        },
+        {
+            "id": "Dvijotham_2011_a",
+            "entry": "Krishnamurthy Dvijotham and Emanuel Todorov. A unifying framework for linearly solvable control. In UAI, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dvijotham%2C%20Krishnamurthy%20Todorov%2C%20Emanuel%20A%20unifying%20framework%20for%20linearly%20solvable%20control%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dvijotham%2C%20Krishnamurthy%20Todorov%2C%20Emanuel%20A%20unifying%20framework%20for%20linearly%20solvable%20control%202011"
+        },
+        {
+            "id": "Feinberg_et+al_2018_a",
+            "entry": "Vladimir Feinberg, Alvin Wan, Ion Stoica, Michael I. Jordan, Joseph Gonzalez, and Sergey Levine. Model-based value estimation for efficient model-free reinforcement learning. CoRR, abs/1803.00101, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00101"
+        },
+        {
+            "id": "Fortunato_et+al_2017_a",
+            "entry": "Meire Fortunato, Mohammad Gheshlaghi Azar, Bilal Piot, Jacob Menick, Ian Osband, Alex Graves, Vlad Mnih, Remi Munos, Demis Hassabis, Olivier Pietquin, et al. Noisy networks for exploration. arXiv preprint arXiv:1706.10295, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.10295"
+        },
+        {
+            "id": "Garcia_et+al_1989_a",
+            "entry": "Carlos E. Garcia, David M. Prett, and Manfred Morari. Model predictive control: Theory and practice - a survey. Automatica, 25:335\u2013348, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garcia%2C%20Carlos%20E.%20Prett%2C%20David%20M.%20Morari%2C%20Manfred%20Model%20predictive%20control%3A%20Theory%20and%20practice%20-%20a%20survey%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garcia%2C%20Carlos%20E.%20Prett%2C%20David%20M.%20Morari%2C%20Manfred%20Model%20predictive%20control%3A%20Theory%20and%20practice%20-%20a%20survey%201989"
+        },
+        {
+            "id": "Ghosh_et+al_2018_a",
+            "entry": "Dibya Ghosh, Avi Singh, Aravind Rajeswaran, Vikash Kumar, and Sergey Levine. Divide-andconquer reinforcement learning. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ghosh%2C%20Dibya%20Singh%2C%20Avi%20Rajeswaran%2C%20Aravind%20Kumar%2C%20Vikash%20Divide-andconquer%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ghosh%2C%20Dibya%20Singh%2C%20Avi%20Rajeswaran%2C%20Aravind%20Kumar%2C%20Vikash%20Divide-andconquer%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pp. 1109\u20131117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Jacobson_1970_a",
+            "entry": "David Jacobson and David Mayne. Differential Dynamic Programming. American Elsevier Publishing Company, 1970.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacobson%2C%20David%20Mayne%2C%20David%20Differential%20Dynamic%20Programming%201970"
+        },
+        {
+            "id": "Kearns_2002_a",
+            "entry": "Michael Kearns and Satinder Singh. Near-optimal reinforcement learning in polynomial time. Machine learning, 49(2-3):209\u2013232, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kearns%2C%20Michael%20Singh%2C%20Satinder%20Near-optimal%20reinforcement%20learning%20in%20polynomial%20time%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kearns%2C%20Michael%20Singh%2C%20Satinder%20Near-optimal%20reinforcement%20learning%20in%20polynomial%20time%202002"
+        },
+        {
+            "id": "Kumar_2016_a",
+            "entry": "Vikash Kumar. Manipulators and Manipulation in high dimensional spaces. PhD thesis, University of Washington, Seattle, 2016. URL https://digital.lib.washington.edu/researchworks/handle/1773/38104.",
+            "url": "https://digital.lib.washington.edu/researchworks/handle/1773/38104"
+        },
+        {
+            "id": "Levine_2013_a",
+            "entry": "Sergey Levine and Vladlen Koltun. Guided policy search. In ICML, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Guided%20policy%20search.%20In%20ICML%202013"
+        },
+        {
+            "id": "Li_et+al_2010_a",
+            "entry": "Lihong Li, Wei Chu, John Langford, and Robert E. Schapire. A contextual-bandit approach to personalized news article recommendation. In WWW, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Lihong%20Chu%2C%20Wei%20Langford%2C%20John%20Schapire%2C%20Robert%20E.%20A%20contextual-bandit%20approach%20to%20personalized%20news%20article%20recommendation%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Lihong%20Chu%2C%20Wei%20Langford%2C%20John%20Schapire%2C%20Robert%20E.%20A%20contextual-bandit%20approach%20to%20personalized%20news%20article%20recommendation%202010"
+        },
+        {
+            "id": "Ljung_1987_a",
+            "entry": "Lennart Ljung. System identification: theory for the user. 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ljung%2C%20Lennart%20System%20identification%3A%20theory%20for%20the%20user%201987"
+        },
+        {
+            "id": "Lowrey_et+al_2018_a",
+            "entry": "Kendall Lowrey, Svetoslav Kolev, Jeremy Dao, Aravind Rajeswaran, and Emanuel Todorov. Reinforcement learning for non-prehensile manipulation: Transfer from simulation to physical system. CoRR, abs/1803.10371, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.10371"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy P. Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Mordatch_2014_a",
+            "entry": "Igor Mordatch and Emanuel Todorov. Combining the benefits of function approximation and trajectory optimization. In RSS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mordatch%2C%20Igor%20Todorov%2C%20Emanuel%20Combining%20the%20benefits%20of%20function%20approximation%20and%20trajectory%20optimization%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mordatch%2C%20Igor%20Todorov%2C%20Emanuel%20Combining%20the%20benefits%20of%20function%20approximation%20and%20trajectory%20optimization%202014"
+        },
+        {
+            "id": "Munos_2008_a",
+            "entry": "Remi Munos and Csaba Szepesvari. Finite-time bounds for fitted value iteration. Journal of Machine Learning Research, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Munos%2C%20Remi%20Szepesvari%2C%20Csaba%20Finite-time%20bounds%20for%20fitted%20value%20iteration%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Munos%2C%20Remi%20Szepesvari%2C%20Csaba%20Finite-time%20bounds%20for%20fitted%20value%20iteration%202008"
+        },
+        {
+            "id": "Munos_et+al_2016_a",
+            "entry": "Remi Munos, Tom Stepleton, Anna Harutyunyan, and Marc G. Bellemare. Safe and efficient offpolicy reinforcement learning. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Munos%2C%20Remi%20Stepleton%2C%20Tom%20Harutyunyan%2C%20Anna%20Bellemare%2C%20Marc%20G.%20Safe%20and%20efficient%20offpolicy%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Munos%2C%20Remi%20Stepleton%2C%20Tom%20Harutyunyan%2C%20Anna%20Bellemare%2C%20Marc%20G.%20Safe%20and%20efficient%20offpolicy%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Nagabandi_et+al_2018_a",
+            "entry": "Anusha Nagabandi, Gregory Kahn, Ronald S. Fearing, and Sergey Levine. Neural network dynamics for model-based deep reinforcement learning with model-free fine-tuning. In ICRA, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nagabandi%2C%20Anusha%20Kahn%2C%20Gregory%20Fearing%2C%20Ronald%20S.%20Levine%2C%20Sergey%20Neural%20network%20dynamics%20for%20model-based%20deep%20reinforcement%20learning%20with%20model-free%20fine-tuning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nagabandi%2C%20Anusha%20Kahn%2C%20Gregory%20Fearing%2C%20Ronald%20S.%20Levine%2C%20Sergey%20Neural%20network%20dynamics%20for%20model-based%20deep%20reinforcement%20learning%20with%20model-free%20fine-tuning%202018"
+        },
+        {
+            "id": "Ng_et+al_1999_a",
+            "entry": "Andrew Y. Ng, Daishi Harada, and Stuart J. Russell. Policy invariance under reward transformations: Theory and application to reward shaping. In ICML, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ng%2C%20Andrew%20Y.%20Harada%2C%20Daishi%20Russell%2C%20Stuart%20J.%20Policy%20invariance%20under%20reward%20transformations%3A%20Theory%20and%20application%20to%20reward%20shaping%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ng%2C%20Andrew%20Y.%20Harada%2C%20Daishi%20Russell%2C%20Stuart%20J.%20Policy%20invariance%20under%20reward%20transformations%3A%20Theory%20and%20application%20to%20reward%20shaping%201999"
+        },
+        {
+            "id": "Openai_2018_a",
+            "entry": "OpenAI. Learning dexterous in-hand manipulation. ArXiv e-prints, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=OpenAI%20Learning%20dexterous%20in-hand%20manipulation.%20ArXiv%20e-prints%202018"
+        },
+        {
+            "id": "Osband_et+al_2013_a",
+            "entry": "Ian Osband, Daniel Russo, and Benjamin Van Roy. (more) efficient reinforcement learning via posterior sampling. In Advances in Neural Information Processing Systems, pp. 3003\u20133011, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Russo%2C%20Daniel%20Roy%2C%20Benjamin%20Van%20efficient%20reinforcement%20learning%20via%20posterior%20sampling%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Russo%2C%20Daniel%20Roy%2C%20Benjamin%20Van%20efficient%20reinforcement%20learning%20via%20posterior%20sampling%202013"
+        },
+        {
+            "id": "Osband_et+al_2016_a",
+            "entry": "Ian Osband, Benjamin Van Roy, and Zheng Wen. Generalization and exploration via randomized value functions. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Roy%2C%20Benjamin%20Van%20Wen%2C%20Zheng%20Generalization%20and%20exploration%20via%20randomized%20value%20functions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Roy%2C%20Benjamin%20Van%20Wen%2C%20Zheng%20Generalization%20and%20exploration%20via%20randomized%20value%20functions%202016"
+        },
+        {
+            "id": "Osband_et+al_2018_a",
+            "entry": "Ian Osband, John Aslanides, and Albin Cassirer. Randomized prior functions for deep reinforcement learning. CoRR, abs/1806.03335, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.03335"
+        },
+        {
+            "id": "Pathak_et+al_0000_a",
+            "entry": "Deepak Pathak, Pulkit Agrawal, Alexei A Efros, and Trevor Darrell. Curiosity-driven exploration by self-supervised prediction. In International Conference on Machine Learning (ICML), volume 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction"
+        },
+        {
+            "id": "Plappert_et+al_2017_a",
+            "entry": "Matthias Plappert, Rein Houthooft, Prafulla Dhariwal, Szymon Sidor, Richard Y Chen, Xi Chen, Tamim Asfour, Pieter Abbeel, and Marcin Andrychowicz. Parameter space noise for exploration. arXiv preprint arXiv:1706.01905, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01905"
+        },
+        {
+            "id": "Qina_2003_a",
+            "entry": "S. Joe Qina and Thomas A. Badgwellb. A survey of industrial model predictive control technology. Control Engineering Practice, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qina%2C%20S.Joe%20Badgwellb%2C%20Thomas%20A.%20A%20survey%20of%20industrial%20model%20predictive%20control%20technology%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qina%2C%20S.Joe%20Badgwellb%2C%20Thomas%20A.%20A%20survey%20of%20industrial%20model%20predictive%20control%20technology%202003"
+        },
+        {
+            "id": "Rajamaki_2017_a",
+            "entry": "Joose Rajamaki and Perttu Hamalainen. Augmenting sampling based controllers with machine learning. In Proceedings of the ACM SIGGRAPH / Eurographics Symposium on Computer Animation, SCA \u201917, pp. 11:1\u201311:9, New York, NY, USA, 2017. ACM. ISBN 978-1-4503-50914. doi: 10.1145/3099564.3099579. URL http://doi.acm.org/10.1145/3099564.3099579.",
+            "crossref": "https://dx.doi.org/10.1145/3099564.3099579",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3099564.3099579"
+        },
+        {
+            "id": "Rajeswaran_et+al_2016_a",
+            "entry": "Aravind Rajeswaran, Sarvjeet Ghotra, Balaraman Ravindran, and Sergey Levine. Epopt: Learning robust neural network policies using model ensembles. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rajeswaran%2C%20Aravind%20Ghotra%2C%20Sarvjeet%20Ravindran%2C%20Balaraman%20Levine%2C%20Sergey%20Epopt%3A%20Learning%20robust%20neural%20network%20policies%20using%20model%20ensembles%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajeswaran%2C%20Aravind%20Ghotra%2C%20Sarvjeet%20Ravindran%2C%20Balaraman%20Levine%2C%20Sergey%20Epopt%3A%20Learning%20robust%20neural%20network%20policies%20using%20model%20ensembles%202016"
+        },
+        {
+            "id": "Rajeswaran_et+al_2017_a",
+            "entry": "Aravind Rajeswaran, Kendall Lowrey, Emanuel Todorov, and Sham Kakade. Towards Generalization and Simplicity in Continuous Control. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aravind%20Rajeswaran%20Kendall%20Lowrey%20Emanuel%20Todorov%20and%20Sham%20Kakade%20Towards%20Generalization%20and%20Simplicity%20in%20Continuous%20Control%20In%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aravind%20Rajeswaran%20Kendall%20Lowrey%20Emanuel%20Todorov%20and%20Sham%20Kakade%20Towards%20Generalization%20and%20Simplicity%20in%20Continuous%20Control%20In%20NIPS%202017"
+        },
+        {
+            "id": "Rajeswaran_et+al_2018_a",
+            "entry": "Aravind Rajeswaran, Vikash Kumar, Abhishek Gupta, Giulia Vezzani, John Schulman, Emanuel Todorov, and Sergey Levine. Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations. In Proceedings of Robotics: Science and Systems (RSS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rajeswaran%2C%20Aravind%20Kumar%2C%20Vikash%20Gupta%2C%20Abhishek%20Vezzani%2C%20Giulia%20Learning%20Complex%20Dexterous%20Manipulation%20with%20Deep%20Reinforcement%20Learning%20and%20Demonstrations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajeswaran%2C%20Aravind%20Kumar%2C%20Vikash%20Gupta%2C%20Abhishek%20Vezzani%2C%20Giulia%20Learning%20Complex%20Dexterous%20Manipulation%20with%20Deep%20Reinforcement%20Learning%20and%20Demonstrations%202018"
+        },
+        {
+            "id": "Ross_2012_a",
+            "entry": "Stephane Ross and J. Andrew Bagnell. Agnostic system identification for model-based reinforcement learning. In ICML, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Bagnell%2C%20J.Andrew%20Agnostic%20system%20identification%20for%20model-based%20reinforcement%20learning%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Bagnell%2C%20J.Andrew%20Agnostic%20system%20identification%20for%20model-based%20reinforcement%20learning%202012"
+        },
+        {
+            "id": "Ross_et+al_2011_a",
+            "entry": "Stephane Ross, Geoffrey Gordon, and Drew Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. In Proceedings of the fourteenth international conference on artificial intelligence and statistics, pp. 627\u2013635, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Gordon%2C%20Geoffrey%20Bagnell%2C%20Drew%20A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20no-regret%20online%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Gordon%2C%20Geoffrey%20Bagnell%2C%20Drew%20A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20no-regret%20online%20learning%202011"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. Highdimensional continuous control using generalized advantage estimation. arXiv preprint arXiv:1506.02438, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02438"
+        },
+        {
+            "id": "Schulman_et+al_2016_a",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. Highdimensional continuous control using generalized advantage estimation. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Moritz%2C%20Philipp%20Levine%2C%20Sergey%20Jordan%2C%20Michael%20Highdimensional%20continuous%20control%20using%20generalized%20advantage%20estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Moritz%2C%20Philipp%20Levine%2C%20Sergey%20Jordan%2C%20Michael%20Highdimensional%20continuous%20control%20using%20generalized%20advantage%20estimation%202016"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J. Maddison, Arthur Guez, Laurent Sifre, George van den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Vedavyas Panneershelvam, Marc Lanctot, Sander Dieleman, Dominik Grewe, John Nham, Nal Kalchbrenner, Ilya Sutskever, Timothy P. Lillicrap, Madeleine Leach, Koray Kavukcuoglu, Thore Graepel, and Demis Hassabis. Mastering the game of go with deep neural networks and tree search. Nature, 529:484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Thore%20Graepel%2C%20and%20Demis%20Hassabis.%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Thore%20Graepel%2C%20and%20Demis%20Hassabis.%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Stadie_et+al_2015_a",
+            "entry": "Bradly C Stadie, Sergey Levine, and Pieter Abbeel. Incentivizing exploration in reinforcement learning with deep predictive models. arXiv preprint arXiv:1507.00814, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.00814"
+        },
+        {
+            "id": "Wen_0000_a",
+            "entry": "Wen Sun, J. Andrew Bagnell, and Byron Boots. Truncated horizon policy search: Combining reinforcement learning & imitation learning. CoRR, abs/1805.11240, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11240"
+        },
+        {
+            "id": "Sun_et+al_0000_a",
+            "entry": "Wen Sun, Geoffrey J. Gordon, Byron Boots, and J. Andrew Bagnell. Dual policy iteration. CoRR, abs/1805.10755, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.10755"
+        },
+        {
+            "id": "Tassa_et+al_2012_a",
+            "entry": "Yuval Tassa, Tom Erez, and Emanuel Todorov. Synthesis and stabilization of complex behaviors through online trajectory optimization. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 4906\u20134913. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tassa%2C%20Yuval%20Erez%2C%20Tom%20Todorov%2C%20Emanuel%20Synthesis%20and%20stabilization%20of%20complex%20behaviors%20through%20online%20trajectory%20optimization%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tassa%2C%20Yuval%20Erez%2C%20Tom%20Todorov%2C%20Emanuel%20Synthesis%20and%20stabilization%20of%20complex%20behaviors%20through%20online%20trajectory%20optimization%202012"
+        },
+        {
+            "id": "Tassa_et+al_2014_a",
+            "entry": "Yuval Tassa, Nicolas Mansard, and Emanuel Todorov. Control-limited differential dynamic programming. 2014 IEEE International Conference on Robotics and Automation (ICRA), pp. 1168\u2013 1175, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuval%20Tassa%20Nicolas%20Mansard%20and%20Emanuel%20Todorov%20Controllimited%20differential%20dynamic%20programming%202014%20IEEE%20International%20Conference%20on%20Robotics%20and%20Automation%20ICRA%20pp%201168%201175%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuval%20Tassa%20Nicolas%20Mansard%20and%20Emanuel%20Todorov%20Controllimited%20differential%20dynamic%20programming%202014%20IEEE%20International%20Conference%20on%20Robotics%20and%20Automation%20ICRA%20pp%201168%201175%202014"
+        },
+        {
+            "id": "Theodorou_et+al_2010_a",
+            "entry": "Evangelos Theodorou, Jonas Buchli, and Stefan Schaal. A generalized path integral control approach to reinforcement learning. Journal of Machine Learning Research, 11:3137\u20133181, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Theodorou%2C%20Evangelos%20Buchli%2C%20Jonas%20Schaal%2C%20Stefan%20A%20generalized%20path%20integral%20control%20approach%20to%20reinforcement%20learning%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Theodorou%2C%20Evangelos%20Buchli%2C%20Jonas%20Schaal%2C%20Stefan%20A%20generalized%20path%20integral%20control%20approach%20to%20reinforcement%20learning%202010"
+        },
+        {
+            "id": "Todorov_2006_a",
+            "entry": "Emanuel Todorov. Linearly-solvable markov decision problems. In NIPS, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Linearly-solvable%20markov%20decision%20problems%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Linearly-solvable%20markov%20decision%20problems%202006"
+        },
+        {
+            "id": "Todorov_2005_a",
+            "entry": "Emanuel Todorov and Weiwei Li. A generalized iterative lqg method for locally-optimal feedback control of constrained nonlinear stochastic systems. In ACC, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Li%2C%20Weiwei%20A%20generalized%20iterative%20lqg%20method%20for%20locally-optimal%20feedback%20control%20of%20constrained%20nonlinear%20stochastic%20systems%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Li%2C%20Weiwei%20A%20generalized%20iterative%20lqg%20method%20for%20locally-optimal%20feedback%20control%20of%20constrained%20nonlinear%20stochastic%20systems%202005"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In IROS, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Williams_et+al_2016_a",
+            "entry": "Grady Williams, Paul Drews, Brian Goldfain, James M Rehg, and Evangelos A Theodorou. Aggressive driving with model predictive path integral control. In Robotics and Automation (ICRA), 2016 IEEE International Conference on, pp. 1433\u20131440. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Grady%20Drews%2C%20Paul%20Goldfain%2C%20Brian%20Rehg%2C%20James%20M.%20and%20Evangelos%20A%20Theodorou.%20Aggressive%20driving%20with%20model%20predictive%20path%20integral%20control%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Grady%20Drews%2C%20Paul%20Goldfain%2C%20Brian%20Rehg%2C%20James%20M.%20and%20Evangelos%20A%20Theodorou.%20Aggressive%20driving%20with%20model%20predictive%20path%20integral%20control%202016"
+        },
+        {
+            "id": "Zhong_et+al_2013_a",
+            "entry": "Mingyuan Zhong, Mikala Johnson, Yuval Tassa, Tom Erez, and Emanuel Todorov. Value function approximation and model predictive control. In Adaptive Dynamic Programming And Reinforcement Learning (ADPRL), 2013 IEEE Symposium on, pp. 100\u2013107. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhong%2C%20Mingyuan%20Johnson%2C%20Mikala%20Tassa%2C%20Yuval%20Erez%2C%20Tom%20Value%20function%20approximation%20and%20model%20predictive%20control.%20In%20Adaptive%20Dynamic%20Programming%20And%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhong%2C%20Mingyuan%20Johnson%2C%20Mikala%20Tassa%2C%20Yuval%20Erez%2C%20Tom%20Value%20function%20approximation%20and%20model%20predictive%20control.%20In%20Adaptive%20Dynamic%20Programming%20And%202013"
+        },
+        {
+            "id": "The_2012_a",
+            "entry": "The model used for the humanoid experiments was originally distributed with the MuJoCo (Todorov et al., 2012) software package and modified for our use. The model nominally has 27 degrees of freedom, including the floating base. It utilizes direct torque actuation for control, necessitating a small timestep of 0.008 seconds. The actuation input is limited to \u00b11.0, but the original gear ratios are left unchanged.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20model%20used%20for%20the%20humanoid%20experiments%20was%20originally%20distributed%20with%20the%20MuJoCo%20Todorov%20et%20al%202012%20software%20package%20and%20modified%20for%20our%20use%20The%20model%20nominally%20has%2027%20degrees%20of%20freedom%20including%20the%20floating%20base%20It%20utilizes%20direct%20torque%20actuation%20for%20control%20necessitating%20a%20small%20timestep%20of%200008%20seconds%20The%20actuation%20input%20is%20limited%20to%2010%20but%20the%20original%20gear%20ratios%20are%20left%20unchanged"
+        },
+        {
+            "id": "Notes_2005_a",
+            "entry": "Notes and Remarks: For Eq. (13) to hold in general, and hence for the overall bound to hold, we require that the actions are optimized in closed loop. In other words, MPC has to optimize over the space of feedback policies as opposed to open loop actions. Many commonly used MPC algorithms like DDP and iLQG Jacobson & Mayne (1970); Todorov & Li (2005) have this property through the certainty equivalence principle for the case of Gaussian noise. For deterministic dynamics, which is the case for most common simulators like MuJoCo, Eq. (13) holds without the closed loop requirement. We summarize the different cases and potential ways to perform MPC below:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Notes%20and%20Remarks%20For%20Eq%2013%20to%20hold%20in%20general%20and%20hence%20for%20the%20overall%20bound%20to%20hold%20we%20require%20that%20the%20actions%20are%20optimized%20in%20closed%20loop%20In%20other%20words%20MPC%20has%20to%20optimize%20over%20the%20space%20of%20feedback%20policies%20as%20opposed%20to%20open%20loop%20actions%20Many%20commonly%20used%20MPC%20algorithms%20like%20DDP%20and%20iLQG%20Jacobson%20%20Mayne%201970%20Todorov%20%20Li%202005%20have%20this%20property%20through%20the%20certainty%20equivalence%20principle%20for%20the%20case%20of%20Gaussian%20noise%20For%20deterministic%20dynamics%20which%20is%20the%20case%20for%20most%20common%20simulators%20like%20MuJoCo%20Eq%2013%20holds%20without%20the%20closed%20loop%20requirement%20We%20summarize%20the%20different%20cases%20and%20potential%20ways%20to%20perform%20MPC%20below",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Notes%20and%20Remarks%20For%20Eq%2013%20to%20hold%20in%20general%20and%20hence%20for%20the%20overall%20bound%20to%20hold%20we%20require%20that%20the%20actions%20are%20optimized%20in%20closed%20loop%20In%20other%20words%20MPC%20has%20to%20optimize%20over%20the%20space%20of%20feedback%20policies%20as%20opposed%20to%20open%20loop%20actions%20Many%20commonly%20used%20MPC%20algorithms%20like%20DDP%20and%20iLQG%20Jacobson%20%20Mayne%201970%20Todorov%20%20Li%202005%20have%20this%20property%20through%20the%20certainty%20equivalence%20principle%20for%20the%20case%20of%20Gaussian%20noise%20For%20deterministic%20dynamics%20which%20is%20the%20case%20for%20most%20common%20simulators%20like%20MuJoCo%20Eq%2013%20holds%20without%20the%20closed%20loop%20requirement%20We%20summarize%20the%20different%20cases%20and%20potential%20ways%20to%20perform%20MPC%20below"
+        }
+    ]
+}

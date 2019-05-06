@@ -1,0 +1,283 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "VISUAL REASONING BY PROGRESSIVE MODULE NETWORKS",
+        "author": "Seung Wook Kim, Makarand Tapaswi, Sanja Fidler, 1Department of Computer Science, University of Toronto 2Vector Institute, Canada 3NVIDIA {seung,makarand,fidler}@cs.toronto.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1fpDsAqt7"
+        },
+        "abstract": "Humans learn to solve tasks of increasing complexity by building on top of previously acquired knowledge. Typically, there exists a natural progression in the tasks that we learn \u2013 most do not require completely independent solutions, but can be broken down into simpler subtasks. We propose to represent a solver for each task as a neural module that calls existing modules (solvers for simpler tasks) in a functional program-like manner. Lower modules are a black box to the calling module, and communicate only via a query and an output. Thus, a module for a new task learns to query existing modules and composes their outputs in order to produce its own output. Our model effectively combines previous skill-sets, does not suffer from forgetting, and is fully differentiable. We test our model in learning a set of visual reasoning tasks, and demonstrate improved performances in all tasks by learning progressively. By evaluating the reasoning process using human judges, we show that our model is more interpretable than an attention-based baseline."
+    },
+    "keywords": [
+        {
+            "term": "multi-task learning",
+            "url": "https://en.wikipedia.org/wiki/multi-task_learning"
+        },
+        {
+            "term": "visual reasoning",
+            "url": "https://en.wikipedia.org/wiki/visual_reasoning"
+        },
+        {
+            "term": "low level",
+            "url": "https://en.wikipedia.org/wiki/low_level"
+        },
+        {
+            "term": "mean average precision",
+            "url": "https://en.wikipedia.org/wiki/mean_average_precision"
+        }
+    ],
+    "abbreviations": {
+        "MTL": "multi-task learning",
+        "PMN": "Progressive Module Networks",
+        "VQA": "Visual Question Answering",
+        "PNNs": "Progressive Neural Networks",
+        "VG": "Visual Genome",
+        "mAP": "mean average precision"
+    },
+    "highlights": [
+        "Humans acquire skills and knowledge in a curriculum by building on top of previously acquired knowledge",
+        "We propose Progressive Module Networks (PMN), a framework for multi-task learning by progressively designing modules on top of existing modules",
+        "We demonstrate Progressive Module Networks in learning a set of visual reasoning tasks such as counting, captioning, and Visual Question Answering (VQA)",
+        "We present an example of how Progressive Module Networks can be adopted for several tasks related to visual reasoning",
+        "We proposed Progressive Module Networks (PMN) that train task modules in a compositional manner, by exploiting previously learned lower-level task modules",
+        "One task can benefit from unrelated tasks unlike conventional multi-task learning algorithms"
+    ],
+    "key_statements": [
+        "Humans acquire skills and knowledge in a curriculum by building on top of previously acquired knowledge",
+        "We address the problem of multi-task learning where tasks exhibit a natural progression in complexity",
+        "We propose Progressive Module Networks (PMN), a framework for multi-task learning by progressively designing modules on top of existing modules",
+        "We demonstrate Progressive Module Networks in learning a set of visual reasoning tasks such as counting, captioning, and Visual Question Answering (VQA)",
+        "We describe the tasks studied in this paper in Sec. 3.3 and provide a detailed example of how Progressive Module Networks is implemented and executed for Visual Question Answering (Sec. 3.4).\n3.1",
+        "We present an example of how Progressive Module Networks can be adopted for several tasks related to visual reasoning",
+        "(4) Qvqa\u2192obj, Qvqa\u2192att, and Qvqa\u2192\u2206 first compute a joint attention map m as summation of weighted by the softmaxed importance scores of (\u03a9vqa, Mrel), and they pass the sum of visual features X weighted by m to the corresponding modules. \u2206vqa is implemented as an MLP",
+        "We report mean average precision for attribute classification which is a multi-label classification problem",
+        "We proposed Progressive Module Networks (PMN) that train task modules in a compositional manner, by exploiting previously learned lower-level task modules",
+        "One task can benefit from unrelated tasks unlike conventional multi-task learning algorithms",
+        "Progressive Module Networks is an important step towards more interpretable, compositional multi-task models"
+    ],
+    "summary": [
+        "Humans acquire skills and knowledge in a curriculum by building on top of previously acquired knowledge.",
+        "We demonstrate PMN in learning a set of visual reasoning tasks such as counting, captioning, and Visual Question Answering (VQA).",
+        "Progressive Module Networks (PMN) learn a module that requests and uses outputs from lower modules to aid in solving the given task.",
+        "The output of the relationship detection module that predicts an object bounding box is a N dimensional soft-maxed vector.",
+        "These are the only modules for which we do not use actual output labels, as we obtained better results for higher level tasks empirically.",
+        "Similar to <a class=\"ref-link\" id=\"cAnderson_et+al_2018_a\" href=\"#rAnderson_et+al_2018_a\">Anderson et al (2018</a>), at each time step, the attention module \u03a9cap attends over image regions X using the hidden state of the first layer.",
+        "The state update function softly chooses a useful attention map by calculating softmax on the importance scores of \u03a9cnt and Mrel.",
+        "Given a vector representation of a natural language question, qvqa, the VQA module Mvqa uses Lvqa = [\u03a9vqa, Mrel, Mobj, Matt, \u2206vqa, Mcnt, Mcap].",
+        "(4) Qvqa\u2192obj, Qvqa\u2192att, and Qvqa\u2192\u2206 first compute a joint attention map m as summation of weighted by the softmaxed importance scores of (\u03a9vqa, Mrel), and they pass the sum of visual features X weighted by m to the corresponding modules.",
+        "After Tvqa steps, the prediction function \u03a8vqa computes the final output based on the initial question vector qvqa and all knowledge vectors kt \u2208 st.",
+        "When training for the task (VQA), unlike other modules whose parameters are fixed, we fine-tune the counting module because counting module expects the same form of input - embedding of natural language question.",
+        "By employing more questions from the whole VQA dataset, we obtain a better attention map, and the performance of counting module increases from 50.0% (c.f .",
+        "Mvqa correctly chooses to use Mrel rather than its own output produced by \u03a9vqa since the question requires relational reasoning.",
+        "With the attended green box obtained from Mrel, Mvqa mostly uses the object and captioning modules to produce the final answer.",
+        "We proposed Progressive Module Networks (PMN) that train task modules in a compositional manner, by exploiting previously learned lower-level task modules.",
+        "PMN can produce queries to call other modules and make use of the returned information to solve the current task.",
+        "Since there is no need to know about the inner workings of the children modules, it opens up promising ways to train intelligent robots that can compartmentalize and perform multiple tasks as they progressively improve their abilities."
+    ],
+    "headline": "We propose to represent a solver for each task as a neural module that calls existing modules in a functional program-like manner",
+    "reference_links": [
+        {
+            "id": "Anderson_et+al_2018_a",
+            "entry": "Peter Anderson, Xiaodong He, Chris Buehler, Damien Teney, Mark Johnson, Stephen Gould, and Lei Zhang. Bottom-up and Top-down Attention for Image Captioning and VQA. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Anderson%2C%20Peter%20He%2C%20Xiaodong%20Buehler%2C%20Chris%20Teney%2C%20Damien%20Bottom-up%20and%20Top-down%20Attention%20for%20Image%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Anderson%2C%20Peter%20He%2C%20Xiaodong%20Buehler%2C%20Chris%20Teney%2C%20Damien%20Bottom-up%20and%20Top-down%20Attention%20for%20Image%202018"
+        },
+        {
+            "id": "Andreas_et+al_2016_a",
+            "entry": "Jacob Andreas, Marcus Rohrbach, Trevor Darrell, and Dan Klein. Neural Module Networks. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacob%20Andreas%20Marcus%20Rohrbach%20Trevor%20Darrell%20and%20Dan%20Klein%20Neural%20Module%20Networks%20In%20CVPR%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jacob%20Andreas%20Marcus%20Rohrbach%20Trevor%20Darrell%20and%20Dan%20Klein%20Neural%20Module%20Networks%20In%20CVPR%202016"
+        },
+        {
+            "id": "Bilen_2016_a",
+            "entry": "Hakan Bilen and Andrea Vedaldi. Integrated Perception with Recurrent Multi-task Neural Networks. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bilen%2C%20Hakan%20Vedaldi%2C%20Andrea%20Integrated%20Perception%20with%20Recurrent%20Multi-task%20Neural%20Networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bilen%2C%20Hakan%20Vedaldi%2C%20Andrea%20Integrated%20Perception%20with%20Recurrent%20Multi-task%20Neural%20Networks%202016"
+        },
+        {
+            "id": "Caruana_1993_a",
+            "entry": "Richard Caruana. Multitask Learning: A Knowledge-Based Source of Inductive Bias. In ICML, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Caruana%2C%20Richard%20Multitask%20Learning%3A%20A%20Knowledge-Based%20Source%20of%20Inductive%20Bias%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Caruana%2C%20Richard%20Multitask%20Learning%3A%20A%20Knowledge-Based%20Source%20of%20Inductive%20Bias%201993"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merri\u00ebnboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical machine translation. arXiv preprint arXiv:1406.1078, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1406.1078"
+        },
+        {
+            "id": "Duong_et+al_2015_a",
+            "entry": "Long Duong, Trevor Cohn, Steven Bird, and Paul Cook. Low Resource Dependency Parsing: Cross-lingual Parameter Sharing in a Neural Network Parser. In Association for Computational Linguistics (ACL), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duong%2C%20Long%20Cohn%2C%20Trevor%20Bird%2C%20Steven%20Cook%2C%20Paul%20Low%20Resource%20Dependency%20Parsing%3A%20Cross-lingual%20Parameter%20Sharing%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duong%2C%20Long%20Cohn%2C%20Trevor%20Bird%2C%20Steven%20Cook%2C%20Paul%20Low%20Resource%20Dependency%20Parsing%3A%20Cross-lingual%20Parameter%20Sharing%202015"
+        },
+        {
+            "id": "Fukui_et+al_2016_a",
+            "entry": "Akira Fukui, Dong Huk Park, Daylen Yang, Anna Rohrbach, Trevor Darrell, and Marcus Rohrbach. Multimodal Compact Bilinear Pooling for Visual Question Answering and Visual Grounding. In Empirical Methods in Natural Language Processing (EMNLP), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fukui%2C%20Akira%20Park%2C%20Dong%20Huk%20Yang%2C%20Daylen%20Rohrbach%2C%20Anna%20Multimodal%20Compact%20Bilinear%20Pooling%20for%20Visual%20Question%20Answering%20and%20Visual%20Grounding%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fukui%2C%20Akira%20Park%2C%20Dong%20Huk%20Yang%2C%20Daylen%20Rohrbach%2C%20Anna%20Multimodal%20Compact%20Bilinear%20Pooling%20for%20Visual%20Question%20Answering%20and%20Visual%20Grounding%202016"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Yash Goyal, Tejas Khot, Douglas Summers-Stay, Dhruv Batra, and Devi Parikh. Making the V in VQA Matter: Elevating the Role of Image Understanding in Visual Question Answering. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Yash%20Khot%2C%20Tejas%20Summers-Stay%2C%20Douglas%20Batra%2C%20Dhruv%20Making%20the%20V%20in%20VQA%20Matter%3A%20Elevating%20the%20Role%20of%20Image%20Understanding%20in%20Visual%20Question%20Answering%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Yash%20Khot%2C%20Tejas%20Summers-Stay%2C%20Douglas%20Batra%2C%20Dhruv%20Making%20the%20V%20in%20VQA%20Matter%3A%20Elevating%20the%20Role%20of%20Image%20Understanding%20in%20Visual%20Question%20Answering%202017"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hu_et+al_2017_a",
+            "entry": "Ronghang Hu, Jacob Andreas, Marcus Rohrbach, Trevor Darrell, and Kate Saenko. Learning to Reason: End-to-End Module Networks for Visual Question Answering. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Ronghang%20Andreas%2C%20Jacob%20Rohrbach%2C%20Marcus%20Darrell%2C%20Trevor%20Learning%20to%20Reason%3A%20End-to-End%20Module%20Networks%20for%20Visual%20Question%20Answering%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Ronghang%20Andreas%2C%20Jacob%20Rohrbach%2C%20Marcus%20Darrell%2C%20Trevor%20Learning%20to%20Reason%3A%20End-to-End%20Module%20Networks%20for%20Visual%20Question%20Answering%202017"
+        },
+        {
+            "id": "Hudson_2018_a",
+            "entry": "Drew Arad Hudson and Christopher D. Manning. Compositional attention networks for machine reasoning. In ICLR, 2018. URL https://openreview.net/forum?id=S1Euwz-Rb.",
+            "url": "https://openreview.net/forum?id=S1Euwz-Rb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hudson%2C%20Drew%20Arad%20Manning%2C%20Christopher%20D.%20Compositional%20attention%20networks%20for%20machine%20reasoning%202018"
+        },
+        {
+            "id": "Jiang_et+al_2018_a",
+            "entry": "Yu Jiang, Vivek Natarajan, Xinlei Chen, Marcus Rohrbach, Dhruv Batra, and Devi Parikh. Pythia v0. 1: the winning entry to the vqa challenge 2018. arXiv preprint arXiv:1807.09956, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.09956"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Justin Johnson, Bharath Hariharan, Laurens van der Maaten, Li Fei-Fei, C Lawrence Zitnick, and Ross Girshick. CLEVR: A diagnostic dataset for compositional language and elementary visual reasoning. In CVPR, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Li%20Fei-Fei%2C%20C.Lawrence%20Zitnick%20CLEVR%3A%20A%20diagnostic%20dataset%20for%20compositional%20language%20and%20elementary%20visual%20reasoning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Li%20Fei-Fei%2C%20C.Lawrence%20Zitnick%20CLEVR%3A%20A%20diagnostic%20dataset%20for%20compositional%20language%20and%20elementary%20visual%20reasoning%202017"
+        },
+        {
+            "id": "Johnson_et+al_2017_b",
+            "entry": "Justin Johnson, Bharath Hariharan, Laurens van der Maaten, Judy Hoffman, Li Fei-Fei, C. Lawrence Zitnick, and Ross Girshick. Inferring and Executing Programs for Visual Reasoning. In ICCV, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Hoffman%2C%20Judy%20Inferring%20and%20Executing%20Programs%20for%20Visual%20Reasoning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Hoffman%2C%20Judy%20Inferring%20and%20Executing%20Programs%20for%20Visual%20Reasoning%202017"
+        },
+        {
+            "id": "Karpathy_2015_a",
+            "entry": "Andrej Karpathy and Li Fei-Fei. Deep Visual-Semantic Alignments for Generating Image Descriptions. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karpathy%2C%20Andrej%20Fei-Fei%2C%20Li%20Deep%20Visual-Semantic%20Alignments%20for%20Generating%20Image%20Descriptions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karpathy%2C%20Andrej%20Fei-Fei%2C%20Li%20Deep%20Visual-Semantic%20Alignments%20for%20Generating%20Image%20Descriptions%202015"
+        },
+        {
+            "id": "Kim_et+al_2018_a",
+            "entry": "Jin-Hwa Kim, Jaehyun Jun, and Byoung-Tak Zhang. Bilinear attention networks. arXiv preprint arXiv:1805.07932, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07932"
+        },
+        {
+            "id": "Kokkinos_2017_a",
+            "entry": "Iasonas Kokkinos. UberNet: Training a \u2018Universal\u2019 Convolutional Neural Network for Low-, Mid-, and High-Level Vision using Diverse Datasets and Limited Memory. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kokkinos%2C%20Iasonas%20UberNet%3A%20Training%20a%20%E2%80%98Universal%E2%80%99%20Convolutional%20Neural%20Network%20for%20Low-%2C%20Mid-%2C%20and%20High-Level%20Vision%20using%20Diverse%20Datasets%20and%20Limited%20Memory%202017"
+        },
+        {
+            "id": "Krishna_et+al_2016_a",
+            "entry": "Ranjay Krishna, Yuke Zhu, Oliver Groth, Justin Johnson, Kenji Hata, Joshua Kravitz, Stephanie Chen, Yannis Kalantidis, Li-Jia Li, David A Shamma, Michael Bernstein, and Li Fei-Fei. Visual Genome: Connecting Language and Vision Using Crowdsourced Dense Image Annotations. arXiv preprint arXiv:1602.07332, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.07332"
+        },
+        {
+            "id": "Lin_et+al_2014_a",
+            "entry": "Tsung-Yi Lin, Michael Maire, Serge Belongie, James Hays, Pietro Perona, Deva Ramanan, Piotr Doll\u00e1r, and C Lawrence Zitnick. Microsoft COCO: Common Objects in Context. In ECCV, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=TsungYi%20Lin%20Michael%20Maire%20Serge%20Belongie%20James%20Hays%20Pietro%20Perona%20Deva%20Ramanan%20Piotr%20Doll%C3%A1r%20and%20C%20Lawrence%20Zitnick%20Microsoft%20COCO%20Common%20Objects%20in%20Context%20In%20ECCV%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=TsungYi%20Lin%20Michael%20Maire%20Serge%20Belongie%20James%20Hays%20Pietro%20Perona%20Deva%20Ramanan%20Piotr%20Doll%C3%A1r%20and%20C%20Lawrence%20Zitnick%20Microsoft%20COCO%20Common%20Objects%20in%20Context%20In%20ECCV%202014"
+        },
+        {
+            "id": "Mingsheng_et+al_2017_a",
+            "entry": "Mingsheng Long, ZHANGJIE CAO, Jianmin Wang, and Philip S Yu. Learning Multiple Tasks with Multilinear Relationship Networks. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mingsheng%20Long%2C%20Z.H.A.N.G.J.I.E.C.A.O.%20Wang%2C%20Jianmin%20Yu%2C%20Philip%20S.%20Learning%20Multiple%20Tasks%20with%20Multilinear%20Relationship%20Networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mingsheng%20Long%2C%20Z.H.A.N.G.J.I.E.C.A.O.%20Wang%2C%20Jianmin%20Yu%2C%20Philip%20S.%20Learning%20Multiple%20Tasks%20with%20Multilinear%20Relationship%20Networks%202017"
+        },
+        {
+            "id": "Lu_et+al_2016_a",
+            "entry": "Cewu Lu, Ranjay Krishna, Michael Bernstein, and Li Fei-Fei. Visual Relationship Detection with Language Priors. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lu%2C%20Cewu%20Krishna%2C%20Ranjay%20Bernstein%2C%20Michael%20Fei-Fei%2C%20Li%20Visual%20Relationship%20Detection%20with%20Language%20Priors%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lu%2C%20Cewu%20Krishna%2C%20Ranjay%20Bernstein%2C%20Michael%20Fei-Fei%2C%20Li%20Visual%20Relationship%20Detection%20with%20Language%20Priors%202016"
+        },
+        {
+            "id": "Misra_et+al_2016_a",
+            "entry": "Ishan Misra, Abhinav Shrivastava, Abhinav Gupta, and Martial Hebert. Cross-Stitch Networks for Multi-task Learning. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Misra%2C%20Ishan%20Shrivastava%2C%20Abhinav%20Gupta%2C%20Abhinav%20Hebert%2C%20Martial%20Cross-Stitch%20Networks%20for%20Multi-task%20Learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Misra%2C%20Ishan%20Shrivastava%2C%20Abhinav%20Gupta%2C%20Abhinav%20Hebert%2C%20Martial%20Cross-Stitch%20Networks%20for%20Multi-task%20Learning%202016"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher Manning. GloVe: Global Vectors for Word Representation. In Empirical Methods in Natural Language Processing (EMNLP), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20GloVe%3A%20Global%20Vectors%20for%20Word%20Representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20GloVe%3A%20Global%20Vectors%20for%20Word%20Representation%202014"
+        },
+        {
+            "id": "Ren_et+al_2015_a",
+            "entry": "Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun. Faster R-CNN: Towards Real-time Object Detection with Region Proposal Networks. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20R-CNN%3A%20Towards%20Real-time%20Object%20Detection%20with%20Region%20Proposal%20Networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20R-CNN%3A%20Towards%20Real-time%20Object%20Detection%20with%20Region%20Proposal%20Networks%202015"
+        },
+        {
+            "id": "Ruder_2017_a",
+            "entry": "Sebastian Ruder. An Overview of Multi-Task Learning in Deep Neural Networks. arXiv preprint, arXiv:1706.05098, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.05098"
+        },
+        {
+            "id": "Ruder_et+al_2017_b",
+            "entry": "Sebastian Ruder, Joachim Bingel, Isabelle Augenstein, and Anders Sogaard. Learning what to share between loosely related tasks. arXiv preprint, arXiv:1705.08142, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.08142"
+        },
+        {
+            "id": "Rusu_et+al_2016_a",
+            "entry": "Andrei A Rusu, Neil C Rabinowitz, Guillaume Desjardins, Hubert Soyer, James Kirkpatrick, Koray Kavukcuoglu, Razvan Pascanu, and Raia Hadsell. Progressive Neural Networks. arXiv preprint, arXiv:1606.04671, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.04671"
+        },
+        {
+            "id": "Teney_et+al_2018_a",
+            "entry": "Damien Teney, Peter Anderson, Xiaodong He, and Anton van den Hengel. Tips and Tricks for Visual Question Answering: Learnings from the 2017 Challenge. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Damien%20Teney%20Peter%20Anderson%20Xiaodong%20He%20and%20Anton%20van%20den%20Hengel%20Tips%20and%20Tricks%20for%20Visual%20Question%20Answering%20Learnings%20from%20the%202017%20Challenge%20In%20CVPR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Damien%20Teney%20Peter%20Anderson%20Xiaodong%20He%20and%20Anton%20van%20den%20Hengel%20Tips%20and%20Tricks%20for%20Visual%20Question%20Answering%20Learnings%20from%20the%202017%20Challenge%20In%20CVPR%202018"
+        },
+        {
+            "id": "Ramakrishna_2015_a",
+            "entry": "Ramakrishna Vedantam, C Lawrence Zitnick, and Devi Parikh. CIDEr: Consensus-based Image Description Evaluation. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramakrishna%20Vedantam%2C%20C.Lawrence%20Zitnick%20Parikh%2C%20Devi%20CIDEr%3A%20Consensus-based%20Image%20Description%20Evaluation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ramakrishna%20Vedantam%2C%20C.Lawrence%20Zitnick%20Parikh%2C%20Devi%20CIDEr%3A%20Consensus-based%20Image%20Description%20Evaluation%202015"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Peng Wang, Qi Wu, Chunhua Shen, and Anton van den Hengel. The vqa-machine: Learning how to use existing vision algorithms to answer new questions. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Peng%20Wu%2C%20Qi%20Shen%2C%20Chunhua%20van%20den%20Hengel%2C%20Anton%20The%20vqa-machine%3A%20Learning%20how%20to%20use%20existing%20vision%20algorithms%20to%20answer%20new%20questions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Peng%20Wu%2C%20Qi%20Shen%2C%20Chunhua%20van%20den%20Hengel%2C%20Anton%20The%20vqa-machine%3A%20Learning%20how%20to%20use%20existing%20vision%20algorithms%20to%20answer%20new%20questions%202017"
+        },
+        {
+            "id": "Yang_2017_a",
+            "entry": "Yongxin Yang and Timothy M. Hospedales. Trace Norm Regularised Deep Multi-Task Learning. In ICLR Workshop Track, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Yongxin%20M%2C%20Timothy%20Hospedales.%20Trace%20Norm%20Regularised%20Deep%20Multi-Task%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Yongxin%20M%2C%20Timothy%20Hospedales.%20Trace%20Norm%20Regularised%20Deep%20Multi-Task%20Learning%202017"
+        },
+        {
+            "id": "Yang_et+al_2016_a",
+            "entry": "Zichao Yang, Xiaodong He, Jianfeng Gao, Li Deng, and Alex Smola. Stacked Attention Networks for Image Question Answering. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zichao%20He%2C%20Xiaodong%20Gao%2C%20Jianfeng%20Deng%2C%20Li%20Stacked%20Attention%20Networks%20for%20Image%20Question%20Answering%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zichao%20He%2C%20Xiaodong%20Gao%2C%20Jianfeng%20Deng%2C%20Li%20Stacked%20Attention%20Networks%20for%20Image%20Question%20Answering%202016"
+        },
+        {
+            "id": "Yu_et+al_2018_a",
+            "entry": "Zhou Yu, Jun Yu, Chenchao Xiang, Jianping Fan, and Dacheng Tao. Beyond Bilinear: Generalized Multimodal Factorized High-Order Pooling for Visual Question Answering. IEEE Transactions on Neural Networks and Learning Systems, 2018. doi: 10.1109/TNNLS.2018.2817340.",
+            "crossref": "https://dx.doi.org/10.1109/TNNLS.2018.2817340",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TNNLS.2018.2817340"
+        },
+        {
+            "id": "Zamir_et+al_2018_a",
+            "entry": "Amir R. Zamir, Alexander Sax, William B. Shen, Leonidas J. Guibas, Jitendra Malik, and Silvio Savarese. Taskonomy: Disentangling Task Transfer Learning. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amir%20R%20Zamir%20Alexander%20Sax%20William%20B%20Shen%20Leonidas%20J%20Guibas%20Jitendra%20Malik%20and%20Silvio%20Savarese%20Taskonomy%20Disentangling%20Task%20Transfer%20Learning%20In%20CVPR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amir%20R%20Zamir%20Alexander%20Sax%20William%20B%20Shen%20Leonidas%20J%20Guibas%20Jitendra%20Malik%20and%20Silvio%20Savarese%20Taskonomy%20Disentangling%20Task%20Transfer%20Learning%20In%20CVPR%202018"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Yan Zhang, Jonathon Hare, and Adam Pr\u00fcgel-Bennett. Learning to Count Objects in Natural Images for Visual Question Answering. In ICLR, 2018. URL https://openreview.net/forum?id=B12Js_yRb.",
+            "url": "https://openreview.net/forum?id=B12Js_yRb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Yan%20Hare%2C%20Jonathon%20Pr%C3%BCgel-Bennett%2C%20Adam%20Learning%20to%20Count%20Objects%20in%20Natural%20Images%20for%20Visual%20Question%20Answering%202018"
+        }
+    ]
+}

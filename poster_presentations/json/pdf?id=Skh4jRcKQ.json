@@ -1,0 +1,318 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "UNDERSTANDING STRAIGHT-THROUGH ESTIMATOR IN TRAINING ACTIVATION QUANTIZED NEURAL NETS",
+        "author": "Penghang Yin,\u2217 Jiancheng Lyu,\u2020 Shuai Zhang,\u2021 Stanley Osher,\u2217 Yingyong Qi,\u2021 Jack Xin",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Skh4jRcKQ"
+        },
+        "abstract": "Training activation quantized neural networks involves minimizing a piecewise constant function whose gradient vanishes almost everywhere, which is undesirable for the standard back-propagation or chain rule. An empirical way around this issue is to use a straight-through estimator (STE) (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al., 2013</a>) in the backward pass, so that the \u201cgradient\u201d through the modified chain rule becomes non-trivial. Since this unusual \u201cgradient\u201d is certainly not the gradient of loss function, the following question arises: why searching in its negative direction minimizes the training loss? In this paper, we provide the theoretical justification of the concept of STE by answering this question. We consider the problem of learning a two-linear-layer network with binarized ReLU activation and Gaussian input data. We shall refer to the unusual \u201cgradient\u201d given by the STE-modifed chain rule as coarse gradient. The choice of STE is not unique. We prove that if the STE is properly chosen, the expected coarse gradient correlates positively with the population gradient (not available for the training), and its negation is a descent direction for minimizing the population loss. We further show the associated coarse gradient descent algorithm converges to a critical point of the population loss minimization problem. Moreover, we show that a poor choice of STE leads to instability of the training algorithm near certain local minima, which is verified with CIFAR-10 experiments."
+    },
+    "keywords": [
+        {
+            "term": "chain rule",
+            "url": "https://en.wikipedia.org/wiki/chain_rule"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "optimization problem",
+            "url": "https://en.wikipedia.org/wiki/optimization_problem"
+        },
+        {
+            "term": "Deep neural networks",
+            "url": "https://en.wikipedia.org/wiki/Deep_neural_networks"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "STE": "straight-through estimator",
+        "DNN": "Deep neural networks",
+        "CNN": "convolutional neural network"
+    },
+    "highlights": [
+        "Deep neural networks (DNN) have achieved the remarkable success in many machine learning applications such as computer vision (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\"><a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\">Ren et al, 2015</a></a>), natural language processing (<a class=\"ref-link\" id=\"cCollobert_2008_a\" href=\"#rCollobert_2008_a\"><a class=\"ref-link\" id=\"cCollobert_2008_a\" href=\"#rCollobert_2008_a\">Collobert & Weston, 2008</a></a>) and reinforcement learning (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>)",
+        "Our main results are concerned with the behaviors of the coarse gradient descent summarized in Algorithm 1 when the derivatives of the vanilla and clipped ReLUs as well as the identity function serve as the straight-through estimator, respectively",
+        "The convergence guarantee for the coarse gradient descent is established under the assumption that there are infinite training samples",
+        "We provided the first theoretical justification for the concept of straight-through estimator that it gives rise to descent training algorithm",
+        "We considered three straight-through estimator: the derivatives of the identity function, vanilla ReLU and clipped ReLU, for learning a two-linear-layer convolutional neural network with binary activation",
+        "We derived the explicit formulas of the expected coarse gradients corresponding to the straight-through estimator, and showed that the negative expected coarse gradients based on vanilla and clipped ReLUs are descent directions for minimizing the population loss, whereas the identity straight-through estimator is not since it generates a coarse gradient incompatible with the energy landscape"
+    ],
+    "key_statements": [
+        "Deep neural networks (DNN) have achieved the remarkable success in many machine learning applications such as computer vision (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\"><a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\">Ren et al, 2015</a></a>), natural language processing (<a class=\"ref-link\" id=\"cCollobert_2008_a\" href=\"#rCollobert_2008_a\"><a class=\"ref-link\" id=\"cCollobert_2008_a\" href=\"#rCollobert_2008_a\">Collobert & Weston, 2008</a></a>) and reinforcement learning (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>)",
+        "To achieve substantial memory savings and energy efficiency at inference time, many recent efforts have been made to the training of coarsely quantized Deep neural networks, maintaining the performance of their float counterparts (<a class=\"ref-link\" id=\"cCourbariaux_et+al_2015_a\" href=\"#rCourbariaux_et+al_2015_a\">Courbariaux et al, 2015</a>; Rastegari et al, 2016; <a class=\"ref-link\" id=\"cCai_et+al_2017_a\" href=\"#rCai_et+al_2017_a\">Cai et al, 2017</a>; <a class=\"ref-link\" id=\"cHubara_et+al_2018_a\" href=\"#rHubara_et+al_2018_a\">Hubara et al, 2018</a>; Yin et al, 2018b)",
+        "Weight quantization of Deep neural networks have been extensively studied in the literature; see for examples (<a class=\"ref-link\" id=\"cLi_et+al_2016_a\" href=\"#rLi_et+al_2016_a\">Li et al, 2016</a>; <a class=\"ref-link\" id=\"cZhu_et+al_2016_a\" href=\"#rZhu_et+al_2016_a\">Zhu et al, 2016</a>; <a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>; <a class=\"ref-link\" id=\"cYin_et+al_2016_a\" href=\"#rYin_et+al_2016_a\">Yin et al, 2016</a>; 2018a; <a class=\"ref-link\" id=\"cHou_2018_a\" href=\"#rHou_2018_a\">Hou & Kwok, 2018</a>; <a class=\"ref-link\" id=\"cHe_et+al_2018_a\" href=\"#rHe_et+al_2018_a\">He et al, 2018</a>; <a class=\"ref-link\" id=\"cLi_2018_a\" href=\"#rLi_2018_a\">Li & Hao, 2018</a>)",
+        "One can replace the a.e. zero derivative of quantized activation function composited in the chain rule with a related surrogate",
+        "This proxy derivative used in the backward pass only is referred as the straight-through estimator (STE) (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al, 2013</a>)",
+        "<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al (2013</a>) proposed an alternative approach based on stochastic neurons",
+        "The negative expected coarse gradients based on straight-through estimator of the vanilla and clipped ReLUs are provably descent directions for the minimizing the population loss, which yield monotonically decreasing energy in the training",
+        "We further prove that the population gradient \u2207f (v, w) given by (6) and (7), is Lipschitz continuous when restricted to bounded domains",
+        "Our main results are concerned with the behaviors of the coarse gradient descent summarized in Algorithm 1 when the derivatives of the vanilla and clipped ReLUs as well as the identity function serve as the straight-through estimator, respectively",
+        "We shall prove that Algorithm 1 using the derivative of vanilla or clipped ReLU converges to a critical point, whereas that with the identity straight-through estimator does not",
+        "Let {} be the sequence generated by Algorithm 1 with ReLU \u03bc(x) = max{x, 0} or clipped ReLU \u03bc(x) = min {max{x, 0}, 1}",
+        "The convergence guarantee for the coarse gradient descent is established under the assumption that there are infinite training samples",
+        "It happens that the coarse gradient derived from the identity straight-through estimator does not vanish at local minima, and Algorithm 1 may never converge there",
+        "By Table 1, the coarse gradient descent algorithms using the vanilla and clipped ReLUs converge to the neighborhoods of the minima with validation accuracies of 86.59% (0.25) and 91.24% (0.04), respectively, whereas that using the identity straight-through estimator gives 54.16% (1.38)",
+        "The training using the identity straight-through estimator ends up with a much worse minimum. This is because the coarse gradient with identity straight-through estimator does not vanish at the good minima in this case (Lemma 9)",
+        "We provided the first theoretical justification for the concept of straight-through estimator that it gives rise to descent training algorithm",
+        "We considered three straight-through estimator: the derivatives of the identity function, vanilla ReLU and clipped ReLU, for learning a two-linear-layer convolutional neural network with binary activation",
+        "We derived the explicit formulas of the expected coarse gradients corresponding to the straight-through estimator, and showed that the negative expected coarse gradients based on vanilla and clipped ReLUs are descent directions for minimizing the population loss, whereas the identity straight-through estimator is not since it generates a coarse gradient incompatible with the energy landscape",
+        "The instability/incompatibility issue was confirmed in CIFAR experiments for improper choices of straight-through estimator"
+    ],
+    "summary": [
+        "Deep neural networks (DNN) have achieved the remarkable success in many machine learning applications such as computer vision (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\"><a class=\"ref-link\" id=\"cRen_et+al_2015_a\" href=\"#rRen_et+al_2015_a\">Ren et al, 2015</a></a>), natural language processing (<a class=\"ref-link\" id=\"cCollobert_2008_a\" href=\"#rCollobert_2008_a\"><a class=\"ref-link\" id=\"cCollobert_2008_a\" href=\"#rCollobert_2008_a\">Collobert & Weston, 2008</a></a>) and reinforcement learning (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>).",
+        "We consider three representative STEs for learning a two-linear-layer network with binary activation and Gaussian data: the derivatives of the identity function (<a class=\"ref-link\" id=\"cRosenblatt_1957_a\" href=\"#rRosenblatt_1957_a\">Rosenblatt, 1957</a>; <a class=\"ref-link\" id=\"cHinton_2012_a\" href=\"#rHinton_2012_a\">Hinton, 2012</a>; <a class=\"ref-link\" id=\"cGoel_et+al_2018_a\" href=\"#rGoel_et+al_2018_a\">Goel et al, 2018</a>), vanilla ReLU and the clipped ReLUs (<a class=\"ref-link\" id=\"cCai_et+al_2017_a\" href=\"#rCai_et+al_2017_a\">Cai et al, 2017</a>; <a class=\"ref-link\" id=\"cHubara_et+al_2016_a\" href=\"#rHubara_et+al_2016_a\">Hubara et al, 2016</a>).",
+        "The negative expected coarse gradients based on STEs of the vanilla and clipped ReLUs are provably descent directions for the minimizing the population loss, which yield monotonically decreasing energy in the training.",
+        "Using the STE \u03bc to train the two-linear-layer convolutional neural network (CNN) with binary activation gives rise to the coarse gradient descent described in Algorithm 1.",
+        "Algorithm 1 Coarse gradient descent for learning two-linear-layer CNN with STE \u03bc .",
+        "Our main results are concerned with the behaviors of the coarse gradient descent summarized in Algorithm 1 when the derivatives of the vanilla and clipped ReLUs as well as the identity function serve as the STE, respectively.",
+        "We shall prove that Algorithm 1 using the derivative of vanilla or clipped ReLU converges to a critical point, whereas that with the identity STE does not.",
+        "If 1mv\u2217 = 0 and m > 1, the descent and convergence properties do not hold for Algorithm 1 with the identity function \u03bc(x) = x near the local minimizers satisfying \u03b8(w, w\u2217) = \u03c0 and v = (Im + 1m1m)\u22121(1m1m \u2212 Im)v\u2217.",
+        "It happens that the coarse gradient derived from the identity STE does not vanish at local minima, and Algorithm 1 may never converge there.",
+        "By Table 1, the coarse gradient descent algorithms using the vanilla and clipped ReLUs converge to the neighborhoods of the minima with validation accuracies of 86.59% (0.25) and 91.24% (0.04), respectively, whereas that using the identity STE gives 54.16% (1.38).",
+        "This is because the coarse gradient with identity STE does not vanish at the good minima in this case (Lemma 9).",
+        "We considered three STEs: the derivatives of the identity function, vanilla ReLU and clipped ReLU, for learning a two-linear-layer CNN with binary activation.",
+        "We derived the explicit formulas of the expected coarse gradients corresponding to the STEs, and showed that the negative expected coarse gradients based on vanilla and clipped ReLUs are descent directions for minimizing the population loss, whereas the identity STE is not since it generates a coarse gradient incompatible with the energy landscape.",
+        "We aim further understanding of coarse gradient descent for large-scale optimization problems with intractable gradients"
+    ],
+    "headline": "Since this unusual \u201cgradient\u201d is certainly not the gradient of loss function, the following question arises: why searching in its negative direction minimizes the training loss? In this paper, we provide the theoretical justification of the concept of straight-through estimator by answering this question",
+    "reference_links": [
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. arXiv preprint arXiv:1802.00420, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.00420"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Nicholas Leonard, and Aaron Courville. Estimating or propagating gradients through stochastic neurons for conditional computation. arXiv preprint arXiv:1308.3432, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.3432"
+        },
+        {
+            "id": "Brutzkus_2017_a",
+            "entry": "Alon Brutzkus and Amir Globerson. Globally optimal gradient descent for a convnet with gaussian inputs. arXiv preprint arXiv:1702.07966, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.07966"
+        },
+        {
+            "id": "Cai_et+al_2017_a",
+            "entry": "Zhaowei Cai, Xiaodong He, Jian Sun, and Nuno Vasconcelos. Deep learning with low precision by half-wave gaussian quantization. In IEEE Conference on Computer Vision and Pattern Recognition, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cai%2C%20Zhaowei%20He%2C%20Xiaodong%20Sun%2C%20Jian%20Vasconcelos%2C%20Nuno%20Deep%20learning%20with%20low%20precision%20by%20half-wave%20gaussian%20quantization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cai%2C%20Zhaowei%20He%2C%20Xiaodong%20Sun%2C%20Jian%20Vasconcelos%2C%20Nuno%20Deep%20learning%20with%20low%20precision%20by%20half-wave%20gaussian%20quantization%202017"
+        },
+        {
+            "id": "Choi_et+al_2018_a",
+            "entry": "Jungwook Choi, Zhuo Wang, Swagath Venkataramani, Pierce I-Jen Chuang, Vijayalakshmi Srinivasan, and Kailash Gopalakrishnan. Pact: Parameterized clipping activation for quantized neural networks. arXiv preprint arXiv:1805.06085, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.06085"
+        },
+        {
+            "id": "Collobert_2008_a",
+            "entry": "Ronan Collobert and Jason Weston. A unified architecture for natural language processing: Deep neural networks with multitask learning. In International Conference on Machine Learning, pp. 160\u2013167. ACM, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collobert%2C%20Ronan%20Weston%2C%20Jason%20A%20unified%20architecture%20for%20natural%20language%20processing%3A%20Deep%20neural%20networks%20with%20multitask%20learning%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collobert%2C%20Ronan%20Weston%2C%20Jason%20A%20unified%20architecture%20for%20natural%20language%20processing%3A%20Deep%20neural%20networks%20with%20multitask%20learning%202008"
+        },
+        {
+            "id": "Courbariaux_et+al_2015_a",
+            "entry": "Matthieu Courbariaux, Yoshua Bengio, and Jean-Pierre David. Binaryconnect: Training deep neural networks with binary weights during propagations. In Advances in Neural Information Processing Systems, pp. 3123\u20133131, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Courbariaux%2C%20Matthieu%20Bengio%2C%20Yoshua%20David%2C%20Jean-Pierre%20Binaryconnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Courbariaux%2C%20Matthieu%20Bengio%2C%20Yoshua%20David%2C%20Jean-Pierre%20Binaryconnect%3A%20Training%20deep%20neural%20networks%20with%20binary%20weights%20during%20propagations%202015"
+        },
+        {
+            "id": "Du_et+al_2018_a",
+            "entry": "Simon S. Du, Jason D. Lee, Yuandong Tian, Barnabas Poczos, and Aarti Singh. Gradient descent learns one-hidden-layer CNN: Don\u2019t be afraid of spurious local minimum. arXiv preprint arXiv:1712.00779, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.00779"
+        },
+        {
+            "id": "Freund_1999_a",
+            "entry": "Yoav Freund and Robert E Schapire. Large margin classification using the perceptron algorithm. Machine learning, 37(3):277\u2013296, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Freund%2C%20Yoav%20Schapire%2C%20Robert%20E.%20Large%20margin%20classification%20using%20the%20perceptron%20algorithm%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Freund%2C%20Yoav%20Schapire%2C%20Robert%20E.%20Large%20margin%20classification%20using%20the%20perceptron%20algorithm%201999"
+        },
+        {
+            "id": "Friesen_2017_a",
+            "entry": "Abram L Friesen and Pedro Domingos. Deep learning as a mixed convex-combinatorial optimization problem. arXiv preprint arXiv:1710.11573, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.11573"
+        },
+        {
+            "id": "Goel_et+al_2018_a",
+            "entry": "Surbhi Goel, Adam Klivans, and Raghu Meka. Learning one convolutional layer with overlapping patches. arXiv preprint arXiv:1802.02547, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.02547"
+        },
+        {
+            "id": "He_et+al_2018_a",
+            "entry": "J. He, L. Li, J. Xu, and C. Zheng. ReLU deep neural networks and linear finite elements. arXiv preprint arXiv:1807.03973, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.03973"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hinton_2012_a",
+            "entry": "Geoffrey Hinton. Neural networks for machine learning, coursera. Coursera, video lectures, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Neural%20networks%20for%20machine%202012"
+        },
+        {
+            "id": "Hou_2018_a",
+            "entry": "Lu Hou and James T Kwok. Loss-aware weight quantization of deep networks. arXiv preprint arXiv:1802.08635, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08635"
+        },
+        {
+            "id": "Hubara_et+al_2016_a",
+            "entry": "Itay Hubara, Matthieu Courbariaux, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Binarized neural networks: Training neural networks with weights and activations constrained to +1 or -1. arXiv preprint arXiv:1602.02830, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02830"
+        },
+        {
+            "id": "Hubara_et+al_2018_a",
+            "entry": "Itay Hubara, Matthieu Courbariaux, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Quantized neural networks: Training neural networks with low precision weights and activations. Journal of Machine Learning Research, 18:1\u201330, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubara%2C%20Itay%20Courbariaux%2C%20Matthieu%20Soudry%2C%20Daniel%20El-Yaniv%2C%20Ran%20Quantized%20neural%20networks%3A%20Training%20neural%20networks%20with%20low%20precision%20weights%20and%20activations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubara%2C%20Itay%20Courbariaux%2C%20Matthieu%20Soudry%2C%20Daniel%20El-Yaniv%2C%20Ran%20Quantized%20neural%20networks%3A%20Training%20neural%20networks%20with%20low%20precision%20weights%20and%20activations%202018"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Tech Report, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Fengfu Li, Bo Zhang, and Bin Liu. Ternary weight networks. arXiv preprint arXiv:1605.04711, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.04711"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Soham De, Zheng Xu, Christoph Studer, Hanan Samet, and Tom Goldstein. Training quantized nets: A deeper understanding. In Advances in Neural Information Processing Systems, pp. 5811\u20135821, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Hao%20De%2C%20Soham%20Xu%2C%20Zheng%20Studer%2C%20Christoph%20Training%20quantized%20nets%3A%20A%20deeper%20understanding%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Hao%20De%2C%20Soham%20Xu%2C%20Zheng%20Studer%2C%20Christoph%20Training%20quantized%20nets%3A%20A%20deeper%20understanding%202017"
+        },
+        {
+            "id": "Li_2018_a",
+            "entry": "Qianxiao Li and Shuji Hao. An optimal control approach to deep learning and applications to discrete-weight neural networks. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Qianxiao%20Hao%2C%20Shuji%20An%20optimal%20control%20approach%20to%20deep%20learning%20and%20applications%20to%20discrete-weight%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Qianxiao%20Hao%2C%20Shuji%20An%20optimal%20control%20approach%20to%20deep%20learning%20and%20applications%20to%20discrete-weight%20neural%20networks%202018"
+        },
+        {
+            "id": "Li_2017_b",
+            "entry": "Yuanzhi Li and Yang Yuan. Convergence analysis of two-layer neural networks with relu activation. In Advances in Neural Information Processing Systems, pp. 597\u2013607, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yuanzhi%20Yuan%2C%20Yang%20Convergence%20analysis%20of%20two-layer%20neural%20networks%20with%20relu%20activation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yuanzhi%20Yuan%2C%20Yang%20Convergence%20analysis%20of%20two-layer%20neural%20networks%20with%20relu%20activation%202017"
+        },
+        {
+            "id": "Lloyd_1982_a",
+            "entry": "Stuart P. Lloyd. Least squares quantization in PCM. IEEE Trans. Info. Theory, 28:129\u2013137, 1982.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lloyd%2C%20Stuart%20P.%20Least%20squares%20quantization%20in%20PCM%201982",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lloyd%2C%20Stuart%20P.%20Least%20squares%20quantization%20in%20PCM%201982"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Ren_et+al_2015_a",
+            "entry": "Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In Advances in Neural Information Processing systems, pp. 91\u201399, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20R-CNN%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Shaoqing%20He%2C%20Kaiming%20Girshick%2C%20Ross%20Sun%2C%20Jian%20Faster%20R-CNN%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202015"
+        },
+        {
+            "id": "Rosenblatt_1957_a",
+            "entry": "Frank Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rosenblatt%2C%20Frank%20The%20perceptron%2C%20a%20perceiving%20and%20recognizing%20automaton%20Project%20Para%201957"
+        },
+        {
+            "id": "Rosenblatt_1962_a",
+            "entry": "Frank Rosenblatt. Principles of neurodynamics. Spartan Book, 1962.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rosenblatt%2C%20Frank%20Principles%20of%20neurodynamics%201962"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. Nature, 529(7587):484, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Szegedy_et+al_2013_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. arXiv preprint arXiv:1312.6199, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6199"
+        },
+        {
+            "id": "Tian_2017_a",
+            "entry": "Yuandong Tian. An analytical formula of population gradient for two-layered relu network and its applications in convergence and critical point analysis. arXiv preprint arXiv:1703.00560, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00560"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Bao Wang, Xiyang Luo, Zhen Li, Wei Zhu, Zuoqiang Shi, and Stanley J Osher. Deep neural nets with interpolating function as output activation. In Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Bao%20Luo%2C%20Xiyang%20Li%2C%20Zhen%20Zhu%2C%20Wei%20Deep%20neural%20nets%20with%20interpolating%20function%20as%20output%20activation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Bao%20Luo%2C%20Xiyang%20Li%2C%20Zhen%20Zhu%2C%20Wei%20Deep%20neural%20nets%20with%20interpolating%20function%20as%20output%20activation%202018"
+        },
+        {
+            "id": "Bernard_1990_a",
+            "entry": "Bernard Widrow and Michael A Lehr. 30 years of adaptive neural networks: perceptron, madaline, and backpropagation. Proceedings of the IEEE, 78(9):1415\u20131442, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bernard%20Widrow%20and%20Michael%20A%20Lehr%2030%20years%20of%20adaptive%20neural%20networks%20perceptron%20madaline%20and%20backpropagation%20Proceedings%20of%20the%20IEEE%2078914151442%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bernard%20Widrow%20and%20Michael%20A%20Lehr%2030%20years%20of%20adaptive%20neural%20networks%20perceptron%20madaline%20and%20backpropagation%20Proceedings%20of%20the%20IEEE%2078914151442%201990"
+        },
+        {
+            "id": "Yin_et+al_2016_a",
+            "entry": "Penghang Yin, Shuai Zhang, Yingyong Qi, and Jack Xin. Quantization and training of low bit-width convolutional neural networks for object detection. arXiv preprint arXiv:1612.06052, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.06052"
+        },
+        {
+            "id": "Yin_et+al_0000_a",
+            "entry": "Penghang Yin, Shuai Zhang, Jiancheng Lyu, Stanley Osher, Yingyong Qi, and Jack Xin. Binaryrelax: A relaxation approach for training deep neural networks with quantized weights. arXiv preprint arXiv:1801.06313, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.06313"
+        },
+        {
+            "id": "Yin_et+al_0000_b",
+            "entry": "Penghang Yin, Shuai Zhang, Jiancheng Lyu, Stanley Osher, Yingyong Qi, and Jack Xin. Blended coarse gradient descent for full quantization of deep neural networks. arXiv preprint arXiv:1808.05240, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.05240"
+        },
+        {
+            "id": "Zhong_et+al_2017_a",
+            "entry": "Kai Zhong, Zhao Song, Prateek Jain, Peter L Bartlett, and Inderjit S Dhillon. Recovery guarantees for one-hidden-layer neural networks. arXiv preprint arXiv:1706.03175, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.03175"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Shuchang Zhou, Yuxin Wu, Zekun Ni, Xinyu Zhou, He Wen, and Yuheng Zou. Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients. arXiv preprint arXiv:1606.06160, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        },
+        {
+            "id": "Zhu_et+al_2016_a",
+            "entry": "Chenzhuo Zhu, Song Han, Huizi Mao, and William J Dally. Trained ternary quantization. arXiv preprint arXiv:1612.01064, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.01064"
+        }
+    ]
+}

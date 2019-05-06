@@ -1,0 +1,258 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "OVERCOMING THE DISENTANGLEMENT VS RECONSTRUCTION TRADE-OFF VIA JACOBIAN SUPERVISION",
+        "author": "Jose Lezama Universidad de la Republica, Uruguay jlezama@fing.edu.uy",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Hkg4W2AcFm"
+        },
+        "abstract": "A major challenge in learning image representations is the disentangling of the factors of variation underlying the image formation. This is typically achieved with an autoencoder architecture where a subset of the latent variables is constrained to correspond to specific factors, and the rest of them are considered nuisance variables. This approach has an important drawback: as the dimension of the nuisance variables is increased, image reconstruction is improved, but the decoder has the flexibility to ignore the specified factors, thus losing the ability to condition the output on them. In this work, we propose to overcome this trade-off by progressively growing the dimension of the latent code, while constraining the Jacobian of the output image with respect to the disentangled variables to remain the same. As a result, the obtained models are effective at both disentangling and reconstruction. We demonstrate the applicability of this method in both unsupervised and supervised scenarios for learning disentangled representations. In a facial attribute manipulation task, we obtain high quality image generation while smoothly controlling dozens of attributes with a single model. This is an order of magnitude more disentangled factors than state-of-the-art methods, while obtaining visually similar or superior results, and avoiding adversarial training1."
+    },
+    "keywords": [
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        },
+        {
+            "term": "nuisance variable",
+            "url": "https://en.wikipedia.org/wiki/nuisance_variable"
+        },
+        {
+            "term": "Generative Adversarial Networks",
+            "url": "https://en.wikipedia.org/wiki/Generative_Adversarial_Networks"
+        },
+        {
+            "term": "Convolutional Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "latent variable",
+            "url": "https://en.wikipedia.org/wiki/latent_variable"
+        },
+        {
+            "term": "image translation",
+            "url": "https://en.wikipedia.org/wiki/image_translation"
+        },
+        {
+            "term": "image formation",
+            "url": "https://en.wikipedia.org/wiki/image_formation"
+        },
+        {
+            "term": "multi-layer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptron"
+        }
+    ],
+    "abbreviations": {
+        "GANs": "Generative Adversarial Networks",
+        "VAE": "Variational Autoencoder",
+        "MLP": "multi-layer perceptron",
+        "CNN": "Convolutional Neural Networks"
+    },
+    "highlights": [
+        "A desired characteristic of deep generative models is the ability to output realistic images while controlling one or more of the factors of variation underlying the image formation",
+        "When each unit in the model\u2019s internal image representation is sensitive to each of these factors, the model is said to obtain disentangled representations. Learning such models has been approached in the past by training autoencoders where the latent variables are constrained to correspond to given factors of variation, which can be specified or learned from the data (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al, 2013</a>; <a class=\"ref-link\" id=\"cMathieu_et+al_2016_a\" href=\"#rMathieu_et+al_2016_a\">Mathieu et al, 2016</a>; <a class=\"ref-link\" id=\"cHu_et+al_2017_a\" href=\"#rHu_et+al_2017_a\">Hu et al, 2017</a>; <a class=\"ref-link\" id=\"cSzabo_et+al_2018_a\" href=\"#rSzabo_et+al_2018_a\">Szabo et al, 2018</a>; Kim & Mnih, 2018)",
+        "The remaining latent variables are typically considered nuisance variables and are used by the autoencoder to complete the reconstruction of the image",
+        "The flipping is done by setting the latent variable yi to \u2212\u03b1 \u00b7 sign, with \u03b1 > 0 a multiplier to exaggerate the attribute, found in a separate validation set for each model (\u03b1 = 40 for all models)",
+        "We showed that it is possible to overcome this trade-off by first learning a teacher model that is good at disentangling and imposing the Jacobian of this model with respect to the disentangled variables to a student model that is good at reconstruction"
+    ],
+    "key_statements": [
+        "A desired characteristic of deep generative models is the ability to output realistic images while controlling one or more of the factors of variation underlying the image formation",
+        "When each unit in the model\u2019s internal image representation is sensitive to each of these factors, the model is said to obtain disentangled representations. Learning such models has been approached in the past by training autoencoders where the latent variables are constrained to correspond to given factors of variation, which can be specified or learned from the data (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al, 2013</a>; <a class=\"ref-link\" id=\"cMathieu_et+al_2016_a\" href=\"#rMathieu_et+al_2016_a\">Mathieu et al, 2016</a>; <a class=\"ref-link\" id=\"cHu_et+al_2017_a\" href=\"#rHu_et+al_2017_a\">Hu et al, 2017</a>; <a class=\"ref-link\" id=\"cSzabo_et+al_2018_a\" href=\"#rSzabo_et+al_2018_a\">Szabo et al, 2018</a>; Kim & Mnih, 2018)",
+        "The remaining latent variables are typically considered nuisance variables and are used by the autoencoder to complete the reconstruction of the image",
+        "The flipping is done by setting the latent variable yi to \u2212\u03b1 \u00b7 sign, with \u03b1 > 0 a multiplier to exaggerate the attribute, found in a separate validation set for each model (\u03b1 = 40 for all models)",
+        "We showed that it is possible to overcome this trade-off by first learning a teacher model that is good at disentangling and imposing the Jacobian of this model with respect to the disentangled variables to a student model that is good at reconstruction"
+    ],
+    "summary": [
+        "A desired characteristic of deep generative models is the ability to output realistic images while controlling one or more of the factors of variation underlying the image formation.",
+        "Our method consists in first training an autoencoder model, the teacher, where the dimension of the latent code is small, so that the autoencoder is able to effectively disentangle the factors of variation and condition its output on them.",
+        "We use the Jacobian supervision to train an autoencoder model for images of faces, in which the factors of variation to be controlled are facial attributes.",
+        "Once the student model is trained, it generates a better reconstructed image than the teacher model, thanks to the expanded latent code, while maintaining the conditioning of the output that the teacher had.",
+        "A model trained progressively until reaching the same latent code dimension but without Jacobian supervision, and only the cross-covariance loss for disentangling (<a class=\"ref-link\" id=\"cCheung_et+al_2014_a\" href=\"#rCheung_et+al_2014_a\">Cheung et al, 2014</a>), is shown in Figure 1(c).",
+        "We use the same encoder to assess the new image: If the disentangling is achieved, the part of the latent code that is not related to the attributes should be the same for the existing and fabricated images, and the predicted factors should match those of the sample from which they were copied.",
+        "The reversed autoencoder could learn to replicate the input code (y2, z1) by encoding this information inside a latent image in whatever way it finds easier, that does not induce a natural attribute variation.",
+        "After the teacher is trained, we create a student autoencoder model with a larger dimension for the nuisance variables z and train it using only reconstruction and Jacobian supervision ((8) and (9)), as detailed .",
+        "At the beginning of the training of the teacher, the weights of the cycle-consistency losses \u03bb4 and \u03bb5 are set to 0, so the autoencoder is only trained for reconstruction (Lrec), attribute prediction (Lpred) and linear decorrelation (Lcov).",
+        "After the teacher autoencoder training is completed, we create the student model by appending new convolutional filters to the output of the encoder and the input of the decoder, so that the effective dimension of the latent code is increased.",
+        "Figure 5 shows the result of manipulating 32 attributes for eight different subjects, using the student model with Jacobian supervision.",
+        "We showed that it is possible to overcome this trade-off by first learning a teacher model that is good at disentangling and imposing the Jacobian of this model with respect to the disentangled variables to a student model that is good at reconstruction.",
+        "The resulting model is able to manipulate one order of magnitude more facial attributes than state-of-the-art methods, while obtaining similar or superior visual results, and requiring no adversarial training"
+    ],
+    "headline": "We propose to overcome this trade-off by progressively growing the dimension of the latent code, while constraining the Jacobian of the output image with respect to the disentangled variables to remain the same",
+    "reference_links": [
+        {
+            "id": "Arjovsky_et+al_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein GAN. arXiv preprint arXiv:1701.07875, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07875"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Aaron Courville, and Pascal Vincent. Representation learning: A review and new perspectives. IEEE transactions on pattern analysis and machine intelligence, 35(8):1798\u20131828, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013"
+        },
+        {
+            "id": "Burgess_et+al_2018_a",
+            "entry": "Christopher P Burgess, Irina Higgins, Arka Pal, Loic Matthey, Nick Watters, Guillaume Desjardins, and Alexander Lerchner. Understanding disentangling in \u03b2-VAE. arXiv preprint arXiv:1804.03599, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.03599"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, and Pieter Abbeel. InfoGAN: Interpretable representation learning by information maximizing generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2172\u20132180, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20InfoGAN%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20InfoGAN%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016"
+        },
+        {
+            "id": "Cheung_et+al_2014_a",
+            "entry": "Brian Cheung, Jesse A Livezey, Arjun K Bansal, and Bruno A Olshausen. Discovering hidden factors of variation in deep networks. arXiv preprint arXiv:1412.6583, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6583"
+        },
+        {
+            "id": "Choi_et+al_2017_a",
+            "entry": "Yunjey Choi, Minje Choi, Munyoung Kim, Jung-Woo Ha, Sunghun Kim, and Jaegul Choo. StarGAN: Unified generative adversarial networks for multi-domain image-to-image translation. arXiv preprint arXiv:1711.09020, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09020"
+        },
+        {
+            "id": "Cogswell_et+al_2015_a",
+            "entry": "Michael Cogswell, Faruk Ahmed, Ross Girshick, Larry Zitnick, and Dhruv Batra. Reducing overfitting in deep networks by decorrelating representations. arXiv preprint arXiv:1511.06068, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06068"
+        },
+        {
+            "id": "Donahue_et+al_2016_a",
+            "entry": "Jeff Donahue, Philipp Krahenbuhl, and Trevor Darrell. Adversarial feature learning. arXiv preprint arXiv:1605.09782, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.09782"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of Wasserstein GANs. In Advances in Neural Information Processing Systems, pp. 5769\u20135779, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20Wasserstein%20GANs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20Wasserstein%20GANs%202017"
+        },
+        {
+            "id": "Higgins_et+al_2016_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. Beta-VAE: Learning basic visual concepts with a constrained variational framework. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20Beta-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202016"
+        },
+        {
+            "id": "Hinton_2006_a",
+            "entry": "Geoffrey E Hinton and Ruslan R Salakhutdinov. Reducing the dimensionality of data with neural networks. science, 313(5786):504\u2013507, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Salakhutdinov%2C%20Ruslan%20R.%20Reducing%20the%20dimensionality%20of%20data%20with%20neural%20networks%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Salakhutdinov%2C%20Ruslan%20R.%20Reducing%20the%20dimensionality%20of%20data%20with%20neural%20networks%202006"
+        },
+        {
+            "id": "Hu_et+al_2017_a",
+            "entry": "Qiyang Hu, Attila Szabo, Tiziano Portenier, Paolo Favaro, and Matthias Zwicker. Disentangling factors of variation by mixing them. arXiv preprint arXiv:1711.07410, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.07410"
+        },
+        {
+            "id": "Isola_et+al_2017_a",
+            "entry": "Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A Efros. Image-to-image translation with conditional adversarial networks. arXiv preprint, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks.%20arXiv%20p%202017"
+        },
+        {
+            "id": "Hyunjik_2018_a",
+            "entry": "Hyunjik Kim and Andriy Mnih. Disentangling by factorising. arXiv preprint arXiv:1802.05983, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05983"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kingma_2014_b",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. In ICLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Kingma_et+al_2014_c",
+            "entry": "Diederik P Kingma, Shakir Mohamed, Danilo Jimenez Rezende, and Max Welling. Semi-supervised learning with deep generative models. In Advances in Neural Information Processing Systems, pp. 3581\u20133589, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Mohamed%2C%20Shakir%20Rezende%2C%20Danilo%20Jimenez%20Welling%2C%20Max%20Semi-supervised%20learning%20with%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Mohamed%2C%20Shakir%20Rezende%2C%20Danilo%20Jimenez%20Welling%2C%20Max%20Semi-supervised%20learning%20with%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Lample_et+al_2017_a",
+            "entry": "Guillaume Lample, Neil Zeghidour, Nicolas Usunier, Antoine Bordes, Ludovic Denoyer, et al. Fader networks: Manipulating images by sliding attributes. In Advances in Neural Information Processing Systems, pp. 5969\u20135978, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lample%2C%20Guillaume%20Zeghidour%2C%20Neil%20Usunier%2C%20Nicolas%20Bordes%2C%20Antoine%20Fader%20networks%3A%20Manipulating%20images%20by%20sliding%20attributes%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lample%2C%20Guillaume%20Zeghidour%2C%20Neil%20Usunier%2C%20Nicolas%20Bordes%2C%20Antoine%20Fader%20networks%3A%20Manipulating%20images%20by%20sliding%20attributes%202017"
+        },
+        {
+            "id": "Liu_2016_a",
+            "entry": "Ming-Yu Liu and Oncel Tuzel. Coupled generative adversarial networks. In Advances in Neural Information Processing Systems, pp. 469\u2013477, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ming-Yu%20Tuzel%2C%20Oncel%20Coupled%20generative%20adversarial%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ming-Yu%20Tuzel%2C%20Oncel%20Coupled%20generative%20adversarial%20networks%202016"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In Proceedings of International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015"
+        },
+        {
+            "id": "Mathieu_et+al_2016_a",
+            "entry": "Michael F Mathieu, Junbo Jake Zhao, Junbo Zhao, Aditya Ramesh, Pablo Sprechmann, and Yann LeCun. Disentangling factors of variation in deep representation using adversarial training. In Advances in Neural Information Processing Systems, pp. 5040\u20135048, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mathieu%2C%20Michael%20F.%20Zhao%2C%20Junbo%20Jake%20Zhao%2C%20Junbo%20Ramesh%2C%20Aditya%20Disentangling%20factors%20of%20variation%20in%20deep%20representation%20using%20adversarial%20training%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mathieu%2C%20Michael%20F.%20Zhao%2C%20Junbo%20Jake%20Zhao%2C%20Junbo%20Ramesh%2C%20Aditya%20Disentangling%20factors%20of%20variation%20in%20deep%20representation%20using%20adversarial%20training%202016"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading digits in natural images with unsupervised feature learning. In NIPS workshop on deep learning and unsupervised feature learning, volume 2011, pp. 5, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Peng_et+al_2017_a",
+            "entry": "Xi Peng, Xiang Yu, Kihyuk Sohn, Dimitris N Metaxas, and Manmohan Chandraker. Reconstructionbased disentanglement for pose-invariant face recognition. In Proceedings of the IEEE International Conference on Computer Vision, pp. 1623\u20131632, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Xi%20Yu%2C%20Xiang%20Sohn%2C%20Kihyuk%20Metaxas%2C%20Dimitris%20N.%20Reconstructionbased%20disentanglement%20for%20pose-invariant%20face%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Xi%20Yu%2C%20Xiang%20Sohn%2C%20Kihyuk%20Metaxas%2C%20Dimitris%20N.%20Reconstructionbased%20disentanglement%20for%20pose-invariant%20face%20recognition%202017"
+        },
+        {
+            "id": "Perarnau_et+al_2016_a",
+            "entry": "Guim Perarnau, Joost van de Weijer, Bogdan Raducanu, and Jose M. Alvarez. Invertible Conditional GANs for image editing. In NIPS Workshop on Adversarial Training, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Perarnau%2C%20Guim%20van%20de%20Weijer%2C%20Joost%20Raducanu%2C%20Bogdan%20Alvarez%2C%20Jose%20M.%20Invertible%20Conditional%20GANs%20for%20image%20editing%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Perarnau%2C%20Guim%20van%20de%20Weijer%2C%20Joost%20Raducanu%2C%20Bogdan%20Alvarez%2C%20Jose%20M.%20Invertible%20Conditional%20GANs%20for%20image%20editing%202016"
+        },
+        {
+            "id": "Reed_et+al_2015_a",
+            "entry": "Scott E Reed, Yi Zhang, Yuting Zhang, and Honglak Lee. Deep visual analogy-making. In Advances in Neural Information Processing Systems, pp. 1252\u20131260, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reed%2C%20Scott%20E.%20Zhang%2C%20Yi%20Zhang%2C%20Yuting%20Lee%2C%20Honglak%20Deep%20visual%20analogy-making%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reed%2C%20Scott%20E.%20Zhang%2C%20Yi%20Zhang%2C%20Yuting%20Lee%2C%20Honglak%20Deep%20visual%20analogy-making%202015"
+        },
+        {
+            "id": "Szabo_et+al_2017_a",
+            "entry": "Attila Szabo, Qiyang Hu, Tiziano Portenier, Matthias Zwicker, and Paolo Favaro. Challenges in disentangling independent factors of variation. arXiv preprint arXiv:1711.02245, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.02245"
+        },
+        {
+            "id": "Szabo_et+al_2018_a",
+            "entry": "Attila Szabo, Qiyang Hu, Tiziano Portenier, Matthias Zwicker, and Paolo Favaro. Understanding degeneracies and ambiguities in attribute transfer. In The European Conference on Computer Vision (ECCV), September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szabo%2C%20Attila%20Hu%2C%20Qiyang%20Portenier%2C%20Tiziano%20Zwicker%2C%20Matthias%20Understanding%20degeneracies%20and%20ambiguities%20in%20attribute%20transfer%202018-09",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szabo%2C%20Attila%20Hu%2C%20Qiyang%20Portenier%2C%20Tiziano%20Zwicker%2C%20Matthias%20Understanding%20degeneracies%20and%20ambiguities%20in%20attribute%20transfer%202018-09"
+        },
+        {
+            "id": "Tran_et+al_2017_a",
+            "entry": "Luan Tran, Xi Yin, and Xiaoming Liu. Disentangled representation learning GAN for pose-invariant face recognition. In CVPR, volume 3, pp. 7, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tran%2C%20Luan%20Yin%2C%20Xi%20Liu%2C%20Xiaoming%20Disentangled%20representation%20learning%20GAN%20for%20pose-invariant%20face%20recognition%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tran%2C%20Luan%20Yin%2C%20Xi%20Liu%2C%20Xiaoming%20Disentangled%20representation%20learning%20GAN%20for%20pose-invariant%20face%20recognition%202017"
+        },
+        {
+            "id": "Yang_et+al_2015_a",
+            "entry": "Jimei Yang, Scott E Reed, Ming-Hsuan Yang, and Honglak Lee. Weakly-supervised disentangling with recurrent transformations for 3d view synthesis. In Advances in Neural Information Processing Systems, pp. 1099\u20131107, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Jimei%20Reed%2C%20Scott%20E.%20Yang%2C%20Ming-Hsuan%20Lee%2C%20Honglak%20Weakly-supervised%20disentangling%20with%20recurrent%20transformations%20for%203d%20view%20synthesis%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Jimei%20Reed%2C%20Scott%20E.%20Yang%2C%20Ming-Hsuan%20Lee%2C%20Honglak%20Weakly-supervised%20disentangling%20with%20recurrent%20transformations%20for%203d%20view%20synthesis%202015"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. In IEEE International Conference on Computer Vision, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks%202017"
+        }
+    ]
+}

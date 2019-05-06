@@ -1,0 +1,437 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "BEYOND PIXEL NORM-BALLS: PARAMETRIC ADVERSARIES USING AN ANALYTICALLY DIFFERENTIABLE RENDERER",
+        "author": "Hsueh-Ti Derek Liu University of Toronto hsuehtil@cs.toronto.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJl2niR9KQ"
+        },
+        "abstract": "Many machine learning image classifiers are vulnerable to adversarial attacks, inputs with perturbations designed to intentionally trigger misclassification. Current adversarial methods directly alter pixel colors and evaluate against pixel norm-balls: pixel perturbations smaller than a specified magnitude, according to a measurement norm. This evaluation, however, has limited practical utility since perturbations in the pixel space do not correspond to underlying real-world phenomena of image formation that lead to them and has no security motivation attached. Pixels in natural images are measurements of light that has interacted with the geometry of a physical scene. As such, we propose a novel evaluation measure, parametric normballs, by directly perturbing physical parameters that underly image formation. One enabling contribution we present is a physically-based differentiable renderer that allows us to propagate pixel gradients to the parametric space of lighting and geometry. Our approach enables physically-based adversarial attacks, and our differentiable renderer leverages models from the interactive rendering literature to balance the performance and accuracy trade-offs necessary for a memory-efficient and scalable adversarial data augmentation workflow."
+    },
+    "keywords": [
+        {
+            "term": "3d model",
+            "url": "https://en.wikipedia.org/wiki/3d_model"
+        },
+        {
+            "term": "geometry",
+            "url": "https://en.wikipedia.org/wiki/geometry"
+        },
+        {
+            "term": "real world",
+            "url": "https://en.wikipedia.org/wiki/real_world"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "physical world",
+            "url": "https://en.wikipedia.org/wiki/physical_world"
+        },
+        {
+            "term": "computer vision",
+            "url": "https://en.wikipedia.org/wiki/computer_vision"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "black box",
+            "url": "https://en.wikipedia.org/wiki/black_box"
+        },
+        {
+            "term": "image formation",
+            "url": "https://en.wikipedia.org/wiki/image_formation"
+        }
+    ],
+    "abbreviations": {},
+    "highlights": [
+        "Research in adversarial examples continues to contribute to the development of robustsupervised learning (<a class=\"ref-link\" id=\"cMiyato_et+al_2018_a\" href=\"#rMiyato_et+al_2018_a\"><a class=\"ref-link\" id=\"cMiyato_et+al_2018_a\" href=\"#rMiyato_et+al_2018_a\">Miyato et al, 2018</a></a>), data augmentation (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cSun_et+al_2018_a\" href=\"#rSun_et+al_2018_a\"><a class=\"ref-link\" id=\"cSun_et+al_2018_a\" href=\"#rSun_et+al_2018_a\">Sun et al, 2018</a></a>), and machine learning understanding (<a class=\"ref-link\" id=\"cKanbak_et+al_2018_a\" href=\"#rKanbak_et+al_2018_a\"><a class=\"ref-link\" id=\"cKanbak_et+al_2018_a\" href=\"#rKanbak_et+al_2018_a\">Kanbak et al, 2018</a></a>)",
+        "Our work extends this progression in constructing adversarial examples, a problem that lies at the foundation of adversarial machine learning",
+        "Differentiable renderer is fundamental to computing derivative of pixel colors with respect to scene parameters and can benefit machine learning in several ways, including promoting the development of novel network architectures (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a>), in computing adversarial examples (<a class=\"ref-link\" id=\"cAthalye_et+al_2017_a\" href=\"#rAthalye_et+al_2017_a\">Athalye et al, 2017</a>; <a class=\"ref-link\" id=\"cZeng_et+al_2017_a\" href=\"#rZeng_et+al_2017_a\">Zeng et al, 2017</a>), and in generalizing neural style transfer to a 3D context (<a class=\"ref-link\" id=\"cKato_et+al_2018_a\" href=\"#rKato_et+al_2018_a\">Kato et al, 2018</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al, 2018</a>)",
+        "Our renderer explicitly models the physics of the image formation processes, and so the images it generates are realistic enough to illicit correct classifications from networks trained on real-world photographs.\n3 ADVERSARIAL ATTACKS IN PARAMETRIC SPACES",
+        "Adversarial attacks based on pixel norm-balls typically generate adversarial examples by defining a cost function over the space of images C : I \u2192 R that enforces some intuition of what failure should look like, typically using variants of gradient descent where the gradient \u2202C/\u2202I is accessible by differentiating through networks (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a>; <a class=\"ref-link\" id=\"cRozsa_et+al_2016_a\" href=\"#rRozsa_et+al_2016_a\">Rozsa et al, 2016</a>; <a class=\"ref-link\" id=\"cKurakin_et+al_2017_a\" href=\"#rKurakin_et+al_2017_a\">Kurakin et al, 2017</a>; Moosavi Dezfooli et al, 2016; <a class=\"ref-link\" id=\"cDong_et+al_2018_a\" href=\"#rDong_et+al_2018_a\">Dong et al, 2018</a>)",
+        "We have described how to compute adversarial examples by parametric perturbations, including lighting and geometry"
+    ],
+    "key_statements": [
+        "Research in adversarial examples continues to contribute to the development of robustsupervised learning (<a class=\"ref-link\" id=\"cMiyato_et+al_2018_a\" href=\"#rMiyato_et+al_2018_a\"><a class=\"ref-link\" id=\"cMiyato_et+al_2018_a\" href=\"#rMiyato_et+al_2018_a\">Miyato et al, 2018</a></a>), data augmentation (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cSun_et+al_2018_a\" href=\"#rSun_et+al_2018_a\"><a class=\"ref-link\" id=\"cSun_et+al_2018_a\" href=\"#rSun_et+al_2018_a\">Sun et al, 2018</a></a>), and machine learning understanding (<a class=\"ref-link\" id=\"cKanbak_et+al_2018_a\" href=\"#rKanbak_et+al_2018_a\"><a class=\"ref-link\" id=\"cKanbak_et+al_2018_a\" href=\"#rKanbak_et+al_2018_a\">Kanbak et al, 2018</a></a>)",
+        "Our differentiable renderer achieves state-of-the-art performance in speed and scalability (Section 3) and is fast enough for rendered adversarial data augmentation (Section 5): training augmented with adversarial images generated with a renderer",
+        "We demonstrate the utility of rendering can be used to study the potential danger lurking in misclassification due to subtle changes to geometry and lighting",
+        "Our work extends this progression in constructing adversarial examples, a problem that lies at the foundation of adversarial machine learning",
+        "Our approach is based on a differentiable physically-based renderer that directly models the image formation process, allowing us to alter physical parameters \u2013 like geometry and lighting \u2013 and compute derivatives much more rapidly compared to the",
+        "Differentiable renderer is fundamental to computing derivative of pixel colors with respect to scene parameters and can benefit machine learning in several ways, including promoting the development of novel network architectures (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a>), in computing adversarial examples (<a class=\"ref-link\" id=\"cAthalye_et+al_2017_a\" href=\"#rAthalye_et+al_2017_a\">Athalye et al, 2017</a>; <a class=\"ref-link\" id=\"cZeng_et+al_2017_a\" href=\"#rZeng_et+al_2017_a\">Zeng et al, 2017</a>), and in generalizing neural style transfer to a 3D context (<a class=\"ref-link\" id=\"cKato_et+al_2018_a\" href=\"#rKato_et+al_2018_a\">Kato et al, 2018</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al, 2018</a>)",
+        "Various techniques have been proposed to obtain these derivatives: <a class=\"ref-link\" id=\"cWu_et+al_2017_a\" href=\"#rWu_et+al_2017_a\">Wu et al (2017</a>); <a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al (2017</a>); <a class=\"ref-link\" id=\"cEslami_et+al_2016_a\" href=\"#rEslami_et+al_2016_a\">Eslami et al (2016</a>) use neural networks to learn the image formation process provided a large amount of input/output pairs",
+        "<a class=\"ref-link\" id=\"cKato_et+al_2018_a\" href=\"#rKato_et+al_2018_a\">Kato et al (2018</a>) propose a differentiable renderer based on a simplified image formation model and an underlying linear approximation",
+        "Our novel differentiable renderer overcomes these limitations by efficiently computing analytical derivatives of a physically-based image formation model",
+        "We model image variations by changing geometry and realistic lighting conditions in an analytically differentiable manner, relying on an accurate model of diffuse image formation that extend spherical harmonicsbased shading methods (Appendix C)",
+        "Our renderer explicitly models the physics of the image formation processes, and so the images it generates are realistic enough to illicit correct classifications from networks trained on real-world photographs.\n3 ADVERSARIAL ATTACKS IN PARAMETRIC SPACES",
+        "Adversarial attacks based on pixel norm-balls typically generate adversarial examples by defining a cost function over the space of images C : I \u2192 R that enforces some intuition of what failure should look like, typically using variants of gradient descent where the gradient \u2202C/\u2202I is accessible by differentiating through networks (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a>; <a class=\"ref-link\" id=\"cRozsa_et+al_2016_a\" href=\"#rRozsa_et+al_2016_a\">Rozsa et al, 2016</a>; <a class=\"ref-link\" id=\"cKurakin_et+al_2017_a\" href=\"#rKurakin_et+al_2017_a\">Kurakin et al, 2017</a>; Moosavi Dezfooli et al, 2016; <a class=\"ref-link\" id=\"cDong_et+al_2018_a\" href=\"#rDong_et+al_2018_a\">Dong et al, 2018</a>)",
+        "We have described how to compute adversarial examples by parametric perturbations, including lighting and geometry",
+        "We show that adversarial examples exist in the parametric spaces, we analyze the characteristics of those adversaries and parametric norm-balls"
+    ],
+    "summary": [
+        "Research in adversarial examples continues to contribute to the development of robustsupervised learning (<a class=\"ref-link\" id=\"cMiyato_et+al_2018_a\" href=\"#rMiyato_et+al_2018_a\"><a class=\"ref-link\" id=\"cMiyato_et+al_2018_a\" href=\"#rMiyato_et+al_2018_a\">Miyato et al, 2018</a></a>), data augmentation (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a></a>; <a class=\"ref-link\" id=\"cSun_et+al_2018_a\" href=\"#rSun_et+al_2018_a\"><a class=\"ref-link\" id=\"cSun_et+al_2018_a\" href=\"#rSun_et+al_2018_a\">Sun et al, 2018</a></a>), and machine learning understanding (<a class=\"ref-link\" id=\"cKanbak_et+al_2018_a\" href=\"#rKanbak_et+al_2018_a\"><a class=\"ref-link\" id=\"cKanbak_et+al_2018_a\" href=\"#rKanbak_et+al_2018_a\">Kanbak et al, 2018</a></a>).",
+        "Our proposed solution \u2013 parametric norm-balls \u2013 rely on perturbations of physical parameters of a synthetic image formation model, instead of pixel color perturbations (Figure 2).",
+        "We use a physically-based differentiable renderer which allows us to perturb the underlying parameters of the image formation process.",
+        "<a class=\"ref-link\" id=\"cZeng_et+al_2017_a\" href=\"#rZeng_et+al_2017_a\">Zeng et al (2017</a>) generate adversarial examples by altering physical parameters using a rendering network (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>) trained to approximate the physics of realistic image formation.",
+        "Our approach is based on a differentiable physically-based renderer that directly models the image formation process, allowing us to alter physical parameters \u2013 like geometry and lighting \u2013 and compute derivatives much more rapidly compared to the",
+        "Differentiable renderer is fundamental to computing derivative of pixel colors with respect to scene parameters and can benefit machine learning in several ways, including promoting the development of novel network architectures (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a></a>), in computing adversarial examples (<a class=\"ref-link\" id=\"cAthalye_et+al_2017_a\" href=\"#rAthalye_et+al_2017_a\">Athalye et al, 2017</a>; <a class=\"ref-link\" id=\"cZeng_et+al_2017_a\" href=\"#rZeng_et+al_2017_a\">Zeng et al, 2017</a>), and in generalizing neural style transfer to a 3D context (<a class=\"ref-link\" id=\"cKato_et+al_2018_a\" href=\"#rKato_et+al_2018_a\">Kato et al, 2018</a>; <a class=\"ref-link\" id=\"cLiu_et+al_2018_a\" href=\"#rLiu_et+al_2018_a\">Liu et al, 2018</a>).",
+        "Our novel differentiable renderer overcomes these limitations by efficiently computing analytical derivatives of a physically-based image formation model.",
+        "Our renderer explicitly models the physics of the image formation processes, and so the images it generates are realistic enough to illicit correct classifications from networks trained on real-world photographs.",
+        "Adversarial attacks based on pixel norm-balls typically generate adversarial examples by defining a cost function over the space of images C : I \u2192 R that enforces some intuition of what failure should look like, typically using variants of gradient descent where the gradient \u2202C/\u2202I is accessible by differentiating through networks (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a>; <a class=\"ref-link\" id=\"cRozsa_et+al_2016_a\" href=\"#rRozsa_et+al_2016_a\">Rozsa et al, 2016</a>; <a class=\"ref-link\" id=\"cKurakin_et+al_2017_a\" href=\"#rKurakin_et+al_2017_a\">Kurakin et al, 2017</a>; Moosavi Dezfooli et al, 2016; <a class=\"ref-link\" id=\"cDong_et+al_2018_a\" href=\"#rDong_et+al_2018_a\">Dong et al, 2018</a>).",
+        "Our adversarial attacks in the parametric space consider an image I(U, V ) is the function of physical parameters of the image formation model, including the lighting U and the geometry V .",
+        "We inject adversarial examples, generated using our differentiable renderer, into the training process of modern image classifiers.",
+        "We can take a small set of real images, constructing 3D virtual scenes which have real image statistics, using our approach to manipulate the predicted parameters to construct the parametric adversarial examples, perform rendered adversarial training."
+    ],
+    "headline": "We propose a novel evaluation measure, parametric normballs, by directly perturbing physical parameters that underly image formation",
+    "reference_links": [
+        {
+            "id": "Akenine-Moller_et+al_2008_a",
+            "entry": "Tomas Akenine-Moller, Eric Haines, and Naty Hoffman. Real-time rendering. AK Peters/CRC Press, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Akenine-Moller%2C%20Tomas%20Haines%2C%20Eric%20Hoffman%2C%20Naty%20Real-time%20rendering%202008"
+        },
+        {
+            "id": "Akhtar_2018_a",
+            "entry": "Naveed Akhtar and Ajmal S. Mian. Threat of adversarial attacks on deep learning in computer vision: A survey. IEEE Access, 6:14410\u201314430, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Akhtar%2C%20Naveed%20Mian%2C%20Ajmal%20S.%20Threat%20of%20adversarial%20attacks%20on%20deep%20learning%20in%20computer%20vision%3A%20A%20survey%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Akhtar%2C%20Naveed%20Mian%2C%20Ajmal%20S.%20Threat%20of%20adversarial%20attacks%20on%20deep%20learning%20in%20computer%20vision%3A%20A%20survey%202018"
+        },
+        {
+            "id": "Athalye_et+al_2017_a",
+            "entry": "Anish Athalye, Logan Engstrom, Andrew Ilyas, and Kevin Kwok. Synthesizing robust adversarial examples, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Engstrom%2C%20Logan%20Ilyas%2C%20Andrew%20Kwok%2C%20Kevin%20Synthesizing%20robust%20adversarial%20examples%202017"
+        },
+        {
+            "id": "Basri_2003_a",
+            "entry": "Ronen Basri and David W Jacobs. Lambertian reflectance and linear subspaces. IEEE transactions on pattern analysis and machine intelligence, 25(2):218\u2013233, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Basri%2C%20Ronen%20Jacobs%2C%20David%20W.%20Lambertian%20reflectance%20and%20linear%20subspaces%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Basri%2C%20Ronen%20Jacobs%2C%20David%20W.%20Lambertian%20reflectance%20and%20linear%20subspaces%202003"
+        },
+        {
+            "id": "Chang_et+al_2015_a",
+            "entry": "Angel X Chang, Thomas Funkhouser, Leonidas Guibas, Pat Hanrahan, Qixing Huang, Zimo Li, Silvio Savarese, Manolis Savva, Shuran Song, Hao Su, et al. ShapeNet: An information-rich 3d model repository. arXiv preprint arXiv:1512.03012, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.03012"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Pin-Yu Chen, Huan Zhang, Yash Sharma, Jinfeng Yi, and Cho-Jui Hsieh. Zoo: Zeroth order optimization based black-box attacks to deep neural networks without training substitute models. In Proceedings of the 10th ACM Workshop on Artificial Intelligence and Security, pp. 15\u201326. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Pin-Yu%20Zhang%2C%20Huan%20Sharma%2C%20Yash%20Yi%2C%20Jinfeng%20Zoo%3A%20Zeroth%20order%20optimization%20based%20black-box%20attacks%20to%20deep%20neural%20networks%20without%20training%20substitute%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Pin-Yu%20Zhang%2C%20Huan%20Sharma%2C%20Yash%20Yi%2C%20Jinfeng%20Zoo%3A%20Zeroth%20order%20optimization%20based%20black-box%20attacks%20to%20deep%20neural%20networks%20without%20training%20substitute%20models%202017"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Wenzheng Chen, Huan Wang, Yangyan Li, Hao Su, Zhenhua Wang, Changhe Tu, Dani Lischinski, Daniel Cohen-Or, and Baoquan Chen. Synthesizing training images for boosting human 3d pose estimation. In 3D Vision (3DV), 2016 Fourth International Conference on, pp. 479\u2013488. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Wenzheng%20Wang%2C%20Huan%20Li%2C%20Yangyan%20Su%2C%20Hao%20Synthesizing%20training%20images%20for%20boosting%20human%203d%20pose%20estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Wenzheng%20Wang%2C%20Huan%20Li%2C%20Yangyan%20Su%2C%20Hao%20Synthesizing%20training%20images%20for%20boosting%20human%203d%20pose%20estimation%202016"
+        },
+        {
+            "id": "Dong_et+al_2018_a",
+            "entry": "Yinpeng Dong, Fangzhou Liao, Tianyu Pang, Hang Su, Jun Zhu, Xiaolin Hu, and Jianguo Li. Boosting adversarial attacks with momentum. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dong%2C%20Yinpeng%20Liao%2C%20Fangzhou%20Pang%2C%20Tianyu%20Su%2C%20Hang%20Boosting%20adversarial%20attacks%20with%20momentum%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dong%2C%20Yinpeng%20Liao%2C%20Fangzhou%20Pang%2C%20Tianyu%20Su%2C%20Hang%20Boosting%20adversarial%20attacks%20with%20momentum%202018"
+        },
+        {
+            "id": "Dunster_2010_a",
+            "entry": "TM Dunster. Legendre and related functions. NIST handbook of mathematical functions, pp. 351\u2013381, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dunster%2C%20T.M.%20Legendre%20and%20related%20functions.%20NIST%20handbook%20of%20mathematical%20functions%202010"
+        },
+        {
+            "id": "Eslami_et+al_2016_a",
+            "entry": "SM Ali Eslami, Nicolas Heess, Theophane Weber, Yuval Tassa, David Szepesvari, Geoffrey E Hinton, et al. Attend, infer, repeat: Fast scene understanding with generative models. In Advances in Neural Information Processing Systems, pp. 3225\u20133233, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eslami%2C%20S.M.Ali%20Heess%2C%20Nicolas%20Weber%2C%20Theophane%20Tassa%2C%20Yuval%20repeat%3A%20Fast%20scene%20understanding%20with%20generative%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eslami%2C%20S.M.Ali%20Heess%2C%20Nicolas%20Weber%2C%20Theophane%20Tassa%2C%20Yuval%20repeat%3A%20Fast%20scene%20understanding%20with%20generative%20models%202016"
+        },
+        {
+            "id": "Eykholt_et+al_2018_a",
+            "entry": "Kevin Eykholt, Ivan Evtimov, Earlence Fernandes, Bo Li, Amir Rahmati, Chaowei Xiao, Atul Prakash, Tadayoshi Kohno, and Dawn Song. Robust Physical-World Attacks on Deep Learning Visual Classification. In Computer Vision and Pattern Recognition (CVPR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eykholt%2C%20Kevin%20Evtimov%2C%20Ivan%20Fernandes%2C%20Earlence%20Li%2C%20Bo%20Robust%20Physical-World%20Attacks%20on%20Deep%20Learning%20Visual%20Classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eykholt%2C%20Kevin%20Evtimov%2C%20Ivan%20Fernandes%2C%20Earlence%20Li%2C%20Bo%20Robust%20Physical-World%20Attacks%20on%20Deep%20Learning%20Visual%20Classification%202018"
+        },
+        {
+            "id": "Genova_et+al_2018_a",
+            "entry": "Kyle Genova, Forrester Cole, Aaron Maschinot, Aaron Sarna, Daniel Vlasic, and William T. Freeman. Unsupervised training for 3d morphable model regression. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Genova%2C%20Kyle%20Cole%2C%20Forrester%20Maschinot%2C%20Aaron%20Sarna%2C%20Aaron%20Unsupervised%20training%20for%203d%20morphable%20model%20regression%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Genova%2C%20Kyle%20Cole%2C%20Forrester%20Maschinot%2C%20Aaron%20Sarna%2C%20Aaron%20Unsupervised%20training%20for%203d%20morphable%20model%20regression%202018-06"
+        },
+        {
+            "id": "Gilmer_et+al_2018_a",
+            "entry": "Justin Gilmer, Ryan P Adams, Ian Goodfellow, David Andersen, and George E Dahl. Motivating the rules of the game for adversarial example research. arXiv preprint arXiv:1807.06732, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.06732"
+        },
+        {
+            "id": "Goodfellow_2018_a",
+            "entry": "Ian Goodfellow. Defense against the dark arts: An overview of adversarial example security research and future research directions. arXiv preprint arXiv:1806.04169, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.04169"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "Ian Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. In International Conference on Learning Representations, 2015. URL http://arxiv.org/abs/1412.6572.",
+            "url": "http://arxiv.org/abs/1412.6572",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Green_2003_a",
+            "entry": "Robin Green. Spherical harmonic lighting: The gritty details. In Archives of the Game Developers Conference, volume 56, pp. 4, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Green%2C%20Robin%20Spherical%20harmonic%20lighting%3A%20The%20gritty%20details%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Green%2C%20Robin%20Spherical%20harmonic%20lighting%3A%20The%20gritty%20details%202003"
+        },
+        {
+            "id": "Habel_et+al_2008_a",
+            "entry": "Ralf Habel, Bogdan Mustata, and Michael Wimmer. Efficient spherical harmonics lighting with the preetham skylight model. In Eurographics (Short Papers), pp. 119\u2013122, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Habel%2C%20Ralf%20Mustata%2C%20Bogdan%20Wimmer%2C%20Michael%20Efficient%20spherical%20harmonics%20lighting%20with%20the%20preetham%20skylight%20model%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Habel%2C%20Ralf%20Mustata%2C%20Bogdan%20Wimmer%2C%20Michael%20Efficient%20spherical%20harmonics%20lighting%20with%20the%20preetham%20skylight%20model%202008"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hendrycks_2018_a",
+            "entry": "Dan Hendrycks and Thomas G Dietterich. Benchmarking neural network robustness to common corruptions and surface variations. arXiv preprint arXiv:1807.01697, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.01697"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Laurens van der Maaten, and Kilian Q. Weinberger. Densely connected convolutional networks. In 2017 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, Honolulu, HI, USA, July 21-26, 2017, pp. 2261\u20132269, 2017. doi: 10.1109/CVPR. 2017.243. URL https://doi.org/10.1109/CVPR.2017.243.",
+            "crossref": "https://dx.doi.org/10.1109/CVPR.2017.243",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/CVPR.2017.243"
+        },
+        {
+            "id": "Iandola_et+al_2016_a",
+            "entry": "Forrest N Iandola, Song Han, Matthew W Moskewicz, Khalid Ashraf, William J Dally, and Kurt Keutzer. Squeezenet: Alexnet-level accuracy with 50x fewer parameters and< 0.5 mb model size. arXiv preprint arXiv:1602.07360, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.07360"
+        },
+        {
+            "id": "James_2016_a",
+            "entry": "Stephen James and Edward Johns. 3d simulation for robot arm control with deep q-learning. arXiv preprint arXiv:1609.03759, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03759"
+        },
+        {
+            "id": "Johnson-Roberson_et+al_2017_a",
+            "entry": "Matthew Johnson-Roberson, Charles Barto, Rounak Mehta, Sharath Nittur Sridhar, Karl Rosaen, and Ram Vasudevan. Driving in the matrix: Can virtual worlds replace human-generated annotations for real world tasks? In Robotics and Automation (ICRA), 2017 IEEE International Conference on, pp. 746\u2013753. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson-Roberson%2C%20Matthew%20Barto%2C%20Charles%20Mehta%2C%20Rounak%20Sridhar%2C%20Sharath%20Nittur%20Driving%20in%20the%20matrix%3A%20Can%20virtual%20worlds%20replace%20human-generated%20annotations%20for%20real%20world%20tasks%3F%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson-Roberson%2C%20Matthew%20Barto%2C%20Charles%20Mehta%2C%20Rounak%20Sridhar%2C%20Sharath%20Nittur%20Driving%20in%20the%20matrix%3A%20Can%20virtual%20worlds%20replace%20human-generated%20annotations%20for%20real%20world%20tasks%3F%202017"
+        },
+        {
+            "id": "Kajiya_1986_a",
+            "entry": "James T Kajiya. The rendering equation. In ACM Siggraph Computer Graphics, volume 20, pp. 143\u2013150. ACM, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kajiya%2C%20James%20T.%20The%20rendering%20equation%201986",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kajiya%2C%20James%20T.%20The%20rendering%20equation%201986"
+        },
+        {
+            "id": "Kanbak_et+al_2018_a",
+            "entry": "Can Kanbak, Seyed Mohsen Moosavi Dezfooli, and Pascal Frossard. Geometric robustness of deep networks: analysis and improvement. Proceedings of IEEE CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kanbak%2C%20Can%20Dezfooli%2C%20Seyed%20Mohsen%20Moosavi%20Frossard%2C%20Pascal%20Geometric%20robustness%20of%20deep%20networks%3A%20analysis%20and%20improvement%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kanbak%2C%20Can%20Dezfooli%2C%20Seyed%20Mohsen%20Moosavi%20Frossard%2C%20Pascal%20Geometric%20robustness%20of%20deep%20networks%3A%20analysis%20and%20improvement%202018"
+        },
+        {
+            "id": "Kato_et+al_2018_a",
+            "entry": "Hiroharu Kato, Yoshitaka Ushiku, and Tatsuya Harada. Neural 3d mesh renderer. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 3907\u20133916, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kato%2C%20Hiroharu%20Ushiku%2C%20Yoshitaka%20Harada%2C%20Tatsuya%20Neural%203d%20mesh%20renderer%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kato%2C%20Hiroharu%20Ushiku%2C%20Yoshitaka%20Harada%2C%20Tatsuya%20Neural%203d%20mesh%20renderer%202018"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Kurakin_et+al_2016_a",
+            "entry": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial examples in the physical world. In Proc. ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kurakin%2C%20Alexey%20Goodfellow%2C%20Ian%20Bengio%2C%20Samy%20Adversarial%20examples%20in%20the%20physical%20world%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kurakin%2C%20Alexey%20Goodfellow%2C%20Ian%20Bengio%2C%20Samy%20Adversarial%20examples%20in%20the%20physical%20world%202016"
+        },
+        {
+            "id": "Kurakin_et+al_2017_a",
+            "entry": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial machine learning at scale. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kurakin%2C%20Alexey%20Goodfellow%2C%20Ian%20Bengio%2C%20Samy%20Adversarial%20machine%20learning%20at%20scale%202017"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Guilin Liu, Duygu Ceylan, Ersin Yumer, Jimei Yang, and Jyh-Ming Lien. Material editing using a physically based rendering network. In 2017 IEEE International Conference on Computer Vision (ICCV), pp. 2280\u20132288. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Guilin%20Ceylan%2C%20Duygu%20Yumer%2C%20Ersin%20Yang%2C%20Jimei%20Material%20editing%20using%20a%20physically%20based%20rendering%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Guilin%20Ceylan%2C%20Duygu%20Yumer%2C%20Ersin%20Yang%2C%20Jimei%20Material%20editing%20using%20a%20physically%20based%20rendering%20network%202017"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Hsueh-Ti Derek Liu, Michael Tao, and Alec Jacobson. Paparazzi: Surface editing by way of multi-view image processing. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Hsueh-Ti%20Derek%20Tao%2C%20Michael%20Jacobson%2C%20Alec%20Paparazzi%3A%20Surface%20editing%20by%20way%20of%20multi-view%20image%20processing%202018"
+        },
+        {
+            "id": "Madry_et+al_2018_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018"
+        },
+        {
+            "id": "Miller_1994_a",
+            "entry": "Gavin Miller. Efficient algorithms for local and global accessibility shading. In Proceedings of the 21st Annual Conference on Computer Graphics and Interactive Techniques, SIGGRAPH \u201994, pp. 319\u2013326, New York, NY, USA, 1994. ACM. ISBN 0-89791-667-0. doi: 10.1145/192161.192244. URL http://doi.acm.org/10.1145/192161.192244.",
+            "crossref": "https://dx.doi.org/10.1145/192161.192244",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/192161.192244"
+        },
+        {
+            "id": "Miyato_et+al_2018_a",
+            "entry": "Takeru Miyato, Shin-ichi Maeda, Shin Ishii, and Masanori Koyama. Virtual adversarial training: a regularization method for supervised and semi-supervised learning. IEEE transactions on pattern analysis and machine intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miyato%2C%20Takeru%20Maeda%2C%20Shin-ichi%20Ishii%2C%20Shin%20Koyama%2C%20Masanori%20Virtual%20adversarial%20training%3A%20a%20regularization%20method%20for%20supervised%20and%20semi-supervised%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miyato%2C%20Takeru%20Maeda%2C%20Shin-ichi%20Ishii%2C%20Shin%20Koyama%2C%20Masanori%20Virtual%20adversarial%20training%3A%20a%20regularization%20method%20for%20supervised%20and%20semi-supervised%20learning%202018"
+        },
+        {
+            "id": "Dezfooli_et+al_2016_a",
+            "entry": "Seyed Mohsen Moosavi Dezfooli, Alhussein Fawzi, and Pascal Frossard. Deepfool: a simple and accurate method to fool deep neural networks. In Proceedings of 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), number EPFL-CONF-218057, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dezfooli%2C%20Seyed%20Mohsen%20Moosavi%20Fawzi%2C%20Alhussein%20Frossard%2C%20Pascal%20Deepfool%3A%20a%20simple%20and%20accurate%20method%20to%20fool%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dezfooli%2C%20Seyed%20Mohsen%20Moosavi%20Fawzi%2C%20Alhussein%20Frossard%2C%20Pascal%20Deepfool%3A%20a%20simple%20and%20accurate%20method%20to%20fool%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Moosavi-Dezfooli_et+al_2017_a",
+            "entry": "Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, Omar Fawzi, and Pascal Frossard. Universal adversarial perturbations. In 2017 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, Honolulu, HI, USA, July 21-26, 2017, pp. 86\u201394, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Universal%20adversarial%20perturbations%202017-07-21",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Fawzi%2C%20Alhussein%20Fawzi%2C%20Omar%20Frossard%2C%20Pascal%20Universal%20adversarial%20perturbations%202017-07-21"
+        },
+        {
+            "id": "Papernot_et+al_2017_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Ian Goodfellow, Somesh Jha, Z Berkay Celik, and Ananthram Swami. Practical black-box attacks against machine learning. In Proceedings of the 2017 ACM on Asia Conference on Computer and Communications Security, pp. 506\u2013519. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Goodfellow%2C%20Ian%20Somesh%20Jha%2C%20Z.Berkay%20Celik%20Practical%20black-box%20attacks%20against%20machine%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Goodfellow%2C%20Ian%20Somesh%20Jha%2C%20Z.Berkay%20Celik%20Practical%20black-box%20attacks%20against%20machine%20learning%202017"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20Adam%20Gross%2C%20Sam%20Chintala%2C%20Soumith%20Chanan%2C%20Gregory%20Automatic%20differentiation%20in%20pytorch%202017"
+        },
+        {
+            "id": "Pharr_et+al_2016_a",
+            "entry": "Matt Pharr, Wenzel Jakob, and Greg Humphreys. Physically based rendering: From theory to implementation. Morgan Kaufmann, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pharr%2C%20Matt%20Jakob%2C%20Wenzel%20Humphreys%2C%20Greg%20Physically%20based%20rendering%3A%20From%20theory%20to%20implementation%202016"
+        },
+        {
+            "id": "Preetham_et+al_1999_a",
+            "entry": "Arcot J Preetham, Peter Shirley, and Brian Smits. A practical analytic model for daylight. In Proceedings of the 26th annual conference on Computer graphics and interactive techniques, pp. 91\u2013100. ACM Press/Addison-Wesley Publishing Co., 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Preetham%2C%20Arcot%20J.%20Shirley%2C%20Peter%20Smits%2C%20Brian%20A%20practical%20analytic%20model%20for%20daylight%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Preetham%2C%20Arcot%20J.%20Shirley%2C%20Peter%20Smits%2C%20Brian%20A%20practical%20analytic%20model%20for%20daylight%201999"
+        },
+        {
+            "id": "Ramamoorthi_2001_a",
+            "entry": "Ravi Ramamoorthi and Pat Hanrahan. An efficient representation for irradiance environment maps. In Proceedings of the 28th annual conference on Computer graphics and interactive techniques, pp. 497\u2013500. ACM, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramamoorthi%2C%20Ravi%20Hanrahan%2C%20Pat%20An%20efficient%20representation%20for%20irradiance%20environment%20maps%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ramamoorthi%2C%20Ravi%20Hanrahan%2C%20Pat%20An%20efficient%20representation%20for%20irradiance%20environment%20maps%202001"
+        },
+        {
+            "id": "Rozsa_et+al_2016_a",
+            "entry": "Andras Rozsa, Ethan M Rudd, and Terrance E Boult. Adversarial diversity and hard positive generation. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops, pp. 25\u201332, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rozsa%2C%20Andras%20Rudd%2C%20Ethan%20M.%20Boult%2C%20Terrance%20E.%20Adversarial%20diversity%20and%20hard%20positive%20generation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rozsa%2C%20Andras%20Rudd%2C%20Ethan%20M.%20Boult%2C%20Terrance%20E.%20Adversarial%20diversity%20and%20hard%20positive%20generation%202016"
+        },
+        {
+            "id": "Sadeghi_2016_a",
+            "entry": "Fereshteh Sadeghi and Sergey Levine. Cad2rl: Real single-image flight without a single real image. arXiv preprint arXiv:1611.04201, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.04201"
+        },
+        {
+            "id": "Dave_2009_a",
+            "entry": "Dave Shreiner and The Khronos OpenGL ARB Working Group. OpenGL Programming Guide: The Official Guide to Learning OpenGL, Versions 3.0 and 3.1. Addison-Wesley Professional, 7th edition, 2009. ISBN 0321552628, 9780321552624.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dave%20Shreiner%20and%20The%20Khronos%20OpenGL%20ARB%20Working%20Group%20OpenGL%20Programming%20Guide%20The%20Official%20Guide%20to%20Learning%20OpenGL%20Versions%2030%20and%2031%20AddisonWesley%20Professional%207th%20edition%202009%20ISBN%200321552628%209780321552624"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Sloan_et+al_2005_a",
+            "entry": "Peter-Pike Sloan, Ben Luna, and John Snyder. Local, deformable precomputed radiance transfer. In ACM Transactions on Graphics (TOG), volume 24, pp. 1216\u20131224. ACM, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sloan%2C%20Peter-Pike%20Luna%2C%20Ben%20Snyder%2C%20John%20Local%2C%20deformable%20precomputed%20radiance%20transfer%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sloan%2C%20Peter-Pike%20Luna%2C%20Ben%20Snyder%2C%20John%20Local%2C%20deformable%20precomputed%20radiance%20transfer%202005"
+        },
+        {
+            "id": "Su_et+al_2015_a",
+            "entry": "Hao Su, Charles R Qi, Yangyan Li, and Leonidas J Guibas. Render for CNN: Viewpoint estimation in images using CNNs trained with rendered 3d model views. In Proc. ICCV, pp. 2686\u20132694, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Su%2C%20Hao%20Qi%2C%20Charles%20R.%20Li%2C%20Yangyan%20Guibas%2C%20Leonidas%20J.%20Render%20for%20CNN%3A%20Viewpoint%20estimation%20in%20images%20using%20CNNs%20trained%20with%20rendered%203d%20model%20views%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Su%2C%20Hao%20Qi%2C%20Charles%20R.%20Li%2C%20Yangyan%20Guibas%2C%20Leonidas%20J.%20Render%20for%20CNN%3A%20Viewpoint%20estimation%20in%20images%20using%20CNNs%20trained%20with%20rendered%203d%20model%20views%202015"
+        },
+        {
+            "id": "Su_et+al_2017_a",
+            "entry": "Jiawei Su, Danilo Vasconcellos Vargas, and Sakurai Kouichi. One pixel attack for fooling deep neural networks. arXiv preprint arXiv:1710.08864, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.08864"
+        },
+        {
+            "id": "Sun_et+al_2018_a",
+            "entry": "Sining Sun, Ching-Feng Yeh, Mari Ostendorf, Mei-Yuh Hwang, and Lei Xie. Training augmentation with adversarial examples for robust speech recognition. arXiv preprint arXiv:1806.02782, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02782"
+        },
+        {
+            "id": "Szegedy_et+al_2014_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20Bruna%2C%20Joan%20Intriguing%20properties%20of%20neural%20networks%202014"
+        },
+        {
+            "id": "Tram_et+al_2017_a",
+            "entry": "Florian Tram\u00e8r, Alexey Kurakin, Nicolas Papernot, Dan Boneh, and Patrick McDaniel. Ensemble adversarial training: Attacks and defenses. arXiv preprint arXiv:1705.07204, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07204"
+        },
+        {
+            "id": "Tremblay_et+al_2018_a",
+            "entry": "Jonathan Tremblay, Aayush Prakash, David Acuna, Mark Brophy, Varun Jampani, Cem Anil, Thang To, Eric Cameracci, Shaad Boochoon, and Stan Birchfield. Training deep networks with synthetic data: Bridging the reality gap by domain randomization. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tremblay%2C%20Jonathan%20Prakash%2C%20Aayush%20Acuna%2C%20David%20Brophy%2C%20Mark%20Cem%20Anil%2C%20Thang%20To%2C%20Eric%20Cameracci%2C%20Shaad%20Boochoon%2C%20and%20Stan%20Birchfield.%20Training%20deep%20networks%20with%20synthetic%20data%3A%20Bridging%20the%20reality%20gap%20by%20domain%20randomization%202018"
+        },
+        {
+            "id": "Varol_et+al_2017_a",
+            "entry": "G\u00fcl Varol, Javier Romero, Xavier Martin, Naureen Mahmood, Michael J Black, Ivan Laptev, and Cordelia Schmid. Learning from synthetic humans. In 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR 2017), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Varol%2C%20G%C3%BCl%20Romero%2C%20Javier%20Martin%2C%20Xavier%20Mahmood%2C%20Naureen%20Learning%20from%20synthetic%20humans%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Varol%2C%20G%C3%BCl%20Romero%2C%20Javier%20Martin%2C%20Xavier%20Mahmood%2C%20Naureen%20Learning%20from%20synthetic%20humans%202017"
+        },
+        {
+            "id": "Veeravasarapu_et+al_2017_a",
+            "entry": "VSR Veeravasarapu, Constantin Rothkopf, and Ramesh Visvanathan. Model-driven simulations for computer vision. In Applications of Computer Vision (WACV), 2017 IEEE Winter Conference on, pp. 1063\u20131071. IEEE, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Veeravasarapu%2C%20V.S.R.%20Rothkopf%2C%20Constantin%20Visvanathan%2C%20Ramesh%20Model-driven%20simulations%20for%20computer%20vision%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Veeravasarapu%2C%20V.S.R.%20Rothkopf%2C%20Constantin%20Visvanathan%2C%20Ramesh%20Model-driven%20simulations%20for%20computer%20vision%202017"
+        },
+        {
+            "id": "Veeravasarapu_et+al_2017_b",
+            "entry": "VSR Veeravasarapu, Constantin A Rothkopf, and Visvanathan Ramesh. Adversarially tuned scene generation. In CVPR, pp. 6441\u20136449, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Veeravasarapu%2C%20V.S.R.%20Rothkopf%2C%20Constantin%20A.%20Ramesh%2C%20Visvanathan%20Adversarially%20tuned%20scene%20generation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Veeravasarapu%2C%20V.S.R.%20Rothkopf%2C%20Constantin%20A.%20Ramesh%2C%20Visvanathan%20Adversarially%20tuned%20scene%20generation%202017"
+        },
+        {
+            "id": "Williams_1978_a",
+            "entry": "Lance Williams. Casting curved shadows on curved surfaces. In ACM Siggraph Computer Graphics, volume 12, pp. 270\u2013274. ACM, 1978.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Lance%20Casting%20curved%20shadows%20on%20curved%20surfaces%201978",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Lance%20Casting%20curved%20shadows%20on%20curved%20surfaces%201978"
+        },
+        {
+            "id": "Wu_et+al_2017_a",
+            "entry": "Jiajun Wu, Joshua B Tenenbaum, and Pushmeet Kohli. Neural scene de-rendering. In Proc. CVPR, volume 2, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jiajun%20Wu%20Joshua%20B%20Tenenbaum%20and%20Pushmeet%20Kohli%20Neural%20scene%20derendering%20In%20Proc%20CVPR%20volume%202%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jiajun%20Wu%20Joshua%20B%20Tenenbaum%20and%20Pushmeet%20Kohli%20Neural%20scene%20derendering%20In%20Proc%20CVPR%20volume%202%202017"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Wide residual networks. In Proceedings of the British Machine Vision Conference 2016, BMVC 2016, York, UK, September 19-22, 2016, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zagoruyko%2C%20Sergey%20Komodakis%2C%20Nikos%20Wide%20residual%20networks%202016-09-19",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zagoruyko%2C%20Sergey%20Komodakis%2C%20Nikos%20Wide%20residual%20networks%202016-09-19"
+        },
+        {
+            "id": "Zeng_et+al_2017_a",
+            "entry": "Xiaohui Zeng, Chenxi Liu, Weichao Qiu, Lingxi Xie, Yu-Wing Tai, Chi Keung Tang, and Alan L Yuille. Adversarial attacks beyond the image space. arXiv preprint arXiv:1711.07183, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.07183"
+        }
+    ]
+}

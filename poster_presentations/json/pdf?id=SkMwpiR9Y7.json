@@ -1,0 +1,254 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "MEASURING AND REGULARIZING NETWORKS IN",
+        "author": "FUNCTION SPACE",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkMwpiR9Y7"
+        },
+        "abstract": "To optimize a neural network one often thinks of optimizing its parameters, but it is ultimately a matter of optimizing the function that maps inputs to outputs. Since a change in the parameters might serve as a poor proxy for the change in the function, it is of some concern that primacy is given to parameters but that the correspondence has not been tested. Here, we show that it is simple and computationally feasible to calculate distances between functions in a L2 Hilbert space. We examine how typical networks behave in this space, and compare how parameter 2 distances compare to function L2 distances between various points of an optimization trajectory. We find that the two distances are nontrivially related. In particular, the L2/ 2 ratio decreases throughout optimization, reaching a steady value around when test error plateaus. We then investigate how the L2 distance could be applied directly to optimization. We first propose that in multitask learning, one can avoid catastrophic forgetting by directly limiting how much the input/output function changes between tasks. Secondly, we propose a new learning rule that constrains the distance a network can travel through L2-space in any one update. This allows new examples to be learned in a way that minimally interferes with what has previously been learned. These applications demonstrate how one can measure and regularize function distances directly, without relying on parameters or local approximations like loss curvature."
+    },
+    "keywords": [
+        {
+            "term": "l2 distance",
+            "url": "https://en.wikipedia.org/wiki/l2_distance"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "catastrophic forgetting",
+            "url": "https://en.wikipedia.org/wiki/Catastrophic_Forgetting"
+        },
+        {
+            "term": "function space",
+            "url": "https://en.wikipedia.org/wiki/function_space"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "new learning",
+            "url": "https://en.wikipedia.org/wiki/new_learning"
+        },
+        {
+            "term": "parameter space",
+            "url": "https://en.wikipedia.org/wiki/parameter_space"
+        }
+    ],
+    "abbreviations": {
+        "HCGD": "Hilbert-constrained gradient descent",
+        "BN": "Batch Normalization",
+        "EWC": "Elastic Weight Consolidation",
+        "SI": "Synaptic Intelligence"
+    },
+    "highlights": [
+        "A neural network\u2019s parameters collectively encode a function that maps inputs to outputs",
+        "It is important that analyses discuss the empirical relationship between function space and the more direct parameter space",
+        "We argued that the L2 Hilbert space defined over an input distribution is a tractable and useful space for analysis",
+        "We found that networks traverse this function space qualitatively differently than they do parameter space",
+        "We proposed two possibilities for how the L2 distance could be used directly in applications",
+        "For large networks with millions of parameters, this approach may be more appealing than comparable methods like Elastic Weight Consolidation and Synaptic Intelligence, which require storing large diagonal matrices"
+    ],
+    "key_statements": [
+        "A neural network\u2019s parameters collectively encode a function that maps inputs to outputs",
+        "A researcher should ideally consider how a network\u2019s input/output function changes relative to the space of possible functions. Since this space is not often considered tractable, most techniques and analyses consider the parameters of neural networks",
+        "For example, act directly on the parameters places upon movement). These techniques are valuable to the extent that parameter space can be taken as a proxy for function space",
+        "Since the two might not always be related, and since we care most about the input/output function, it is important to develop metrics that are directly applicable in function space",
+        "In this work we show that it is relatively straightforward to measure the distance between two networks in function space, at least if one chooses the right space",
+        "As we derive in \u00a73.2.1, the natural gradient can be viewed as resulting from constrains changes in a function space measured by the Kullbeck-Leibler divergence.\n2 EXAMINING NETWORKS IN FUNCTION SPACE",
+        "We propose to examine the trajectories of networks in the space of functions defined by the inner product f, g = f (x)g(x)d\u03bc(x), which yields the following norm: X",
+        "First, that networks continue to move in function space as well as in parameter space after test error converges, which is around epoch 60. (The test error can be seen in Appendix A, along with identical plots colored by test error instead of epoch.) Their movement relative to initialization slows, but there is still large movement relative to previous iterations and previous epochs",
+        "What changes strikingly throughout optimization is the relationship between parameter and function space",
+        "We compared the performance of our approach at the benchmark task of permuted MNIST. This task requires a single MLP to learn to classify a sequence of MNIST tasks in which the pixels have been randomly permuted differently on each task",
+        "Every n iterations, a step is taken to decrease the loss on the memory cache",
+        "We found that regularizing the L2 distance on a working memory cache was more successful than retraining on the same cache",
+        "We propose that the L2 distance can be used for regularization in a single supervised task",
+        "In Appendix C, we demonstrate that this algorithm does decrease the distance traveled in function space, as expected",
+        "In Appendix E, we show how one can approximate the natural gradient with an inner first-order optimization loop, like in Hilbert-constrained gradient descent",
+        "By normalizing and whitening the gradients, or by proxy, the activations, these various methods ensure that parameter space is a better proxy for function space.\n3.3",
+        "We trained a Squeezenet v1.1, a convolutional neural network model with batch normalization optimized for parameter efficiency (<a class=\"ref-link\" id=\"cIandola_et+al_2016_a\" href=\"#rIandola_et+al_2016_a\">Iandola et al (2016</a>))",
+        "We found that Hilbert-constrained gradient descent outperformed SGD (Figure 6",
+        "Since Adam worked well for the sequential MNIST task, we tested if Adam could be improved by taking a step to penalize the change in function space",
+        "It is important that analyses discuss the empirical relationship between function space and the more direct parameter space",
+        "We argued that the L2 Hilbert space defined over an input distribution is a tractable and useful space for analysis",
+        "We found that networks traverse this function space qualitatively differently than they do parameter space",
+        "A distance of parameters cannot be taken to represent a proportional distance between functions",
+        "We proposed two possibilities for how the L2 distance could be used directly in applications",
+        "Estimate an L2 distance, we can ensure that the function does not change as a new task is learned. This regularization term is agnostic to the architecture or parameterization of the network",
+        "We found that this scheme outperforms retraining on the same number of stored examples",
+        "For large networks with millions of parameters, this approach may be more appealing than comparable methods like Elastic Weight Consolidation and Synaptic Intelligence, which require storing large diagonal matrices",
+        "We proposed a learning rule that reduces movement in function space during single-task optimization",
+        "Hilbert-constrained gradient descent can increase test performance at image classification in recurrent situations, indicating both that the locality of function movement is important to SGD and that it can be improved upon"
+    ],
+    "summary": [
+        "A neural network\u2019s parameters collectively encode a function that maps inputs to outputs.",
+        "We show that one can instead directly regularize changes in the input/output function of early tasks.",
+        "As we derive in \u00a73.2.1, the natural gradient can be viewed as resulting from constrains changes in a function space measured by the Kullbeck-Leibler divergence.",
+        "First, that networks continue to move in function space as well as in parameter space after test error converges, which is around epoch 60.",
+        "What changes strikingly throughout optimization is the relationship between parameter and function space.",
+        "Using a function space metric, it is not hard to ensure that the network\u2019s output function on previous tasks does not change during learning.",
+        "The working memory approach that is required to regularize function change from old tasks is comparable or cheaper in memory.",
+        "Let us seek to regularize the change in a network\u2019s output distribution P\u03b8 throughout optimization of the parameters \u03b8, choosing the Kullbeck-Leibler (KL) divergence as a measure of similarity between any two distributions.",
+        "The natural gradient emerges as the optimal update when one regularizes the change in the output distribution during learning.",
+        "In Appendix E, we show how one can approximate the natural gradient with an inner first-order optimization loop, like in HCGD.",
+        "By normalizing and whitening the gradients, or by proxy, the activations, these various methods ensure that parameter space is a better proxy for function space.",
+        "We trained a Squeezenet v1.1, a convolutional neural network model with batch normalization optimized for parameter efficiency (<a class=\"ref-link\" id=\"cIandola_et+al_2016_a\" href=\"#rIandola_et+al_2016_a\">Iandola et al (2016</a>)).",
+        "Since Adam worked well for the sequential MNIST task, we tested if Adam could be improved by taking a step to penalize the change in function space.",
+        "Estimate an L2 distance, we can ensure that the function does not change as a new task is learned.",
+        "We proposed a learning rule that reduces movement in function space during single-task optimization.",
+        "Hilbert-constrained gradient descent (HCGD) constrains the change in L2 space between successive updates.",
+        "HCGD can increase test performance at image classification in recurrent situations, indicating both that the locality of function movement is important to SGD and that it can be improved upon.",
+        "Regularization upon behavioral change would predict that neurons central to many actions, like neurons in motor pools of the spinal cord, would learn very slowly after early development, despite the fact that their gradient to the error on any one task is likely to be quite large."
+    ],
+    "headline": "We show that it is simple and computationally feasible to calculate distances between functions in a L2 Hilbert space",
+    "reference_links": [
+        {
+            "id": "Amari_1998_a",
+            "entry": "Shun-Ichi Amari. Natural gradient works efficiently in learning. Neural computation, 10(2):251\u2013276, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-Ichi%20Natural%20gradient%20works%20efficiently%20in%20learning%201998"
+        },
+        {
+            "id": "Amari_et+al_1996_a",
+            "entry": "Shun-ichi Amari, Andrzej Cichocki, and Howard Hua Yang. A new learning algorithm for blind signal separation. In Advances in neural information processing systems, pp. 757\u2013763, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-ichi%20Cichocki%2C%20Andrzej%20Yang%2C%20Howard%20Hua%20A%20new%20learning%20algorithm%20for%20blind%20signal%20separation%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-ichi%20Cichocki%2C%20Andrzej%20Yang%2C%20Howard%20Hua%20A%20new%20learning%20algorithm%20for%20blind%20signal%20separation%201996"
+        },
+        {
+            "id": "Amari_et+al_2000_a",
+            "entry": "Shun-Ichi Amari, Hyeyoung Park, and Kenji Fukumizu. Adaptive method of realizing natural gradient learning for multilayer perceptrons. Neural Computation, 12(6):1399\u20131409, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amari%2C%20Shun-Ichi%20Park%2C%20Hyeyoung%20Fukumizu%2C%20Kenji%20Adaptive%20method%20of%20realizing%20natural%20gradient%20learning%20for%20multilayer%20perceptrons%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amari%2C%20Shun-Ichi%20Park%2C%20Hyeyoung%20Fukumizu%2C%20Kenji%20Adaptive%20method%20of%20realizing%20natural%20gradient%20learning%20for%20multilayer%20perceptrons%202000"
+        },
+        {
+            "id": "Crammer_et+al_2009_a",
+            "entry": "Koby Crammer, Alex Kulesza, and Mark Dredze. Adaptive regularization of weight vectors. In Advances in neural information processing systems, pp. 414\u2013422, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Crammer%2C%20Koby%20Kulesza%2C%20Alex%20Dredze%2C%20Mark%20Adaptive%20regularization%20of%20weight%20vectors%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Crammer%2C%20Koby%20Kulesza%2C%20Alex%20Dredze%2C%20Mark%20Adaptive%20regularization%20of%20weight%20vectors%202009"
+        },
+        {
+            "id": "Fine_2006_a",
+            "entry": "Michael S Fine and Kurt A Thoroughman. Motor adaptation to single force pulses: sensitive to direction but insensitive to within-movement pulse placement and magnitude. Journal of neurophysiology, 96(2):710\u2013720, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fine%2C%20Michael%20S.%20Thoroughman%2C%20Kurt%20A.%20Motor%20adaptation%20to%20single%20force%20pulses%3A%20sensitive%20to%20direction%20but%20insensitive%20to%20within-movement%20pulse%20placement%20and%20magnitude%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fine%2C%20Michael%20S.%20Thoroughman%2C%20Kurt%20A.%20Motor%20adaptation%20to%20single%20force%20pulses%3A%20sensitive%20to%20direction%20but%20insensitive%20to%20within-movement%20pulse%20placement%20and%20magnitude%202006"
+        },
+        {
+            "id": "Giryes_et+al_2016_a",
+            "entry": "Raja Giryes, Guillermo Sapiro, and Alexander M Bronstein. Deep neural networks with random Gaussian weights: a universal classification strategy? IEEE Trans. Signal Processing, 64(13): 3444\u20133457, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Giryes%2C%20Raja%20Sapiro%2C%20Guillermo%20Bronstein%2C%20Alexander%20M.%20Deep%20neural%20networks%20with%20random%20Gaussian%20weights%3A%20a%20universal%20classification%20strategy%3F%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Giryes%2C%20Raja%20Sapiro%2C%20Guillermo%20Bronstein%2C%20Alexander%20M.%20Deep%20neural%20networks%20with%20random%20Gaussian%20weights%3A%20a%20universal%20classification%20strategy%3F%202016"
+        },
+        {
+            "id": "Hardt_et+al_2015_a",
+            "entry": "Moritz Hardt, Benjamin Recht, and Yoram Singer. Train faster, generalize better: Stability of stochastic gradient descent. arXiv preprint arXiv:1509.01240, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.01240"
+        },
+        {
+            "id": "Honkela_2003_a",
+            "entry": "Antti Honkela and Harri Valpola. On-line variational bayesian learning. In 4th International Symposium on Independent Component Analysis and Blind Signal Separation, pp. 803\u2013808, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Honkela%2C%20Antti%20Valpola%2C%20Harri%20On-line%20variational%20bayesian%20learning%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Honkela%2C%20Antti%20Valpola%2C%20Harri%20On-line%20variational%20bayesian%20learning%202003"
+        },
+        {
+            "id": "Iandola_et+al_2016_a",
+            "entry": "Forrest N Iandola, Song Han, Matthew W Moskewicz, Khalid Ashraf, William J Dally, and Kurt Keutzer. Squeezenet: Alexnet-level accuracy with 50x fewer parameters and\u00a1 0.5 mb model size. arXiv preprint arXiv:1602.07360, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.07360"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Kirkpatrick_et+al_2016_a",
+            "entry": "James Kirkpatrick, Razvan Pascanu, Neil Rabinowitz, Joel Veness, Guillaume Desjardins, Andrei A Rusu, Kieran Milan, John Quan, Tiago Ramalho, Agnieszka Grabska-Barwinska, et al. Overcoming catastrophic forgetting in neural networks. Proceedings of the national academy of sciences, pp. 201611835, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kirkpatrick%2C%20James%20Pascanu%2C%20Razvan%20Rabinowitz%2C%20Neil%20Veness%2C%20Joel%20Overcoming%20catastrophic%20forgetting%20in%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kirkpatrick%2C%20James%20Pascanu%2C%20Razvan%20Rabinowitz%2C%20Neil%20Veness%2C%20Joel%20Overcoming%20catastrophic%20forgetting%20in%20neural%20networks%202016"
+        },
+        {
+            "id": "Lecun_et+al_1991_a",
+            "entry": "Yann LeCun, Ido Kanter, and Sara A Solla. Eigenvalues of covariance matrices: Application to neural-network learning. Physical Review Letters, 66(18):2396, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Kanter%2C%20Ido%20Solla%2C%20Sara%20A.%20Eigenvalues%20of%20covariance%20matrices%3A%20Application%20to%20neural-network%20learning%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Kanter%2C%20Ido%20Solla%2C%20Sara%20A.%20Eigenvalues%20of%20covariance%20matrices%3A%20Application%20to%20neural-network%20learning%201991"
+        },
+        {
+            "id": "Lopez-Paz_2017_a",
+            "entry": "David Lopez-Paz et al. Gradient episodic memory for continual learning. In Advances in Neural Information Processing Systems, pp. 6467\u20136476, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lopez-Paz%2C%20David%20Gradient%20episodic%20memory%20for%20continual%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lopez-Paz%2C%20David%20Gradient%20episodic%20memory%20for%20continual%20learning%202017"
+        },
+        {
+            "id": "Martens_2014_a",
+            "entry": "James Martens. New perspectives on the natural gradient method. arXiv preprint arXiv:1412.1193, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.1193"
+        },
+        {
+            "id": "Martens_2015_a",
+            "entry": "James Martens and Roger Grosse. Optimizing neural networks with kronecker-factored approximate curvature. In International Conference on Machine Learning, pp. 2408\u20132417, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martens%2C%20James%20Grosse%2C%20Roger%20Optimizing%20neural%20networks%20with%20kronecker-factored%20approximate%20curvature%202015"
+        },
+        {
+            "id": "Opper_1998_a",
+            "entry": "Manfred Opper and Ole Winther. A bayesian approach to on-line learning. On-line Learning in Neural Networks, ed. D. Saad, pp. 363\u2013378, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Opper%2C%20Manfred%20Winther%2C%20Ole%20A%20bayesian%20approach%20to%20on-line%20learning%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Opper%2C%20Manfred%20Winther%2C%20Ole%20A%20bayesian%20approach%20to%20on-line%20learning%201998"
+        },
+        {
+            "id": "Pascanu_2013_a",
+            "entry": "Razvan Pascanu and Yoshua Bengio. Revisiting natural gradient for deep networks. arXiv preprint arXiv:1301.3584, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1301.3584"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20Adam%20Gross%2C%20Sam%20Chintala%2C%20Soumith%20Chanan%2C%20Gregory%20Automatic%20differentiation%20in%20pytorch%202017"
+        },
+        {
+            "id": "Pereyra_et+al_2017_a",
+            "entry": "Gabriel Pereyra, George Tucker, Jan Chorowski, \u0141ukasz Kaiser, and Geoffrey Hinton. Regularizing neural networks by penalizing confident output distributions. arXiv preprint arXiv:1701.06548, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.06548"
+        },
+        {
+            "id": "Raiko_et+al_2012_a",
+            "entry": "Tapani Raiko, Harri Valpola, and Yann LeCun. Deep learning made easier by linear transformations in perceptrons. In Artificial Intelligence and Statistics, pp. 924\u2013932, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raiko%2C%20Tapani%20Valpola%2C%20Harri%20LeCun%2C%20Yann%20Deep%20learning%20made%20easier%20by%20linear%20transformations%20in%20perceptrons%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raiko%2C%20Tapani%20Valpola%2C%20Harri%20LeCun%2C%20Yann%20Deep%20learning%20made%20easier%20by%20linear%20transformations%20in%20perceptrons%202012"
+        },
+        {
+            "id": "Rebuffi_et+al_2017_a",
+            "entry": "Sylvestre-Alvise Rebuffi, Alexander Kolesnikov, Georg Sperl, and Christoph H Lampert. icarl: Incremental classifier and representation learning. In Proc. CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rebuffi%2C%20Sylvestre-Alvise%20Kolesnikov%2C%20Alexander%20Sperl%2C%20Georg%20Lampert%2C%20Christoph%20H.%20icarl%3A%20Incremental%20classifier%20and%20representation%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rebuffi%2C%20Sylvestre-Alvise%20Kolesnikov%2C%20Alexander%20Sperl%2C%20Georg%20Lampert%2C%20Christoph%20H.%20icarl%3A%20Incremental%20classifier%20and%20representation%20learning%202017"
+        },
+        {
+            "id": "Ritter_et+al_2018_a",
+            "entry": "Hippolyt Ritter, Aleksandar Botev, and David Barber. Online structured laplace approximations for overcoming catastrophic forgetting. arXiv preprint arXiv:1805.07810, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07810"
+        },
+        {
+            "id": "Salimans_2016_a",
+            "entry": "Tim Salimans and Diederik P Kingma. Weight normalization: A simple reparameterization to accelerate training of deep neural networks. In Advances in Neural Information Processing Systems, pp. 901\u2013909, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20P.%20Weight%20normalization%3A%20A%20simple%20reparameterization%20to%20accelerate%20training%20of%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Kingma%2C%20Diederik%20P.%20Weight%20normalization%3A%20A%20simple%20reparameterization%20to%20accelerate%20training%20of%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Schraudolph_1998_a",
+            "entry": "Nicol Schraudolph. Accelerated gradient descent by factor-centering decomposition. 1998. Nicol N Schraudolph and Terrence J Sejnowski. Tempering backpropagation networks: Not all weights are created equal. In Advances in neural information processing systems, pp. 563\u2013569, 1996. Patrice Simard, Yann LeCun, John Denker, and Bernard Victorri. Transformation invariance in pattern recognitiontangent distance and tangent propagation. Neural networks: tricks of the trade, pp. 549\u2013550, 1998. Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In International conference on machine learning, pp. 1139\u20131147, 2013. Chong Wang, Xi Chen, Alexander J Smola, and Eric P Xing. Variance reduction for stochastic gradient optimization. In Advances in Neural Information Processing Systems, pp. 181\u2013189, 2013. Friedemann Zenke, Ben Poole, and Surya Ganguli. Continual learning through synaptic intelligence. arXiv preprint arXiv:1703.04200, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04200"
+        }
+    ]
+}

@@ -1,0 +1,331 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DPSNET: END-TO-END DEEP PLANE SWEEP STEREO",
+        "author": "Sunghoon Im, Hae-Gon Jeon, Stephen Lin, In So Kweon, 1 KAIST, 2 Carnegie Mellon University, 3 Microsoft Research Asia dlarl,@kaist.ac.kr, haegonj@andrew.cmu.edu, stevelin@microsoft.com, iskweon,@kaist.ac.kr",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ryeYHi0ctQ"
+        },
+        "abstract": "Multiview stereo aims to reconstruct scene depth from images acquired by a camera under arbitrary motion. Recent methods address this problem through deep learning, which can utilize semantic cues to deal with challenges such as textureless and reflective regions. In this paper, we present a convolutional neural network called DPSNet (Deep Plane Sweep Network) whose design is inspired by best practices of traditional geometry-based approaches for dense depth reconstruction. Rather than directly estimating depth and/or optical flow correspondence from image pairs as done in many previous deep learning methods, DPSNet takes a plane sweep approach that involves building a cost volume from deep features using the plane sweep algorithm, regularizing the cost volume via a contextaware cost aggregation, and regressing the dense depth map from the cost volume. The cost volume is constructed using a differentiable warping process that allows for end-to-end training of the network. Through the effective incorporation of conventional multiview stereo concepts within a deep learning framework, DPSNet achieves state-of-the-art reconstruction results on a variety of challenging datasets."
+    },
+    "keywords": [
+        {
+            "term": "geometry",
+            "url": "https://en.wikipedia.org/wiki/geometry"
+        },
+        {
+            "term": "optical flow",
+            "url": "https://en.wikipedia.org/wiki/optical_flow"
+        },
+        {
+            "term": "stereopsis",
+            "url": "https://en.wikipedia.org/wiki/stereopsis"
+        },
+        {
+            "term": "conditional random field",
+            "url": "https://en.wikipedia.org/wiki/conditional_random_field"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "plane sweep",
+            "url": "https://en.wikipedia.org/wiki/plane_sweep"
+        },
+        {
+            "term": "convolutional neural networks",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_networks"
+        },
+        {
+            "term": "National Research Foundation of Korea",
+            "url": "https://en.wikipedia.org/wiki/National_Research_Foundation_of_Korea"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "depth map",
+            "url": "https://en.wikipedia.org/wiki/depth_map"
+        },
+        {
+            "term": "Air Force Research Laboratory",
+            "url": "https://en.wikipedia.org/wiki/Air_Force_Research_Laboratory"
+        }
+    ],
+    "abbreviations": {
+        "CNNs": "convolutional neural networks",
+        "DPSNet": "Deep Plane Sweep Network",
+        "CRF": "conditional random field",
+        "SPP": "spatial pyramid pooling",
+        "Abs Rel": "absolute relative error",
+        "Sq Rel": "square relative error",
+        "AFRL": "Air Force Research Laboratory",
+        "NRF": "National Research Foundation of Korea"
+    },
+    "highlights": [
+        "Such as semantic segmentation <a class=\"ref-link\" id=\"cCouprie_et+al_2013_a\" href=\"#rCouprie_et+al_2013_a\"><a class=\"ref-link\" id=\"cCouprie_et+al_2013_a\" href=\"#rCouprie_et+al_2013_a\">Couprie et al (2013</a></a>) and human pose/action recognition <a class=\"ref-link\" id=\"cShotton_et+al_2011_a\" href=\"#rShotton_et+al_2011_a\"><a class=\"ref-link\" id=\"cShotton_et+al_2011_a\" href=\"#rShotton_et+al_2011_a\">Shotton et al (2011</a></a>); <a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\"><a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\">Wang et al (2016</a></a>), have been shown to benefit from 3D scene information",
+        "A common approach to reconstructing 3D geometry is by multiview stereo, which infers depth based on point correspondences among a set of unstructured images <a class=\"ref-link\" id=\"cHartley_2003_a\" href=\"#rHartley_2003_a\">Hartley & Zisserman (2003</a>); <a class=\"ref-link\" id=\"cSchonberger_et+al_2016_a\" href=\"#rSchonberger_et+al_2016_a\">Schonberger et al (2016</a>)",
+        "We present Deep Plane Sweep Network (DPSNet), an end-to-end convolutional neural networks framework for robust multiview stereo",
+        "We developed a multiview stereo network whose design is inspired by best practices of traditional non-learning-based techniques",
+        "The plane sweep algorithm is formulated as an end-to-end network via a differentiable construction of plane sweep cost volumes and by solving for depth as a multilabel classification problem",
+        "With this incorporation of traditional multiview stereo schemes into a deep learning framework, state-of-the-art reconstruction results are achieved on a variety of datasets"
+    ],
+    "key_statements": [
+        "Such as semantic segmentation <a class=\"ref-link\" id=\"cCouprie_et+al_2013_a\" href=\"#rCouprie_et+al_2013_a\"><a class=\"ref-link\" id=\"cCouprie_et+al_2013_a\" href=\"#rCouprie_et+al_2013_a\">Couprie et al (2013</a></a>) and human pose/action recognition <a class=\"ref-link\" id=\"cShotton_et+al_2011_a\" href=\"#rShotton_et+al_2011_a\"><a class=\"ref-link\" id=\"cShotton_et+al_2011_a\" href=\"#rShotton_et+al_2011_a\">Shotton et al (2011</a></a>); <a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\"><a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\">Wang et al (2016</a></a>), have been shown to benefit from 3D scene information",
+        "A common approach to reconstructing 3D geometry is by multiview stereo, which infers depth based on point correspondences among a set of unstructured images <a class=\"ref-link\" id=\"cHartley_2003_a\" href=\"#rHartley_2003_a\">Hartley & Zisserman (2003</a>); <a class=\"ref-link\" id=\"cSchonberger_et+al_2016_a\" href=\"#rSchonberger_et+al_2016_a\">Schonberger et al (2016</a>)",
+        "We present Deep Plane Sweep Network (DPSNet), an end-to-end convolutional neural networks framework for robust multiview stereo",
+        "We propose to generate cost volumes for the multiview images by adopting traditional plane sweep stereo <a class=\"ref-link\" id=\"cCollins_1996_a\" href=\"#rCollins_1996_a\">Collins (1996</a>); <a class=\"ref-link\" id=\"cYang_2003_a\" href=\"#rYang_2003_a\">Yang & Pollefeys (2003</a>); <a class=\"ref-link\" id=\"cHa_et+al_2016_a\" href=\"#rHa_et+al_2016_a\">Ha et al (2016</a>); <a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018a</a>), originally devised for dense depth estimation",
+        "Deep Plane Sweep Network estimates accurate depth maps at those regions because the differential feature warping penalizes inaccurate reconstructions, playing a role similar to the left-right consistency check that has been used in stereo matching <a class=\"ref-link\" id=\"cGarg_et+al_2016_a\" href=\"#rGarg_et+al_2016_a\">Garg et al (2016</a>)",
+        "Rectified Stereo Pair convolutional neural networks-based stereo matching methods have similarity to Deep Plane Sweep Network, but differ from it in that correspondences are obtained by shifting learned features in <a class=\"ref-link\" id=\"cMayer_et+al_2016_a\" href=\"#rMayer_et+al_2016_a\">Mayer et al (2016</a>); <a class=\"ref-link\" id=\"cKendall_et+al_2017_a\" href=\"#rKendall_et+al_2017_a\">Kendall et al (2017</a>); <a class=\"ref-link\" id=\"cTulyakov_et+al_2018_a\" href=\"#rTulyakov_et+al_2018_a\">Tulyakov et al (2018</a>)",
+        "The purpose of this study is to show readers that not only descriptor shift but plane sweeping can be applied to rectified stereo matching",
+        "We developed a multiview stereo network whose design is inspired by best practices of traditional non-learning-based techniques",
+        "The plane sweep algorithm is formulated as an end-to-end network via a differentiable construction of plane sweep cost volumes and by solving for depth as a multilabel classification problem",
+        "We propose a context-aware cost aggregation method that leads to improved depth regression without any post-processing",
+        "With this incorporation of traditional multiview stereo schemes into a deep learning framework, state-of-the-art reconstruction results are achieved on a variety of datasets"
+    ],
+    "summary": [
+        "Such as semantic segmentation <a class=\"ref-link\" id=\"cCouprie_et+al_2013_a\" href=\"#rCouprie_et+al_2013_a\"><a class=\"ref-link\" id=\"cCouprie_et+al_2013_a\" href=\"#rCouprie_et+al_2013_a\">Couprie et al (2013</a></a>) and human pose/action recognition <a class=\"ref-link\" id=\"cShotton_et+al_2011_a\" href=\"#rShotton_et+al_2011_a\"><a class=\"ref-link\" id=\"cShotton_et+al_2011_a\" href=\"#rShotton_et+al_2011_a\">Shotton et al (2011</a></a>); <a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\"><a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\">Wang et al (2016</a></a>), have been shown to benefit from 3D scene information.",
+        "In contrast to these single-image works which employ warping as a component of view synthesis for self-supervised learning, our network computes warps with respect to multiple depth planes to produce plane-sweep cost volumes both for training and at test time.",
+        "We would like to refer the reader to the concurrent work by <a class=\"ref-link\" id=\"cYao_et+al_2018_a\" href=\"#rYao_et+al_2018_a\">Yao et al (2018</a>) that adopts differential warping to construct a multi-scale cost volume, refined an initial depth map guided by a reference image feature.",
+        "Our Deep Plane Sweep Network (DPSNet) is inspired by traditional multiview stereo practices for dense depth estimation and consists of four parts: feature extraction, cost volume generation, cost aggregation and depth map regression.",
+        "We propose to generate cost volumes for the multiview images by adopting traditional plane sweep stereo <a class=\"ref-link\" id=\"cCollins_1996_a\" href=\"#rCollins_1996_a\">Collins (1996</a>); <a class=\"ref-link\" id=\"cYang_2003_a\" href=\"#rYang_2003_a\">Yang & Pollefeys (2003</a>); <a class=\"ref-link\" id=\"cHa_et+al_2016_a\" href=\"#rHa_et+al_2016_a\">Ha et al (2016</a>); <a class=\"ref-link\" id=\"cIm_et+al_2018_a\" href=\"#rIm_et+al_2018_a\">Im et al (2018a</a>), originally devised for dense depth estimation.",
+        "In a similar manner to traditional plane sweep stereo, we construct a cost volume from an input image pair.",
+        "Unlike the traditional plane sweeping method which utilizes a distance metric, we use a concatenation of features in learning a representation and carry this through to the cost volume as proposed in <a class=\"ref-link\" id=\"cKendall_et+al_2017_a\" href=\"#rKendall_et+al_2017_a\"><a class=\"ref-link\" id=\"cKendall_et+al_2017_a\" href=\"#rKendall_et+al_2017_a\">Kendall et al (2017</a></a>).",
+        "DPSNet estimates accurate depth maps at those regions because the differential feature warping penalizes inaccurate reconstructions, playing a role similar to the left-right consistency check that has been used in stereo matching <a class=\"ref-link\" id=\"cGarg_et+al_2016_a\" href=\"#rGarg_et+al_2016_a\">Garg et al (2016</a>).",
+        "The stacked hourglass is shown in Table 3 (c) to enhance depth results, its improvement is smaller than ours, which uses reference image features to guide the aggregation.",
+        "As displayed in Figure 7a, a greater number of images yields better results, since cost volume noise is reduced through averaging over more images, and more viewpoints help to provide features from areas unseen in other views.",
+        "Rectified Stereo Pair CNNs-based stereo matching methods have similarity to DPSNet, but differ from it in that correspondences are obtained by shifting learned features in <a class=\"ref-link\" id=\"cMayer_et+al_2016_a\" href=\"#rMayer_et+al_2016_a\">Mayer et al (2016</a>); <a class=\"ref-link\" id=\"cKendall_et+al_2017_a\" href=\"#rKendall_et+al_2017_a\"><a class=\"ref-link\" id=\"cKendall_et+al_2017_a\" href=\"#rKendall_et+al_2017_a\">Kendall et al (2017</a></a>); <a class=\"ref-link\" id=\"cTulyakov_et+al_2018_a\" href=\"#rTulyakov_et+al_2018_a\">Tulyakov et al (2018</a>).",
+        "Another direction is to improve depth prediction by employing viewpoint selection in constructing cost volumes <a class=\"ref-link\" id=\"cGallup_et+al_2008_a\" href=\"#rGallup_et+al_2008_a\">Gallup et al (2008</a>); <a class=\"ref-link\" id=\"cSchonberger_et+al_2016_a\" href=\"#rSchonberger_et+al_2016_a\">Schonberger et al (2016</a>), rather than by averaging the estimated cost volumes as currently done in DPSNet. Lastly, the proposed network requires pre-calibrated intrinsic and extrinsic parameters for reconstruction."
+    ],
+    "headline": "We present a convolutional neural network called Deep Plane Sweep Network whose design is inspired by best practices of traditional geometry-based approaches for dense depth reconstruction",
+    "reference_links": [
+        {
+            "id": "Chang_2018_a",
+            "entry": "Jia-Ren Chang and Yong-Sheng Chen. Pyramid stereo matching network. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chang%2C%20Jia-Ren%20Chen%2C%20Yong-Sheng%20Pyramid%20stereo%20matching%20network%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chang%2C%20Jia-Ren%20Chen%2C%20Yong-Sheng%20Pyramid%20stereo%20matching%20network%202018"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Liang-Chieh Chen, George Papandreou, Iasonas Kokkinos, Kevin Murphy, and Alan L Yuille. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and fully connected crfs. IEEE Trans. on Patt. Anal. and Mach. Intel., 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Liang-Chieh%20Papandreou%2C%20George%20Kokkinos%2C%20Iasonas%20Murphy%2C%20Kevin%20Deeplab%3A%20Semantic%20image%20segmentation%20with%20deep%20convolutional%20nets%2C%20atrous%20convolution%2C%20and%20fully%20connected%20crfs%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Liang-Chieh%20Papandreou%2C%20George%20Kokkinos%2C%20Iasonas%20Murphy%2C%20Kevin%20Deeplab%3A%20Semantic%20image%20segmentation%20with%20deep%20convolutional%20nets%2C%20atrous%20convolution%2C%20and%20fully%20connected%20crfs%202018"
+        },
+        {
+            "id": "Collins_1996_a",
+            "entry": "Robert T Collins. A space-sweep approach to true multi-image matching. In CVPR, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collins%2C%20Robert%20T.%20A%20space-sweep%20approach%20to%20true%20multi-image%20matching%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collins%2C%20Robert%20T.%20A%20space-sweep%20approach%20to%20true%20multi-image%20matching%201996"
+        },
+        {
+            "id": "Couprie_et+al_2013_a",
+            "entry": "Camille Couprie, Clement Farabet, Laurent Najman, and Yann Lecun. Indoor semantic segmentation using depth information. In ICLR, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Couprie%2C%20Camille%20Farabet%2C%20Clement%20Najman%2C%20Laurent%20Lecun%2C%20Yann%20Indoor%20semantic%20segmentation%20using%20depth%20information%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Couprie%2C%20Camille%20Farabet%2C%20Clement%20Najman%2C%20Laurent%20Lecun%2C%20Yann%20Indoor%20semantic%20segmentation%20using%20depth%20information%202013"
+        },
+        {
+            "id": "Eigen_et+al_2014_a",
+            "entry": "David Eigen, Christian Puhrsch, and Rob Fergus. Depth map prediction from a single image using a multi-scale deep network. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eigen%2C%20David%20Puhrsch%2C%20Christian%20Fergus%2C%20Rob%20Depth%20map%20prediction%20from%20a%20single%20image%20using%20a%20multi-scale%20deep%20network%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eigen%2C%20David%20Puhrsch%2C%20Christian%20Fergus%2C%20Rob%20Depth%20map%20prediction%20from%20a%20single%20image%20using%20a%20multi-scale%20deep%20network%202014"
+        },
+        {
+            "id": "Flynn_et+al_2016_a",
+            "entry": "John Flynn, Ivan Neulander, James Philbin, and Noah Snavely. Deepstereo: Learning to predict new views from the worlds imagery. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Flynn%2C%20John%20Neulander%2C%20Ivan%20Philbin%2C%20James%20Snavely%2C%20Noah%20Deepstereo%3A%20Learning%20to%20predict%20new%20views%20from%20the%20worlds%20imagery%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Flynn%2C%20John%20Neulander%2C%20Ivan%20Philbin%2C%20James%20Snavely%2C%20Noah%20Deepstereo%3A%20Learning%20to%20predict%20new%20views%20from%20the%20worlds%20imagery%202016"
+        },
+        {
+            "id": "Gallup_et+al_2008_a",
+            "entry": "David Gallup, Jan-Michael Frahm, Philippos Mordohai, and Marc Pollefeys. Variable baseline/resolution stereo. In CVPR, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gallup%2C%20David%20Frahm%2C%20Jan-Michael%20Mordohai%2C%20Philippos%20Pollefeys%2C%20Marc%20Variable%20baseline/resolution%20stereo%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gallup%2C%20David%20Frahm%2C%20Jan-Michael%20Mordohai%2C%20Philippos%20Pollefeys%2C%20Marc%20Variable%20baseline/resolution%20stereo%202008"
+        },
+        {
+            "id": "Garg_et+al_2016_a",
+            "entry": "Ravi Garg, Vijay Kumar BG, Gustavo Carneiro, and Ian Reid. Unsupervised cnn for single view depth estimation: Geometry to the rescue. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garg%2C%20Ravi%20BG%2C%20Vijay%20Kumar%20Carneiro%2C%20Gustavo%20Reid%2C%20Ian%20Unsupervised%20cnn%20for%20single%20view%20depth%20estimation%3A%20Geometry%20to%20the%20rescue%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garg%2C%20Ravi%20BG%2C%20Vijay%20Kumar%20Carneiro%2C%20Gustavo%20Reid%2C%20Ian%20Unsupervised%20cnn%20for%20single%20view%20depth%20estimation%3A%20Geometry%20to%20the%20rescue%202016"
+        },
+        {
+            "id": "Godard_et+al_2017_a",
+            "entry": "Clement Godard, Oisin Mac Aodha, and Gabriel J Brostow. Unsupervised monocular depth estimation with left-right consistency. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Godard%2C%20Clement%20Aodha%2C%20Oisin%20Mac%20Brostow%2C%20Gabriel%20J.%20Unsupervised%20monocular%20depth%20estimation%20with%20left-right%20consistency%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Godard%2C%20Clement%20Aodha%2C%20Oisin%20Mac%20Brostow%2C%20Gabriel%20J.%20Unsupervised%20monocular%20depth%20estimation%20with%20left-right%20consistency%202017"
+        },
+        {
+            "id": "Ha_et+al_2016_a",
+            "entry": "Hyowon Ha, Sunghoon Im, Jaesik Park, Hae-Gon Jeon, and In So Kweon. High-quality depth from uncalibrated small motion clip. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 5413\u20135421, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ha%2C%20Hyowon%20Im%2C%20Sunghoon%20Park%2C%20Jaesik%20Jeon%2C%20Hae-Gon%20High-quality%20depth%20from%20uncalibrated%20small%20motion%20clip%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ha%2C%20Hyowon%20Im%2C%20Sunghoon%20Park%2C%20Jaesik%20Jeon%2C%20Hae-Gon%20High-quality%20depth%20from%20uncalibrated%20small%20motion%20clip%202016"
+        },
+        {
+            "id": "Hartley_2003_a",
+            "entry": "Richard Hartley and Andrew Zisserman. Multiple view geometry in computer vision. Cambridge university press, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hartley%2C%20Richard%20Zisserman%2C%20Andrew%20Multiple%20view%20geometry%20in%20computer%20vision%202003"
+        },
+        {
+            "id": "He_et+al_2013_a",
+            "entry": "Kaiming He, Jian Sun, and Xiaoou Tang. Guided image filtering. IEEE Trans. on Patt. Anal. and Mach. Intel., 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Sun%2C%20Jian%20Tang%2C%20Xiaoou%20Guided%20image%20filtering%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Sun%2C%20Jian%20Tang%2C%20Xiaoou%20Guided%20image%20filtering%202013"
+        },
+        {
+            "id": "He_et+al_2014_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Spatial%20pyramid%20pooling%20in%20deep%20convolutional%20networks%20for%20visual%20recognition%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Spatial%20pyramid%20pooling%20in%20deep%20convolutional%20networks%20for%20visual%20recognition%202014"
+        },
+        {
+            "id": "Hu_2012_a",
+            "entry": "Xiaoyan Hu and Philippos Mordohai. A quantitative evaluation of confidence measures for stereo vision. IEEE Trans. on Patt. Anal. and Mach. Intel., 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hu%2C%20Xiaoyan%20Mordohai%2C%20Philippos%20A%20quantitative%20evaluation%20of%20confidence%20measures%20for%20stereo%20vision%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hu%2C%20Xiaoyan%20Mordohai%2C%20Philippos%20A%20quantitative%20evaluation%20of%20confidence%20measures%20for%20stereo%20vision%202012"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Po-Han Huang, Kevin Matzen, Johannes Kopf, Narendra Ahuja, and Jia-Bin Huang. Deepmvs: Learning multi-view stereopsis. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Po-Han%20Matzen%2C%20Kevin%20Kopf%2C%20Johannes%20Ahuja%2C%20Narendra%20Deepmvs%3A%20Learning%20multi-view%20stereopsis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Po-Han%20Matzen%2C%20Kevin%20Kopf%2C%20Johannes%20Ahuja%2C%20Narendra%20Deepmvs%3A%20Learning%20multi-view%20stereopsis%202018"
+        },
+        {
+            "id": "Im_et+al_2018_a",
+            "entry": "Sunghoon Im, Hyowon Ha, Gyeongmin Choe, Hae-Gon Jeon, Kyungdon Joo, and In So Kweon. Accurate 3d reconstruction from small motion clip for rolling shutter cameras. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Im%2C%20Sunghoon%20Ha%2C%20Hyowon%20Choe%2C%20Gyeongmin%20Jeon%2C%20Hae-Gon%20Accurate%203d%20reconstruction%20from%20small%20motion%20clip%20for%20rolling%20shutter%20cameras%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Im%2C%20Sunghoon%20Ha%2C%20Hyowon%20Choe%2C%20Gyeongmin%20Jeon%2C%20Hae-Gon%20Accurate%203d%20reconstruction%20from%20small%20motion%20clip%20for%20rolling%20shutter%20cameras%202018"
+        },
+        {
+            "id": "Im_et+al_2018_b",
+            "entry": "Sunghoon Im, Hae-Gon Jeon, and In So Kweon. Robust depth estimation from auto bracketed images. In CVPR, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Im%2C%20Sunghoon%20Jeon%2C%20Hae-Gon%20Kweon%2C%20In%20So%20Robust%20depth%20estimation%20from%20auto%20bracketed%20images%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Im%2C%20Sunghoon%20Jeon%2C%20Hae-Gon%20Kweon%2C%20In%20So%20Robust%20depth%20estimation%20from%20auto%20bracketed%20images%202018"
+        },
+        {
+            "id": "Jaderberg_et+al_2015_a",
+            "entry": "Max Jaderberg, Karen Simonyan, Andrew Zisserman, et al. Spatial transformer networks. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jaderberg%2C%20Max%20Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Spatial%20transformer%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jaderberg%2C%20Max%20Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Spatial%20transformer%20networks%202015"
+        },
+        {
+            "id": "Ji_et+al_2017_a",
+            "entry": "Mengqi Ji, Juergen Gall, Haitian Zheng, Yebin Liu, and Lu Fang. Surfacenet: an end-to-end 3d neural network for multiview stereopsis. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ji%2C%20Mengqi%20Gall%2C%20Juergen%20Zheng%2C%20Haitian%20Liu%2C%20Yebin%20Surfacenet%3A%20an%20end-to-end%203d%20neural%20network%20for%20multiview%20stereopsis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ji%2C%20Mengqi%20Gall%2C%20Juergen%20Zheng%2C%20Haitian%20Liu%2C%20Yebin%20Surfacenet%3A%20an%20end-to-end%203d%20neural%20network%20for%20multiview%20stereopsis%202017"
+        },
+        {
+            "id": "Kendall_et+al_2017_a",
+            "entry": "Alex Kendall, Hayk Martirosyan, Saumitro Dasgupta, Peter Henry, Ryan Kennedy, Abraham Bachrach, and Adam Bry. End-to-end learning of geometry and context for deep stereo regression. In ICCV, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kendall%2C%20Alex%20Martirosyan%2C%20Hayk%20Dasgupta%2C%20Saumitro%20Henry%2C%20Peter%20End-to-end%20learning%20of%20geometry%20and%20context%20for%20deep%20stereo%20regression%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kendall%2C%20Alex%20Martirosyan%2C%20Hayk%20Dasgupta%2C%20Saumitro%20Henry%2C%20Peter%20End-to-end%20learning%20of%20geometry%20and%20context%20for%20deep%20stereo%20regression%202017"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Ruihao Li, Sen Wang, Zhiqiang Long, and Dongbing Gu. Undeepvo: Monocular visual odometry through unsupervised deep learning. In ICRA, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Ruihao%20Wang%2C%20Sen%20Long%2C%20Zhiqiang%20Gu%2C%20Dongbing%20Undeepvo%3A%20Monocular%20visual%20odometry%20through%20unsupervised%20deep%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Ruihao%20Wang%2C%20Sen%20Long%2C%20Zhiqiang%20Gu%2C%20Dongbing%20Undeepvo%3A%20Monocular%20visual%20odometry%20through%20unsupervised%20deep%20learning%202018"
+        },
+        {
+            "id": "Liang_et+al_2018_a",
+            "entry": "Zhengfa Liang, Yiliu Feng, Yulan Guo, Hengzhu Liu, Linbo Qiao, Wei Chen, Li Zhou, and Jianfeng Zhang. Learning deep correspondence through prior and posterior feature constancy. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Zhengfa%20Feng%2C%20Yiliu%20Guo%2C%20Yulan%20Liu%2C%20Hengzhu%20Learning%20deep%20correspondence%20through%20prior%20and%20posterior%20feature%20constancy%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liang%2C%20Zhengfa%20Feng%2C%20Yiliu%20Guo%2C%20Yulan%20Liu%2C%20Hengzhu%20Learning%20deep%20correspondence%20through%20prior%20and%20posterior%20feature%20constancy%202018"
+        },
+        {
+            "id": "Liu_et+al_2016_a",
+            "entry": "Fayao Liu, Chunhua Shen, Guosheng Lin, and Ian Reid. Learning depth from single monocular images using deep convolutional neural fields. IEEE Trans. on Patt. Anal. and Mach. Intel., 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Fayao%20Shen%2C%20Chunhua%20Lin%2C%20Guosheng%20Reid%2C%20Ian%20Learning%20depth%20from%20single%20monocular%20images%20using%20deep%20convolutional%20neural%20fields%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Fayao%20Shen%2C%20Chunhua%20Lin%2C%20Guosheng%20Reid%2C%20Ian%20Learning%20depth%20from%20single%20monocular%20images%20using%20deep%20convolutional%20neural%20fields%202016"
+        },
+        {
+            "id": "Mahjourian_et+al_2018_a",
+            "entry": "Reza Mahjourian, Martin Wicke, and Anelia Angelova. Unsupervised learning of depth and egomotion from monocular video using 3d geometric constraints. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mahjourian%2C%20Reza%20Wicke%2C%20Martin%20Angelova%2C%20Anelia%20Unsupervised%20learning%20of%20depth%20and%20egomotion%20from%20monocular%20video%20using%203d%20geometric%20constraints%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mahjourian%2C%20Reza%20Wicke%2C%20Martin%20Angelova%2C%20Anelia%20Unsupervised%20learning%20of%20depth%20and%20egomotion%20from%20monocular%20video%20using%203d%20geometric%20constraints%202018"
+        },
+        {
+            "id": "Mayer_et+al_2016_a",
+            "entry": "Nikolaus Mayer, Eddy Ilg, Philip Hausser, Philipp Fischer, Daniel Cremers, Alexey Dosovitskiy, and Thomas Brox. A large dataset to train convolutional networks for disparity, optical flow, and scene flow estimation. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mayer%2C%20Nikolaus%20Ilg%2C%20Eddy%20Hausser%2C%20Philip%20Fischer%2C%20Philipp%20A%20large%20dataset%20to%20train%20convolutional%20networks%20for%20disparity%2C%20optical%20flow%2C%20and%20scene%20flow%20estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mayer%2C%20Nikolaus%20Ilg%2C%20Eddy%20Hausser%2C%20Philip%20Fischer%2C%20Philipp%20A%20large%20dataset%20to%20train%20convolutional%20networks%20for%20disparity%2C%20optical%20flow%2C%20and%20scene%20flow%20estimation%202016"
+        },
+        {
+            "id": "Mei_2013_a",
+            "entry": "Xing Mei, Xun Sun, Weiming Dong, Haitao Wang, and Xiaopeng Zhang. Segment-tree based cost aggregation for stereo matching. In CVPR, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mei%2C%20Xing%20Sun%2C%20Xun%20Weiming%20Dong%2C%20Haitao%20Wang%2C%20and%20Xiaopeng%20Zhang.%20Segment-tree%20based%20cost%20aggregation%20for%20stereo%20matching%202013"
+        },
+        {
+            "id": "Rhemann_et+al_2011_a",
+            "entry": "Christoph Rhemann, Asmaa Hosni, Michael Bleyer, Carsten Rother, and Margrit Gelautz. Fast cost-volume filtering for visual correspondence and beyond. In CVPR, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rhemann%2C%20Christoph%20Hosni%2C%20Asmaa%20Bleyer%2C%20Michael%20Rother%2C%20Carsten%20Fast%20cost-volume%20filtering%20for%20visual%20correspondence%20and%20beyond%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rhemann%2C%20Christoph%20Hosni%2C%20Asmaa%20Bleyer%2C%20Michael%20Rother%2C%20Carsten%20Fast%20cost-volume%20filtering%20for%20visual%20correspondence%20and%20beyond%202011"
+        },
+        {
+            "id": "Schonberger_et+al_2016_a",
+            "entry": "Johannes L Schonberger, Enliang Zheng, Jan-Michael Frahm, and Marc Pollefeys. Pixelwise view selection for unstructured multi-view stereo. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schonberger%2C%20Johannes%20L.%20Zheng%2C%20Enliang%20Frahm%2C%20Jan-Michael%20Pollefeys%2C%20Marc%20Pixelwise%20view%20selection%20for%20unstructured%20multi-view%20stereo%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schonberger%2C%20Johannes%20L.%20Zheng%2C%20Enliang%20Frahm%2C%20Jan-Michael%20Pollefeys%2C%20Marc%20Pixelwise%20view%20selection%20for%20unstructured%20multi-view%20stereo%202016"
+        },
+        {
+            "id": "Schonberger_2016_b",
+            "entry": "Johannes Lutz Schonberger and Jan-Michael Frahm. Structure-from-motion revisited. In CVPR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schonberger%2C%20Johannes%20Lutz%20Frahm%2C%20Jan-Michael%20Structure-from-motion%20revisited%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schonberger%2C%20Johannes%20Lutz%20Frahm%2C%20Jan-Michael%20Structure-from-motion%20revisited%202016"
+        },
+        {
+            "id": "Shotton_et+al_2011_a",
+            "entry": "Jamie Shotton, Andrew Fitzgibbon, Mat Cook, Toby Sharp, Mark Finocchio, Richard Moore, Alex Kipman, and Andrew Blake. Real-time human pose recognition in parts from single depth images. In CVPR, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shotton%2C%20Jamie%20Fitzgibbon%2C%20Andrew%20Cook%2C%20Mat%20Sharp%2C%20Toby%20Real-time%20human%20pose%20recognition%20in%20parts%20from%20single%20depth%20images%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shotton%2C%20Jamie%20Fitzgibbon%2C%20Andrew%20Cook%2C%20Mat%20Sharp%2C%20Toby%20Real-time%20human%20pose%20recognition%20in%20parts%20from%20single%20depth%20images%202011"
+        },
+        {
+            "id": "Tulyakov_et+al_2018_a",
+            "entry": "Stepan Tulyakov, Anton Ivanov, and Francois Fleuret. Practical deep stereo (pds): Toward applications-friendly deep stereo matching. In NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tulyakov%2C%20Stepan%20Ivanov%2C%20Anton%20Fleuret%2C%20Francois%20Practical%20deep%20stereo%20%28pds%29%3A%20Toward%20applications-friendly%20deep%20stereo%20matching%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tulyakov%2C%20Stepan%20Ivanov%2C%20Anton%20Fleuret%2C%20Francois%20Practical%20deep%20stereo%20%28pds%29%3A%20Toward%20applications-friendly%20deep%20stereo%20matching%202018"
+        },
+        {
+            "id": "Ummenhofer_et+al_2017_a",
+            "entry": "Benjamin Ummenhofer, Huizhong Zhou, Jonas Uhrig, Nikolaus Mayer, Eddy Ilg, Alexey Dosovitskiy, and Thomas Brox. Demon: Depth and motion network for learning monocular stereo. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ummenhofer%2C%20Benjamin%20Zhou%2C%20Huizhong%20Uhrig%2C%20Jonas%20Mayer%2C%20Nikolaus%20Demon%3A%20Depth%20and%20motion%20network%20for%20learning%20monocular%20stereo%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ummenhofer%2C%20Benjamin%20Zhou%2C%20Huizhong%20Uhrig%2C%20Jonas%20Mayer%2C%20Nikolaus%20Demon%3A%20Depth%20and%20motion%20network%20for%20learning%20monocular%20stereo%202017"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Chaoyang Wang, Jose Miguel Buenaposada, Rui Zhu, and Simon Lucey. Learning depth from monocular videos using direct methods. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Chaoyang%20Buenaposada%2C%20Jose%20Miguel%20Zhu%2C%20Rui%20Lucey%2C%20Simon%20Learning%20depth%20from%20monocular%20videos%20using%20direct%20methods%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Chaoyang%20Buenaposada%2C%20Jose%20Miguel%20Zhu%2C%20Rui%20Lucey%2C%20Simon%20Learning%20depth%20from%20monocular%20videos%20using%20direct%20methods%202018"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Pichao Wang, Wanqing Li, Zhimin Gao, Jing Zhang, Chang Tang, and Philip O Ogunbona. Action recognition from depth maps using deep convolutional neural networks. IEEE Trans. on Hum.Mac. Sys., 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Pichao%20Li%2C%20Wanqing%20Gao%2C%20Zhimin%20Zhang%2C%20Jing%20Action%20recognition%20from%20depth%20maps%20using%20deep%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Pichao%20Li%2C%20Wanqing%20Gao%2C%20Zhimin%20Zhang%2C%20Jing%20Action%20recognition%20from%20depth%20maps%20using%20deep%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Yang_2003_a",
+            "entry": "Ruigang Yang and Marc Pollefeys. Multi-resolution real-time stereo on commodity graphics hardware. In CVPR, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Ruigang%20Pollefeys%2C%20Marc%20Multi-resolution%20real-time%20stereo%20on%20commodity%20graphics%20hardware%202003"
+        },
+        {
+            "id": "Yao_et+al_2018_a",
+            "entry": "Yao Yao, Zixin Luo, Shiwei Li, Tian Fang, and Long Quan. Mvsnet: Depth inference for unstructured multi-view stereo. ECCV, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yao%2C%20Yao%20Luo%2C%20Zixin%20Li%2C%20Shiwei%20Fang%2C%20Tian%20Mvsnet%3A%20Depth%20inference%20for%20unstructured%20multi-view%20stereo%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yao%2C%20Yao%20Luo%2C%20Zixin%20Li%2C%20Shiwei%20Fang%2C%20Tian%20Mvsnet%3A%20Depth%20inference%20for%20unstructured%20multi-view%20stereo%202018"
+        },
+        {
+            "id": "Yin_2018_a",
+            "entry": "Zhichao Yin and Jianping Shi. Geonet: Unsupervised learning of dense depth, optical flow and camera pose. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yin%2C%20Zhichao%20Shi%2C%20Jianping%20Geonet%3A%20Unsupervised%20learning%20of%20dense%20depth%2C%20optical%20flow%20and%20camera%20pose%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yin%2C%20Zhichao%20Shi%2C%20Jianping%20Geonet%3A%20Unsupervised%20learning%20of%20dense%20depth%2C%20optical%20flow%20and%20camera%20pose%202018"
+        },
+        {
+            "id": "Yu_2016_a",
+            "entry": "Fisher Yu and Vladlen Koltun. Multi-scale context aggregation by dilated convolutions. ICLR, 2016. Jure Zbontar and Yann LeCun. Stereo matching by training a convolutional neural network to compare image patches. J. of Machine Learning Research, 2016. Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang, and Jiaya Jia. Pyramid scene parsing network. In CVPR, 2017. Tinghui Zhou, Matthew Brown, Noah Snavely, and David G Lowe. Unsupervised learning of depth and ego-motion from video. In CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Fisher%20Koltun%2C%20Vladlen%20Multi-scale%20context%20aggregation%20by%20dilated%20convolutions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Fisher%20Koltun%2C%20Vladlen%20Multi-scale%20context%20aggregation%20by%20dilated%20convolutions%202016"
+        }
+    ]
+}

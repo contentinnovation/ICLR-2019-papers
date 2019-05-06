@@ -1,0 +1,441 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PROBABILISTIC PLANNING WITH SEQUENTIAL MONTE CARLO METHODS",
+        "author": "Alexandre Piche, Valentin Thomas, Cyril Ibrahim 2, Yoshua Bengio 13, Chris Pal 1245 1 Mila, Universitede Montreal 2 Element AI 3 CIFAR Senior Fellow 4 Mila, Polytechnique Montreal 5 Canada CIFAR AI Chair",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ByetGn0cYX"
+        },
+        "abstract": "In this work, we propose a novel formulation of planning which views it as a probabilistic inference problem over future optimal trajectories. This enables us to use sampling methods, and thus, tackle planning in continuous domains using a fixed computational budget. We design a new algorithm, Sequential Monte Carlo Planning, by leveraging classical methods in Sequential Monte Carlo and Bayesian smoothing in the context of control as inference. Furthermore, we show that Sequential Monte Carlo Planning can capture multimodal policies and can quickly learn continuous control tasks."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "Importance sampling",
+            "url": "https://en.wikipedia.org/wiki/Importance_sampling"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "Sequential Importance Sampling",
+            "url": "https://en.wikipedia.org/wiki/Sequential_Importance_Sampling"
+        },
+        {
+            "term": "markov decision process",
+            "url": "https://en.wikipedia.org/wiki/markov_decision_process"
+        },
+        {
+            "term": "temporal difference",
+            "url": "https://en.wikipedia.org/wiki/temporal_difference"
+        },
+        {
+            "term": "Model Predictive Control",
+            "url": "https://en.wikipedia.org/wiki/Model_Predictive_Control"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Hidden Markov Model",
+            "url": "https://en.wikipedia.org/wiki/Hidden_Markov_Model"
+        },
+        {
+            "term": "Sequential Importance Resampling",
+            "url": "https://en.wikipedia.org/wiki/Sequential_Importance_Resampling"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        }
+    ],
+    "abbreviations": {
+        "MCTS": "Monte Carlo Tree Search",
+        "CEM": "Cross entropy methods",
+        "iLQR": "iterative linear quadratic regulator",
+        "DL": "deep learning",
+        "SMC": "Sequential Monte Carlo",
+        "RL": "reinforcement learning",
+        "HMM": "Hidden Markov Model",
+        "SAC": "Soft Actor-Critic",
+        "IS": "Importance sampling",
+        "SIS": "Sequential Importance Sampling",
+        "SIR": "Sequential Importance Resampling",
+        "MPC": "Model Predictive Control",
+        "TD": "temporal difference",
+        "PGAS": "Particle Gibbs with Ancestor Sampling"
+    },
+    "highlights": [
+        "To exhibit intelligent behaviour machine learning agents must be able to learn quickly, predict the consequences of their actions, and explain how they will react in a given situation",
+        "We introduce a novel planning strategy based on the Sequential Monte Carlo class of algorithms, in which we treat the policy as the proposed distribution to be learned",
+        "We have introduced a connection between planning and inference and showed how we can exploit advances in deep learning and probabilistic inference to design a new efficient and theoretically grounded planning algorithm",
+        "We proposed a natural way to combine model-free and model-based reinforcement learning for planning based on the Sequential Monte Carlo perspective",
+        "We empirically demonstrated that our method achieves state of the art results on Mujoco",
+        "Our result suggest that planning can lead to faster learning in control tasks"
+    ],
+    "key_statements": [
+        "To exhibit intelligent behaviour machine learning agents must be able to learn quickly, predict the consequences of their actions, and explain how they will react in a given situation. These abilities are best achieved when the agent efficiently uses a model of the world to plan future actions",
+        "We address the limitations of the aforementioned planning algorithms by creating a more general view of planning that can leverage advances in deep learning (DL) and probabilistic inference methods",
+        "We introduce a novel planning strategy based on the Sequential Monte Carlo class of algorithms, in which we treat the policy as the proposed distribution to be learned",
+        "We define a trajectory as a sequence of state-action pairs xt:T = {, . . . ,}, and we use the notation \u03c0 for a policy which represents a distribution over actions conditioned on a state",
+        "The bias in the objective also1 appears in many control as inference works such as Particle Value Functions (<a class=\"ref-link\" id=\"cMaddison_et+al_2017_a\" href=\"#rMaddison_et+al_2017_a\">Maddison et al, 2017a</a>) and the probabilistic version of LQR proposed in <a class=\"ref-link\" id=\"cToussaint_2009_a\" href=\"#rToussaint_2009_a\">Toussaint (2009</a>)",
+        "(b) Sequential Importance Sampling (SIS): if we do not perform the resampling step the agent spends most of its computation on uninteresting trajectories and was not able to explore as well",
+        "To understand how planning can increase the learning speed of reinforcement learning agents we focus on the 250000 first time steps",
+        "We have introduced a connection between planning and inference and showed how we can exploit advances in deep learning and probabilistic inference to design a new efficient and theoretically grounded planning algorithm",
+        "We proposed a natural way to combine model-free and model-based reinforcement learning for planning based on the Sequential Monte Carlo perspective",
+        "We empirically demonstrated that our method achieves state of the art results on Mujoco",
+        "Our result suggest that planning can lead to faster learning in control tasks",
+        "More advanced Sequential Monte Carlo methods dealing with this issue such as backward simulation (Lindsten et al, 2013) or Particle Gibbs with Ancestor Sampling (PGAS) (<a class=\"ref-link\" id=\"cLindsten_et+al_2014_a\" href=\"#rLindsten_et+al_2014_a\">Lindsten et al, 2014</a>) have been proposed and using them would certainly improve our results",
+        "While the inference and modeling techniques used here could be improved in multiple ways, SMCP achieved impressive learning speed on complex control tasks"
+    ],
+    "summary": [
+        "To exhibit intelligent behaviour machine learning agents must be able to learn quickly, predict the consequences of their actions, and explain how they will react in a given situation.",
+        "These abilities are best achieved when the agent efficiently uses a model of the world to plan future actions.",
+        "We introduce a novel planning strategy based on the SMC class of algorithms, in which we treat the policy as the proposed distribution to be learned.",
+        "In the context of control as inference, it is natural to see planning as the act of approximating a distribution of optimal future trajectories via simulation.",
+        "We sample from the proposal distribution or model-free agent and use our learned model to sample the state and reward.",
+        "(b) Update: New actions and states are sampled from the proposal distribution and model.",
+        "The bias in the objective also1 appears in many control as inference works such as Particle Value Functions (<a class=\"ref-link\" id=\"cMaddison_et+al_2017_a\" href=\"#rMaddison_et+al_2017_a\">Maddison et al, 2017a</a>) and the probabilistic version of LQR proposed in <a class=\"ref-link\" id=\"cToussaint_2009_a\" href=\"#rToussaint_2009_a\">Toussaint (2009</a>).",
+        "(b) Sequential Importance Sampling (SIS): if we do not perform the resampling step the agent spends most of its computation on uninteresting trajectories and was not able to explore as well.",
+        "The proposal is an isotropic normal distribution for each planning algorithm, and since the environment\u2019s dynamics are known, there is no need for learning: the only difference between the three methods is how they handle planning.",
+        "We included SAC (<a class=\"ref-link\" id=\"cHaarnoja_et+al_2018_a\" href=\"#rHaarnoja_et+al_2018_a\">Haarnoja et al, 2018</a>), a model free RL algorithm, since i) it has currently one of the highest performances on Mujoco tasks, which make it a very strong baseline, and ii) it is a component of our algorithm, as we use it as a proposal distribution in the planning phase.",
+        "Further works have combined SMC methods and variational inference (<a class=\"ref-link\" id=\"cNaesseth_et+al_2017_a\" href=\"#rNaesseth_et+al_2017_a\">Naesseth et al, 2017</a>; Maddison et al, 2017b; <a class=\"ref-link\" id=\"cLe_et+al_2017_a\" href=\"#rLe_et+al_2017_a\">Le et al, 2017</a>) to obtain lower variance estimates of the distribution of interest.",
+        "We need many particles to build a good approximation of the posterior, and this can be computationally expensive since it requires to perform a forward pass of the policy, the value function and the model for every particle.",
+        "More advanced SMC methods dealing with this issue such as backward simulation (Lindsten et al, 2013) or Particle Gibbs with Ancestor Sampling (PGAS) (<a class=\"ref-link\" id=\"cLindsten_et+al_2014_a\" href=\"#rLindsten_et+al_2014_a\">Lindsten et al, 2014</a>) have been proposed and using them would certainly improve our results.",
+        "While the inference and modeling techniques used here could be improved in multiple ways, SMCP achieved impressive learning speed on complex control tasks.",
+        "Our result suggest that planning can lead to faster learning in control tasks"
+    ],
+    "headline": "We propose a novel formulation of planning which views it as a probabilistic inference problem over future optimal trajectories",
+    "reference_links": [
+        {
+            "id": "Abdolmaleki_et+al_2018_a",
+            "entry": "Abbas Abdolmaleki, Jost Tobias Springenberg, Yuval Tassa, Remi Munos, Nicolas Heess, and Martin Riedmiller. Maximum a posteriori policy optimisation. arXiv preprint arXiv:1806.06920, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.06920"
+        },
+        {
+            "id": "Andrieu_et+al_2004_a",
+            "entry": "Christophe Andrieu, Arnaud Doucet, Sumeetpal S Singh, and Vladislav B Tadic. Particle methods for change detection, system identification, and control. Proceedings of the IEEE, 92(3):423\u2013438, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrieu%2C%20Christophe%20Doucet%2C%20Arnaud%20Singh%2C%20Sumeetpal%20S.%20Tadic%2C%20Vladislav%20B.%20Particle%20methods%20for%20change%20detection%2C%20system%20identification%2C%20and%20control%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrieu%2C%20Christophe%20Doucet%2C%20Arnaud%20Singh%2C%20Sumeetpal%20S.%20Tadic%2C%20Vladislav%20B.%20Particle%20methods%20for%20change%20detection%2C%20system%20identification%2C%20and%20control%202004"
+        },
+        {
+            "id": "Attias_2003_a",
+            "entry": "Hagai Attias. Planning by probabilistic inference. In AISTATS. Citeseer, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Attias%2C%20Hagai%20Planning%20by%20probabilistic%20inference.%20In%20AISTATS%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Attias%2C%20Hagai%20Planning%20by%20probabilistic%20inference.%20In%20AISTATS%202003"
+        },
+        {
+            "id": "Botvinick_2012_a",
+            "entry": "Matthew Botvinick and Marc Toussaint. Planning as inference. Trends in cognitive sciences, 16(10): 485\u2013488, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Botvinick%2C%20Matthew%20Toussaint%2C%20Marc%20Planning%20as%20inference%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Botvinick%2C%20Matthew%20Toussaint%2C%20Marc%20Planning%20as%20inference%202012"
+        },
+        {
+            "id": "Bresler_1986_a",
+            "entry": "Yoram Bresler. Two-filter formulae for discrete-time non-linear bayesian smoothing. International Journal of Control, 43(2):629\u2013641, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bresler%2C%20Yoram%20Two-filter%20formulae%20for%20discrete-time%20non-linear%20bayesian%20smoothing%201986",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bresler%2C%20Yoram%20Two-filter%20formulae%20for%20discrete-time%20non-linear%20bayesian%20smoothing%201986"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym. arXiv preprint arXiv:1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Buckman_et+al_2018_a",
+            "entry": "Jacob Buckman, Danijar Hafner, George Tucker, Eugene Brevdo, and Honglak Lee. Sample-efficient reinforcement learning with stochastic ensemble value expansion. arXiv preprint arXiv:1807.01675, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.01675"
+        },
+        {
+            "id": "Buesing_et+al_2018_a",
+            "entry": "Lars Buesing, Theophane Weber, Sebastien Racaniere, S. M. Ali Eslami, Danilo Jimenez Rezende, David P. Reichert, Fabio Viola, Frederic Besse, Karol Gregor, Demis Hassabis, and Daan Wierstra. Learning and querying fast generative models for reinforcement learning. CoRR, abs/1802.03006, 2018. URL http://arxiv.org/abs/1802.03006.",
+            "url": "http://arxiv.org/abs/1802.03006",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03006"
+        },
+        {
+            "id": "Chua_et+al_2018_a",
+            "entry": "Kurtland Chua, Roberto Calandra, Rowan McAllister, and Sergey Levine. Deep reinforcement learning in a handful of trials using probabilistic dynamics models. arXiv preprint arXiv:1805.12114, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.12114"
+        },
+        {
+            "id": "Colas_et+al_2018_a",
+            "entry": "Cedric Colas, Olivier Sigaud, and Pierre-Yves Oudeyer. How many random seeds? statistical power analysis in deep reinforcement learning experiments. arXiv preprint arXiv:1806.08295, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.08295"
+        },
+        {
+            "id": "Dayan_1997_a",
+            "entry": "Peter Dayan and Geoffrey E Hinton. Using expectation-maximization for reinforcement learning. Neural Computation, 9(2):271\u2013278, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Using%20expectation-maximization%20for%20reinforcement%20learning%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Using%20expectation-maximization%20for%20reinforcement%20learning%201997"
+        },
+        {
+            "id": "Finn_2017_a",
+            "entry": "Chelsea Finn and Sergey Levine. Deep visual foresight for planning robot motion. In Robotics and Automation (ICRA), 2017 IEEE International Conference on, pp. 2786\u20132793. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Deep%20visual%20foresight%20for%20planning%20robot%20motion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Levine%2C%20Sergey%20Deep%20visual%20foresight%20for%20planning%20robot%20motion%202017"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gordon_1993_a",
+            "entry": "Neil J Gordon, David J Salmond, and Adrian FM Smith. Novel approach to nonlinear/non-gaussian bayesian state estimation. In IEE Proceedings F-radar and signal processing, volume 140, pp. 107\u2013113. IET, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neil%20J%20Gordon%20David%20J%20Salmond%20and%20Adrian%20FM%20Smith%20Novel%20approach%20to%20nonlinearnongaussian%20bayesian%20state%20estimation%20In%20IEE%20Proceedings%20Fradar%20and%20signal%20processing%20volume%20140%20pp%20107113%20IET%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Neil%20J%20Gordon%20David%20J%20Salmond%20and%20Adrian%20FM%20Smith%20Novel%20approach%20to%20nonlinearnongaussian%20bayesian%20state%20estimation%20In%20IEE%20Proceedings%20Fradar%20and%20signal%20processing%20volume%20140%20pp%20107113%20IET%201993"
+        },
+        {
+            "id": "Gu_et+al_2015_a",
+            "entry": "Shixiang Gu, Zoubin Ghahramani, and Richard E Turner. Neural adaptive sequential monte carlo. In Advances in Neural Information Processing Systems, pp. 2629\u20132637, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Ghahramani%2C%20Zoubin%20Turner%2C%20Richard%20E.%20Neural%20adaptive%20sequential%20monte%20carlo%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Ghahramani%2C%20Zoubin%20Turner%2C%20Richard%20E.%20Neural%20adaptive%20sequential%20monte%20carlo%202015"
+        },
+        {
+            "id": "Guez_et+al_2018_a",
+            "entry": "Arthur Guez, Theophane Weber, Ioannis Antonoglou, Karen Simonyan, Oriol Vinyals, Daan Wierstra, Remi Munos, and David Silver. Learning to search with mctsnets. arXiv preprint arXiv:1802.04697, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04697"
+        },
+        {
+            "id": "Ha_2018_a",
+            "entry": "David Ha and Jurgen Schmidhuber. World models. CoRR, abs/1803.10122, 2018. URL http://arxiv.org/abs/1803.10122.",
+            "url": "http://arxiv.org/abs/1803.10122",
+            "arxiv_url": "https://arxiv.org/pdf/1803.10122"
+        },
+        {
+            "id": "Haarnoja_et+al_2018_a",
+            "entry": "Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor. arXiv preprint arXiv:1801.01290, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01290"
+        },
+        {
+            "id": "Henderson_et+al_2017_a",
+            "entry": "Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, and David Meger. Deep reinforcement learning that matters. arXiv preprint arXiv:1709.06560, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.06560"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Kalman_1964_a",
+            "entry": "Rudolf Emil Kalman. When is a linear control system optimal? Journal of Basic Engineering, 86(1): 51\u201360, 1964.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalman%2C%20Rudolf%20Emil%20When%20is%20a%20linear%20control%20system%20optimal%3F%201964",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalman%2C%20Rudolf%20Emil%20When%20is%20a%20linear%20control%20system%20optimal%3F%201964"
+        },
+        {
+            "id": "Kalman_1960_a",
+            "entry": "Rudolf Emil Kalman et al. Contributions to the theory of optimal control. Bol. Soc. Mat. Mexicana, 5(2):102\u2013119, 1960.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalman%2C%20Rudolf%20Emil%20Contributions%20to%20the%20theory%20of%20optimal%20control%201960",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalman%2C%20Rudolf%20Emil%20Contributions%20to%20the%20theory%20of%20optimal%20control%201960"
+        },
+        {
+            "id": "Kearns_2002_a",
+            "entry": "Michael Kearns, Yishay Mansour, and Andrew Y Ng. A sparse sampling algorithm for near-optimal planning in large markov decision processes. Machine learning, 49(2-3):193\u2013208, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kearns%2C%20Michael%20Mansour%2C%20Yishay%20and%20Andrew%20Y%20Ng.%20A%20sparse%20sampling%20algorithm%20for%20near-optimal%20planning%20in%20large%20markov%20decision%20processes%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kearns%2C%20Michael%20Mansour%2C%20Yishay%20and%20Andrew%20Y%20Ng.%20A%20sparse%20sampling%20algorithm%20for%20near-optimal%20planning%20in%20large%20markov%20decision%20processes%202002"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kitagawa_1994_a",
+            "entry": "Genshiro Kitagawa. The two-filter formula for smoothing and an implementation of the gaussian-sum smoother. Annals of the Institute of Statistical Mathematics, 46(4):605\u2013623, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kitagawa%2C%20Genshiro%20The%20two-filter%20formula%20for%20smoothing%20and%20an%20implementation%20of%20the%20gaussian-sum%20smoother%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kitagawa%2C%20Genshiro%20The%20two-filter%20formula%20for%20smoothing%20and%20an%20implementation%20of%20the%20gaussian-sum%20smoother%201994"
+        },
+        {
+            "id": "Kitagawa_1996_a",
+            "entry": "Genshiro Kitagawa. Monte carlo filter and smoother for non-gaussian nonlinear state space models. Journal of computational and graphical statistics, 5(1):1\u201325, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kitagawa%2C%20Genshiro%20Monte%20carlo%20filter%20and%20smoother%20for%20non-gaussian%20nonlinear%20state%20space%20models%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kitagawa%2C%20Genshiro%20Monte%20carlo%20filter%20and%20smoother%20for%20non-gaussian%20nonlinear%20state%20space%20models%201996"
+        },
+        {
+            "id": "Kurutach_et+al_2018_a",
+            "entry": "Thanard Kurutach, Aviv Tamar, Ge Yang, Stuart Russell, and Pieter Abbeel. Learning plannable representations with causal infogan. arXiv preprint arXiv:1807.09341, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.09341"
+        },
+        {
+            "id": "Le_et+al_2017_a",
+            "entry": "Tuan Anh Le, Maximilian Igl, Tom Rainforth, Tom Jin, and Frank Wood. Auto-encoding sequential monte carlo. arXiv preprint arXiv:1705.10306, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10306"
+        },
+        {
+            "id": "Levine_2018_a",
+            "entry": "Sergey Levine. Reinforcement learning and control as probabilistic inference: Tutorial and review. arXiv preprint arXiv:1805.00909, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.00909"
+        },
+        {
+            "id": "Levine_2013_a",
+            "entry": "Sergey Levine and Vladlen Koltun. Variational policy search via trajectory optimization. In Advances in Neural Information Processing Systems, pp. 207\u2013215, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Variational%20policy%20search%20via%20trajectory%20optimization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Koltun%2C%20Vladlen%20Variational%20policy%20search%20via%20trajectory%20optimization%202013"
+        },
+        {
+            "id": "Lindsten_2013_a",
+            "entry": "Fredrik Lindsten, Thomas B Schon, et al. Backward simulation methods for monte carlo statistical inference. Foundations and Trends R in Machine Learning, 6(1):1\u2013143, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lindsten%2C%20Fredrik%20Schon%2C%20Thomas%20B.%20Backward%20simulation%20methods%20for%20monte%20carlo%20statistical%20inference%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lindsten%2C%20Fredrik%20Schon%2C%20Thomas%20B.%20Backward%20simulation%20methods%20for%20monte%20carlo%20statistical%20inference%202013"
+        },
+        {
+            "id": "Lindsten_et+al_2014_a",
+            "entry": "Fredrik Lindsten, Michael I Jordan, and Thomas B Schon. Particle gibbs with ancestor sampling. The Journal of Machine Learning Research, 15(1):2145\u20132184, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lindsten%2C%20Fredrik%20Jordan%2C%20Michael%20I.%20Schon%2C%20Thomas%20B.%20Particle%20gibbs%20with%20ancestor%20sampling%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lindsten%2C%20Fredrik%20Jordan%2C%20Michael%20I.%20Schon%2C%20Thomas%20B.%20Particle%20gibbs%20with%20ancestor%20sampling%202014"
+        },
+        {
+            "id": "Maddison_et+al_0000_a",
+            "entry": "Chris J Maddison, Dieterich Lawson, George Tucker, Nicolas Heess, Arnaud Doucet, Andriy Mnih, and Yee Whye Teh. Particle value functions. arXiv preprint arXiv:1703.05820, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05820"
+        },
+        {
+            "id": "Maddison_et+al_2017_a",
+            "entry": "Chris J Maddison, John Lawson, George Tucker, Nicolas Heess, Mohammad Norouzi, Andriy Mnih, Arnaud Doucet, and Yee Teh. Filtering variational objectives. In Advances in Neural Information Processing Systems, pp. 6573\u20136583, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20Chris%20J.%20Lawson%2C%20John%20Tucker%2C%20George%20Heess%2C%20Nicolas%20Filtering%20variational%20objectives%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20Chris%20J.%20Lawson%2C%20John%20Tucker%2C%20George%20Heess%2C%20Nicolas%20Filtering%20variational%20objectives%202017"
+        },
+        {
+            "id": "Nachum_et+al_2017_a",
+            "entry": "Ofir Nachum, Mohammad Norouzi, Kelvin Xu, and Dale Schuurmans. Bridging the gap between value and policy based reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2775\u20132785, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Naesseth_et+al_2017_a",
+            "entry": "Christian A Naesseth, Scott W Linderman, Rajesh Ranganath, and David M Blei. Variational sequential monte carlo. arXiv preprint arXiv:1705.11140, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.11140"
+        },
+        {
+            "id": "Nagabandi_et+al_2017_a",
+            "entry": "Anusha Nagabandi, Gregory Kahn, Ronald S Fearing, and Sergey Levine. Neural network dynamics for model-based deep reinforcement learning with model-free fine-tuning. arXiv preprint arXiv:1708.02596, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02596"
+        },
+        {
+            "id": "O_et+al_2016_a",
+            "entry": "Brendan O\u2019Donoghue, Remi Munos, Koray Kavukcuoglu, and Volodymyr Mnih. Combining policy gradient and q-learning. arXiv preprint arXiv:1611.01626, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01626"
+        },
+        {
+            "id": "Pitt_1999_a",
+            "entry": "Michael K Pitt and Neil Shephard. Filtering via simulation: Auxiliary particle filters. Journal of the American statistical association, 94(446):590\u2013599, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pitt%2C%20Michael%20K.%20Shephard%2C%20Neil%20Filtering%20via%20simulation%3A%20Auxiliary%20particle%20filters%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pitt%2C%20Michael%20K.%20Shephard%2C%20Neil%20Filtering%20via%20simulation%3A%20Auxiliary%20particle%20filters%201999"
+        },
+        {
+            "id": "Pong_2018_a",
+            "entry": "Vitchyr Pong. rlkit. https://github.com/vitchyr/rlkit/, 2018.",
+            "url": "https://github.com/vitchyr/rlkit/"
+        },
+        {
+            "id": "Rawlik_et+al_2011_a",
+            "entry": "Konrad Rawlik, Marc Toussaint, and Sethu Vijayakumar. An approximate inference approach to temporal optimization in optimal control. In Advances in neural information processing systems, pp. 2011\u20132019, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20An%20approximate%20inference%20approach%20to%20temporal%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20An%20approximate%20inference%20approach%20to%20temporal%20optimization%202011"
+        },
+        {
+            "id": "Rawlik_et+al_2012_a",
+            "entry": "Konrad Rawlik, Marc Toussaint, and Sethu Vijayakumar. On stochastic optimal control and reinforcement learning by approximate inference. In Robotics: science and systems, volume 13, pp. 3052\u20133056, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20On%20stochastic%20optimal%20control%20and%20reinforcement%20learning%20by%20approximate%20inference%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rawlik%2C%20Konrad%20Toussaint%2C%20Marc%20Vijayakumar%2C%20Sethu%20On%20stochastic%20optimal%20control%20and%20reinforcement%20learning%20by%20approximate%20inference%202012"
+        },
+        {
+            "id": "Rubinstein_2004_a",
+            "entry": "RY Rubinstein and DP Kroese. A unified approach to combinatorial optimization, monte-carlo simulation, and machine learning. Springer-Verlag New York, LLC, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubinstein%2C%20R.Y.%20Kroese%2C%20D.P.%20A%20unified%20approach%20to%20combinatorial%20optimization%2C%20monte-carlo%20simulation%2C%20and%20machine%20learning%202004"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Xi Chen, and Pieter Abbeel. Equivalence between policy gradients and soft q-learning. arXiv preprint arXiv:1704.06440, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.06440"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Solway_2012_a",
+            "entry": "Alec Solway and Matthew M Botvinick. Goal-directed decision making as probabilistic inference: a computational framework and potential neural correlates. Psychological review, 119(1):120, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Solway%2C%20Alec%20Botvinick%2C%20Matthew%20M.%20Goal-directed%20decision%20making%20as%20probabilistic%20inference%3A%20a%20computational%20framework%20and%20potential%20neural%20correlates%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Solway%2C%20Alec%20Botvinick%2C%20Matthew%20M.%20Goal-directed%20decision%20making%20as%20probabilistic%20inference%3A%20a%20computational%20framework%20and%20potential%20neural%20correlates%202012"
+        },
+        {
+            "id": "Stewart_1992_a",
+            "entry": "Leland Stewart and Perry McCarty. Use of bayesian belief networks to fuse continuous and discrete information for target recognition, tracking, and situation assessment. In Signal Processing, Sensor Fusion, and Target Recognition, volume 1699, pp. 177\u2013186. International Society for Optics and Photonics, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stewart%2C%20Leland%20McCarty%2C%20Perry%20Use%20of%20bayesian%20belief%20networks%20to%20fuse%20continuous%20and%20discrete%20information%20for%20target%20recognition%2C%20tracking%2C%20and%20situation%20assessment%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stewart%2C%20Leland%20McCarty%2C%20Perry%20Use%20of%20bayesian%20belief%20networks%20to%20fuse%20continuous%20and%20discrete%20information%20for%20target%20recognition%2C%20tracking%2C%20and%20situation%20assessment%201992"
+        },
+        {
+            "id": "Szita_2006_a",
+            "entry": "Istvan Szita and Andras Lorincz. Learning tetris using the noisy cross-entropy method. Neural computation, 18(12):2936\u20132941, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szita%2C%20Istvan%20Lorincz%2C%20Andras%20Learning%20tetris%20using%20the%20noisy%20cross-entropy%20method%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szita%2C%20Istvan%20Lorincz%2C%20Andras%20Learning%20tetris%20using%20the%20noisy%20cross-entropy%20method%202006"
+        },
+        {
+            "id": "Tassa_et+al_2012_a",
+            "entry": "Yuval Tassa, Tom Erez, and Emanuel Todorov. Synthesis and stabilization of complex behaviors through online trajectory optimization. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 4906\u20134913. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tassa%2C%20Yuval%20Erez%2C%20Tom%20Todorov%2C%20Emanuel%20Synthesis%20and%20stabilization%20of%20complex%20behaviors%20through%20online%20trajectory%20optimization%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tassa%2C%20Yuval%20Erez%2C%20Tom%20Todorov%2C%20Emanuel%20Synthesis%20and%20stabilization%20of%20complex%20behaviors%20through%20online%20trajectory%20optimization%202012"
+        },
+        {
+            "id": "Todorov_2005_a",
+            "entry": "Emanuel Todorov and Weiwei Li. A generalized iterative lqg method for locally-optimal feedback control of constrained nonlinear stochastic systems. In American Control Conference, 2005. Proceedings of the 2005, pp. 300\u2013306. IEEE, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Li%2C%20Weiwei%20A%20generalized%20iterative%20lqg%20method%20for%20locally-optimal%20feedback%20control%20of%20constrained%20nonlinear%20stochastic%20systems%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Li%2C%20Weiwei%20A%20generalized%20iterative%20lqg%20method%20for%20locally-optimal%20feedback%20control%20of%20constrained%20nonlinear%20stochastic%20systems%202005"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, pp. 5026\u2013 5033. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Toussaint_2009_a",
+            "entry": "Marc Toussaint. Robot trajectory optimization using approximate inference. In Proceedings of the 26th annual international conference on machine learning, pp. 1049\u20131056. ACM, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Toussaint%2C%20Marc%20Robot%20trajectory%20optimization%20using%20approximate%20inference%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Toussaint%2C%20Marc%20Robot%20trajectory%20optimization%20using%20approximate%20inference%202009"
+        },
+        {
+            "id": "Toussaint_2007_a",
+            "entry": "Marc Toussaint and Christian Goerick. Probabilistic inference for structured planning in robotics. In Intelligent Robots and Systems, 2007. IROS 2007. IEEE/RSJ International Conference on, pp. 3068\u20133073. IEEE, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marc%20Toussaint%20and%20Christian%20Goerick%20Probabilistic%20inference%20for%20structured%20planning%20in%20robotics%20In%20Intelligent%20Robots%20and%20Systems%202007%20IROS%202007%20IEEERSJ%20International%20Conference%20on%20pp%2030683073%20IEEE%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marc%20Toussaint%20and%20Christian%20Goerick%20Probabilistic%20inference%20for%20structured%20planning%20in%20robotics%20In%20Intelligent%20Robots%20and%20Systems%202007%20IROS%202007%20IEEERSJ%20International%20Conference%20on%20pp%2030683073%20IEEE%202007"
+        },
+        {
+            "id": "Toussaint_2006_a",
+            "entry": "Marc Toussaint and Amos Storkey. Probabilistic inference for solving discrete and continuous state markov decision processes. In Proceedings of the 23rd international conference on Machine learning, pp. 945\u2013952. ACM, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Toussaint%2C%20Marc%20Storkey%2C%20Amos%20Probabilistic%20inference%20for%20solving%20discrete%20and%20continuous%20state%20markov%20decision%20processes%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Toussaint%2C%20Marc%20Storkey%2C%20Amos%20Probabilistic%20inference%20for%20solving%20discrete%20and%20continuous%20state%20markov%20decision%20processes%202006"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "Theophane Weber, Sebastien Racaniere, David P Reichert, Lars Buesing, Arthur Guez, Danilo Jimenez Rezende, Adria Puigdomenech Badia, Oriol Vinyals, Nicolas Heess, Yujia Li, et al. Imagination-augmented agents for deep reinforcement learning. arXiv preprint arXiv:1707.06203, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06203"
+        },
+        {
+            "id": "Ziebart_2010_a",
+            "entry": "Brian D Ziebart. Modeling purposeful adaptive behavior with the principle of maximum causal entropy. 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ziebart%2C%20Brian%20D.%20Modeling%20purposeful%20adaptive%20behavior%20with%20the%20principle%20of%20maximum%20causal%20entropy%202010"
+        }
+    ]
+}

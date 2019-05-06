@@ -1,0 +1,362 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MODEL-PREDICTIVE POLICY LEARNING WITH UNCERTAINTY REGULARIZATION FOR DRIVING IN DENSE TRAFFIC",
+        "author": "Mikael Henaff \u2217 Courant Institute, New York University mbh305@nyu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HygQBn0cYm"
+        },
+        "journal": "Halkias",
+        "abstract": "Learning a policy using only observational data is challenging because the distribution of states it induces at execution time may differ from the distribution observed during training. We propose to train a policy by unrolling a learned model of the environment dynamics over multiple time steps while explicitly penalizing two costs: the original cost the policy seeks to optimize, and an uncertainty cost which represents its divergence from the states it is trained on. We measure this second cost by using the uncertainty of the dynamics model about its own predictions, using recent ideas from uncertainty estimation for deep networks. We evaluate our approach using a large-scale observational dataset of driving behavior recorded from traffic cameras, and show that we are able to learn effective driving policies from purely observational data, with no environment interaction."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "bayesian neural network",
+            "url": "https://en.wikipedia.org/wiki/bayesian_neural_network"
+        },
+        {
+            "term": "dynamic model",
+            "url": "https://en.wikipedia.org/wiki/dynamic_model"
+        }
+    ],
+    "abbreviations": {
+        "BNN": "Bayesian neural network"
+    },
+    "highlights": [
+        "Model-free reinforcement learning methods using deep neural network controllers have proven effective on a wide range of tasks, from playing video or text-based games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; 2016; <a class=\"ref-link\" id=\"cNarasimhan_et+al_2015_a\" href=\"#rNarasimhan_et+al_2015_a\"><a class=\"ref-link\" id=\"cNarasimhan_et+al_2015_a\" href=\"#rNarasimhan_et+al_2015_a\">Narasimhan et al, 2015</a></a>) to learning algorithms (<a class=\"ref-link\" id=\"cZaremba_et+al_2015_a\" href=\"#rZaremba_et+al_2015_a\"><a class=\"ref-link\" id=\"cZaremba_et+al_2015_a\" href=\"#rZaremba_et+al_2015_a\">Zaremba et al, 2015</a></a>) and complex locomotion tasks (<a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>; <a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\">Zhang et al, 2015</a></a>)",
+        "We use a learned dynamics model which is unrolled for multiple time steps, and train a policy network to minimize a differentiable cost over this rolled-out trajectory",
+        "The work of (<a class=\"ref-link\" id=\"cDepeweg_et+al_2018_a\" href=\"#rDepeweg_et+al_2018_a\">Depeweg et al, 2018</a>) proposed adding an uncertainty penalty when training paramaterized policies, but did so in the context of Bayesian neural network trained using \u03b1-divergences applied in low-dimensional settings, whereas we use variational autoencoders combined with dropout for high-dimensional video prediction. \u03b1-Bayesian neural network can yield better uncertainty estimates than variational inference-based methods, which can underestimate model uncertainty by fitting to a local mode of the exact posterior (<a class=\"ref-link\" id=\"cDepeweg_et+al_2016_a\" href=\"#rDepeweg_et+al_2016_a\">Depeweg et al, 2016</a>; <a class=\"ref-link\" id=\"cLi_2017_a\" href=\"#rLi_2017_a\">Li & Gal, 2017</a>)",
+        "The key elements are: i) a learned stochastic dynamics model, which is used to optimize a policy cost over multiple time steps, ii) an uncertainty term which penalizes the divergence of the trajectories induced by the policy from the manifold it was trained on, and iii) a modified posterior distribution which keeps the stochastic model responsive to input actions",
+        "We have applied this approach to a large observational dataset of real-world traffic recordings, and shown it can effectively learn policies for navigating in dense traffic, which outperform other approaches which learn from observational data"
+    ],
+    "key_statements": [
+        "Model-free reinforcement learning methods using deep neural network controllers have proven effective on a wide range of tasks, from playing video or text-based games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; 2016; <a class=\"ref-link\" id=\"cNarasimhan_et+al_2015_a\" href=\"#rNarasimhan_et+al_2015_a\"><a class=\"ref-link\" id=\"cNarasimhan_et+al_2015_a\" href=\"#rNarasimhan_et+al_2015_a\">Narasimhan et al, 2015</a></a>) to learning algorithms (<a class=\"ref-link\" id=\"cZaremba_et+al_2015_a\" href=\"#rZaremba_et+al_2015_a\"><a class=\"ref-link\" id=\"cZaremba_et+al_2015_a\" href=\"#rZaremba_et+al_2015_a\">Zaremba et al, 2015</a></a>) and complex locomotion tasks (<a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>; <a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\">Zhang et al, 2015</a></a>)",
+        "We use a learned dynamics model which is unrolled for multiple time steps, and train a policy network to minimize a differentiable cost over this rolled-out trajectory",
+        "The work of (<a class=\"ref-link\" id=\"cDepeweg_et+al_2018_a\" href=\"#rDepeweg_et+al_2018_a\">Depeweg et al, 2018</a>) proposed adding an uncertainty penalty when training paramaterized policies, but did so in the context of Bayesian neural network trained using \u03b1-divergences applied in low-dimensional settings, whereas we use variational autoencoders combined with dropout for high-dimensional video prediction. \u03b1-Bayesian neural network can yield better uncertainty estimates than variational inference-based methods, which can underestimate model uncertainty by fitting to a local mode of the exact posterior (<a class=\"ref-link\" id=\"cDepeweg_et+al_2016_a\" href=\"#rDepeweg_et+al_2016_a\">Depeweg et al, 2016</a>; <a class=\"ref-link\" id=\"cLi_2017_a\" href=\"#rLi_2017_a\">Li & Gal, 2017</a>)",
+        "The key elements are: i) a learned stochastic dynamics model, which is used to optimize a policy cost over multiple time steps, ii) an uncertainty term which penalizes the divergence of the trajectories induced by the policy from the manifold it was trained on, and iii) a modified posterior distribution which keeps the stochastic model responsive to input actions",
+        "We have applied this approach to a large observational dataset of real-world traffic recordings, and shown it can effectively learn policies for navigating in dense traffic, which outperform other approaches which learn from observational data"
+    ],
+    "summary": [
+        "Model-free reinforcement learning methods using deep neural network controllers have proven effective on a wide range of tasks, from playing video or text-based games (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a></a>; 2016; <a class=\"ref-link\" id=\"cNarasimhan_et+al_2015_a\" href=\"#rNarasimhan_et+al_2015_a\"><a class=\"ref-link\" id=\"cNarasimhan_et+al_2015_a\" href=\"#rNarasimhan_et+al_2015_a\">Narasimhan et al, 2015</a></a>) to learning algorithms (<a class=\"ref-link\" id=\"cZaremba_et+al_2015_a\" href=\"#rZaremba_et+al_2015_a\"><a class=\"ref-link\" id=\"cZaremba_et+al_2015_a\" href=\"#rZaremba_et+al_2015_a\">Zaremba et al, 2015</a></a>) and complex locomotion tasks (<a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\"><a class=\"ref-link\" id=\"cLillicrap_et+al_2015_a\" href=\"#rLillicrap_et+al_2015_a\">Lillicrap et al, 2015</a></a>; <a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\"><a class=\"ref-link\" id=\"cZhang_et+al_2015_a\" href=\"#rZhang_et+al_2015_a\">Zhang et al, 2015</a></a>).",
+        "We use a learned dynamics model which is unrolled for multiple time steps, and train a policy network to minimize a differentiable cost over this rolled-out trajectory.",
+        "We first describe our general approach, which consists of two steps: learning an actionconditional dynamics model using the collected observational data, and using this model to train a fast, feedforward policy network which minimizes both a policy cost and an uncertainty cost.",
+        "Recent models for stochastic video prediction (<a class=\"ref-link\" id=\"cBabaeizadeh_et+al_2017_a\" href=\"#rBabaeizadeh_et+al_2017_a\">Babaeizadeh et al, 2017</a>; <a class=\"ref-link\" id=\"cDenton_2018_a\" href=\"#rDenton_2018_a\">Denton & Fergus, 2018</a>) do not use their model for planning or training a policy network, and parameterize the posterior distribution over latent variables using a diagonal Gaussian.",
+        "We first sample an initial state sequence s1:t from the training set, unroll the forward model over T time steps, and backpropagate gradients of a differentiable objective function with respect to the parameters of the policy network.",
+        "The uncertainty cost U is applied to states predicted by the forward model, and could reflect any measure of their likelihood under the distribution the training data is drawn from.",
+        "Once the forward model is trained, for a given input we can obtain an approximate distribution over outputs p induced by the approximate posterior by sampling different latent variables and dropout masks.",
+        "The works of (<a class=\"ref-link\" id=\"cMcallister_2016_a\" href=\"#rMcallister_2016_a\">McAllister & Rasmussen, 2016</a>; <a class=\"ref-link\" id=\"cChua_et+al_2018_a\" href=\"#rChua_et+al_2018_a\">Chua et al, 2018</a>) used model uncertainty estimates calculated using dropout in the context of model-based reinforcement learning, but used them for sampling trajectories during the forward prediction step.",
+        "We apply uncertainty estimates to the predicted high-dimensional states of a forward model at every time step, summarize them into a scalar, and backpropagate gradients through the unrolled forward model to train a policy network by gradient descent.",
+        "The work of (<a class=\"ref-link\" id=\"cDepeweg_et+al_2018_a\" href=\"#rDepeweg_et+al_2018_a\">Depeweg et al, 2018</a>) proposed adding an uncertainty penalty when training paramaterized policies, but did so in the context of BNNs trained using \u03b1-divergences applied in low-dimensional settings, whereas we use variational autoencoders combined with dropout for high-dimensional video prediction.",
+        "The key elements are: i) a learned stochastic dynamics model, which is used to optimize a policy cost over multiple time steps, ii) an uncertainty term which penalizes the divergence of the trajectories induced by the policy from the manifold it was trained on, and iii) a modified posterior distribution which keeps the stochastic model responsive to input actions.",
+        "Our approach is general and could potentially be applied to many other settings where interactions with the environment are expensive or unfeasible, but observational data is plentiful"
+    ],
+    "headline": "We propose to train a policy by unrolling a learned model of the environment dynamics over multiple time steps while explicitly penalizing two costs: the original cost the policy seeks to optimize, and an uncertainty cost which represents its divergence from the states it is trained on",
+    "reference_links": [
+        {
+            "id": "Agrawal_et+al_2016_a",
+            "entry": "Pulkit Agrawal, Ashvin Nair, Pieter Abbeel, Jitendra Malik, and Sergey Levine. Learning to poke by poking: Experiential learning of intuitive physics. CoRR, abs/1606.07419, 2016. URL http://arxiv.org/abs/1606.07419.",
+            "url": "http://arxiv.org/abs/1606.07419",
+            "arxiv_url": "https://arxiv.org/pdf/1606.07419"
+        },
+        {
+            "id": "Atkeson_1997_a",
+            "entry": "C. G. Atkeson and J. C. Santamaria. A comparison of direct and model-based reinforcement learning. In Proceedings of International Conference on Robotics and Automation, volume 4, pp. 3557\u20133564 vol.4, April 1997. doi: 10.1109/ROBOT.1997.606886.",
+            "crossref": "https://dx.doi.org/10.1109/ROBOT.1997.606886",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/ROBOT.1997.606886"
+        },
+        {
+            "id": "Babaeizadeh_et+al_2017_a",
+            "entry": "Mohammad Babaeizadeh, Chelsea Finn, Dumitru Erhan, Roy H. Campbell, and Sergey Levine. Stochastic variational video prediction. CoRR, abs/1710.11252, 2017. URL http://arxiv.org/abs/1710.11252.",
+            "url": "http://arxiv.org/abs/1710.11252",
+            "arxiv_url": "https://arxiv.org/pdf/1710.11252"
+        },
+        {
+            "id": "Baram_et+al_2017_a",
+            "entry": "Nir Baram, Oron Anschel, Itai Caspi, and Shie Mannor. End-to-end differentiable adversarial imitation learning. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baram%2C%20Nir%20Anschel%2C%20Oron%20Caspi%2C%20Itai%20Mannor%2C%20Shie%20End-to-end%20differentiable%20adversarial%20imitation%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baram%2C%20Nir%20Anschel%2C%20Oron%20Caspi%2C%20Itai%20Mannor%2C%20Shie%20End-to-end%20differentiable%20adversarial%20imitation%20learning%202017"
+        },
+        {
+            "id": "Bojarski_et+al_2016_a",
+            "entry": "Mariusz Bojarski, Davide Del Testa, Daniel Dworakowski, Bernhard Firner, Beat Flepp, Prasoon Goyal, Lawrence D. Jackel, Mathew Monfort, Urs Muller, Jiakai Zhang, Xin Zhang, Jake Zhao, and Karol Zieba. End to end learning for self-driving cars. CoRR, abs/1604.07316, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.07316"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Greg%20Brockman%20Vicki%20Cheung%20Ludwig%20Pettersson%20Jonas%20Schneider%20John%20Schulman%20Jie%20Tang%20and%20Wojciech%20Zaremba%20Openai%20gym%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Greg%20Brockman%20Vicki%20Cheung%20Ludwig%20Pettersson%20Jonas%20Schneider%20John%20Schulman%20Jie%20Tang%20and%20Wojciech%20Zaremba%20Openai%20gym%202016"
+        },
+        {
+            "id": "Chua_et+al_2018_a",
+            "entry": "Kurtland Chua, Roberto Calandra, Rowan McAllister, and Sergey Levine. Deep reinforcement learning in a handful of trials using probabilistic dynamics models. CoRR, abs/1805.12114, 2018. URL http://arxiv.org/abs/1805.12114.",
+            "url": "http://arxiv.org/abs/1805.12114",
+            "arxiv_url": "https://arxiv.org/pdf/1805.12114"
+        },
+        {
+            "id": "Deisenroth_2011_a",
+            "entry": "Marc Peter Deisenroth and Carl Edward Rasmussen. Pilco: A model-based and data-efficient approach to policy search. In In Proceedings of the International Conference on Machine Learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deisenroth%2C%20Marc%20Peter%20Rasmussen%2C%20Carl%20Edward%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deisenroth%2C%20Marc%20Peter%20Rasmussen%2C%20Carl%20Edward%20Pilco%3A%20A%20model-based%20and%20data-efficient%20approach%20to%20policy%20search%202011"
+        },
+        {
+            "id": "Denton_2018_a",
+            "entry": "Emily Denton and Rob Fergus. Stochastic video generation with a learned prior. CoRR, abs/1802.07687, 2018. URL http://arxiv.org/abs/1802.07687.",
+            "url": "http://arxiv.org/abs/1802.07687",
+            "arxiv_url": "https://arxiv.org/pdf/1802.07687"
+        },
+        {
+            "id": "Depeweg_et+al_2016_a",
+            "entry": "Stefan Depeweg, Jose Miguel Hernandez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Learning and policy search in stochastic dynamical systems with bayesian neural networks. CoRR, abs/1605.07127, 2016. URL http://arxiv.org/abs/1605.07127.",
+            "url": "http://arxiv.org/abs/1605.07127",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07127"
+        },
+        {
+            "id": "Depeweg_et+al_2018_a",
+            "entry": "Stefan Depeweg, Jose-Miguel Hernandez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Decomposition of uncertainty in Bayesian deep learning for efficient and risk-sensitive learning. In Jennifer Dy and Andreas Krause (eds.), Proceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pp. 1184\u20131193, Stockholmsmssan, Stockholm Sweden, 10\u201315 Jul 2018. PMLR. URL http://proceedings.mlr.press/v80/depeweg18a.html.",
+            "url": "http://proceedings.mlr.press/v80/depeweg18a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Depeweg%2C%20Stefan%20Hernandez-Lobato%2C%20Jose-Miguel%20Doshi-Velez%2C%20Finale%20Udluft%2C%20Steffen%20Decomposition%20of%20uncertainty%20in%20Bayesian%20deep%20learning%20for%20efficient%20and%20risk-sensitive%20learning%202018-07"
+        },
+        {
+            "id": "Englert_et+al_2013_a",
+            "entry": "P. Englert, A. Paraschos, J. Peters, and M. P. Deisenroth. Model-based imitation learning by probabilistic trajectory matching. In 2013 IEEE International Conference on Robotics and Automation, pp. 1922\u20131927, May 2013. doi: 10.1109/ICRA.2013.6630832.",
+            "crossref": "https://dx.doi.org/10.1109/ICRA.2013.6630832",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/ICRA.2013.6630832"
+        },
+        {
+            "id": "Finn_et+al_2016_a",
+            "entry": "Chelsea Finn, Ian J. Goodfellow, and Sergey Levine. Unsupervised learning for physical interaction through video prediction. CoRR, abs/1605.07157, 2016. URL http://arxiv.org/abs/1605.07157.",
+            "url": "http://arxiv.org/abs/1605.07157",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07157"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a bayesian approximation: Representing model uncertainty in deep learning. In Maria Florina Balcan and Kilian Q. Weinberger (eds.), Proceedings of The 33rd International Conference on Machine Learning, volume 48 of Proceedings of Machine Learning Research, pp. 1050\u20131059, New York, New York, USA, 20\u201322 Jun 2016. PMLR. URL http://proceedings.mlr.press/v48/gal16.html.",
+            "url": "http://proceedings.mlr.press/v48/gal16.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016-06-20"
+        },
+        {
+            "id": "Halkias_2006_a",
+            "entry": "John Halkias and James Colyar. NGSIM interstate 80 freeway dataset. US Federal Highway Administration, FHWA-HRT-06-137, Washington, DC, USA, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Halkias%2C%20John%20Colyar%2C%20James%20NGSIM%20interstate%2080%20freeway%20dataset.%20US%20Federal%20Highway%20Administration%202006"
+        },
+        {
+            "id": "Heess_et+al_2015_a",
+            "entry": "Nicolas Heess, Gregory Wayne, David Silver, Tim Lillicrap, Tom Erez, and Yuval Tassa. Learning continuous control policies by stochastic value gradients. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett (eds.), Advances in Neural Information Processing Systems 28, pp. 2944\u20132952. Curran Associates, Inc., 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heess%2C%20Nicolas%20Wayne%2C%20Gregory%20Silver%2C%20David%20Lillicrap%2C%20Tim%20Learning%20continuous%20control%20policies%20by%20stochastic%20value%20gradients%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heess%2C%20Nicolas%20Wayne%2C%20Gregory%20Silver%2C%20David%20Lillicrap%2C%20Tim%20Learning%20continuous%20control%20policies%20by%20stochastic%20value%20gradients%202015"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "Geoffrey E. Hinton, Nitish Srivastava, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Improving neural networks by preventing co-adaptation of feature detectors. CoRR, abs/1207.0580, 2012. URL http://arxiv.org/abs/1207.0580.",
+            "url": "http://arxiv.org/abs/1207.0580",
+            "arxiv_url": "https://arxiv.org/pdf/1207.0580"
+        },
+        {
+            "id": "Jordan_1992_a",
+            "entry": "Michael I. Jordan and David E. Rumelhart. Forward models: Supervised learning with a distal teacher. Cognitive Science, 16(3):307 \u2013 354, 1992. ISSN 0364-0213. doi: http://dx.doi.org/10.1016/0364-0213(92)90036-T. URL http://www.sciencedirect.com/science/article/pii/036402139290036T.",
+            "crossref": "https://dx.doi.org/10.1016/0364-0213(92)90036-T",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/0364-0213%2892%2990036-T"
+        },
+        {
+            "id": "Jordan_et+al_1999_a",
+            "entry": "Michael I. Jordan, Zoubin Ghahramani, Tommi S. Jaakkola, and Lawrence K. Saul. An introduction to variational methods for graphical models. Mach. Learn., 37(2):183\u2013233, November 1999. ISSN 0885-6125. doi: 10.1023/A:1007665907178. URL https://doi.org/10.1023/A:1007665907178.",
+            "crossref": "https://dx.doi.org/10.1023/A:1007665907178",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1023/A%3A1007665907178"
+        },
+        {
+            "id": "Kahn_et+al_2017_a",
+            "entry": "Gregory Kahn, Adam Villaflor, Vitchyr Pong, Pieter Abbeel, and Sergey Levine. Uncertainty-aware reinforcement learning for collision avoidance. 02 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kahn%2C%20Gregory%20Villaflor%2C%20Adam%20Pong%2C%20Vitchyr%20Abbeel%2C%20Pieter%20Uncertainty-aware%20reinforcement%20learning%20for%20collision%20avoidance%202017"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. CoRR, abs/1412.6980, 2014. URL http://arxiv.org/abs/1412.6980.",
+            "url": "http://arxiv.org/abs/1412.6980",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P. Kingma and Max Welling. Auto-encoding variational bayes. CoRR, abs/1312.6114, 2013. URL http://dblp.uni-trier.de/db/journals/corr/corr1312.html# KingmaW13.",
+            "url": "http://dblp.uni-trier.de/db/journals/corr/corr1312.html#",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Lecun_et+al_2006_a",
+            "entry": "Yann LeCun, Urs Muller, Jan Ben, Eric Cosatto, and Beat Flepp. Off-road obstacle avoidance through end-to-end learning. In Y. Weiss, B. Scholkopf, and J. C. Platt (eds.), Advances in Neural Information Processing Systems 18, pp. 739\u2013746. MIT Press, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Muller%2C%20Urs%20Ben%2C%20Jan%20Eric%20Cosatto%2C%20and%20Beat%20Flepp.%20Off-road%20obstacle%20avoidance%20through%20end-to-end%20learning%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Muller%2C%20Urs%20Ben%2C%20Jan%20Eric%20Cosatto%2C%20and%20Beat%20Flepp.%20Off-road%20obstacle%20avoidance%20through%20end-to-end%20learning%202006"
+        },
+        {
+            "id": "URL_0000_a",
+            "entry": "URL http://papers.nips.cc/paper/",
+            "url": "http://papers.nips.cc/paper/"
+        },
+        {
+            "id": "Li_2017_a",
+            "entry": "Yingzhen Li and Yarin Gal. Dropout inference in Bayesian neural networks with alpha-divergences. In Doina Precup and Yee Whye Teh (eds.), Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, pp. 2052\u20132061, International Convention Centre, Sydney, Australia, 06\u201311 Aug 2017. PMLR. URL http://proceedings.mlr.press/v70/li17a.html.",
+            "url": "http://proceedings.mlr.press/v70/li17a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yingzhen%20Gal%2C%20Yarin%20Dropout%20inference%20in%20Bayesian%20neural%20networks%20with%20alpha-divergences%202017-08"
+        },
+        {
+            "id": "Lillicrap_et+al_2015_a",
+            "entry": "Timothy P. Lillicrap, Jonathan J. Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. CoRR, abs/1509.02971, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1509.02971"
+        },
+        {
+            "id": "Mcallister_2016_a",
+            "entry": "Rowan McAllister and Carl E. Rasmussen. Improving pilco with bayesian neural network dynamics models. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McAllister%2C%20Rowan%20Rasmussen%2C%20Carl%20E.%20Improving%20pilco%20with%20bayesian%20neural%20network%20dynamics%20models%202016"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg, and Demis Hassabis. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, February 2015. ISSN 0028-0836. doi: 10.1038/nature14236. URL http://dx.doi.org/10.1038/nature14236.",
+            "crossref": "https://dx.doi.org/10.1038/nature14236",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/nature14236"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy P. Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. CoRR, abs/1602.01783, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.01783"
+        },
+        {
+            "id": "Nagabandi_et+al_2017_a",
+            "entry": "Anusha Nagabandi, Gregory Kahn, Ronald S. Fearing, and Sergey Levine. Neural network dynamics for model-based deep reinforcement learning with model-free fine-tuning. CoRR, abs/1708.02596, 2017. URL http://arxiv.org/abs/1708.02596.",
+            "url": "http://arxiv.org/abs/1708.02596",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02596"
+        },
+        {
+            "id": "Narasimhan_et+al_2015_a",
+            "entry": "Karthik Narasimhan, Tejas D. Kulkarni, and Regina Barzilay. Language understanding for textbased games using deep reinforcement learning. CoRR, abs/1506.08941, 2015. URL http://arxiv.org/abs/1506.08941.",
+            "url": "http://arxiv.org/abs/1506.08941",
+            "arxiv_url": "https://arxiv.org/pdf/1506.08941"
+        },
+        {
+            "id": "Neal_1995_a",
+            "entry": "Radford M. Neal. Bayesian Learning for Neural Networks. PhD thesis, Toronto, Ont., Canada, Canada, 1995. AAINN02676.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20Bayesian%20Learning%20for%20Neural%20Networks%201995"
+        },
+        {
+            "id": "Nguyen_1989_a",
+            "entry": "Nguyen and Widrow. The truck backer-upper: an example of self-learning in neural networks. In International 1989 Joint Conference on Neural Networks, pp. 357\u2013363 vol.2, 1989. doi: 10.1109/ IJCNN.1989.118723.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%20Widrow%20The%20truck%20backer-upper%3A%20an%20example%20of%20self-learning%20in%20neural%20networks%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%20Widrow%20The%20truck%20backer-upper%3A%20an%20example%20of%20self-learning%20in%20neural%20networks%201989"
+        },
+        {
+            "id": "Nguyen_1990_a",
+            "entry": "Derrick Nguyen and Bernard Widrow. Neural networks for control. chapter The Truck Backerupper: An Example of Self-learning in Neural Networks, pp. 287\u2013299. MIT Press, Cambridge, MA, USA, 1990. ISBN 0-262-13261-3. URL http://dl.acm.org/citation.cfm?id=104204.104216.",
+            "url": "http://dl.acm.org/citation.cfm?id=104204.104216",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Derrick%20Widrow%2C%20Bernard%20Neural%20networks%20for%20control.%20chapter%20The%20Truck%20Backerupper%3A%20An%20Example%20of%20Self-learning%201990"
+        },
+        {
+            "id": "Oh_et+al_2015_a",
+            "entry": "Junhyuk Oh, Xiaoxiao Guo, Honglak Lee, Richard L. Lewis, and Satinder P. Singh. Actionconditional video prediction using deep networks in atari games. CoRR, abs/1507.08750, 2015. URL http://arxiv.org/abs/1507.08750.",
+            "url": "http://arxiv.org/abs/1507.08750",
+            "arxiv_url": "https://arxiv.org/pdf/1507.08750"
+        },
+        {
+            "id": "Pan_et+al_2017_a",
+            "entry": "Yunpeng Pan, Ching-An Cheng, Kamil Saigol, Keuntaek Lee, Xinyan Yan, Evangelos Theodorou, and Byron Boots. Agile off-road autonomous driving using end-to-end deep imitation learning. CoRR, abs/1709.07174, 2017. URL http://arxiv.org/abs/1709.07174.",
+            "url": "http://arxiv.org/abs/1709.07174",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07174"
+        },
+        {
+            "id": "Pascanu_et+al_2017_a",
+            "entry": "Razvan Pascanu, Yujia Li, Oriol Vinyals, Nicolas Heess, Lars Buesing, Sebastien Racaniere, David P. Reichert, Theophane Weber, Daan Wierstra, and Peter Battaglia. Learning model-based planning from scratch. CoRR, abs/1707.06170, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06170"
+        },
+        {
+            "id": "Pomerleau_1991_a",
+            "entry": "Dean A. Pomerleau. Efficient training of artificial neural networks for autonomous navigation. Neural Computation, 3:97, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pomerleau%2C%20Dean%20A.%20Efficient%20training%20of%20artificial%20neural%20networks%20for%20autonomous%20navigation%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pomerleau%2C%20Dean%20A.%20Efficient%20training%20of%20artificial%20neural%20networks%20for%20autonomous%20navigation%201991"
+        },
+        {
+            "id": "Ross_2010_a",
+            "entry": "Stephane Ross and J. Andrew Bagnell. Efficient reductions for imitation learning. In AISTATS, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Bagnell%2C%20J.Andrew%20Efficient%20reductions%20for%20imitation%20learning%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Bagnell%2C%20J.Andrew%20Efficient%20reductions%20for%20imitation%20learning%202010"
+        },
+        {
+            "id": "Ross_et+al_2011_a",
+            "entry": "Stphane Ross, Geoffrey J. Gordon, and Drew Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. In Geoffrey J. Gordon, David B. Dunson, and Miroslav Dudk (eds.), AISTATS, volume 15 of JMLR Proceedings, pp. 627\u2013635. JMLR.org, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stphane%20Gordon%2C%20Geoffrey%20J.%20Bagnell%2C%20Drew%20A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20no-regret%20online%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stphane%20Gordon%2C%20Geoffrey%20J.%20Bagnell%2C%20Drew%20A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20no-regret%20online%20learning%202011"
+        },
+        {
+            "id": "Sadigh_et+al_2016_a",
+            "entry": "Dorsa Sadigh, Shankar Sastry, Sanjit A. Seshia, and Anca D. Dragan. Planning for autonomous cars that leverage effects on human actions, 06 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sadigh%2C%20Dorsa%20Sastry%2C%20Shankar%20Seshia%2C%20Sanjit%20A.%20Dragan%2C%20Anca%20D.%20Planning%20for%20autonomous%20cars%20that%20leverage%20effects%20on%20human%20actions%202016"
+        },
+        {
+            "id": "Schmidhuber_1990_a",
+            "entry": "Jurgen Schmidhuber. An on-line algorithm for dynamic reinforcement learning and planning in reactive environments. In Proceedings of the International Joint Conference on Neural Networks (IJCNN), 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20An%20on-line%20algorithm%20for%20dynamic%20reinforcement%20learning%20and%20planning%20in%20reactive%20environments%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20An%20on-line%20algorithm%20for%20dynamic%20reinforcement%20learning%20and%20planning%20in%20reactive%20environments%201990"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. CoRR, abs/1707.06347, 2017. URL http://arxiv.org/abs/1707.06347.",
+            "url": "http://arxiv.org/abs/1707.06347",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Srinivas_et+al_2018_a",
+            "entry": "Aravind Srinivas, Allan Jabri, Pieter Abbeel, Sergey Levine, and Chelsea Finn. Universal planning networks. CoRR, abs/1804.00645, 2018. URL http://arxiv.org/abs/1804.00645.",
+            "url": "http://arxiv.org/abs/1804.00645",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00645"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. Journal of Machine Learning Research, 15:1929\u20131958, 2014. URL http://jmlr.org/papers/v15/srivastava14a.html.",
+            "url": "http://jmlr.org/papers/v15/srivastava14a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Weber_et+al_2017_a",
+            "entry": "Theophane Weber, Sebastien Racaniere, David P. Reichert, Lars Buesing, Arthur Guez, Danilo Jimenez Rezende, Adria Puigdomenech Badia, Oriol Vinyals, Nicolas Heess, Yujia Li, Razvan Pascanu, Peter Battaglia, David Silver, and Daan Wierstra. Imagination-augmented agents for deep reinforcement learning. CoRR, abs/1707.06203, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06203"
+        },
+        {
+            "id": "Williams_et+al_2017_a",
+            "entry": "G. Williams, N. Wagener, B. Goldfain, P. Drews, J. M. Rehg, B. Boots, and E. A. Theodorou. Information theoretic mpc for model-based reinforcement learning. In 2017 IEEE International Conference on Robotics and Automation (ICRA), pp. 1714\u20131721, May 2017. doi: 10.1109/ICRA. 2017.7989202.",
+            "crossref": "https://dx.doi.org/10.1109/ICRA.2017.7989202",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/ICRA.2017.7989202"
+        },
+        {
+            "id": "Zaremba_et+al_2015_a",
+            "entry": "Wojciech Zaremba, Tomas Mikolov, Armand Joulin, and Rob Fergus. Learning simple algorithms from examples. CoRR, abs/1511.07275, 2015. URL http://arxiv.org/abs/1511.07275.",
+            "url": "http://arxiv.org/abs/1511.07275",
+            "arxiv_url": "https://arxiv.org/pdf/1511.07275"
+        },
+        {
+            "id": "Zhang_et+al_2015_a",
+            "entry": "Fangyi Zhang, Jurgen Leitner, Michael Milford, Ben Upcroft, and Peter I. Corke. Towards visionbased deep reinforcement learning for robotic motion control. CoRR, abs/1511.03791, 2015. URL http://arxiv.org/abs/1511.03791.",
+            "url": "http://arxiv.org/abs/1511.03791",
+            "arxiv_url": "https://arxiv.org/pdf/1511.03791"
+        },
+        {
+            "id": "Zhang_2016_a",
+            "entry": "Jiakai Zhang and Kyunghyun Cho. Query-efficient imitation learning for end-to-end autonomous driving. CoRR, abs/1605.06450, 2016. URL http://arxiv.org/abs/1605.06450.",
+            "url": "http://arxiv.org/abs/1605.06450",
+            "arxiv_url": "https://arxiv.org/pdf/1605.06450"
+        }
+    ]
+}

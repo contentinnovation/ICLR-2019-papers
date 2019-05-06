@@ -1,0 +1,344 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "PHASE-AWARE SPEECH ENHANCEMENT WITH DEEP COMPLEX U-NET",
+        "author": "Hyeong-Seok Choi, Jang-Hyun Kim, Jaesung Huh, Adrian Kim, Jung-Woo Ha, Kyogu Lee, 1Department of Transdisciplinary Studies, Seoul National University, Seoul, Korea 2Department of Mathematical Sciences, Seoul National University, Seoul, Korea 3Clova AI Research, NAVER Corp., Seongnam, Korea kekepa,@snu.ac.kr, blue,@snu.ac.kr, jaesung.huh@navercorp.com, adrian.kim@navercorp.com, jungwoo.ha@navercorp.com, kglee@snu.ac.kr",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkeRTsAcYm"
+        },
+        "abstract": "Most deep learning-based models for speech enhancement have mainly focused on estimating the magnitude of spectrogram while reusing the phase from noisy speech for reconstruction. This is due to the difficulty of estimating the phase of clean speech. To improve speech enhancement performance, we tackle the phase estimation problem in three ways. First, we propose Deep Complex U-Net, an advanced U-Net structured model incorporating well-defined complex-valued building blocks to deal with complex-valued spectrograms. Second, we propose a polar coordinate-wise complex-valued masking method to reflect the distribution of complex ideal ratio masks. Third, we define a novel loss function, weighted source-to-distortion ratio (wSDR) loss, which is designed to directly correlate with a quantitative evaluation measure. Our model was evaluated on a mixture of the Voice Bank corpus and DEMAND database, which has been widely used by many deep learning models for speech enhancement. Ablation experiments were conducted on the mixed dataset showing that all three proposed approaches are empirically valid. Experimental results show that the proposed method achieves state-of-the-art performance in all metrics, outperforming previous approaches by a large margin1."
+    },
+    "keywords": [
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "National Research Foundation of Korea",
+            "url": "https://en.wikipedia.org/wiki/National_Research_Foundation_of_Korea"
+        },
+        {
+            "term": "mean squared error",
+            "url": "https://en.wikipedia.org/wiki/mean_squared_error"
+        },
+        {
+            "term": "speech enhancement",
+            "url": "https://en.wikipedia.org/wiki/speech_enhancement"
+        },
+        {
+            "term": "Ministry of Science and ICT",
+            "url": "https://en.wikipedia.org/wiki/Ministry_of_Science_and_ICT"
+        },
+        {
+            "term": "spectrogram",
+            "url": "https://en.wikipedia.org/wiki/spectrogram"
+        }
+    ],
+    "abbreviations": {
+        "SNR": "signalto-noise ratio",
+        "PSM": "phase-sensitive mask",
+        "cRM": "complex ratio mask",
+        "cIRM": "complex ideal ratio mask",
+        "DCUnet": "Deep Complex U-Net",
+        "ISTFT": "inverse short-time-Fourier-transform",
+        "SDR": "source-to-distortion ratio",
+        "RM": "ratio mask",
+        "MSE": "mean squared error",
+        "NSML": "NAVER Smart Machine Learning",
+        "BDSS": "Bounded (sig-sig)",
+        "BDT": "Bounded (tanh)",
+        "NRF": "National Research Foundation of Korea",
+        "MSIT": "Ministry of Science and ICT"
+    },
+    "highlights": [
+        "Speech enhancement is one of the most important and challenging tasks in speech applications where the goal is to separate clean speech from noise when noisy speech is given as an input",
+        "Spectrograms are represented as complex matrices, which are normally decomposed into magnitude and phase components to be used in real-valued networks",
+        "Since the performance of phase-sensitive mask was limited because of reusing noisy phase, later studies proposed using complex-valued ratio mask to directly optimize on complex values (<a class=\"ref-link\" id=\"cWilliamson_et+al_2016_a\" href=\"#rWilliamson_et+al_2016_a\">Williamson et al, 2016</a>; <a class=\"ref-link\" id=\"cEphrat_et+al_2018_a\" href=\"#rEphrat_et+al_2018_a\">Ephrat et al, 2018</a>). We found this direction promising for phase estimation because it has been shown that a complex ideal ratio mask is guaranteed to give the best oracle performance out of other ideal masks such as ideal binary masks, ideal ratio masks, or phase-sensitive mask (<a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\">Wang et al, 2016</a>)",
+        "Wiener filtering (Wiener) with a priori noise signalto-noise ratio estimation was used, along with recent deep-learning based models which are briefly described as the following: SEGAN: a time-domain U-Net model optimized with generative adversarial networks",
+        "We proposed Deep Complex U-Net which combines two models to deal with complexvalued spectrograms for speech enhancement",
+        "We showed that the proposed approaches are effective for more precise phase estimation, resulting in state-of-the-art performance for speech enhancement"
+    ],
+    "key_statements": [
+        "Speech enhancement is one of the most important and challenging tasks in speech applications where the goal is to separate clean speech from noise when noisy speech is given as an input",
+        "Spectrograms are represented as complex matrices, which are normally decomposed into magnitude and phase components to be used in real-valued networks",
+        "A popular approach to speech enhancement is to optimize a mask which produces a spectrogram of clean speech when applied to noisy input audio",
+        "Since the performance of phase-sensitive mask was limited because of reusing noisy phase, later studies proposed using complex-valued ratio mask to directly optimize on complex values (<a class=\"ref-link\" id=\"cWilliamson_et+al_2016_a\" href=\"#rWilliamson_et+al_2016_a\">Williamson et al, 2016</a>; <a class=\"ref-link\" id=\"cEphrat_et+al_2018_a\" href=\"#rEphrat_et+al_2018_a\">Ephrat et al, 2018</a>). We found this direction promising for phase estimation because it has been shown that a complex ideal ratio mask is guaranteed to give the best oracle performance out of other ideal masks such as ideal binary masks, ideal ratio masks, or phase-sensitive mask (<a class=\"ref-link\" id=\"cWang_et+al_2016_a\" href=\"#rWang_et+al_2016_a\">Wang et al, 2016</a>)",
+        "With the complex-valued estimation of clean speech, we can use inverse short-time-Fourier-transform (ISTFT) to convert a spectrogram into a time-domain waveform. Taking this as an advantage, we introduce a novel loss function which directly optimizes source-to-distortion ratio (SDR) (<a class=\"ref-link\" id=\"cVincent_et+al_2006_a\" href=\"#rVincent_et+al_2006_a\">Vincent et al, 2006</a>), a quantitative evaluation measure widely used in many source separation tasks",
+        "Wiener filtering (Wiener) with a priori noise signalto-noise ratio estimation was used, along with recent deep-learning based models which are briefly described as the following: SEGAN: a time-domain U-Net model optimized with generative adversarial networks",
+        "We show the evaluation results on how the various masking strategies and loss functions affect the performance of speech enhancement",
+        "We proposed Deep Complex U-Net which combines two models to deal with complexvalued spectrograms for speech enhancement",
+        "We designed a new complex-valued masking method optimized with a novel loss function, weighted-source-to-distortion ratio loss",
+        "We showed that the proposed approaches are effective for more precise phase estimation, resulting in state-of-the-art performance for speech enhancement"
+    ],
+    "summary": [
+        "Speech enhancement is one of the most important and challenging tasks in speech applications where the goal is to separate clean speech from noise when noisy speech is given as an input.",
+        "A popular approach to speech enhancement is to optimize a mask which produces a spectrogram of clean speech when applied to noisy input audio.",
+        "Since the performance of PSM was limited because of reusing noisy phase, later studies proposed using complex-valued ratio mask to directly optimize on complex values (<a class=\"ref-link\" id=\"cWilliamson_et+al_2016_a\" href=\"#rWilliamson_et+al_2016_a\">Williamson et al, 2016</a>; <a class=\"ref-link\" id=\"cEphrat_et+al_2018_a\" href=\"#rEphrat_et+al_2018_a\">Ephrat et al, 2018</a>).",
+        "A more straightforward method would be to jointly estimate magnitude and phase by using a continuous complex-valued ratio mask.",
+        "We will provide details on our approach, starting with our proposed model Deep Complex U-Net, followed by the masking framework based on the model.",
+        "As our proposed model can handle complex values, we aim to estimate cRM for speech enhancement.",
+        "The proposed complex-valued mask Mt,f is estimated as follows: Mt,f = Mt,f \u00b7 ei\u03b8Mt,f = Mtm,fag \u00b7 Mtp,hfase",
+        "A popular loss function for audio source separation is mean squared error (MSE) between clean source Y and estimated source Yon the STFT-domain.",
+        "Wiener filtering (Wiener) with a priori noise SNR estimation was used, along with recent deep-learning based models which are briefly described as the following: SEGAN: a time-domain U-Net model optimized with generative adversarial networks.",
+        "We used the configuration of using a 20-layer Deep Complex U-Net (DCUnet20) to estimate a tanh bounded cRM, optimized with weighted-SDR loss.",
+        "We show the evaluation results on how the various masking strategies and loss functions affect the performance of speech enhancement.",
+        "In order to show that complex neural networks are effective, we compare evaluation results of DCUnet (Cn) and its corresponding real-valued UNet setting with the same parameter size (Rn).",
+        "The first setting takes a complexvalued spectrogram as an input, estimating a complex ratio mask with a tanh bound.",
+        "We first visualized estimated complex masks with scatter plots in Figure 4 for each masking method and loss function configuration from Table 2.",
+        "As one can notice from Figure 5 (c) & (d), estimated speech from models optimized with time-domain loss functions are well-aligned with clean speech.",
+        "We proposed Deep Complex U-Net which combines two models to deal with complexvalued spectrograms for speech enhancement.",
+        "We designed a new complex-valued masking method optimized with a novel loss function, weighted-SDR loss.",
+        "We showed that the proposed approaches are effective for more precise phase estimation, resulting in state-of-the-art performance for speech enhancement.",
+        "We conducted both quantitative and qualitative studies and demonstrated that the proposed method is consistently superior to the previously proposed algorithms"
+    ],
+    "headline": "We propose Deep Complex U-Net, an advanced U-Net structured model incorporating well-defined complex-valued building blocks to deal with complex-valued spectrograms",
+    "reference_links": [
+        {
+            "id": "Afouras_et+al_2018_a",
+            "entry": "Triantafyllos Afouras, Joon Son Chung, and Andrew Zisserman. The conversation: Deep audiovisual speech enhancement. Proc. Interspeech 2018, pp. 3244\u20133248, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Afouras%2C%20Triantafyllos%20Chung%2C%20Joon%20Son%20Zisserman%2C%20Andrew%20The%20conversation%3A%20Deep%20audiovisual%20speech%20enhancement%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Afouras%2C%20Triantafyllos%20Chung%2C%20Joon%20Son%20Zisserman%2C%20Andrew%20The%20conversation%3A%20Deep%20audiovisual%20speech%20enhancement%202018"
+        },
+        {
+            "id": "Arjovsky_et+al_2016_a",
+            "entry": "Martin Arjovsky, Amar Shah, and Yoshua Bengio. Unitary evolution recurrent neural networks. In International Conference on Machine Learning, pp. 1120\u20131128, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Shah%2C%20Amar%20Bengio%2C%20Yoshua%20Unitary%20evolution%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjovsky%2C%20Martin%20Shah%2C%20Amar%20Bengio%2C%20Yoshua%20Unitary%20evolution%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Cogswell_et+al_2015_a",
+            "entry": "Michael Cogswell, Faruk Ahmed, Ross Girshick, Larry Zitnick, and Dhruv Batra. Reducing overfitting in deep networks by decorrelating representations. arXiv preprint arXiv:1511.06068, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06068"
+        },
+        {
+            "id": "Ephrat_et+al_2018_a",
+            "entry": "Ariel Ephrat, Inbar Mosseri, Oran Lang, Tali Dekel, Kevin Wilson, Avinatan Hassidim, William T Freeman, and Michael Rubinstein. Looking to listen at the cocktail party: A speaker-independent audio-visual model for speech separation. arXiv preprint arXiv:1804.03619, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.03619"
+        },
+        {
+            "id": "Erdogan_et+al_2015_a",
+            "entry": "Hakan Erdogan, John R Hershey, Shinji Watanabe, and Jonathan Le Roux. Phase-sensitive and recognition-boosted speech separation using deep recurrent neural networks. In Acoustics, Speech and Signal Processing (ICASSP), 2015 IEEE International Conference on, pp. 708\u2013712. IEEE, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Erdogan%2C%20Hakan%20Hershey%2C%20John%20R.%20Watanabe%2C%20Shinji%20Roux%2C%20Jonathan%20Le%20Phase-sensitive%20and%20recognition-boosted%20speech%20separation%20using%20deep%20recurrent%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Erdogan%2C%20Hakan%20Hershey%2C%20John%20R.%20Watanabe%2C%20Shinji%20Roux%2C%20Jonathan%20Le%20Phase-sensitive%20and%20recognition-boosted%20speech%20separation%20using%20deep%20recurrent%20neural%20networks%202015"
+        },
+        {
+            "id": "Germain_et+al_2018_a",
+            "entry": "Francois G Germain, Qifeng Chen, and Vladlen Koltun. Speech denoising with deep feature losses. arXiv preprint arXiv:1806.10522, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.10522"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Emad_2016_a",
+            "entry": "Emad M Grais, Gerard Roma, Andrew JR Simpson, and Mark D Plumbley. Single-channel audio source separation using deep neural network ensembles. In Audio Engineering Society Convention 140. Audio Engineering Society, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Emad%20M%20Grais%2C%20Gerard%20Roma%2C%20Andrew%20JR%20Simpson%20Plumbley%2C%20Mark%20D%20Single-channel%20audio%20source%20separation%20using%20deep%20neural%20network%20ensembles.%20In%20Audio%20Engineering%20Society%20Convention%20140%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Emad%20M%20Grais%2C%20Gerard%20Roma%2C%20Andrew%20JR%20Simpson%20Plumbley%2C%20Mark%20D%20Single-channel%20audio%20source%20separation%20using%20deep%20neural%20network%20ensembles.%20In%20Audio%20Engineering%20Society%20Convention%20140%202016"
+        },
+        {
+            "id": "Griffin_1984_a",
+            "entry": "Daniel Griffin and Jae Lim. Signal estimation from modified short-time fourier transform. IEEE Transactions on Acoustics, Speech, and Signal Processing, 32(2):236\u2013243, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Griffin%2C%20Daniel%20Lim%2C%20Jae%20Signal%20estimation%20from%20modified%20short-time%20fourier%20transform%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Griffin%2C%20Daniel%20Lim%2C%20Jae%20Signal%20estimation%20from%20modified%20short-time%20fourier%20transform%201984"
+        },
+        {
+            "id": "Huang_et+al_2014_a",
+            "entry": "Po-Sen Huang, Minje Kim, Mark Hasegawa-Johnson, and Paris Smaragdis. Deep learning for monaural speech separation. In Acoustics, Speech and Signal Processing (ICASSP), 2014 IEEE International Conference on, pp. 1562\u20131566. IEEE, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Po-Sen%20Kim%2C%20Minje%20Hasegawa-Johnson%2C%20Mark%20Smaragdis%2C%20Paris%20Deep%20learning%20for%20monaural%20speech%20separation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Po-Sen%20Kim%2C%20Minje%20Hasegawa-Johnson%2C%20Mark%20Smaragdis%2C%20Paris%20Deep%20learning%20for%20monaural%20speech%20separation%202014"
+        },
+        {
+            "id": "Jansson_et+al_2017_a",
+            "entry": "Andreas Jansson, Eric J. Humphrey, Nicola Montecchio, Rachel M. Bittner, Aparna Kumar, and Tillman Weyde. Singing voice separation with deep u-net convolutional networks. In ISMIR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jansson%2C%20Andreas%20Humphrey%2C%20Eric%20J.%20Montecchio%2C%20Nicola%20Bittner%2C%20Rachel%20M.%20Singing%20voice%20separation%20with%20deep%20u-net%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jansson%2C%20Andreas%20Humphrey%2C%20Eric%20J.%20Montecchio%2C%20Nicola%20Bittner%2C%20Rachel%20M.%20Singing%20voice%20separation%20with%20deep%20u-net%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Kim_et+al_2018_a",
+            "entry": "Hanjoo Kim, Minkyu Kim, Dongjoo Seo, Jinwoong Kim, Heungseok Park, Soeun Park, Hyunwoo Jo, KyungHyun Kim, Youngil Yang, Youngkwan Kim, et al. Nsml: Meet the mlaas platform with a real-world case study. arXiv preprint arXiv:1810.09957, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.09957"
+        },
+        {
+            "id": "Lee_2017_a",
+            "entry": "Yuan-Shan Lee, Chien-Yao Wang, Shu-Fan Wang, Jia-Ching Wang, and Chung-Hsien Wu. Fully complex deep neural network for phase-incorporating monaural source separation. In IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 281\u2013285. IEEE, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Yuan-Shan%20Chien-Yao%20Wang%2C%20Shu-Fan%20Wang%2C%20Jia-Ching%20Wang%2C%20and%20Chung-Hsien%20Wu.%20Fully%20complex%20deep%20neural%20network%20for%20phase-incorporating%20monaural%20source%20separation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Yuan-Shan%20Chien-Yao%20Wang%2C%20Shu-Fan%20Wang%2C%20Jia-Ching%20Wang%2C%20and%20Chung-Hsien%20Wu.%20Fully%20complex%20deep%20neural%20network%20for%20phase-incorporating%20monaural%20source%20separation%202017"
+        },
+        {
+            "id": "Lee_et+al_2017_b",
+            "entry": "Yuan-Shan Lee, Kuo Yu, Sih-Huei Chen, and Jia-Ching Wang. Discriminative training of complexvalued deep recurrent neural network for singing voice separation. In Proceedings of the 2017 ACM on Multimedia Conference, pp. 1327\u20131335. ACM, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Yuan-Shan%20Yu%2C%20Kuo%20Chen%2C%20Sih-Huei%20Wang%2C%20Jia-Ching%20Discriminative%20training%20of%20complexvalued%20deep%20recurrent%20neural%20network%20for%20singing%20voice%20separation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Yuan-Shan%20Yu%2C%20Kuo%20Chen%2C%20Sih-Huei%20Wang%2C%20Jia-Ching%20Discriminative%20training%20of%20complexvalued%20deep%20recurrent%20neural%20network%20for%20singing%20voice%20separation%202017"
+        },
+        {
+            "id": "Maas_et+al_2013_a",
+            "entry": "Andrew L Maas, Awni Y Hannun, and Andrew Y Ng. Rectifier nonlinearities improve neural network acoustic models. In Proc. icml, volume 30, pp. 3, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20Ng%2C%20Andrew%20Y.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20Ng%2C%20Andrew%20Y.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013"
+        },
+        {
+            "id": "Nugraha_et+al_2016_a",
+            "entry": "Aditya Arie Nugraha, Antoine Liutkus, and Emmanuel Vincent. Multichannel audio source separation with deep neural networks. IEEE/ACM Trans. Audio, Speech & Language Processing, 24(9): 1652\u20131664, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nugraha%2C%20Aditya%20Arie%20Liutkus%2C%20Antoine%20Vincent%2C%20Emmanuel%20Multichannel%20audio%20source%20separation%20with%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nugraha%2C%20Aditya%20Arie%20Liutkus%2C%20Antoine%20Vincent%2C%20Emmanuel%20Multichannel%20audio%20source%20separation%20with%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Pascual_et+al_2017_a",
+            "entry": "Santiago Pascual, Antonio Bonafonte, and Joan Serra. Segan: Speech enhancement generative adversarial network. In Proc. Interspeech 2017, pp. 3642\u20133646, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascual%2C%20Santiago%20Bonafonte%2C%20Antonio%20Serra%2C%20Joan%20Segan%3A%20Speech%20enhancement%20generative%20adversarial%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascual%2C%20Santiago%20Bonafonte%2C%20Antonio%20Serra%2C%20Joan%20Segan%3A%20Speech%20enhancement%20generative%20adversarial%20network%202017"
+        },
+        {
+            "id": "Perraudin_et+al_2013_a",
+            "entry": "Nathanael Perraudin, Peter Balazs, and Peter L S\u00f8ndergaard. A fast griffin-lim algorithm. In Applications of Signal Processing to Audio and Acoustics (WASPAA), 2013 IEEE Workshop on, pp. 1\u20134. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Perraudin%2C%20Nathanael%20Balazs%2C%20Peter%20S%C3%B8ndergaard%2C%20Peter%20L.%20A%20fast%20griffin-lim%20algorithm%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Perraudin%2C%20Nathanael%20Balazs%2C%20Peter%20S%C3%B8ndergaard%2C%20Peter%20L.%20A%20fast%20griffin-lim%20algorithm%202013"
+        },
+        {
+            "id": "Rethage_et+al_2018_a",
+            "entry": "Dario Rethage, Jordi Pons, and Xavier Serra. A wavenet for speech denoising. In IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rethage%2C%20Dario%20Pons%2C%20Jordi%20Serra%2C%20Xavier%20A%20wavenet%20for%20speech%20denoising%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rethage%2C%20Dario%20Pons%2C%20Jordi%20Serra%2C%20Xavier%20A%20wavenet%20for%20speech%20denoising%202018"
+        },
+        {
+            "id": "Ronneberger_et+al_2015_a",
+            "entry": "Olaf Ronneberger, Philipp Fischer, and Thomas Brox. U-net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computerassisted intervention, pp. 234\u2013241, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ronneberger%2C%20Olaf%20Fischer%2C%20Philipp%20Brox%2C%20Thomas%20U-net%3A%20Convolutional%20networks%20for%20biomedical%20image%20segmentation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ronneberger%2C%20Olaf%20Fischer%2C%20Philipp%20Brox%2C%20Thomas%20U-net%3A%20Convolutional%20networks%20for%20biomedical%20image%20segmentation%202015"
+        },
+        {
+            "id": "Roux_et+al_2018_a",
+            "entry": "Jonathan Le Roux, Gordon Wichern, Shinji Watanabe, Andy Sarroff, and John R Hershey. Phasebook and friends: Leveraging discrete representations for source separation. arXiv preprint arXiv:1810.01395, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.01395"
+        },
+        {
+            "id": "Scalart_1996_a",
+            "entry": "Pascal Scalart et al. Speech enhancement based on a priori signal to noise estimation. In Acoustics, Speech, and Signal Processing, 1996. ICASSP-96. Conference Proceedings., 1996 IEEE International Conference on, volume 2, pp. 629\u2013632. IEEE, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scalart%2C%20Pascal%20Speech%20enhancement%20based%20on%20a%20priori%20signal%20to%20noise%20estimation%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scalart%2C%20Pascal%20Speech%20enhancement%20based%20on%20a%20priori%20signal%20to%20noise%20estimation%201996"
+        },
+        {
+            "id": "Soni_2018_a",
+            "entry": "Meet H Soni, Neil Shah, and Hemant A Patil. Time-frequency masking-based speech enhancement using generative adversarial network. In IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Soni%2C%20Meet%20H.%20Shah%2C%20Neil%20and%20Hemant%20A%20Patil.%20Time-frequency%20masking-based%20speech%20enhancement%20using%20generative%20adversarial%20network%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Soni%2C%20Meet%20H.%20Shah%2C%20Neil%20and%20Hemant%20A%20Patil.%20Time-frequency%20masking-based%20speech%20enhancement%20using%20generative%20adversarial%20network%202018"
+        },
+        {
+            "id": "Stoller_et+al_2018_a",
+            "entry": "Daniel Stoller, Sebastian Ewert, and Simon Dixon. Wave-u-net: A multi-scale neural network for end-to-end audio source separation. In ISMIR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stoller%2C%20Daniel%20Ewert%2C%20Sebastian%20Dixon%2C%20Simon%20Wave-u-net%3A%20A%20multi-scale%20neural%20network%20for%20end-to-end%20audio%20source%20separation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stoller%2C%20Daniel%20Ewert%2C%20Sebastian%20Dixon%2C%20Simon%20Wave-u-net%3A%20A%20multi-scale%20neural%20network%20for%20end-to-end%20audio%20source%20separation%202018"
+        },
+        {
+            "id": "Sung_et+al_2017_a",
+            "entry": "Nako Sung, Minkyu Kim, Hyunwoo Jo, Youngil Yang, Jingwoong Kim, Leonard Lausen, Youngkwan Kim, Gayoung Lee, Donghyun Kwak, Jung-Woo Ha, et al. Nsml: A machine learning platform that enables you to focus on your models. arXiv preprint arXiv:1712.05902, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.05902"
+        },
+        {
+            "id": "Takahashi_et+al_2018_a",
+            "entry": "Naoya Takahashi, Purvi Agrawal, Nabarun Goswami, and Yuki Mitsufuji. Phasenet: Discretized phase modeling with deep neural networks for audio source separation. Proc. Interspeech 2018, pp. 2713\u20132717, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Takahashi%2C%20Naoya%20Agrawal%2C%20Purvi%20Goswami%2C%20Nabarun%20Mitsufuji%2C%20Yuki%20Phasenet%3A%20Discretized%20phase%20modeling%20with%20deep%20neural%20networks%20for%20audio%20source%20separation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Takahashi%2C%20Naoya%20Agrawal%2C%20Purvi%20Goswami%2C%20Nabarun%20Mitsufuji%2C%20Yuki%20Phasenet%3A%20Discretized%20phase%20modeling%20with%20deep%20neural%20networks%20for%20audio%20source%20separation%202018"
+        },
+        {
+            "id": "Takahashi_et+al_0000_a",
+            "entry": "Naoya Takahashi, Nabarun Goswami, and Yuki Mitsufuji. Mmdenselstm: An efficient combination of convolutional and recurrent neural networks for audio source separation. arXiv preprint arXiv:1805.02410, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.02410"
+        },
+        {
+            "id": "Thiemann_et+al_2013_a",
+            "entry": "Joachim Thiemann, Nobutaka Ito, and Emmanuel Vincent. The diverse environments multi-channel acoustic noise database: A database of multichannel environmental noise recordings. The Journal of the Acoustical Society of America, 133(5):3591\u20133591, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thiemann%2C%20Joachim%20Ito%2C%20Nobutaka%20Vincent%2C%20Emmanuel%20The%20diverse%20environments%20multi-channel%20acoustic%20noise%20database%3A%20A%20database%20of%20multichannel%20environmental%20noise%20recordings%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thiemann%2C%20Joachim%20Ito%2C%20Nobutaka%20Vincent%2C%20Emmanuel%20The%20diverse%20environments%20multi-channel%20acoustic%20noise%20database%3A%20A%20database%20of%20multichannel%20environmental%20noise%20recordings%202013"
+        },
+        {
+            "id": "Trabelsi_et+al_2018_a",
+            "entry": "Chiheb Trabelsi, Olexa Bilaniuk, Ying Zhang, Dmitriy Serdyuk, Sandeep Subramanian, Joao Felipe Santos, Soroush Mehri, Negar Rostamzadeh, Yoshua Bengio, and Christopher J Pal. Deep complex networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chiheb%20Trabelsi%20Olexa%20Bilaniuk%20Ying%20Zhang%20Dmitriy%20Serdyuk%20Sandeep%20Subramanian%20Joao%20Felipe%20Santos%20Soroush%20Mehri%20Negar%20Rostamzadeh%20Yoshua%20Bengio%20and%20Christopher%20J%20Pal%20Deep%20complex%20networks%20In%20International%20Conference%20on%20Learning%20Representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chiheb%20Trabelsi%20Olexa%20Bilaniuk%20Ying%20Zhang%20Dmitriy%20Serdyuk%20Sandeep%20Subramanian%20Joao%20Felipe%20Santos%20Soroush%20Mehri%20Negar%20Rostamzadeh%20Yoshua%20Bengio%20and%20Christopher%20J%20Pal%20Deep%20complex%20networks%20In%20International%20Conference%20on%20Learning%20Representations%202018"
+        },
+        {
+            "id": "Veaux_et+al_2013_a",
+            "entry": "Christophe Veaux, Junichi Yamagishi, and Simon King. The voice bank corpus: Design, collection and data analysis of a large regional accent speech database. In Oriental COCOSDA held jointly with 2013 Conference on Asian Spoken Language Research and Evaluation (OCOCOSDA/CASLRE), 2013 International Conference, pp. 1\u20134. IEEE, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christophe%20Veaux%20Junichi%20Yamagishi%20and%20Simon%20King%20The%20voice%20bank%20corpus%20Design%20collection%20and%20data%20analysis%20of%20a%20large%20regional%20accent%20speech%20database%20In%20Oriental%20COCOSDA%20held%20jointly%20with%202013%20Conference%20on%20Asian%20Spoken%20Language%20Research%20and%20Evaluation%20OCOCOSDACASLRE%202013%20International%20Conference%20pp%2014%20IEEE%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christophe%20Veaux%20Junichi%20Yamagishi%20and%20Simon%20King%20The%20voice%20bank%20corpus%20Design%20collection%20and%20data%20analysis%20of%20a%20large%20regional%20accent%20speech%20database%20In%20Oriental%20COCOSDA%20held%20jointly%20with%202013%20Conference%20on%20Asian%20Spoken%20Language%20Research%20and%20Evaluation%20OCOCOSDACASLRE%202013%20International%20Conference%20pp%2014%20IEEE%202013"
+        },
+        {
+            "id": "Venkataramani_et+al_2017_a",
+            "entry": "Shrikant Venkataramani, Jonah Casebeer, and Paris Smaragdis. Adaptive front-ends for end-toend source separation. In Workshop Machine Learning for Audio Signal Processing at NIPS (ML4Audio@NIPS17), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Venkataramani%2C%20Shrikant%20Casebeer%2C%20Jonah%20Smaragdis%2C%20Paris%20Adaptive%20front-ends%20for%20end-toend%20source%20separation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Venkataramani%2C%20Shrikant%20Casebeer%2C%20Jonah%20Smaragdis%2C%20Paris%20Adaptive%20front-ends%20for%20end-toend%20source%20separation%202017"
+        },
+        {
+            "id": "Vincent_et+al_2006_a",
+            "entry": "E. Vincent, R. Gribonval, and C. Fevotte. Performance measurement in blind audio source separation. IEEE Transactions on Audio, Speech, and Language Processing, 14(4):1462\u20131469, 2006. ISSN 1558-7916. doi: 10.1109/TSA.2005.858005.",
+            "crossref": "https://dx.doi.org/10.1109/TSA.2005.858005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TSA.2005.858005"
+        },
+        {
+            "id": "Wang_2017_a",
+            "entry": "DeLiang Wang. Deep learning reinvents the hearing aid. IEEE Spectrum, 54(3):32\u201337, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20DeLiang%20Deep%20learning%20reinvents%20the%20hearing%20aid%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20DeLiang%20Deep%20learning%20reinvents%20the%20hearing%20aid%202017"
+        },
+        {
+            "id": "Wang_et+al_2014_a",
+            "entry": "Yuxuan Wang, Arun Narayanan, and DeLiang Wang. On training targets for supervised speech separation. IEEE/ACM Transactions on Audio, Speech and Language Processing (TASLP), 22 (12):1849\u20131858, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yuxuan%20Narayanan%2C%20Arun%20Wang%2C%20DeLiang%20On%20training%20targets%20for%20supervised%20speech%20separation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yuxuan%20Narayanan%2C%20Arun%20Wang%2C%20DeLiang%20On%20training%20targets%20for%20supervised%20speech%20separation%202014"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Zhong-Qiu Wang, Jonathan Le Roux, and John R Hershey. Multi-channel deep clustering: Discriminative spectral and spatial embeddings for speaker-independent speech separation. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Zhong-Qiu%20Roux%2C%20Jonathan%20Le%20Hershey%2C%20John%20R.%20Multi-channel%20deep%20clustering%3A%20Discriminative%20spectral%20and%20spatial%20embeddings%20for%20speaker-independent%20speech%20separation%202018"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Ziteng Wang, Xiaofei Wang, Xu Li, Qiang Fu, and Yonghong Yan. Oracle performance investigation of the ideal masks. In Acoustic Signal Enhancement (IWAENC), 2016 IEEE International Workshop on, pp. 1\u20135. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Ziteng%20Wang%2C%20Xiaofei%20Li%2C%20Xu%20Fu%2C%20Qiang%20Oracle%20performance%20investigation%20of%20the%20ideal%20masks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Ziteng%20Wang%2C%20Xiaofei%20Li%2C%20Xu%20Fu%2C%20Qiang%20Oracle%20performance%20investigation%20of%20the%20ideal%20masks%202016"
+        },
+        {
+            "id": "Williamson_et+al_2016_a",
+            "entry": "Donald S Williamson, Yuxuan Wang, and DeLiang Wang. Complex ratio masking for monaural speech separation. IEEE/ACM Transactions on Audio, Speech and Language Processing (TASLP), 24(3):483\u2013492, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williamson%2C%20Donald%20S.%20Wang%2C%20Yuxuan%20Wang%2C%20DeLiang%20Complex%20ratio%20masking%20for%20monaural%20speech%20separation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williamson%2C%20Donald%20S.%20Wang%2C%20Yuxuan%20Wang%2C%20DeLiang%20Complex%20ratio%20masking%20for%20monaural%20speech%20separation%202016"
+        },
+        {
+            "id": "Wisdom_et+al_2016_a",
+            "entry": "Scott Wisdom, Thomas Powers, John Hershey, Jonathan Le Roux, and Les Atlas. Full-capacity unitary recurrent neural networks. In Advances in Neural Information Processing Systems, pp. 4880\u20134888, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wisdom%2C%20Scott%20Powers%2C%20Thomas%20Hershey%2C%20John%20Jonathan%20Le%20Roux%2C%20and%20Les%20Atlas.%20Full-capacity%20unitary%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wisdom%2C%20Scott%20Powers%2C%20Thomas%20Hershey%2C%20John%20Jonathan%20Le%20Roux%2C%20and%20Les%20Atlas.%20Full-capacity%20unitary%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Xu_et+al_2015_a",
+            "entry": "Yong Xu, Jun Du, Li-Rong Dai, and Chin-Hui Lee. A regression approach to speech enhancement based on deep neural networks. IEEE/ACM Transactions on Audio, Speech and Language Processing (TASLP), 23(1):7\u201319, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xu%2C%20Yong%20Du%2C%20Jun%20Dai%2C%20Li-Rong%20and%20Chin-Hui%20Lee.%20A%20regression%20approach%20to%20speech%20enhancement%20based%20on%20deep%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xu%2C%20Yong%20Du%2C%20Jun%20Dai%2C%20Li-Rong%20and%20Chin-Hui%20Lee.%20A%20regression%20approach%20to%20speech%20enhancement%20based%20on%20deep%20neural%20networks%202015"
+        },
+        {
+            "id": "Bayya_1992_a",
+            "entry": "Bayya Yegnanarayana and Hema A Murthy. Significance of group delay functions in spectrum estimation. IEEE Transactions on signal processing, 40(9):2281\u20132289, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bayya%20Yegnanarayana%20and%20Hema%20A%20Murthy%20Significance%20of%20group%20delay%20functions%20in%20spectrum%20estimation%20IEEE%20Transactions%20on%20signal%20processing%2040922812289%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bayya%20Yegnanarayana%20and%20Hema%20A%20Murthy%20Significance%20of%20group%20delay%20functions%20in%20spectrum%20estimation%20IEEE%20Transactions%20on%20signal%20processing%2040922812289%201992"
+        },
+        {
+            "id": "Yu_et+al_2017_a",
+            "entry": "Dong Yu, Morten Kolb\u00e6k, Zheng-Hua Tan, and Jesper Jensen. Permutation invariant training of deep models for speaker-independent multi-talker speech separation. In Acoustics, Speech and Signal Processing (ICASSP), pp. 241\u2013245. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Dong%20Kolb%C3%A6k%2C%20Morten%20Tan%2C%20Zheng-Hua%20Jensen%2C%20Jesper%20Permutation%20invariant%20training%20of%20deep%20models%20for%20speaker-independent%20multi-talker%20speech%20separation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Dong%20Kolb%C3%A6k%2C%20Morten%20Tan%2C%20Zheng-Hua%20Jensen%2C%20Jesper%20Permutation%20invariant%20training%20of%20deep%20models%20for%20speaker-independent%20multi-talker%20speech%20separation%202017"
+        }
+    ]
+}

@@ -1,0 +1,319 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "AUTOLOSS: LEARNING DISCRETE SCHEDULE FOR ALTERNATE OPTIMIZATION",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJgK6iA5KX"
+        },
+        "abstract": "Many machine learning problems involve iteratively and alternately optimizing different task objectives with respect to different sets of parameters. Appropriately scheduling the optimization of a task objective or a set of parameters is usually crucial to the quality of convergence. In this paper, we present AutoLoss, a meta-learning framework that automatically learns and determines the optimization schedule. AutoLoss provides a generic way to represent and learn the discrete optimization schedule from metadata, allows for a dynamic and data-driven schedule in ML problems that involve alternating updates of different parameters or from different loss objectives. We apply AutoLoss on four ML tasks: d-ary quadratic regression, classification using a multi-layer perceptron (MLP), image generation using GANs, and multi-task neural machine translation (NMT). We show that the AutoLoss controller is able to capture the distribution of better optimization schedules that result in higher quality of convergence on all four tasks. The trained AutoLoss controller is generalizable \u2013 it can guide and improve the learning of a new task model with different specifications, or on different datasets."
+    },
+    "keywords": [
+        {
+            "term": "named entity recognition",
+            "url": "https://en.wikipedia.org/wiki/named_entity_recognition"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "multi-layer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptron"
+        },
+        {
+            "term": "mean square error",
+            "url": "https://en.wikipedia.org/wiki/mean_square_error"
+        }
+    ],
+    "abbreviations": {
+        "MLP": "multi-layer perceptron",
+        "NMT": "neural machine translation",
+        "ML": "machine learning",
+        "GANs": "generative adversarial networks",
+        "RL": "reinforcement learning",
+        "SGD": "stochastic gradient descent",
+        "AutoML": "automatic machine learning",
+        "MSE": "mean square error",
+        "BCE": "binary cross entropy",
+        "NER": "named entity recognition",
+        "DGS": "dense grid search",
+        "IS": "inception score"
+    },
+    "highlights": [
+        "Many machine learning (ML) problems involve iterative alternate optimization of different objectives { m}m M=1 w.r.t different sets of parameters {\u03b8n}Nn=1 until a global consensus is reached",
+        "On all four tasks, the AutoLoss controller is able to capture the distribution of better optimization schedules that result in higher quality of convergence on the corresponding task than strong baselines",
+        "We adapt T depending on the task: for simpler tasks that converge with fewer iterations, T equals the number of steps to convergence",
+        "We compare the AutoLoss-trained model to other methods, and report the results in Figure 4a and Figure 4c on two tasks: multi-layer perceptron classification, for which we synthesize 4 datasets following a generative process with 4 different specifications, with one of them used for controller training; generative adversarial networks, where we first train a controller for digit generation on MNIST, and use the controller to guide the training of the same generative adversarial networks architecture on CIFAR-10",
+        "We propose a unified formulation for iterative alternate optimization and developed AutoLoss, a framework to automatically learn and generate optimization schedules",
+        "Comprehensive experiments on synthetic and real data have demonstrated that the optimization schedule produced by AutoLoss controller can guide the task model to achieve better quality of convergence, and the trained AutoLoss controller is transferable from one dataset to another, or one model to another"
+    ],
+    "key_statements": [
+        "Many machine learning (ML) problems involve iterative alternate optimization of different objectives { m}m M=1 w.r.t different sets of parameters {\u03b8n}Nn=1 until a global consensus is reached",
+        "In training generative adversarial networks (GANs) (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a>), parameters of the generator and the discriminator are alternately updated to an equilibrium; in many multi-task learning problems (<a class=\"ref-link\" id=\"cArgyriou_et+al_2007_a\" href=\"#rArgyriou_et+al_2007_a\">Argyriou et al, 2007</a>), one usually has to alternate the optimization of different taskspecific objectives on corresponded data, until the target task performance is maximized",
+        "In this paper, we develop AutoLoss, a generic meta-learning framework to automatically determine the optimization schedule in iterative and alternate optimization processes",
+        "On all four tasks, the AutoLoss controller is able to capture the distribution of better optimization schedules that result in higher quality of convergence on the corresponding task than strong baselines",
+        "We propose a novel set of features and reward functions to facilitate the training of AutoLoss controllers",
+        "Iterative optimization methods look for the optimal parameter \u0398\u2217 in an iterative-convergent way, by repeatedly updating \u0398 until certain stopping criteria is reached",
+        "We introduce a meta model, which we call controller, to be distinguished from the task model used in the downstream task",
+        "We introduce the training objective of the controller as J (\u03c6) = EY\u223cp(y|x;\u03c6) R(Y)|L, \u0398 , where R(\u00b7) is the reward function that evaluates the final task\n1The other alternative is to condition the decision at the t step on the decision made at the t \u2212 1 step, though we choose a simpler one to highlight the generic idea behind AutoLoss",
+        "We introduce a baseline term B in Eq 2 to stabilize the training), where B is defined as a moving average of received reward: B(h+1) \u2190 \u03b7B(h) + (1 \u2212 \u03b7)R(h) with \u03b7 as a decay factor",
+        "We adapt T depending on the task: for simpler tasks that converge with fewer iterations, T equals the number of steps to convergence",
+        "We empirically show that under the formulation of Eq 1, there do exist learnable update schedules, and AutoLoss is able to capture their distribution and guides the task model to achieve better quality of convergence across multiple tasks and models",
+        "We report the converged inception score for all methods here: 8.6307, 9.0026, 9.0232, 9.0145, 9.0549 for generative adversarial networks, generative adversarial networks (1:5), generative adversarial networks (1:7), generative adversarial networks (1:9), AUTOLOSS, respectively",
+        "We use an multi-layer perceptron controller with a 3-way softmax output, and train it along with the neural machine translation model training, and compare it to the following approaches: (1) MT: single-task neural machine translation baseline trained with parallel data; (2) FIXEDRATIO: a manually designed schedule that selects which task objective to optimize based on a ratio proportional to the size of training data for each task; (3) FINETUNED MT: train with FIXEDRATIO first and fine-tune delicately on MT task",
+        "We compare the AutoLoss-trained model to other methods, and report the results in Figure 4a and Figure 4c on two tasks: multi-layer perceptron classification, for which we synthesize 4 datasets following a generative process with 4 different specifications, with one of them used for controller training; generative adversarial networks, where we first train a controller for digit generation on MNIST, and use the controller to guide the training of the same generative adversarial networks architecture on CIFAR-10",
+        "When transferred from digit images to natural images, a controller guided generative adversarial networks achieves both higher quality of convergence and faster per-epoch convergence than a normal generative adversarial networks trained with various fixed schedules, among which we observe generative adversarial networks 1:1 performs best on CIFAR-10, while most of generative adversarial networks K:1 schedules fail",
+        "We transfer a DCGAN controller trained on MNIST to a different DCGAN on CIFAR-10, and observe comparable quality and speed of convergence to the best fixed schedule on CIFAR-10, though AutoLoss bypasses the schedule search and is more readily available",
+        "We propose a unified formulation for iterative alternate optimization and developed AutoLoss, a framework to automatically learn and generate optimization schedules",
+        "Comprehensive experiments on synthetic and real data have demonstrated that the optimization schedule produced by AutoLoss controller can guide the task model to achieve better quality of convergence, and the trained AutoLoss controller is transferable from one dataset to another, or one model to another"
+    ],
+    "summary": [
+        "Many machine learning (ML) problems involve iterative alternate optimization of different objectives { m}m M=1 w.r.t different sets of parameters {\u03b8n}Nn=1 until a global consensus is reached.",
+        "It can guide the optimization of task models to achieve higher quality of convergence faster, by predicting better schedules.",
+        "We use an MLP controller with a 3-way softmax output, and train it along with the NMT model training, and compare it to the following approaches: (1) MT: single-task NMT baseline trained with parallel data; (2) FIXEDRATIO: a manually designed schedule that selects which task objective to optimize based on a ratio proportional to the size of training data for each task; (3) FINETUNED MT: train with FIXEDRATIO first and fine-tune delicately on MT task.",
+        "To assess the resulted overhead, we perform a fixed budget experiment: given a fixed number of data batches allowed to scan, we compare in Fig 3(R) the reached convergence by AUTOLOSS and DGS on the regression task.",
+        "For computational-heavy tasks that need many steps to converge (GANs, NMT), the controller training, in most cases, can finish simultaneously with task model training, and does not repeat experiments as many times as other hyperparameter search methods would do.",
+        "We compare the AutoLoss-trained model to other methods, and report the results in Figure 4a and Figure 4c on two tasks: MLP classification, for which we synthesize 4 datasets following a generative process with 4 different specifications, with one of them used for controller training; GANs, where we first train a controller for digit generation on MNIST, and use the controller to guide the training of the same GAN architecture on CIFAR-10.",
+        "When transferred from digit images to natural images, a controller guided GAN achieves both higher quality of convergence and faster per-epoch convergence than a normal GAN trained with various fixed schedules, among which we observe GAN 1:1 performs best on CIFAR-10, while most of GAN K:1 schedules fail.",
+        "We transfer a DCGAN controller trained on MNIST to a different DCGAN on CIFAR-10, and observe comparable quality and speed of convergence to the best fixed schedule on CIFAR-10, though AutoLoss bypasses the schedule search and is more readily available.",
+        "Comprehensive experiments on synthetic and real data have demonstrated that the optimization schedule produced by AutoLoss controller can guide the task model to achieve better quality of convergence, and the trained AutoLoss controller is transferable from one dataset to another, or one model to another."
+    ],
+    "headline": "We present AutoLoss, a meta-learning framework that automatically learns and determines the optimization schedule",
+    "reference_links": [
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, and Nando de Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, pp. 3981\u20133989, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Argyriou_et+al_2007_a",
+            "entry": "Andreas Argyriou, Theodoros Evgeniou, and Massimiliano Pontil. Multi-task feature learning. In Advances in neural information processing systems, pp. 41\u201348, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Argyriou%2C%20Andreas%20Evgeniou%2C%20Theodoros%20Pontil%2C%20Massimiliano%20Multi-task%20feature%20learning%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Argyriou%2C%20Andreas%20Evgeniou%2C%20Theodoros%20Pontil%2C%20Massimiliano%20Multi-task%20feature%20learning%202007"
+        },
+        {
+            "id": "Martin_2017_a",
+            "entry": "Martin Arjovsky, Soumith Chintala, and L\u00e9on Bottou. Wasserstein GAN. arXiv preprint arXiv:1701.07875, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.07875"
+        },
+        {
+            "id": "Baker_et+al_2016_a",
+            "entry": "Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architectures using reinforcement learning. arXiv preprint arXiv:1611.02167, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02167"
+        },
+        {
+            "id": "Bello_et+al_2017_a",
+            "entry": "Irwan Bello, Barret Zoph, Vijay Vasudevan, and Quoc V Le. Neural optimizer search with reinforcement learning. arXiv preprint arXiv:1709.07417, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07417"
+        },
+        {
+            "id": "Benikova_et+al_2014_a",
+            "entry": "Darina Benikova, Chris Biemann, Max Kisselew, and Sebastian Pado. Germeval 2014 named entity recognition shared task: companion paper. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Darina%20Benikova%20Chris%20Biemann%20Max%20Kisselew%20and%20Sebastian%20Pado%20Germeval%202014%20named%20entity%20recognition%20shared%20task%20companion%20paper%202014"
+        },
+        {
+            "id": "Bottou_0000_a",
+            "entry": "L\u00e9on Bottou. Large-scale machine learning with stochastic gradient descent. In Proceedings of COMPSTAT\u20192010, pp. 177\u2013186.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bottou%2C%20L%C3%A9on%20Large-scale%20machine%20learning%20with%20stochastic%20gradient%20descent",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bottou%2C%20L%C3%A9on%20Large-scale%20machine%20learning%20with%20stochastic%20gradient%20descent"
+        },
+        {
+            "id": "Boyd_2004_a",
+            "entry": "Stephen Boyd and Lieven Vandenberghe. Convex optimization. Cambridge university press, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boyd%2C%20Stephen%20Vandenberghe%2C%20Lieven%20Convex%20optimization%202004"
+        },
+        {
+            "id": "Boyd_et+al_2003_a",
+            "entry": "Stephen Boyd, Lin Xiao, and Almir Mutapcic. Subgradient methods. 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stephen%20Boyd%20Lin%20Xiao%20and%20Almir%20Mutapcic%20Subgradient%20methods%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stephen%20Boyd%20Lin%20Xiao%20and%20Almir%20Mutapcic%20Subgradient%20methods%202003"
+        },
+        {
+            "id": "Brants_et+al_2004_a",
+            "entry": "Sabine Brants, Stefanie Dipper, Peter Eisenberg, Silvia Hansen-Schirra, Esther K\u00f6nig, Wolfgang Lezius, Christian Rohrer, George Smith, and Hans Uszkoreit. Tiger: Linguistic interpretation of a German corpus. Research on Language and Computation, 2(4):597\u2013620, Dec 2004. ISSN 1572-8706. doi: 10.1007/s11168-004-7431-3. URL https://doi.org/10.1007/s11168-004-7431-3.",
+            "crossref": "https://dx.doi.org/10.1007/s11168-004-7431-3",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11168-004-7431-3"
+        },
+        {
+            "id": "Cettolo_et+al_2012_a",
+            "entry": "Mauro Cettolo, Christian Girardi, and Marcello Federico. Wit3: Web inventory of transcribed and translated talks. In Proceedings of the 16th Conference of the European Association for Machine Translation (EAMT), pp. 261\u2013268, Trento, Italy, May 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cettolo%2C%20Mauro%20Girardi%2C%20Christian%20Federico%2C%20Marcello%20Wit3%3A%20Web%20inventory%20of%20transcribed%20and%20translated%20talks%202012-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cettolo%2C%20Mauro%20Girardi%2C%20Christian%20Federico%2C%20Marcello%20Wit3%3A%20Web%20inventory%20of%20transcribed%20and%20translated%20talks%202012-05"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Yutian Chen, Matthew W Hoffman, Sergio G\u00f3mez Colmenarejo, Misha Denil, Timothy P Lillicrap, Matt Botvinick, and Nando de Freitas. Learning to learn without gradient descent by gradient descent. arXiv preprint arXiv:1611.03824, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03824"
+        },
+        {
+            "id": "Daniel_et+al_2016_a",
+            "entry": "Christian Daniel, Jonathan Taylor, and Sebastian Nowozin. Learning step size controllers for robust neural network training. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daniel%2C%20Christian%20Taylor%2C%20Jonathan%20Nowozin%2C%20Sebastian%20Learning%20step%20size%20controllers%20for%20robust%20neural%20network%20training%202016"
+        },
+        {
+            "id": "Deng_et+al_2017_a",
+            "entry": "Zhijie Deng, Hao Zhang, Xiaodan Liang, Luona Yang, Shizhen Xu, Jun Zhu, and Eric P Xing. Structured generative adversarial networks. In Advances in Neural Information Processing Systems, pp. 3902\u20133912, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Zhijie%20Zhang%2C%20Hao%20Liang%2C%20Xiaodan%20Yang%2C%20Luona%20and%20Eric%20P%20Xing.%20Structured%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Zhijie%20Zhang%2C%20Hao%20Liang%2C%20Xiaodan%20Yang%2C%20Luona%20and%20Eric%20P%20Xing.%20Structured%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. Journal of Machine Learning Research, 12(Jul):2121\u20132159, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Fan_et+al_2018_a",
+            "entry": "Yang Fan, Fei Tian, Tao Qin, Xiang-Yang Li Li, and Tie-Yan Liu. Learning to teach. arXiv preprint arXiv:1606.01885, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01885"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. arXiv preprint arXiv:1703.03400, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.03400"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Griffiths_2004_a",
+            "entry": "Thomas L Griffiths and Mark Steyvers. Finding scientific topics. Proceedings of the National academy of Sciences, 101(suppl 1):5228\u20135235, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Griffiths%2C%20Thomas%20L.%20Steyvers%2C%20Mark%20Finding%20scientific%20topics%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Griffiths%2C%20Thomas%20L.%20Steyvers%2C%20Mark%20Finding%20scientific%20topics%202004"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Larsen_0000_a",
+            "entry": "Anders Boesen Lindbo Larsen and S\u00f8ren Kaae S\u00f8nderby. Generating faces with torch. URL http://torch.ch/blog/2015/11/13/gan.html.",
+            "url": "http://torch.ch/blog/2015/11/13/gan.html"
+        },
+        {
+            "id": "Li_2016_a",
+            "entry": "Ke Li and Jitendra Malik. Learning to optimize. arXiv preprint arXiv:1606.01885, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01885"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Hanxiao Liu, Karen Simonyan, and Yiming Yang. Darts: Differentiable architecture search. arXiv preprint arXiv:1806.09055, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.09055"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Minh-Thang Luong, Hieu Pham, and Christopher D. Manning. Effective approaches to attentionbased neural machine translation. CoRR, abs/1508.04025, 2015. URL http://arxiv.org/abs/1508.04025.",
+            "url": "http://arxiv.org/abs/1508.04025",
+            "arxiv_url": "https://arxiv.org/pdf/1508.04025"
+        },
+        {
+            "id": "Ma_et+al_2015_a",
+            "entry": "Yi-An Ma, Tianqi Chen, and Emily Fox. A complete recipe for stochastic gradient MCMC. In Advances in Neural Information Processing Systems, pp. 2917\u20132925, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ma%2C%20Yi-An%20Chen%2C%20Tianqi%20Fox%2C%20Emily%20A%20complete%20recipe%20for%20stochastic%20gradient%20MCMC%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ma%2C%20Yi-An%20Chen%2C%20Tianqi%20Fox%2C%20Emily%20A%20complete%20recipe%20for%20stochastic%20gradient%20MCMC%202015"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan Adams. Gradient-based hyperparameter optimization through reversible learning. In International Conference on Machine Learning, pp. 2113\u20132122, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015"
+        },
+        {
+            "id": "Mirhoseini_et+al_2017_a",
+            "entry": "Azalia Mirhoseini, Hieu Pham, Quoc V Le, Benoit Steiner, Rasmus Larsen, Yuefeng Zhou, Naveen Kumar, Mohammad Norouzi, Samy Bengio, and Jeff Dean. Device placement optimization with reinforcement learning. arXiv preprint arXiv:1706.04972, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.04972"
+        },
+        {
+            "id": "Moon_1996_a",
+            "entry": "Todd K Moon. The expectation-maximization algorithm. IEEE Signal processing magazine, 13(6): 47\u201360, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moon%2C%20Todd%20K.%20The%20expectation-maximization%20algorithm%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moon%2C%20Todd%20K.%20The%20expectation-maximization%20algorithm%201996"
+        },
+        {
+            "id": "Niehues_2017_a",
+            "entry": "Jan Niehues and Eunah Cho. Exploiting linguistic resources for neural machine translation using multi-task learning. arXiv preprint arXiv:1708.00993, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.00993"
+        },
+        {
+            "id": "Peters_2008_a",
+            "entry": "Jan Peters and Stefan Schaal. Reinforcement learning of motor skills with policy gradients. Neural networks, 21(4):682\u2013697, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peters%2C%20Jan%20Schaal%2C%20Stefan%20Reinforcement%20learning%20of%20motor%20skills%20with%20policy%20gradients%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Jan%20Schaal%2C%20Stefan%20Reinforcement%20learning%20of%20motor%20skills%20with%20policy%20gradients%202008"
+        },
+        {
+            "id": "Pham_et+al_2018_a",
+            "entry": "Hieu Pham, Melody Y Guan, Barret Zoph, Quoc V Le, and Jeff Dean. Efficient neural architecture search via parameter sharing. arXiv preprint arXiv:1802.03268, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03268"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Salimans_et+al_2016_a",
+            "entry": "Tim Salimans, Ian Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, and Xi Chen. Improved techniques for training GANs. In Advances in Neural Information Processing Systems, pp. 2226\u20132234, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Goodfellow%2C%20Ian%20Zaremba%2C%20Wojciech%20Cheung%2C%20Vicki%20Improved%20techniques%20for%20training%20GANs%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Goodfellow%2C%20Ian%20Zaremba%2C%20Wojciech%20Cheung%2C%20Vicki%20Improved%20techniques%20for%20training%20GANs%202016"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. CoRR, abs/1707.06347, 2017. URL http://arxiv.org/abs/1707.06347.",
+            "url": "http://arxiv.org/abs/1707.06347",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Sutskever_et+al_2013_a",
+            "entry": "Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In International conference on machine learning, pp. 1139\u20131147, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Martens%2C%20James%20Dahl%2C%20George%20Hinton%2C%20Geoffrey%20On%20the%20importance%20of%20initialization%20and%20momentum%20in%20deep%20learning%202013"
+        },
+        {
+            "id": "Teh_et+al_2017_a",
+            "entry": "Yee Teh, Victor Bapst, Wojciech M Czarnecki, John Quan, James Kirkpatrick, Raia Hadsell, Nicolas Heess, and Razvan Pascanu. Distral: Robust multitask reinforcement learning. In Advances in Neural Information Processing Systems, pp. 4496\u20134506, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Teh%2C%20Yee%20Bapst%2C%20Victor%20Czarnecki%2C%20Wojciech%20M.%20Quan%2C%20John%20Distral%3A%20Robust%20multitask%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Teh%2C%20Yee%20Bapst%2C%20Victor%20Czarnecki%2C%20Wojciech%20M.%20Quan%2C%20John%20Distral%3A%20Robust%20multitask%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Jane X Wang, Zeb Kurth-Nelson, Dhruva Tirumala, Hubert Soyer, Joel Z Leibo, Remi Munos, Charles Blundell, Dharshan Kumaran, and Matt Botvinick. Learning to reinforcement learn. arXiv preprint arXiv:1611.05763, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05763"
+        },
+        {
+            "id": "Wright_2019_a",
+            "entry": "Under review as a conference paper at ICLR 2019 Stephen J Wright. Coordinate descent algorithms. Mathematical Programming, 151(1):3\u201334, 2015. Yuhuai Wu, Mengye Ren, Renjie Liao, and Roger Grosse. Understanding short-horizon bias in stochastic meta-optimization. arXiv preprint arXiv:1803.02021, 2018. Yu Zhang and Qiang Yang. A survey on multi-task learning. arXiv preprint arXiv:1707.08114, 2017. Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. arXiv preprint arXiv:1611.01578, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02021"
+        }
+    ]
+}

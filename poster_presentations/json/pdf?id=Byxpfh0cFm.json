@@ -1,0 +1,289 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Efficient Augmentation via Data Subsampling",
+        "author": "Michael Kuchnik & Virginia Smith",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Byxpfh0cFm"
+        },
+        "abstract": "Data augmentation is commonly used to encode invariances in learning methods. However, this process is often performed in an inefficient manner, as artificial examples are created by applying a number of transformations to all points in the training set. The resulting explosion of the dataset size can be an issue in terms of storage and training costs, as well as in selecting and tuning the optimal set of transformations to apply. In this work, we demonstrate that it is possible to significantly reduce the number of data points included in data augmentation while realizing the same accuracy and invariance benefits of augmenting the entire dataset. We propose a novel set of subsampling policies, based on model influence and loss, that can achieve a 90% reduction in augmentation set size while maintaining the accuracy gains of standard data augmentation."
+    },
+    "keywords": [
+        {
+            "term": "Convolutional Neural Network",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "data augmentation",
+            "url": "https://en.wikipedia.org/wiki/data_augmentation"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "support vector machine",
+            "url": "https://en.wikipedia.org/wiki/support_vector_machine"
+        }
+    ],
+    "abbreviations": {
+        "VSV": "virtual support vector",
+        "GANs": "generative adversarial networks",
+        "CNN": "Convolutional Neural Network"
+    },
+    "highlights": [
+        "Data augmentation is a process in which the training set is expanded by applying class-preserving transformations, such as rotations or crops for images, to the original data points",
+        "This process has become an instrumental tool in achieving state-of-the-art accuracy in modern machine learning pipelines",
+        "Our results indicate that policies based off of training loss or model influence are an effective strategy over simple baselines, such as random sampling",
+        "We explore model influence, which has been rigorously studied in the field of robust statistics as a way to determine which data points are most impactful on the model",
+        "Obtaining access to an augmentation score vector can be obtained in only one training cycle on the original data, yet the potential improvements in augmented training can scale superlinearly with respect to the original dataset size"
+    ],
+    "key_statements": [
+        "Data augmentation is a process in which the training set is expanded by applying class-preserving transformations, such as rotations or crops for images, to the original data points",
+        "This process has become an instrumental tool in achieving state-of-the-art accuracy in modern machine learning pipelines",
+        "Our results indicate that policies based off of training loss or model influence are an effective strategy over simple baselines, such as random sampling",
+        "We explore model influence, which has been rigorously studied in the field of robust statistics as a way to determine which data points are most impactful on the model",
+        "In Section 4.1, we describe two metrics, loss and model influence, by which augmentation scores are generated",
+        "We propose two metrics to determine our augmentation scores: training loss and model influence",
+        "To understand the potential of using training loss and model influence for scoring, we provide a histogram of model influence across the CIFAR10 and NORB datasets in Figure 1",
+        "We explore the effect of using support vectors for augmentation, which was proposed in the Virtual Support Vector literature (<a class=\"ref-link\" id=\"cBurges_1997_a\" href=\"#rBurges_1997_a\">Burges & Scholkopf, 1997</a>; <a class=\"ref-link\" id=\"cDecoste_2002_a\" href=\"#rDecoste_2002_a\">Decoste & Scholkopf, 2002</a>)",
+        "Obtaining access to an augmentation score vector can be obtained in only one training cycle on the original data, yet the potential improvements in augmented training can scale superlinearly with respect to the original dataset size"
+    ],
+    "summary": [
+        "Data augmentation is a process in which the training set is expanded by applying class-preserving transformations, such as rotations or crops for images, to the original data points.",
+        "Our results indicate that policies based off of training loss or model influence are an effective strategy over simple baselines, such as random sampling.",
+        "We seek to make data augmentation more efficient by providing effective policies for subsampling the original training dataset.",
+        "We propose two metrics to determine our augmentation scores: training loss and model influence.",
+        "One method to obtain augmentation scores is the loss at a point in the training set.",
+        "Since we add augmentations back to the training set, our augmentation policy will duplicate selected samples, resulting in a net effect which reweights samples with twice the original weight.",
+        "To control for sources of variance in model performance, all augmentations under consideration are applied exhaustively in a deterministic fashion to any selected samples, and the resulting augmented points are added back to the training set.",
+        "In the case of translation, we test the performance of applying translation augmentations to the original training set, and determine the accuracy using an augmented variant of the test data that has been appended with translated test examples.",
+        "In Figure 3, we explore a first set of policies in which we randomly sample points for augmentation proportional either to their loss or influence value.",
+        "This is true for the rotation augmentation for all three datasets, where the random-influence and random-loss policies achieve the full augmentation accuracy with only 5\u201310% of the data, compared to 90\u2013100% of the data for random sampling.",
+        "Baseline Random Proportional Influence Random Proportional Loss 2N0u0mber 4o0f0Augme6n0t0ed Poin8t0s0 1000 (d) MNIST-rotate",
+        "The approach is not as reliable as the proposed policies in terms of finding the optimal subset of points for transformation, and the major limitation is that the augmentation set size is fixed to the number of support vectors rather than being able to vary depending on a desired data budget.",
+        "We investigate the effect of two refinements on the initial policies: (i) reweighting the samples as they are added back to the training set and updating the scores as the augmentation proceeds, as described in Section 4.2.",
+        "In Figure 4, we observe the effect of these modifications for all datasets using the rotation augmentation with model influence as the score.",
+        "Our policies, based on notions of training loss and model influence, are widely applicable to general machine learning models."
+    ],
+    "headline": "We demonstrate that it is possible to significantly reduce the number of data points included in data augmentation while realizing the same accuracy and invariance benefits of augmenting the entire dataset",
+    "reference_links": [
+        {
+            "id": "Abadi_et+al_2015_a",
+            "entry": "Mart\u0131n Abadi, Ashish Agarwal, Paul Barham, Eugene Brevdo, Zhifeng Chen, Craig Citro, Greg S. Corrado, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Ian Goodfellow, Andrew Harp, Geoffrey Irving, Michael Isard, Yangqing Jia, Rafal Jozefowicz, Lukasz Kaiser, Manjunath Kudlur, Josh Levenberg, Dandelion Mane, Rajat Monga, Sherry Moore, Derek Murray, Chris Olah, Mike Schuster, Jonathon Shlens, Benoit Steiner, Ilya Sutskever, Kunal Talwar, Paul Tucker, Vincent Vanhoucke, Vijay Vasudevan, Fernanda Viegas, Oriol Vinyals, Pete Warden, Martin Wattenberg, Martin Wicke, Yuan Yu, and Xiaoqiang Zheng. TensorFlow: Large-scale machine learning on heterogeneous systems. https://www.tensorflow.org/, 2015.",
+            "url": "https://www.tensorflow.org/"
+        },
+        {
+            "id": "Antoniou_et+al_2017_a",
+            "entry": "Antreas Antoniou, Amos Storkey, and Harrison Edwards. Data augmentation generative adversarial networks. arXiv preprint arXiv:1711.04340, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.04340"
+        },
+        {
+            "id": "Bishop_2006_a",
+            "entry": "Christopher M. Bishop. Pattern recognition and machine learning. Springer, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Christopher%20M.%20Pattern%20recognition%20and%20machine%20learning%202006"
+        },
+        {
+            "id": "Buitinck_et+al_2013_a",
+            "entry": "Lars Buitinck, Gilles Louppe, Mathieu Blondel, Fabian Pedregosa, Andreas Mueller, Olivier Grisel, Vlad Niculae, Peter Prettenhofer, Alexandre Gramfort, Jaques Grobler, Robert Layton, Jake VanderPlas, Arnaud Joly, Brian Holt, and Gael Varoquaux. API design for machine learning software: experiences from the scikit-learn project. In ECML PKDD Workshop: Languages for Data Mining and Machine Learning, pp. 108\u2013122, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Buitinck%2C%20Lars%20Louppe%2C%20Gilles%20Blondel%2C%20Mathieu%20Pedregosa%2C%20Fabian%20API%20design%20for%20machine%20learning%20software%3A%20experiences%20from%20the%20scikit-learn%20project%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Buitinck%2C%20Lars%20Louppe%2C%20Gilles%20Blondel%2C%20Mathieu%20Pedregosa%2C%20Fabian%20API%20design%20for%20machine%20learning%20software%3A%20experiences%20from%20the%20scikit-learn%20project%202013"
+        },
+        {
+            "id": "Burges_1997_a",
+            "entry": "Christopher J. C. Burges and Bernhard Scholkopf. Improving the accuracy and speed of support vector machines. In Neural Information Processing Systems, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Burges%2C%20Christopher%20J.C.%20Scholkopf%2C%20Bernhard%20Improving%20the%20accuracy%20and%20speed%20of%20support%20vector%20machines%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Burges%2C%20Christopher%20J.C.%20Scholkopf%2C%20Bernhard%20Improving%20the%20accuracy%20and%20speed%20of%20support%20vector%20machines%201997"
+        },
+        {
+            "id": "Chollet_2015_a",
+            "entry": "Francois Chollet et al. Keras. https://keras.io, 2015.",
+            "url": "https://keras.io"
+        },
+        {
+            "id": "Ciresan_et+al_2010_a",
+            "entry": "Dan Claudiu Ciresan, Ueli Meier, Luca Maria Gambardella, and Jurgen Schmidhuber. Deep, big, simple neural nets for handwritten digit recognition. Neural Computation, 22(12):3207\u20133220, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ciresan%2C%20Dan%20Claudiu%20Meier%2C%20Ueli%20Gambardella%2C%20Luca%20Maria%20Schmidhuber%2C%20Jurgen%20Deep%2C%20big%2C%20simple%20neural%20nets%20for%20handwritten%20digit%20recognition%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ciresan%2C%20Dan%20Claudiu%20Meier%2C%20Ueli%20Gambardella%2C%20Luca%20Maria%20Schmidhuber%2C%20Jurgen%20Deep%2C%20big%2C%20simple%20neural%20nets%20for%20handwritten%20digit%20recognition%202010"
+        },
+        {
+            "id": "Cook_1986_a",
+            "entry": "R. Dennis Cook. Assessment of local influence. Journal of the Royal Statistical Society. Series B (Methodological), 48(2):133\u2013169, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cook%2C%20R.Dennis%20Assessment%20of%20local%20influence%201986",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cook%2C%20R.Dennis%20Assessment%20of%20local%20influence%201986"
+        },
+        {
+            "id": "Cubuk_et+al_2018_a",
+            "entry": "Ekin D. Cubuk, Barret Zoph, Dandelion Mane, Vijay Vasudevan, and Quoc V. Le. Autoaugment: Learning augmentation policies from data. arXiv preprint arXiv:1805.09501, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09501"
+        },
+        {
+            "id": "Decoste_2002_a",
+            "entry": "Dennis Decoste and Bernhard Scholkopf. Training invariant support vector machines. Machine learning, 46(1-3):161\u2013190, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Decoste%2C%20Dennis%20Scholkopf%2C%20Bernhard%20Training%20invariant%20support%20vector%20machines%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Decoste%2C%20Dennis%20Scholkopf%2C%20Bernhard%20Training%20invariant%20support%20vector%20machines%202002"
+        },
+        {
+            "id": "Dosovitskiy_et+al_2016_a",
+            "entry": "Alexey Dosovitskiy, Philipp Fischer, Jost Tobias Springenberg, Martin Riedmiller, and Thomas Brox. Discriminative unsupervised feature learning with exemplar convolutional neural networks. Transactions on Pattern Analysis and Machine Intelligence, 38(9):1734\u20131747, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dosovitskiy%2C%20Alexey%20Fischer%2C%20Philipp%20Springenberg%2C%20Jost%20Tobias%20Riedmiller%2C%20Martin%20Discriminative%20unsupervised%20feature%20learning%20with%20exemplar%20convolutional%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dosovitskiy%2C%20Alexey%20Fischer%2C%20Philipp%20Springenberg%2C%20Jost%20Tobias%20Riedmiller%2C%20Martin%20Discriminative%20unsupervised%20feature%20learning%20with%20exemplar%20convolutional%20neural%20networks%202016"
+        },
+        {
+            "id": "Drineas_et+al_2011_a",
+            "entry": "Petros Drineas, Michael W. Mahoney, S. Muthukrishnan, and Tamas Sarlos. Faster least squares approximation. Numerische Mathematik, 117(2):219\u2013249, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Drineas%2C%20Petros%20Mahoney%2C%20Michael%20W.%20Muthukrishnan%2C%20S.%20Sarlos%2C%20Tamas%20Faster%20least%20squares%20approximation%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Drineas%2C%20Petros%20Mahoney%2C%20Michael%20W.%20Muthukrishnan%2C%20S.%20Sarlos%2C%20Tamas%20Faster%20least%20squares%20approximation%202011"
+        },
+        {
+            "id": "Drineas_et+al_2012_a",
+            "entry": "Petros Drineas, Malik Magdon-Ismail, Michael W. Mahoney, and David P. Woodruff. Fast approximation of matrix coherence and statistical leverage. Journal of Machine Learning Research, 13: 3475\u20133506, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Drineas%2C%20Petros%20Magdon-Ismail%2C%20Malik%20Mahoney%2C%20Michael%20W.%20Woodruff%2C%20David%20P.%20Fast%20approximation%20of%20matrix%20coherence%20and%20statistical%20leverage%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Drineas%2C%20Petros%20Magdon-Ismail%2C%20Malik%20Mahoney%2C%20Michael%20W.%20Woodruff%2C%20David%20P.%20Fast%20approximation%20of%20matrix%20coherence%20and%20statistical%20leverage%202012"
+        },
+        {
+            "id": "Fawzi_et+al_2016_a",
+            "entry": "Alhussein Fawzi, Horst Samulowitz, Deepak Turaga, and Pascal Frossard. Adaptive data augmentation for image classification. In International Conference on Image Processing, pp. 3688\u20133692, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fawzi%2C%20Alhussein%20Samulowitz%2C%20Horst%20Turaga%2C%20Deepak%20Frossard%2C%20Pascal%20Adaptive%20data%20augmentation%20for%20image%20classification%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fawzi%2C%20Alhussein%20Samulowitz%2C%20Horst%20Turaga%2C%20Deepak%20Frossard%2C%20Pascal%20Adaptive%20data%20augmentation%20for%20image%20classification%202016"
+        },
+        {
+            "id": "Fithian_2014_a",
+            "entry": "William Fithian and Trevor Hastie. Local case-control sampling: Efficient subsampling in imbalanced data sets. The Annals of Statistics, 42(5):1693\u20131724, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fithian%2C%20William%20Hastie%2C%20Trevor%20Local%20case-control%20sampling%3A%20Efficient%20subsampling%20in%20imbalanced%20data%20sets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fithian%2C%20William%20Hastie%2C%20Trevor%20Local%20case-control%20sampling%3A%20Efficient%20subsampling%20in%20imbalanced%20data%20sets%202014"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Neural Information Processing Systems, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20Neural%20Information%20Processing%20Systems%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20Aaron%20Courville%20and%20Yoshua%20Bengio%20Generative%20adversarial%20nets%20In%20Neural%20Information%20Processing%20Systems%202014"
+        },
+        {
+            "id": "Graham_2014_a",
+            "entry": "Benjamin Graham. Fractional max-pooling. arXiv preprint arXiv:1412.6071, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6071"
+        },
+        {
+            "id": "Hoaglin_1978_a",
+            "entry": "David C. Hoaglin and Roy E. Welsch. The hat matrix in regression and ANOVA. The American Statistician, 32(1):17\u201322, 1978.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoaglin%2C%20David%20C.%20Welsch%2C%20Roy%20E.%20The%20hat%20matrix%20in%20regression%20and%20ANOVA%201978",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoaglin%2C%20David%20C.%20Welsch%2C%20Roy%20E.%20The%20hat%20matrix%20in%20regression%20and%20ANOVA%201978"
+        },
+        {
+            "id": "Jung_2018_a",
+            "entry": "Alexander B. Jung. imgaug. https://github.com/aleju/imgaug, 2018.",
+            "url": "https://github.com/aleju/imgaug"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Koh_2017_a",
+            "entry": "Pang Wei Koh and Percy Liang. Understanding black-box predictions via influence functions. In International Conference on Machine Learning, pp. 1885\u20131894, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koh%2C%20Pang%20Wei%20Liang%2C%20Percy%20Understanding%20black-box%20predictions%20via%20influence%20functions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koh%2C%20Pang%20Wei%20Liang%2C%20Percy%20Understanding%20black-box%20predictions%20via%20influence%20functions%202017"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Master\u2019s thesis, Department of Computer Science, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Kulesza_2012_a",
+            "entry": "Alex Kulesza and Ben Taskar. Determinantal point processes for machine learning. Foundations and Trends in Machine Learning, 5(2\u20133):123\u2013286, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulesza%2C%20Alex%20Taskar%2C%20Ben%20Determinantal%20point%20processes%20for%20machine%20learning%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulesza%2C%20Alex%20Taskar%2C%20Ben%20Determinantal%20point%20processes%20for%20machine%20learning%202012"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lecun_et+al_2004_a",
+            "entry": "Yann LeCun, Fu Jie Huang, and Leon Bottou. Learning methods for generic object recognition with invariance to pose and lighting. In Computer Vision and Pattern Recognition, volume 2, pp. 97\u2013104, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Huang%2C%20Fu%20Jie%20Bottou%2C%20Leon%20Learning%20methods%20for%20generic%20object%20recognition%20with%20invariance%20to%20pose%20and%20lighting%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Huang%2C%20Fu%20Jie%20Bottou%2C%20Leon%20Learning%20methods%20for%20generic%20object%20recognition%20with%20invariance%20to%20pose%20and%20lighting%202004"
+        },
+        {
+            "id": "Lu_et+al_2006_a",
+            "entry": "Xinghua Lu, Bin Zheng, Atulya Velivelli, and ChengXiang Zhai. Enhancing text categorization with semantic-enriched representation and training data augmentation. Journal of the American Medical Informatics Association, 13(5):526\u2013535, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lu%2C%20Xinghua%20Zheng%2C%20Bin%20Velivelli%2C%20Atulya%20Zhai%2C%20ChengXiang%20Enhancing%20text%20categorization%20with%20semantic-enriched%20representation%20and%20training%20data%20augmentation%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lu%2C%20Xinghua%20Zheng%2C%20Bin%20Velivelli%2C%20Atulya%20Zhai%2C%20ChengXiang%20Enhancing%20text%20categorization%20with%20semantic-enriched%20representation%20and%20training%20data%20augmentation%202006"
+        },
+        {
+            "id": "Ma_et+al_2015_a",
+            "entry": "Ping Ma, Michael W. Mahoney, and Bin Yu. A statistical perspective on algorithmic leveraging. Journal of Machine Learning Research, 16:861\u2013911, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ma%2C%20Ping%20Mahoney%2C%20Michael%20W.%20Yu%2C%20Bin%20A%20statistical%20perspective%20on%20algorithmic%20leveraging%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ma%2C%20Ping%20Mahoney%2C%20Michael%20W.%20Yu%2C%20Bin%20A%20statistical%20perspective%20on%20algorithmic%20leveraging%202015"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan P. Adams. Autograd: Effortless gradients in numpy. In International Conference on Machine Learning AutoML Workshop, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20P.%20Autograd%3A%20Effortless%20gradients%20in%20numpy%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20P.%20Autograd%3A%20Effortless%20gradients%20in%20numpy%202015"
+        },
+        {
+            "id": "Mcwilliams_et+al_2014_a",
+            "entry": "Brian McWilliams, Gabriel Krummenacher, Mario Lucic, and Joachim M Buhmann. Fast and robust least squares estimation in corrupted linear models. In Neural Information Processing Systems, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McWilliams%2C%20Brian%20Krummenacher%2C%20Gabriel%20Lucic%2C%20Mario%20Buhmann%2C%20Joachim%20M.%20Fast%20and%20robust%20least%20squares%20estimation%20in%20corrupted%20linear%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McWilliams%2C%20Brian%20Krummenacher%2C%20Gabriel%20Lucic%2C%20Mario%20Buhmann%2C%20Joachim%20M.%20Fast%20and%20robust%20least%20squares%20estimation%20in%20corrupted%20linear%20models%202014"
+        },
+        {
+            "id": "Pedregosa_et+al_2011_a",
+            "entry": "F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay. Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12:2825\u20132830, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pedregosa%2C%20F.%20Varoquaux%2C%20G.%20Gramfort%2C%20A.%20Michel%2C%20V.%20Scikit-learn%3A%20Machine%20learning%20in%20Python%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pedregosa%2C%20F.%20Varoquaux%2C%20G.%20Gramfort%2C%20A.%20Michel%2C%20V.%20Scikit-learn%3A%20Machine%20learning%20in%20Python%202011"
+        },
+        {
+            "id": "Pregibon_1981_a",
+            "entry": "Daryl Pregibon. Logistic regression diagnostics. The Annals of Statistics, 9(4):705\u2013724, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pregibon%2C%20Daryl%20Logistic%20regression%20diagnostics%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pregibon%2C%20Daryl%20Logistic%20regression%20diagnostics%201981"
+        },
+        {
+            "id": "Ratner_et+al_2017_a",
+            "entry": "Alexander J Ratner, Henry Ehrenberg, Zeshan Hussain, Jared Dunnmon, and Christopher Re. Learning to compose domain-specific transformations for data augmentation. In Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ratner%2C%20Alexander%20J.%20Ehrenberg%2C%20Henry%20Hussain%2C%20Zeshan%20Dunnmon%2C%20Jared%20Learning%20to%20compose%20domain-specific%20transformations%20for%20data%20augmentation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ratner%2C%20Alexander%20J.%20Ehrenberg%2C%20Henry%20Hussain%2C%20Zeshan%20Dunnmon%2C%20Jared%20Learning%20to%20compose%20domain-specific%20transformations%20for%20data%20augmentation%202017"
+        },
+        {
+            "id": "Sajjadi_et+al_2016_a",
+            "entry": "Mehdi Sajjadi, Mehran Javanmardi, and Tolga Tasdizen. Regularization with stochastic transformations and perturbations for deep semi-supervised learning. In Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sajjadi%2C%20Mehdi%20Javanmardi%2C%20Mehran%20Tasdizen%2C%20Tolga%20Regularization%20with%20stochastic%20transformations%20and%20perturbations%20for%20deep%20semi-supervised%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sajjadi%2C%20Mehdi%20Javanmardi%2C%20Mehran%20Tasdizen%2C%20Tolga%20Regularization%20with%20stochastic%20transformations%20and%20perturbations%20for%20deep%20semi-supervised%20learning%202016"
+        },
+        {
+            "id": "Spearman_1904_a",
+            "entry": "Charles Spearman. The proof and measurement of association between two things. The American Journal of Psychology, 15(1):72\u2013101, 1904.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Spearman%2C%20Charles%20The%20proof%20and%20measurement%20of%20association%20between%20two%20things%201904",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Spearman%2C%20Charles%20The%20proof%20and%20measurement%20of%20association%20between%20two%20things%201904"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Daniel Ting and Eric Brochu. Optimal subsampling with influence functions. In Neural Information",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Daniel%20Ting%20and%20Eric%20Brochu%20Optimal%20subsampling%20with%20influence%20functions%20In%20Neural%20Information",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Daniel%20Ting%20and%20Eric%20Brochu%20Optimal%20subsampling%20with%20influence%20functions%20In%20Neural%20Information"
+        },
+        {
+            "id": "Processing_2018_a",
+            "entry": "Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Processing%20Systems%202018"
+        },
+        {
+            "id": "Uhlich_et+al_2017_a",
+            "entry": "S. Uhlich, M. Porcu, F. Giron, M. Enenkl, T. Kemp, N. Takahashi, and Y. Mitsufuji. Improving music source separation based on deep neural networks through data augmentation and network blending. In International Conference on Acoustics, Speech and Signal Processing, 2017. Riccardo Volpi, Hongseok Namkoong, Ozan Sener, John C Duchi, Vittorio Murino, and Silvio Savarese. Generalizing to unseen domains via adversarial data augmentation. In Neural Information Processing Systems, 2018. Esteban Walker and Jeffrey B. Birch. Influence measures in ridge regression. Technometrics, 30(2): 221\u2013227, 1988. HaiYing Wang, Rong Zhu, and Ping Ma. Optimal subsampling for large sample logistic regression. Journal of the American Statistical Association, 113(522):829\u2013844, 2018. Rong Zhu. Gradient-based sampling: An adaptive importance sampling for least-squares. In Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Uhlich%2C%20S.%20Porcu%2C%20M.%20Giron%2C%20F.%20Enenkl%2C%20M.%20Improving%20music%20source%20separation%20based%20on%20deep%20neural%20networks%20through%20data%20augmentation%20and%20network%20blending%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Uhlich%2C%20S.%20Porcu%2C%20M.%20Giron%2C%20F.%20Enenkl%2C%20M.%20Improving%20music%20source%20separation%20based%20on%20deep%20neural%20networks%20through%20data%20augmentation%20and%20network%20blending%202017"
+        }
+    ]
+}

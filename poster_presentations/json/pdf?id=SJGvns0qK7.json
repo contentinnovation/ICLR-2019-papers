@@ -1,0 +1,332 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Bayesian Policy Optimization for Model Uncertainty",
+        "author": "Gilwoo Lee, Brian Hou, Aditya Mandalika Vamsikrishna, Jeongseok Lee, Sanjiban Choudhury, Siddhartha S. Srinivasa Paul G. Allen School of Computer Science & Engineering University of Washington {gilwoo,bhou,adityavk,jslee02,sanjibac,siddh}@cs.uw.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJGvns0qK7"
+        },
+        "journal": "Veness",
+        "abstract": "Addressing uncertainty is critical for autonomous systems to robustly adapt to the real world. We formulate the problem of model uncertainty as a continuous Bayes-Adaptive Markov Decision Process (BAMDP), where an agent maintains a posterior distribution over latent model parameters given a history of observations and maximizes its expected long-term reward with respect to this belief distribution. Our algorithm, Bayesian Policy Optimization, builds on recent policy optimization algorithms to learn a universal policy that navigates the exploration-exploitation trade-off to maximize the Bayesian value function. To address challenges from discretizing the continuous latent parameter space, we propose a new policy network architecture that encodes the belief distribution independently from the observable state. Our method significantly outperforms algorithms that address model uncertainty without explicitly reasoning about belief distributions and is competitive with state-of-the-art Partially Observable Markov Decision Process solvers."
+    },
+    "keywords": [
+        {
+            "term": "belief distribution",
+            "url": "https://en.wikipedia.org/wiki/belief_distribution"
+        },
+        {
+            "term": "markov decision process",
+            "url": "https://en.wikipedia.org/wiki/markov_decision_process"
+        }
+    ],
+    "abbreviations": {
+        "BAMDP": "Bayes-Adaptive Markov Decision Process",
+        "POMDP": "Partially Observable Markov Decision Process",
+        "BPO": "Bayesian Policy Optimization",
+        "BRL": "Bayesian Reinforcement Learning",
+        "MOMDPs": "Mixed-observability MDPs",
+        "LSTM": "Long Short-Term Memory",
+        "EPOpt": "Ensemble Policy Optimization"
+    },
+    "highlights": [
+        "Real-world robotics focuses on operating under uncertainty",
+        "We evaluate Bayesian Policy Optimization on discrete and continuous Partially Observable Markov Decision Process benchmarks to highlight its use of information-gathering actions",
+        "We evaluate Bayesian Policy Optimization on Bayes-Adaptive Markov Decision Process problems constructed by varying physical model parameters on OpenAI benchmark problems (<a class=\"ref-link\" id=\"cBrockman_et+al_2016_a\" href=\"#rBrockman_et+al_2016_a\">Brockman et al, 2016</a>)",
+        "For all Bayes-Adaptive Markov Decision Process problems with continuous latent spaces (Chain, MuJoCo), latent parameters are sampled in the continuous space in Step 3 of Algorithm 1, regardless of discretization",
+        "For the OpenAI Bayes-Adaptive Markov Decision Process problems, we compare to a policy trained with TRPO in an environment with the mean values of the latent parameters",
+        "We demonstrate that Bayesian Policy Optimization learns policies that achieve performance comparable to state-of-the-art discrete Partially Observable Markov Decision Process solvers"
+    ],
+    "key_statements": [
+        "Real-world robotics focuses on operating under uncertainty",
+        "We focus on Bayes-Adaptive Markov Decision Process problems in which the latent parameter space is either a discrete finite set or a bounded continuous set that can be approximated via discretization",
+        "Inspired by previous approaches that train learning algorithms with an ensemble of models (<a class=\"ref-link\" id=\"cRajeswaran_et+al_2017_a\" href=\"#rRajeswaran_et+al_2017_a\">Rajeswaran et al, 2017</a>; <a class=\"ref-link\" id=\"cYu_et+al_2017_a\" href=\"#rYu_et+al_2017_a\">Yu et al, 2017</a>), we examine model uncertainty through a Bayes-Adaptive Markov Decision Process lens",
+        "We introduce a Bayesian policy optimization algorithm to learn policies that directly reason about model uncertainty while maximizing the expected long-term reward (Section 4)",
+        "We propose Bayesian Policy Optimization, a simple policy gradient algorithm for Bayes-Adaptive Markov Decision Process (Algorithm 1)",
+        "We evaluate Bayesian Policy Optimization on discrete and continuous Partially Observable Markov Decision Process benchmarks to highlight its use of information-gathering actions",
+        "We evaluate Bayesian Policy Optimization on Bayes-Adaptive Markov Decision Process problems constructed by varying physical model parameters on OpenAI benchmark problems (<a class=\"ref-link\" id=\"cBrockman_et+al_2016_a\" href=\"#rBrockman_et+al_2016_a\">Brockman et al, 2016</a>)",
+        "For all Bayes-Adaptive Markov Decision Process problems with continuous latent spaces (Chain, MuJoCo), latent parameters are sampled in the continuous space in Step 3 of Algorithm 1, regardless of discretization",
+        "For the OpenAI Bayes-Adaptive Markov Decision Process problems, we compare to a policy trained with TRPO in an environment with the mean values of the latent parameters",
+        "Bayesian Policy Optimization achieves close to the approximately optimal return found by SARSOP (19.0 \u00b1 0.6), a state-of-the-art offline Partially Observable Markov Decision Process solver that approximates the optimal value function rather than performing policy optimization (<a class=\"ref-link\" id=\"cKurniawati_et+al_2008_a\" href=\"#rKurniawati_et+al_2008_a\">Kurniawati et al, 2008</a>)",
+        "Bayesian Policy Optimization learns a universal policy that adapts to the changing belief over the latent parameters",
+        "We demonstrate that Bayesian Policy Optimization learns policies that achieve performance comparable to state-of-the-art discrete Partially Observable Markov Decision Process solvers",
+        "We highlight that Bayesian Policy Optimization is agnostic to the choice of batch policy optimization subroutine"
+    ],
+    "summary": [
+        "Real-world robotics focuses on operating under uncertainty.",
+        "The agent maintains a belief, which is a posterior distribution over the latent parameters \u03c6 given a history of observations.",
+        "BPO simulates the policy on multiple latent models sampled from the source distribution (Figure 1a).",
+        "The agent learns a stochastic Bayesian policy that maps a state-belief pair to a probability distribution over actions \u03c0 : S \u00d7 B \u2192 P (A).",
+        "By simulating on MDPs with different latent variables, BPO observes the evolution of the state-belief throughout multiple trajectories.",
+        "Algorithm 1 Bayesian Policy Optimization Require: Bayes filter \u03c8(\u00b7), initial belief b0(\u03c6), P0, policy \u03c0\u03b80 , horizon H, nitr, nsample",
+        "Any Bayes filter that outputs a fixed-size belief representation can be used; for example, we use an extended Kalman filter to maintain a Gaussian distribution over continuous latent variables in the LightDark environment in Section 5.",
+        "EPOpt and UP-MLE are the most relevant algorithms that use batch policy optimization to address model uncertainty, we emphasize that neither formulates the problems as BAMDPs. As shown in Figure 1b, the BPO network\u2019s state and belief encoder components are identical, consisting of two fully connected layers with Nh hidden units each and tanh activations (Nh = 32 for Tiger, Chain, and LightDark; Nh = 64 for MuJoCo).",
+        "BPO achieves close to the approximately optimal return found by SARSOP (19.0 \u00b1 0.6), a state-of-the-art offline POMDP solver that approximates the optimal value function rather than performing policy optimization (<a class=\"ref-link\" id=\"cKurniawati_et+al_2008_a\" href=\"#rKurniawati_et+al_2008_a\">Kurniawati et al, 2008</a>).",
+        "BPO learns a universal policy that adapts to the changing belief over the latent parameters.",
+        "We demonstrate that BPO learns policies that achieve performance comparable to state-of-the-art discrete POMDP solvers.",
+        "They outperform state-of-the-art robust policy gradient algorithms that address model uncertainty without formulating it as a BAMDP problem.",
+        "Our network architecture scales well with respect to the degree of latent parameter space discretization due to its independent encoding of state and belief.",
+        "Adapting iterative densification ideas previously explored in motion planning (<a class=\"ref-link\" id=\"cGammell_et+al_2015_a\" href=\"#rGammell_et+al_2015_a\">Gammell et al, 2015</a>) and optimal control (<a class=\"ref-link\" id=\"cMunos_1999_a\" href=\"#rMunos_1999_a\">Munos & Moore, 1999</a>) to the discretization of latent space may yield a more compact belief representation while enabling further improved performance.",
+        "An alternative to the model-based Bayes filter and belief encoder components of BPO is learning to directly map a history of observations to a lower-dimensional belief embedding, analogous to <a class=\"ref-link\" id=\"cPeng_et+al_2018_a\" href=\"#rPeng_et+al_2018_a\">Peng et al (2018</a>)."
+    ],
+    "headline": "To address challenges from discretizing the continuous latent parameter space, we propose a new policy network architecture that encodes the belief distribution independently from the observable state",
+    "reference_links": [
+        {
+            "id": "Aberdeen_2003_a",
+            "entry": "Douglas Aberdeen. A (revised) survey of approximate methods for solving partially observable markov decision processes. National ICT Australia, Canberra, Australia, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aberdeen%2C%20Douglas%20A%20%28revised%29%20survey%20of%20approximate%20methods%20for%20solving%20partially%20observable%20markov%20decision%20processes.%20National%20ICT%202003"
+        },
+        {
+            "id": "Aberdeen_2002_a",
+            "entry": "Douglas Aberdeen and Jonathan Baxter. Scaling internal-state policy-gradient methods for POMDPs. In International Conference on Machine Learning, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aberdeen%2C%20Douglas%20Baxter%2C%20Jonathan%20Scaling%20internal-state%20policy-gradient%20methods%20for%20POMDPs%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aberdeen%2C%20Douglas%20Baxter%2C%20Jonathan%20Scaling%20internal-state%20policy-gradient%20methods%20for%20POMDPs%202002"
+        },
+        {
+            "id": "Bansal_et+al_2018_a",
+            "entry": "Trapit Bansal, Jakub Pachocki, Szymon Sidor, Ilya Sutskever, and Igor Mordatch. Emergent complexity via multi-agent competition. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bansal%2C%20Trapit%20Pachocki%2C%20Jakub%20Sidor%2C%20Szymon%20Sutskever%2C%20Ilya%20Emergent%20complexity%20via%20multi-agent%20competition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bansal%2C%20Trapit%20Pachocki%2C%20Jakub%20Sidor%2C%20Szymon%20Sutskever%2C%20Ilya%20Emergent%20complexity%20via%20multi-agent%20competition%202018"
+        },
+        {
+            "id": "Ba_2008_a",
+            "entry": "Tamer Ba\u015far and Pierre Bernhard. H-infinity optimal control and related minimax design problems: a dynamic game approach. Springer Science & Business Media, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ba%C5%9Far%2C%20Tamer%20Bernhard%2C%20Pierre%20H-infinity%20optimal%20control%20and%20related%20minimax%20design%20problems%3A%20a%20dynamic%20game%20approach%202008"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. OpenAI Gym. arXiv preprint arXiv:1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Min Chen, Emilio Frazzoli, David Hsu, and Wee Sun Lee. POMDP-lite for robust robot planning under uncertainty. In IEEE International Conference on Robotics and Automation, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Min%20Frazzoli%2C%20Emilio%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20POMDP-lite%20for%20robust%20robot%20planning%20under%20uncertainty%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Min%20Frazzoli%2C%20Emilio%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20POMDP-lite%20for%20robust%20robot%20planning%20under%20uncertainty%202016"
+        },
+        {
+            "id": "Duan_et+al_2016_a",
+            "entry": "Yan Duan, Xi Chen, Rein Houthooft, John Schulman, and Pieter Abbeel. Benchmarking deep reinforcement learning for continuous control. In International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016"
+        },
+        {
+            "id": "Duff_2002_a",
+            "entry": "Michael O\u2019Gordon Duff and Andrew Barto. Optimal Learning: Computational procedures for Bayes-adaptive Markov decision processes. PhD thesis, University of Massachusetts at Amherst, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duff%2C%20Michael%20O.%E2%80%99Gordon%20Barto%2C%20Andrew%20Optimal%20Learning%3A%20Computational%20procedures%20for%20Bayes-adaptive%20Markov%20decision%20processes%202002"
+        },
+        {
+            "id": "Gammell_et+al_2015_a",
+            "entry": "Jonathan Gammell, Siddhartha Srinivasa, and Timothy Barfoot. Batch informed trees (BIT*): Sampling-based optimal planning via the heuristically guided search of implicit random geometric graphs. In IEEE International Conference on Robotics and Automation, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gammell%2C%20Jonathan%20Srinivasa%2C%20Siddhartha%20Barfoot%2C%20Timothy%20Batch%20informed%20trees%20%28BIT%2A%29%3A%20Sampling-based%20optimal%20planning%20via%20the%20heuristically%20guided%20search%20of%20implicit%20random%20geometric%20graphs%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gammell%2C%20Jonathan%20Srinivasa%2C%20Siddhartha%20Barfoot%2C%20Timothy%20Batch%20informed%20trees%20%28BIT%2A%29%3A%20Sampling-based%20optimal%20planning%20via%20the%20heuristically%20guided%20search%20of%20implicit%20random%20geometric%20graphs%202015"
+        },
+        {
+            "id": "Ghavamzadeh_et+al_2015_a",
+            "entry": "Mohammad Ghavamzadeh, Shie Mannor, Joelle Pineau, Aviv Tamar, et al. Bayesian reinforcement learning: A survey. Foundations and Trends R in Machine Learning, 8(5-6): 359\u2013483, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ghavamzadeh%2C%20Mohammad%20Mannor%2C%20Shie%20Pineau%2C%20Joelle%20Tamar%2C%20Aviv%20Bayesian%20reinforcement%20learning%3A%20A%20survey.%20Foundations%20and%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ghavamzadeh%2C%20Mohammad%20Mannor%2C%20Shie%20Pineau%2C%20Joelle%20Tamar%2C%20Aviv%20Bayesian%20reinforcement%20learning%3A%20A%20survey.%20Foundations%20and%202015"
+        },
+        {
+            "id": "Guez_et+al_2012_a",
+            "entry": "Arthur Guez, David Silver, and Peter Dayan. Efficient Bayes-adaptive reinforcement learning using sample-based search. In Advances in Neural Information Processing Systems, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guez%2C%20Arthur%20Silver%2C%20David%20Dayan%2C%20Peter%20Efficient%20Bayes-adaptive%20reinforcement%20learning%20using%20sample-based%20search%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guez%2C%20Arthur%20Silver%2C%20David%20Dayan%2C%20Peter%20Efficient%20Bayes-adaptive%20reinforcement%20learning%20using%20sample-based%20search%202012"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Long short-term memory. Neural computation, 9 (8):1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory.%20Neural%20computation%201997"
+        },
+        {
+            "id": "Igl_et+al_2018_a",
+            "entry": "Maximilian Igl, Luisa Zintgraf, Tuan Anh Le, Frank Wood, and Shimon Whiteson. Deep variational reinforcement learning for pomdps. arXiv preprint arXiv:1806.02426, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02426"
+        },
+        {
+            "id": "Kaelbling_et+al_1998_a",
+            "entry": "Leslie Pack Kaelbling, Michael Littman, and Anthony Cassandra. Planning and acting in partially observable stochastic domains. Artificial Intelligence, 101(1-2):99\u2013134, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaelbling%2C%20Leslie%20Pack%20Littman%2C%20Michael%20Cassandra%2C%20Anthony%20Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaelbling%2C%20Leslie%20Pack%20Littman%2C%20Michael%20Cassandra%2C%20Anthony%20Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains%201998"
+        },
+        {
+            "id": "Karkus_et+al_2017_a",
+            "entry": "Peter Karkus, David Hsu, and Wee Sun Lee. QMDP-Net: Deep learning for planning under partial observability. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Karkus%2C%20Peter%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20QMDP-Net%3A%20Deep%20learning%20for%20planning%20under%20partial%20observability%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Karkus%2C%20Peter%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20QMDP-Net%3A%20Deep%20learning%20for%20planning%20under%20partial%20observability%202017"
+        },
+        {
+            "id": "Kolter_2009_a",
+            "entry": "Zico Kolter and Andrew Ng. Near-Bayesian exploration in polynomial time. In International Conference on Machine Learning, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kolter%2C%20Zico%20Ng%2C%20Andrew%20Near-Bayesian%20exploration%20in%20polynomial%20time%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kolter%2C%20Zico%20Ng%2C%20Andrew%20Near-Bayesian%20exploration%20in%20polynomial%20time%202009"
+        },
+        {
+            "id": "Kurniawati_et+al_2008_a",
+            "entry": "Hanna Kurniawati, David Hsu, and Wee Sun Lee. SARSOP: Efficient point-based POMDP planning by approximating optimally reachable belief spaces. In Robotics: Science and Systems, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kurniawati%2C%20Hanna%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20SARSOP%3A%20Efficient%20point-based%20POMDP%20planning%20by%20approximating%20optimally%20reachable%20belief%20spaces%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kurniawati%2C%20Hanna%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20SARSOP%3A%20Efficient%20point-based%20POMDP%20planning%20by%20approximating%20optimally%20reachable%20belief%20spaces%202008"
+        },
+        {
+            "id": "Littman_et+al_1995_a",
+            "entry": "Michael Littman, Anthony Cassandra, and Leslie Pack Kaelbling. Learning policies for partially observable environments: Scaling up. In International Conference on Machine Learning, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Littman%2C%20Michael%20Cassandra%2C%20Anthony%20Kaelbling%2C%20Leslie%20Pack%20Learning%20policies%20for%20partially%20observable%20environments%3A%20Scaling%20up%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Littman%2C%20Michael%20Cassandra%2C%20Anthony%20Kaelbling%2C%20Leslie%20Pack%20Learning%20policies%20for%20partially%20observable%20environments%3A%20Scaling%20up%201995"
+        },
+        {
+            "id": "Mordatch_et+al_2015_a",
+            "entry": "Igor Mordatch, Kendall Lowrey, and Emanuel Todorov. Ensemble-CIO: Full-body dynamic motion planning that transfers to physical humanoids. In IEEE/RSJ International Conference on Intelligent Robots and Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mordatch%2C%20Igor%20Lowrey%2C%20Kendall%20Todorov%2C%20Emanuel%20Ensemble-CIO%3A%20Full-body%20dynamic%20motion%20planning%20that%20transfers%20to%20physical%20humanoids%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mordatch%2C%20Igor%20Lowrey%2C%20Kendall%20Todorov%2C%20Emanuel%20Ensemble-CIO%3A%20Full-body%20dynamic%20motion%20planning%20that%20transfers%20to%20physical%20humanoids%202015"
+        },
+        {
+            "id": "Morimoto_2001_a",
+            "entry": "Jun Morimoto and Kenji Doya. Robust reinforcement learning. In Advances in Neural Information Processing Systems, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morimoto%2C%20Jun%20Doya%2C%20Kenji%20Robust%20reinforcement%20learning%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morimoto%2C%20Jun%20Doya%2C%20Kenji%20Robust%20reinforcement%20learning%202001"
+        },
+        {
+            "id": "Munos_1999_a",
+            "entry": "Remi Munos and Andrew Moore. Variable resolution discretization for high-accuracy solutions of optimal control problems. In International Joint Conference on Artificial Intelligence, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Munos%2C%20Remi%20Moore%2C%20Andrew%20Variable%20resolution%20discretization%20for%20high-accuracy%20solutions%20of%20optimal%20control%20problems%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Munos%2C%20Remi%20Moore%2C%20Andrew%20Variable%20resolution%20discretization%20for%20high-accuracy%20solutions%20of%20optimal%20control%20problems%201999"
+        },
+        {
+            "id": "Ong_et+al_2010_a",
+            "entry": "Sylvie CW Ong, Shao Wei Png, David Hsu, and Wee Sun Lee. Planning under uncertainty for robotic tasks with mixed observability. The International Journal of Robotics Research, 29(8):1053\u20131068, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ong%2C%20Sylvie%20C.W.%20Png%2C%20Shao%20Wei%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20Planning%20under%20uncertainty%20for%20robotic%20tasks%20with%20mixed%20observability%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ong%2C%20Sylvie%20C.W.%20Png%2C%20Shao%20Wei%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20Planning%20under%20uncertainty%20for%20robotic%20tasks%20with%20mixed%20observability%202010"
+        },
+        {
+            "id": "Osband_et+al_2013_a",
+            "entry": "Ian Osband, Daniel Russo, and Benjamin Van Roy. (more) efficient reinforcement learning via posterior sampling. In Advances in Neural Information Processing Systems, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Russo%2C%20Daniel%20Roy%2C%20Benjamin%20Van%20efficient%20reinforcement%20learning%20via%20posterior%20sampling%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Russo%2C%20Daniel%20Roy%2C%20Benjamin%20Van%20efficient%20reinforcement%20learning%20via%20posterior%20sampling%202013"
+        },
+        {
+            "id": "Papadimitriou_1987_a",
+            "entry": "Christos Papadimitriou and John Tsitsiklis. The complexity of Markov decision processes. Mathematics of Operations Research, 12(3):441\u2013450, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papadimitriou%2C%20Christos%20Tsitsiklis%2C%20John%20The%20complexity%20of%20Markov%20decision%20processes%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papadimitriou%2C%20Christos%20Tsitsiklis%2C%20John%20The%20complexity%20of%20Markov%20decision%20processes%201987"
+        },
+        {
+            "id": "Pattanaik_et+al_2018_a",
+            "entry": "Anay Pattanaik, Zhenyi Tang, Shuijing Liu, Gautham Bommannan, and Girish Chowdhary. Robust deep reinforcement learning with adversarial attacks. In International Conference on Autonomous Agents and Multiagent Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pattanaik%2C%20Anay%20Tang%2C%20Zhenyi%20Liu%2C%20Shuijing%20Bommannan%2C%20Gautham%20Robust%20deep%20reinforcement%20learning%20with%20adversarial%20attacks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pattanaik%2C%20Anay%20Tang%2C%20Zhenyi%20Liu%2C%20Shuijing%20Bommannan%2C%20Gautham%20Robust%20deep%20reinforcement%20learning%20with%20adversarial%20attacks%202018"
+        },
+        {
+            "id": "Peng_et+al_2018_a",
+            "entry": "Xue Bin Peng, Marcin Andrychowicz, Wojciech Zaremba, and Pieter Abbeel. Sim-to-real transfer of robotic control with dynamics randomization. In IEEE International Conference on Robotics and Automation, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Xue%20Bin%20Andrychowicz%2C%20Marcin%20Zaremba%2C%20Wojciech%20Abbeel%2C%20Pieter%20Sim-to-real%20transfer%20of%20robotic%20control%20with%20dynamics%20randomization%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Xue%20Bin%20Andrychowicz%2C%20Marcin%20Zaremba%2C%20Wojciech%20Abbeel%2C%20Pieter%20Sim-to-real%20transfer%20of%20robotic%20control%20with%20dynamics%20randomization%202018"
+        },
+        {
+            "id": "Pineau_et+al_2003_a",
+            "entry": "Joelle Pineau, Geoff Gordon, Sebastian Thrun, et al. Point-based value iteration: An anytime algorithm for POMDPs. In International Joint Conference on Artificial Intelligence, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pineau%2C%20Joelle%20Gordon%2C%20Geoff%20Thrun%2C%20Sebastian%20Point-based%20value%20iteration%3A%20An%20anytime%20algorithm%20for%20POMDPs%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pineau%2C%20Joelle%20Gordon%2C%20Geoff%20Thrun%2C%20Sebastian%20Point-based%20value%20iteration%3A%20An%20anytime%20algorithm%20for%20POMDPs%202003"
+        },
+        {
+            "id": "Pinto_et+al_2017_a",
+            "entry": "Lerrel Pinto, James Davidson, Rahul Sukthankar, and Abhinav Gupta. Robust adversarial reinforcement learning. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pinto%2C%20Lerrel%20Davidson%2C%20James%20Sukthankar%2C%20Rahul%20Gupta%2C%20Abhinav%20Robust%20adversarial%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pinto%2C%20Lerrel%20Davidson%2C%20James%20Sukthankar%2C%20Rahul%20Gupta%2C%20Abhinav%20Robust%20adversarial%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Platt_et+al_2010_a",
+            "entry": "Robert Platt, Russ Tedrake, Leslie Pack Kaelbling, and Tomas Lozano-Perez. Belief space planning assuming maximum likelihood observations. In Robotics: Science and Systems, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Platt%2C%20Robert%20Tedrake%2C%20Russ%20Kaelbling%2C%20Leslie%20Pack%20Lozano-Perez%2C%20Tomas%20Belief%20space%20planning%20assuming%20maximum%20likelihood%20observations%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Platt%2C%20Robert%20Tedrake%2C%20Russ%20Kaelbling%2C%20Leslie%20Pack%20Lozano-Perez%2C%20Tomas%20Belief%20space%20planning%20assuming%20maximum%20likelihood%20observations%202010"
+        },
+        {
+            "id": "Poupart_et+al_2006_a",
+            "entry": "Pascal Poupart, Nikos Vlassis, Jesse Hoey, and Kevin Regan. An analytic solution to discrete bayesian reinforcement learning. In International Conference on Machine Learning, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Poupart%2C%20Pascal%20Vlassis%2C%20Nikos%20Hoey%2C%20Jesse%20Regan%2C%20Kevin%20An%20analytic%20solution%20to%20discrete%20bayesian%20reinforcement%20learning%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Poupart%2C%20Pascal%20Vlassis%2C%20Nikos%20Hoey%2C%20Jesse%20Regan%2C%20Kevin%20An%20analytic%20solution%20to%20discrete%20bayesian%20reinforcement%20learning%202006"
+        },
+        {
+            "id": "Rajeswaran_et+al_2017_a",
+            "entry": "Aravind Rajeswaran, Sarvjeet Ghotra, Balaraman Ravindran, and Sergey Levine. EPOpt: Learning robust neural network policies using model ensembles. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rajeswaran%2C%20Aravind%20Ghotra%2C%20Sarvjeet%20Ravindran%2C%20Balaraman%20Levine%2C%20Sergey%20EPOpt%3A%20Learning%20robust%20neural%20network%20policies%20using%20model%20ensembles%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajeswaran%2C%20Aravind%20Ghotra%2C%20Sarvjeet%20Ravindran%2C%20Balaraman%20Levine%2C%20Sergey%20EPOpt%3A%20Learning%20robust%20neural%20network%20policies%20using%20model%20ensembles%202017"
+        },
+        {
+            "id": "Ross_et+al_2008_a",
+            "entry": "Stephane Ross, Brahim Chaib-draa, and Joelle Pineau. Bayes-adaptive POMDPs. In Advances in Neural Information Processing Systems, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Chaib-draa%2C%20Brahim%20Pineau%2C%20Joelle%20Bayes-adaptive%20POMDPs%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Chaib-draa%2C%20Brahim%20Pineau%2C%20Joelle%20Bayes-adaptive%20POMDPs%202008"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International Conference on Machine Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Shani_et+al_2013_a",
+            "entry": "Guy Shani, Joelle Pineau, and Robert Kaplow. A survey of point-based POMDP solvers. Journal on Autonomous Agents and Multiagent Systems, 27(1):1\u201351, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shani%2C%20Guy%20Pineau%2C%20Joelle%20Kaplow%2C%20Robert%20A%20survey%20of%20point-based%20POMDP%20solvers%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shani%2C%20Guy%20Pineau%2C%20Joelle%20Kaplow%2C%20Robert%20A%20survey%20of%20point-based%20POMDP%20solvers%202013"
+        },
+        {
+            "id": "Silver_2010_a",
+            "entry": "David Silver and Joel Veness. Monte-carlo planning in large POMDPs. In Advances in Neural Information Processing Systems, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Veness%2C%20Joel%20Monte-carlo%20planning%20in%20large%20POMDPs%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Veness%2C%20Joel%20Monte-carlo%20planning%20in%20large%20POMDPs%202010"
+        },
+        {
+            "id": "Spaan_2005_a",
+            "entry": "Matthijs TJ Spaan and Nikos Vlassis. Perseus: Randomized point-based value iteration for POMDPs. Journal of Artificial Intelligence Research, 24:195\u2013220, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Spaan%2C%20Matthijs%20T.J.%20Vlassis%2C%20Nikos%20Perseus%3A%20Randomized%20point-based%20value%20iteration%20for%20POMDPs%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Spaan%2C%20Matthijs%20T.J.%20Vlassis%2C%20Nikos%20Perseus%3A%20Randomized%20point-based%20value%20iteration%20for%20POMDPs%202005"
+        },
+        {
+            "id": "Strens_2000_a",
+            "entry": "Malcolm Strens. A Bayesian framework for reinforcement learning. In International Conference on Machine Learning, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strens%2C%20Malcolm%20A%20Bayesian%20framework%20for%20reinforcement%20learning%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Strens%2C%20Malcolm%20A%20Bayesian%20framework%20for%20reinforcement%20learning%202000"
+        },
+        {
+            "id": "Sunberg_2018_a",
+            "entry": "Zachary Sunberg and Mykel Kochenderfer. Online algorithms for POMDPs with continuous state, action, and observation spaces. In International Conference on Automated Planning and Scheduling, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sunberg%2C%20Zachary%20Kochenderfer%2C%20Mykel%20Online%20algorithms%20for%20POMDPs%20with%20continuous%20state%2C%20action%2C%20and%20observation%20spaces%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sunberg%2C%20Zachary%20Kochenderfer%2C%20Mykel%20Online%20algorithms%20for%20POMDPs%20with%20continuous%20state%2C%20action%2C%20and%20observation%20spaces%202018"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. MuJoCo: A physics engine for model-based control. In IEEE/RSJ International Conference on Intelligent Robots and Systems, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20MuJoCo%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20MuJoCo%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Van_et+al_2012_a",
+            "entry": "Jur van den Berg, Sachin Patil, and Ron Alterovitz. Motion planning under uncertainty using iterative local optimization in belief space. The International Journal of Robotics Research, 31(11):1263\u20131278, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Berg%2C%20Jur%20Patil%2C%20Sachin%20Alterovitz%2C%20Ron%20Motion%20planning%20under%20uncertainty%20using%20iterative%20local%20optimization%20in%20belief%20space%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Berg%2C%20Jur%20Patil%2C%20Sachin%20Alterovitz%2C%20Ron%20Motion%20planning%20under%20uncertainty%20using%20iterative%20local%20optimization%20in%20belief%20space%202012"
+        },
+        {
+            "id": "Wang_et+al_2012_a",
+            "entry": "Yi Wang, Kok Sung Won, David Hsu, and Wee Sun Lee. Monte Carlo Bayesian reinforcement learning. In International Conference on Machine Learning, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yi%20Won%2C%20Kok%20Sung%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20Monte%20Carlo%20Bayesian%20reinforcement%20learning%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yi%20Won%2C%20Kok%20Sung%20Hsu%2C%20David%20Lee%2C%20Wee%20Sun%20Monte%20Carlo%20Bayesian%20reinforcement%20learning%202012"
+        },
+        {
+            "id": "Weaver_2001_a",
+            "entry": "Lex Weaver and Nigel Tao. The optimal reward baseline for gradient-based reinforcement learning. In Conference on Uncertainty in Artificial Intelligence, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weaver%2C%20Lex%20Tao%2C%20Nigel%20The%20optimal%20reward%20baseline%20for%20gradient-based%20reinforcement%20learning%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weaver%2C%20Lex%20Tao%2C%20Nigel%20The%20optimal%20reward%20baseline%20for%20gradient-based%20reinforcement%20learning%202001"
+        },
+        {
+            "id": "Yu_et+al_2017_a",
+            "entry": "Wenhao Yu, Jie Tan, C. Karen Liu, and Greg Turk. Preparing for the unknown: Learning a universal policy with online system identification. In Robotics: Science and Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Wenhao%20Jie%20Tan%2C%20C.Karen%20Liu%20Turk%2C%20Greg%20Preparing%20for%20the%20unknown%3A%20Learning%20a%20universal%20policy%20with%20online%20system%20identification%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Wenhao%20Jie%20Tan%2C%20C.Karen%20Liu%20Turk%2C%20Greg%20Preparing%20for%20the%20unknown%3A%20Learning%20a%20universal%20policy%20with%20online%20system%20identification%202017"
+        }
+    ]
+}

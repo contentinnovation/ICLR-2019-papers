@@ -1,0 +1,297 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TEMPORAL DIFFERENCE VARIATIONAL AUTO-ENCODER",
+        "author": "Karol Gregor, George Papamakarios, Frederic Besse, Lars Buesing, Th\u00e9ophane Weber DeepMind",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1x4ghC9tQ"
+        },
+        "abstract": "To act and plan in complex environments, we posit that agents should have a mental simulator of the world with three characteristics: (a) it should build an abstract state representing the condition of the world; (b) it should form a belief which represents uncertainty on the world; (c) it should go beyond simple step-by-step simulation, and exhibit temporal abstraction. Motivated by the absence of a model satisfying all these requirements, we propose TD-VAE, a generative sequence model that learns representations containing explicit beliefs about states several steps into the future, and that can be rolled out directly without single-step transitions. TD-VAE is trained on pairs of temporally separated time points, using an analogue of temporal difference learning used in reinforcement learning."
+    },
+    "keywords": [
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "predictive state representations",
+            "url": "https://en.wikipedia.org/wiki/Predictive_State_Representation"
+        },
+        {
+            "term": "evidence lower bound",
+            "url": "https://en.wikipedia.org/wiki/evidence_lower_bound"
+        },
+        {
+            "term": "markov decision process",
+            "url": "https://en.wikipedia.org/wiki/markov_decision_process"
+        },
+        {
+            "term": "temporal difference",
+            "url": "https://en.wikipedia.org/wiki/temporal_difference"
+        },
+        {
+            "term": "time point",
+            "url": "https://en.wikipedia.org/wiki/time_point"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "TD-VAE": "Temporal Difference Variational Auto-Encoder",
+        "ELBO": "evidence lower bound",
+        "PSRs": "predictive state representations"
+    },
+    "highlights": [
+        "Generative models of sequential data have received a lot of attention, due to their wide applicability in domains such as speech synthesis, neural translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a>), image captioning (Xu et al, 2015), and many others",
+        "Of particular interest to this paper is the problem of reinforcement learning in partially observed environments, where, in order to act and explore optimally, agents need to build a representation of the uncertainty about the world, computed from the information they have gathered so far",
+        "We develop a new model and associated training algorithm, called Temporal Difference Variational Auto-Encoder (TD-VAE), which meets all of the above requirements",
+        "Following the intuition given by the sequential Temporal Difference Variational Auto-Encoder, we develop the full Temporal Difference Variational Auto-Encoder model, which learns from temporally extended data by making jumpy predictions into the future",
+        "We argued that an agent needs a model that is different from an accurate step-by-step environment simulator",
+        "Temporal Difference Variational Auto-Encoder builds states from observations by bridging time points separated by random intervals"
+    ],
+    "key_statements": [
+        "Generative models of sequential data have received a lot of attention, due to their wide applicability in domains such as speech synthesis, neural translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a>), image captioning (Xu et al, 2015), and many others",
+        "Of particular interest to this paper is the problem of reinforcement learning in partially observed environments, where, in order to act and explore optimally, agents need to build a representation of the uncertainty about the world, computed from the information they have gathered so far",
+        "While an agent endowed with memory could in principle learn such a representation implicitly through model-free reinforcement learning, in many situations the reinforcement signal may be too weak to quickly learn such a representation in a way which would generalize to a collection of tasks",
+        "We develop a new model and associated training algorithm, called Temporal Difference Variational Auto-Encoder (TD-VAE), which meets all of the above requirements",
+        "Following the intuition given by the sequential Temporal Difference Variational Auto-Encoder, we develop the full Temporal Difference Variational Auto-Encoder model, which learns from temporally extended data by making jumpy predictions into the future",
+        "Related to our definition of belief states as sufficient statistics is the notion of predictive state representations (PSRs) (<a class=\"ref-link\" id=\"cLittman_2002_a\" href=\"#rLittman_2002_a\">Littman & Sutton, 2002</a>); see (Venkatraman et al, 2017) for a model that learns predictive state representations which, combined with a decoder, can predict future observations",
+        "Motivated by the model derived in section 3, we extend sequential Temporal Difference Variational Auto-Encoder to exhibit time abstraction",
+        "We argued that an agent needs a model that is different from an accurate step-by-step environment simulator",
+        "Temporal Difference Variational Auto-Encoder builds states from observations by bridging time points separated by random intervals"
+    ],
+    "summary": [
+        "Generative models of sequential data have received a lot of attention, due to their wide applicability in domains such as speech synthesis, neural translation (<a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2014_a\" href=\"#rBahdanau_et+al_2014_a\">Bahdanau et al, 2014</a></a>), image captioning (Xu et al, 2015), and many others.",
+        "The model should learn a belief state, i.e. a deterministic, coded representation of the filtering posterior of the state given all the observations up to a given time.",
+        "Following the intuition given by the sequential TD-VAE, we develop the full TD-VAE model, which learns from temporally extended data by making jumpy predictions into the future.",
+        "Xt) so that p \u2248 p, bt would contain all the information about the state of the world the agent has, and would effectively form a neural belief state, i.e. a code fully characterizing the filtering distribution.",
+        "Classical training of state-space model does not compute a belief state: by computing a joint, autoregressive posterior q(z | x) = t q, some of the uncertainty about the marginal posterior of zt may be \u2018leaked\u2019 in the sample zt\u22121.",
+        "Related to our definition of belief states as sufficient statistics is the notion of predictive state representations (PSRs) (<a class=\"ref-link\" id=\"cLittman_2002_a\" href=\"#rLittman_2002_a\">Littman & Sutton, 2002</a>); see (Venkatraman et al, 2017) for a model that learns PSRs which, combined with a decoder, can predict future observations.",
+        "We consider an arbitrary state space model with joint latent and observable likelihood given by p(x, z) = t pp, and we aim to optimize the data likelihood log p(x).",
+        "The agent can make a guess of what the state of the world is by sampling from its belief model pB.",
+        "The first experiment using sequential TD-VAE, which enables a direct comparison to related algorithms for training state-space models.",
+        "We roll out a sequence from the model as follows: (a) bt is computed by the aggregation recurrent network from observations up to time t; (b) a state zt is sampled from pB; (c) a sequence of states is rolled out by repeatedly sampling z \u2190 z \u223c p(z | z) starting with z = zt; (d) each z is decoded by p(x | z), producing a sequence of frames.",
+        "We would like to demonstrate that the model can build a state even when little information is present in each observation, and that it can sample states far into the future.",
+        "We compare two models with the same recurrent architecture, but trained with different objective: -step prediction vs TD-VAE loss.",
+        "TD-VAE builds states from observations by bridging time points separated by random intervals.",
+        "It allows rolling out in state-space and in time steps larger than, and potentially independent of, the underlying temporal environment/data step size.",
+        "We aim to apply TD-VAE to more complex settings, and investigate a number of possible uses in reinforcement learning such are representation learning and planning"
+    ],
+    "headline": "Motivated by the absence of a model satisfying all these requirements, we propose Temporal Difference Variational Auto-Encoder, a generative sequence model that learns representations containing explicit beliefs about states several steps into the future, and that can be rolled out directly without single-step transitions",
+    "reference_links": [
+        {
+            "id": "Amos_et+al_2018_a",
+            "entry": "Brandon Amos, Laurent Dinh, Serkan Cabi, Thomas Roth\u00f6rl, Sergio G\u00f3mez Colmenarejo, Alistair Muldal, Tom Erez, Yuval Tassa, Nando de Freitas, and Misha Denil. Learning awareness models. arXiv preprint arXiv:1804.06318, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.06318"
+        },
+        {
+            "id": "Archer_et+al_2015_a",
+            "entry": "Evan Archer, Il Memming Park, Lars Buesing, John Cunningham, and Liam Paninski. Black box variational inference for state space models. arXiv preprint arXiv:1511.07367, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.07367"
+        },
+        {
+            "id": "Astrom_1965_a",
+            "entry": "Karl J Astrom. Optimal control of Markov decision processes with incomplete state estimation. Journal of mathematical analysis and applications, 10:174\u2013205, 1965.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Astrom%2C%20Karl%20J.%20Optimal%20control%20of%20Markov%20decision%20processes%20with%20incomplete%20state%20estimation%201965",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Astrom%2C%20Karl%20J.%20Optimal%20control%20of%20Markov%20decision%20processes%20with%20incomplete%20state%20estimation%201965"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. arXiv preprint arXiv:1409.0473, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Bayer_2014_a",
+            "entry": "Justin Bayer and Christian Osendorfer. Learning stochastic recurrent networks. arXiv preprint arXiv:1411.7610, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.7610"
+        },
+        {
+            "id": "Beattie_et+al_2016_a",
+            "entry": "Charles Beattie, Joel Z Leibo, Denis Teplyashin, Tom Ward, Marcus Wainwright, Heinrich K\u00fcttler, Andrew Lefrancq, Simon Green, V\u00edctor Vald\u00e9s, Amir Sadik, et al. DeepMind Lab. arXiv preprint arXiv:1612.03801, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.03801"
+        },
+        {
+            "id": "Marc_2017_a",
+            "entry": "Marc G Bellemare, Will Dabney, and R\u00e9mi Munos. A distributional perspective on reinforcement learning. arXiv preprint arXiv:1707.06887, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06887"
+        },
+        {
+            "id": "Bengio_et+al_2015_a",
+            "entry": "Samy Bengio, Oriol Vinyals, Navdeep Jaitly, and Noam Shazeer. Scheduled sampling for sequence prediction with recurrent neural networks. In Advances in Neural Information Processing Systems, pp. 1171\u20131179, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Vinyals%2C%20Oriol%20Jaitly%2C%20Navdeep%20Shazeer%2C%20Noam%20Scheduled%20sampling%20for%20sequence%20prediction%20with%20recurrent%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Vinyals%2C%20Oriol%20Jaitly%2C%20Navdeep%20Shazeer%2C%20Noam%20Scheduled%20sampling%20for%20sequence%20prediction%20with%20recurrent%20neural%20networks%202015"
+        },
+        {
+            "id": "Buesing_et+al_2018_a",
+            "entry": "Lars Buesing, Theophane Weber, Sebastien Racaniere, SM Eslami, Danilo Rezende, David P Reichert, Fabio Viola, Frederic Besse, Karol Gregor, Demis Hassabis, et al. Learning and querying fast generative models for reinforcement learning. arXiv preprint arXiv:1802.03006, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03006"
+        },
+        {
+            "id": "Chiappa_et+al_2017_a",
+            "entry": "Silvia Chiappa, S\u00e9bastien Racaniere, Daan Wierstra, and Shakir Mohamed. Recurrent environment simulators. arXiv preprint arXiv:1704.02254, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02254"
+        },
+        {
+            "id": "Chung_et+al_2015_a",
+            "entry": "Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron C Courville, and Yoshua Bengio. A recurrent latent variable model for sequential data. In Advances in neural information processing systems, pp. 2980\u20132988, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015"
+        },
+        {
+            "id": "Chung_et+al_2016_a",
+            "entry": "Junyoung Chung, Sungjin Ahn, and Yoshua Bengio. Hierarchical multiscale recurrent neural networks. arXiv preprint arXiv:1609.01704, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.01704"
+        },
+        {
+            "id": "Fraccaro_et+al_2016_a",
+            "entry": "Marco Fraccaro, S\u00f8ren Kaae S\u00f8nderby, Ulrich Paquet, and Ole Winther. Sequential neural models with stochastic layers. In Advances in neural information processing systems, pp. 2199\u20132207, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016"
+        },
+        {
+            "id": "Gemici_et+al_2017_a",
+            "entry": "Mevlana Gemici, Chia-Chun Hung, Adam Santoro, Greg Wayne, Shakir Mohamed, Danilo J Rezende, David Amos, and Timothy Lillicrap. Generative temporal models with memory. arXiv preprint arXiv:1702.04649, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.04649"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Anirudh Goyal, Alessandro Sordoni, Marc-Alexandre C\u00f4t\u00e9, Nan Ke, and Yoshua Bengio. Z-forcing: Training stochastic recurrent networks. In Advances in Neural Information Processing Systems, pp. 6713\u20136723, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Anirudh%20Sordoni%2C%20Alessandro%20C%C3%B4t%C3%A9%2C%20Marc-Alexandre%20Ke%2C%20Nan%20Z-forcing%3A%20Training%20stochastic%20recurrent%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Anirudh%20Sordoni%2C%20Alessandro%20C%C3%B4t%C3%A9%2C%20Marc-Alexandre%20Ke%2C%20Nan%20Z-forcing%3A%20Training%20stochastic%20recurrent%20networks%202017"
+        },
+        {
+            "id": "Graves_2013_a",
+            "entry": "Alex Graves. Generating sequences with recurrent neural networks. arXiv preprint arXiv:1308.0850, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.0850"
+        },
+        {
+            "id": "Gregor_et+al_2016_a",
+            "entry": "Karol Gregor, Frederic Besse, Danilo Jimenez Rezende, Ivo Danihelka, and Daan Wierstra. Towards conceptual compression. In Advances In Neural Information Processing Systems, pp. 3549\u20133557, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20Karol%20Besse%2C%20Frederic%20Rezende%2C%20Danilo%20Jimenez%20Danihelka%2C%20Ivo%20Towards%20conceptual%20compression%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20Karol%20Besse%2C%20Frederic%20Rezende%2C%20Danilo%20Jimenez%20Danihelka%2C%20Ivo%20Towards%20conceptual%20compression%202016"
+        },
+        {
+            "id": "Ha_2018_a",
+            "entry": "David Ha and J\u00fcrgen Schmidhuber. World models. arXiv preprint arXiv:1803.10122, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.10122"
+        },
+        {
+            "id": "Hauskrecht_2000_a",
+            "entry": "Milos Hauskrecht. Value-function approximations for partially observable Markov decision processes. Journal of artificial intelligence research, 13:33\u201394, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hauskrecht%2C%20Milos%20Value-function%20approximations%20for%20partially%20observable%20Markov%20decision%20processes%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hauskrecht%2C%20Milos%20Value-function%20approximations%20for%20partially%20observable%20Markov%20decision%20processes%202000"
+        },
+        {
+            "id": "Igl_et+al_2018_a",
+            "entry": "Maximilian Igl, Luisa Zintgraf, Tuan Anh Le, Frank Wood, and Shimon Whiteson. Deep variational reinforcement learning for POMDPs. arXiv preprint arXiv:1806.02426, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.02426"
+        },
+        {
+            "id": "Jayaraman_et+al_2018_a",
+            "entry": "Dinesh Jayaraman, Frederik Ebert, Alexei A Efros, and Sergey Levine. Time-agnostic prediction: Predicting predictable video frames. arXiv preprint arXiv:1808.07784, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.07784"
+        },
+        {
+            "id": "Kaelbling_et+al_1998_a",
+            "entry": "Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99\u2013134, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kaelbling%2C%20Leslie%20Pack%20Littman%2C%20Michael%20L.%20Cassandra%2C%20Anthony%20R.%20Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kaelbling%2C%20Leslie%20Pack%20Littman%2C%20Michael%20L.%20Cassandra%2C%20Anthony%20R.%20Planning%20and%20acting%20in%20partially%20observable%20stochastic%20domains%201998"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2016_a",
+            "entry": "Nal Kalchbrenner, Aaron van den Oord, Karen Simonyan, Ivo Danihelka, Oriol Vinyals, Alex Graves, and Koray Kavukcuoglu. Video pixel networks. arXiv preprint arXiv:1610.00527, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.00527"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, pp. 4743\u20134751, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Koutnik_et+al_2014_a",
+            "entry": "Jan Koutnik, Klaus Greff, Faustino Gomez, and Juergen Schmidhuber. A clockwork RNN. arXiv preprint arXiv:1402.3511, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1402.3511"
+        },
+        {
+            "id": "Krishnan_et+al_2015_a",
+            "entry": "Rahul G Krishnan, Uri Shalit, and David Sontag. Deep Kalman filters. arXiv preprint arXiv:1511.05121, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05121"
+        },
+        {
+            "id": "Lamb_et+al_2016_a",
+            "entry": "Alex Lamb, Anirudh Goyal, Ying Zhang, Saizheng Zhang, Aaron C Courville, and Yoshua Bengio. Professor forcing: A new algorithm for training recurrent networks. In Advances In Neural Information Processing Systems, pp. 4601\u20134609, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lamb%2C%20Alex%20Goyal%2C%20Anirudh%20Zhang%2C%20Ying%20Zhang%2C%20Saizheng%20Professor%20forcing%3A%20A%20new%20algorithm%20for%20training%20recurrent%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lamb%2C%20Alex%20Goyal%2C%20Anirudh%20Zhang%2C%20Ying%20Zhang%2C%20Saizheng%20Professor%20forcing%3A%20A%20new%20algorithm%20for%20training%20recurrent%20networks%202016"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Alex X Lee, Richard Zhang, Frederik Ebert, Pieter Abbeel, Chelsea Finn, and Sergey Levine. Stochastic adversarial video prediction. arXiv preprint arXiv:1804.01523, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.01523"
+        },
+        {
+            "id": "Littman_2002_a",
+            "entry": "Michael L Littman and Richard S Sutton. Predictive representations of state. In Advances in neural information processing systems, pp. 1555\u20131561, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Littman%2C%20Michael%20L.%20Sutton%2C%20Richard%20S.%20Predictive%20representations%20of%20state%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Littman%2C%20Michael%20L.%20Sutton%2C%20Richard%20S.%20Predictive%20representations%20of%20state%202002"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Hao Liu, Lirong He, Haoli Bai, and Zenglin Xu. Efficient structured inference for stochastic recurrent neural networks. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Hao%20He%2C%20Lirong%20Bai%2C%20Haoli%20Xu%2C%20Zenglin%20Efficient%20structured%20inference%20for%20stochastic%20recurrent%20neural%20networks%202017"
+        },
+        {
+            "id": "Neitz_et+al_2018_a",
+            "entry": "Alexander Neitz, Giambattista Parascandolo, Stefan Bauer, and Bernhard Sch\u00f6lkopf. Adaptive skip intervals: Temporal abstraction for recurrent dynamical models. arXiv preprint arXiv:1808.04768, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04768"
+        },
+        {
+            "id": "Oh_et+al_2015_a",
+            "entry": "Junhyuk Oh, Xiaoxiao Guo, Honglak Lee, Richard L Lewis, and Satinder Singh. Action-conditional video prediction using deep networks in atari games. In Advances in Neural Information Processing Systems, pp. 2863\u20132871, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oh%2C%20Junhyuk%20Guo%2C%20Xiaoxiao%20Lee%2C%20Honglak%20Lewis%2C%20Richard%20L.%20Action-conditional%20video%20prediction%20using%20deep%20networks%20in%20atari%20games%202015"
+        },
+        {
+            "id": "Racani_et+al_2017_a",
+            "entry": "S\u00e9bastien Racani\u00e8re, Th\u00e9ophane Weber, David Reichert, Lars Buesing, Arthur Guez, Danilo Jimenez Rezende, Adri\u00e0 Puigdom\u00e8nech Badia, Oriol Vinyals, Nicolas Heess, Yujia Li, et al. Imaginationaugmented agents for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 5694\u20135705, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Racani%C3%A8re%2C%20S%C3%A9bastien%20Weber%2C%20Th%C3%A9ophane%20Reichert%2C%20David%20Buesing%2C%20Lars%20Imaginationaugmented%20agents%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Racani%C3%A8re%2C%20S%C3%A9bastien%20Weber%2C%20Th%C3%A9ophane%20Reichert%2C%20David%20Buesing%2C%20Lars%20Imaginationaugmented%20agents%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Rasmus_et+al_2015_a",
+            "entry": "Antti Rasmus, Mathias Berglund, Mikko Honkala, Harri Valpola, and Tapani Raiko. Semi-supervised learning with ladder networks. In Advances in Neural Information Processing Systems, pp. 3546\u2013 3554, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rasmus%2C%20Antti%20Berglund%2C%20Mathias%20Honkala%2C%20Mikko%20Valpola%2C%20Harri%20Semi-supervised%20learning%20with%20ladder%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rasmus%2C%20Antti%20Berglund%2C%20Mathias%20Honkala%2C%20Mikko%20Valpola%2C%20Harri%20Semi-supervised%20learning%20with%20ladder%20networks%202015"
+        },
+        {
+            "id": "Serban_et+al_2017_a",
+            "entry": "Iulian Vlad Serban, Alessandro Sordoni, Ryan Lowe, Laurent Charlin, Joelle Pineau, Aaron C Courville, and Yoshua Bengio. A hierarchical latent variable encoder-decoder model for generating dialogues. In AAAI, pp. 3295\u20133301, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Serban%2C%20Iulian%20Vlad%20Sordoni%2C%20Alessandro%20Lowe%2C%20Ryan%20Charlin%2C%20Laurent%20and%20Yoshua%20Bengio.%20A%20hierarchical%20latent%20variable%20encoder-decoder%20model%20for%20generating%20dialogues%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Serban%2C%20Iulian%20Vlad%20Sordoni%2C%20Alessandro%20Lowe%2C%20Ryan%20Charlin%2C%20Laurent%20and%20Yoshua%20Bengio.%20A%20hierarchical%20latent%20variable%20encoder-decoder%20model%20for%20generating%20dialogues%202017"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S Sutton and Andrew G Barto. Reinforcement learning: An introduction, volume 1. MIT press Cambridge, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Reinforcement%20learning%3A%20An%20introduction%2C%20volume%201%201998"
+        },
+        {
+            "id": "Uria_et+al_2016_a",
+            "entry": "Benigno Uria, Marc-Alexandre C\u00f4t\u00e9, Karol Gregor, Iain Murray, and Hugo Larochelle. Neural autoregressive distribution estimation. The Journal of Machine Learning Research, 17(1):7184\u2013 7220, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Uria%2C%20Benigno%20C%C3%B4t%C3%A9%2C%20Marc-Alexandre%20Gregor%2C%20Karol%20Murray%2C%20Iain%20Neural%20autoregressive%20distribution%20estimation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Uria%2C%20Benigno%20C%C3%B4t%C3%A9%2C%20Marc-Alexandre%20Gregor%2C%20Karol%20Murray%2C%20Iain%20Neural%20autoregressive%20distribution%20estimation%202016"
+        },
+        {
+            "id": "Be_2015_a",
+            "entry": "Let us first consider a relatively general form of temporal variational auto-encoder. We consider recurrent models where the same module is applied at every step, and where outputs are sampled one at a time (so that arbitrarily long sequences can be generated). A very general form of such an architecture consist of forward-backward encoder RNNs and a forward decoder RNN (Figure 7) but otherwise allowing for all the connections. Several works (Chung et al., 2015; Lee et al., 2018; Archer et al., 2015; Fraccaro et al., 2016; Liu et al., 2017; Goyal et al., 2017; Buesing et al., 2018; Serban et al., 2017) fall into this framework.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=be%20generated%20Let%20us%20first%20consider%20a%20relatively%20general%20form%20of%20temporal%20variational%20auto-encoder.%20We%20consider%20recurrent%20models%20where%20the%20same%20module%20is%20applied%20at%20every%20step%2C%20and%20where%20outputs%20are%20sampled%20one%20at%20a%20time%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=be%20generated%20Let%20us%20first%20consider%20a%20relatively%20general%20form%20of%20temporal%20variational%20auto-encoder.%20We%20consider%20recurrent%20models%20where%20the%20same%20module%20is%20applied%20at%20every%20step%2C%20and%20where%20outputs%20are%20sampled%20one%20at%20a%20time%202015"
+        }
+    ]
+}

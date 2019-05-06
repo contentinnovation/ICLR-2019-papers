@@ -1,0 +1,497 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ORDERED NEURONS: INTEGRATING TREE STRUCTURES INTO RECURRENT NEURAL NETWORKS",
+        "author": "Yikang Shen, Mila/Universitede Montreal and Microsoft Research Montreal, Canada",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1l6qiR5F7"
+        },
+        "abstract": "Natural language is hierarchically structured: smaller units (e.g., phrases) are nested within larger units (e.g., clauses). When a larger constituent ends, all of the smaller constituents that are nested within it must also be closed. While the standard LSTM architecture allows different neurons to track information at different time scales, it does not have an explicit bias towards modeling a hierarchy of constituents. This paper proposes to add such an inductive bias by ordering the neurons; a vector of master input and forget gates ensures that when a given neuron is updated, all the neurons that follow it in the ordering are also updated. Our novel recurrent architecture, ordered neurons LSTM (ON-LSTM), achieves good performance on four different tasks: language modeling, unsupervised parsing, targeted syntactic evaluation, and logical inference1."
+    },
+    "keywords": [
+        {
+            "term": "grammar induction",
+            "url": "https://en.wikipedia.org/wiki/grammar_induction"
+        },
+        {
+            "term": "short term",
+            "url": "https://en.wikipedia.org/wiki/short_term"
+        },
+        {
+            "term": "Reinforcement Learning",
+            "url": "https://en.wikipedia.org/wiki/Reinforcement_Learning"
+        },
+        {
+            "term": "Linguistics",
+            "url": "https://en.wikipedia.org/wiki/Linguistics"
+        },
+        {
+            "term": "language modeling",
+            "url": "https://en.wikipedia.org/wiki/language_modeling"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "compose",
+            "url": "https://en.wikipedia.org/wiki/compose"
+        },
+        {
+            "term": "natural language",
+            "url": "https://en.wikipedia.org/wiki/natural_language"
+        },
+        {
+            "term": "tree structure",
+            "url": "https://en.wikipedia.org/wiki/tree_structure"
+        },
+        {
+            "term": "language model",
+            "url": "https://en.wikipedia.org/wiki/language_model"
+        },
+        {
+            "term": "Penn TreeBank",
+            "url": "https://en.wikipedia.org/wiki/Penn_Treebank"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "Recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/Recurrent_neural_networks"
+        },
+        {
+            "term": "inductive bias",
+            "url": "https://en.wikipedia.org/wiki/inductive_bias"
+        }
+    ],
+    "abbreviations": {
+        "ON-LSTM": "ordered neurons LSTM",
+        "RL": "Reinforcement Learning",
+        "RNNs": "Recurrent neural networks",
+        "PRPN": "Parsing-Reading-Predict Networks",
+        "PTB": "Penn TreeBank"
+    },
+    "highlights": [
+        "Natural language has a sequential overt form as spoken and written, but the underlying structure of language is not strictly sequential",
+        "From a practical point of view, integrating a tree structure into a neural network language model may be important for multiple reasons: (i) to obtain a hierarchical representation with increasing levels of abstraction, a key feature of deep neural networks (Bengio et al, 2009; <a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a>; <a class=\"ref-link\" id=\"cSchmidhuber_2015_a\" href=\"#rSchmidhuber_2015_a\">Schmidhuber, 2015</a>); to model the compositional effects of language (<a class=\"ref-link\" id=\"cKoopman_et+al_2013_a\" href=\"#rKoopman_et+al_2013_a\">Koopman et al, 2013</a>; <a class=\"ref-link\" id=\"cSocher_et+al_2013_a\" href=\"#rSocher_et+al_2013_a\">Socher et al, 2013</a>) and help with the long-term dependency problem (Bengio et al, 2009; <a class=\"ref-link\" id=\"cTai_et+al_2015_a\" href=\"#rTai_et+al_2015_a\">Tai et al, 2015</a>) by providing shortcuts for gradient backpropagation (<a class=\"ref-link\" id=\"cChung_et+al_2016_a\" href=\"#rChung_et+al_2016_a\">Chung et al, 2016</a>); to improve generalization via a better inductive bias and at the same time potentially reducing the need of a large amount of training data",
+        "Since the WSJ test set contains sentences of various lengths which are unobserved during training, we find that ordered neurons LSTM provides better generalization and robustness toward longer sentences than previous models",
+        "We propose ordered neurons, a novel inductive bias for recurrent neural networks",
+        "We propose a novel recurrent unit, the ordered neurons LSTM, which includes a new gating mechanism and a new activation function cumax(\u00b7)",
+        "The model performance on unsupervised constituency parsing shows that the ordered neurons LSTM induces the latent structure of natural language in a way that is coherent with human expert annotation"
+    ],
+    "key_statements": [
+        "Natural language has a sequential overt form as spoken and written, but the underlying structure of language is not strictly sequential",
+        "From a practical point of view, integrating a tree structure into a neural network language model may be important for multiple reasons: (i) to obtain a hierarchical representation with increasing levels of abstraction, a key feature of deep neural networks (Bengio et al, 2009; <a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a>; <a class=\"ref-link\" id=\"cSchmidhuber_2015_a\" href=\"#rSchmidhuber_2015_a\">Schmidhuber, 2015</a>); to model the compositional effects of language (<a class=\"ref-link\" id=\"cKoopman_et+al_2013_a\" href=\"#rKoopman_et+al_2013_a\">Koopman et al, 2013</a>; <a class=\"ref-link\" id=\"cSocher_et+al_2013_a\" href=\"#rSocher_et+al_2013_a\">Socher et al, 2013</a>) and help with the long-term dependency problem (Bengio et al, 2009; <a class=\"ref-link\" id=\"cTai_et+al_2015_a\" href=\"#rTai_et+al_2015_a\">Tai et al, 2015</a>) by providing shortcuts for gradient backpropagation (<a class=\"ref-link\" id=\"cChung_et+al_2016_a\" href=\"#rChung_et+al_2016_a\">Chung et al, 2016</a>); to improve generalization via a better inductive bias and at the same time potentially reducing the need of a large amount of training data",
+        "We introduce ordered neurons, a new inductive bias for recurrent neural networks",
+        "<a class=\"ref-link\" id=\"cYogatama_et+al_2018_a\" href=\"#rYogatama_et+al_2018_a\">Yogatama et al (2018</a>) focus on language modeling and syntactic evaluation tasks (<a class=\"ref-link\" id=\"cLinzen_et+al_2016_a\" href=\"#rLinzen_et+al_2016_a\">Linzen et al, 2016</a>) but they do not show the extent to which the structure learnt by the model align with gold-standard parse trees",
+        "One possible interpretation is that the first and last layers may be too focused on capturing local information useful for the language modeling task as they are directly exposed to input tokens and output predictions respectively, may not be encouraged to learn the more abstract tree structure",
+        "Since the WSJ test set contains sentences of various lengths which are unobserved during training, we find that ordered neurons LSTM provides better generalization and robustness toward longer sentences than previous models",
+        "We propose ordered neurons, a novel inductive bias for recurrent neural networks",
+        "We propose a novel recurrent unit, the ordered neurons LSTM, which includes a new gating mechanism and a new activation function cumax(\u00b7)",
+        "The model performance on unsupervised constituency parsing shows that the ordered neurons LSTM induces the latent structure of natural language in a way that is coherent with human expert annotation"
+    ],
+    "summary": [
+        "Natural language has a sequential overt form as spoken and written, but the underlying structure of language is not strictly sequential.",
+        "Our model achieves good performance on four tasks: language modeling, unsupervised constituency parsing, targeted syntactic evaluation (<a class=\"ref-link\" id=\"cMarvin_2018_a\" href=\"#rMarvin_2018_a\"><a class=\"ref-link\" id=\"cMarvin_2018_a\" href=\"#rMarvin_2018_a\">Marvin & Linzen, 2018</a></a>) and logical inference (<a class=\"ref-link\" id=\"cBowman_et+al_2015_a\" href=\"#rBowman_et+al_2015_a\"><a class=\"ref-link\" id=\"cBowman_et+al_2015_a\" href=\"#rBowman_et+al_2015_a\">Bowman et al, 2015</a></a>).",
+        "<a class=\"ref-link\" id=\"cYogatama_et+al_2018_a\" href=\"#rYogatama_et+al_2018_a\">Yogatama et al (2018</a>) focus on language modeling and syntactic evaluation tasks (<a class=\"ref-link\" id=\"cLinzen_et+al_2016_a\" href=\"#rLinzen_et+al_2016_a\">Linzen et al, 2016</a>) but they do not show the extent to which the structure learnt by the model align with gold-standard parse trees.",
+        "A large number of zeroed neurons, i.e. a large dft , represents the end of a high-level constituent in the parse tree, as most of the information in the state will be discarded.",
+        "We evaluate the proposed model on four tasks: language modeling, unsupervised constituency parsing, targeted syntactic evaluation (<a class=\"ref-link\" id=\"cMarvin_2018_a\" href=\"#rMarvin_2018_a\"><a class=\"ref-link\" id=\"cMarvin_2018_a\" href=\"#rMarvin_2018_a\">Marvin & Linzen, 2018</a></a>), and logical inference (<a class=\"ref-link\" id=\"cBowman_et+al_2015_a\" href=\"#rBowman_et+al_2015_a\"><a class=\"ref-link\" id=\"cBowman_et+al_2015_a\" href=\"#rBowman_et+al_2015_a\">Bowman et al, 2015</a></a>).",
+        "As shown in Table 1, our model performs better than the standard LSTM while sharing the same number of layers, embedding dimensions, and hidden states units.",
+        "The unsupervised constituency parsing task compares the latent stree structure induced by the model with those annotated by human experts.",
+        "To infer the tree structure of a sentence from a pre-trained model, we initialize the hidden states with the zero vector, feed the sentence into the model as done in the language modeling task.",
+        "The second layer of ON-LSTM achieves state-of-the-art unsupervised constituency parsing results on the WSJ test set, while the first and third layers do not perform as well.",
+        "One possible interpretation is that the first and last layers may be too focused on capturing local information useful for the language modeling task as they are directly exposed to input tokens and output predictions respectively, may not be encouraged to learn the more abstract tree structure.",
+        "Since the WSJ test set contains sentences of various lengths which are unobserved during training, we find that ON-LSTM provides better generalization and robustness toward longer sentences than previous models.",
+        "It is a collection of tasks that evaluate language models along three different structure-sensitive linguistic phenomena: subject-verb agreement, reflexive anaphora and negative polarity items.",
+        "This brings recurrent neural networks closer to performing tree-like composition operations, by separately allocating hidden state neurons with long and short-term information.",
+        "The model performance on unsupervised constituency parsing shows that the ON-LSTM induces the latent structure of natural language in a way that is coherent with human expert annotation.",
+        "The inductive bias enables ON-LSTM to achieve good performance on language modeling, long-term dependency, and logical inference tasks."
+    ],
+    "headline": "This paper proposes to add such an inductive bias by ordering the neurons; a vector of master input and forget gates ensures that when a given neuron is updated, all the neurons that follow it in the ordering are updated",
+    "reference_links": [
+        {
+            "id": "Alvarez-Melis_2016_a",
+            "entry": "David Alvarez-Melis and Tommi S Jaakkola. Tree-structured decoding with doubly-recurrent neural networks. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez-Melis%2C%20David%20Jaakkola%2C%20Tommi%20S.%20Tree-structured%20decoding%20with%20doubly-recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Bengio_2009_a",
+            "entry": "Yoshua Bengio et al. Learning deep architectures for ai. Foundations and trends R in Machine Learning, 2(1):1\u2013127, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Learning%20deep%20architectures%20for%20ai%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Learning%20deep%20architectures%20for%20ai%202009"
+        },
+        {
+            "id": "Bod_2006_a",
+            "entry": "Rens Bod. An all-subtrees approach to unsupervised parsing. In Proceedings of the 21st International Conference on Computational Linguistics and the 44th annual meeting of the Association for Computational Linguistics, pp. 865\u2013872. Association for Computational Linguistics, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bod%2C%20Rens%20An%20all-subtrees%20approach%20to%20unsupervised%20parsing%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bod%2C%20Rens%20An%20all-subtrees%20approach%20to%20unsupervised%20parsing%202006"
+        },
+        {
+            "id": "Bowman_et+al_2014_a",
+            "entry": "Samuel R Bowman, Christopher Potts, and Christopher D Manning. Recursive neural networks can learn logical semantics. arXiv preprint arXiv:1406.1827, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1406.1827"
+        },
+        {
+            "id": "Bowman_et+al_2015_a",
+            "entry": "Samuel R Bowman, Christopher D Manning, and Christopher Potts. Tree-structured composition in neural networks without tree-structured architectures. arXiv preprint arXiv:1506.04834, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.04834"
+        },
+        {
+            "id": "Bowman_et+al_2016_a",
+            "entry": "Samuel R Bowman, Jon Gauthier, Abhinav Rastogi, Raghav Gupta, Christopher D Manning, and Christopher Potts. A fast unified model for parsing and sentence understanding. arXiv preprint arXiv:1603.06021, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1603.06021"
+        },
+        {
+            "id": "Charniak_2001_a",
+            "entry": "Eugene Charniak. Immediate-head parsing for language models. In Proceedings of the 39th Annual Meeting on Association for Computational Linguistics, pp. 124\u2013131. Association for Computational Linguistics, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Charniak%2C%20Eugene%20Immediate-head%20parsing%20for%20language%20models%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Charniak%2C%20Eugene%20Immediate-head%20parsing%20for%20language%20models%202001"
+        },
+        {
+            "id": "Chelba_2000_a",
+            "entry": "Ciprian Chelba and Frederick Jelinek. Structured language modeling. Computer Speech & Language, 14(4):283\u2013332, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chelba%2C%20Ciprian%20Jelinek%2C%20Frederick%20Structured%20language%20modeling%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chelba%2C%20Ciprian%20Jelinek%2C%20Frederick%20Structured%20language%20modeling%202000"
+        },
+        {
+            "id": "Chen_1995_a",
+            "entry": "Stanley F Chen. Bayesian grammar induction for language modeling. In Proceedings of the 33rd annual meeting on Association for Computational Linguistics, pp. 228\u2013235. Association for Computational Linguistics, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Stanley%20F.%20Bayesian%20grammar%20induction%20for%20language%20modeling%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Stanley%20F.%20Bayesian%20grammar%20induction%20for%20language%20modeling%201995"
+        },
+        {
+            "id": "Choi_et+al_2018_a",
+            "entry": "Jihun Choi, Kang Min Yoo, and Sang-goo Lee. Learning to compose task-specific tree structures. In Proceedings of the 2018 Association for the Advancement of Artificial Intelligence (AAAI). and the 7th International Joint Conference on Natural Language Processing (ACL-IJCNLP), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Choi%2C%20Jihun%20Yoo%2C%20Kang%20Min%20Lee%2C%20Sang-goo%20Learning%20to%20compose%20task-specific%20tree%20structures%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Choi%2C%20Jihun%20Yoo%2C%20Kang%20Min%20Lee%2C%20Sang-goo%20Learning%20to%20compose%20task-specific%20tree%20structures%202018"
+        },
+        {
+            "id": "Chomsky_1956_a",
+            "entry": "Noam Chomsky. Three models for the description of language. IRE Transactions on information theory, 2(3):113\u2013124, 1956.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chomsky%2C%20Noam%20Three%20models%20for%20the%20description%20of%20language%201956",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chomsky%2C%20Noam%20Three%20models%20for%20the%20description%20of%20language%201956"
+        },
+        {
+            "id": "Chomsky_1965_a",
+            "entry": "Noam Chomsky. Aspects of the Theory of Syntax. The MIT Press, Cambridge, 1965. URL http://www.amazon.com/Aspects-Theory-Syntax-Noam-Chomsky/dp/0262530074.",
+            "url": "http://www.amazon.com/Aspects-Theory-Syntax-Noam-Chomsky/dp/0262530074"
+        },
+        {
+            "id": "Chung_et+al_2016_a",
+            "entry": "Junyoung Chung, Sungjin Ahn, and Yoshua Bengio. Hierarchical multiscale recurrent neural networks. arXiv preprint arXiv:1609.01704, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.01704"
+        },
+        {
+            "id": "Cohen_et+al_2011_a",
+            "entry": "Shay B Cohen, Dipanjan Das, and Noah A Smith. Unsupervised structure prediction with nonparallel multilingual guidance. In Proceedings of the Conference on Empirical Methods in Natural Language Processing, pp. 50\u201361. Association for Computational Linguistics, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cohen%2C%20Shay%20B.%20Das%2C%20Dipanjan%20Smith%2C%20Noah%20A.%20Unsupervised%20structure%20prediction%20with%20nonparallel%20multilingual%20guidance%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cohen%2C%20Shay%20B.%20Das%2C%20Dipanjan%20Smith%2C%20Noah%20A.%20Unsupervised%20structure%20prediction%20with%20nonparallel%20multilingual%20guidance%202011"
+        },
+        {
+            "id": "Dehaene_et+al_2015_a",
+            "entry": "Stanislas Dehaene, Florent Meyniel, Catherine Wacongne, Liping Wang, and Christophe Pallier. The neural representation of sequences: from transition probabilities to algebraic patterns and linguistic trees. Neuron, 88(1):2\u201319, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dehaene%2C%20Stanislas%20Meyniel%2C%20Florent%20Wacongne%2C%20Catherine%20Wang%2C%20Liping%20The%20neural%20representation%20of%20sequences%3A%20from%20transition%20probabilities%20to%20algebraic%20patterns%20and%20linguistic%20trees%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dehaene%2C%20Stanislas%20Meyniel%2C%20Florent%20Wacongne%2C%20Catherine%20Wang%2C%20Liping%20The%20neural%20representation%20of%20sequences%3A%20from%20transition%20probabilities%20to%20algebraic%20patterns%20and%20linguistic%20trees%202015"
+        },
+        {
+            "id": "Dyer_et+al_2016_a",
+            "entry": "Chris Dyer, Adhiguna Kuncoro, Miguel Ballesteros, and Noah A Smith. Recurrent neural network grammars. In Proceedings of the 2016 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pp. 199\u2013209, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dyer%2C%20Chris%20Kuncoro%2C%20Adhiguna%20Ballesteros%2C%20Miguel%20Smith%2C%20Noah%20A.%20Recurrent%20neural%20network%20grammars%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dyer%2C%20Chris%20Kuncoro%2C%20Adhiguna%20Ballesteros%2C%20Miguel%20Smith%2C%20Noah%20A.%20Recurrent%20neural%20network%20grammars%202016"
+        },
+        {
+            "id": "Hihi_1996_a",
+            "entry": "Salah El Hihi and Yoshua Bengio. Hierarchical recurrent neural networks for long-term dependencies. In Advances in neural information processing systems, pp. 493\u2013499, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hihi%2C%20Salah%20El%20Bengio%2C%20Yoshua%20Hierarchical%20recurrent%20neural%20networks%20for%20long-term%20dependencies%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hihi%2C%20Salah%20El%20Bengio%2C%20Yoshua%20Hierarchical%20recurrent%20neural%20networks%20for%20long-term%20dependencies%201996"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. A theoretically grounded application of dropout in recurrent neural networks. In Advances in neural information processing systems, pp. 1019\u20131027, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20A%20theoretically%20grounded%20application%20of%20dropout%20in%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Gers_2001_a",
+            "entry": "Felix A Gers and E Schmidhuber. Lstm recurrent networks learn simple context-free and contextsensitive languages. IEEE Transactions on Neural Networks, 12(6):1333\u20131340, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gers%2C%20Felix%20A.%20Schmidhuber%2C%20E.%20Lstm%20recurrent%20networks%20learn%20simple%20context-free%20and%20contextsensitive%20languages%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gers%2C%20Felix%20A.%20Schmidhuber%2C%20E.%20Lstm%20recurrent%20networks%20learn%20simple%20context-free%20and%20contextsensitive%20languages%202001"
+        },
+        {
+            "id": "Grave_et+al_2016_a",
+            "entry": "Edouard Grave, Armand Joulin, and Nicolas Usunier. Improving neural language models with a continuous cache. arXiv preprint arXiv:1612.04426, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.04426"
+        },
+        {
+            "id": "Grefenstette_et+al_2015_a",
+            "entry": "Edward Grefenstette, Karl Moritz Hermann, Mustafa Suleyman, and Phil Blunsom. Learning to transduce with unbounded memory. In Advances in Neural Information Processing Systems, pp. 1828\u20131836, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Grefenstette%2C%20Edward%20Hermann%2C%20Karl%20Moritz%20Suleyman%2C%20Mustafa%20Blunsom%2C%20Phil%20Learning%20to%20transduce%20with%20unbounded%20memory%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Grefenstette%2C%20Edward%20Hermann%2C%20Karl%20Moritz%20Suleyman%2C%20Mustafa%20Blunsom%2C%20Phil%20Learning%20to%20transduce%20with%20unbounded%20memory%202015"
+        },
+        {
+            "id": "Gulordava_et+al_2018_a",
+            "entry": "Kristina Gulordava, Piotr Bojanowski, Edouard Grave, Tal Linzen, and Marco Baroni. Colorless green recurrent networks dream hierarchically. In Proc. of NAACL, pp. 1195\u20131205, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulordava%2C%20Kristina%20Bojanowski%2C%20Piotr%20Grave%2C%20Edouard%20Linzen%2C%20Tal%20Colorless%20green%20recurrent%20networks%20dream%20hierarchically%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulordava%2C%20Kristina%20Bojanowski%2C%20Piotr%20Grave%2C%20Edouard%20Linzen%2C%20Tal%20Colorless%20green%20recurrent%20networks%20dream%20hierarchically%202018"
+        },
+        {
+            "id": "Htut_et+al_2018_a",
+            "entry": "Phu Mon Htut, Kyunghyun Cho, and Samuel R Bowman. Grammar induction with neural language models: An unusual replication. arXiv preprint arXiv:1808.10000, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.10000"
+        },
+        {
+            "id": "Inan_et+al_2016_a",
+            "entry": "Hakan Inan, Khashayar Khosravi, and Richard Socher. Tying word vectors and word classifiers: A loss framework for language modeling. arXiv preprint arXiv:1611.01462, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01462"
+        },
+        {
+            "id": "Jacob_et+al_2018_a",
+            "entry": "Athul Paul Jacob, Zhouhan Lin, Alessandro Sordoni, and Yoshua Bengio. Learning hierarchical structures on-the-fly with a recurrent-recursive model for sequences. In Proceedings of The Third Workshop on Representation Learning for NLP, pp. 154\u2013158, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacob%2C%20Athul%20Paul%20Lin%2C%20Zhouhan%20Sordoni%2C%20Alessandro%20Bengio%2C%20Yoshua%20Learning%20hierarchical%20structures%20on-the-fly%20with%20a%20recurrent-recursive%20model%20for%20sequences%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jacob%2C%20Athul%20Paul%20Lin%2C%20Zhouhan%20Sordoni%2C%20Alessandro%20Bengio%2C%20Yoshua%20Learning%20hierarchical%20structures%20on-the-fly%20with%20a%20recurrent-recursive%20model%20for%20sequences%202018"
+        },
+        {
+            "id": "Joulin_2015_a",
+            "entry": "Armand Joulin and Tomas Mikolov. Inferring algorithmic patterns with stack-augmented recurrent nets. In Advances in neural information processing systems, pp. 190\u2013198, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Inferring%20algorithmic%20patterns%20with%20stack-augmented%20recurrent%20nets%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Joulin%2C%20Armand%20Mikolov%2C%20Tomas%20Inferring%20algorithmic%20patterns%20with%20stack-augmented%20recurrent%20nets%202015"
+        },
+        {
+            "id": "Kim_et+al_2016_a",
+            "entry": "Yoon Kim, Yacine Jernite, David Sontag, and Alexander M Rush. Character-aware neural language models. In AAAI, pp. 2741\u20132749, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yoon%20Jernite%2C%20Yacine%20Sontag%2C%20David%20Rush%2C%20Alexander%20M.%20Character-aware%20neural%20language%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yoon%20Jernite%2C%20Yacine%20Sontag%2C%20David%20Rush%2C%20Alexander%20M.%20Character-aware%20neural%20language%20models%202016"
+        },
+        {
+            "id": "Klein_2002_a",
+            "entry": "Dan Klein and Christopher D Manning. A generative constituent-context model for improved grammar induction. In Proceedings of the 40th Annual Meeting on Association for Computational Linguistics, pp. 128\u2013135. Association for Computational Linguistics, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klein%2C%20Dan%20Manning%2C%20Christopher%20D.%20A%20generative%20constituent-context%20model%20for%20improved%20grammar%20induction%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klein%2C%20Dan%20Manning%2C%20Christopher%20D.%20A%20generative%20constituent-context%20model%20for%20improved%20grammar%20induction%202002"
+        },
+        {
+            "id": "Klein_2003_a",
+            "entry": "Dan Klein and Christopher D Manning. Accurate unlexicalized parsing. In Proceedings of the 41st Annual Meeting on Association for Computational Linguistics-Volume 1, pp. 423\u2013430. Association for Computational Linguistics, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klein%2C%20Dan%20Manning%2C%20Christopher%20D.%20Accurate%20unlexicalized%20parsing%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klein%2C%20Dan%20Manning%2C%20Christopher%20D.%20Accurate%20unlexicalized%20parsing%202003"
+        },
+        {
+            "id": "Klein_2005_a",
+            "entry": "Dan Klein and Christopher D Manning. Natural language grammar induction with a generative constituent-context model. Pattern recognition, 38(9):1407\u20131419, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klein%2C%20Dan%20Manning%2C%20Christopher%20D.%20Natural%20language%20grammar%20induction%20with%20a%20generative%20constituent-context%20model%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klein%2C%20Dan%20Manning%2C%20Christopher%20D.%20Natural%20language%20grammar%20induction%20with%20a%20generative%20constituent-context%20model%202005"
+        },
+        {
+            "id": "Koopman_et+al_2013_a",
+            "entry": "Hilda Koopman, Dominique Sportiche, and Edward Stabler. An introduction to syntactic analysis and theory, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koopman%2C%20Hilda%20Sportiche%2C%20Dominique%20Stabler%2C%20Edward%20An%20introduction%20to%20syntactic%20analysis%20and%20theory%202013"
+        },
+        {
+            "id": "Koutnik_et+al_2014_a",
+            "entry": "Jan Koutnik, Klaus Greff, Faustino Gomez, and Juergen Schmidhuber. A clockwork rnn. arXiv preprint arXiv:1402.3511, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1402.3511"
+        },
+        {
+            "id": "Kuncoro_et+al_2018_a",
+            "entry": "Adhiguna Kuncoro, Chris Dyer, John Hale, Dani Yogatama, Stephen Clark, and Phil Blunsom. Lstms can learn syntax-sensitive dependencies well, but modeling structure makes them better. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 1426\u20131436, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kuncoro%2C%20Adhiguna%20Dyer%2C%20Chris%20Hale%2C%20John%20Yogatama%2C%20Dani%20Lstms%20can%20learn%20syntax-sensitive%20dependencies%20well%2C%20but%20modeling%20structure%20makes%20them%20better%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kuncoro%2C%20Adhiguna%20Dyer%2C%20Chris%20Hale%2C%20John%20Yogatama%2C%20Dani%20Lstms%20can%20learn%20syntax-sensitive%20dependencies%20well%2C%20but%20modeling%20structure%20makes%20them%20better%202018"
+        },
+        {
+            "id": "Lakretz_et+al_2019_a",
+            "entry": "Yair Lakretz, German Kruszewski, Theo Desbordes, Dieuwke Hupkes, Stanislas Dehaene, and Marco Baroni. The emergence of number and syntax units in lstm language models. In Proc. of NAACL, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lakretz%2C%20Yair%20Kruszewski%2C%20German%20Desbordes%2C%20Theo%20Hupkes%2C%20Dieuwke%20The%20emergence%20of%20number%20and%20syntax%20units%20in%20lstm%20language%20models%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lakretz%2C%20Yair%20Kruszewski%2C%20German%20Desbordes%2C%20Theo%20Hupkes%2C%20Dieuwke%20The%20emergence%20of%20number%20and%20syntax%20units%20in%20lstm%20language%20models%202019"
+        },
+        {
+            "id": "Lecun_et+al_2015_a",
+            "entry": "Yann LeCun, Yoshua Bengio, and Geoffrey Hinton. Deep learning. Nature, 521(7553):436\u2013444, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015"
+        },
+        {
+            "id": "Lin_et+al_1998_a",
+            "entry": "Tsungnan Lin, Bill G Horne, Peter Tino, and C Lee Giles. Learning long-term dependencies is not as difficult with narx recurrent neural networks. Technical report, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Tsungnan%20Horne%2C%20Bill%20G.%20Tino%2C%20Peter%20Giles%2C%20C.Lee%20Learning%20long-term%20dependencies%20is%20not%20as%20difficult%20with%20narx%20recurrent%20neural%20networks%201998"
+        },
+        {
+            "id": "Linzen_et+al_2016_a",
+            "entry": "Tal Linzen, Emmanuel Dupoux, and Yoav Goldberg. Assessing the ability of lstms to learn syntaxsensitive dependencies. arXiv preprint arXiv:1611.01368, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01368"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: The penn treebank. Computational linguistics, 19(2):313\u2013330, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993"
+        },
+        {
+            "id": "Marvin_2018_a",
+            "entry": "Rebecca Marvin and Tal Linzen. Targeted syntactic evaluation of language models. arXiv preprint arXiv:1808.09031, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.09031"
+        },
+        {
+            "id": "Melis_et+al_2017_a",
+            "entry": "Gabor Melis, Chris Dyer, and Phil Blunsom. On the state of the art of evaluation in neural language models. arXiv preprint arXiv:1707.05589, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.05589"
+        },
+        {
+            "id": "Merity_et+al_2016_a",
+            "entry": "Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. Pointer sentinel mixture models. arXiv preprint arXiv:1609.07843, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.07843"
+        },
+        {
+            "id": "Merity_et+al_2017_a",
+            "entry": "Stephen Merity, Nitish Shirish Keskar, and Richard Socher. Regularizing and Optimizing LSTM Language Models. arXiv preprint arXiv:1708.02182, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.02182"
+        },
+        {
+            "id": "Mikolov_2012_a",
+            "entry": "Tomas Mikolov. Statistical language models based on neural networks. Presentation at Google, Mountain View, 2nd April, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Statistical%20language%20models%20based%20on%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Statistical%20language%20models%20based%20on%20neural%20networks%202012"
+        },
+        {
+            "id": "Press_2017_a",
+            "entry": "Ofir Press and Lior Wolf. Using the output embedding to improve language models. In Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics: Volume 2, Short Papers, volume 2, pp. 157\u2013163, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Press%2C%20Ofir%20Wolf%2C%20Lior%20Using%20the%20output%20embedding%20to%20improve%20language%20models%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Press%2C%20Ofir%20Wolf%2C%20Lior%20Using%20the%20output%20embedding%20to%20improve%20language%20models%202017"
+        },
+        {
+            "id": "Rippel_et+al_2014_a",
+            "entry": "Oren Rippel, Michael Gelbart, and Ryan Adams. Learning ordered representations with nested dropout. In International Conference on Machine Learning, pp. 1746\u20131754, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rippel%2C%20Oren%20Gelbart%2C%20Michael%20Adams%2C%20Ryan%20Learning%20ordered%20representations%20with%20nested%20dropout%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rippel%2C%20Oren%20Gelbart%2C%20Michael%20Adams%2C%20Ryan%20Learning%20ordered%20representations%20with%20nested%20dropout%202014"
+        },
+        {
+            "id": "Roark_2001_a",
+            "entry": "Brian Roark. Probabilistic top-down parsing and language modeling. Computational linguistics, 27 (2):249\u2013276, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roark%2C%20Brian%20Probabilistic%20top-down%20parsing%20and%20language%20modeling%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roark%2C%20Brian%20Probabilistic%20top-down%20parsing%20and%20language%20modeling%202001"
+        },
+        {
+            "id": "Sandra_2014_a",
+            "entry": "Dominiek Sandra and Marcus Taft. Morphological Structure, Lexical Representation and Lexical Access (RLE Linguistics C: Applied Linguistics): A Special Issue of Language and Cognitive Processes. Routledge, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sandra%2C%20Dominiek%20Taft%2C%20Marcus%20Morphological%20Structure%2C%20Lexical%20Representation%20and%20Lexical%20Access%20%28RLE%20Linguistics%20C%3A%20Applied%20Linguistics%29%3A%20A%20Special%20Issue%20of%20Language%20and%20Cognitive%20Processes%202014"
+        },
+        {
+            "id": "Schmidhuber_1991_a",
+            "entry": "Jurgen Schmidhuber. Neural sequence chunkers. 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Neural%20sequence%20chunkers%201991"
+        },
+        {
+            "id": "Schmidhuber_2015_a",
+            "entry": "Jurgen Schmidhuber. Deep learning in neural networks: An overview. Neural networks, 61:85\u2013117, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Deep%20learning%20in%20neural%20networks%3A%20An%20overview%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20Deep%20learning%20in%20neural%20networks%3A%20An%20overview%202015"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Nicolas Heess, Theophane Weber, and Pieter Abbeel. Gradient estimation using stochastic computation graphs. In Advances in Neural Information Processing Systems, pp. 3528\u2013 3536, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Heess%2C%20Nicolas%20Weber%2C%20Theophane%20Abbeel%2C%20Pieter%20Gradient%20estimation%20using%20stochastic%20computation%20graphs%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Heess%2C%20Nicolas%20Weber%2C%20Theophane%20Abbeel%2C%20Pieter%20Gradient%20estimation%20using%20stochastic%20computation%20graphs%202015"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Yikang Shen, Zhouhan Lin, Chin-Wei Huang, and Aaron Courville. Neural language modeling by jointly learning syntax and lexicon. arXiv preprint arXiv:1711.02013, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.02013"
+        },
+        {
+            "id": "Shi_et+al_2018_a",
+            "entry": "Haoyue Shi, Hao Zhou, Jiaze Chen, and Lei Li. On tree-based neural sentence modeling. arXiv preprint arXiv:1808.09644, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.09644"
+        },
+        {
+            "id": "Richard_2010_a",
+            "entry": "Richard Socher, Christopher D Manning, and Andrew Y Ng. Learning continuous phrase representations and syntactic parsing with recursive neural networks. In Proceedings of the NIPS-2010 Deep Learning and Unsupervised Feature Learning Workshop, volume 2010, pp. 1\u20139, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Richard%20Socher%2C%20Christopher%20D%20Manning%2C%20and%20Andrew%20Y%20Ng.%20Learning%20continuous%20phrase%20representations%20and%20syntactic%20parsing%20with%20recursive%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Richard%20Socher%2C%20Christopher%20D%20Manning%2C%20and%20Andrew%20Y%20Ng.%20Learning%20continuous%20phrase%20representations%20and%20syntactic%20parsing%20with%20recursive%20neural%20networks%202010"
+        },
+        {
+            "id": "Socher_et+al_2013_a",
+            "entry": "Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher D Manning, Andrew Ng, and Christopher Potts. Recursive deep models for semantic compositionality over a sentiment treebank. In Proceedings of the 2013 conference on empirical methods in natural language processing, pp. 1631\u20131642, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Socher%2C%20Richard%20Perelygin%2C%20Alex%20Wu%2C%20Jean%20Chuang%2C%20Jason%20Andrew%20Ng%2C%20and%20Christopher%20Potts.%20Recursive%20deep%20models%20for%20semantic%20compositionality%20over%20a%20sentiment%20treebank%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Socher%2C%20Richard%20Perelygin%2C%20Alex%20Wu%2C%20Jean%20Chuang%2C%20Jason%20Andrew%20Ng%2C%20and%20Christopher%20Potts.%20Recursive%20deep%20models%20for%20semantic%20compositionality%20over%20a%20sentiment%20treebank%202013"
+        },
+        {
+            "id": "Guo-Zheng_et+al_2017_a",
+            "entry": "Guo-Zheng Sun, C Lee Giles, Hsing-Hen Chen, and Yee-Chun Lee. The neural network pushdown automaton: Model, stack and learning simulations. arXiv preprint arXiv:1711.05738, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.05738"
+        },
+        {
+            "id": "Tai_et+al_2015_a",
+            "entry": "Kai Sheng Tai, Richard Socher, and Christopher D Manning. Improved semantic representations from tree-structured long short-term memory networks. arXiv preprint arXiv:1503.00075, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.00075"
+        },
+        {
+            "id": "Williams_et+al_2017_a",
+            "entry": "Adina Williams, Nikita Nangia, and Samuel R Bowman. A broad-coverage challenge corpus for sentence understanding through inference. arXiv preprint arXiv:1704.05426, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.05426"
+        },
+        {
+            "id": "Williams_et+al_2018_a",
+            "entry": "Adina Williams, Andrew Drozdov*, and Samuel R Bowman. Do latent tree learning models identify meaningful structure in sentences? Transactions of the Association of Computational Linguistics, 6:253\u2013267, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Williams%2C%20Adina%20Drozdov%2A%2C%20Andrew%20Bowman%2C%20Samuel%20R.%20Do%20latent%20tree%20learning%20models%20identify%20meaningful%20structure%20in%20sentences%3F%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Williams%2C%20Adina%20Drozdov%2A%2C%20Andrew%20Bowman%2C%20Samuel%20R.%20Do%20latent%20tree%20learning%20models%20identify%20meaningful%20structure%20in%20sentences%3F%202018"
+        },
+        {
+            "id": "Wu_et+al_2017_a",
+            "entry": "Shuangzhi Wu, Dongdong Zhang, Nan Yang, Mu Li, and Ming Zhou. Sequence-to-dependency neural machine translation. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), volume 1, pp. 698\u2013707, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Shuangzhi%20Zhang%2C%20Dongdong%20Yang%2C%20Nan%20Li%2C%20Mu%20Sequence-to-dependency%20neural%20machine%20translation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Shuangzhi%20Zhang%2C%20Dongdong%20Yang%2C%20Nan%20Li%2C%20Mu%20Sequence-to-dependency%20neural%20machine%20translation%202017"
+        },
+        {
+            "id": "Yang_et+al_2017_a",
+            "entry": "Zhilin Yang, Zihang Dai, Ruslan Salakhutdinov, and William W Cohen. Breaking the softmax bottleneck: A high-rank rnn language model. arXiv preprint arXiv:1711.03953, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.03953"
+        },
+        {
+            "id": "Yogatama_et+al_2016_a",
+            "entry": "Dani Yogatama, Phil Blunsom, Chris Dyer, Edward Grefenstette, and Wang Ling. Learning to compose words into sentences with reinforcement learning. arXiv preprint arXiv:1611.09100, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.09100"
+        },
+        {
+            "id": "Yogatama_et+al_2018_a",
+            "entry": "Dani Yogatama, Yishu Miao, Gabor Melis, Wang Ling, Adhiguna Kuncoro, Chris Dyer, and Phil Blunsom. Memory architectures in recurrent neural network language models. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yogatama%2C%20Dani%20Miao%2C%20Yishu%20Melis%2C%20Gabor%20Ling%2C%20Wang%20Memory%20architectures%20in%20recurrent%20neural%20network%20language%20models%202018"
+        },
+        {
+            "id": "Zaremba_et+al_2014_a",
+            "entry": "Wojciech Zaremba, Ilya Sutskever, and Oriol Vinyals. Recurrent neural network regularization. arXiv preprint arXiv:1409.2329, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.2329"
+        },
+        {
+            "id": "Zhang_et+al_2015_a",
+            "entry": "Xingxing Zhang, Liang Lu, and Mirella Lapata. Top-down tree long short-term memory networks. arXiv preprint arXiv:1511.00060, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.00060"
+        },
+        {
+            "id": "Zhou_et+al_2017_a",
+            "entry": "Ganbin Zhou, Ping Luo, Rongyu Cao, Yijun Xiao, Fen Lin, Bo Chen, and Qing He. Generative neural machine for tree structures. CoRR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Ganbin%20Luo%2C%20Ping%20Cao%2C%20Rongyu%20Xiao%2C%20Yijun%20Generative%20neural%20machine%20for%20tree%20structures%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Ganbin%20Luo%2C%20Ping%20Cao%2C%20Rongyu%20Xiao%2C%20Yijun%20Generative%20neural%20machine%20for%20tree%20structures%202017"
+        },
+        {
+            "id": "Zilly_et+al_2016_a",
+            "entry": "Julian Georg Zilly, Rupesh Kumar Srivastava, Jan Koutn\u0131k, and Jurgen Schmidhuber. Recurrent highway networks. arXiv preprint arXiv:1607.03474, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.03474"
+        },
+        {
+            "id": "Zoph_2016_a",
+            "entry": "Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. arXiv preprint arXiv:1611.01578, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01578"
+        },
+        {
+            "id": "Resolution_1988_a",
+            "entry": "Resolution Funding Corp. to sell 4.5 billion 30-year bonds interest expense in the 1988 third quarter was 75.3 million",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Resolution%20Funding%20Corp%20to%20sell%2045%20billion%2030year%20bonds%20interest%20expense%20in%20the%201988%20third%20quarter%20was%20753%20million"
+        },
+        {
+            "id": "Interest_1988_b",
+            "entry": "Interest expense in the 1988 third quarter was 75.3 million all prices are as of monday \u2019s close",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Interest%20expense%20in%20the%201988%20third%20quarter%20was%20753%20million%20all%20prices%20are%20as%20of%20monday%20s%20close"
+        }
+    ]
+}

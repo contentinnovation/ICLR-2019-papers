@@ -1,0 +1,335 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING ROBUST REPRESENTATIONS BY PROJECTING SUPERFICIAL STATISTICS OUT",
+        "author": "Haohan Wang Carnegie Mellon University Pittsburgh, PA USA haohanw@cs.cmu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJEjjoR9K7"
+        },
+        "abstract": "Despite impressive performance as evaluated on i.i.d. holdout data, deep neural networks depend heavily on superficial statistics of the training data and are liable to break under distribution shift. For example, subtle changes to the background or texture of an image can break a seemingly powerful classifier. Building on previous work on domain generalization, we hope to produce a classifier that will generalize to previously unseen domains, even when domain identifiers are not available during training. This setting is challenging because the model may extract many distribution-specific (superficial) signals together with distribution-agnostic (semantic) signals. To overcome this challenge, we incorporate the gray-level cooccurrence matrix (GLCM) to extract patterns that our prior knowledge suggests are superficial: they are sensitive to texture but unable to capture the gestalt of an image. Then we introduce two techniques for improving our networks\u2019 outof-sample performance. The first method is built on the reverse gradient method that pushes our model to learn representations from which the GLCM representation is not predictable. The second method is built on the independence introduced by projecting the model\u2019s representation onto the subspace orthogonal to GLCM representation\u2019s. We test our method on battery of standard domain generalization data sets and, interestingly, achieve comparable or better performance as compared to other domain generalization methods that explicitly require samples from the target distribution for training."
+    },
+    "keywords": [
+        {
+            "term": "gray level",
+            "url": "https://en.wikipedia.org/wiki/gray_level"
+        },
+        {
+            "term": "multilayer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multilayer_perceptron"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "Domain Adaptation",
+            "url": "https://en.wikipedia.org/wiki/Domain_Adaptation"
+        }
+    ],
+    "abbreviations": {
+        "GLCM": "gray-level cooccurrence matrix",
+        "DA": "Domain Adaptation",
+        "DG": "Domain generalization",
+        "MLP": "multilayer perceptron"
+    },
+    "highlights": [
+        "We propose a new differentiable neural network building block that captures textural information only from images without modeling the lower-frequency semantic information that we care about (Section 3.1)",
+        "We introduce two synthetic datasets for Domain Adaptation/Domain generalization studies that are more challenging than regular Domain Adaptation/Domain generalization scenario in the sense that the domain-specific information is correlated with semantic information",
+        "To form intuition, we first examine the NGLCM and HEX separately with two basic testings, we evaluate on two synthetic datasets, on in which dataset shift is introduced at the semantic level and another at the raw feature level, respectively",
+        "We introduced two novel components: NGLCM that only extracts textural information from an image, and HEX that projects the textural information out and forces the model to focus on semantic information",
+        "NGLCM cannot be completely free of semantic information of an image"
+    ],
+    "key_statements": [
+        "This paper focuses on visual applications, and we focus on high-frequency textural information as the relevant notion of superficial statistics that we do not want our model to depend upon",
+        "We propose a new differentiable neural network building block that captures textural information only from images without modeling the lower-frequency semantic information that we care about (Section 3.1)",
+        "We introduce two synthetic datasets for Domain Adaptation/Domain generalization studies that are more challenging than regular Domain Adaptation/Domain generalization scenario in the sense that the domain-specific information is correlated with semantic information",
+        "Our goal is to design a neural building block that 1) has enough capacity to extract the textural information from an image, 2) is not capable of extracting semantic information",
+        "To form intuition, we first examine the NGLCM and HEX separately with two basic testings, we evaluate on two synthetic datasets, on in which dataset shift is introduced at the semantic level and another at the raw feature level, respectively",
+        "We evaluate other two standard domain generalization datasets to compare with the state-of-the-art",
+        "We compared HEX/ADV with the following methods that have been tested on PACS: AlexNet), DSN (<a class=\"ref-link\" id=\"cBousmalis_et+al_2016_a\" href=\"#rBousmalis_et+al_2016_a\">Bousmalis et al, 2016</a>), L-CNN (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017a</a>), MLDG (<a class=\"ref-link\" id=\"cLi_et+al_2017_b\" href=\"#rLi_et+al_2017_b\">Li et al, 2017b</a>), Fusion (<a class=\"ref-link\" id=\"cMancini_et+al_2018_a\" href=\"#rMancini_et+al_2018_a\">Mancini et al, 2018</a>)",
+        "We introduced two novel components: NGLCM that only extracts textural information from an image, and HEX that projects the textural information out and forces the model to focus on semantic information",
+        "NGLCM cannot be completely free of semantic information of an image"
+    ],
+    "summary": [
+        "To form intuition, we first examine the NGLCM and HEX separately with two basic testings, we evaluate on two synthetic datasets, on in which dataset shift is introduced at the semantic level and another at the raw feature level, respectively.",
+        "We conducted ablation tests on our two synthetic datasets with two cases 1) replacing NGLCM with one-layer MLP, 2) not using HEX/ADV instead of FL (Equation 4)).",
+        "With two choices of learning rates, we repeated this for every epoch through 100 epochs of training and reported the mean and standard deviation over 100 epochs in Table 1: while MLP and NGLCM perform comparably well in extracting textural information, NGLCM is significantly less useful for recognizing the semantic label.",
+        "We compared the performance of HEX/ADV with several methods tested on this data including CAE (Rifai et al, 2011), MTAE (Ghifary et al, 2015), CCSA (<a class=\"ref-link\" id=\"cMotiian_et+al_2017_a\" href=\"#rMotiian_et+al_2017_a\">Motiian et al, 2017</a>), DANN (<a class=\"ref-link\" id=\"cGanin_et+al_2016_a\" href=\"#rGanin_et+al_2016_a\">Ganin et al, 2016</a>), Fusion (<a class=\"ref-link\" id=\"cMancini_et+al_2018_a\" href=\"#rMancini_et+al_2018_a\"><a class=\"ref-link\" id=\"cMancini_et+al_2018_a\" href=\"#rMancini_et+al_2018_a\">Mancini et al, 2018</a></a>), LabelGrad, and CrossGrad (<a class=\"ref-link\" id=\"cShankar_et+al_2018_a\" href=\"#rShankar_et+al_2018_a\">Shankar et al, 2018</a>).",
+        "The results are shown in Table 3: HEX is only inferior to previous methods in one case and leads the average performance overall.",
+        "We tested on the PACS data set (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\"><a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017a</a></a>), which consists of collections of images of seven different objects over four domains, including photo, art painting, cartoon, and sketch.",
+        "We compared HEX/ADV with the following methods that have been tested on PACS: AlexNet), DSN (<a class=\"ref-link\" id=\"cBousmalis_et+al_2016_a\" href=\"#rBousmalis_et+al_2016_a\">Bousmalis et al, 2016</a>), L-CNN (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\"><a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017a</a></a>), MLDG (<a class=\"ref-link\" id=\"cLi_et+al_2017_b\" href=\"#rLi_et+al_2017_b\">Li et al, 2017b</a>), Fusion (<a class=\"ref-link\" id=\"cMancini_et+al_2018_a\" href=\"#rMancini_et+al_2018_a\"><a class=\"ref-link\" id=\"cMancini_et+al_2018_a\" href=\"#rMancini_et+al_2018_a\">Mancini et al, 2018</a></a>).",
+        "Notice that most of the competing methods (DSN, L-CNN, MLDG, and Fusion) have explicit knowledge about the domain identification of the training images.",
+        "Fusion is a method that involves three different AlexNets, one for each training domain, and a fusion layer to combine the representation for prediction.",
+        "HEX achieves impressively high performance when the testing domain is Art painting and Cartoon, while Fusion is good at prediction for Photo and Sketch.",
+        "We introduced two novel components: NGLCM that only extracts textural information from an image, and HEX that projects the textural information out and forces the model to focus on semantic information.",
+        "Another limitation we observe is that sometimes the training performance of HEX fluctuates dramatically during training, but the model picked up by highest validation accuracy generally performs better than competing methods."
+    ],
+    "headline": "We introduce two techniques for improving our networks\u2019 outof-sample performance",
+    "reference_links": [
+        {
+            "id": "Achille_2018_a",
+            "entry": "Alessandro Achille and Stefano Soatto. Information dropout: Learning optimal representations through noisy computation. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Achille%2C%20Alessandro%20Soatto%2C%20Stefano%20Information%20dropout%3A%20Learning%20optimal%20representations%20through%20noisy%20computation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Achille%2C%20Alessandro%20Soatto%2C%20Stefano%20Information%20dropout%3A%20Learning%20optimal%20representations%20through%20noisy%20computation%202018"
+        },
+        {
+            "id": "Ben-David_et+al_2010_a",
+            "entry": "Shai Ben-David, John Blitzer, Koby Crammer, Alex Kulesza, Fernando Pereira, and Jennifer Wortman Vaughan. A theory of learning from different domains. Machine learning, 79(1):151\u2013175, 2010a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ben-David%2C%20Shai%20Blitzer%2C%20John%20Crammer%2C%20Koby%20Kulesza%2C%20Alex%20A%20theory%20of%20learning%20from%20different%20domains%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ben-David%2C%20Shai%20Blitzer%2C%20John%20Crammer%2C%20Koby%20Kulesza%2C%20Alex%20A%20theory%20of%20learning%20from%20different%20domains%202010"
+        },
+        {
+            "id": "Ben-David_et+al_2010_b",
+            "entry": "Shai Ben-David, Tyler Lu, Teresa Luu, and David Pal. Impossibility theorems for domain adaptation. In International Conference on Artificial Intelligence and Statistics (AISTATS), 2010b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ben-David%2C%20Shai%20Lu%2C%20Tyler%20Luu%2C%20Teresa%20Pal%2C%20David%20Impossibility%20theorems%20for%20domain%20adaptation%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ben-David%2C%20Shai%20Lu%2C%20Tyler%20Luu%2C%20Teresa%20Pal%2C%20David%20Impossibility%20theorems%20for%20domain%20adaptation%202010"
+        },
+        {
+            "id": "Bishop_1995_a",
+            "entry": "Chris Bishop, Christopher M Bishop, et al. Neural networks for pattern recognition. Oxford university press, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Chris%20Bishop%2C%20Christopher%20M.%20Neural%20networks%20for%20pattern%20recognition%201995"
+        },
+        {
+            "id": "Bousmalis_et+al_2016_a",
+            "entry": "Konstantinos Bousmalis, George Trigeorgis, Nathan Silberman, Dilip Krishnan, and Dumitru Erhan. Domain separation networks. In Advances in Neural Information Processing Systems, pp. 343\u2013 351, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bousmalis%2C%20Konstantinos%20Trigeorgis%2C%20George%20Silberman%2C%20Nathan%20Krishnan%2C%20Dilip%20Domain%20separation%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bousmalis%2C%20Konstantinos%20Trigeorgis%2C%20George%20Silberman%2C%20Nathan%20Krishnan%2C%20Dilip%20Domain%20separation%20networks%202016"
+        },
+        {
+            "id": "Bridle_1991_a",
+            "entry": "John S Bridle and Stephen J Cox. Recnorm: Simultaneous normalisation and classification applied to speech recognition. In Advances in Neural Information Processing Systems, pp. 234\u2013240, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bridle%2C%20John%20S.%20Cox%2C%20Stephen%20J.%20Recnorm%3A%20Simultaneous%20normalisation%20and%20classification%20applied%20to%20speech%20recognition%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bridle%2C%20John%20S.%20Cox%2C%20Stephen%20J.%20Recnorm%3A%20Simultaneous%20normalisation%20and%20classification%20applied%20to%20speech%20recognition%201991"
+        },
+        {
+            "id": "Carlucci_et+al_2018_a",
+            "entry": "Fabio M Carlucci, Paolo Russo, Tatiana Tommasi, and Barbara Caputo. Agnostic domain generalization. arXiv preprint arXiv:1808.01102, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.01102"
+        },
+        {
+            "id": "Csurka_2017_a",
+            "entry": "Gabriela Csurka. Domain adaptation for visual applications: A comprehensive survey. arXiv preprint arXiv:1702.05374, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.05374"
+        },
+        {
+            "id": "Denker_et+al_1989_a",
+            "entry": "John S Denker, WR Gardner, Hans Peter Graf, Donnie Henderson, Richard E Howard, W Hubbard, Lawrence D Jackel, Henry S Baird, and Isabelle Guyon. Neural network recognizer for handwritten zip code digits. In Advances in neural information processing systems, pp. 323\u2013331, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denker%2C%20John%20S.%20Gardner%2C%20W.R.%20Graf%2C%20Hans%20Peter%20Henderson%2C%20Donnie%20Neural%20network%20recognizer%20for%20handwritten%20zip%20code%20digits%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denker%2C%20John%20S.%20Gardner%2C%20W.R.%20Graf%2C%20Hans%20Peter%20Henderson%2C%20Donnie%20Neural%20network%20recognizer%20for%20handwritten%20zip%20code%20digits%201989"
+        },
+        {
+            "id": "Ding_2018_a",
+            "entry": "Zhengming Ding and Yun Fu. Deep domain generalization with structured low-rank constraint. IEEE Transactions on Image Processing, 27(1):304\u2013313, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ding%2C%20Zhengming%20Fu%2C%20Yun%20Deep%20domain%20generalization%20with%20structured%20low-rank%20constraint%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ding%2C%20Zhengming%20Fu%2C%20Yun%20Deep%20domain%20generalization%20with%20structured%20low-rank%20constraint%202018"
+        },
+        {
+            "id": "Erfani_et+al_2016_a",
+            "entry": "Sarah Erfani, Mahsa Baktashmotlagh, Masoud Moshtaghi, Vinh Nguyen, Christopher Leckie, James Bailey, and Ramamohanarao Kotagiri. Robust domain generalisation by enforcing distribution invariance. In Proceedings of the Twenty-Fifth International Joint Conference on Artificial Intelligence, pp. 1455\u20131461. AAAI Press/International Joint Conferences on Artificial Intelligence, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Erfani%2C%20Sarah%20Baktashmotlagh%2C%20Mahsa%20Moshtaghi%2C%20Masoud%20Nguyen%2C%20Vinh%20Robust%20domain%20generalisation%20by%20enforcing%20distribution%20invariance%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Erfani%2C%20Sarah%20Baktashmotlagh%2C%20Mahsa%20Moshtaghi%2C%20Masoud%20Nguyen%2C%20Vinh%20Robust%20domain%20generalisation%20by%20enforcing%20distribution%20invariance%202016"
+        },
+        {
+            "id": "Ganin_2014_a",
+            "entry": "Yaroslav Ganin and Victor Lempitsky. Unsupervised domain adaptation by backpropagation. arXiv preprint arXiv:1409.7495, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.7495"
+        },
+        {
+            "id": "Ganin_et+al_2016_a",
+            "entry": "Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo Larochelle, Francois Laviolette, Mario Marchand, and Victor Lempitsky. Domain-adversarial training of neural networks. The Journal of Machine Learning Research, 17(1):2096\u20132030, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ganin%2C%20Yaroslav%20Ustinova%2C%20Evgeniya%20Ajakan%2C%20Hana%20Germain%2C%20Pascal%20Domain-adversarial%20training%20of%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganin%2C%20Yaroslav%20Ustinova%2C%20Evgeniya%20Ajakan%2C%20Hana%20Germain%2C%20Pascal%20Domain-adversarial%20training%20of%20neural%20networks%202016"
+        },
+        {
+            "id": "Muhammad_et+al_2015_a",
+            "entry": "Muhammad Ghifary, W Bastiaan Kleijn, Mengjie Zhang, and David Balduzzi. Domain generalization for object recognition with multi-task autoencoders. In Proceedings of the IEEE international conference on computer vision, pp. 2551\u20132559, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Muhammad%20Ghifary%2C%20W.Bastiaan%20Kleijn%20Zhang%2C%20Mengjie%20Balduzzi%2C%20David%20Domain%20generalization%20for%20object%20recognition%20with%20multi-task%20autoencoders%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Muhammad%20Ghifary%2C%20W.Bastiaan%20Kleijn%20Zhang%2C%20Mengjie%20Balduzzi%2C%20David%20Domain%20generalization%20for%20object%20recognition%20with%20multi-task%20autoencoders%202015"
+        },
+        {
+            "id": "Gretton_et+al_2009_a",
+            "entry": "Arthur Gretton, Alexander J Smola, Jiayuan Huang, Marcel Schmittfull, Karsten M Borgwardt, and Bernhard Scholkopf. Covariate shift by kernel mean matching. Journal of Machine Learning Research, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gretton%2C%20Arthur%20Smola%2C%20Alexander%20J.%20Huang%2C%20Jiayuan%20Schmittfull%2C%20Marcel%20Covariate%20shift%20by%20kernel%20mean%20matching%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gretton%2C%20Arthur%20Smola%2C%20Alexander%20J.%20Huang%2C%20Jiayuan%20Schmittfull%2C%20Marcel%20Covariate%20shift%20by%20kernel%20mean%20matching%202009"
+        },
+        {
+            "id": "Haralick_1973_a",
+            "entry": "Robert M Haralick, Karthikeyan Shanmugam, et al. Textural features for image classification. IEEE Transactions on systems, man, and cybernetics, 1973.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Haralick%2C%20Robert%20M.%20Shanmugam%2C%20Karthikeyan%20Textural%20features%20for%20image%20classification%201973",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Haralick%2C%20Robert%20M.%20Shanmugam%2C%20Karthikeyan%20Textural%20features%20for%20image%20classification%201973"
+        },
+        {
+            "id": "He_1990_a",
+            "entry": "Dong-Chen He and Li Wang. Texture unit, texture spectrum, and texture analysis. IEEE transactions on Geoscience and Remote Sensing, 28(4):509\u2013512, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Dong-Chen%20Wang%2C%20Li%20Texture%20unit%2C%20texture%20spectrum%2C%20and%20texture%20analysis%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Dong-Chen%20Wang%2C%20Li%20Texture%20unit%2C%20texture%20spectrum%2C%20and%20texture%20analysis%201990"
+        },
+        {
+            "id": "Heckman_1977_a",
+            "entry": "James J Heckman. Sample selection bias as a specification error (with an application to the estimation of labor supply functions), 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heckman%2C%20James%20J.%20Sample%20selection%20bias%20as%20a%20specification%20error%20%28with%20an%20application%20to%20the%20estimation%20of%20labor%20supply%20functions%29%201977"
+        },
+        {
+            "id": "Hu_et+al_2016_a",
+            "entry": "Weihua Hu, Gang Nio, Issei Sato, and Masashi Sugiyama. Does distributionally robust supervised learning give robust classifiers? arXiv preprint arXiv:1611.02041, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02041"
+        },
+        {
+            "id": "Jo_2017_a",
+            "entry": "Jason Jo and Yoshua Bengio. Measuring the tendency of cnns to learn surface statistical regularities. arXiv preprint arXiv:1711.11561, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.11561"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kumagai_2018_a",
+            "entry": "Atsutoshi Kumagai and Tomoharu Iwata. Zero-shot domain adaptation without domain semantic descriptors. arXiv preprint arXiv:1807.02927, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.02927"
+        },
+        {
+            "id": "Lam_1996_a",
+            "entry": "SW-C Lam. Texture feature extraction using gray level gradient based co-occurence matrices. In Systems, Man, and Cybernetics, 1996., IEEE International Conference on, volume 1, pp. 267\u2013 271. IEEE, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lam%2C%20S.W.-C.%20Texture%20feature%20extraction%20using%20gray%20level%20gradient%20based%20co-occurence%20matrices%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lam%2C%20S.W.-C.%20Texture%20feature%20extraction%20using%20gray%20level%20gradient%20based%20co-occurence%20matrices%201996"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy M Hospedales. Deeper, broader and artier domain generalization. In Computer Vision (ICCV), 2017 IEEE International Conference on, pp. 5543\u2013 5551. IEEE, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Da%20Yang%2C%20Yongxin%20Song%2C%20Yi-Zhe%20Deeper%2C%20Timothy%20M.Hospedales%20broader%20and%20artier%20domain%20generalization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Da%20Yang%2C%20Yongxin%20Song%2C%20Yi-Zhe%20Deeper%2C%20Timothy%20M.Hospedales%20broader%20and%20artier%20domain%20generalization%202017"
+        },
+        {
+            "id": "Li_et+al_0000_a",
+            "entry": "Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy M Hospedales. Learning to generalize: Metalearning for domain generalization. arXiv preprint arXiv:1710.03463, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.03463"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Haoliang Li, Sinno Jialin Pan, Shiqi Wang, and Alex C Kot. Domain generalization with adversarial feature learning. In Proc. IEEE Conf. Comput. Vis. Pattern Recognit.(CVPR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Haoliang%20Pan%2C%20Sinno%20Jialin%20Wang%2C%20Shiqi%20Kot%2C%20Alex%20C.%20Domain%20generalization%20with%20adversarial%20feature%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Haoliang%20Pan%2C%20Sinno%20Jialin%20Wang%2C%20Shiqi%20Kot%2C%20Alex%20C.%20Domain%20generalization%20with%20adversarial%20feature%20learning%202018"
+        },
+        {
+            "id": "Li_et+al_2017_b",
+            "entry": "Wen Li, Zheng Xu, Dong Xu, Dengxin Dai, and Luc Van Gool. Domain generalization and adaptation using low rank exemplar svms. IEEE transactions on pattern analysis and machine intelligence, 2017c.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Wen%20Xu%2C%20Zheng%20Xu%2C%20Dong%20Dai%2C%20Dengxin%20Domain%20generalization%20and%20adaptation%20using%20low%20rank%20exemplar%20svms%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Wen%20Xu%2C%20Zheng%20Xu%2C%20Dong%20Dai%2C%20Dengxin%20Domain%20generalization%20and%20adaptation%20using%20low%20rank%20exemplar%20svms%202017"
+        },
+        {
+            "id": "Lipton_et+al_2018_a",
+            "entry": "Zachary C Lipton, Yu-Xiang Wang, and Alex Smola. Detecting and correcting for label shift with black box predictors. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lipton%2C%20Zachary%20C.%20Wang%2C%20Yu-Xiang%20Smola%2C%20Alex%20Detecting%20and%20correcting%20for%20label%20shift%20with%20black%20box%20predictors%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lipton%2C%20Zachary%20C.%20Wang%2C%20Yu-Xiang%20Smola%2C%20Alex%20Detecting%20and%20correcting%20for%20label%20shift%20with%20black%20box%20predictors%202018"
+        },
+        {
+            "id": "Mancini_et+al_2018_a",
+            "entry": "Massimiliano Mancini, Samuel Rota Bulo, Barbara Caputo, and Elisa Ricci. Best sources forward: domain generalization through source-specific nets. arXiv preprint arXiv:1806.05810, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.05810"
+        },
+        {
+            "id": "Manski_1977_a",
+            "entry": "Charles F Manski and Steven R Lerman. The estimation of choice probabilities from choice based samples. Econometrica: Journal of the Econometric Society, 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Manski%2C%20Charles%20F.%20Lerman%2C%20Steven%20R.%20The%20estimation%20of%20choice%20probabilities%20from%20choice%20based%20samples%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Manski%2C%20Charles%20F.%20Lerman%2C%20Steven%20R.%20The%20estimation%20of%20choice%20probabilities%20from%20choice%20based%20samples%201977"
+        },
+        {
+            "id": "Mansour_et+al_2009_a",
+            "entry": "Yishay Mansour, Mehryar Mohri, and Afshin Rostamizadeh. Domain adaptation: Learning bounds and algorithms. arXiv preprint arXiv:0902.3430, 2009.",
+            "arxiv_url": "https://arxiv.org/pdf/0902.3430"
+        },
+        {
+            "id": "Motiian_et+al_2017_a",
+            "entry": "Saeid Motiian, Marco Piccirilli, Donald A Adjeroh, and Gianfranco Doretto. Unified deep supervised domain adaptation and generalization. In The IEEE International Conference on Computer Vision (ICCV), volume 2, pp. 3, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Motiian%2C%20Saeid%20Piccirilli%2C%20Marco%20Adjeroh%2C%20Donald%20A.%20Doretto%2C%20Gianfranco%20Unified%20deep%20supervised%20domain%20adaptation%20and%20generalization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Motiian%2C%20Saeid%20Piccirilli%2C%20Marco%20Adjeroh%2C%20Donald%20A.%20Doretto%2C%20Gianfranco%20Unified%20deep%20supervised%20domain%20adaptation%20and%20generalization%202017"
+        },
+        {
+            "id": "Moyer_et+al_2018_a",
+            "entry": "Daniel Moyer, Shuyang Gao, Rob Brekelmans, Greg Ver Steeg, and Aram Galstyan. Evading the adversary in invariant representation. arXiv preprint arXiv:1805.09458, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09458"
+        },
+        {
+            "id": "Muandet_et+al_2013_a",
+            "entry": "Krikamol Muandet, David Balduzzi, and Bernhard Scholkopf. Domain generalization via invariant feature representation. In International Conference on Machine Learning, pp. 10\u201318, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Muandet%2C%20Krikamol%20Balduzzi%2C%20David%20Scholkopf%2C%20Bernhard%20Domain%20generalization%20via%20invariant%20feature%20representation%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Muandet%2C%20Krikamol%20Balduzzi%2C%20David%20Scholkopf%2C%20Bernhard%20Domain%20generalization%20via%20invariant%20feature%20representation%202013"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading digits in natural images with unsupervised feature learning. In NIPS workshop on deep learning and unsupervised feature learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Niu_et+al_2015_a",
+            "entry": "Li Niu, Wen Li, and Dong Xu. Multi-view domain generalization for visual recognition. In Proceedings of the IEEE International Conference on Computer Vision, pp. 4193\u20134201, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Niu%2C%20Li%20Li%2C%20Wen%20Xu%2C%20Dong%20Multi-view%20domain%20generalization%20for%20visual%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Niu%2C%20Li%20Li%2C%20Wen%20Xu%2C%20Dong%20Multi-view%20domain%20generalization%20for%20visual%20recognition%202015"
+        },
+        {
+            "id": "Rifai_et+al_0000_a",
+            "entry": "Salah Rifai, Pascal Vincent, Xavier Muller, Xavier Glorot, and Yoshua Bengio. Contractive autoencoders: Explicit invariance during feature extraction. In Proceedings of the 28th International Conference on International Conference on Machine Learning, pp. 833\u2013840.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rifai%2C%20Salah%20Vincent%2C%20Pascal%20Muller%2C%20Xavier%20Glorot%2C%20Xavier%20Contractive%20autoencoders%3A%20Explicit%20invariance%20during%20feature%20extraction",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rifai%2C%20Salah%20Vincent%2C%20Pascal%20Muller%2C%20Xavier%20Glorot%2C%20Xavier%20Contractive%20autoencoders%3A%20Explicit%20invariance%20during%20feature%20extraction"
+        },
+        {
+            "id": "Omnipress_2011_a",
+            "entry": "Omnipress, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omnipress%202011"
+        },
+        {
+            "id": "Omnipress_2012_a",
+            "entry": "Omnipress, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omnipress%202012"
+        },
+        {
+            "id": "Shankar_et+al_2018_a",
+            "entry": "Shiv Shankar, Vihari Piratla, Soumen Chakrabarti, Siddhartha Chaudhuri, Preethi Jyothi, and Sunita Sarawagi. Generalizing across domains via cross-gradient training. arXiv preprint arXiv:1804.10745, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.10745"
+        },
+        {
+            "id": "Shimodaira_2000_a",
+            "entry": "Hidetoshi Shimodaira. Improving predictive inference under covariate shift by weighting the loglikelihood function. Journal of statistical planning and inference, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shimodaira%2C%20Hidetoshi%20Improving%20predictive%20inference%20under%20covariate%20shift%20by%20weighting%20the%20loglikelihood%20function%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shimodaira%2C%20Hidetoshi%20Improving%20predictive%20inference%20under%20covariate%20shift%20by%20weighting%20the%20loglikelihood%20function%202000"
+        },
+        {
+            "id": "Storkey_2009_a",
+            "entry": "Amos Storkey. When training and test sets are different: characterizing learning transfer. Dataset shift in machine learning, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Storkey%2C%20Amos%20When%20training%20and%20test%20sets%20are%20different%3A%20characterizing%20learning%20transfer.%20Dataset%20shift%20in%20machine%20learning%202009"
+        },
+        {
+            "id": "Wang_2016_a",
+            "entry": "Haohan Wang, Aaksha Meghawat, Louis-Philippe Morency, and Eric P Xing. Selectadditive learning: Improving generalization in multimodal sentiment analysis. arXiv preprint arXiv:1609.05244, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.05244"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Haohan Wang, Bryon Aragam, and Eric P. Xing. Variable selection in heterogeneous datasets: A truncated-rank sparse linear mixed model with applications to genome-wide association studies. Bioinformatics and Biomedicine (BIBM), 2017 IEEE International Conference on, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Haohan%20Aragam%2C%20Bryon%20Xing%2C%20Eric%20P.%20Variable%20selection%20in%20heterogeneous%20datasets%3A%20A%20truncated-rank%20sparse%20linear%20mixed%20model%20with%20applications%20to%20genome-wide%20association%20studies%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Haohan%20Aragam%2C%20Bryon%20Xing%2C%20Eric%20P.%20Variable%20selection%20in%20heterogeneous%20datasets%3A%20A%20truncated-rank%20sparse%20linear%20mixed%20model%20with%20applications%20to%20genome-wide%20association%20studies%202017"
+        },
+        {
+            "id": "Weiss_2016_a",
+            "entry": "Karl Weiss, Taghi M Khoshgoftaar, and DingDing Wang. A survey of transfer learning. Journal of Big Data, 3(1):9, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weiss%2C%20Karl%20Khoshgoftaar%2C%20Taghi%20M.%20and%20DingDing%20Wang.%20A%20survey%20of%20transfer%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weiss%2C%20Karl%20Khoshgoftaar%2C%20Taghi%20M.%20and%20DingDing%20Wang.%20A%20survey%20of%20transfer%20learning%202016"
+        },
+        {
+            "id": "Zhang_et+al_2013_a",
+            "entry": "Kun Zhang, Bernhard Scholkopf, Krikamol Muandet, and Zhikun Wang. Domain adaptation under target and conditional shift. In International Conference on Machine Learning, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Kun%20Scholkopf%2C%20Bernhard%20Muandet%2C%20Krikamol%20Wang%2C%20Zhikun%20Domain%20adaptation%20under%20target%20and%20conditional%20shift%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Kun%20Scholkopf%2C%20Bernhard%20Muandet%2C%20Krikamol%20Wang%2C%20Zhikun%20Domain%20adaptation%20under%20target%20and%20conditional%20shift%202013"
+        }
+    ]
+}

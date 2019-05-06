@@ -1,0 +1,448 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DYNAMIC SPARSE GRAPH FOR EFFICIENT DEEP LEARNING",
+        "author": "Liu Liu, Lei Deng, Xing Hu, Maohua Zhu, Guoqi Li, Yufei Ding, Yuan Xie, 1Department of Electrical and Computer Engineering, University of California, Santa Barbara 2Department of Computer Science, University of California, Santa Barbara 3Center for Brain Inspired Computing Research, Department of Precision Instrument, Tsinghua University \u2217Equal contribution {liu liu, leideng, huxing, maohua, yuanxie}@ece.ucsb.edu yufeiding@cs.ucsb.edu liguoqi@mail.tsinghua.edu.cn",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1goBoR9F7"
+        },
+        "abstract": "We propose to execute deep neural networks (DNNs) with dynamic and sparse graph (DSG) structure for compressive memory and accelerative execution during both training and inference. The great success of DNNs motivates the pursuing of lightweight models for the deployment onto embedded devices. However, most of the previous studies optimize for inference while neglect training or even complicate it. Training is far more intractable, since (i) the neurons dominate the memory cost rather than the weights in inference; (ii) the dynamic activation makes previous sparse acceleration via one-off optimization on fixed weight invalid; (iii) batch normalization (BN) is critical for maintaining accuracy while its activation reorganization damages the sparsity. To address these issues, DSG activates only a small amount of neurons with high selectivity at each iteration via a dimensionreduction search and obtains the BN compatibility via a double-mask selection. Experiments show significant memory saving (1.7-4.5x) and operation reduction (2.3-4.4x) with little accuracy loss on various benchmarks."
+    },
+    "keywords": [
+        {
+            "term": "sparse graph",
+            "url": "https://en.wikipedia.org/wiki/sparse_graph"
+        },
+        {
+            "term": "computational cost",
+            "url": "https://en.wikipedia.org/wiki/computational_cost"
+        },
+        {
+            "term": "National Science Foundations",
+            "url": "https://en.wikipedia.org/wiki/National_Science_Foundation"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "batch normalization",
+            "url": "https://en.wikipedia.org/wiki/batch_normalization"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "Deep Neural Networks",
+        "DSG": "dynamic and sparse graph",
+        "BN": "batch normalization",
+        "VMM": "vector-matrix multiplication",
+        "FMs": "feature maps",
+        "JLL": "Johnson-Lindenstrauss Lemma",
+        "MLP": "multi-layered perceptron",
+        "NSF": "National Science Foundations"
+    },
+    "highlights": [
+        "Deep Neural Networks (DNNs) (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>) have been achieving impressive progress in a wide spectrum of domains (<a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\"><a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\">Simonyan & Zisserman, 2014</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; <a class=\"ref-link\" id=\"cAbdel-Hamid_et+al_2014_a\" href=\"#rAbdel-Hamid_et+al_2014_a\"><a class=\"ref-link\" id=\"cAbdel-Hamid_et+al_2014_a\" href=\"#rAbdel-Hamid_et+al_2014_a\">Abdel-Hamid et al, 2014</a></a>; <a class=\"ref-link\" id=\"cRedmon_2016_a\" href=\"#rRedmon_2016_a\"><a class=\"ref-link\" id=\"cRedmon_2016_a\" href=\"#rRedmon_2016_a\">Redmon & Farhadi, 2016</a></a>; <a class=\"ref-link\" id=\"cWu_et+al_2016_a\" href=\"#rWu_et+al_2016_a\"><a class=\"ref-link\" id=\"cWu_et+al_2016_a\" href=\"#rWu_et+al_2016_a\">Wu et al, 2016</a></a>), while the models are extremely memory- and compute-intensive",
+        "We propose a compressible and accelerative dynamic and sparse graph approach supported by dimension-reduction search and doublemask selection",
+        "We introduce a dimension-reduction lemma, named Johnson-Lindenstrauss Lemma (JLL) (<a class=\"ref-link\" id=\"cJohnson_1984_a\" href=\"#rJohnson_1984_a\">Johnson & Lindenstrauss, 1984</a>), to implement the dimension-reduction search with inner product preservation",
+        "To deal with the important but intractable batch normalization layer, we propose a double-mask selection method presented in Figure 2(c)",
+        "We provide a comprehensive analysis regarding the influence of sparsity on accuracy and explore the robustness of multi-layered perceptron and CNN, the graph selection strategy, the batch normalization compatibility, and the importance of width and depth",
+        "We propose dynamic and sparse graph structure for efficient Deep Neural Networks training and inference through a dimension-reduction search based sparsity forecast for compressive memory and accelerative execution and a double-mask selection for batch normalization compatibility without sacrificing model\u2019s expressive power"
+    ],
+    "key_statements": [
+        "Deep Neural Networks (DNNs) (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>) have been achieving impressive progress in a wide spectrum of domains (<a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\"><a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\">Simonyan & Zisserman, 2014</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; <a class=\"ref-link\" id=\"cAbdel-Hamid_et+al_2014_a\" href=\"#rAbdel-Hamid_et+al_2014_a\"><a class=\"ref-link\" id=\"cAbdel-Hamid_et+al_2014_a\" href=\"#rAbdel-Hamid_et+al_2014_a\">Abdel-Hamid et al, 2014</a></a>; <a class=\"ref-link\" id=\"cRedmon_2016_a\" href=\"#rRedmon_2016_a\"><a class=\"ref-link\" id=\"cRedmon_2016_a\" href=\"#rRedmon_2016_a\">Redmon & Farhadi, 2016</a></a>; <a class=\"ref-link\" id=\"cWu_et+al_2016_a\" href=\"#rWu_et+al_2016_a\"><a class=\"ref-link\" id=\"cWu_et+al_2016_a\" href=\"#rWu_et+al_2016_a\">Wu et al, 2016</a></a>), while the models are extremely memory- and compute-intensive",
+        "We propose a compressible and accelerative dynamic and sparse graph approach supported by dimension-reduction search and doublemask selection",
+        "We introduce a dimension-reduction lemma, named Johnson-Lindenstrauss Lemma (JLL) (<a class=\"ref-link\" id=\"cJohnson_1984_a\" href=\"#rJohnson_1984_a\">Johnson & Lindenstrauss, 1984</a>), to implement the dimension-reduction search with inner product preservation",
+        "To deal with the important but intractable batch normalization layer, we propose a double-mask selection method presented in Figure 2(c)",
+        "We provide a comprehensive analysis regarding the influence of sparsity on accuracy and explore the robustness of multi-layered perceptron and CNN, the graph selection strategy, the batch normalization compatibility, and the importance of width and depth",
+        "W/ batch normalization, double mask. This observation indicates the effectiveness of the proposed double-mask selection for simultaneously recovering the sparsity damaged by the batch normalization layer and maintaining the accuracy",
+        "We propose dynamic and sparse graph structure for efficient Deep Neural Networks training and inference through a dimension-reduction search based sparsity forecast for compressive memory and accelerative execution and a double-mask selection for batch normalization compatibility without sacrificing model\u2019s expressive power"
+    ],
+    "summary": [
+        "Deep Neural Networks (DNNs) (<a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\"><a class=\"ref-link\" id=\"cLecun_et+al_2015_a\" href=\"#rLecun_et+al_2015_a\">LeCun et al, 2015</a></a>) have been achieving impressive progress in a wide spectrum of domains (<a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\"><a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\">Simonyan & Zisserman, 2014</a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>; <a class=\"ref-link\" id=\"cAbdel-Hamid_et+al_2014_a\" href=\"#rAbdel-Hamid_et+al_2014_a\"><a class=\"ref-link\" id=\"cAbdel-Hamid_et+al_2014_a\" href=\"#rAbdel-Hamid_et+al_2014_a\">Abdel-Hamid et al, 2014</a></a>; <a class=\"ref-link\" id=\"cRedmon_2016_a\" href=\"#rRedmon_2016_a\"><a class=\"ref-link\" id=\"cRedmon_2016_a\" href=\"#rRedmon_2016_a\">Redmon & Farhadi, 2016</a></a>; <a class=\"ref-link\" id=\"cWu_et+al_2016_a\" href=\"#rWu_et+al_2016_a\"><a class=\"ref-link\" id=\"cWu_et+al_2016_a\" href=\"#rWu_et+al_2016_a\">Wu et al, 2016</a></a>), while the models are extremely memory- and compute-intensive.",
+        "By activating only a small amount of neurons with a high selectivity, we can significantly save memory and simplify computation with tolerable accuracy degradation.",
+        "If the output neurons have a small or negative activation value, i.e., not selective to current input sample, they can be removed for saving representational cost.",
+        "To avoid the costly VMM operations in the mentioned naive selection, we propose an efficient method, i.e., dimension reduction search, to estimate the importance of output neurons.",
+        "Besides the compressive sparse activations, the dimension-reduction search can further save a significant amount of expensive operations in the high-dimensional space.",
+        "The results are shown in Figure 5(c), in which we can see that our dimension-reduction search and the oracle one perform much better than the random selection under high sparsity condition.",
+        "Dimension-reduction search achieves nearly the same accuracy with the oracle top-k selection, which indicates the proposed random projection method can find an accurate activation estimation in the low-dimensional space.",
+        "Lower can approach the original inner product more accurately, that brings higher accuracy but at the cost of more computation for graph selection since less dimension reduction.",
+        "This observation indicates the effectiveness of the proposed double-mask selection for simultaneously recovering the sparsity damaged by the BN layer and maintaining the accuracy.",
+        "This owes to the high fidelity of inner product when we use random projection to reduce the data dimension, as shown in Figure 10(c).",
+        "On ResNet152, the extra mask overhead even offsets the compression benefit under 50% sparsity, whereas, we can still achieve up to 7.1x memory reduction for activations and 1.7x for overall memory.",
+        "The overhead of the dimension-reduction search in the low-dimensional space is relatively larger (<6.5% in training and <19.5% in inference) compared to the mask overhead in memory cost.",
+        "As shown in Figure 8(a), we evaluate the execution time of these layers after the dimension-reduction search on VGG8.",
+        "As shown in Figure 8(b), comparing with dense baseline, our approach can reduce training time with little accuracy loss.",
+        "The hashing search aims at finding neurons whose weight bases are similar to the input vector, which cannot estimate the inner product accurately will probably cause significant accuracy loss on large models.",
+        "We propose DSG structure for efficient DNN training and inference through a dimension-reduction search based sparsity forecast for compressive memory and accelerative execution and a double-mask selection for BN compatibility without sacrificing model\u2019s expressive power.",
+        "Through significantly boosting both forward and backward passes in training, as well as in inference, DSG promises efficient deep learning in both the cloud and edge"
+    ],
+    "headline": "We propose to execute deep neural networks with dynamic and sparse graph structure for compressive memory and accelerative execution during both training and inference",
+    "reference_links": [
+        {
+            "id": "Abdel-Hamid_et+al_2014_a",
+            "entry": "Ossama Abdel-Hamid, Abdel-rahman Mohamed, Hui Jiang, Li Deng, Gerald Penn, and Dong Yu. Convolutional neural networks for speech recognition. IEEE/ACM Transactions on audio, speech, and language processing, 22(10):1533\u20131545, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abdel-Hamid%2C%20Ossama%20Mohamed%2C%20Abdel-rahman%20Jiang%2C%20Hui%20Deng%2C%20Li%20Convolutional%20neural%20networks%20for%20speech%20recognition%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abdel-Hamid%2C%20Ossama%20Mohamed%2C%20Abdel-rahman%20Jiang%2C%20Hui%20Deng%2C%20Li%20Convolutional%20neural%20networks%20for%20speech%20recognition%202014"
+        },
+        {
+            "id": "Achlioptas_2001_a",
+            "entry": "Dimitris Achlioptas. Database-friendly random projections. In Proceedings of the twentieth ACM SIGMOD-SIGACT-SIGART symposium on Principles of database systems, pp. 274\u2013281. ACM, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Achlioptas%2C%20Dimitris%20Database-friendly%20random%20projections%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Achlioptas%2C%20Dimitris%20Database-friendly%20random%20projections%202001"
+        },
+        {
+            "id": "Ailon_2009_a",
+            "entry": "Nir Ailon and Bernard Chazelle. The fast johnson\u2013lindenstrauss transform and approximate nearest neighbors. SIAM Journal on computing, 39(1):302\u2013322, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ailon%2C%20Nir%20Chazelle%2C%20Bernard%20The%20fast%20johnson%E2%80%93lindenstrauss%20transform%20and%20approximate%20nearest%20neighbors%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ailon%2C%20Nir%20Chazelle%2C%20Bernard%20The%20fast%20johnson%E2%80%93lindenstrauss%20transform%20and%20approximate%20nearest%20neighbors%202009"
+        },
+        {
+            "id": "Alvarez_2017_a",
+            "entry": "Jose M Alvarez and Mathieu Salzmann. Compression-aware training of deep networks. In Advances in Neural Information Processing Systems, pp. 856\u2013867, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez%2C%20Jose%20M.%20Salzmann%2C%20Mathieu%20Compression-aware%20training%20of%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alvarez%2C%20Jose%20M.%20Salzmann%2C%20Mathieu%20Compression-aware%20training%20of%20deep%20networks%202017"
+        },
+        {
+            "id": "Ardakani_et+al_2016_a",
+            "entry": "Arash Ardakani, Carlo Condo, and Warren J Gross. Sparsely-connected neural networks: towards efficient vlsi implementation of deep neural networks. arXiv preprint arXiv:1611.01427, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01427"
+        },
+        {
+            "id": "Bingham_2001_a",
+            "entry": "Ella Bingham and Heikki Mannila. Random projection in dimensionality reduction: applications to image and text data. In Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining, pp. 245\u2013250. ACM, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bingham%2C%20Ella%20Mannila%2C%20Heikki%20Random%20projection%20in%20dimensionality%20reduction%3A%20applications%20to%20image%20and%20text%20data%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bingham%2C%20Ella%20Mannila%2C%20Heikki%20Random%20projection%20in%20dimensionality%20reduction%3A%20applications%20to%20image%20and%20text%20data%202001"
+        },
+        {
+            "id": "Chin_et+al_2018_a",
+            "entry": "Ting-Wu Chin, Cha Zhang, and Diana Marculescu. Layer-compensated pruning for resourceconstrained convolutional neural networks. arXiv preprint arXiv:1810.00518, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.00518"
+        },
+        {
+            "id": "Courbariaux_et+al_2016_a",
+            "entry": "Matthieu Courbariaux, Itay Hubara, Daniel Soudry, Ran El-Yaniv, and Yoshua Bengio. Binarized neural networks: Training deep neural networks with weights and activations constrained to+ 1 or-1. arXiv preprint arXiv:1602.02830, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02830"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, pp. 248\u2013255. IEEE, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Deng_et+al_2018_a",
+            "entry": "Lei Deng, Peng Jiao, Jing Pei, Zhenzhi Wu, and Guoqi Li. Gxnor-net: Training deep neural networks with ternary weights and activations without full-precision memory under a unified discretization framework. Neural Networks, 100:49\u201358, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Lei%20Jiao%2C%20Peng%20Pei%2C%20Jing%20Wu%2C%20Zhenzhi%20Gxnor-net%3A%20Training%20deep%20neural%20networks%20with%20ternary%20weights%20and%20activations%20without%20full-precision%20memory%20under%20a%20unified%20discretization%20framework%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Lei%20Jiao%2C%20Peng%20Pei%2C%20Jing%20Wu%2C%20Zhenzhi%20Gxnor-net%3A%20Training%20deep%20neural%20networks%20with%20ternary%20weights%20and%20activations%20without%20full-precision%20memory%20under%20a%20unified%20discretization%20framework%202018"
+        },
+        {
+            "id": "Garipov_et+al_2016_a",
+            "entry": "Timur Garipov, Dmitry Podoprikhin, Alexander Novikov, and Dmitry Vetrov. Ultimate tensorization: compressing convolutional and fc layers alike. arXiv preprint arXiv:1611.03214, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03214"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Dollar, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch sgd: training imagenet in 1 hour. arXiv preprint arXiv:1706.02677, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "Han_et+al_2015_a",
+            "entry": "Song Han, Huizi Mao, and William J Dally. Deep compression: Compressing deep neural networks with pruning, trained quantization and huffman coding. arXiv preprint arXiv:1510.00149, 2015a.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "Han_et+al_2015_b",
+            "entry": "Song Han, Jeff Pool, John Tran, and William Dally. Learning both weights and connections for efficient neural network. In Advances in neural information processing systems, pp. 1135\u20131143, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Pool%2C%20Jeff%20Tran%2C%20John%20Dally%2C%20William%20Learning%20both%20weights%20and%20connections%20for%20efficient%20neural%20network%202015"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Xingyu Liu, Huizi Mao, Jing Pu, Ardavan Pedram, Mark A Horowitz, and William J Dally. Eie: efficient inference engine on compressed deep neural network. In Computer Architecture (ISCA), 2016 ACM/IEEE 43rd Annual International Symposium on, pp. 243\u2013254. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20Eie%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20Eie%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016"
+        },
+        {
+            "id": "Han_et+al_2017_a",
+            "entry": "Song Han, Junlong Kang, Huizi Mao, Yiming Hu, Xin Li, Yubin Li, Dongliang Xie, Hong Luo, Song Yao, Yu Wang, et al. Ese: Efficient speech recognition engine with sparse lstm on fpga. In Proceedings of the 2017 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays, pp. 75\u201384. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Kang%2C%20Junlong%20Mao%2C%20Huizi%20Hu%2C%20Yiming%20Ese%3A%20Efficient%20speech%20recognition%20engine%20with%20sparse%20lstm%20on%20fpga%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Kang%2C%20Junlong%20Mao%2C%20Huizi%20Hu%2C%20Yiming%20Ese%3A%20Efficient%20speech%20recognition%20engine%20with%20sparse%20lstm%20on%20fpga%202017"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_0000_a",
+            "entry": "Yang He, Guoliang Kang, Xuanyi Dong, Yanwei Fu, and Yi Yang. Soft filter pruning for accelerating deep convolutional neural networks. arXiv preprint arXiv:1808.06866, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.06866"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Yihui He, Xiangyu Zhang, and Jian Sun. Channel pruning for accelerating very deep neural networks. In International Conference on Computer Vision (ICCV), volume 2, pp. 6, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "He_et+al_0000_b",
+            "entry": "Yihui He, Ji Lin, Zhijian Liu, Hanrui Wang, Li-Jia Li, and Song Han. Amc: Automl for model compression and acceleration on mobile devices. In Proceedings of the European Conference on Computer Vision (ECCV), pp. 784\u2013800, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Lin%2C%20Ji%20Liu%2C%20Zhijian%20Wang%2C%20Hanrui%20Amc%3A%20Automl%20for%20model%20compression%20and%20acceleration%20on%20mobile%20devices",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Lin%2C%20Ji%20Liu%2C%20Zhijian%20Wang%2C%20Hanrui%20Amc%3A%20Automl%20for%20model%20compression%20and%20acceleration%20on%20mobile%20devices"
+        },
+        {
+            "id": "Hu_et+al_2018_a",
+            "entry": "Yiming Hu, Siyang Sun, Jianquan Li, Xingang Wang, and Qingyi Gu. A novel channel pruning method for deep neural network compression. arXiv preprint arXiv:1805.11394, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11394"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "Jain_et+al_2018_a",
+            "entry": "Animesh Jain, Amar Phanishayee, Jason Mars, Lingjia Tang, and Gennady Pekhimenko. Gist: Efficient data encoding for deep neural network training. In 2018 ACM/IEEE 45th Annual International Symposium on Computer Architecture (ISCA), pp. 776\u2013789. IEEE, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jain%2C%20Animesh%20Phanishayee%2C%20Amar%20Mars%2C%20Jason%20Tang%2C%20Lingjia%20Gist%3A%20Efficient%20data%20encoding%20for%20deep%20neural%20network%20training%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jain%2C%20Animesh%20Phanishayee%2C%20Amar%20Mars%2C%20Jason%20Tang%2C%20Lingjia%20Gist%3A%20Efficient%20data%20encoding%20for%20deep%20neural%20network%20training%202018"
+        },
+        {
+            "id": "Johnson_1984_a",
+            "entry": "William B Johnson and Joram Lindenstrauss. Extensions of lipschitz mappings into a hilbert space. Contemporary mathematics, 26(189-206):1, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20William%20B.%20Lindenstrauss%2C%20Joram%20Extensions%20of%20lipschitz%20mappings%20into%20a%20hilbert%20space%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20William%20B.%20Lindenstrauss%2C%20Joram%20Extensions%20of%20lipschitz%20mappings%20into%20a%20hilbert%20space%201984"
+        },
+        {
+            "id": "Kakade_2009_a",
+            "entry": "Instructors Sham Kakade and Greg Shakhnarovich. Cmsc 35900 (spring 2009) large scale learning lecture: 2 random projections, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kakade%2C%20Instructors%20Sham%20Shakhnarovich%2C%20Greg%20Cmsc%2035900%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kakade%2C%20Instructors%20Sham%20Shakhnarovich%2C%20Greg%20Cmsc%2035900%202009"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pp. 1097\u20131105, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lecun_et+al_2015_a",
+            "entry": "Yann LeCun, Yoshua Bengio, and Geoffrey Hinton. Deep learning. nature, 521(7553):436, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015"
+        },
+        {
+            "id": "Leng_et+al_2017_a",
+            "entry": "Cong Leng, Hao Li, Shenghuo Zhu, and Rong Jin. Extremely low bit neural network: Squeeze the last bit out with admm. arXiv preprint arXiv:1707.09870, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.09870"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. Pruning filters for efficient convnets. arXiv preprint arXiv:1608.08710, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1608.08710"
+        },
+        {
+            "id": "Li_et+al_2006_a",
+            "entry": "Ping Li, Trevor J Hastie, and Kenneth W Church. Very sparse random projections. In Proceedings of the 12th ACM SIGKDD international conference on Knowledge discovery and data mining, pp. 287\u2013296. ACM, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Ping%20Hastie%2C%20Trevor%20J.%20Church%2C%20Kenneth%20W.%20Very%20sparse%20random%20projections%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Ping%20Hastie%2C%20Trevor%20J.%20Church%2C%20Kenneth%20W.%20Very%20sparse%20random%20projections%202006"
+        },
+        {
+            "id": "Liang_et+al_2018_a",
+            "entry": "Ling Liang, Lei Deng, Yueling Zeng, Xing Hu, Yu Ji, Xin Ma, Guoqi Li, and Yuan Xie. Crossbaraware neural network pruning. IEEE Access, 6:58324\u201358337, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Ling%20Deng%2C%20Lei%20Zeng%2C%20Yueling%20Hu%2C%20Xing%20Crossbaraware%20neural%20network%20pruning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liang%2C%20Ling%20Deng%2C%20Lei%20Zeng%2C%20Yueling%20Hu%2C%20Xing%20Crossbaraware%20neural%20network%20pruning%202018"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Yingyan Lin, Charbel Sakr, Yongjune Kim, and Naresh Shanbhag. Predictivenet: An energyefficient convolutional neural network via zero prediction. In Circuits and Systems (ISCAS), 2017 IEEE International Symposium on, pp. 1\u20134. IEEE, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Yingyan%20Sakr%2C%20Charbel%20Kim%2C%20Yongjune%20Shanbhag%2C%20Naresh%20Predictivenet%3A%20An%20energyefficient%20convolutional%20neural%20network%20via%20zero%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Yingyan%20Sakr%2C%20Charbel%20Kim%2C%20Yongjune%20Shanbhag%2C%20Naresh%20Predictivenet%3A%20An%20energyefficient%20convolutional%20neural%20network%20via%20zero%20prediction%202017"
+        },
+        {
+            "id": "Lin_et+al_0000_a",
+            "entry": "Yujun Lin, Song Han, Huizi Mao, Yu Wang, and William J Dally. Deep gradient compression: Reducing the communication bandwidth for distributed training. arXiv preprint arXiv:1712.01887, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.01887"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Zhuang Liu, Jianguo Li, Zhiqiang Shen, Gao Huang, Shoumeng Yan, and Changshui Zhang. Learning efficient convolutional networks through network slimming. In 2017 IEEE International Conference on Computer Vision (ICCV), pp. 2755\u20132763. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017"
+        },
+        {
+            "id": "Luo_2018_a",
+            "entry": "Jian-Hao Luo and Jianxin Wu. Autopruner: An end-to-end trainable filter pruning method for efficient deep model inference. arXiv preprint arXiv:1805.08941, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.08941"
+        },
+        {
+            "id": "Luo_et+al_2017_a",
+            "entry": "Jian-Hao Luo, Jianxin Wu, and Weiyao Lin. Thinet: A filter level pruning method for deep neural network compression. arXiv preprint arXiv:1707.06342, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06342"
+        },
+        {
+            "id": "Mckinstry_et+al_2018_a",
+            "entry": "Jeffrey L McKinstry, Steven K Esser, Rathinakumar Appuswamy, Deepika Bablani, John V Arthur, Izzet B Yildiz, and Dharmendra S Modha. Discovering low-precision networks close to fullprecision networks for efficient embedded inference. arXiv preprint arXiv:1809.04191, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.04191"
+        },
+        {
+            "id": "Mishkin_2015_a",
+            "entry": "Dmytro Mishkin and Jiri Matas. All you need is a good init. arXiv preprint arXiv:1511.06422, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06422"
+        },
+        {
+            "id": "Molchanov_et+al_2016_a",
+            "entry": "Pavlo Molchanov, Stephen Tyree, Tero Karras, Timo Aila, and Jan Kautz. Pruning convolutional neural networks for resource efficient inference. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Molchanov%2C%20Pavlo%20Tyree%2C%20Stephen%20Karras%2C%20Tero%20Aila%2C%20Timo%20Pruning%20convolutional%20neural%20networks%20for%20resource%20efficient%20inference%202016"
+        },
+        {
+            "id": "Morcos_et+al_2018_a",
+            "entry": "Ari S Morcos, David GT Barrett, Neil C Rabinowitz, and Matthew Botvinick. On the importance of single directions for generalization. arXiv preprint arXiv:1803.06959, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.06959"
+        },
+        {
+            "id": "Novikov_et+al_2015_a",
+            "entry": "Alexander Novikov, Dmitrii Podoprikhin, Anton Osokin, and Dmitry P Vetrov. Tensorizing neural networks. In Advances in Neural Information Processing Systems, pp. 442\u2013450, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Novikov%2C%20Alexander%20Podoprikhin%2C%20Dmitrii%20Osokin%2C%20Anton%20Vetrov%2C%20Dmitry%20P.%20Tensorizing%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Novikov%2C%20Alexander%20Podoprikhin%2C%20Dmitrii%20Osokin%2C%20Anton%20Vetrov%2C%20Dmitry%20P.%20Tensorizing%20neural%20networks%202015"
+        },
+        {
+            "id": "Redmon_2016_a",
+            "entry": "Joseph Redmon and Ali Farhadi. Yolo9000: better, faster, stronger. arXiv preprint, 1612, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Redmon%2C%20Joseph%20Farhadi%2C%20Ali%20Yolo9000%3A%20better%2C%20faster%2C%20stronger%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Redmon%2C%20Joseph%20Farhadi%2C%20Ali%20Yolo9000%3A%20better%2C%20faster%2C%20stronger%202016"
+        },
+        {
+            "id": "Minsoo_2018_a",
+            "entry": "Minsoo Rhu, Mike O\u2019Connor, Niladrish Chatterjee, Jeff Pool, Youngeun Kwon, and Stephen W Keckler. Compressing dma engine: Leveraging activation sparsity for training deep neural networks. In High Performance Computer Architecture (HPCA), 2018 IEEE International Symposium on, pp. 78\u201391. IEEE, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Minsoo%20Rhu%20Mike%20OConnor%20Niladrish%20Chatterjee%20Jeff%20Pool%20Youngeun%20Kwon%20and%20Stephen%20W%20Keckler%20Compressing%20dma%20engine%20Leveraging%20activation%20sparsity%20for%20training%20deep%20neural%20networks%20In%20High%20Performance%20Computer%20Architecture%20HPCA%202018%20IEEE%20International%20Symposium%20on%20pp%207891%20IEEE%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Minsoo%20Rhu%20Mike%20OConnor%20Niladrish%20Chatterjee%20Jeff%20Pool%20Youngeun%20Kwon%20and%20Stephen%20W%20Keckler%20Compressing%20dma%20engine%20Leveraging%20activation%20sparsity%20for%20training%20deep%20neural%20networks%20In%20High%20Performance%20Computer%20Architecture%20HPCA%202018%20IEEE%20International%20Symposium%20on%20pp%207891%20IEEE%202018"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Smith_et+al_2017_a",
+            "entry": "Samuel L Smith, Pieter-Jan Kindermans, and Quoc V Le. Don\u2019t decay the learning rate, increase the batch size. arXiv preprint arXiv:1711.00489, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00489"
+        },
+        {
+            "id": "Spring_2017_a",
+            "entry": "Ryan Spring and Anshumali Shrivastava. Scalable and sustainable deep learning via randomized hashing. In Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 445\u2013454. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Spring%2C%20Ryan%20Shrivastava%2C%20Anshumali%20Scalable%20and%20sustainable%20deep%20learning%20via%20randomized%20hashing%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Spring%2C%20Ryan%20Shrivastava%2C%20Anshumali%20Scalable%20and%20sustainable%20deep%20learning%20via%20randomized%20hashing%202017"
+        },
+        {
+            "id": "Sun_et+al_2017_a",
+            "entry": "Xu Sun, Xuancheng Ren, Shuming Ma, and Houfeng Wang. meprop: Sparsified back propagation for accelerated deep learning with reduced overfitting. arXiv preprint arXiv:1706.06197, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.06197"
+        },
+        {
+            "id": "Vijaykumar_et+al_2015_a",
+            "entry": "Nandita Vijaykumar, Gennady Pekhimenko, Adwait Jog, Abhishek Bhowmick, Rachata Ausavarungnirun, Chita Das, Mahmut Kandemir, Todd C Mowry, and Onur Mutlu. A case for core-assisted bottleneck acceleration in gpus: enabling flexible data compression with assist warps. In ACM SIGARCH Computer Architecture News, volume 43, pp. 41\u201353. ACM, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vijaykumar%2C%20Nandita%20Pekhimenko%2C%20Gennady%20Jog%2C%20Adwait%20Bhowmick%2C%20Abhishek%20and%20Onur%20Mutlu.%20A%20case%20for%20core-assisted%20bottleneck%20acceleration%20in%20gpus%3A%20enabling%20flexible%20data%20compression%20with%20assist%20warps%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vijaykumar%2C%20Nandita%20Pekhimenko%2C%20Gennady%20Jog%2C%20Adwait%20Bhowmick%2C%20Abhishek%20and%20Onur%20Mutlu.%20A%20case%20for%20core-assisted%20bottleneck%20acceleration%20in%20gpus%3A%20enabling%20flexible%20data%20compression%20with%20assist%20warps%202015"
+        },
+        {
+            "id": "Vu_2016_a",
+            "entry": "Khac Ky Vu. Random projection for high-dimensional optimization. PhD thesis, Universite ParisSaclay, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vu%2C%20Khac%20Ky%20Random%20projection%20for%20high-dimensional%20optimization%202016"
+        },
+        {
+            "id": "Wen_et+al_2016_a",
+            "entry": "Wei Wen, Chunpeng Wu, Yandan Wang, Yiran Chen, and Hai Li. Learning structured sparsity in deep neural networks. In Advances in Neural Information Processing Systems, pp. 2074\u20132082, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Wen_et+al_2017_a",
+            "entry": "Wei Wen, Cong Xu, Feng Yan, Chunpeng Wu, Yandan Wang, Yiran Chen, and Hai Li. Terngrad: Ternary gradients to reduce communication in distributed deep learning. In Advances in Neural Information Processing Systems, pp. 1508\u20131518, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Wei%20Xu%2C%20Cong%20Yan%2C%20Feng%20Wu%2C%20Chunpeng%20Terngrad%3A%20Ternary%20gradients%20to%20reduce%20communication%20in%20distributed%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Wei%20Xu%2C%20Cong%20Yan%2C%20Feng%20Wu%2C%20Chunpeng%20Terngrad%3A%20Ternary%20gradients%20to%20reduce%20communication%20in%20distributed%20deep%20learning%202017"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Shuang Wu, Guoqi Li, Feng Chen, and Luping Shi. Training and inference with integers in deep neural networks. arXiv preprint arXiv:1802.04680, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04680"
+        },
+        {
+            "id": "Wu_et+al_2016_a",
+            "entry": "Yonghui Wu, Mike Schuster, Zhifeng Chen, Quoc V Le, Mohammad Norouzi, Wolfgang Macherey, Maxim Krikun, Yuan Cao, Qin Gao, Klaus Macherey, et al. Google\u2019s neural machine translation system: Bridging the gap between human and machine translation. arXiv preprint arXiv:1609.08144, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.08144"
+        },
+        {
+            "id": "Wu_2018_b",
+            "entry": "Yuxin Wu and Kaiming He. Group normalization. arXiv preprint arXiv:1803.08494, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.08494"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Han Xiao, Kashif Rasul, and Roland Vollgraf. Fashion-mnist: a novel image dataset for benchmarking machine learning algorithms. arXiv preprint arXiv:1708.07747, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1708.07747"
+        },
+        {
+            "id": "Xue_et+al_2014_a",
+            "entry": "Jian Xue, Jinyu Li, Dong Yu, Mike Seltzer, and Yifan Gong. Singular value decomposition based low-footprint speaker adaptation and personalization for deep neural network. In Acoustics, Speech and Signal Processing (ICASSP), 2014 IEEE International Conference on, pp. 6359\u2013 6363. IEEE, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xue%2C%20Jian%20Li%2C%20Jinyu%20Yu%2C%20Dong%20Seltzer%2C%20Mike%20Singular%20value%20decomposition%20based%20low-footprint%20speaker%20adaptation%20and%20personalization%20for%20deep%20neural%20network%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xue%2C%20Jian%20Li%2C%20Jinyu%20Yu%2C%20Dong%20Seltzer%2C%20Mike%20Singular%20value%20decomposition%20based%20low-footprint%20speaker%20adaptation%20and%20personalization%20for%20deep%20neural%20network%202014"
+        },
+        {
+            "id": "Yang_et+al_2017_a",
+            "entry": "Yinchong Yang, Denis Krompass, and Volker Tresp. Tensor-train recurrent neural networks for video classification. arXiv preprint arXiv:1707.01786, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.01786"
+        },
+        {
+            "id": "Ye_et+al_2018_a",
+            "entry": "Jianbo Ye, Xin Lu, Zhe Lin, and James Z Wang. Rethinking the smaller-norm-less-informative assumption in channel pruning of convolution layers. arXiv preprint arXiv:1802.00124, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.00124"
+        },
+        {
+            "id": "You_et+al_2017_a",
+            "entry": "Yang You, Zhao Zhang, C Hsieh, James Demmel, and Kurt Keutzer. Imagenet training in minutes. CoRR, abs/1709.05011, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.05011"
+        },
+        {
+            "id": "Zagoruyko_2016_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Wide residual networks. arXiv preprint arXiv:1605.07146, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.07146"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Tianyun Zhang, Kaiqi Zhang, Shaokai Ye, Jiayu Li, Jian Tang, Wujie Wen, Xue Lin, Makan Fardad, and Yanzhi Wang. Adam-admm: A unified, systematic framework of structured weight pruning for dnns. arXiv preprint arXiv:1807.11091, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.11091"
+        },
+        {
+            "id": "Zhang_et+al_2000_a",
+            "entry": "Youtao Zhang, Jun Yang, and Rajiv Gupta. Frequent value locality and value-centric data cache design. ACM SIGPLAN Notices, 35(11):150\u2013159, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Youtao%20Yang%2C%20Jun%20Gupta%2C%20Rajiv%20Frequent%20value%20locality%20and%20value-centric%20data%20cache%20design%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Youtao%20Yang%2C%20Jun%20Gupta%2C%20Rajiv%20Frequent%20value%20locality%20and%20value-centric%20data%20cache%20design%202000"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Shuchang Zhou, Yuxin Wu, Zekun Ni, Xinyu Zhou, He Wen, and Yuheng Zou. Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients. arXiv preprint arXiv:1606.06160, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.06160"
+        }
+    ]
+}

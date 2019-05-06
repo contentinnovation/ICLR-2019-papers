@@ -1,0 +1,537 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Multiple regression genetic programming",
+        "author": "Ignacio Arnaldo, Krzysztof Krawiec, Una-May O'Reilly",
+        "date": 2014,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Hke-JhA9Y7",
+            "doi": "10.1145/2576768.2598291"
+        },
+        "journal": "Proceedings of the 2014 conference on Genetic and evolutionary computation - GECCO '14",
+        "abstract": "We propose and study a method for learning interpretable representations for the task of regression. Features are represented as networks of multi-type expression trees comprised of activation functions common in neural networks in addition to other elementary functions. Differentiable features are trained via gradient descent, and the performance of features in a linear model is used to weight the rate of change among subcomponents of each representation. The search process maintains an archive of representations with accuracy-complexity trade-offs to assist in generalization and interpretation. We compare several stochastic optimization approaches within this framework. We benchmark these variants on 100 open-source regression problems in comparison to state-of-the-art machine learning approaches. Our main finding is that this approach produces the highest average test scores across problems while producing representations that are orders of magnitude smaller than the next best performing method (gradient boosting). We also report a negative result in which attempts to directly optimize the disentanglement of the representation result in more highly correlated features."
+    },
+    "keywords": [
+        {
+            "term": "simulated annealing",
+            "url": "https://en.wikipedia.org/wiki/simulated_annealing"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "neural architecture search",
+            "url": "https://en.wikipedia.org/wiki/neural_architecture_search"
+        },
+        {
+            "term": "architecture search",
+            "url": "https://en.wikipedia.org/wiki/architecture_search"
+        },
+        {
+            "term": "cross validation",
+            "url": "https://en.wikipedia.org/wiki/cross_validation"
+        },
+        {
+            "term": "symbolic regression",
+            "url": "https://en.wikipedia.org/wiki/symbolic_regression"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "evolutionary computation",
+            "url": "https://en.wikipedia.org/wiki/evolutionary_computation"
+        },
+        {
+            "term": "genetic programming",
+            "url": "https://en.wikipedia.org/wiki/genetic_programming"
+        },
+        {
+            "term": "network architecture",
+            "url": "https://en.wikipedia.org/wiki/network_architecture"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        },
+        {
+            "term": "condition number",
+            "url": "https://en.wikipedia.org/wiki/condition_number"
+        }
+    ],
+    "abbreviations": {
+        "ML": "machine learning",
+        "NN": "neural networks",
+        "SO": "stochastic optimization",
+        "EC": "evolutionary computation",
+        "FEAT": "feature engineering automation tool",
+        "SA": "simulated annealing",
+        "CN": "condition number",
+        "NAS": "neural architecture search",
+        "CV": "cross validation"
+    },
+    "highlights": [
+        "The performance of a machine learning (ML) model depends primarily on the data representation used in training (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\"><a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al, 2013</a></a>), and for this reason the representational capacity of neural networks (NN) is considered a central factor in their success in many applications (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\">Goodfellow et al, 2016</a></a></a>)",
+        "This paper proposes a feature engineering archive tool that optimizes neural network architectures by representing them as syntax trees",
+        "We conduct a thorough analysis of this method applied to the task of regression in comparison to state-of-the-art methods",
+        "The results suggest that feature engineering automation tool achieves state-of-the-art performance on regression tasks while producing representations that are significantly less complex than those resulting from performing methods",
+        "This improvement comes at an additional computational cost, limited in this study to 60 minutes per training instance",
+        "We expect this limitation to be reasonable for many applications where intelligibility is the prime motivation"
+    ],
+    "key_statements": [
+        "The performance of a machine learning (ML) model depends primarily on the data representation used in training (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al, 2013</a>), and for this reason the representational capacity of neural networks (NN) is considered a central factor in their success in many applications (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\">Goodfellow et al, 2016</a>)",
+        "In Section 2, we introduce a new method for optimizing representations that we call the feature engineering automation tool (FEAT)1",
+        "In section 4 and 5, we describe and conduct an experiment that benchmarks feature engineering automation tool against state-of-the-art machine learning methods on 100 open-source regression problems",
+        "feature engineering automation tool is related to SR approaches to feature engineering (<a class=\"ref-link\" id=\"cKrawiec_2002_a\" href=\"#rKrawiec_2002_a\">Krawiec, 2002</a>; Arnaldo et al, 2014; La Cava & Moore, 2017; La Cava et al, 2018b; Mu\u00f1oz et al, 2018) that use evolutionary computation to search for possible representations and couple with an machine learning model to handle the parametrization of the representations",
+        "feature engineering automation tool incorporates two elements of neural networks learning to improve its representational capacity: activation functions commonly used in neural networks and edge-based encoding of weights",
+        "Our goals with the experiment are to 1) robustly compare feature engineering automation tool to state-of-the-art regression methods, including hyperparameter optimization of feedforward neural networks; 2) characterize the complexity of the models; and 3) assess whether disentanglement objectives lead to less correlated representations",
+        "To quantify the \"entanglement\" of the feature spaces, we report Eqn 5 in the raw data and in the final hidden layer of feature engineering automation tool and MLP models",
+        "The score statistics for each method are shown in Fig. 3 across all datasets",
+        "Full statistical comparisons are reported in Appendix A.3",
+        "As measured by the number of nodes in the final solutions, the models produced by feature engineering automation tool are significantly less complex than XGBoost, RF, and MLP, as shown in Fig. 4 (p<1e-16)",
+        "The selected for representations produced by different model is shown on the right, with the features sorted ac- methods",
+        "This paper proposes a feature engineering archive tool that optimizes neural network architectures by representing them as syntax trees",
+        "We conduct a thorough analysis of this method applied to the task of regression in comparison to state-of-the-art methods",
+        "The results suggest that feature engineering automation tool achieves state-of-the-art performance on regression tasks while producing representations that are significantly less complex than those resulting from performing methods",
+        "This improvement comes at an additional computational cost, limited in this study to 60 minutes per training instance",
+        "We expect this limitation to be reasonable for many applications where intelligibility is the prime motivation"
+    ],
+    "summary": [
+        "The performance of a machine learning (ML) model depends primarily on the data representation used in training (<a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\"><a class=\"ref-link\" id=\"cBengio_et+al_2013_a\" href=\"#rBengio_et+al_2013_a\">Bengio et al, 2013</a></a>), and for this reason the representational capacity of neural networks (NN) is considered a central factor in their success in many applications (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2016_a\" href=\"#rGoodfellow_et+al_2016_a\">Goodfellow et al, 2016</a></a></a>).",
+        "In Section 2, we introduce a new method for optimizing representations that we call the feature engineering automation tool (FEAT)1.",
+        "We use Eqn 4 to drive search, our experimental comparisons with other algorithms rely on the node counts of the final models for benchmarking interpretability of different methods.",
+        "In the case of regression, a disentangled representation ideally contains a minimal set of features, each corresponding to a separate latent factor of variation, and each orthogonal to each other.",
+        "NAS methods vary in approach, including for example parameter sharing (<a class=\"ref-link\" id=\"cPham_et+al_2018_a\" href=\"#rPham_et+al_2018_a\">Pham et al, 2018</a>), sequential model-based optimization (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al, 2017</a>), reinforcement learning (<a class=\"ref-link\" id=\"cZoph_2016_a\" href=\"#rZoph_2016_a\">Zoph & Le, 2016</a>), and greedy heuristic strategies (<a class=\"ref-link\" id=\"cCortes_et+al_2016_a\" href=\"#rCortes_et+al_2016_a\">Cortes et al, 2016</a>).",
+        "FEAT is related to SR approaches to feature engineering (<a class=\"ref-link\" id=\"cKrawiec_2002_a\" href=\"#rKrawiec_2002_a\">Krawiec, 2002</a>; Arnaldo et al, 2014; La Cava & Moore, 2017; La Cava et al, 2018b; Mu\u00f1oz et al, 2018) that use EC to search for possible representations and couple with an ML model to handle the parametrization of the representations.",
+        "FEAT uses multiple type representations, and can learn continuous and rule-based features within a single representation, unlike previous methods.",
+        "FEAT incorporates two elements of NN learning to improve its representational capacity: activation functions commonly used in NN and edge-based encoding of weights.",
+        "Our goals with the experiment are to 1) robustly compare FEAT to state-of-the-art regression methods, including hyperparameter optimization of feedforward NNs; 2) characterize the complexity of the models; and 3) assess whether disentanglement objectives lead to less correlated representations.",
+        "We count the number of nodes in the final model produced by each method for each trial on each dataset.",
+        "To quantify the \"entanglement\" of the feature spaces, we report Eqn 5 in the raw data and in the final hidden layer of FEAT and MLP models.",
+        "As measured by the number of nodes in the final solutions, the models produced by FEAT are significantly less complex than XGBoost, RF, and MLP, as shown in Fig. 4 (p<1e-16).",
+        "0.75 to training and validation scores for each archived representation with a square denoting the final model selection.",
+        "The selected for representations produced by different model is shown on the right, with the features sorted ac- methods.",
+        "FEAT uses model weights as feedback to guide network variation in an EC optimization algorithm.",
+        "The results suggest that FEAT achieves state-of-the-art performance on regression tasks while producing representations that are significantly less complex than those resulting from performing methods."
+    ],
+    "headline": "We propose and study a method for learning interpretable representations for the task of regression",
+    "reference_links": [
+        {
+            "id": "Ignacio_2014_a",
+            "entry": "Ignacio Arnaldo, Krzysztof Krawiec, and Una-May O\u2019Reilly. Multiple regression genetic programming. In Proceedings of the 2014 conference on Genetic and evolutionary computation, pp. 879\u2013886. ACM Press, 2014. ISBN 978-1-4503-2662-9. doi: 10.1145/2576768.2598291. URL http://dl.acm.org/citation.cfm?doid=2576768.2598291.",
+            "crossref": "https://dx.doi.org/10.1145/2576768.2598291",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2576768.2598291"
+        },
+        {
+            "id": "Austel_et+al_2017_a",
+            "entry": "Vernon Austel, Sanjeeb Dash, Oktay Gunluk, Lior Horesh, Leo Liberti, Giacomo Nannicini, and Baruch Schieber. Globally Optimal Symbolic Regression. arXiv:1710.10720 [stat], October 2017. URL http://arxiv.org/abs/1710.10720.arXiv:1710.10720.",
+            "url": "http://arxiv.org/abs/1710.10720.arXiv:1710.10720",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10720"
+        },
+        {
+            "id": "Belsley_1991_a",
+            "entry": "David A. Belsley. A Guide to using the collinearity diagnostics. Computer Science in Economics and Management, 4(1):33\u201350, February 1991. ISSN 1572-9974. doi: 10.1007/BF00426854. URL https://doi.org/10.1007/BF00426854.",
+            "crossref": "https://dx.doi.org/10.1007/BF00426854",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/BF00426854"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Aaron Courville, and Pascal Vincent. Representation learning: A review and new perspectives. IEEE transactions on pattern analysis and machine intelligence, 35(8):1798\u2013 1828, 2013. URL http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6472238.",
+            "url": "http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6472238",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013"
+        },
+        {
+            "id": "Bergstra_2012_a",
+            "entry": "James Bergstra and Yoshua Bengio. Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13(Feb):281\u2013305, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bergstra%2C%20James%20Bengio%2C%20Yoshua%20Random%20search%20for%20hyper-parameter%20optimization%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bergstra%2C%20James%20Bengio%2C%20Yoshua%20Random%20search%20for%20hyper-parameter%20optimization%202012"
+        },
+        {
+            "id": "Brahma_et+al_2016_a",
+            "entry": "Pratik Prabhanjan Brahma, Dapeng Wu, and Yiyuan She. Why Deep Learning Works: A Manifold Disentanglement Perspective. IEEE Trans. Neural Netw. Learning Syst., 27(10):1997\u20132008, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brahma%2C%20Pratik%20Prabhanjan%20Wu%2C%20Dapeng%20She%2C%20Yiyuan%20Why%20Deep%20Learning%20Works%3A%20A%20Manifold%20Disentanglement%20Perspective%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brahma%2C%20Pratik%20Prabhanjan%20Wu%2C%20Dapeng%20She%2C%20Yiyuan%20Why%20Deep%20Learning%20Works%3A%20A%20Manifold%20Disentanglement%20Perspective%202016"
+        },
+        {
+            "id": "Chen_2016_a",
+            "entry": "Tianqi Chen and Carlos Guestrin. XGBoost: A Scalable Tree Boosting System. In Proceedings of the 22Nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD \u201916, pp. 785\u2013794, New York, NY, USA, 2016. ACM. ISBN 978-1-4503-4232-2. doi: 10.1145/2939672.2939785. URL http://doi.acm.org/10.1145/2939672.2939785.",
+            "crossref": "https://dx.doi.org/10.1145/2939672.2939785",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2939672.2939785"
+        },
+        {
+            "id": "Cleveland_1993_a",
+            "entry": "William S Cleveland. Visualizing data. Hobart Press, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cleveland%2C%20William%20S.%20Visualizing%20data%201993"
+        },
+        {
+            "id": "Cline_et+al_1979_a",
+            "entry": "A. Cline, C. Moler, G. Stewart, and J. Wilkinson. An Estimate for the Condition Number of a Matrix. SIAM Journal on Numerical Analysis, 16(2):368\u2013375, April 1979. ISSN 0036-1429. doi: 10.1137/0716029. URL https://epubs.siam.org/doi/abs/10.1137/0716029.",
+            "crossref": "https://dx.doi.org/10.1137/0716029",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1137/0716029"
+        },
+        {
+            "id": "Conti_et+al_2017_a",
+            "entry": "Edoardo Conti, Vashisht Madhavan, Felipe Petroski Such, Joel Lehman, Kenneth O. Stanley, and Jeff Clune. Improving Exploration in Evolution Strategies for Deep Reinforcement Learning via a Population of Novelty-Seeking Agents. arXiv:1712.06560 [cs], December 2017. URL http://arxiv.org/abs/1712.06560.arXiv:1712.06560.",
+            "url": "http://arxiv.org/abs/1712.06560.arXiv:1712.06560",
+            "arxiv_url": "https://arxiv.org/pdf/1712.06560"
+        },
+        {
+            "id": "Cortes_et+al_2016_a",
+            "entry": "Corinna Cortes, Xavi Gonzalvo, Vitaly Kuznetsov, Mehryar Mohri, and Scott Yang. Adanet: Adaptive structural learning of artificial neural networks. arXiv preprint arXiv:1607.01097, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.01097"
+        },
+        {
+            "id": "Deb_et+al_2000_a",
+            "entry": "Kalyanmoy Deb, Samir Agrawal, Amrit Pratap, and T Meyarivan. A Fast Elitist Non-dominated Sorting Genetic Algorithm for Multi-objective Optimization: NSGA-II. In Marc Schoenauer, Kalyanmoy Deb, G\u00fcnther Rudolph, Xin Yao, Evelyne Lutton, Juan Julian Merelo, and HansPaul Schwefel (eds.), Parallel Problem Solving from Nature PPSN VI, volume 1917, pp. 849\u2013 858. Springer Berlin Heidelberg, Berlin, Heidelberg, 2000. ISBN 978-3-540-41056-0. URL http://repository.ias.ac.in/83498/.",
+            "url": "http://repository.ias.ac.in/83498/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deb%2C%20Kalyanmoy%20Agrawal%2C%20Samir%20Pratap%2C%20Amrit%20Meyarivan%2C%20T.%20A%20Fast%20Elitist%20Non-dominated%20Sorting%20Genetic%20Algorithm%20for%20Multi-objective%20Optimization%3A%20NSGA-II%202000"
+        },
+        {
+            "id": "Dem_2006_a",
+            "entry": "Janez Dem\u0161ar. Statistical Comparisons of Classifiers over Multiple Data Sets. Journal of Machine Learning Research, 7(Jan):1\u201330, 2006. ISSN ISSN 1533-7928. URL http://www.jmlr.org/papers/v7/demsar06a.html.",
+            "url": "http://www.jmlr.org/papers/v7/demsar06a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dem%C5%A1ar%2C%20Janez%20Statistical%20Comparisons%20of%20Classifiers%20over%20Multiple%20Data%20Sets%202006"
+        },
+        {
+            "id": "Eastwood_2018_a",
+            "entry": "Cian Eastwood and Christopher K. I. Williams. A Framework for the Quantitative Evaluation of Disentangled Representations. February 2018. URL https://openreview.net/forum?id=By-7dz-AZ.",
+            "url": "https://openreview.net/forum?id=By-7dz-AZ"
+        },
+        {
+            "id": "Fernando_et+al_2016_a",
+            "entry": "Chrisantha Fernando, Dylan Banarse, Malcolm Reynolds, Frederic Besse, David Pfau, Max Jaderberg, Marc Lanctot, and Daan Wierstra. Convolution by Evolution: Differentiable Pattern Producing Networks. arXiv:1606.02580 [cs], June 2016. URL http://arxiv.org/abs/1606.02580.arXiv:1606.02580.",
+            "url": "http://arxiv.org/abs/1606.02580.arXiv:1606.02580",
+            "arxiv_url": "https://arxiv.org/pdf/1606.02580"
+        },
+        {
+            "id": "Dario_2008_a",
+            "entry": "Dario Floreano, Peter D\u00fcrr, and Claudio Mattiussi. Neuroevolution: from architectures to learning. Evolutionary Intelligence, 1(1):47\u201362, 2008. URL http://link.springer.com/article/10.1007/s12065-007-0002-4.",
+            "url": "http://link.springer.com/article/10.1007/s12065-007-0002-4",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dario%20Floreano%2C%20Peter%20D%C3%BCrr%20Mattiussi%2C%20Claudio%20Neuroevolution%3A%20from%20architectures%20to%20learning%202008"
+        },
+        {
+            "id": "Springer_2006_a",
+            "entry": "Springer, 2006. URL http://link.springer.com/content/pdf/10.1007/11871842.pdf#page=676.",
+            "url": "http://link.springer.com/content/pdf/10.1007/11871842.pdf#page=676"
+        },
+        {
+            "id": "Gonzalez-Garcia_et+al_2018_a",
+            "entry": "Abel Gonzalez-Garcia, Joost van de Weijer, and Yoshua Bengio. Image-to-image translation for cross-domain disentanglement. arXiv preprint arXiv:1805.09730, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.09730"
+        },
+        {
+            "id": "Goodfellow_et+al_2009_a",
+            "entry": "Ian Goodfellow, Honglak Lee, Quoc V. Le, Andrew Saxe, and Andrew Y. Ng. Measuring invariances in deep networks. In Advances in neural information processing systems, pp. 646\u2013654, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Lee%2C%20Honglak%20Le%2C%20Quoc%20V.%20Saxe%2C%20Andrew%20Measuring%20invariances%20in%20deep%20networks%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Lee%2C%20Honglak%20Le%2C%20Quoc%20V.%20Saxe%2C%20Andrew%20Measuring%20invariances%20in%20deep%20networks%202009"
+        },
+        {
+            "id": "Goodfellow_et+al_2016_a",
+            "entry": "Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Deep Learning. MIT Press, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Deep%20Learning%202016"
+        },
+        {
+            "id": "Hadad_et+al_2018_a",
+            "entry": "Naama Hadad, Lior Wolf, and Moni Shahar. A Two-Step Disentanglement Method. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 772\u2013780, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hadad%2C%20Naama%20Wolf%2C%20Lior%20Shahar%2C%20Moni%20A%20Two-Step%20Disentanglement%20Method%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hadad%2C%20Naama%20Wolf%2C%20Lior%20Shahar%2C%20Moni%20A%20Two-Step%20Disentanglement%20Method%202018"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. -VAE: LEARNING BASIC VISUAL CONCEPTS WITH A CONSTRAINED VARIATIONAL FRAMEWORK. pp. 22, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20-VAE%3A%20LEARNING%20BASIC%20VISUAL%20CONCEPTS%20WITH%20A%20CONSTRAINED%20VARIATIONAL%20FRAMEWORK%202017"
+        },
+        {
+            "id": "Hoerl_1970_a",
+            "entry": "Arthur E. Hoerl and Robert W. Kennard. Ridge regression: Biased estimation for nonorthogonal problems. Technometrics, 12(1):55\u201367, 1970.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hoerl%2C%20Arthur%20E.%20Kennard%2C%20Robert%20W.%20Ridge%20regression%3A%20Biased%20estimation%20for%20nonorthogonal%20problems%201970",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hoerl%2C%20Arthur%20E.%20Kennard%2C%20Robert%20W.%20Ridge%20regression%3A%20Biased%20estimation%20for%20nonorthogonal%20problems%201970"
+        },
+        {
+            "id": "Holland_1975_a",
+            "entry": "John H Holland. Adaptation in natural and artificial systems. An introductory analysis with application to biology, control, and artificial intelligence. Ann Arbor, MI: University of Michigan Press, pp. 439\u2013444, 1975.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Holland%2C%20John%20H.%20Adaptation%20in%20natural%20and%20artificial%20systems.%20An%20introductory%20analysis%20with%20application%20to%20biology%2C%20control%2C%20and%20artificial%20intelligence%201975"
+        },
+        {
+            "id": "Huizinga_et+al_2014_a",
+            "entry": "Joost Huizinga, Jeff Clune, and Jean-Baptiste Mouret. Evolving neural networks that are both modular and regular: HyperNEAT plus the connection cost technique. pp. 697\u2013704. ACM Press, 2014. ISBN 978-1-4503-2662-9. doi: 10.1145/2576768.2598232. URL http://dl.acm.org/citation.cfm?doid=2576768.2598232.",
+            "crossref": "https://dx.doi.org/10.1145/2576768.2598232"
+        },
+        {
+            "id": "Igel_2003_a",
+            "entry": "Christian Igel. Neuroevolution for reinforcement learning using evolution strategies. In Evolutionary Computation, 2003. CEC\u201903. The 2003 Congress on, volume 4, pp. 2588\u20132595. IEEE, 2003. URL http://ieeexplore.ieee.org/abstract/document/1299414/.",
+            "url": "http://ieeexplore.ieee.org/abstract/document/1299414/",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christian%20Igel%20Neuroevolution%20for%20reinforcement%20learning%20using%20evolution%20strategies%20In%20Evolutionary%20Computation%202003%20CEC03%20The%202003%20Congress%20on%20volume%204%20pp%2025882595%20IEEE%202003%20URL%20httpieeexploreieeeorgabstractdocument1299414"
+        },
+        {
+            "id": "Igel_2003_b",
+            "entry": "Christian Igel and Martin Kreutz. Operator adaptation in evolutionary computation and its application to structure optimization of neural networks. Neurocomputing, 55(1-2):347\u2013361, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Igel%2C%20Christian%20Kreutz%2C%20Martin%20Operator%20adaptation%20in%20evolutionary%20computation%20and%20its%20application%20to%20structure%20optimization%20of%20neural%20networks%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Igel%2C%20Christian%20Kreutz%2C%20Martin%20Operator%20adaptation%20in%20evolutionary%20computation%20and%20its%20application%20to%20structure%20optimization%20of%20neural%20networks%202003"
+        },
+        {
+            "id": "Jaderberg_et+al_2017_a",
+            "entry": "Max Jaderberg, Valentin Dalibard, Simon Osindero, Wojciech M. Czarnecki, Jeff Donahue, Ali Razavi, Oriol Vinyals, Tim Green, Iain Dunning, Karen Simonyan, Chrisantha Fernando, and Koray Kavukcuoglu. Population Based Training of Neural Networks. arXiv:1711.09846 [cs], November 2017. URL http://arxiv.org/abs/1711.09846.arXiv:1711.09846.",
+            "url": "http://arxiv.org/abs/1711.09846.arXiv:1711.09846",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09846"
+        },
+        {
+            "id": "Kashtan_2005_a",
+            "entry": "Nadav Kashtan and Uri Alon. Spontaneous evolution of modularity and network motifs. Proceedings of the National Academy of Sciences, 102(39):13773\u201313778, September 2005. ISSN 0027-8424, 1091-6490. doi: 10.1073/pnas.0503610102. URL http://www.pnas.org/content/102/39/13773.",
+            "crossref": "https://dx.doi.org/10.1073/pnas.0503610102",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1073/pnas.0503610102"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A Method for Stochastic Optimization. arXiv:1412.6980 [cs], December 2014. URL http://arxiv.org/abs/1412.6980.arXiv:1412.6980.",
+            "url": "http://arxiv.org/abs/1412.6980.arXiv:1412.6980",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Scott_1983_a",
+            "entry": "Scott Kirkpatrick, C Daniel Gelatt, and Mario P Vecchi. Optimization by simulated annealing. science, 220(4598):671\u2013680, 1983.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scott%20Kirkpatrick%2C%20C.Daniel%20Gelatt%20Vecchi%2C%20Mario%20P.%20Optimization%20by%20simulated%20annealing%201983",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scott%20Kirkpatrick%2C%20C.Daniel%20Gelatt%20Vecchi%2C%20Mario%20P.%20Optimization%20by%20simulated%20annealing%201983"
+        },
+        {
+            "id": "Kommenda_et+al_2013_a",
+            "entry": "Michael Kommenda, Gabriel Kronberger, Stephan Winkler, Michael Affenzeller, and Stefan Wagner. Effects of constant optimization by nonlinear least squares minimization in symbolic regression. In Christian Blum, Enrique Alba, Thomas Bartz-Beielstein, Daniele Loiacono, Francisco Luna, Joern Mehnen, Gabriela Ochoa, Mike Preuss, Emilia Tantar, and Leonardo Vanneschi (eds.), GECCO \u201913 Companion: Proceeding of the fifteenth annual conference companion on Genetic and evolutionary computation conference companion, pp. 1121\u20131128, Amsterdam, The Netherlands, 2013. ACM. doi: doi:10.1145/2464576.2482691.",
+            "crossref": "https://dx.doi.org/10.1145/2464576.2482691",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2464576.2482691"
+        },
+        {
+            "id": "Kommenda_et+al_2015_a",
+            "entry": "Michael Kommenda, Gabriel Kronberger, Michael Affenzeller, Stephan M. Winkler, and Bogdan Burlacu. Evolving Simple Symbolic Regression Models by Multi-objective Genetic Programming. In Genetic Programming Theory and Practice, volume XIV of Genetic and Evolutionary Computation. Springer, Ann Arbor, MI, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kommenda%2C%20Michael%20Kronberger%2C%20Gabriel%20Affenzeller%2C%20Michael%20Winkler%2C%20Stephan%20M.%20Evolving%20Simple%20Symbolic%20Regression%20Models%20by%20Multi-objective%20Genetic%20Programming%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kommenda%2C%20Michael%20Kronberger%2C%20Gabriel%20Affenzeller%2C%20Michael%20Winkler%2C%20Stephan%20M.%20Evolving%20Simple%20Symbolic%20Regression%20Models%20by%20Multi-objective%20Genetic%20Programming%202015"
+        },
+        {
+            "id": "Koza_1992_a",
+            "entry": "John R. Koza. Genetic Programming: On the Programming of Computers by Means of Natural Selection. MIT Press, Cambridge, MA, USA, 1992. ISBN 0-262-11170-5.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koza%2C%20John%20R.%20Genetic%20Programming%3A%20On%20the%20Programming%20of%20Computers%20by%20Means%20of%20Natural%20Selection%201992"
+        },
+        {
+            "id": "Krawiec_2002_a",
+            "entry": "Krzysztof Krawiec. Genetic programming-based construction of features for machine learning and knowledge discovery tasks. Genetic Programming and Evolvable Machines, 3(4):329\u2013343, 2002. URL http://link.springer.com/article/10.1023/A:1020984725014.",
+            "url": "http://link.springer.com/article/10.1023/A:1020984725014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krawiec%2C%20Krzysztof%20Genetic%20programming-based%20construction%20of%20features%20for%20machine%20learning%20and%20knowledge%20discovery%20tasks%202002"
+        },
+        {
+            "id": "Kumar_et+al_2018_a",
+            "entry": "Abhishek Kumar, Prasanna Sattigeri, and Avinash Balakrishnan. Variational Inference of Disentangled Latent Concepts from Unlabeled Observations. February 2018. URL https://openreview.net/forum?id=H1kG7GZAW.",
+            "url": "https://openreview.net/forum?id=H1kG7GZAW"
+        },
+        {
+            "id": "Springer_2017_a",
+            "entry": "Springer, Cham, April 2017. doi: 10.1007/978-3-319-55696-3_6. URL https://link.springer.com/chapter/10.1007/978-3-319-55696-3_6.",
+            "crossref": "https://dx.doi.org/10.1007/978-3-319-55696-3_6"
+        },
+        {
+            "id": "Cava_et+al_2016_a",
+            "entry": "William La Cava, Kourosh Danai, Lee Spector, Paul Fleming, Alan Wright, and Matthew Lackner. Automatic identification of wind turbine models using evolutionary multiobjective optimization. Renewable Energy, 87, Part 2:892\u2013902, March 2016a. ISSN 0960-1481. doi: 10.1016/j.renene.2015.09.068. URL http://www.sciencedirect.com/science/article/pii/S0960148115303475.",
+            "crossref": "https://dx.doi.org/10.1016/j.renene.2015.09.068",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.renene.2015.09.068"
+        },
+        {
+            "id": "Cava_et+al_2016_b",
+            "entry": "William La Cava, Lee Spector, and Kourosh Danai. Epsilon-Lexicase Selection for Regression. In Proceedings of the Genetic and Evolutionary Computation Conference 2016, GECCO \u201916, pp. 741\u2013748, New York, NY, USA, 2016b. ACM. ISBN 978-1-4503-4206-3. doi: 10.1145/2908812. 2908898. URL http://doi.acm.org/10.1145/2908812.2908898.",
+            "crossref": "https://dx.doi.org/10.1145/2908812.2908898",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2908812.2908898"
+        },
+        {
+            "id": "Cava_et+al_2018_a",
+            "entry": "William La Cava, Thomas Helmuth, Lee Spector, and Jason H. Moore. A probabilistic and multiobjective analysis of lexicase selection and -lexicase selection. Evolutionary Computation, pp. 1\u201328, May 2018a. ISSN 1063-6560. doi: 10.1162/evco_a_00224. URL https://doi.org/10.1162/evco_a_00224.",
+            "crossref": "https://dx.doi.org/10.1162/evco_a_00224",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1162/evco_a_00224"
+        },
+        {
+            "id": "Cava_et+al_2018_b",
+            "entry": "William La Cava, Sara Silva, Kourosh Danai, Lee Spector, Leonardo Vanneschi, and Jason H. Moore. Multidimensional genetic programming for multiclass classification. Swarm and Evolutionary Computation, April 2018b. ISSN 2210-6502. doi: 10.1016/j.swevo.2018.03.015. URL http://www.sciencedirect.com/science/article/pii/S2210650217309136.",
+            "crossref": "https://dx.doi.org/10.1016/j.swevo.2018.03.015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.swevo.2018.03.015"
+        },
+        {
+            "id": "Architecture_2017_a",
+            "entry": "Architecture, May 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Architecture%20May%202017"
+        },
+        {
+            "id": "URL_0000_a",
+            "entry": "URL https://ai.googleblog.com/2017/05/",
+            "url": "https://ai.googleblog.com/2017/05/"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Chenxi Liu, Barret Zoph, Jonathon Shlens, Wei Hua, Li-Jia Li, Li Fei-Fei, Alan Yuille, Jonathan Huang, and Kevin Murphy. Progressive neural architecture search. arXiv preprint arXiv:1712.00559, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.00559"
+        },
+        {
+            "id": "Luke_2013_a",
+            "entry": "Sean Luke. Essentials of Metaheuristics. 2nd edition, 2013. ISBN 978-1-300-54962-8.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luke%2C%20Sean%20Essentials%20of%20Metaheuristics%202013"
+        },
+        {
+            "id": "Miller_et+al_1989_a",
+            "entry": "Geoffrey F. Miller, Peter M. Todd, and Shailesh U. Hegde. Designing Neural Networks using Genetic Algorithms. In ICGA, volume 89, pp. 379\u2013384, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miller%2C%20Geoffrey%20F.%20Todd%2C%20Peter%20M.%20Hegde%2C%20Shailesh%20U.%20Designing%20Neural%20Networks%20using%20Genetic%20Algorithms%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miller%2C%20Geoffrey%20F.%20Todd%2C%20Peter%20M.%20Hegde%2C%20Shailesh%20U.%20Designing%20Neural%20Networks%20using%20Genetic%20Algorithms%201989"
+        },
+        {
+            "id": "Springer_2012_a",
+            "entry": "Springer, Berlin, Heidelberg, 2012. ISBN 978-3-642-35288-1 978-3-642-35289-8. doi: 10.1007/978-3-642-35289-8_29. URL https://link.springer.com/chapter/10.1007/978-3-642-35289-8_29.",
+            "crossref": "https://dx.doi.org/10.1007/978-3-642-35289-8_29"
+        },
+        {
+            "id": "Mu_et+al_2018_a",
+            "entry": "Luis Mu\u00f1oz, Leonardo Trujillo, Sara Silva, Mauro Castelli, and Leonardo Vanneschi. Evolving multidimensional transformations for symbolic regression with M3gp. Memetic Computing, September 2018. ISSN 1865-9292. doi: 10.1007/s12293-018-0274-5. URL https://doi.org/10.1007/s12293-018-0274-5.",
+            "crossref": "https://dx.doi.org/10.1007/s12293-018-0274-5"
+        },
+        {
+            "id": "Olson_et+al_2017_a",
+            "entry": "Randal S. Olson, William La Cava, Patryk Orzechowski, Ryan J. Urbanowicz, and Jason H. Moore. PMLB: A Large Benchmark Suite for Machine Learning Evaluation and Comparison. BioData Mining, 2017. URL https://arxiv.org/abs/1703.00512.arXiv preprint arXiv:1703.00512.",
+            "url": "https://arxiv.org/abs/1703.00512.arXiv",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00512"
+        },
+        {
+            "id": "Una-May_2014_a",
+            "entry": "Una-May O\u2019Reilly Franz Oppacher. The troubling aspects of a building block hypothesis for genetic programming. Foundations of Genetic Algorithms 1995 (FOGA 3), 3:73, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=UnaMay%20OReilly%20Franz%20Oppacher%20The%20troubling%20aspects%20of%20a%20building%20block%20hypothesis%20for%20genetic%20programming%20Foundations%20of%20Genetic%20Algorithms%201995%20FOGA%203%20373%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=UnaMay%20OReilly%20Franz%20Oppacher%20The%20troubling%20aspects%20of%20a%20building%20block%20hypothesis%20for%20genetic%20programming%20Foundations%20of%20Genetic%20Algorithms%201995%20FOGA%203%20373%202014"
+        },
+        {
+            "id": "Orzechowski_et+al_2018_a",
+            "entry": "Patryk Orzechowski, William La Cava, and Jason H. Moore. Where are we now? A large benchmark study of recent symbolic regression methods. arXiv:1804.09331 [cs], April 2018. doi: 10.1145/ 3205455.3205539. URL http://arxiv.org/abs/1804.09331.arXiv:1804.09331.",
+            "crossref": "https://dx.doi.org/10.1145/3205455.3205539",
+            "arxiv_url": "https://arxiv.org/pdf/1804.09331"
+        },
+        {
+            "id": "O_2007_a",
+            "entry": "Robert M. O\u2019brien. A Caution Regarding Rules of Thumb for Variance Inflation Factors. Quality & Quantity, 41(5):673\u2013690, October 2007. ISSN 1573-7845. doi: 10.1007/s11135-006-9018-6. URL https://doi.org/10.1007/s11135-006-9018-6.",
+            "crossref": "https://dx.doi.org/10.1007/s11135-006-9018-6",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11135-006-9018-6"
+        },
+        {
+            "id": "Pedregosa_et+al_2011_a",
+            "entry": "Fabian Pedregosa, Ga\u00ebl Varoquaux, Alexandre Gramfort, Vincent Michel, Bertrand Thirion, Olivier Grisel, Mathieu Blondel, Peter Prettenhofer, Ron Weiss, Vincent Dubourg, and others. Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12(Oct):2825\u20132830, 2011. URL http://www.jmlr.org/papers/v12/pedregosa11a.html.",
+            "url": "http://www.jmlr.org/papers/v12/pedregosa11a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pedregosa%2C%20Fabian%20Varoquaux%2C%20Ga%C3%ABl%20Gramfort%2C%20Alexandre%20Michel%2C%20Vincent%20and%20others.%20Scikit-learn%3A%20Machine%20learning%20in%20Python%202011"
+        },
+        {
+            "id": "Pham_et+al_2018_a",
+            "entry": "Hieu Pham, Melody Y. Guan, Barret Zoph, Quoc V. Le, and Jeff Dean. Efficient Neural Architecture Search via Parameter Sharing. arXiv preprint arXiv:1802.03268, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03268"
+        },
+        {
+            "id": "Real_2018_a",
+            "entry": "Esteban Real. Using Evolutionary AutoML to Discover Neural Network Architectures, March 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Real%2C%20Esteban%20Using%20Evolutionary%20AutoML%20to%20Discover%20Neural%20Network%20Architectures%202018-03"
+        },
+        {
+            "id": "URL_0000_b",
+            "entry": "URL https://ai.googleblog.com/2018/03/",
+            "url": "https://ai.googleblog.com/2018/03/"
+        },
+        {
+            "id": "Real_et+al_2017_a",
+            "entry": "Esteban Real, Sherry Moore, Andrew Selle, Saurabh Saxena, Yutaka Leon Suematsu, Jie Tan, Quoc Le, and Alex Kurakin. Large-Scale Evolution of Image Classifiers. arXiv:1703.01041 [cs], March 2017. URL http://arxiv.org/abs/1703.01041.arXiv:1703.01041.",
+            "url": "http://arxiv.org/abs/1703.01041.arXiv:1703.01041",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01041"
+        },
+        {
+            "id": "Ribeiro_et+al_2016_a",
+            "entry": "Marco Tulio Ribeiro, Sameer Singh, and Carlos Guestrin. Why should i trust you?: Explaining the predictions of any classifier. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 1135\u20131144. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ribeiro%2C%20Marco%20Tulio%20Singh%2C%20Sameer%20Guestrin%2C%20Carlos%20Why%20should%20i%20trust%20you%3F%3A%20Explaining%20the%20predictions%20of%20any%20classifier%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ribeiro%2C%20Marco%20Tulio%20Singh%2C%20Sameer%20Guestrin%2C%20Carlos%20Why%20should%20i%20trust%20you%3F%3A%20Explaining%20the%20predictions%20of%20any%20classifier%202016"
+        },
+        {
+            "id": "Schmidt_2009_a",
+            "entry": "Michael Schmidt and Hod Lipson. Distilling free-form natural laws from experimental data. Science, 324(5923):81\u201385, 2009. URL http://www.sciencemag.org/content/324/5923/81.short.",
+            "url": "http://www.sciencemag.org/content/324/5923/81.short",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidt%2C%20Michael%20Lipson%2C%20Hod%20Distilling%20free-form%20natural%20laws%20from%20experimental%20data%202009"
+        },
+        {
+            "id": "Spector_2012_a",
+            "entry": "Lee Spector. Assessment of problem modality by differential performance of lexicase selection in genetic programming: a preliminary report. In Proceedings of the fourteenth international conference on Genetic and evolutionary computation conference companion, pp. 401\u2013408, 2012. URL http://dl.acm.org/citation.cfm?id=2330846.",
+            "url": "http://dl.acm.org/citation.cfm?id=2330846",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Spector%2C%20Lee%20Assessment%20of%20problem%20modality%20by%20differential%20performance%20of%20lexicase%20selection%20in%20genetic%20programming%3A%20a%20preliminary%20report%202012"
+        },
+        {
+            "id": "Stanley_2007_a",
+            "entry": "Kenneth O. Stanley. Compositional pattern producing networks: A novel abstraction of development. Genetic programming and evolvable machines, 8(2):131\u2013162, 2007. URL http://link.springer.com/article/10.1007/s10710-007-9028-8.",
+            "url": "http://link.springer.com/article/10.1007/s10710-007-9028-8",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stanley%2C%20Kenneth%20O.%20Compositional%20pattern%20producing%20networks%3A%20A%20novel%20abstraction%20of%20development.%20Genetic%20programming%20and%20evolvable%202007"
+        },
+        {
+            "id": "Stanley_2002_a",
+            "entry": "Kenneth O. Stanley and Risto Miikkulainen. Evolving neural networks through augmenting topologies. Evolutionary computation, 10(2):99\u2013127, 2002. URL http://www.mitpressjournals.org/doi/abs/10.1162/106365602320169811.",
+            "url": "http://www.mitpressjournals.org/doi/abs/10.1162/106365602320169811",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stanley%2C%20Kenneth%20O.%20Miikkulainen%2C%20Risto%20Evolving%20neural%20networks%20through%20augmenting%20topologies%202002"
+        },
+        {
+            "id": "Stanley_et+al_2009_a",
+            "entry": "Kenneth O. Stanley, David B. D\u2019Ambrosio, and Jason Gauci. A hypercube-based encoding for evolving large-scale neural networks. Artificial life, 15(2):185\u2013212, 2009. URL http://www.mitpressjournals.org/doi/abs/10.1162/artl.2009.15.2.15202.",
+            "url": "http://www.mitpressjournals.org/doi/abs/10.1162/artl.2009.15.2.15202",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stanley%2C%20Kenneth%20O.%20D%E2%80%99Ambrosio%2C%20David%20B.%20Gauci%2C%20Jason%20A%20hypercube-based%20encoding%20for%20evolving%20large-scale%20neural%20networks%202009"
+        },
+        {
+            "id": "Stanley_et+al_2019_a",
+            "entry": "Kenneth O. Stanley, Jeff Clune, Joel Lehman, and Risto Miikkulainen. Designing neural networks through neuroevolution. 1(1):24, 2019. ISSN 2522-5839. doi: 10.1038/s42256-018-0006-z. URL https://www.nature.com/articles/s42256-018-0006-z.",
+            "crossref": "https://dx.doi.org/10.1038/s42256-018-0006-z",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/s42256-018-0006-z"
+        },
+        {
+            "id": "Tibshirani_1996_a",
+            "entry": "Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society. Series B (Methodological), pp. 267\u2013288, 1996. URL http://www.jstor.org/stable/2346178.",
+            "url": "http://www.jstor.org/stable/2346178",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201996"
+        },
+        {
+            "id": "Topchy_2001_a",
+            "entry": "Alexander Topchy and William F. Punch. Faster genetic programming based on local gradient search of numeric leaf values. In Proceedings of the Genetic and Evolutionary Computation Conference (GECCO-2001), pp. 155\u2013162, 2001. URL http://garage.cse.msu.edu/papers/GARAGe01-07-01.pdf.",
+            "url": "http://garage.cse.msu.edu/papers/GARAGe01-07-01.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Topchy%2C%20Alexander%20Punch%2C%20William%20F.%20Faster%20genetic%20programming%20based%20on%20local%20gradient%20search%20of%20numeric%20leaf%20values%202001"
+        },
+        {
+            "id": "Vanschoren_et+al_2014_a",
+            "entry": "Joaquin Vanschoren, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. OpenML: Networked Science in Machine Learning. SIGKDD Explor. Newsl., 15(2):49\u201360, June 2014. ISSN 1931-0145. doi: 10.1145/2641190.2641198. URL http://doi.acm.org/10.1145/2641190.2641198.",
+            "crossref": "https://dx.doi.org/10.1145/2641190.2641198",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2641190.2641198"
+        },
+        {
+            "id": "Vladislavleva_et+al_2009_a",
+            "entry": "E.J. Vladislavleva, G.F. Smits, and D. den Hertog. Order of Nonlinearity as a Complexity Measure for Models Generated by Symbolic Regression via Pareto Genetic Programming. IEEE Transactions on Evolutionary Computation, 13(2):333\u2013349, 2009. ISSN 1089-778X. doi: 10.1109/TEVC.2008. 926486.",
+            "crossref": "https://dx.doi.org/10.1109/TEVC.2008.926486",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TEVC.2008.926486"
+        },
+        {
+            "id": "Whitney_2016_a",
+            "entry": "William Whitney. Disentangled Representations in Neural Models. arXiv:1602.02383 [cs], February 2016. URL http://arxiv.org/abs/1602.02383.arXiv:1602.02383.",
+            "url": "http://arxiv.org/abs/1602.02383.arXiv:1602.02383",
+            "arxiv_url": "https://arxiv.org/pdf/1602.02383"
+        },
+        {
+            "id": "Wiegand_et+al_2004_a",
+            "entry": "Stefan Wiegand, Christian Igel, and Uwe Handmann. Evolutionary multi-objective optimisation of neural networks for face detection. International Journal of Computational Intelligence and Applications, 4(03):237\u2013253, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wiegand%2C%20Stefan%20Igel%2C%20Christian%20Handmann%2C%20Uwe%20Evolutionary%20multi-objective%20optimisation%20of%20neural%20networks%20for%20face%20detection%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wiegand%2C%20Stefan%20Igel%2C%20Christian%20Handmann%2C%20Uwe%20Evolutionary%20multi-objective%20optimisation%20of%20neural%20networks%20for%20face%20detection%202004"
+        },
+        {
+            "id": "Yao_1999_a",
+            "entry": "Xin Yao. Evolving artificial neural networks. Proceedings of the IEEE, 87(9):1423\u20131447, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yao%2C%20Xin%20Evolving%20artificial%20neural%20networks%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yao%2C%20Xin%20Evolving%20artificial%20neural%20networks%201999"
+        },
+        {
+            "id": "Zoph_2016_a",
+            "entry": "Barret Zoph and Quoc V. Le. Neural Architecture Search with Reinforcement Learning. November 2016. URL https://arxiv.org/abs/1611.01578.",
+            "url": "https://arxiv.org/abs/1611.01578",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01578"
+        }
+    ]
+}

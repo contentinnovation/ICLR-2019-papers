@@ -1,0 +1,331 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MULTI-STEP RETRIEVER-READER INTERACTION FOR SCALABLE OPEN-DOMAIN QUESTION ANSWERING",
+        "author": "Rajarshi Das, Shehzaad Dhuliawala, Manzil Zaheer, & Andrew McCallum, {rajarshi,mccallum}@cs.umass.edu shehzaad.dhuliawala@microsoft.com, manzil@zaheer.ml 1 University of Massachusetts, Amherst, 2 Microsoft Research, Montreal 3 Google AI, Mountain View",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkfPSh05K7"
+        },
+        "abstract": "This paper introduces a new framework for open-domain question answering in which the retriever and the reader iteratively interact with each other. The framework is agnostic to the architecture of the machine reading model, only requiring access to the token-level hidden representations of the reader. The retriever uses fast nearest neighbor search to scale to corpora containing millions of paragraphs. A gated recurrent unit updates the query at each step conditioned on the state of the reader and the reformulated query is used to re-rank the paragraphs by the retriever. We conduct analysis and show that iterative interaction helps in retrieving informative paragraphs from the corpus. Finally, we show that our multistep-reasoning framework brings consistent improvement when applied to two widely used reader architectures (DR.QA and BIDAF) on various large open-domain datasets \u2014 TRIVIAQA-unfiltered, QUASAR-T, SEARCHQA, and SQUAD-open1."
+    },
+    "keywords": [
+        {
+            "term": "question answering",
+            "url": "https://en.wikipedia.org/wiki/question_answering"
+        },
+        {
+            "term": "nearest neighbor",
+            "url": "https://en.wikipedia.org/wiki/nearest_neighbor"
+        },
+        {
+            "term": "reading comprehension",
+            "url": "https://en.wikipedia.org/wiki/reading_comprehension"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "paragraph",
+            "url": "https://en.wikipedia.org/wiki/paragraph"
+        },
+        {
+            "term": "open domain question answering",
+            "url": "https://en.wikipedia.org/wiki/open_domain_question_answering"
+        }
+    ],
+    "abbreviations": {
+        "QA": "question answering",
+        "MRC": "machine reading comprehension",
+        "LSTM": "long-short term memory network",
+        "NN": "nearest neighbor",
+        "MIPS": "maximum inner product search",
+        "FFN": "feed forward network",
+        "RL": "reinforcement learning",
+        "POMDP": "Partially Observed Markov decision process",
+        "AQA": "Active Question Answering"
+    },
+    "highlights": [
+        "Open-domain question answering (QA) (Voorhees et al, 1999) involves a retriever for selecting relevant context from a large corpora of text (e.g. Wikipedia) and a machine reading comprehension (MRC) model for \u2018reasoning\u2019 on the retrieved context",
+        "Our architecture is agnostic to the choice of the reader architecture and we show that multi-step-reasoning increases performance of two state-of-the-art machine reading comprehension architectures - DrQA (<a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>) and BiDAF (<a class=\"ref-link\" id=\"cSeo_et+al_2017_a\" href=\"#rSeo_et+al_2017_a\">Seo et al, 2017</a>)",
+        "The reader is a sophisticated neural machine reading comprehension (MRC) model that takes in the top few paragraphs sent by the retriever and outputs a span of answer text",
+        "Perhaps the most related to our work is Active Question Answering (AQA) (<a class=\"ref-link\" id=\"cBuck_et+al_2018_a\" href=\"#rBuck_et+al_2018_a\">Buck et al, 2018</a>), which use reformulation of the natural language query to improve the performance of a BiDAF reader model on SEARCHQA",
+        "This paper introduces a new framework for open-domain question answering in which the retriever and the reader iteratively interact with each other",
+        "We show that our method is agnostic to the architecture of the machine reading system provided we have access to the token level hidden representations of the reader"
+    ],
+    "key_statements": [
+        "Open-domain question answering (QA) (Voorhees et al, 1999) involves a retriever for selecting relevant context from a large corpora of text (e.g. Wikipedia) and a machine reading comprehension (MRC) model for \u2018reasoning\u2019 on the retrieved context",
+        "A lot of effort has been put into designing sophisticated neural machine reading comprehension architectures for reading short context, with much success (Wang & Jiang, 2017; <a class=\"ref-link\" id=\"cSeo_et+al_2017_a\" href=\"#rSeo_et+al_2017_a\">Seo et al, 2017</a>; Xiong et al, 2017; Wang et al, 2018c; Yu et al, 2018, inter alia)",
+        "We propose the following two desiderata for a general purpose open-domain question answering system - (a) The retriever model should be fast, since it has to find the relevant context from a very large text corpora and give it to the more sophisticated and computationally expensive machine reading comprehension model (b) Secondly, the retriever and reader models should be interactive, i.e. if the reader model is unable to find the answer from the initial retrieved context, the retriever should be able to learn to provide more relevant context to the reader",
+        "Our architecture is agnostic to the choice of the reader architecture and we show that multi-step-reasoning increases performance of two state-of-the-art machine reading comprehension architectures - DrQA (<a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>) and BiDAF (<a class=\"ref-link\" id=\"cSeo_et+al_2017_a\" href=\"#rSeo_et+al_2017_a\">Seo et al, 2017</a>)",
+        "(b) Our paragraph representations are independent of the query which makes our architecture highly scalable and we empirically demonstrate it by running large scale experiments over millions of paragraphs. (c) Lastly, our framework is agnostic to the architecture of the reader and we show improvements on two widely used neural reading comprehension models.\n2 BASIC COMPONENTS OF OUR MODEL",
+        "Borrowing ideas from <a class=\"ref-link\" id=\"cBachrach_et+al_2014_a\" href=\"#rBachrach_et+al_2014_a\">Bachrach et al (2014</a>); Zaheer et al (2019), we propose to use nearest neighbor (NN) search algorithms to perform the maximum inner product search in sublinear time as follows",
+        "The reader is a sophisticated neural machine reading comprehension (MRC) model that takes in the top few paragraphs sent by the retriever and outputs a span of answer text",
+        "We employ reinforcement learning (RL) and train it by how well the reader performs after reading the new set of paragraphs retrieved by the modified query",
+        "To the agent only the query vector and the memory of the reader model is shown, which are a function of the current state. This represents the information encoded by the machine reader model after reading the top k paragraphs sent by the retriever in current step",
+        "They form query dependent paragraph representation and such architectures will not scale to full open-domain settings where the retriever has to rank millions of paragraphs. and neither do they support iterative reasoning thereby failing to recover from any mistakes made by the ranker or where evidence needs to be aggregated across multiple paragraphs",
+        "Perhaps the most related to our work is Active Question Answering (AQA) (<a class=\"ref-link\" id=\"cBuck_et+al_2018_a\" href=\"#rBuck_et+al_2018_a\">Buck et al, 2018</a>), which use reformulation of the natural language query to improve the performance of a BiDAF reader model on SEARCHQA",
+        "We are interested in analyzing if our method is able to gather more relevant evidence as we increase the number of steps of interaction between the retriever and the reader. We conduct this analysis on the development set of SEARCHQA and to simplify analysis, we make the retriever choose the top scored single paragraph to send to the reader, at each step",
+        "This paper introduces a new framework for open-domain question answering in which the retriever and the reader iteratively interact with each other",
+        "We show that our fast retrieval method can scale upto millions of paragraphs, much beyond the current capability of existing open-domain systems with a trained retriever module",
+        "We show that our method is agnostic to the architecture of the machine reading system provided we have access to the token level hidden representations of the reader",
+        "Our method brings an increase in performance to two popular and widely used neural machine reading architectures, Dr.question answering and BiDAF"
+    ],
+    "summary": [
+        "Open-domain question answering (QA) (Voorhees et al, 1999) involves a retriever for selecting relevant context from a large corpora of text (e.g. Wikipedia) and a machine reading comprehension (MRC) model for \u2018reasoning\u2019 on the retrieved context.",
+        "RC model reads the new retrieved paragraph at step 2",
+        "(b) reader - a more sophisticated neural machine reading model that receives few top-ranked paragraphs from the retriever and outputs a span of text as a possible answer to the query and (c) multi-step-reasoner - a gated recurrent unit that facilitates iterative interaction between the retriever and the reader.",
+        "This architecture design will not scale in open-domain settings where the retriever has to re-compute new representations for possibly millions of paragraphs for every new question.",
+        "The reader is a sophisticated neural machine reading comprehension (MRC) model that takes in the top few paragraphs sent by the retriever and outputs a span of answer text.",
+        "A novel component of our open-domain architecture is the multi-step-reasoner which facilitates iterative interaction between the retriever and the machine reader.",
+        "The new reformulated query qt+1 \u2208 R2d for the paragraph retriever is calculated by the multi-step-reasoner module as follows \u2014",
+        "We employ reinforcement learning (RL) and train it by how well the reader performs after reading the new set of paragraphs retrieved by the modified query.",
+        "This represents the information encoded by the machine reader model after reading the top k paragraphs sent by the retriever in current step.",
+        "The retriever scores all paragraphs w.r.t the current query and selects the top k paragraphs to send to the reader model.",
+        "They form query dependent paragraph representation and such architectures will not scale to full open-domain settings where the retriever has to rank millions of paragraphs.",
+        "Perhaps the most related to our work is Active Question Answering (AQA) (<a class=\"ref-link\" id=\"cBuck_et+al_2018_a\" href=\"#rBuck_et+al_2018_a\">Buck et al, 2018</a>), which use reformulation of the natural language query to improve the performance of a BiDAF reader model on SEARCHQA.",
+        "One of the main observation is that combining multi-step-reasoner with the base Dr.QA reader (<a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>) always leads to improved performance.",
+        "We conduct this analysis on the development set of SEARCHQA and to simplify analysis, we make the retriever choose the top scored single paragraph to send to the reader, at each step.",
+        "This paper introduces a new framework for open-domain question answering in which the retriever and the reader iteratively interact with each other.",
+        "The resulting framework improved performance of machine reading over the base reader model uniformly across four open-domain QA datasets.",
+        "Our method brings an increase in performance to two popular and widely used neural machine reading architectures, Dr.QA and BiDAF"
+    ],
+    "headline": "We show that our multistep-reasoning framework brings consistent improvement when applied to two widely used reader architectures on various large open-domain datasets \u2014 TRIVIAQA-unfiltered, QUASAR-T, SEARCHQA, and SQUAD-open1",
+    "reference_links": [
+        {
+            "id": "Bachrach_et+al_2014_a",
+            "entry": "Yoram Bachrach, Yehuda Finkelstein, Ran Gilad-Bachrach, Liran Katzir, Noam Koenigstein, Nir Nice, and Ulrich Paquet. Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces. In RecSys, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bachrach%2C%20Yoram%20Finkelstein%2C%20Yehuda%20Gilad-Bachrach%2C%20Ran%20Katzir%2C%20Liran%20Speeding%20up%20the%20xbox%20recommender%20system%20using%20a%20euclidean%20transformation%20for%20inner-product%20spaces%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bachrach%2C%20Yoram%20Finkelstein%2C%20Yehuda%20Gilad-Bachrach%2C%20Ran%20Katzir%2C%20Liran%20Speeding%20up%20the%20xbox%20recommender%20system%20using%20a%20euclidean%20transformation%20for%20inner-product%20spaces%202014"
+        },
+        {
+            "id": "Beygelzimer_et+al_2006_a",
+            "entry": "Alina Beygelzimer, Sham Kakade, and John Langford. Cover trees for nearest neighbor. In ICML, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Beygelzimer%2C%20Alina%20Kakade%2C%20Sham%20Langford%2C%20John%20Cover%20trees%20for%20nearest%20neighbor%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Beygelzimer%2C%20Alina%20Kakade%2C%20Sham%20Langford%2C%20John%20Cover%20trees%20for%20nearest%20neighbor%202006"
+        },
+        {
+            "id": "Bishop_et+al_2006_a",
+            "entry": "Penny A Bishop, Cynthia Reyes, and Susanna W Pflaum. Read smarter, not harder: Global reading comprehension strategies. The Reading Teacher, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Penny%20A.%20Reyes%2C%20Cynthia%20Pflaum%2C%20Susanna%20W.%20Read%20smarter%2C%20not%20harder%3A%20Global%20reading%20comprehension%20strategies%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bishop%2C%20Penny%20A.%20Reyes%2C%20Cynthia%20Pflaum%2C%20Susanna%20W.%20Read%20smarter%2C%20not%20harder%3A%20Global%20reading%20comprehension%20strategies%202006"
+        },
+        {
+            "id": "Buck_et+al_2018_a",
+            "entry": "Christian Buck, Jannis Bulian, Massimiliano Ciaramita, Andrea Gesmundo, Neil Houlsby, Wojciech Gajewski, and Wei Wang. Ask the right questions: Active question reformulation with reinforcement learning. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Buck%2C%20Christian%20Bulian%2C%20Jannis%20Ciaramita%2C%20Massimiliano%20Gesmundo%2C%20Andrea%20Ask%20the%20right%20questions%3A%20Active%20question%20reformulation%20with%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Buck%2C%20Christian%20Bulian%2C%20Jannis%20Ciaramita%2C%20Massimiliano%20Gesmundo%2C%20Andrea%20Ask%20the%20right%20questions%3A%20Active%20question%20reformulation%20with%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Cao_et+al_2018_a",
+            "entry": "Kris Cao, Angeliki Lazaridou, Marc Lanctot, Joel Z Leibo, Karl Tuyls, and Stephen Clark. Emergent communication through negotiation. arXiv preprint arXiv:1804.03980, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.03980"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Danqi Chen, Adam Fisch, Jason Weston, and Antoine Bordes. Reading wikipedia to answer opendomain questions. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Danqi%20Fisch%2C%20Adam%20Weston%2C%20Jason%20and%20Antoine%20Bordes.%20Reading%20wikipedia%20to%20answer%20opendomain%20questions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Danqi%20Fisch%2C%20Adam%20Weston%2C%20Jason%20and%20Antoine%20Bordes.%20Reading%20wikipedia%20to%20answer%20opendomain%20questions%202017"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical machine translation. arXiv preprint arXiv:1406.1078, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1406.1078"
+        },
+        {
+            "id": "Clark_2018_a",
+            "entry": "Christopher Clark and Matt Gardner. Simple and effective multi-paragraph reading comprehension. In ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Clark%2C%20Christopher%20Gardner%2C%20Matt%20Simple%20and%20effective%20multi-paragraph%20reading%20comprehension%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Clark%2C%20Christopher%20Gardner%2C%20Matt%20Simple%20and%20effective%20multi-paragraph%20reading%20comprehension%202018"
+        },
+        {
+            "id": "Cunningham_1975_a",
+            "entry": "Dick Cunningham and Scott L Shablak. Selective reading guide-o-rama: The content teacher\u2019s best friend. Journal of Reading, 1975.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cunningham%2C%20Dick%20Shablak%2C%20Scott%20L.%20Selective%20reading%20guide-o-rama%3A%20The%20content%20teacher%E2%80%99s%20best%20friend%201975",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cunningham%2C%20Dick%20Shablak%2C%20Scott%20L.%20Selective%20reading%20guide-o-rama%3A%20The%20content%20teacher%E2%80%99s%20best%20friend%201975"
+        },
+        {
+            "id": "Das_et+al_2017_a",
+            "entry": "Rajarshi Das, Manzil Zaheer, Siva Reddy, and Andrew McCallum. Question answering on knowledge bases and text using universal schema and memory networks. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Das%2C%20Rajarshi%20Zaheer%2C%20Manzil%20Reddy%2C%20Siva%20McCallum%2C%20Andrew%20Question%20answering%20on%20knowledge%20bases%20and%20text%20using%20universal%20schema%20and%20memory%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Das%2C%20Rajarshi%20Zaheer%2C%20Manzil%20Reddy%2C%20Siva%20McCallum%2C%20Andrew%20Question%20answering%20on%20knowledge%20bases%20and%20text%20using%20universal%20schema%20and%20memory%20networks%202017"
+        },
+        {
+            "id": "Das_et+al_2018_a",
+            "entry": "Rajarshi Das, Shehzaad Dhuliawala, Manzil Zaheer, Luke Vilnis, Ishan Durugkar, Akshay Krishnamurthy, Alex Smola, and Andrew McCallum. Go for a walk and arrive at the answer: Reasoning over paths in knowledge bases using reinforcement learning. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Das%2C%20Rajarshi%20Dhuliawala%2C%20Shehzaad%20Zaheer%2C%20Manzil%20Vilnis%2C%20Luke%20Go%20for%20a%20walk%20and%20arrive%20at%20the%20answer%3A%20Reasoning%20over%20paths%20in%20knowledge%20bases%20using%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Das%2C%20Rajarshi%20Dhuliawala%2C%20Shehzaad%20Zaheer%2C%20Manzil%20Vilnis%2C%20Luke%20Go%20for%20a%20walk%20and%20arrive%20at%20the%20answer%3A%20Reasoning%20over%20paths%20in%20knowledge%20bases%20using%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Dasgupta_2013_a",
+            "entry": "Sanjoy Dasgupta and Kaushik Sinha. Randomized partition trees for exact nearest neighbor search. In COLT, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dasgupta%2C%20Sanjoy%20Sinha%2C%20Kaushik%20Randomized%20partition%20trees%20for%20exact%20nearest%20neighbor%20search%202013"
+        },
+        {
+            "id": "Dhingra_et+al_2016_a",
+            "entry": "Bhuwan Dhingra, Hanxiao Liu, Zhilin Yang, William W Cohen, and Ruslan Salakhutdinov. Gatedattention readers for text comprehension. arXiv preprint arXiv:1606.01549, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01549"
+        },
+        {
+            "id": "Dhingra_et+al_2017_a",
+            "entry": "Bhuwan Dhingra, Kathryn Mazaitis, and William W Cohen. Quasar: Datasets for question answering by search and reading. arXiv preprint arXiv:1707.03904, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03904"
+        },
+        {
+            "id": "Duggan_2009_a",
+            "entry": "Geoffrey B Duggan and Stephen J Payne. Text skimming: The process and effectiveness of foraging through text under time pressure. Journal of Experimental Psychology: Applied, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duggan%2C%20Geoffrey%20B.%20Payne%2C%20Stephen%20J.%20Text%20skimming%3A%20The%20process%20and%20effectiveness%20of%20foraging%20through%20text%20under%20time%20pressure%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duggan%2C%20Geoffrey%20B.%20Payne%2C%20Stephen%20J.%20Text%20skimming%3A%20The%20process%20and%20effectiveness%20of%20foraging%20through%20text%20under%20time%20pressure%202009"
+        },
+        {
+            "id": "Dunn_et+al_2017_a",
+            "entry": "Matthew Dunn, Levent Sagun, Mike Higgins, V Ugur Guney, Volkan Cirik, and Kyunghyun Cho. Searchqa: A new q&a dataset augmented with context from a search engine. arXiv preprint arXiv:1704.05179, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.05179"
+        },
+        {
+            "id": "Green_et+al_1961_a",
+            "entry": "Bert F Green Jr, Alice K Wolf, Carol Chomsky, and Kenneth Laughery. Baseball: an automatic question-answerer. In IRE-AIEE-ACM, 1961.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Green%2C%20Jr%2C%20Bert%20F.%20Wolf%2C%20Alice%20K.%20Chomsky%2C%20Carol%20Laughery%2C%20Kenneth%20Baseball%3A%20an%20automatic%20question-answerer%201961",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Green%2C%20Jr%2C%20Bert%20F.%20Wolf%2C%20Alice%20K.%20Chomsky%2C%20Carol%20Laughery%2C%20Kenneth%20Baseball%3A%20an%20automatic%20question-answerer%201961"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Htut_et+al_2018_a",
+            "entry": "Phu Mon Htut, Samuel R Bowman, and Kyunghyun Cho. Training a ranking function for open-domain question answering. arXiv preprint arXiv:1804.04264, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.04264"
+        },
+        {
+            "id": "Joshi_et+al_2017_a",
+            "entry": "Mandar Joshi, Eunsol Choi, Daniel S Weld, and Luke Zettlemoyer. Triviaqa: A large scale distantly supervised challenge dataset for reading comprehension. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joshi%2C%20Mandar%20Choi%2C%20Eunsol%20Weld%2C%20Daniel%20S.%20Zettlemoyer%2C%20Luke%20Triviaqa%3A%20A%20large%20scale%20distantly%20supervised%20challenge%20dataset%20for%20reading%20comprehension%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Joshi%2C%20Mandar%20Choi%2C%20Eunsol%20Weld%2C%20Daniel%20S.%20Zettlemoyer%2C%20Luke%20Triviaqa%3A%20A%20large%20scale%20distantly%20supervised%20challenge%20dataset%20for%20reading%20comprehension%202017"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Lavrenko_2001_a",
+            "entry": "Victor Lavrenko and W Bruce Croft. Relevance-based language models. In SIGIR, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lavrenko%2C%20Victor%20Croft%2C%20W.Bruce%20Relevance-based%20language%20models%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lavrenko%2C%20Victor%20Croft%2C%20W.Bruce%20Relevance-based%20language%20models%202001"
+        },
+        {
+            "id": "Lazaridou_et+al_2017_a",
+            "entry": "Angeliki Lazaridou, Alexander Peysakhovich, and Marco Baroni. Multi-agent cooperation and the emergence of (natural) language. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lazaridou%2C%20Angeliki%20Peysakhovich%2C%20Alexander%20Baroni%2C%20Marco%20Multi-agent%20cooperation%20and%20the%20emergence%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lazaridou%2C%20Angeliki%20Peysakhovich%2C%20Alexander%20Baroni%2C%20Marco%20Multi-agent%20cooperation%20and%20the%20emergence%202017"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Jason Lee, Kyunghyun Cho, Jason Weston, and Douwe Kiela. Emergent translation in multi-agent communication. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jason%20Lee%20Kyunghyun%20Cho%20Jason%20Weston%20and%20Douwe%20Kiela%20Emergent%20translation%20in%20multiagent%20communication%20In%20ICLR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jason%20Lee%20Kyunghyun%20Cho%20Jason%20Weston%20and%20Douwe%20Kiela%20Emergent%20translation%20in%20multiagent%20communication%20In%20ICLR%202018"
+        },
+        {
+            "id": "Li_2017_a",
+            "entry": "Ke Li and Jitendra Malik. Fast k-nearest neighbour search via prioritized dci. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Ke%20Malik%2C%20Jitendra%20Fast%20k-nearest%20neighbour%20search%20via%20prioritized%20dci%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Ke%20Malik%2C%20Jitendra%20Fast%20k-nearest%20neighbour%20search%20via%20prioritized%20dci%202017"
+        },
+        {
+            "id": "Lin_et+al_2018_a",
+            "entry": "Yankai Lin, Haozhe Ji, Zhiyuan Liu, and Maosong Sun. Denoising distantly supervised open-domain question answering. In ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Yankai%20Ji%2C%20Haozhe%20Liu%2C%20Zhiyuan%20Sun%2C%20Maosong%20Denoising%20distantly%20supervised%20open-domain%20question%20answering%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Yankai%20Ji%2C%20Haozhe%20Liu%2C%20Zhiyuan%20Sun%2C%20Maosong%20Denoising%20distantly%20supervised%20open-domain%20question%20answering%202018"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Xiaodong Liu, Yelong Shen, Kevin Duh, and Jianfeng Gao. Stochastic answer networks for machine reading comprehension. arXiv preprint arXiv:1712.03556, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.03556"
+        },
+        {
+            "id": "Yury_2018_a",
+            "entry": "Yury A Malkov and Dmitry A Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. TPAMI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yury%20A%20Malkov%20and%20Dmitry%20A%20Yashunin%20Efficient%20and%20robust%20approximate%20nearest%20neighbor%20search%20using%20hierarchical%20navigable%20small%20world%20graphs%20TPAMI%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yury%20A%20Malkov%20and%20Dmitry%20A%20Yashunin%20Efficient%20and%20robust%20approximate%20nearest%20neighbor%20search%20using%20hierarchical%20navigable%20small%20world%20graphs%20TPAMI%202018"
+        },
+        {
+            "id": "Miller_et+al_2016_a",
+            "entry": "Alexander Miller, Adam Fisch, Jesse Dodge, Amir-Hossein Karimi, Antoine Bordes, and Jason Weston. Key-value memory networks for directly reading documents. arXiv preprint arXiv:1606.03126, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.03126"
+        },
+        {
+            "id": "Min_et+al_2018_a",
+            "entry": "Sewon Min, Victor Zhong, Richard Socher, and Caiming Xiong. Efficient and robust question answering from minimal context over documents. arXiv preprint arXiv:1805.08092, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.08092"
+        },
+        {
+            "id": "Mintz_et+al_2009_a",
+            "entry": "Mike Mintz, Steven Bills, Rion Snow, and Dan Jurafsky. Distant supervision for relation extraction without labeled data. In ACL, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mintz%2C%20Mike%20Bills%2C%20Steven%20Snow%2C%20Rion%20Jurafsky%2C%20Dan%20Distant%20supervision%20for%20relation%20extraction%20without%20labeled%20data%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mintz%2C%20Mike%20Bills%2C%20Steven%20Snow%2C%20Rion%20Jurafsky%2C%20Dan%20Distant%20supervision%20for%20relation%20extraction%20without%20labeled%20data%202009"
+        },
+        {
+            "id": "Nogueira_2017_a",
+            "entry": "Rodrigo Nogueira and Kyunghyun Cho. Task-oriented query reformulation with reinforcement learning. In EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nogueira%2C%20Rodrigo%20Cho%2C%20Kyunghyun%20Task-oriented%20query%20reformulation%20with%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nogueira%2C%20Rodrigo%20Cho%2C%20Kyunghyun%20Task-oriented%20query%20reformulation%20with%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Pfeiffer_et+al_2018_a",
+            "entry": "Jonas Pfeiffer, Samuel Broscheit, Rainer Gemulla, and Mathias Goschl. A neural autoencoder approach for document ranking and query refinement in pharmacogenomic information retrieval. In BioNLP workshop, ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pfeiffer%2C%20Jonas%20Broscheit%2C%20Samuel%20Gemulla%2C%20Rainer%20Goschl%2C%20Mathias%20A%20neural%20autoencoder%20approach%20for%20document%20ranking%20and%20query%20refinement%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pfeiffer%2C%20Jonas%20Broscheit%2C%20Samuel%20Gemulla%2C%20Rainer%20Goschl%2C%20Mathias%20A%20neural%20autoencoder%20approach%20for%20document%20ranking%20and%20query%20refinement%202018"
+        },
+        {
+            "id": "Rajpurkar_et+al_2016_a",
+            "entry": "Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang. Squad: 100,000+ questions for machine comprehension of text. In EMNLP, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rajpurkar%2C%20Pranav%20Zhang%2C%20Jian%20Lopyrev%2C%20Konstantin%20Liang%2C%20Percy%20Squad%3A%20100%2C000%2B%20questions%20for%20machine%20comprehension%20of%20text%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajpurkar%2C%20Pranav%20Zhang%2C%20Jian%20Lopyrev%2C%20Konstantin%20Liang%2C%20Percy%20Squad%3A%20100%2C000%2B%20questions%20for%20machine%20comprehension%20of%20text%202016"
+        },
+        {
+            "id": "Rendle_et+al_2009_a",
+            "entry": "Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. Bpr: Bayesian personalized ranking from implicit feedback. In UAI, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rendle%2C%20Steffen%20Freudenthaler%2C%20Christoph%20Gantner%2C%20Zeno%20Schmidt-Thieme%2C%20Lars%20Bpr%3A%20Bayesian%20personalized%20ranking%20from%20implicit%20feedback%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rendle%2C%20Steffen%20Freudenthaler%2C%20Christoph%20Gantner%2C%20Zeno%20Schmidt-Thieme%2C%20Lars%20Bpr%3A%20Bayesian%20personalized%20ranking%20from%20implicit%20feedback%202009"
+        },
+        {
+            "id": "Seo_et+al_2017_a",
+            "entry": "Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi, and Hannaneh Hajishirzi. Bidirectional attention flow for machine comprehension. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Seo%2C%20Minjoon%20Kembhavi%2C%20Aniruddha%20Farhadi%2C%20Ali%20Hajishirzi%2C%20Hannaneh%20Bidirectional%20attention%20flow%20for%20machine%20comprehension%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Seo%2C%20Minjoon%20Kembhavi%2C%20Aniruddha%20Farhadi%2C%20Ali%20Hajishirzi%2C%20Hannaneh%20Bidirectional%20attention%20flow%20for%20machine%20comprehension%202017"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Yelong Shen, Po-Sen Huang, Jianfeng Gao, and Weizhu Chen. Reasonet: Learning to stop reading in machine comprehension. In KDD, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Yelong%20Huang%2C%20Po-Sen%20Gao%2C%20Jianfeng%20Chen%2C%20Weizhu%20Reasonet%3A%20Learning%20to%20stop%20reading%20in%20machine%20comprehension%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Yelong%20Huang%2C%20Po-Sen%20Gao%2C%20Jianfeng%20Chen%2C%20Weizhu%20Reasonet%3A%20Learning%20to%20stop%20reading%20in%20machine%20comprehension%202017"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2015_a",
+            "entry": "Sainbayar Sukhbaatar, Jason Weston, Rob Fergus, et al. End-to-end memory networks. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sukhbaatar%2C%20Sainbayar%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sukhbaatar%2C%20Sainbayar%20Weston%2C%20Jason%20Fergus%2C%20Rob%20End-to-end%20memory%20networks%202015"
+        },
+        {
+            "id": "Swayamdipta_et+al_2018_a",
+            "entry": "Swabha Swayamdipta, Ankur P Parikh, and Tom Kwiatkowski. Multi-mention learning for reading comprehension with neural cascades. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Swayamdipta%2C%20Swabha%20Parikh%2C%20Ankur%20P.%20Kwiatkowski%2C%20Tom%20Multi-mention%20learning%20for%20reading%20comprehension%20with%20neural%20cascades%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Swayamdipta%2C%20Swabha%20Parikh%2C%20Ankur%20P.%20Kwiatkowski%2C%20Tom%20Multi-mention%20learning%20for%20reading%20comprehension%20with%20neural%20cascades%202018"
+        },
+        {
+            "id": "Trischler_et+al_2016_a",
+            "entry": "Adam Trischler, Tong Wang, Xingdi Yuan, Justin Harris, Alessandro Sordoni, Philip Bachman, and Kaheer Suleman. Newsqa: A machine comprehension dataset. arXiv preprint arXiv:1611.09830, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.09830"
+        },
+        {
+            "id": "Voorhees_1999_a",
+            "entry": "Ellen M Voorhees, others, et al. The trec-8 question answering track report. In Trec, 1999. Shuohang Wang and Jing Jiang. Machine comprehension using match-lstm and answer pointer. In",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ellen%20M%20Voorhees%20others%20et%20al%20The%20trec8%20question%20answering%20track%20report%20In%20Trec%201999%20Shuohang%20Wang%20and%20Jing%20Jiang%20Machine%20comprehension%20using%20matchlstm%20and%20answer%20pointer%20In",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ellen%20M%20Voorhees%20others%20et%20al%20The%20trec8%20question%20answering%20track%20report%20In%20Trec%201999%20Shuohang%20Wang%20and%20Jing%20Jiang%20Machine%20comprehension%20using%20matchlstm%20and%20answer%20pointer%20In"
+        }
+    ]
+}

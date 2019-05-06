@@ -1,0 +1,337 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MINIMUM DIVERGENCE VS. MAXIMUM MARGIN: AN EMPIRICAL COMPARISON ON SEQ2SEQ MODELS",
+        "author": "Huan Zhang, Hai Zhao \u2217 Department of Computer Science and Engineering Shanghai Jiao Tong University zhanghuan0468@gmail.com, zhaohai@cs.sjtu.edu.cn",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1xD9sR5Fm"
+        },
+        "abstract": "Sequence to sequence (seq2seq) models have become a popular framework for neural sequence prediction. While traditional seq2seq models are trained by Maximum Likelihood Estimation (MLE), much recent work has made various attempts to optimize evaluation scores directly to solve the mismatch between training and evaluation, since model predictions are usually evaluated by a task specific evaluation metric like BLEU or ROUGE scores instead of perplexity. This paper puts this existing work into two categories, a) minimum divergence, and b) maximum margin. We introduce a new training criterion based on the analysis of existing work, and empirically compare models in the two categories. Our experimental results show that our new training criterion can usually work better than existing methods, on both the tasks of machine translation and sentence summarization."
+    },
+    "keywords": [
+        {
+            "term": "Maximum Likelihood Estimation",
+            "url": "https://en.wikipedia.org/wiki/Maximum_Likelihood_Estimation"
+        },
+        {
+            "term": "cross entropy",
+            "url": "https://en.wikipedia.org/wiki/cross_entropy"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        },
+        {
+            "term": "Markov Decision Process",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Process"
+        },
+        {
+            "term": "maximum likelihood",
+            "url": "https://en.wikipedia.org/wiki/maximum_likelihood"
+        },
+        {
+            "term": "structured prediction",
+            "url": "https://en.wikipedia.org/wiki/structured_prediction"
+        },
+        {
+            "term": "BLEU",
+            "url": "https://en.wikipedia.org/wiki/BLEU"
+        },
+        {
+            "term": "Monte Carlo",
+            "url": "https://en.wikipedia.org/wiki/Monte_Carlo"
+        }
+    ],
+    "abbreviations": {
+        "MLE": "Maximum Likelihood Estimation",
+        "RL": "reinforcement learning",
+        "MERT": "Minimum Error Rate Training",
+        "MIXER": "mixed incremental cross entropy REINFORCE",
+        "MRT": "Minimum Risk Training",
+        "RAML": "Reward augmented Maximum Likelihood",
+        "GRU": "Gated Recurrent Unit",
+        "LSTM": "Long ShortTerm Memory",
+        "MC": "Monte Carlo",
+        "KL": "Kullback Leibler",
+        "MDP": "Markov Decision Process",
+        "SSVM": "Structural Support Vector Machine"
+    },
+    "highlights": [
+        "Sequence to sequence models (<a class=\"ref-link\" id=\"cKalchbrenner_2013_a\" href=\"#rKalchbrenner_2013_a\"><a class=\"ref-link\" id=\"cKalchbrenner_2013_a\" href=\"#rKalchbrenner_2013_a\">Kalchbrenner & Blunsom, 2013</a></a>; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; <a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a></a>) are a powerful end-to-end solution to sequence prediction since they allow a mapping between two sequences of different lengths",
+        "Training and evaluation mismatch: during training, we maximize the log likelihood, while during inference, the model is evaluated by a different metric such as BLEU or ROUGE;",
+        "Maximum Likelihood Estimation fails to assign proper scores to different model outputs, which means that all incorrect outputs are treated",
+        "Recent approaches to taking the evaluation metric into training criteria generally fall into one of the following two categories: 1. minimum divergence: Minimum divergence methods minimize some distance functions between the model output distribution and the probability distribution given by the ground truth, and by optimizing the divergence between the two distributions, the model output distribution will ideally be equal to the ground truth distribution.\n2. maximum margin: During inference, in structured prediction, the goal is to ensure good structures have the highest predicted score",
+        "By comparing the above two methods, we find that both Reward augmented Maximum Likelihood and Minimum Risk Training are minimizing the cross entropy loss between the model output distribution and the exponentiated payoff distribution, but with different directions of DXENT",
+        "We report ROUGE-1, ROUGE-2, ROUGE-L and ROUGE-S4 score"
+    ],
+    "key_statements": [
+        "Sequence to sequence models (<a class=\"ref-link\" id=\"cKalchbrenner_2013_a\" href=\"#rKalchbrenner_2013_a\"><a class=\"ref-link\" id=\"cKalchbrenner_2013_a\" href=\"#rKalchbrenner_2013_a\">Kalchbrenner & Blunsom, 2013</a></a>; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; <a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a></a>) are a powerful end-to-end solution to sequence prediction since they allow a mapping between two sequences of different lengths",
+        "Training and evaluation mismatch: during training, we maximize the log likelihood, while during inference, the model is evaluated by a different metric such as BLEU or ROUGE;",
+        "Maximum Likelihood Estimation fails to assign proper scores to different model outputs, which means that all incorrect outputs are treated",
+        "Similar to SEARN (Daumeet al., 2009) and DAGGER (<a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\">Ross et al, 2011</a>) in traditional models, many reinforcement learning (RL) techniques have been extended to seq2eq models recently to solve the mismatch between training and inference",
+        "Recent approaches to taking the evaluation metric into training criteria generally fall into one of the following two categories: 1. minimum divergence: Minimum divergence methods minimize some distance functions between the model output distribution and the probability distribution given by the ground truth, and by optimizing the divergence between the two distributions, the model output distribution will ideally be equal to the ground truth distribution.\n2. maximum margin: During inference, in structured prediction, the goal is to ensure good structures have the highest predicted score",
+        "We construct the approximated n-best list S using Monte Carlo sampling proposed in <a class=\"ref-link\" id=\"cShen_et+al_2016_a\" href=\"#rShen_et+al_2016_a\">Shen et al (2016</a>) , and for completeness, we describe the sampling approach in Appendix 8.1 in details",
+        "In Minimum Risk Training, the training objective is the expectation of evaluation metric scores taken with respect to the model output distribution: LMRT = \u2212Ep(y | x;\u03b8)[ r(y, y\u2217) ]",
+        "By comparing the above two methods, we find that both Reward augmented Maximum Likelihood and Minimum Risk Training are minimizing the cross entropy loss between the model output distribution and the exponentiated payoff distribution, but with different directions of DXENT",
+        "During training of both Reward augmented Maximum Likelihood and Minimum Risk Training, the model is trying to predict the evaluation score r by multiplying log p with a constant.\n4.4",
+        "We report ROUGE-1, ROUGE-2, ROUGE-L and ROUGE-S4 score"
+    ],
+    "summary": [
+        "Sequence to sequence models (<a class=\"ref-link\" id=\"cKalchbrenner_2013_a\" href=\"#rKalchbrenner_2013_a\"><a class=\"ref-link\" id=\"cKalchbrenner_2013_a\" href=\"#rKalchbrenner_2013_a\">Kalchbrenner & Blunsom, 2013</a></a>; <a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\"><a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a></a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\"><a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a></a>; <a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLuong_et+al_2015_a\" href=\"#rLuong_et+al_2015_a\">Luong et al, 2015</a></a>) are a powerful end-to-end solution to sequence prediction since they allow a mapping between two sequences of different lengths.",
+        "Before seq2seq models, previous work on optimizing task specific evaluation metric scores generally includes SEARN (Daumeet al., 2009), DAGGER (<a class=\"ref-link\" id=\"cRoss_et+al_2011_a\" href=\"#rRoss_et+al_2011_a\">Ross et al, 2011</a>), Minimum Error Rate Training (MERT) (<a class=\"ref-link\" id=\"cOch_2003_a\" href=\"#rOch_2003_a\">Och, 2003</a>), and softmax-margin criterion (<a class=\"ref-link\" id=\"cGimpel_2010_a\" href=\"#rGimpel_2010_a\">Gimpel & Smith, 2010</a>).",
+        "The baseline training criterion MLE can be seen as minimum divergence training, where the cross entropy between the model output distribution and the one-hot encoded ground truth is minimized.",
+        "In MRT, the training objective is the expectation of evaluation metric scores taken with respect to the model output distribution: LMRT = \u2212Ep(y | x;\u03b8)[ r(y, y\u2217) ].",
+        "If we regard the whole seq2seq framework as a one-step Markov Decision Process (MDP), in which the input sequence x is the state, the output sequence y is the action, and the evaluation metric score r is the reward, both REINFORCE and MRT optimize the same training criterion.",
+        "By comparing the above two methods, we find that both RAML and MRT are minimizing the cross entropy loss between the model output distribution and the exponentiated payoff distribution, but with different directions of DXENT.",
+        "During training of both RAML and MRT, the model is trying to predict the evaluation score r by multiplying log p with a constant.",
+        "In RAML which samples from exponentiated payoff distribution q and maximizes log p, sequences that have a high evaluation score will have a high predicted probability.",
+        "By optimizing the cross entropy loss, the model is trained to find the candidate that has the highest probability and pays less attention to samples that have low probabilities, while by optimizing the squared Hellinger distance, the model learns to predict the evaluation metric score for every sample in the candidate set and pays equal attention to all of them.",
+        "Since seq2seq models generate a predicted sequence word by word, the target sequence which has the highest evaluation metric score or the highest predicted probability may not be reached by approximate inference algorithms like greedy search or beam search.",
+        "A model trained by optimizing the cross entropy loss may not work as expected, a model trained by optimizing the squared Hellinger distance can still make predictions normally since it pays equal attention to samples with low probabilities during training.",
+        "In the training process of maximum margin methods, only the target sequence and a negative sample selected from the candidate set are used to update model parameters, which may explain their performance."
+    ],
+    "headline": "We introduce a new training criterion based on the analysis of existing work, and empirically compare models in the two categories",
+    "reference_links": [
+        {
+            "id": "Abdel-Azim_2016_a",
+            "entry": "Gamil Abdel-Azim. New hierarchical clustering algorithm for protein sequences based on hellinger distance. Appl Math, 10(4):1541\u20139, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abdel-Azim%2C%20Gamil%20New%20hierarchical%20clustering%20algorithm%20for%20protein%20sequences%20based%20on%20hellinger%20distance%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abdel-Azim%2C%20Gamil%20New%20hierarchical%20clustering%20algorithm%20for%20protein%20sequences%20based%20on%20hellinger%20distance%202016"
+        },
+        {
+            "id": "Ayana_et+al_2016_a",
+            "entry": "Ayana, Shiqi Shen, Zhiyuan Liu, and Maosong Sun. Neural headline generation with minimum risk training. arXiv:1604.01904, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.01904"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Bahdanau_et+al_2017_a",
+            "entry": "Dzmitry Bahdanau, Philemon Brakel, Kelvin Xu, Anirudh Goyal, Ryan Lowe, Joelle Pineau, Aaron Courville, and Yoshua Bengio. An actor-critic algorithm for sequence prediction. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Brakel%2C%20Philemon%20Xu%2C%20Kelvin%20Goyal%2C%20Anirudh%20An%20actor-critic%20algorithm%20for%20sequence%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Brakel%2C%20Philemon%20Xu%2C%20Kelvin%20Goyal%2C%20Anirudh%20An%20actor-critic%20algorithm%20for%20sequence%20prediction%202017"
+        },
+        {
+            "id": "Beykikhoshk_et+al_0000_a",
+            "entry": "Adham Beykikhoshk, Ognjen Arandjelovic, Dinh Phung, and Svetha Venkatesh. Discovering topic structures of a temporally evolving document corpus. arXiv:1512.08008, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.08008"
+        },
+        {
+            "id": "Chen_2014_a",
+            "entry": "Boxing Chen and Colin Cherry. A systematic comparison of smoothing techniques for sentencelevel bleu. In ACL, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Boxing%20Cherry%2C%20Colin%20A%20systematic%20comparison%20of%20smoothing%20techniques%20for%20sentencelevel%20bleu%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Boxing%20Cherry%2C%20Colin%20A%20systematic%20comparison%20of%20smoothing%20techniques%20for%20sentencelevel%20bleu%202014"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart van Merrienboer, Dzmitry Bahdanau, and Yoshua Bengio. On the properties of neural machine translation: Encoder\u2013decoder approaches. Syntax, Semantics and Structure in Statistical Translation, pp. 103, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20van%20Merrienboer%2C%20Bart%20Bahdanau%2C%20Dzmitry%20Bengio%2C%20Yoshua%20On%20the%20properties%20of%20neural%20machine%20translation%3A%20Encoder%E2%80%93decoder%20approaches.%20Syntax%2C%20Semantics%20and%20Structure%20in%20Statistical%20Translation%202014"
+        },
+        {
+            "id": "Chopra_et+al_2016_a",
+            "entry": "Sumit Chopra, Michael Auli, and Alexander M Rush. Abstractive sentence summarization with attentive recurrent neural networks. In NAACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chopra%2C%20Sumit%20Auli%2C%20Michael%20Rush%2C%20Alexander%20M.%20Abstractive%20sentence%20summarization%20with%20attentive%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chopra%2C%20Sumit%20Auli%2C%20Michael%20Rush%2C%20Alexander%20M.%20Abstractive%20sentence%20summarization%20with%20attentive%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Csiszar_1963_a",
+            "entry": "Imre Csiszar. Eine informationstheoretische ungleichung und ihre anwendung auf den beweis der ergodizitat von markoffschen ketten. Magyar. Tud. Akad. Mat. Kutato Int. Kozl, 8:85\u2013108, 1963.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Csiszar%2C%20Imre%20Eine%20informationstheoretische%20ungleichung%20und%20ihre%20anwendung%20auf%20den%20beweis%20der%20ergodizitat%20von%20markoffschen%20ketten%201963",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Csiszar%2C%20Imre%20Eine%20informationstheoretische%20ungleichung%20und%20ihre%20anwendung%20auf%20den%20beweis%20der%20ergodizitat%20von%20markoffschen%20ketten%201963"
+        },
+        {
+            "id": "Daume_et+al_2009_a",
+            "entry": "Hal Daume, John Langford, and Daniel Marcu. Search-based structured prediction. Machine learning, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daume%2C%20Hal%20Langford%2C%20John%20Marcu%2C%20Daniel%20Search-based%20structured%20prediction%202009"
+        },
+        {
+            "id": "Edunov_et+al_2018_a",
+            "entry": "Sergey Edunov, Myle Ott, Michael Auli, David Grangier, et al. Classical structured prediction losses for sequence to sequence learning. In NAACL-HLT, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Classical%20structured%20prediction%20losses%20for%20sequence%20to%20sequence%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Edunov%2C%20Sergey%20Ott%2C%20Myle%20Auli%2C%20Michael%20Grangier%2C%20David%20Classical%20structured%20prediction%20losses%20for%20sequence%20to%20sequence%20learning%202018"
+        },
+        {
+            "id": "Gehring_et+al_2017_a",
+            "entry": "Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N Dauphin. Convolutional Sequence to Sequence Learning. arXiv:1705.03122, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.03122"
+        },
+        {
+            "id": "Gimpel_2010_a",
+            "entry": "Kevin Gimpel and Noah A Smith. Softmax-margin training for structured log-linear models. 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gimpel%2C%20Kevin%20Smith%2C%20Noah%20A.%20Softmax-margin%20training%20for%20structured%20log-linear%20models%202010"
+        },
+        {
+            "id": "Hellinger_1909_a",
+            "entry": "Ernst Hellinger. Neue begrundung der theorie quadratischer formen von unendlichvielen veranderlichen. Journal fur die reine und angewandte Mathematik, 136:210\u2013271, 1909.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hellinger%2C%20Ernst%20Neue%20begrundung%20der%20theorie%20quadratischer%20formen%20von%20unendlichvielen%20veranderlichen%201909",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hellinger%2C%20Ernst%20Neue%20begrundung%20der%20theorie%20quadratischer%20formen%20von%20unendlichvielen%20veranderlichen%201909"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and Jurgen Schmidhuber. Long short-term memory. Neural computation, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20Jurgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Ji_et+al_2018_a",
+            "entry": "Wenying Ji, Simaan M AbouRizk, Osmar R Za\u0131ane, and Yitong Li. Complexity analysis approach for prefabricated construction products using uncertain data clustering. Journal of Construction Engineering and Management, 144(8):04018063, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ji%2C%20Wenying%20AbouRizk%2C%20Simaan%20M.%20Za%C4%B1ane%2C%20Osmar%20R.%20Li%2C%20Yitong%20Complexity%20analysis%20approach%20for%20prefabricated%20construction%20products%20using%20uncertain%20data%20clustering%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ji%2C%20Wenying%20AbouRizk%2C%20Simaan%20M.%20Za%C4%B1ane%2C%20Osmar%20R.%20Li%2C%20Yitong%20Complexity%20analysis%20approach%20for%20prefabricated%20construction%20products%20using%20uncertain%20data%20clustering%202018"
+        },
+        {
+            "id": "Joachims_2006_a",
+            "entry": "Thorsten Joachims. Training linear svms in linear time. In KDD, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joachims%2C%20Thorsten%20Training%20linear%20svms%20in%20linear%20time%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Joachims%2C%20Thorsten%20Training%20linear%20svms%20in%20linear%20time%202006"
+        },
+        {
+            "id": "Joachims_et+al_2009_a",
+            "entry": "Thorsten Joachims, Thomas Finley, and Chun-Nam John Yu. Cutting-plane training of structural svms. Machine Learning, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joachims%2C%20Thorsten%20Finley%2C%20Thomas%20Yu%2C%20Chun-Nam%20John%20Cutting-plane%20training%20of%20structural%20svms%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Joachims%2C%20Thorsten%20Finley%2C%20Thomas%20Yu%2C%20Chun-Nam%20John%20Cutting-plane%20training%20of%20structural%20svms%202009"
+        },
+        {
+            "id": "Kalchbrenner_2013_a",
+            "entry": "Nal Kalchbrenner and Phil Blunsom. Recurrent continuous translation models. In EMNLP, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalchbrenner%2C%20Nal%20Blunsom%2C%20Phil%20Recurrent%20continuous%20translation%20models%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalchbrenner%2C%20Nal%20Blunsom%2C%20Phil%20Recurrent%20continuous%20translation%20models%202013"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Konda_2000_a",
+            "entry": "Vijay R Konda and John N Tsitsiklis. Actor-critic algorithms. In NIPS, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Konda%2C%20Vijay%20R.%20Tsitsiklis%2C%20John%20N.%20Actor-critic%20algorithms%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Konda%2C%20Vijay%20R.%20Tsitsiklis%2C%20John%20N.%20Actor-critic%20algorithms%202000"
+        },
+        {
+            "id": "Koyamada_et+al_2017_a",
+            "entry": "Sotetsu Koyamada, Yuta Kikuchi, Atsunori Kanemura, Shin-ichi Maeda, and Shin Ishii. Neural sequence model training via \u03b1-divergence minimization. In ICML Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koyamada%2C%20Sotetsu%20Kikuchi%2C%20Yuta%20Kanemura%2C%20Atsunori%20Maeda%2C%20Shin-ichi%20Neural%20sequence%20model%20training%20via%20%CE%B1-divergence%20minimization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koyamada%2C%20Sotetsu%20Kikuchi%2C%20Yuta%20Kanemura%2C%20Atsunori%20Maeda%2C%20Shin-ichi%20Neural%20sequence%20model%20training%20via%20%CE%B1-divergence%20minimization%202017"
+        },
+        {
+            "id": "Kreutzer_et+al_2017_a",
+            "entry": "Julia Kreutzer, Artem Sokolov, and Stefan Riezler. Bandit structured prediction for neural sequenceto-sequence learning. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kreutzer%2C%20Julia%20Sokolov%2C%20Artem%20Riezler%2C%20Stefan%20Bandit%20structured%20prediction%20for%20neural%20sequenceto-sequence%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kreutzer%2C%20Julia%20Sokolov%2C%20Artem%20Riezler%2C%20Stefan%20Bandit%20structured%20prediction%20for%20neural%20sequenceto-sequence%20learning%202017"
+        },
+        {
+            "id": "Li_2009_a",
+            "entry": "Zhifei Li and Jason Eisner. First-and second-order expectation semirings with applications to minimum-risk training on translation forests. In EMNLP, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Zhifei%20Eisner%2C%20Jason%20First-and%20second-order%20expectation%20semirings%20with%20applications%20to%20minimum-risk%20training%20on%20translation%20forests%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Zhifei%20Eisner%2C%20Jason%20First-and%20second-order%20expectation%20semirings%20with%20applications%20to%20minimum-risk%20training%20on%20translation%20forests%202009"
+        },
+        {
+            "id": "Chin-Yew_2004_a",
+            "entry": "Chin-Yew Lin. Rouge: A package for automatic evaluation of summaries. In ACL Workshop, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChinYew%20Lin%20Rouge%20A%20package%20for%20automatic%20evaluation%20of%20summaries%20In%20ACL%20Workshop%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=ChinYew%20Lin%20Rouge%20A%20package%20for%20automatic%20evaluation%20of%20summaries%20In%20ACL%20Workshop%202004"
+        },
+        {
+            "id": "Luong_et+al_2015_a",
+            "entry": "Thang Luong, Hieu Pham, and Christopher D. Manning. Effective approaches to attention-based neural machine translation. In EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luong%2C%20Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luong%2C%20Thang%20Pham%2C%20Hieu%20Manning%2C%20Christopher%20D.%20Effective%20approaches%20to%20attention-based%20neural%20machine%20translation%202015"
+        },
+        {
+            "id": "Norouzi_et+al_2016_a",
+            "entry": "Mohammad Norouzi, Samy Bengio, Zhifeng Chen, Navdeep Jaitly, Mike Schuster, Yonghui Wu, and Dale Schuurmans. Reward augmented maximum likelihood for neural structured prediction. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Norouzi%2C%20Mohammad%20Bengio%2C%20Samy%20Chen%2C%20Zhifeng%20Jaitly%2C%20Navdeep%20Reward%20augmented%20maximum%20likelihood%20for%20neural%20structured%20prediction%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Norouzi%2C%20Mohammad%20Bengio%2C%20Samy%20Chen%2C%20Zhifeng%20Jaitly%2C%20Navdeep%20Reward%20augmented%20maximum%20likelihood%20for%20neural%20structured%20prediction%202016"
+        },
+        {
+            "id": "Och_2003_a",
+            "entry": "Franz Josef Och. Minimum error rate training in statistical machine translation. In ACL, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Och%2C%20Franz%20Josef%20Minimum%20error%20rate%20training%20in%20statistical%20machine%20translation%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Och%2C%20Franz%20Josef%20Minimum%20error%20rate%20training%20in%20statistical%20machine%20translation%202003"
+        },
+        {
+            "id": "Papineni_et+al_2002_a",
+            "entry": "Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. Bleu: a method for automatic evaluation of machine translation. In ACL, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002"
+        },
+        {
+            "id": "Pascanu_et+al_2013_a",
+            "entry": "Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. On the difficulty of training recurrent neural networks. In ICML, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Ranzato_et+al_2016_a",
+            "entry": "Marc\u2019Aurelio Ranzato, Sumit Chopra, Michael Auli, and Wojciech Zaremba. Sequence level training with recurrent neural networks. In ICLR, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ranzato%2C%20Marc%E2%80%99Aurelio%20Chopra%2C%20Sumit%20Auli%2C%20Michael%20Zaremba%2C%20Wojciech%20Sequence%20level%20training%20with%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ranzato%2C%20Marc%E2%80%99Aurelio%20Chopra%2C%20Sumit%20Auli%2C%20Michael%20Zaremba%2C%20Wojciech%20Sequence%20level%20training%20with%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Ross_et+al_2011_a",
+            "entry": "Stephane Ross, Geoffrey Gordon, and Drew Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. In AISTATS, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ross%2C%20Stephane%20Gordon%2C%20Geoffrey%20Bagnell%2C%20Drew%20A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20no-regret%20online%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ross%2C%20Stephane%20Gordon%2C%20Geoffrey%20Bagnell%2C%20Drew%20A%20reduction%20of%20imitation%20learning%20and%20structured%20prediction%20to%20no-regret%20online%20learning%202011"
+        },
+        {
+            "id": "Rush_et+al_2015_a",
+            "entry": "Alexander M. Rush, Sumit Chopra, and Jason Weston. A neural attention model for abstractive sentence summarization. In EMNLP, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rush%2C%20Alexander%20M.%20Chopra%2C%20Sumit%20Weston%2C%20Jason%20A%20neural%20attention%20model%20for%20abstractive%20sentence%20summarization%202015"
+        },
+        {
+            "id": "Shen_et+al_2016_a",
+            "entry": "Shiqi Shen, Yong Cheng, Zhongjun He, Wei He, Hua Wu, Maosong Sun, and Yang Liu. Minimum risk training for neural machine translation. In ACL, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Shiqi%20Cheng%2C%20Yong%20He%2C%20Zhongjun%20He%2C%20Wei%20Minimum%20risk%20training%20for%20neural%20machine%20translation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Shiqi%20Cheng%2C%20Yong%20He%2C%20Zhongjun%20He%2C%20Wei%20Minimum%20risk%20training%20for%20neural%20machine%20translation%202016"
+        },
+        {
+            "id": "Smith_2006_a",
+            "entry": "David A Smith and Jason Eisner. Minimum risk annealing for training log-linear models. In ACL, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20David%20A.%20Eisner%2C%20Jason%20Minimum%20risk%20annealing%20for%20training%20log-linear%20models%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smith%2C%20David%20A.%20Eisner%2C%20Jason%20Minimum%20risk%20annealing%20for%20training%20log-linear%20models%202006"
+        },
+        {
+            "id": "Sokolov_et+al_2016_a",
+            "entry": "Artem Sokolov, Julia Kreutzer, Stefan Riezler, and Christopher Lo. Stochastic structured prediction under bandit feedback. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sokolov%2C%20Artem%20Kreutzer%2C%20Julia%20Riezler%2C%20Stefan%20Lo%2C%20Christopher%20Stochastic%20structured%20prediction%20under%20bandit%20feedback%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sokolov%2C%20Artem%20Kreutzer%2C%20Julia%20Riezler%2C%20Stefan%20Lo%2C%20Christopher%20Stochastic%20structured%20prediction%20under%20bandit%20feedback%202016"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. JMLR, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Hinton%2C%20Geoffrey%20Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Sutton_et+al_1992_a",
+            "entry": "Published as a conference paper at ICLR 2019 Richard S Sutton, David A McAllester, Satinder P Singh, and Yishay Mansour. Policy gradient methods for reinforcement learning with function approximation. In NIPS, 2000. Ioannis Tsochantaridis, Thomas Hofmann, Thorsten Joachims, and Yasemin Altun. Support vector machine learning for interdependent and structured output spaces. In ICML, 2004. Ronald J Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 1992. Sam Wiseman and Alexander M. Rush. Sequence-to-sequence learning as beam-search optimization. In EMNLP, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Published%20as%20a%20conference%20paper%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutton%2C%20S.%20McAllester%2C%20David%20A.%20Singh%2C%20Satinder%20P.%20Mansour%2C%20Yishay%20Published%20as%20a%20conference%20paper%201992"
+        }
+    ]
+}

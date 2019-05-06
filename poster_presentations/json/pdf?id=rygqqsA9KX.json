@@ -1,0 +1,505 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING FACTORIZED MULTIMODAL REPRESENTATIONS",
+        "author": "Yao-Hung Hubert Tsai, Paul Pu Liang, Amir Zadeh, Louis-Philippe Morency, Ruslan Salakhutdinov, {1Machine Learning Department, 2Language Technologies Institute}, Carnegie Mellon University {yaohungt,pliang,abagherz,morency,rsalakhu}@cs.cmu.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rygqqsA9KX"
+        },
+        "abstract": "Learning multimodal representations is a fundamentally complex research problem due to the presence of multiple heterogeneous sources of information. Although the presence of multiple modalities provides additional valuable information, there are two key challenges to address when learning from multimodal data: 1) models must learn the complex intra-modal and cross-modal interactions for prediction and 2) models must be robust to unexpected missing or noisy modalities during testing. In this paper, we propose to optimize for a joint generative-discriminative objective across multimodal data and labels. We introduce a model that factorizes representations into two sets of independent factors: multimodal discriminative and modality-specific generative factors. Multimodal discriminative factors are shared across all modalities and contain joint multimodal features required for discriminative tasks such as sentiment prediction. Modality-specific generative factors are unique for each modality and contain the information required for generating data. Experimental results show that our model is able to learn meaningful multimodal representations that achieve state-of-the-art or competitive performance on six multimodal datasets. Our model demonstrates flexible generative capabilities by conditioning on independent factors and can reconstruct missing modalities without significantly impacting performance. Lastly, we interpret our factorized representations to understand the interactions that influence multimodal learning."
+    },
+    "keywords": [
+        {
+            "term": "multimedia",
+            "url": "https://en.wikipedia.org/wiki/multimedia"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "Convolutional Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "multimodal sentiment analysis",
+            "url": "https://en.wikipedia.org/wiki/multimodal_sentiment_analysis"
+        },
+        {
+            "term": "emotion recognition",
+            "url": "https://en.wikipedia.org/wiki/emotion_recognition"
+        },
+        {
+            "term": "independent factor",
+            "url": "https://en.wikipedia.org/wiki/independent_factor"
+        }
+    ],
+    "abbreviations": {
+        "MFM": "Multimodal Factorization Model",
+        "VAEs": "Variational Autoencoders",
+        "WAEs": "Wasserstein Autoencoders",
+        "ELBO": "evidence lower bound objective",
+        "CNNs": "Convolutional Neural Networks",
+        "FCNNs": "Fully-Connected Neural Networks",
+        "MFN": "Memory Fusion Network",
+        "LSTM": "Long Short-term Memory"
+    },
+    "highlights": [
+        "Multimodal machine learning involves learning from data across multiple modalities (Baltru\u0161aitis et al, 2017)",
+        "We introduce the Multimodal Factorization Model (MFM in Figure 1) that factorizes multimodal representations into multimodal discriminative factors and modality-specific generative factors",
+        "Multimodal discriminative factors are shared across all modalities and contain joint multimodal features required for discriminative tasks",
+        "Through an extensive set of experiments, we show that Multimodal Factorization Model learns improved multimodal representations with these characteristics: 1) The multimodal discriminative factors achieve state-of-the-art or competitive performance on six multimodal time series datasets",
+        "We proposed the Multimodal Factorization Model (MFM) for multimodal representation learning",
+        "Multimodal Factorization Model factorizes the multimodal representations into two sets of independent factors: multimodal discriminative factors and modality-specific generative factors"
+    ],
+    "key_statements": [
+        "Multimodal machine learning involves learning from data across multiple modalities (Baltru\u0161aitis et al, 2017)",
+        "We introduce the Multimodal Factorization Model (MFM in Figure 1) that factorizes multimodal representations into multimodal discriminative factors and modality-specific generative factors",
+        "Multimodal discriminative factors are shared across all modalities and contain joint multimodal features required for discriminative tasks",
+        "Through an extensive set of experiments, we show that Multimodal Factorization Model learns improved multimodal representations with these characteristics: 1) The multimodal discriminative factors achieve state-of-the-art or competitive performance on six multimodal time series datasets",
+        "We proposed the Multimodal Factorization Model (MFM) for multimodal representation learning",
+        "Multimodal Factorization Model factorizes the multimodal representations into two sets of independent factors: multimodal discriminative factors and modality-specific generative factors"
+    ],
+    "summary": [
+        "Multimodal machine learning involves learning from data across multiple modalities (Baltru\u0161aitis et al, 2017).",
+        "Multimodal Factorization Model (MFM) is a latent variable model (Figure 1(a)) with conditional independence assumptions over multimodal discriminative factors and modality-specific generative factors.",
+        "To factorize multimodal representations into multimodal discriminative factors and modality-specific generative factors, MFM assumes a Bayesian network structure as shown in Figure 1(a).",
+        "To 1) rigorously evaluate the discriminative capabilities of MFM in comparison with existing baselines, 2) analyze the importance of each design component through ablation studies, 3) assess the robustness of MFM\u2019s modality reconstruction and prediction capabilities to missing modalities, and 4) interpret the learned representations using information-based and gradient-based methods to understand the contributions of individual factors towards multimodal prediction and generation.",
+        "MFM with surrogate inference is able to better handle missing modalities during test time as compared to the purely generative (Seq2Seq) or purely discriminative baselines.",
+        "For sentiment prediction, using 1) a multimodal discriminative factor outperforms modality-specific discriminative factors (MD > MC, MB > MA), and 2) adding generative capabilities to the model improves performance (MC > MA, ME > MB).",
+        "For both sentiment prediction and modality reconstruction, 3) factorizing into separate generative and discriminative factors improves performance (ME > MD), and 4) using modality-specific generative factors outperforms multimodal generative factors (MFM > ME).",
+        "Since Fy is a common cause of X 1\u2236M , we can compare MI(Fy, X 1), \u22ef, MI(Fy, X M ), where MI(\u22c5, \u22c5) denotes the mutual information measure between Fy and generated modality Xi. Higher MI(Fy, Xi) indicates greater contribution from Fy to Xi. Figure 4 reports the ratios ri = MI(Fy, Xi) MI(Fai, Xi) which measure a normalized version of the mutual information between Fai and Xi. We observe that on CMU-MOSI, the language modality is most informative towards sentiment prediction, followed by the acoustic modality.",
+        "To unify the advantages of both approaches, MFM factorizes multimodal representations into generative and discriminative components and optimizes for a joint objective.",
+        "Several methods involve specifying a fixed set of latent attributes that individually control particular variations of data and performing supervised training (<a class=\"ref-link\" id=\"cCheung_et+al_2014_a\" href=\"#rCheung_et+al_2014_a\">Cheung et al, 2014</a>; <a class=\"ref-link\" id=\"cKaraletsos_et+al_2015_a\" href=\"#rKaraletsos_et+al_2015_a\">Karaletsos et al, 2015</a>; <a class=\"ref-link\" id=\"cYang_et+al_2015_a\" href=\"#rYang_et+al_2015_a\">Yang et al, 2015</a>; <a class=\"ref-link\" id=\"cReed_et+al_2014_a\" href=\"#rReed_et+al_2014_a\">Reed et al, 2014</a>; <a class=\"ref-link\" id=\"cZhu_et+al_2014_a\" href=\"#rZhu_et+al_2014_a\">Zhu et al, 2014</a>), assuming an isotropic Gaussian prior over latent variables to learn disentangled generative representations (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a>; <a class=\"ref-link\" id=\"cRubenstein_et+al_2018_a\" href=\"#rRubenstein_et+al_2018_a\">Rubenstein et al, 2018</a>) and learning latent variables in charge of specific variations in the data by maximizing the mutual information between a subset of latent variables and the data (<a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a>).",
+        "We believe that MFM sheds light on the advantages of learning factorizing multimodal representations and potentially opens up new horizons for multimodal machine learning"
+    ],
+    "headline": "We introduce a model that factorizes representations into two sets of independent factors: multimodal discriminative and modality-specific generative factors",
+    "reference_links": [
+        {
+            "id": "Baltru_et+al_2017_a",
+            "entry": "Tadas Baltru\u0161aitis, Chaitanya Ahuja, and Louis-Philippe Morency. Multimodal machine learning: A survey and taxonomy. arXiv preprint arXiv:1705.09406, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.09406"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Aaron Courville, and Pascal Vincent. Representation learning: A review and new perspectives. IEEE Trans. Pattern Anal. Mach. Intell., 35(8), August 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Courville%2C%20Aaron%20Vincent%2C%20Pascal%20Representation%20learning%3A%20A%20review%20and%20new%20perspectives%202013-08"
+        },
+        {
+            "id": "Forests_2001_a",
+            "entry": "Leo Breiman. Random forests. Mach. Learn., 45(1):5\u201332, October 2001. ISSN 0885-6125. doi: 10.1023/A:1010933404324. URL https://doi.org/10.1023/A:1010933404324.",
+            "crossref": "https://dx.doi.org/10.1023/A:1010933404324",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1023/A%3A1010933404324"
+        },
+        {
+            "id": "Busso_et+al_2008_a",
+            "entry": "Carlos Busso, Murtaza Bulut, Chi-Chun Lee, Abe Kazemzadeh, Emily Mower, Samuel Kim, Jeannette Chang, Sungbok Lee, and Shrikanth S. Narayanan. Iemocap: Interactive emotional dyadic motion capture database. Journal of Language Resources and Evaluation, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Busso%2C%20Carlos%20Bulut%2C%20Murtaza%20Lee%2C%20Chi-Chun%20Kazemzadeh%2C%20Abe%20Iemocap%3A%20Interactive%20emotional%20dyadic%20motion%20capture%20database%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Busso%2C%20Carlos%20Bulut%2C%20Murtaza%20Lee%2C%20Chi-Chun%20Kazemzadeh%2C%20Abe%20Iemocap%3A%20Interactive%20emotional%20dyadic%20motion%20capture%20database%202008"
+        },
+        {
+            "id": "Chaplot_et+al_2017_a",
+            "entry": "Devendra Singh Chaplot, Kanthashree Mysore Sathyendra, Rama Kumar Pasumarthi, Dheeraj Rajagopal, and Ruslan Salakhutdinov. Gated-attention architectures for task-oriented language grounding. arXiv preprint arXiv:1706.07230, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07230"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Minghai Chen, Sen Wang, Paul Pu Liang, Tadas Baltru\u0161aitis, Amir Zadeh, and Louis-Philippe Morency. Multimodal sentiment analysis with word-level fusion and reinforcement learning. In Proceedings of the 19th ACM International Conference on Multimodal Interaction, ICMI, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Minghai%20Wang%2C%20Sen%20Liang%2C%20Paul%20Pu%20Baltru%C5%A1aitis%2C%20Tadas%20Multimodal%20sentiment%20analysis%20with%20word-level%20fusion%20and%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Minghai%20Wang%2C%20Sen%20Liang%2C%20Paul%20Pu%20Baltru%C5%A1aitis%2C%20Tadas%20Multimodal%20sentiment%20analysis%20with%20word-level%20fusion%20and%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, and Pieter Abbeel. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. In Advances in Neural Information Processing Systems, pp. 2172\u20132180, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Infogan%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Infogan%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016"
+        },
+        {
+            "id": "Cheung_et+al_2014_a",
+            "entry": "Brian Cheung, Jesse A Livezey, Arjun K Bansal, and Bruno A Olshausen. Discovering hidden factors of variation in deep networks. arXiv preprint arXiv:1412.6583, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6583"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart van Merri\u00ebnboer, \u00c7aglar G\u00fcl\u00e7ehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using rnn encoder\u2013decoder for statistical machine translation. In EMNLP. ACL, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20van%20Merri%C3%ABnboer%2C%20Bart%20G%C3%BCl%C3%A7ehre%2C%20%C3%87aglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder%E2%80%93decoder%20for%20statistical%20machine%20translation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cho%2C%20Kyunghyun%20van%20Merri%C3%ABnboer%2C%20Bart%20G%C3%BCl%C3%A7ehre%2C%20%C3%87aglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20rnn%20encoder%E2%80%93decoder%20for%20statistical%20machine%20translation%202014"
+        },
+        {
+            "id": "Cho_et+al_2015_a",
+            "entry": "KyungHyun Cho, Aaron C. Courville, and Yoshua Bengio. Describing multimedia content using attention-based encoder-decoder networks. CoRR, abs/1507.01053, 2015. URL http://arxiv.org/abs/1507.01053.",
+            "url": "http://arxiv.org/abs/1507.01053",
+            "arxiv_url": "https://arxiv.org/pdf/1507.01053"
+        },
+        {
+            "id": "Cuturi_et+al_2007_a",
+            "entry": "Marco Cuturi, Jean-Philippe Vert, Oystein Birkenes, and Tomoko Matsui. A kernel for time series based on global alignments. In Acoustics, Speech and Signal Processing, ICASSP 2007., 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cuturi%2C%20Marco%20Vert%2C%20Jean-Philippe%20Birkenes%2C%20Oystein%20Matsui%2C%20Tomoko%20A%20kernel%20for%20time%20series%20based%20on%20global%20alignments%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cuturi%2C%20Marco%20Vert%2C%20Jean-Philippe%20Birkenes%2C%20Oystein%20Matsui%2C%20Tomoko%20A%20kernel%20for%20time%20series%20based%20on%20global%20alignments%202007"
+        },
+        {
+            "id": "Degottex_et+al_2014_a",
+            "entry": "Gilles Degottex, John Kane, Thomas Drugman, Tuomo Raitio, and Stefan Scherer. Covarepa collaborative voice analysis repository for speech technologies. In ICASSP. IEEE, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Degottex%2C%20Gilles%20Kane%2C%20John%20Drugman%2C%20Thomas%20Raitio%2C%20Tuomo%20Covarepa%20collaborative%20voice%20analysis%20repository%20for%20speech%20technologies.%20In%20ICASSP%202014"
+        },
+        {
+            "id": "Ekman_1992_a",
+            "entry": "Paul Ekman. An argument for basic emotions. Cognition & emotion, 6(3-4):169\u2013200, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ekman%2C%20Paul%20An%20argument%20for%20basic%20emotions%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ekman%2C%20Paul%20An%20argument%20for%20basic%20emotions%201992"
+        },
+        {
+            "id": "Ekman_et+al_1980_a",
+            "entry": "Paul Ekman, Wallace V Freisen, and Sonia Ancoli. Facial signs of emotional experience. Journal of personality and social psychology, 39(6):1125, 1980.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ekman%2C%20Paul%20Freisen%2C%20Wallace%20V.%20Ancoli%2C%20Sonia%20Facial%20signs%20of%20emotional%20experience%201980",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ekman%2C%20Paul%20Freisen%2C%20Wallace%20V.%20Ancoli%2C%20Sonia%20Facial%20signs%20of%20emotional%20experience%201980"
+        },
+        {
+            "id": "Frantzidis_et+al_2010_a",
+            "entry": "C. A. Frantzidis, C. Bratsas, M. A. Klados, E. Konstantinidis, C. D. Lithari, A. B. Vivas, C. L. Papadelis, E. Kaldoudi, C. Pappas, and P. D. Bamidis. On the classification of emotional biosignals evoked while viewing affective pictures: An integrated data-mining-based approach for healthcare applications. IEEE Transactions on Information Technology in Biomedicine, March 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frantzidis%2C%20C.A.%20Bratsas%2C%20C.%20Klados%2C%20M.A.%20Konstantinidis%2C%20E.%20On%20the%20classification%20of%20emotional%20biosignals%20evoked%20while%20viewing%20affective%20pictures%3A%20An%20integrated%20data-mining-based%20approach%20for%20healthcare%20applications%202010-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frantzidis%2C%20C.A.%20Bratsas%2C%20C.%20Klados%2C%20M.A.%20Konstantinidis%2C%20E.%20On%20the%20classification%20of%20emotional%20biosignals%20evoked%20while%20viewing%20affective%20pictures%3A%20An%20integrated%20data-mining-based%20approach%20for%20healthcare%20applications%202010-03"
+        },
+        {
+            "id": "Frome_et+al_2013_a",
+            "entry": "Andrea Frome, Greg S Corrado, Jon Shlens, Samy Bengio, Jeff Dean, Tomas Mikolov, et al. Devise: A deep visual-semantic embedding model. In NIPS, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frome%2C%20Andrea%20Corrado%2C%20Greg%20S.%20Shlens%2C%20Jon%20Bengio%2C%20Samy%20Devise%3A%20A%20deep%20visual-semantic%20embedding%20model%202013"
+        },
+        {
+            "id": "Graves_et+al_2013_a",
+            "entry": "A. Graves, A. r. Mohamed, and G. Hinton. Speech recognition with deep recurrent neural networks. In 2013 IEEE International Conference on Acoustics, Speech and Signal Processing, May 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Graves%2C%20A.%20r.%20Mohamed%2C%20A.%20Hinton%2C%20G.%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013-05",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Graves%2C%20A.%20r.%20Mohamed%2C%20A.%20Hinton%2C%20G.%20Speech%20recognition%20with%20deep%20recurrent%20neural%20networks%202013-05"
+        },
+        {
+            "id": "Gretton_et+al_2012_a",
+            "entry": "Arthur Gretton, Karsten M Borgwardt, Malte J Rasch, Bernhard Sch\u00f6lkopf, and Alexander Smola. A kernel two-sample test. Journal of Machine Learning Research, 13(Mar):723\u2013773, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gretton%2C%20Arthur%20Borgwardt%2C%20Karsten%20M.%20Rasch%2C%20Malte%20J.%20Sch%C3%B6lkopf%2C%20Bernhard%20A%20kernel%20two-sample%20test%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gretton%2C%20Arthur%20Borgwardt%2C%20Karsten%20M.%20Rasch%2C%20Malte%20J.%20Sch%C3%B6lkopf%2C%20Bernhard%20A%20kernel%20two-sample%20test%202012"
+        },
+        {
+            "id": "Guimond_2012_a",
+            "entry": "Sylvain Guimond and Wael Massrieh. Intricate correlation between body posture, personality trait and incidence of body pain: A cross-referential study report. PLOS ONE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guimond%2C%20Sylvain%20Massrieh%2C%20Wael%20Intricate%20correlation%20between%20body%20posture%2C%20personality%20trait%20and%20incidence%20of%20body%20pain%3A%20A%20cross-referential%20study%20report%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guimond%2C%20Sylvain%20Massrieh%2C%20Wael%20Intricate%20correlation%20between%20body%20posture%2C%20personality%20trait%20and%20incidence%20of%20body%20pain%3A%20A%20cross-referential%20study%20report%202012"
+        },
+        {
+            "id": "Higgins_et+al_2016_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. beta-vae: Learning basic visual concepts with a constrained variational framework. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-vae%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202016"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. beta-vae: Learning basic visual concepts with a constrained variational framework. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-vae%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-vae%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Hsu_2018_a",
+            "entry": "Wei-Ning Hsu and James Glass. Disentangling by partitioning: A representation learning framework for multimodal sensory data. arXiv preprint arXiv:1805.11264, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11264"
+        },
+        {
+            "id": "Imotions_2017_a",
+            "entry": "iMotions. Facial expression analysis, 2017. URL goo.gl/1rh1JN.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=iMotions%20Facial%20expression%20analysis%202017"
+        },
+        {
+            "id": "Karaletsos_et+al_2015_a",
+            "entry": "Theofanis Karaletsos, Serge Belongie, and Gunnar R\u00e4tsch. Bayesian representation learning with oracle constraints. arXiv preprint arXiv:1506.05011, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.05011"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Kuhl_2000_a",
+            "entry": "Patricia K. Kuhl. A new view of language acquisition. Proceedings of the National Academy of Sciences, 2000. doi: 10.1073/pnas.97.22.11850.",
+            "crossref": "https://dx.doi.org/10.1073/pnas.97.22.11850",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1073/pnas.97.22.11850"
+        },
+        {
+            "id": "Kulkarni_et+al_2015_a",
+            "entry": "Tejas D Kulkarni, William F Whitney, Pushmeet Kohli, and Josh Tenenbaum. Deep convolutional inverse graphics network. In Advances in Neural Information Processing Systems, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulkarni%2C%20Tejas%20D.%20Whitney%2C%20William%20F.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Josh%20Deep%20convolutional%20inverse%20graphics%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulkarni%2C%20Tejas%20D.%20Whitney%2C%20William%20F.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Josh%20Deep%20convolutional%20inverse%20graphics%20network%202015"
+        },
+        {
+            "id": "Lake_et+al_2017_a",
+            "entry": "Brenden M Lake, Tomer D Ullman, Joshua B Tenenbaum, and Samuel J Gershman. Building machines that learn and think like people. Behavioral and Brain Sciences, 40, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20M.%20Ullman%2C%20Tomer%20D.%20Tenenbaum%2C%20Joshua%20B.%20Gershman%2C%20Samuel%20J.%20Building%20machines%20that%20learn%20and%20think%20like%20people%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20M.%20Ullman%2C%20Tomer%20D.%20Tenenbaum%2C%20Joshua%20B.%20Gershman%2C%20Samuel%20J.%20Building%20machines%20that%20learn%20and%20think%20like%20people%202017"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann Lecun, L\u00e9on Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. In Proceedings of the IEEE, pp. 2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lecun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lecun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Levine_et+al_2009_a",
+            "entry": "Sergey Levine, Christian Theobalt, and Vladlen Koltun. Real-time prosody-driven synthesis of body language. ACM Trans. Graph., 28(5):172:1\u2013172:10, December 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Levine%2C%20Sergey%20Theobalt%2C%20Christian%20Koltun%2C%20Vladlen%20Real-time%20prosody-driven%20synthesis%20of%20body%20language%202009-12-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Levine%2C%20Sergey%20Theobalt%2C%20Christian%20Koltun%2C%20Vladlen%20Real-time%20prosody-driven%20synthesis%20of%20body%20language%202009-12-10"
+        },
+        {
+            "id": "Liang_et+al_2018_a",
+            "entry": "Paul Pu Liang, Amir Zadeh, and Louis-Philippe Morency. Multimodal local-global ranking fusion for emotion recognition. In Proceedings of the 20th ACM International Conference on Multimodal Interaction, ICMI, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Paul%20Pu%20Zadeh%2C%20Amir%20Morency%2C%20Louis-Philippe%20Multimodal%20local-global%20ranking%20fusion%20for%20emotion%20recognition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liang%2C%20Paul%20Pu%20Zadeh%2C%20Amir%20Morency%2C%20Louis-Philippe%20Multimodal%20local-global%20ranking%20fusion%20for%20emotion%20recognition%202018"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Z. Liu, M. Wu, W. Cao, L. Chen, J. Xu, R. Zhang, M. Zhou, and J. Mao. A facial expression emotion recognition based human-robot interaction system. IEEE/CAA Journal of Automatica Sinica, 4(4): 668\u2013676, 2017. ISSN 2329-9266. doi: 10.1109/JAS.2017.7510622.",
+            "crossref": "https://dx.doi.org/10.1109/JAS.2017.7510622",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/JAS.2017.7510622"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Zhun Liu, Ying Shen, Varun Bharadhwaj Lakshminarasimhan, Paul Pu Liang, AmirAli Bagher Zadeh, and Louis-Philippe Morency. Efficient low-rank multimodal fusion with modality-specific factors. In ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Zhun%20Shen%2C%20Ying%20Lakshminarasimhan%2C%20Varun%20Bharadhwaj%20Liang%2C%20Paul%20Pu%20Efficient%20low-rank%20multimodal%20fusion%20with%20modality-specific%20factors%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Zhun%20Shen%2C%20Ying%20Lakshminarasimhan%2C%20Varun%20Bharadhwaj%20Liang%2C%20Paul%20Pu%20Efficient%20low-rank%20multimodal%20fusion%20with%20modality-specific%20factors%202018"
+        },
+        {
+            "id": "Mohammadi_et+al_2010_a",
+            "entry": "Gelareh Mohammadi, Alessandro Vinciarelli, and Marcello Mortillaro. The voice of personality: Mapping nonverbal vocal behavior into trait attributions. In Proceedings of ACM Multimedia Workshop on Social Signal Processing, 0 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mohammadi%2C%20Gelareh%20Vinciarelli%2C%20Alessandro%20Mortillaro%2C%20Marcello%20The%20voice%20of%20personality%3A%20Mapping%20nonverbal%20vocal%20behavior%20into%20trait%20attributions%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mohammadi%2C%20Gelareh%20Vinciarelli%2C%20Alessandro%20Mortillaro%2C%20Marcello%20The%20voice%20of%20personality%3A%20Mapping%20nonverbal%20vocal%20behavior%20into%20trait%20attributions%202010"
+        },
+        {
+            "id": "Morency_et+al_2007_a",
+            "entry": "Louis-Philippe Morency, Ariadna Quattoni, and Trevor Darrell. Latent-dynamic discriminative models for continuous gesture recognition. In CVPR. IEEE, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morency%2C%20Louis-Philippe%20Quattoni%2C%20Ariadna%20Darrell%2C%20Trevor%20Latent-dynamic%20discriminative%20models%20for%20continuous%20gesture%20recognition.%20In%20CVPR%202007"
+        },
+        {
+            "id": "Morency_et+al_2011_a",
+            "entry": "Louis-Philippe Morency, Rada Mihalcea, and Payal Doshi. Towards multimodal sentiment analysis: Harvesting opinions from the web. In ICMI, pp. 169\u2013176. ACM, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morency%2C%20Louis-Philippe%20Mihalcea%2C%20Rada%20Doshi%2C%20Payal%20Towards%20multimodal%20sentiment%20analysis%3A%20Harvesting%20opinions%20from%20the%20web%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morency%2C%20Louis-Philippe%20Mihalcea%2C%20Rada%20Doshi%2C%20Payal%20Towards%20multimodal%20sentiment%20analysis%3A%20Harvesting%20opinions%20from%20the%20web%202011"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y. Ng. Reading digits in natural images with unsupervised feature learning. 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Ngiam_et+al_2011_a",
+            "entry": "Jiquan Ngiam, Aditya Khosla, Mingyu Kim, Juhan Nam, Honglak Lee, and Andrew Y Ng. Multimodal deep learning. In (ICML-11), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ngiam%2C%20Jiquan%20Khosla%2C%20Aditya%20Kim%2C%20Mingyu%20Nam%2C%20Juhan%20and%20Andrew%20Y%20Ng.%20Multimodal%20deep%20learning%202011"
+        },
+        {
+            "id": "Nojavanasghari_et+al_2016_a",
+            "entry": "Behnaz Nojavanasghari, Deepak Gopinath, Jayanth Koushik, Tadas Baltru\u0161aitis, and Louis-Philippe Morency. Deep multimodal fusion for persuasiveness prediction. In Proceedings of the 18th ACM International Conference on Multimodal Interaction, ICMI 2016. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nojavanasghari%2C%20Behnaz%20Gopinath%2C%20Deepak%20Koushik%2C%20Jayanth%20Baltru%C5%A1aitis%2C%20Tadas%20Deep%20multimodal%20fusion%20for%20persuasiveness%20prediction%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nojavanasghari%2C%20Behnaz%20Gopinath%2C%20Deepak%20Koushik%2C%20Jayanth%20Baltru%C5%A1aitis%2C%20Tadas%20Deep%20multimodal%20fusion%20for%20persuasiveness%20prediction%202016"
+        },
+        {
+            "id": "Park_et+al_2014_a",
+            "entry": "Sunghyun Park, Han Suk Shim, Moitreya Chatterjee, Kenji Sagae, and Louis-Philippe Morency. Computational analysis of persuasiveness in social multimedia: A novel dataset and multimodal prediction approach. ICMI \u201914, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Park%2C%20Sunghyun%20Shim%2C%20Han%20Suk%20Chatterjee%2C%20Moitreya%20Sagae%2C%20Kenji%20Computational%20analysis%20of%20persuasiveness%20in%20social%20multimedia%3A%20A%20novel%20dataset%20and%20multimodal%20prediction%20approach%202014"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher D Manning. Glove: Global vectors for word representation. In EMNLP, volume 14, pp. 1532\u20131543, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Glove%3A%20Global%20vectors%20for%20word%20representation%202014"
+        },
+        {
+            "id": "Perez-Rosas_et+al_2013_a",
+            "entry": "Veronica Perez-Rosas, Rada Mihalcea, and Louis-Philippe Morency. Utterance-Level Multimodal Sentiment Analysis. In Association for Computational Linguistics (ACL), August 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Perez-Rosas%2C%20Veronica%20Mihalcea%2C%20Rada%20Morency%2C%20Louis-Philippe%20Utterance-Level%20Multimodal%20Sentiment%20Analysis%202013-08",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Perez-Rosas%2C%20Veronica%20Mihalcea%2C%20Rada%20Morency%2C%20Louis-Philippe%20Utterance-Level%20Multimodal%20Sentiment%20Analysis%202013-08"
+        },
+        {
+            "id": "Sintija_2017_a",
+            "entry": "Sintija Petrovica, Alla Anohina-Naumeca, and Haz\u00c4\u00b1m Kemal Ekenel. Emotion recognition in affective tutoring systems: Collection of ground-truth data. Procedia Computer Science, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sintija%20Petrovica%2C%20Alla%20Anohina-Naumeca%20Ekenel%2C%20Haz%C3%84%C2%B1m%20Kemal%20Emotion%20recognition%20in%20affective%20tutoring%20systems%3A%20Collection%20of%20ground-truth%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sintija%20Petrovica%2C%20Alla%20Anohina-Naumeca%20Ekenel%2C%20Haz%C3%84%C2%B1m%20Kemal%20Emotion%20recognition%20in%20affective%20tutoring%20systems%3A%20Collection%20of%20ground-truth%20data%202017"
+        },
+        {
+            "id": "Pham_et+al_2018_a",
+            "entry": "Hai Pham, Thomas Manzini, Paul Pu Liang, and Barnabas Poczos. Seq2seq2sentiment: Multimodal sequence to sequence models for sentiment analysis. In Proceedings of Grand Challenge and Workshop on Human Multimodal Language (Challenge-HML). ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pham%2C%20Hai%20Manzini%2C%20Thomas%20Liang%2C%20Paul%20Pu%20Poczos%2C%20Barnabas%20Seq2seq2sentiment%3A%20Multimodal%20sequence%20to%20sequence%20models%20for%20sentiment%20analysis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pham%2C%20Hai%20Manzini%2C%20Thomas%20Liang%2C%20Paul%20Pu%20Poczos%2C%20Barnabas%20Seq2seq2sentiment%3A%20Multimodal%20sequence%20to%20sequence%20models%20for%20sentiment%20analysis%202018"
+        },
+        {
+            "id": "Pittermann_et+al_2010_a",
+            "entry": "Johannes Pittermann, Angela Pittermann, and Wolfgang Minker. Emotion recognition and adaptation in spoken dialogue systems. International Journal of Speech Technology, 13(1):49\u201360, Mar 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pittermann%2C%20Johannes%20Pittermann%2C%20Angela%20Minker%2C%20Wolfgang%20Emotion%20recognition%20and%20adaptation%20in%20spoken%20dialogue%20systems%202010-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pittermann%2C%20Johannes%20Pittermann%2C%20Angela%20Minker%2C%20Wolfgang%20Emotion%20recognition%20and%20adaptation%20in%20spoken%20dialogue%20systems%202010-03"
+        },
+        {
+            "id": "Poria_et+al_2017_a",
+            "entry": "Soujanya Poria, Erik Cambria, Devamanyu Hazarika, Navonil Majumder, Amir Zadeh, and LouisPhilippe Morency. Context-dependent sentiment analysis in user-generated videos. In ACL, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Poria%2C%20Soujanya%20Cambria%2C%20Erik%20Hazarika%2C%20Devamanyu%20Majumder%2C%20Navonil%20Context-dependent%20sentiment%20analysis%20in%20user-generated%20videos%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Poria%2C%20Soujanya%20Cambria%2C%20Erik%20Hazarika%2C%20Devamanyu%20Majumder%2C%20Navonil%20Context-dependent%20sentiment%20analysis%20in%20user-generated%20videos%202017"
+        },
+        {
+            "id": "Quattoni_2007_a",
+            "entry": "Ariadna Quattoni, Sybor Wang, Louis-Philippe Morency, Michael Collins, and Trevor Darrell. Hidden conditional random fields. IEEE Trans. Pattern Anal. Mach. Intell., 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Quattoni%2C%20Ariadna%20Wang%2C%20Sybor%20Louis-Philippe%20Morency%2C%20Michael%20Collins%2C%20and%20Trevor%20Darrell.%20Hidden%20conditional%20random%20fields%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Quattoni%2C%20Ariadna%20Wang%2C%20Sybor%20Louis-Philippe%20Morency%2C%20Michael%20Collins%2C%20and%20Trevor%20Darrell.%20Hidden%20conditional%20random%20fields%202007"
+        },
+        {
+            "id": "Rajagopalan_et+al_2016_a",
+            "entry": "Shyam Sundar Rajagopalan, Louis-Philippe Morency, Tadas Baltru\u0161aitis, and Goecke Roland. Extending long short-term memory for multi-view structured learning. In ECCV, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rajagopalan%2C%20Shyam%20Sundar%20Morency%2C%20Louis-Philippe%20Baltru%C5%A1aitis%2C%20Tadas%20Roland%2C%20Goecke%20Extending%20long%20short-term%20memory%20for%20multi-view%20structured%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rajagopalan%2C%20Shyam%20Sundar%20Morency%2C%20Louis-Philippe%20Baltru%C5%A1aitis%2C%20Tadas%20Roland%2C%20Goecke%20Extending%20long%20short-term%20memory%20for%20multi-view%20structured%20learning%202016"
+        },
+        {
+            "id": "Reed_et+al_2014_a",
+            "entry": "Scott Reed, Kihyuk Sohn, Yuting Zhang, and Honglak Lee. Learning to disentangle factors of variation with manifold interaction. In International Conference on Machine Learning, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reed%2C%20Scott%20Sohn%2C%20Kihyuk%20Zhang%2C%20Yuting%20Lee%2C%20Honglak%20Learning%20to%20disentangle%20factors%20of%20variation%20with%20manifold%20interaction%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reed%2C%20Scott%20Sohn%2C%20Kihyuk%20Zhang%2C%20Yuting%20Lee%2C%20Honglak%20Learning%20to%20disentangle%20factors%20of%20variation%20with%20manifold%20interaction%202014"
+        },
+        {
+            "id": "Rubenstein_et+al_2018_a",
+            "entry": "Paul K Rubenstein, Bernhard Schoelkopf, and Ilya Tolstikhin. On the latent space of wasserstein auto-encoders. arXiv preprint arXiv:1802.03761, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03761"
+        },
+        {
+            "id": "Schuster_1997_a",
+            "entry": "M. Schuster and K.K. Paliwal. Bidirectional recurrent neural networks. Trans. Sig. Proc., 45(11), November 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schuster%2C%20M.%20Paliwal%2C%20K.K.%20Bidirectional%20recurrent%20neural%20networks%201997-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schuster%2C%20M.%20Paliwal%2C%20K.K.%20Bidirectional%20recurrent%20neural%20networks%201997-11"
+        },
+        {
+            "id": "Socher_et+al_2013_a",
+            "entry": "Richard Socher, Milind Ganjoo, Christopher D Manning, and Andrew Ng. Zero-shot learning through cross-modal transfer. In Advances in neural information processing systems, pp. 935\u2013943, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Socher%2C%20Richard%20Ganjoo%2C%20Milind%20Manning%2C%20Christopher%20D.%20Ng%2C%20Andrew%20Zero-shot%20learning%20through%20cross-modal%20transfer%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Socher%2C%20Richard%20Ganjoo%2C%20Milind%20Manning%2C%20Christopher%20D.%20Ng%2C%20Andrew%20Zero-shot%20learning%20through%20cross-modal%20transfer%202013"
+        },
+        {
+            "id": "Sohn_et+al_2014_a",
+            "entry": "Kihyuk Sohn, Wenling Shang, and Honglak Lee. Improved multimodal deep learning with variation of information. In Advances in Neural Information Processing Systems, pp. 2141\u20132149, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sohn%2C%20Kihyuk%20Shang%2C%20Wenling%20Lee%2C%20Honglak%20Improved%20multimodal%20deep%20learning%20with%20variation%20of%20information%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sohn%2C%20Kihyuk%20Shang%2C%20Wenling%20Lee%2C%20Honglak%20Improved%20multimodal%20deep%20learning%20with%20variation%20of%20information%202014"
+        },
+        {
+            "id": "Song_et+al_2012_a",
+            "entry": "Yale Song, Louis-Philippe Morency, and Randall Davis. Multi-view latent variable discriminative models for action recognition. In CVPR, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Song%2C%20Yale%20Morency%2C%20Louis-Philippe%20Davis%2C%20Randall%20Multi-view%20latent%20variable%20discriminative%20models%20for%20action%20recognition%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Song%2C%20Yale%20Morency%2C%20Louis-Philippe%20Davis%2C%20Randall%20Multi-view%20latent%20variable%20discriminative%20models%20for%20action%20recognition%202012"
+        },
+        {
+            "id": "Song_et+al_2013_a",
+            "entry": "Yale Song, Louis-Philippe Morency, and Randall Davis. Action recognition by hierarchical sequence summarization. In CVPR, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Song%2C%20Yale%20Morency%2C%20Louis-Philippe%20Davis%2C%20Randall%20Action%20recognition%20by%20hierarchical%20sequence%20summarization%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Song%2C%20Yale%20Morency%2C%20Louis-Philippe%20Davis%2C%20Randall%20Action%20recognition%20by%20hierarchical%20sequence%20summarization%202013"
+        },
+        {
+            "id": "Srivastava_2012_a",
+            "entry": "Nitish Srivastava and Ruslan R Salakhutdinov. Multimodal learning with deep boltzmann machines. In Advances in neural information processing systems, pp. 2222\u20132230, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Nitish%20Salakhutdinov%2C%20Ruslan%20R.%20Multimodal%20learning%20with%20deep%20boltzmann%20machines%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Nitish%20Salakhutdinov%2C%20Ruslan%20R.%20Multimodal%20learning%20with%20deep%20boltzmann%20machines%202012"
+        },
+        {
+            "id": "Sugiyama_2012_a",
+            "entry": "Masashi Sugiyama and Makoto Yamada. On kernel parameter selection in hilbert-schmidt independence criterion. IEICE TRANSACTIONS on Information and Systems, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sugiyama%2C%20Masashi%20Yamada%2C%20Makoto%20On%20kernel%20parameter%20selection%20in%20hilbert-schmidt%20independence%20criterion%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sugiyama%2C%20Masashi%20Yamada%2C%20Makoto%20On%20kernel%20parameter%20selection%20in%20hilbert-schmidt%20independence%20criterion%202012"
+        },
+        {
+            "id": "Suzuki_et+al_0000_a",
+            "entry": "Masahiro Suzuki, Kotaro Nakayama, and Yutaka Matsuo. Joint multimodal learning with deep generative models. CoRR, abs/1611.01891, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01891"
+        },
+        {
+            "id": "Suzuki_et+al_0000_b",
+            "entry": "Masahiro Suzuki, Kotaro Nakayama, and Yutaka Matsuo. Joint multimodal learning with deep generative models. arXiv preprint arXiv:1611.01891, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01891"
+        },
+        {
+            "id": "Tolstikhin_et+al_2017_a",
+            "entry": "Ilya Tolstikhin, Olivier Bousquet, Sylvain Gelly, and Bernhard Schoelkopf. Wasserstein auto-encoders. arXiv preprint arXiv:1711.01558, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.01558"
+        },
+        {
+            "id": "Tsai_2017_a",
+            "entry": "Yao-Hung Hubert Tsai and Ruslan Salakhutdinov. Improving one-shot learning through fusing side information. arXiv preprint arXiv:1710.08347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.08347"
+        },
+        {
+            "id": "Tsai_et+al_2017_b",
+            "entry": "Yao-Hung Hubert Tsai, Liang-Kang Huang, and Ruslan Salakhutdinov. Learning robust visualsemantic embeddings. arXiv preprint arXiv:1703.05908, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05908"
+        },
+        {
+            "id": "Woellmer_et+al_2013_a",
+            "entry": "Martin W\u00f6llmer, Felix Weninger, Tobias Knaup, Bj\u00f6rn Schuller, Congkai Sun, Kenji Sagae, and Louis-Philippe Morency. Youtube movie reviews: Sentiment analysis in an audio-visual context. IEEE Intelligent Systems, 28(3):46\u201353, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=W%C3%B6llmer%2C%20Martin%20Weninger%2C%20Felix%20Knaup%2C%20Tobias%20Schuller%2C%20Bj%C3%B6rn%20Youtube%20movie%20reviews%3A%20Sentiment%20analysis%20in%20an%20audio-visual%20context%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=W%C3%B6llmer%2C%20Martin%20Weninger%2C%20Felix%20Knaup%2C%20Tobias%20Schuller%2C%20Bj%C3%B6rn%20Youtube%20movie%20reviews%3A%20Sentiment%20analysis%20in%20an%20audio-visual%20context%202013"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Denny Wu, Yixiu Zhao, Yao-Hung Hubert Tsai, Makoto Yamada, and Ruslan Salakhutdinov. \" dependency bottleneck\" in auto-encoding architectures: an empirical study. arXiv preprint arXiv:1802.05408, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.05408"
+        },
+        {
+            "id": "Yang_et+al_2015_a",
+            "entry": "Jimei Yang, Scott E Reed, Ming-Hsuan Yang, and Honglak Lee. Weakly-supervised disentangling with recurrent transformations for 3d view synthesis. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Jimei%20Reed%2C%20Scott%20E.%20Yang%2C%20Ming-Hsuan%20Lee%2C%20Honglak%20Weakly-supervised%20disentangling%20with%20recurrent%20transformations%20for%203d%20view%20synthesis%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Jimei%20Reed%2C%20Scott%20E.%20Yang%2C%20Ming-Hsuan%20Lee%2C%20Honglak%20Weakly-supervised%20disentangling%20with%20recurrent%20transformations%20for%203d%20view%20synthesis%202015"
+        },
+        {
+            "id": "Yuan_2008_a",
+            "entry": "Jiahong Yuan and Mark Liberman. Speaker identification on the scotus corpus. Journal of the Acoustical Society of America, 123(5):3878, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuan%2C%20Jiahong%20Liberman%2C%20Mark%20Speaker%20identification%20on%20the%20scotus%20corpus%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuan%2C%20Jiahong%20Liberman%2C%20Mark%20Speaker%20identification%20on%20the%20scotus%20corpus%202008"
+        },
+        {
+            "id": "Zadeh_et+al_2016_a",
+            "entry": "Amir Zadeh, Rowan Zellers, Eli Pincus, and Louis-Philippe Morency. Multimodal sentiment intensity analysis in videos: Facial gestures and verbal messages. IEEE Intelligent Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zadeh%2C%20Amir%20Zellers%2C%20Rowan%20Pincus%2C%20Eli%20Morency%2C%20Louis-Philippe%20Multimodal%20sentiment%20intensity%20analysis%20in%20videos%3A%20Facial%20gestures%20and%20verbal%20messages%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zadeh%2C%20Amir%20Zellers%2C%20Rowan%20Pincus%2C%20Eli%20Morency%2C%20Louis-Philippe%20Multimodal%20sentiment%20intensity%20analysis%20in%20videos%3A%20Facial%20gestures%20and%20verbal%20messages%202016"
+        },
+        {
+            "id": "Zadeh_et+al_2017_a",
+            "entry": "Amir Zadeh, Minghai Chen, Soujanya Poria, Erik Cambria, and Louis-Philippe Morency. Tensor fusion network for multimodal sentiment analysis. In EMNLP, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zadeh%2C%20Amir%20Chen%2C%20Minghai%20Poria%2C%20Soujanya%20Cambria%2C%20Erik%20Tensor%20fusion%20network%20for%20multimodal%20sentiment%20analysis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zadeh%2C%20Amir%20Chen%2C%20Minghai%20Poria%2C%20Soujanya%20Cambria%2C%20Erik%20Tensor%20fusion%20network%20for%20multimodal%20sentiment%20analysis%202017"
+        },
+        {
+            "id": "Zadeh_et+al_2018_a",
+            "entry": "Amir Zadeh, Paul Pu Liang, Navonil Mazumder, Soujanya Poria, Erik Cambria, and Louis-Philippe Morency. Memory fusion network for multi-view sequential learning. AAAI, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zadeh%2C%20Amir%20Liang%2C%20Paul%20Pu%20Mazumder%2C%20Navonil%20Poria%2C%20Soujanya%20Memory%20fusion%20network%20for%20multi-view%20sequential%20learning%202018"
+        },
+        {
+            "id": "Zadeh_et+al_2018_b",
+            "entry": "Amir Zadeh, Paul Pu Liang, Soujanya Poria, Prateek Vij, Erik Cambria, and Louis-Philippe Morency. Multi-attention recurrent network for human communication comprehension. AAAI, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zadeh%2C%20Amir%20Liang%2C%20Paul%20Pu%20Poria%2C%20Soujanya%20Vij%2C%20Prateek%20Multi-attention%20recurrent%20network%20for%20human%20communication%20comprehension%202018"
+        },
+        {
+            "id": "Zeiler_et+al_2010_a",
+            "entry": "Matthew D. Zeiler, Dilip Krishnan, Graham W. Taylor, and Rob Fergus. Deconvolutional networks. 2010 IEEE Computer Society Conference on Computer Vision and Pattern Recognition, pp. 2528\u2013 2535, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Matthew%20D%20Zeiler%20Dilip%20Krishnan%20Graham%20W%20Taylor%20and%20Rob%20Fergus%20Deconvolutional%20networks%202010%20IEEE%20Computer%20Society%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20pp%202528%202535%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Matthew%20D%20Zeiler%20Dilip%20Krishnan%20Graham%20W%20Taylor%20and%20Rob%20Fergus%20Deconvolutional%20networks%202010%20IEEE%20Computer%20Society%20Conference%20on%20Computer%20Vision%20and%20Pattern%20Recognition%20pp%202528%202535%202010"
+        },
+        {
+            "id": "Zhao_et+al_2017_a",
+            "entry": "Shengjia Zhao, Jiaming Song, and Stefano Ermon. Infovae: Information maximizing variational autoencoders. arXiv preprint arXiv:1706.02262, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02262"
+        },
+        {
+            "id": "Zhu_et+al_2014_a",
+            "entry": "Zhenyao Zhu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Multi-view perceptron: a deep model for learning face identity and view representations. In NIPS, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Zhenyao%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Multi-view%20perceptron%3A%20a%20deep%20model%20for%20learning%20face%20identity%20and%20view%20representations%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Zhenyao%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Multi-view%20perceptron%3A%20a%20deep%20model%20for%20learning%20face%20identity%20and%20view%20representations%202014"
+        },
+        {
+            "id": "Therefore,_2017_a",
+            "entry": "Therefore, this implies that (X, Y) \u22a5 (X, Y ) Z which concludes the proof. A similar argument is made in Lemma 1 of (Tolstikhin et al., 2017).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Therefore%20this%20implies%20that%20X%20Y%20%20X%20Y%20%20Z%20which%20concludes%20the%20proof%20A%20similar%20argument%20is%20made%20in%20Lemma%201%20of%20Tolstikhin%20et%20al%202017"
+        }
+    ]
+}

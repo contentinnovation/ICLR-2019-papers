@@ -1,0 +1,396 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "HIERARCHICAL GENERATIVE MODELING FOR CONTROLLABLE SPEECH SYNTHESIS",
+        "author": "Wei-Ning Hsu,\u2217 Yu Zhang, Ron J. Weiss, Heiga Zen, Yonghui Wu, Yuxuan Wang, Yuan Cao, Ye Jia, Zhifeng Chen, Jonathan Shen, Patrick Nguyen, Ruoming Pang, 1Massachusetts Institute of Technology 2Google Inc. wnhsu@csail.mit.edu, {ngyuzh,ronw}@google.com",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rygkk305YQ"
+        },
+        "abstract": "This paper proposes a neural sequence-to-sequence text-to-speech (TTS) model which can control latent attributes in the generated speech that are rarely annotated in the training data, such as speaking style, accent, background noise, and recording conditions. The model is formulated as a conditional generative model based on the variational autoencoder (VAE) framework, with two levels of hierarchical latent variables. The first level is a categorical variable, which represents attribute groups (e.g. clean/noisy) and provides interpretability. The second level, conditioned on the first, is a multivariate Gaussian variable, which characterizes specific attribute configurations (e.g. noise level, speaking rate) and enables disentangled fine-grained control over these attributes. This amounts to using a Gaussian mixture model (GMM) for the latent distribution. Extensive evaluation demonstrates its ability to control the aforementioned attributes. In particular, we train a high-quality controllable TTS model on real found data, which is capable of inferring speaker and style attributes from a noisy utterance and use it to synthesize clean speech with controllable speaking style."
+    },
+    "keywords": [
+        {
+            "term": "speech synthesis",
+            "url": "https://en.wikipedia.org/wiki/speech_synthesis"
+        },
+        {
+            "term": "Great Britain",
+            "url": "https://en.wikipedia.org/wiki/Great_Britain"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "evidence lower bound",
+            "url": "https://en.wikipedia.org/wiki/evidence_lower_bound"
+        },
+        {
+            "term": "Gaussian mixture model",
+            "url": "https://en.wikipedia.org/wiki/Gaussian_mixture_model"
+        },
+        {
+            "term": "signal-to-noise ratios",
+            "url": "https://en.wikipedia.org/wiki/Signal-To-Noise_Ratio"
+        },
+        {
+            "term": "mean opinion scores",
+            "url": "https://en.wikipedia.org/wiki/Mean_Opinion_Score"
+        },
+        {
+            "term": "high quality",
+            "url": "https://en.wikipedia.org/wiki/high_quality"
+        },
+        {
+            "term": "spectrogram",
+            "url": "https://en.wikipedia.org/wiki/spectrogram"
+        },
+        {
+            "term": "United States",
+            "url": "https://en.wikipedia.org/wiki/United_States"
+        }
+    ],
+    "abbreviations": {
+        "VAE": "variational autoencoder",
+        "GMM": "Gaussian mixture model",
+        "ELBO": "evidence lower bound",
+        "GST": "Global Style Token",
+        "MOS": "mean opinion scores",
+        "US": "United States",
+        "GB": "Great Britain",
+        "SNRs": "signal-to-noise ratios",
+        "SC": "seen clean\u201d",
+        "SN": "seen noisy\u201d",
+        "UC": "unseen clean\u201d"
+    },
+    "highlights": [
+        "Recent development of neural sequence-to-sequence TTS models has shown promising results in generating high fidelity speech without the need of handcrafted linguistic features (<a class=\"ref-link\" id=\"cSotelo_et+al_2017_a\" href=\"#rSotelo_et+al_2017_a\"><a class=\"ref-link\" id=\"cSotelo_et+al_2017_a\" href=\"#rSotelo_et+al_2017_a\">Sotelo et al, 2017</a></a>; Wang et al, 2017; Ar\u0131k et al, 2017; <a class=\"ref-link\" id=\"cShen_et+al_2018_a\" href=\"#rShen_et+al_2018_a\"><a class=\"ref-link\" id=\"cShen_et+al_2018_a\" href=\"#rShen_et+al_2018_a\">Shen et al, 2018</a></a>)",
+        "We evaluated a set of eight \u201cseen clean\u201d (SC) speakers and a set of nine \u201cseen noisy\u201d (SN) speakers from the training set, a set of ten \u201cunseen noisy\u201d (UN) speakers from a held-out set with no overlapping speakers, and the set of ten unseen speakers used in <a class=\"ref-link\" id=\"cJia_et+al_2018_a\" href=\"#rJia_et+al_2018_a\">Jia et al (2018</a>), denoted as \u201cunseen clean\u201d (UC)",
+        "We describe GMVAE-Tacotron, a TTS model which learns an interpretable and disentangled latent representation to enable fine-grained control of latent attributes and provides a systematic sampling scheme for them",
+        "If speaker labels are available, we demonstrate an extension of the model that learns a continuous space that captures speaker attributes, along with an inference model which enables one-shot learning of speaker attributes from unseen reference utterances",
+        "We demonstrated that it can independently control many latent attributes, and is able to cluster them without supervision",
+        "We verified using both subjective and objective tests that the model could synthesize high-quality clean speech for a target speaker even if the quality of data for that speaker does not meet high standard. These experimental results demonstrated the effectiveness of the model for training high-quality controllable TTS systems on large scale training data with rich styles by learning to factorize and independently control latent attributes underlying the speech signal"
+    ],
+    "key_statements": [
+        "Recent development of neural sequence-to-sequence TTS models has shown promising results in generating high fidelity speech without the need of handcrafted linguistic features (<a class=\"ref-link\" id=\"cSotelo_et+al_2017_a\" href=\"#rSotelo_et+al_2017_a\">Sotelo et al, 2017</a>; Wang et al, 2017; Ar\u0131k et al, 2017; <a class=\"ref-link\" id=\"cShen_et+al_2018_a\" href=\"#rShen_et+al_2018_a\">Shen et al, 2018</a>). These models rely heavily on a encoderdecoder neural network structure (<a class=\"ref-link\" id=\"cSutskever_et+al_2014_a\" href=\"#rSutskever_et+al_2014_a\">Sutskever et al, 2014</a>; <a class=\"ref-link\" id=\"cBahdanau_et+al_2015_a\" href=\"#rBahdanau_et+al_2015_a\">Bahdanau et al, 2015</a>) that maps a text sequence to a sequence of speech frames. Extensions to these models have shown that attributes such as speaker identity can be controlled by conditioning the decoder on additional attribute labels (<a class=\"ref-link\" id=\"cArik_et+al_2017_a\" href=\"#rArik_et+al_2017_a\">Arik et al, 2017</a>; 2018; <a class=\"ref-link\" id=\"cJia_et+al_2018_a\" href=\"#rJia_et+al_2018_a\">Jia et al, 2018</a>)",
+        "<a class=\"ref-link\" id=\"cSkerry-Ryan_et+al_2018_a\" href=\"#rSkerry-Ryan_et+al_2018_a\">Skerry-Ryan et al (2018</a>); <a class=\"ref-link\" id=\"cWang_et+al_2018_a\" href=\"#rWang_et+al_2018_a\">Wang et al (2018</a>) model such latent attributes through conditional auto-encoding, by extending the decoder inputs to include a vector inferred from the target speech which aims to capture the residual attributes that are not specified by other input streams, in addition to text and a speaker label",
+        "We propose a principled probabilistic hierarchical generative model, which improves (1) sampling stability and disentangled attribute control compared to e.g. the Global Style Token model of <a class=\"ref-link\" id=\"cWang_et+al_2018_a\" href=\"#rWang_et+al_2018_a\">Wang et al (2018</a>), and (2) interpretability and quality compared to e.g. <a class=\"ref-link\" id=\"cAkuzawa_et+al_2018_a\" href=\"#rAkuzawa_et+al_2018_a\">Akuzawa et al (2018</a>)",
+        "Leveraging disentangled speaker and latent attribute encodings, the proposed model is capable of inferring the speaker attribute representation from a noisy utterance spoken by a previously unseen speaker, and using it to synthesize high-quality clean speech that approximates the voice of that speaker",
+        "We explored what each dimension of zl controlled by decoding with different values of the target dimension, keeping all other factors fixed",
+        "We explored if the level of noise was dominated by a single latent dimension, and whether we could determine such a dimension automatically",
+        "Appendix G contains a quantitative analysis of disentangled latent attribute control, and additional evaluation of style transfer, demonstrating the ability of the proposed the model to synthesize speech that resembles the prosody of a reference utterance.\n4.4",
+        "We demonstrate the ability of GMVAE-Tacotron to consistently generate high-quality speech by conditioning on a value of zl associated with clean output",
+        "We considered two approaches: (1) using the mean of the identified clean component, which can be seen as a preset configuration with a fixed channel and style; (2) inferring a latent attribute representation zl from reference speech and denoising it by modifying dimensions3 associated with the noise level to predetermined values",
+        "We evaluated a set of eight \u201cseen clean\u201d (SC) speakers and a set of nine \u201cseen noisy\u201d (SN) speakers from the training set, a set of ten \u201cunseen noisy\u201d (UN) speakers from a held-out set with no overlapping speakers, and the set of ten unseen speakers used in <a class=\"ref-link\" id=\"cJia_et+al_2018_a\" href=\"#rJia_et+al_2018_a\">Jia et al (2018</a>), denoted as \u201cunseen clean\u201d (UC)",
+        "We evaluate whether the synthesized speech resembles the identity of the reference speaker, by pairing each synthesized utterance with the reference utterance for subjective mean opinion scores evaluation of speaker similarity, following <a class=\"ref-link\" id=\"cJia_et+al_2018_a\" href=\"#rJia_et+al_2018_a\">Jia et al (2018</a>)",
+        "We describe GMVAE-Tacotron, a TTS model which learns an interpretable and disentangled latent representation to enable fine-grained control of latent attributes and provides a systematic sampling scheme for them",
+        "If speaker labels are available, we demonstrate an extension of the model that learns a continuous space that captures speaker attributes, along with an inference model which enables one-shot learning of speaker attributes from unseen reference utterances",
+        "The proposed model was extensively evaluated on tasks spanning a wide range of signal variation",
+        "We demonstrated that it can independently control many latent attributes, and is able to cluster them without supervision",
+        "We verified using both subjective and objective tests that the model could synthesize high-quality clean speech for a target speaker even if the quality of data for that speaker does not meet high standard. These experimental results demonstrated the effectiveness of the model for training high-quality controllable TTS systems on large scale training data with rich styles by learning to factorize and independently control latent attributes underlying the speech signal"
+    ],
+    "summary": [
+        "Recent development of neural sequence-to-sequence TTS models has shown promising results in generating high fidelity speech without the need of handcrafted linguistic features (<a class=\"ref-link\" id=\"cSotelo_et+al_2017_a\" href=\"#rSotelo_et+al_2017_a\"><a class=\"ref-link\" id=\"cSotelo_et+al_2017_a\" href=\"#rSotelo_et+al_2017_a\">Sotelo et al, 2017</a></a>; Wang et al, 2017; Ar\u0131k et al, 2017; <a class=\"ref-link\" id=\"cShen_et+al_2018_a\" href=\"#rShen_et+al_2018_a\"><a class=\"ref-link\" id=\"cShen_et+al_2018_a\" href=\"#rShen_et+al_2018_a\">Shen et al, 2018</a></a>).",
+        "The resulting latent spaces (1) learn disentangled attribute representations, where each dimension controls a different generating factor; (2) discover a set of interpretable clusters, each of which corresponds to a representative mode in the training data; and (3) provide a systematic sampling mechanism from the learned prior.",
+        "Experiments confirm that the proposed model is capable of controlling speaker, noise, and style independently, even when variation of all attributes is present but unannotated in the train set.",
+        "Leveraging disentangled speaker and latent attribute encodings, the proposed model is capable of inferring the speaker attribute representation from a noisy utterance spoken by a previously unseen speaker, and using it to synthesize high-quality clean speech that approximates the voice of that speaker.",
+        "The proposed GMVAE-Tacotron was evaluated on four datasets, spanning a wide degree of variations in speaker, recording channel conditions, background noise, prosody, and speaking styles.",
+        "We demonstrate that our model can synthesize clean speech directly from noisy data by disentangling the background noise level from other attributes, allowing it to be controlled independently.",
+        "Appendix G contains a quantitative analysis of disentangled latent attribute control, and additional evaluation of style transfer, demonstrating the ability of the proposed the model to synthesize speech that resembles the prosody of a reference utterance.",
+        "We considered two approaches: (1) using the mean of the identified clean component, which can be seen as a preset configuration with a fixed channel and style; (2) inferring a latent attribute representation zl from reference speech and denoising it by modifying dimensions3 associated with the noise level to predetermined values.",
+        "Table 5 further compares subjective naturalness MOS of the proposed model using the mean of the clean component to the baseline on the two seen speaker sets, and to the d-vector model (<a class=\"ref-link\" id=\"cJia_et+al_2018_a\" href=\"#rJia_et+al_2018_a\">Jia et al, 2018</a>) on the two unseen speaker sets.",
+        "Table 6 compares the proposed model using denoised latent attribute representations to baseline systems on the two seen speaker sets, and to d-vector systems on the unseen clean speaker set.",
+        "We describe GMVAE-Tacotron, a TTS model which learns an interpretable and disentangled latent representation to enable fine-grained control of latent attributes and provides a systematic sampling scheme for them.",
+        "These experimental results demonstrated the effectiveness of the model for training high-quality controllable TTS systems on large scale training data with rich styles by learning to factorize and independently control latent attributes underlying the speech signal."
+    ],
+    "headline": "This paper proposes a neural sequence-to-sequence text-to-speech model which can control latent attributes in the generated speech that are rarely annotated in the training data, such as speaking style, accent, background noise, and recording conditions",
+    "reference_links": [
+        {
+            "id": "Akuzawa_et+al_2018_a",
+            "entry": "Kei Akuzawa, Yusuke Iwasawa, and Yutaka Matsuo. Expressive speech synthesis via modeling expressions with variational autoencoder. In Interspeech, pp. 3067\u20133071, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Akuzawa%2C%20Kei%20Iwasawa%2C%20Yusuke%20Matsuo%2C%20Yutaka%20Expressive%20speech%20synthesis%20via%20modeling%20expressions%20with%20variational%20autoencoder%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Akuzawa%2C%20Kei%20Iwasawa%2C%20Yusuke%20Matsuo%2C%20Yutaka%20Expressive%20speech%20synthesis%20via%20modeling%20expressions%20with%20variational%20autoencoder%202018"
+        },
+        {
+            "id": "Apple_et+al_1979_a",
+            "entry": "William Apple, Lynn A Streeter, and Robert M Krauss. Effects of pitch and speech rate on personal attributions. Journal of Personality and Social Psychology, 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Apple%2C%20William%20Streeter%2C%20Lynn%20A.%20Krauss%2C%20Robert%20M.%20Effects%20of%20pitch%20and%20speech%20rate%20on%20personal%20attributions%201979",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Apple%2C%20William%20Streeter%2C%20Lynn%20A.%20Krauss%2C%20Robert%20M.%20Effects%20of%20pitch%20and%20speech%20rate%20on%20personal%20attributions%201979"
+        },
+        {
+            "id": "Ar_et+al_2017_a",
+            "entry": "Sercan Ar\u0131k, Mike Chrzanowski, Adam Coates, Gregory Diamos, Andrew Gibiansky, Yongguo Kang, Xian Li, John Miller, Andrew Ng, Jonathan Raiman, et al. Deep Voice: Real-time neural text-to-speech. In International Conference on Machine Learning (ICML), pp. 195\u2013204, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sercan%20Ar%C4%B1k%20Mike%20Chrzanowski%20Adam%20Coates%20Gregory%20Diamos%20Andrew%20Gibiansky%20Yongguo%20Kang%20Xian%20Li%20John%20Miller%20Andrew%20Ng%20Jonathan%20Raiman%20et%20al%20Deep%20Voice%20Realtime%20neural%20texttospeech%20In%20International%20Conference%20on%20Machine%20Learning%20ICML%20pp%20195204%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sercan%20Ar%C4%B1k%20Mike%20Chrzanowski%20Adam%20Coates%20Gregory%20Diamos%20Andrew%20Gibiansky%20Yongguo%20Kang%20Xian%20Li%20John%20Miller%20Andrew%20Ng%20Jonathan%20Raiman%20et%20al%20Deep%20Voice%20Realtime%20neural%20texttospeech%20In%20International%20Conference%20on%20Machine%20Learning%20ICML%20pp%20195204%202017"
+        },
+        {
+            "id": "Arik_et+al_2017_a",
+            "entry": "Sercan Arik, Gregory Diamos, Andrew Gibiansky, John Miller, Kainan Peng, Wei Ping, Jonathan Raiman, and Yanqi Zhou. Deep Voice 2: Multi-speaker neural text-to-speech. In Advances in Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arik%2C%20Sercan%20Diamos%2C%20Gregory%20Gibiansky%2C%20Andrew%20Miller%2C%20John%20Deep%20Voice%202%3A%20Multi-speaker%20neural%20text-to-speech%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arik%2C%20Sercan%20Diamos%2C%20Gregory%20Gibiansky%2C%20Andrew%20Miller%2C%20John%20Deep%20Voice%202%3A%20Multi-speaker%20neural%20text-to-speech%202017"
+        },
+        {
+            "id": "Arik_et+al_2018_a",
+            "entry": "Sercan Arik, Jitong Chen, Kainan Peng, Wei Ping, and Yanqi Zhou. Neural voice cloning with a few samples. arXiv preprint arXiv:1802.06006, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06006"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20Dzmitry%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Black_1961_a",
+            "entry": "John W Black. Relationships among fundamental frequency, vocal sound pressure, and rate of speaking. Language and Speech, 1961.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Black%2C%20John%20W.%20Relationships%20among%20fundamental%20frequency%2C%20vocal%20sound%20pressure%2C%20and%20rate%20of%20speaking%201961",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Black%2C%20John%20W.%20Relationships%20among%20fundamental%20frequency%2C%20vocal%20sound%20pressure%2C%20and%20rate%20of%20speaking%201961"
+        },
+        {
+            "id": "Boll_1979_a",
+            "entry": "Steven Boll. Suppression of acoustic noise in speech using spectral subtraction. IEEE Transactions on Acoustics, Speech, and Signal Processing, 27(2):113\u2013120, 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Boll%2C%20Steven%20Suppression%20of%20acoustic%20noise%20in%20speech%20using%20spectral%20subtraction%201979",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Boll%2C%20Steven%20Suppression%20of%20acoustic%20noise%20in%20speech%20using%20spectral%20subtraction%201979"
+        },
+        {
+            "id": "Bowman_et+al_2016_a",
+            "entry": "Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. In SIGNLL Conference on Computational Natural Language Learning (CoNLL), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowman%2C%20Samuel%20R.%20Vilnis%2C%20Luke%20Vinyals%2C%20Oriol%20Dai%2C%20Andrew%20Generating%20sentences%20from%20a%20continuous%20space%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowman%2C%20Samuel%20R.%20Vilnis%2C%20Luke%20Vinyals%2C%20Oriol%20Dai%2C%20Andrew%20Generating%20sentences%20from%20a%20continuous%20space%202016"
+        },
+        {
+            "id": "Chorowski_et+al_2015_a",
+            "entry": "Jan K Chorowski, Dzmitry Bahdanau, Dmitriy Serdyuk, Kyunghyun Cho, and Yoshua Bengio. Attention-based models for speech recognition. In Advances in Neural Information Processing Systems (NIPS), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chorowski%2C%20Jan%20K.%20Bahdanau%2C%20Dzmitry%20Serdyuk%2C%20Dmitriy%20Cho%2C%20Kyunghyun%20Attention-based%20models%20for%20speech%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chorowski%2C%20Jan%20K.%20Bahdanau%2C%20Dzmitry%20Serdyuk%2C%20Dmitriy%20Cho%2C%20Kyunghyun%20Attention-based%20models%20for%20speech%20recognition%202015"
+        },
+        {
+            "id": "Kawahara_2002_a",
+            "entry": "Alain De Cheveigneand Hideki Kawahara. YIN, a fundamental frequency estimator for speech and music. The Journal of the Acoustical Society of America, 111(4):1917\u20131930, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kawahara%2C%20Alain%20De%20Cheveigneand%20Hideki%20YIN%2C%20a%20fundamental%20frequency%20estimator%20for%20speech%20and%20music%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kawahara%2C%20Alain%20De%20Cheveigneand%20Hideki%20YIN%2C%20a%20fundamental%20frequency%20estimator%20for%20speech%20and%20music%202002"
+        },
+        {
+            "id": "Dilokthanakul_et+al_2016_a",
+            "entry": "Nat Dilokthanakul, Pedro AM Mediano, Marta Garnelo, Matthew CH Lee, Hugh Salimbeni, Kai Arulkumaran, and Murray Shanahan. Deep unsupervised clustering with Gaussian mixture variational autoencoders. arXiv preprint arXiv:1611.02648, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02648"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proceedings of the thirteenth international conference on artificial intelligence and statistics, pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Hayashi_et+al_2018_a",
+            "entry": "Tomoki Hayashi, Shinji Watanabe, Yu Zhang, Tomoki Toda, Takaaki Hori, Ramon Astudillo, and Kazuya Takeda. Back-translation-style data augmentation for end-to-end ASR. arXiv preprint arXiv:1807.10893, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.10893"
+        },
+        {
+            "id": "Henter_et+al_2018_a",
+            "entry": "Gustav Eje Henter, Jaime Lorenzo-Trueba, Xin Wang, and Junichi Yamagishi. Deep encoderdecoder models for unsupervised learning of controllable speech synthesis. arXiv preprint arXiv:1807.11470, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.11470"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. beta-VAE: Learning basic visual concepts with a constrained variational framework. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017"
+        },
+        {
+            "id": "Hsu_et+al_2017_a",
+            "entry": "Wei-Ning Hsu, Yu Zhang, and James Glass. Unsupervised learning of disentangled and interpretable representations from sequential data. In Advances in Neural Information Processing Systems (NIPS), 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hsu%2C%20Wei-Ning%20Zhang%2C%20Yu%20Glass%2C%20James%20Unsupervised%20learning%20of%20disentangled%20and%20interpretable%20representations%20from%20sequential%20data%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hsu%2C%20Wei-Ning%20Zhang%2C%20Yu%20Glass%2C%20James%20Unsupervised%20learning%20of%20disentangled%20and%20interpretable%20representations%20from%20sequential%20data%202017"
+        },
+        {
+            "id": "Hsu_et+al_0000_a",
+            "entry": "Wei-Ning Hsu, Yu Zhang, and James Glass. Unsupervised domain adaptation for robust speech recognition via variational autoencoder-based data augmentation. In Automatic Speech Recognition and Understanding Workshop (ASRU), pp. 16\u201323, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hsu%2C%20Wei-Ning%20Zhang%2C%20Yu%20Glass%2C%20James%20Unsupervised%20domain%20adaptation%20for%20robust%20speech%20recognition%20via%20variational%20autoencoder-based%20data%20augmentation",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hsu%2C%20Wei-Ning%20Zhang%2C%20Yu%20Glass%2C%20James%20Unsupervised%20domain%20adaptation%20for%20robust%20speech%20recognition%20via%20variational%20autoencoder-based%20data%20augmentation"
+        },
+        {
+            "id": "Hsu_et+al_2018_a",
+            "entry": "Wei-Ning Hsu, Hao Tang, and James Glass. Unsupervised adaptation with interpretable disentangled representations for distant conversational speech recognition. In Interspeech, pp. 1576\u20131580, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hsu%2C%20Wei-Ning%20Tang%2C%20Hao%20Glass%2C%20James%20Unsupervised%20adaptation%20with%20interpretable%20disentangled%20representations%20for%20distant%20conversational%20speech%20recognition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hsu%2C%20Wei-Ning%20Tang%2C%20Hao%20Glass%2C%20James%20Unsupervised%20adaptation%20with%20interpretable%20disentangled%20representations%20for%20distant%20conversational%20speech%20recognition%202018"
+        },
+        {
+            "id": "Jia_et+al_2018_a",
+            "entry": "Ye Jia, Yu Zhang, Ron J Weiss, Quan Wang, Jonathan Shen, Fei Ren, Zhifeng Chen, Patrick Nguyen, Ruoming Pang, Ignacio Lopez Moreno, et al. Transfer learning from speaker verification to multispeaker text-to-speech synthesis. arXiv preprint arXiv:1806.04558, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.04558"
+        },
+        {
+            "id": "Jiang_et+al_2017_a",
+            "entry": "Zhuxi Jiang, Yin Zheng, Huachun Tan, Bangsheng Tang, and Hanning Zhou. Variational deep embedding: an unsupervised and generative approach to clustering. In International Joint Conference on Artificial Intelligence (IJCAI), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jiang%2C%20Zhuxi%20Zheng%2C%20Yin%20Tan%2C%20Huachun%20Tang%2C%20Bangsheng%20Variational%20deep%20embedding%3A%20an%20unsupervised%20and%20generative%20approach%20to%20clustering%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jiang%2C%20Zhuxi%20Zheng%2C%20Yin%20Tan%2C%20Huachun%20Tang%2C%20Bangsheng%20Variational%20deep%20embedding%3A%20an%20unsupervised%20and%20generative%20approach%20to%20clustering%202017"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2018_a",
+            "entry": "Nal Kalchbrenner, Erich Elsen, Karen Simonyan, Seb Noury, Norman Casagrande, Edward Lockhart, Florian Stimberg, Aaron van den Oord, Sander Dieleman, and Koray Kavukcuoglu. Efficient neural audio synthesis. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kalchbrenner%2C%20Nal%20Elsen%2C%20Erich%20Simonyan%2C%20Karen%20Noury%2C%20Seb%20Efficient%20neural%20audio%20synthesis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kalchbrenner%2C%20Nal%20Elsen%2C%20Erich%20Simonyan%2C%20Karen%20Noury%2C%20Seb%20Efficient%20neural%20audio%20synthesis%202018"
+        },
+        {
+            "id": "Kim_2008_a",
+            "entry": "Chanwoo Kim and Richard M Stern. Robust signal-to-noise ratio estimation based on waveform amplitude distribution analysis. In Interspeech, pp. 2598\u20132601, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Chanwoo%20Stern%2C%20Richard%20M.%20Robust%20signal-to-noise%20ratio%20estimation%20based%20on%20waveform%20amplitude%20distribution%20analysis%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Chanwoo%20Stern%2C%20Richard%20M.%20Robust%20signal-to-noise%20ratio%20estimation%20based%20on%20waveform%20amplitude%20distribution%20analysis%202008"
+        },
+        {
+            "id": "Kim_et+al_2017_a",
+            "entry": "Chanwoo Kim, Ananya Misra, Kean Chin, Thad Hughes, Arun Narayanan, Tara Sainath, and Michiel Bacchiani. Generation of large-scale simulated utterances in virtual rooms to train deep-neural networks for far-field speech recognition in Google Home. In Interspeech, pp. 379\u2013383, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Chanwoo%20Misra%2C%20Ananya%20Chin%2C%20Kean%20Hughes%2C%20Thad%20Generation%20of%20large-scale%20simulated%20utterances%20in%20virtual%20rooms%20to%20train%20deep-neural%20networks%20for%20far-field%20speech%20recognition%20in%20Google%20Home%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Chanwoo%20Misra%2C%20Ananya%20Chin%2C%20Kean%20Hughes%2C%20Thad%20Generation%20of%20large-scale%20simulated%20utterances%20in%20virtual%20rooms%20to%20train%20deep-neural%20networks%20for%20far-field%20speech%20recognition%20in%20Google%20Home%202017"
+        },
+        {
+            "id": "Kim_et+al_2018_a",
+            "entry": "Yoon Kim, Sam Wiseman, Andrew C Miller, David Sontag, and Alexander M Rush. Semi-amortized variational autoencoders. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yoon%20Wiseman%2C%20Sam%20Miller%2C%20Andrew%20C.%20Sontag%2C%20David%20Semi-amortized%20variational%20autoencoders%202018"
+        },
+        {
+            "id": "King_2013_a",
+            "entry": "Simon King and Vasilis Karaiskos. The Blizzard Challenge 2013. In Blizzard Challenge Workshop, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simon%20King%20and%20Vasilis%20Karaiskos%20The%20Blizzard%20Challenge%202013%20In%20Blizzard%20Challenge%20Workshop%202013"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational Bayes. In International Conference on Learning Representations (ICLR), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20Bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20Bayes%202014"
+        },
+        {
+            "id": "Librivox_2005_a",
+            "entry": "LibriVox. https://librivox.org, 2005.",
+            "url": "https://librivox.org"
+        },
+        {
+            "id": "Nachmani_et+al_2018_a",
+            "entry": "Eliya Nachmani, Adam Polyak, Yaniv Taigman, and Lior Wolf. Fitting new speakers based on a short untranscribed sample. arXiv preprint arXiv:1802.06984, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06984"
+        },
+        {
+            "id": "Nalisnick_et+al_2016_a",
+            "entry": "Eric Nalisnick, Lars Hertel, and Padhraic Smyth. Approximate inference for deep latent Gaussian mixtures. In NIPS Workshop on Bayesian Deep Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nalisnick%2C%20Eric%20Hertel%2C%20Lars%20Smyth%2C%20Padhraic%20Approximate%20inference%20for%20deep%20latent%20Gaussian%20mixtures%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nalisnick%2C%20Eric%20Hertel%2C%20Lars%20Smyth%2C%20Padhraic%20Approximate%20inference%20for%20deep%20latent%20Gaussian%20mixtures%202016"
+        },
+        {
+            "id": "Panayotov_et+al_2015_a",
+            "entry": "Vassil Panayotov, Guoguo Chen, Daniel Povey, and Sanjeev Khudanpur. LibriSpeech: An ASR corpus based on public domain audio books. In International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 5206\u20135210, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Panayotov%2C%20Vassil%20Chen%2C%20Guoguo%20Povey%2C%20Daniel%20Khudanpur%2C%20Sanjeev%20LibriSpeech%3A%20An%20ASR%20corpus%20based%20on%20public%20domain%20audio%20books%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Panayotov%2C%20Vassil%20Chen%2C%20Guoguo%20Povey%2C%20Daniel%20Khudanpur%2C%20Sanjeev%20LibriSpeech%3A%20An%20ASR%20corpus%20based%20on%20public%20domain%20audio%20books%202015"
+        },
+        {
+            "id": "Ping_et+al_2018_a",
+            "entry": "Wei Ping, Kainan Peng, Andrew Gibiansky, Sercan O Arik, Ajay Kannan, Sharan Narang, Jonathan Raiman, and John Miller. Deep Voice 3: 2000-speaker neural text-to-speech. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wei%20Ping%20Kainan%20Peng%20Andrew%20Gibiansky%20Sercan%20O%20Arik%20Ajay%20Kannan%20Sharan%20Narang%20Jonathan%20Raiman%20and%20John%20Miller%20Deep%20Voice%203%202000speaker%20neural%20texttospeech%20In%20International%20Conference%20on%20Learning%20Representations%20ICLR%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wei%20Ping%20Kainan%20Peng%20Andrew%20Gibiansky%20Sercan%20O%20Arik%20Ajay%20Kannan%20Sharan%20Narang%20Jonathan%20Raiman%20and%20John%20Miller%20Deep%20Voice%203%202000speaker%20neural%20texttospeech%20In%20International%20Conference%20on%20Learning%20Representations%20ICLR%202018"
+        },
+        {
+            "id": "Shen_et+al_2018_a",
+            "entry": "Jonathan Shen, Ruoming Pang, Ron J Weiss, Mike Schuster, Navdeep Jaitly, Zongheng Yang, Zhifeng Chen, Yu Zhang, Yuxuan Wang, RJ Skerry-Ryan, et al. Natural TTS synthesis by conditioning wavenet on mel spectrogram predictions. In International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 4779\u20134783, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Jonathan%20Pang%2C%20Ruoming%20Weiss%2C%20Ron%20J.%20Schuster%2C%20Mike%20Natural%20TTS%20synthesis%20by%20conditioning%20wavenet%20on%20mel%20spectrogram%20predictions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Jonathan%20Pang%2C%20Ruoming%20Weiss%2C%20Ron%20J.%20Schuster%2C%20Mike%20Natural%20TTS%20synthesis%20by%20conditioning%20wavenet%20on%20mel%20spectrogram%20predictions%202018"
+        },
+        {
+            "id": "Skerry-Ryan_et+al_2018_a",
+            "entry": "RJ Skerry-Ryan, Eric Battenberg, Ying Xiao, Yuxuan Wang, Daisy Stanton, Joel Shor, Ron J Weiss, Rob Clark, and Rif A Saurous. Towards end-to-end prosody transfer for expressive speech synthesis with Tacotron. In International Conference on Machine Learning (ICML), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Skerry-Ryan%2C%20R.J.%20Battenberg%2C%20Eric%20Xiao%2C%20Ying%20Wang%2C%20Yuxuan%20and%20Rif%20A%20Saurous.%20Towards%20end-to-end%20prosody%20transfer%20for%20expressive%20speech%20synthesis%20with%20Tacotron%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Skerry-Ryan%2C%20R.J.%20Battenberg%2C%20Eric%20Xiao%2C%20Ying%20Wang%2C%20Yuxuan%20and%20Rif%20A%20Saurous.%20Towards%20end-to-end%20prosody%20transfer%20for%20expressive%20speech%20synthesis%20with%20Tacotron%202018"
+        },
+        {
+            "id": "Sotelo_et+al_2017_a",
+            "entry": "J. Sotelo, S. Mehri, K. Kumar, J. Santos, K. Kastner, A. Courville, and Y. Bengio. Char2Wav: End-to-End speech synthesis. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sotelo%2C%20J.%20Mehri%2C%20S.%20Kumar%2C%20K.%20Santos%2C%20J.%20Char2Wav%3A%20End-to-End%20speech%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sotelo%2C%20J.%20Mehri%2C%20S.%20Kumar%2C%20K.%20Santos%2C%20J.%20Char2Wav%3A%20End-to-End%20speech%20synthesis%202017"
+        },
+        {
+            "id": "Sutskever_et+al_2014_a",
+            "entry": "Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning with neural networks. In Advances in Neural Information Processing Systems (NIPS), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sutskever%2C%20Ilya%20Vinyals%2C%20Oriol%20Le%2C%20Quoc%20V.%20Sequence%20to%20sequence%20learning%20with%20neural%20networks%202014"
+        },
+        {
+            "id": "Taigman_et+al_2018_a",
+            "entry": "Yaniv Taigman, Lior Wolf, Adam Polyak, and Eliya Nachmani. VoiceLoop: Voice fitting and synthesis via a phonological loop. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taigman%2C%20Yaniv%20Wolf%2C%20Lior%20Polyak%2C%20Adam%20Nachmani%2C%20Eliya%20VoiceLoop%3A%20Voice%20fitting%20and%20synthesis%20via%20a%20phonological%20loop%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taigman%2C%20Yaniv%20Wolf%2C%20Lior%20Polyak%2C%20Adam%20Nachmani%2C%20Eliya%20VoiceLoop%3A%20Voice%20fitting%20and%20synthesis%20via%20a%20phonological%20loop%202018"
+        },
+        {
+            "id": "Tjandra_et+al_2017_a",
+            "entry": "Andros Tjandra, Sakriani Sakti, and Satoshi Nakamura. Listening while speaking: Speech chain by deep learning. In Automatic Speech Recognition and Understanding Workshop (ASRU), pp. 301\u2013308, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tjandra%2C%20Andros%20Sakti%2C%20Sakriani%20Nakamura%2C%20Satoshi%20Listening%20while%20speaking%3A%20Speech%20chain%20by%20deep%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tjandra%2C%20Andros%20Sakti%2C%20Sakriani%20Nakamura%2C%20Satoshi%20Listening%20while%20speaking%3A%20Speech%20chain%20by%20deep%20learning%202017"
+        },
+        {
+            "id": "Tjandra_et+al_2018_a",
+            "entry": "Andros Tjandra, Sakriani Sakti, and Satoshi Nakamura. Machine speech chain with one-shot speaker adaptation. In Interspeech, pp. 887\u2013891, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tjandra%2C%20Andros%20Sakti%2C%20Sakriani%20Nakamura%2C%20Satoshi%20Machine%20speech%20chain%20with%20one-shot%20speaker%20adaptation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tjandra%2C%20Andros%20Sakti%2C%20Sakriani%20Nakamura%2C%20Satoshi%20Machine%20speech%20chain%20with%20one-shot%20speaker%20adaptation%202018"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew Senior, and Koray Kavukcuoglu. WaveNet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems (NIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20NIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20NIPS%202017"
+        },
+        {
+            "id": "Yuxuan_et+al_2017_a",
+            "entry": "Yuxuan Wang, RJ Skerry-Ryan, Daisy Stanton, Yonghui Wu, Ron J Weiss, Navdeep Jaitly, Zongheng Yang, Ying Xiao, Zhifeng Chen, Samy Bengio, Quoc Le, Yannis Agiomyrgiannakis, Rob Clark, and Rif A Saurous. Tacotron: Towards end-to-end speech synthesis. In Interspeech, pp. 4006\u20134010, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuxuan%20Wang%2C%20R.J.Skerry-Ryan%20Stanton%2C%20Daisy%20Wu%2C%20Yonghui%20Weiss%2C%20Ron%20J.%20and%20Rif%20A%20Saurous.%20Tacotron%3A%20Towards%20end-to-end%20speech%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuxuan%20Wang%2C%20R.J.Skerry-Ryan%20Stanton%2C%20Daisy%20Wu%2C%20Yonghui%20Weiss%2C%20Ron%20J.%20and%20Rif%20A%20Saurous.%20Tacotron%3A%20Towards%20end-to-end%20speech%20synthesis%202017"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Yuxuan Wang, Daisy Stanton, Yu Zhang, RJ Skerry-Ryan, Eric Battenberg, Joel Shor, Ying Xiao, Fei Ren, Ye Jia, and Rif A Saurous. Style tokens: Unsupervised style modeling, control and transfer in end-to-end speech synthesis. In International Conference on Machine Learning (ICML), pp. 5180\u20135189, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Yuxuan%20Stanton%2C%20Daisy%20Yu%20Zhang%2C%20R.J.Skerry-Ryan%20Battenberg%2C%20Eric%20and%20Rif%20A%20Saurous.%20Style%20tokens%3A%20Unsupervised%20style%20modeling%2C%20control%20and%20transfer%20in%20end-to-end%20speech%20synthesis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Yuxuan%20Stanton%2C%20Daisy%20Yu%20Zhang%2C%20R.J.Skerry-Ryan%20Battenberg%2C%20Eric%20and%20Rif%20A%20Saurous.%20Style%20tokens%3A%20Unsupervised%20style%20modeling%2C%20control%20and%20transfer%20in%20end-to-end%20speech%20synthesis%202018"
+        },
+        {
+            "id": "Yang_et+al_2017_a",
+            "entry": "Zichao Yang, Zhiting Hu, Ruslan Salakhutdinov, and Taylor Berg-Kirkpatrick. Improved variational autoencoders for text modeling using dilated convolutions. In International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zichao%20Hu%2C%20Zhiting%20Salakhutdinov%2C%20Ruslan%20Berg-Kirkpatrick%2C%20Taylor%20Improved%20variational%20autoencoders%20for%20text%20modeling%20using%20dilated%20convolutions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zichao%20Hu%2C%20Zhiting%20Salakhutdinov%2C%20Ruslan%20Berg-Kirkpatrick%2C%20Taylor%20Improved%20variational%20autoencoders%20for%20text%20modeling%20using%20dilated%20convolutions%202017"
+        },
+        {
+            "id": "Zen_et+al_2009_a",
+            "entry": "Heiga Zen, Keiichi Tokuda, and Alan W Black. Statistical parametric speech synthesis. Speech Communication, 51(11):1039\u20131064, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zen%2C%20Heiga%20Tokuda%2C%20Keiichi%20Black%2C%20Alan%20W.%20Statistical%20parametric%20speech%20synthesis%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zen%2C%20Heiga%20Tokuda%2C%20Keiichi%20Black%2C%20Alan%20W.%20Statistical%20parametric%20speech%20synthesis%202009"
+        },
+        {
+            "id": "The_2018_a",
+            "entry": "The synthesizer is an attention-based sequence-to-sequence network which generates a mel spectrogram as a function of an input text sequence and conditioning signal generated by the auxiliary encoder networks. It closely follows the network architecture of Tacotron 2 (Shen et al., 2018). The input text sequence is encoded by three convolutional layers, which contains 512 filters with shape 5 \u00d7 1, followed by a bidirectional long short-term memory (LSTM) of 256 units for each direction. The resulting text encodings are accessed by the decoder through a location sensitive attention mechanism (Chorowski et al., 2015), which takes attention history into account when computing a normalized weight vector for aggregation.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20synthesizer%20is%20an%20attentionbased%20sequencetosequence%20network%20which%20generates%20a%20mel%20spectrogram%20as%20a%20function%20of%20an%20input%20text%20sequence%20and%20conditioning%20signal%20generated%20by%20the%20auxiliary%20encoder%20networks%20It%20closely%20follows%20the%20network%20architecture%20of%20Tacotron%202%20Shen%20et%20al%202018%20The%20input%20text%20sequence%20is%20encoded%20by%20three%20convolutional%20layers%20which%20contains%20512%20filters%20with%20shape%205%20%201%20followed%20by%20a%20bidirectional%20long%20shortterm%20memory%20LSTM%20of%20256%20units%20for%20each%20direction%20The%20resulting%20text%20encodings%20are%20accessed%20by%20the%20decoder%20through%20a%20location%20sensitive%20attention%20mechanism%20Chorowski%20et%20al%202015%20which%20takes%20attention%20history%20into%20account%20when%20computing%20a%20normalized%20weight%20vector%20for%20aggregation"
+        },
+        {
+            "id": "Similar_2018_a",
+            "entry": "Similar to Tacotron 2, we separately train a neural vocoder to invert a mel spectrograms to a timedomain waveform. In contrast to that work, we replace the WaveNet (van den Oord et al., 2016) vocoder with one based on the recently proposed WaveRNN (Kalchbrenner et al., 2018) architecture, which is more efficient during inference.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Similar%20to%20Tacotron%202%20we%20separately%20train%20a%20neural%20vocoder%20to%20invert%20a%20mel%20spectrograms%20to%20a%20timedomain%20waveform%20In%20contrast%20to%20that%20work%20we%20replace%20the%20WaveNet%20van%20den%20Oord%20et%20al%202016%20vocoder%20with%20one%20based%20on%20the%20recently%20proposed%20WaveRNN%20Kalchbrenner%20et%20al%202018%20architecture%20which%20is%20more%20efficient%20during%20inference",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Similar%20to%20Tacotron%202%20we%20separately%20train%20a%20neural%20vocoder%20to%20invert%20a%20mel%20spectrograms%20to%20a%20timedomain%20waveform%20In%20contrast%20to%20that%20work%20we%20replace%20the%20WaveNet%20van%20den%20Oord%20et%20al%202016%20vocoder%20with%20one%20based%20on%20the%20recently%20proposed%20WaveRNN%20Kalchbrenner%20et%20al%202018%20architecture%20which%20is%20more%20efficient%20during%20inference"
+        },
+        {
+            "id": "The_2015_b",
+            "entry": "The network is trained using the Adam optimizer (Kingma & Ba, 2015), configured with an initial learning rate 10\u22123, and an exponential decay that halved the learning rate every 12.5k steps, beginning after 50k steps. Parameters of the network are initialized using Xavier initialization (Glorot & Bengio, 2010). A batch size of 256 is used for all experiments. Following the common practice in the VAE literature (Kingma & Welling, 2014), we set the number of samples used for the Monte Carlo estimate to 1, since we train the model with a large batch size.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20network%20is%20trained%20using%20the%20Adam%20optimizer%20Kingma%20%20Ba%202015%20configured%20with%20an%20initial%20learning%20rate%20103%20and%20an%20exponential%20decay%20that%20halved%20the%20learning%20rate%20every%20125k%20steps%20beginning%20after%2050k%20steps%20Parameters%20of%20the%20network%20are%20initialized%20using%20Xavier%20initialization%20Glorot%20%20Bengio%202010%20A%20batch%20size%20of%20256%20is%20used%20for%20all%20experiments%20Following%20the%20common%20practice%20in%20the%20VAE%20literature%20Kingma%20%20Welling%202014%20we%20set%20the%20number%20of%20samples%20used%20for%20the%20Monte%20Carlo%20estimate%20to%201%20since%20we%20train%20the%20model%20with%20a%20large%20batch%20size"
+        }
+    ]
+}

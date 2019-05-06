@@ -1,0 +1,450 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "META-LEARNING UPDATE RULES FOR UNSUPERVISED REPRESENTATION LEARNING",
+        "author": "Luke Metz Google Brain lmetz@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HkNDsiC9KQ"
+        },
+        "abstract": "A major goal of unsupervised learning is to discover data representations that are useful for subsequent tasks, without access to supervised labels during training. Typically, this involves minimizing a surrogate objective, such as the negative log likelihood of a generative model, with the hope that representations useful for subsequent tasks will arise as a side effect. In this work, we propose instead to directly target later desired tasks by meta-learning an unsupervised learning rule which leads to representations useful for those tasks. Specifically, we target semi-supervised classification performance, and we meta-learn an algorithm \u2013 an unsupervised weight update rule \u2013 that produces representations useful for this task. Additionally, we constrain our unsupervised update rule to a be a biologically-motivated, neuron-local function, which enables it to generalize to different neural network architectures, datasets, and data modalities. We show that the meta-learned update rule produces useful features and sometimes outperforms existing unsupervised learning techniques. We further show that the meta-learned unsupervised update rule generalizes to train networks with different widths, depths, and nonlinearities. It also generalizes to train on data with randomly permuted input dimensions and even generalizes from image datasets to a text task."
+    },
+    "keywords": [
+        {
+            "term": "high level",
+            "url": "https://en.wikipedia.org/wiki/high_level"
+        },
+        {
+            "term": "learning rule",
+            "url": "https://en.wikipedia.org/wiki/learning_rule"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "log likelihood",
+            "url": "https://en.wikipedia.org/wiki/log_likelihood"
+        },
+        {
+            "term": "activation function",
+            "url": "https://en.wikipedia.org/wiki/activation_function"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "unsupervised learning",
+            "url": "https://en.wikipedia.org/wiki/unsupervised_learning"
+        },
+        {
+            "term": "network architecture",
+            "url": "https://en.wikipedia.org/wiki/network_architecture"
+        },
+        {
+            "term": "multi-layer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multi-layer_perceptron"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        }
+    ],
+    "abbreviations": {
+        "MLP": "multi-layer perceptron",
+        "SGD": "stochastic gradient descent"
+    },
+    "highlights": [
+        "Supervised learning has proven extremely effective for many problems where large amounts of labeled training data are available",
+        "There is a common hope that unsupervised learning will prove powerful in situations where labels are expensive, impractical to collect, or where the prediction target is unknown during training",
+        "One explanation for this failure is that unsupervised representation learning algorithms are typically mismatched to the target task",
+        "We propose to meta-learn an unsupervised update rule by meta-training on a meta-objective that directly optimizes the utility of the unsupervised representation",
+        "Unlike hand-designed unsupervised learning rules, this meta-objective directly targets the usefulness of a representation generated from unlabeled data for later supervised tasks",
+        "We show performance that matches or exceeds existing unsupervised learning on held out tasks"
+    ],
+    "key_statements": [
+        "Supervised learning has proven extremely effective for many problems where large amounts of labeled training data are available",
+        "There is a common hope that unsupervised learning will prove powerful in situations where labels are expensive, impractical to collect, or where the prediction target is unknown during training",
+        "One explanation for this failure is that unsupervised representation learning algorithms are typically mismatched to the target task",
+        "We propose to meta-learn an unsupervised update rule by meta-training on a meta-objective that directly optimizes the utility of the unsupervised representation",
+        "Unlike hand-designed unsupervised learning rules, this meta-objective directly targets the usefulness of a representation generated from unlabeled data for later supervised tasks",
+        "Few shot learning (<a class=\"ref-link\" id=\"cVinyals_et+al_2016_a\" href=\"#rVinyals_et+al_2016_a\">Vinyals et al, 2016</a>; <a class=\"ref-link\" id=\"cRavi_2016_a\" href=\"#rRavi_2016_a\">Ravi and Larochelle, 2016</a>; <a class=\"ref-link\" id=\"cMishra_et+al_2017_a\" href=\"#rMishra_et+al_2017_a\">Mishra et al, 2017</a>) Meta-unsupervised learning for clustering <a class=\"ref-link\" id=\"cGarg_2018_a\" href=\"#rGarg_2018_a\">Garg (2018</a>)",
+        "We find that despite being a 2D dataset, dissimilar from the image datasets used in meta-training, the learned model is still capable of manipulating and partially separating the data manifold in a purely unsupervised manner (Figure 6)",
+        "We show performance that matches or exceeds existing unsupervised learning on held out tasks"
+    ],
+    "summary": [
+        "Supervised learning has proven extremely effective for many problems where large amounts of labeled training data are available.",
+        "Unlike hand-designed unsupervised learning rules, this meta-objective directly targets the usefulness of a representation generated from unlabeled data for later supervised tasks.",
+        "We focus on the meta-objective of semi-supervised classification here, in principle a learning rule could be optimized to generate representations for any subsequent task.",
+        "The inner loop of our meta-learning process trains this base model via iterative application of our learned update rule.",
+        "Inner loop updates many steps of optimization supervised SGD training using meta-learned architecture adjustment of model weights by an LSTM many steps of optimization of a fixed loss function apply a feature extractor to a batch of data and use soft nearest neighbors to compute class probabilities one step of SGD on training loss starting from a meta-learned network performing gradient descent on a learned loss application of a recurrent model, e.g. LSTM, Wavenet.",
+        "Performance new image classes within similar dataset initial weights of neural network parameters of a learned loss function recurrent model weights clustering algorithm + hyperparameters, binary similarity function parametric learning rule parametric update rule reward or training loss reward test loss on training tasks empirical risk minimization supervised loss, or similarity to biologicallymotivated network few shot classification after unsupervised pretraining",
+        "Training uses 512 workers, each of which performs a sequence of partial unrolls of the inner loop UnsupervisedUpdate, and computes gradients of the meta-objective asynchronously.",
+        "We show meta-training and generalization properties of our learned optimizer and we conclude by visualizing how our learned update rule works.",
+        "To demonstrate the reduced generalization that results from learning transferable features rather than an update algorithm, we train a prototypical network (<a class=\"ref-link\" id=\"cSnell_et+al_2017_a\" href=\"#rSnell_et+al_2017_a\">Snell et al, 2017</a>) with and without the input shuffling described in Section 4.2.",
+        "On the same base model architecture, our learned UnsupervisedUpdate leads to performance better than a variational autoencoder, supervised learning on the labeled examples, and random initialization with trained readout layer.",
+        "UnsupervisedUpdate is able to learn useful features on a 2 way text classification data set, IMDB, despite being meta-trained only from image datasets.",
+        "Our learned UnsupervisedUpdate is capable of optimizing as it does not use base model gradients, and achieves performance double that of random initialization.",
+        "We find that despite being a 2D dataset, dissimilar from the image datasets used in meta-training, the learned model is still capable of manipulating and partially separating the data manifold in a purely unsupervised manner (Figure 6)."
+    ],
+    "headline": "We propose instead to directly target later desired tasks by meta-learning an unsupervised learning rule which leads to representations useful for those tasks",
+    "reference_links": [
+        {
+            "id": "Schmidhuber_1995_a",
+            "entry": "Juergen Schmidhuber. On learning how to learn learning strategies. 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Juergen%20On%20learning%20how%20to%20learn%20learning%20strategies%201995"
+        },
+        {
+            "id": "Hinton_2006_a",
+            "entry": "Geoffrey E Hinton and Ruslan R Salakhutdinov. Reducing the dimensionality of data with neural networks. science, 313(5786):504\u2013507, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Salakhutdinov%2C%20Ruslan%20R.%20Reducing%20the%20dimensionality%20of%20data%20with%20neural%20networks%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hinton%2C%20Geoffrey%20E.%20Salakhutdinov%2C%20Ruslan%20R.%20Reducing%20the%20dimensionality%20of%20data%20with%20neural%20networks%202006"
+        },
+        {
+            "id": "Vincent_et+al_2008_a",
+            "entry": "Pascal Vincent, Hugo Larochelle, Yoshua Bengio, and Pierre-Antoine Manzagol. Extracting and composing robust features with denoising autoencoders. In Proceedings of the 25th international conference on Machine learning, pages 1096\u20131103. ACM, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vincent%2C%20Pascal%20Larochelle%2C%20Hugo%20Bengio%2C%20Yoshua%20Manzagol%2C%20Pierre-Antoine%20Extracting%20and%20composing%20robust%20features%20with%20denoising%20autoencoders%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vincent%2C%20Pascal%20Larochelle%2C%20Hugo%20Bengio%2C%20Yoshua%20Manzagol%2C%20Pierre-Antoine%20Extracting%20and%20composing%20robust%20features%20with%20denoising%20autoencoders%202008"
+        },
+        {
+            "id": "Vincent_et+al_2010_a",
+            "entry": "Pascal Vincent, Hugo Larochelle, Isabelle Lajoie, Yoshua Bengio, and Pierre-Antoine Manzagol. Stacked denoising autoencoders: Learning useful representations in a deep network with a local denoising criterion. Journal of Machine Learning Research, 11(Dec):3371\u20133408, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vincent%2C%20Pascal%20Larochelle%2C%20Hugo%20Lajoie%2C%20Isabelle%20Bengio%2C%20Yoshua%20Stacked%20denoising%20autoencoders%3A%20Learning%20useful%20representations%20in%20a%20deep%20network%20with%20a%20local%20denoising%20criterion%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vincent%2C%20Pascal%20Larochelle%2C%20Hugo%20Lajoie%2C%20Isabelle%20Bengio%2C%20Yoshua%20Stacked%20denoising%20autoencoders%3A%20Learning%20useful%20representations%20in%20a%20deep%20network%20with%20a%20local%20denoising%20criterion%202010"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Le_et+al_2011_a",
+            "entry": "Quoc V Le, Marc\u2019Aurelio Ranzato, Rajat Monga, Matthieu Devin, Kai Chen, Greg S Corrado, Jeff Dean, and Andrew Y Ng. Building high-level features using large scale unsupervised learning. arXiv preprint arXiv:1112.6209, 2011.",
+            "arxiv_url": "https://arxiv.org/pdf/1112.6209"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pages 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Donahue_et+al_2016_a",
+            "entry": "Jeff Donahue, Philipp Kr\u00e4henb\u00fchl, and Trevor Darrell. Adversarial feature learning. arXiv preprint arXiv:1605.09782, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.09782"
+        },
+        {
+            "id": "Dumoulin_et+al_2016_a",
+            "entry": "Vincent Dumoulin, Ishmael Belghazi, Ben Poole, Alex Lamb, Martin Arjovsky, Olivier Mastropietro, and Aaron Courville. Adversarially learned inference. arXiv preprint arXiv:1606.00704, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.00704"
+        },
+        {
+            "id": "Sermanet_et+al_2017_a",
+            "entry": "Pierre Sermanet, Corey Lynch, Jasmine Hsu, and Sergey Levine. Time-contrastive networks: Self-supervised learning from multi-view observation. arXiv preprint arXiv:1704.06888, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.06888"
+        },
+        {
+            "id": "Xie_et+al_2016_a",
+            "entry": "Junyuan Xie, Ross Girshick, and Ali Farhadi. Unsupervised deep embedding for clustering analysis. In International conference on machine learning, pages 478\u2013487, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xie%2C%20Junyuan%20Girshick%2C%20Ross%20Farhadi%2C%20Ali%20Unsupervised%20deep%20embedding%20for%20clustering%20analysis%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xie%2C%20Junyuan%20Girshick%2C%20Ross%20Farhadi%2C%20Ali%20Unsupervised%20deep%20embedding%20for%20clustering%20analysis%202016"
+        },
+        {
+            "id": "Bojanowski_2017_a",
+            "entry": "Piotr Bojanowski and Armand Joulin. Unsupervised learning by predicting noise. arXiv preprint arXiv:1704.05310, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.05310"
+        },
+        {
+            "id": "Schmidhuber_1992_a",
+            "entry": "J\u00fcrgen Schmidhuber. Learning factorial codes by predictability minimization. Neural Computation, 4(6): 863\u2013879, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Learning%20factorial%20codes%20by%20predictability%20minimization%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20J%C3%BCrgen%20Learning%20factorial%20codes%20by%20predictability%20minimization%201992"
+        },
+        {
+            "id": "Hochreiter_1999_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Feature extraction through lococode. Neural Computation, 11(3): 679\u2013714, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Feature%20extraction%20through%20lococode%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Feature%20extraction%20through%20lococode%201999"
+        },
+        {
+            "id": "Olshausen_1997_a",
+            "entry": "Bruno A Olshausen and David J Field. Sparse coding with an overcomplete basis set: A strategy employed by v1? Vision research, 37(23):3311\u20133325, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olshausen%2C%20Bruno%20A.%20Field%2C%20David%20J.%20Sparse%20coding%20with%20an%20overcomplete%20basis%20set%3A%20A%20strategy%20employed%20by%20v1%3F%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olshausen%2C%20Bruno%20A.%20Field%2C%20David%20J.%20Sparse%20coding%20with%20an%20overcomplete%20basis%20set%3A%20A%20strategy%20employed%20by%20v1%3F%201997"
+        },
+        {
+            "id": "Schmidhuber_1987_a",
+            "entry": "J\u00fcrgen Schmidhuber. Evolutionary principles in self-referential learning, or on learning how to learn: the meta-meta-... hook. PhD thesis, Technische Universit\u00e4t M\u00fcnchen, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Evolutionary%20principles%20in%20self-referential%20learning%2C%20or%20on%20learning%20how%20to%20learn%3A%20the%20meta-meta-%201987"
+        },
+        {
+            "id": "Bengio_et+al_1990_a",
+            "entry": "Yoshua Bengio, Samy Bengio, and Jocelyn Cloutier. Learning a synaptic learning rule. Universit\u00e9 de Montr\u00e9al, D\u00e9partement d\u2019informatique et de recherche op\u00e9rationnelle, 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Bengio%2C%20Samy%20Cloutier%2C%20Jocelyn%20Learning%20a%20synaptic%20learning%20rule.%20Universit%C3%A9%20de%20Montr%C3%A9al%2C%20D%C3%A9partement%20d%E2%80%99informatique%20et%20de%20recherche%20op%C3%A9rationnelle%201990"
+        },
+        {
+            "id": "Bengio_et+al_1992_a",
+            "entry": "Samy Bengio, Yoshua Bengio, Jocelyn Cloutier, and Jan Gecsei. On the optimization of a synaptic learning rule. In Preprints Conf. Optimality in Artificial and Biological Neural Networks, pages 6\u20138. Univ. of Texas, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Samy%20Bengio%2C%20Yoshua%20Cloutier%2C%20Jocelyn%20Gecsei%2C%20Jan%20On%20the%20optimization%20of%20a%20synaptic%20learning%20rule%201992"
+        },
+        {
+            "id": "Runarsson_2000_a",
+            "entry": "Thomas Philip Runarsson and Magnus Thor Jonsson. Evolution and design of distributed learning rules. In Combinations of Evolutionary Computation and Neural Networks, 2000 IEEE Symposium on, pages 59\u201363. IEEE, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Runarsson%2C%20Thomas%20Philip%20Jonsson%2C%20Magnus%20Thor%20Evolution%20and%20design%20of%20distributed%20learning%20rules%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Runarsson%2C%20Thomas%20Philip%20Jonsson%2C%20Magnus%20Thor%20Evolution%20and%20design%20of%20distributed%20learning%20rules%202000"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Charles Blundell, Tim Lillicrap, koray kavukcuoglu, and Daan Wierstra. Matching networks for one shot learning. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett, editors, Advances in Neural Information Processing Systems 29, pages 3630\u20133638. Curran Associates, Inc., 2016. URL http://papers.nips.cc/paper/6385-matching-networks-for-one-shot-learning.pdf.",
+            "url": "http://papers.nips.cc/paper/6385-matching-networks-for-one-shot-learning.pdf",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20koray%20kavukcuoglu%20Matching%20networks%20for%20one%20shot%20learning%202016"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Mishra_et+al_2017_a",
+            "entry": "Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. Meta-learning with temporal convolutions. arXiv preprint arXiv:1707.03141, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03141"
+        },
+        {
+            "id": "Finn_et+al_2017_a",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, pages 1126\u20131135, International Convention Centre, Sydney, Australia, 06\u201311 Aug 2017. PMLR. URL http://proceedings.mlr.press/v70/finn17a.html.",
+            "url": "http://proceedings.mlr.press/v70/finn17a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Finn%2C%20Chelsea%20Abbeel%2C%20Pieter%20Levine%2C%20Sergey%20Model-agnostic%20meta-learning%20for%20fast%20adaptation%20of%20deep%20networks%202017-08"
+        },
+        {
+            "id": "Snell_et+al_2017_a",
+            "entry": "Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In Advances in Neural Information Processing Systems, pages 4080\u20134090, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snell%2C%20Jake%20Swersky%2C%20Kevin%20Zemel%2C%20Richard%20Prototypical%20networks%20for%20few-shot%20learning%202017"
+        },
+        {
+            "id": "Ren_et+al_2018_a",
+            "entry": "Mengye Ren, Eleni Triantafillou, Sachin Ravi, Jake Snell, Kevin Swersky, Joshua B Tenenbaum, Hugo Larochelle, and Richard S Zemel. Meta-learning for semi-supervised few-shot classification. arXiv preprint arXiv:1803.00676, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00676"
+        },
+        {
+            "id": "Hsu_et+al_2018_a",
+            "entry": "Kyle Hsu, Sergey Levine, and Chelsea Finn. Unsupervised learning via meta-learning. arXiv preprint arXiv:1810.02334, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.02334"
+        },
+        {
+            "id": "Garg_2018_a",
+            "entry": "Vikas Garg. Supervising unsupervised learning. In Advances in Neural Information Processing Systems, pages 4996\u20135006, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garg%2C%20Vikas%20Supervising%20unsupervised%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Garg%2C%20Vikas%20Supervising%20unsupervised%20learning%202018"
+        },
+        {
+            "id": "Jones_2001_a",
+            "entry": "Donald R Jones. A taxonomy of global optimization methods based on response surfaces. Journal of global optimization, 21(4):345\u2013383, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jones%2C%20Donald%20R.%20A%20taxonomy%20of%20global%20optimization%20methods%20based%20on%20response%20surfaces%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jones%2C%20Donald%20R.%20A%20taxonomy%20of%20global%20optimization%20methods%20based%20on%20response%20surfaces%202001"
+        },
+        {
+            "id": "Snoek_et+al_2012_a",
+            "entry": "Jasper Snoek, Hugo Larochelle, and Ryan P Adams. Practical bayesian optimization of machine learning algorithms. In Advances in neural information processing systems, pages 2951\u20132959, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snoek%2C%20Jasper%20Larochelle%2C%20Hugo%20Adams%2C%20Ryan%20P.%20Practical%20bayesian%20optimization%20of%20machine%20learning%20algorithms%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snoek%2C%20Jasper%20Larochelle%2C%20Hugo%20Adams%2C%20Ryan%20P.%20Practical%20bayesian%20optimization%20of%20machine%20learning%20algorithms%202012"
+        },
+        {
+            "id": "James_2011_a",
+            "entry": "James S Bergstra, R\u00e9mi Bardenet, Yoshua Bengio, and Bal\u00e1zs K\u00e9gl. Algorithms for hyper-parameter optimization. In Advances in neural information processing systems, pages 2546\u20132554, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=James%20S%20Bergstra%2C%20R%C3%A9mi%20Bardenet%2C%20Yoshua%20Bengio%20K%C3%A9gl%2C%20Bal%C3%A1zs%20Algorithms%20for%20hyper-parameter%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=James%20S%20Bergstra%2C%20R%C3%A9mi%20Bardenet%2C%20Yoshua%20Bengio%20K%C3%A9gl%2C%20Bal%C3%A1zs%20Algorithms%20for%20hyper-parameter%20optimization%202011"
+        },
+        {
+            "id": "Bergstra_2012_a",
+            "entry": "James Bergstra and Yoshua Bengio. Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13(Feb):281\u2013305, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bergstra%2C%20James%20Bengio%2C%20Yoshua%20Random%20search%20for%20hyper-parameter%20optimization%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bergstra%2C%20James%20Bengio%2C%20Yoshua%20Random%20search%20for%20hyper-parameter%20optimization%202012"
+        },
+        {
+            "id": "Stanley_2002_a",
+            "entry": "Kenneth O Stanley and Risto Miikkulainen. Evolving neural networks through augmenting topologies. Evolutionary computation, 10(2):99\u2013127, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stanley%2C%20Kenneth%20O.%20Miikkulainen%2C%20Risto%20Evolving%20neural%20networks%20through%20augmenting%20topologies%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stanley%2C%20Kenneth%20O.%20Miikkulainen%2C%20Risto%20Evolving%20neural%20networks%20through%20augmenting%20topologies%202002"
+        },
+        {
+            "id": "Zoph_2017_a",
+            "entry": "Barret Zoph and Quoc V. Le. Neural architecture search with reinforcement learning. International Conference on Learning Representations, 2017. URL https://arxiv.org/abs/1611.01578.",
+            "url": "https://arxiv.org/abs/1611.01578",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01578"
+        },
+        {
+            "id": "Baker_et+al_2017_a",
+            "entry": "Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architectures using reinforcement learning. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baker%2C%20Bowen%20Gupta%2C%20Otkrist%20Naik%2C%20Nikhil%20Raskar%2C%20Ramesh%20Designing%20neural%20network%20architectures%20using%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baker%2C%20Bowen%20Gupta%2C%20Otkrist%20Naik%2C%20Nikhil%20Raskar%2C%20Ramesh%20Designing%20neural%20network%20architectures%20using%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Zoph_et+al_2018_a",
+            "entry": "Barret Zoph, Vijay Vasudevan, Jonathon Shlens, and Quoc V Le. Learning transferable architectures for scalable image recognition. Proceedings of the IEEE conference on computer vision and pattern recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zoph%2C%20Barret%20Vasudevan%2C%20Vijay%20Shlens%2C%20Jonathon%20Le%2C%20Quoc%20V.%20Learning%20transferable%20architectures%20for%20scalable%20image%20recognition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zoph%2C%20Barret%20Vasudevan%2C%20Vijay%20Shlens%2C%20Jonathon%20Le%2C%20Quoc%20V.%20Learning%20transferable%20architectures%20for%20scalable%20image%20recognition%202018"
+        },
+        {
+            "id": "Real_et+al_2017_a",
+            "entry": "Esteban Real, Sherry Moore, Andrew Selle, Saurabh Saxena, Yutaka Leon Suematsu, Quoc Le, and Alex Kurakin. Large-scale evolution of image classifiers. arXiv preprint arXiv:1703.01041, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01041"
+        },
+        {
+            "id": "Maclaurin_et+al_2015_a",
+            "entry": "Dougal Maclaurin, David Duvenaud, and Ryan Adams. Gradient-based hyperparameter optimization through reversible learning. In International Conference on Machine Learning, pages 2113\u20132122, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maclaurin%2C%20Dougal%20Duvenaud%2C%20David%20Adams%2C%20Ryan%20Gradient-based%20hyperparameter%20optimization%20through%20reversible%20learning%202015"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, and Nando de Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, pages 3981\u20133989, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Yutian Chen, Matthew W Hoffman, Sergio G\u00f3mez Colmenarejo, Misha Denil, Timothy P Lillicrap, Matt Botvinick, and Nando de Freitas. Learning to learn without gradient descent by gradient descent. arXiv preprint arXiv:1611.03824, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03824"
+        },
+        {
+            "id": "Li_2017_a",
+            "entry": "Ke Li and Jitendra Malik. Learning to optimize. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Ke%20Malik%2C%20Jitendra%20Learning%20to%20optimize%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Ke%20Malik%2C%20Jitendra%20Learning%20to%20optimize%202017"
+        },
+        {
+            "id": "Wichrowska_et+al_2017_a",
+            "entry": "Olga Wichrowska, Niru Maheswaranathan, Matthew W Hoffman, Sergio Gomez Colmenarejo, Misha Denil, Nando de Freitas, and Jascha Sohl-Dickstein. Learned optimizers that scale and generalize. International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olga%20Wichrowska%20Niru%20Maheswaranathan%20Matthew%20W%20Hoffman%20Sergio%20Gomez%20Colmenarejo%20Misha%20Denil%20Nando%20de%20Freitas%20and%20Jascha%20SohlDickstein%20Learned%20optimizers%20that%20scale%20and%20generalize%20International%20Conference%20on%20Machine%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Olga%20Wichrowska%20Niru%20Maheswaranathan%20Matthew%20W%20Hoffman%20Sergio%20Gomez%20Colmenarejo%20Misha%20Denil%20Nando%20de%20Freitas%20and%20Jascha%20SohlDickstein%20Learned%20optimizers%20that%20scale%20and%20generalize%20International%20Conference%20on%20Machine%20Learning%202017"
+        },
+        {
+            "id": "Bello_et+al_2017_a",
+            "entry": "Irwan Bello, Barret Zoph, Vijay Vasudevan, and Quoc Le. Neural optimizer search with reinforcement learning. 2017. URL https://arxiv.org/pdf/1709.07417.pdf.",
+            "url": "https://arxiv.org/pdf/1709.07417.pdf",
+            "arxiv_url": "https://arxiv.org/pdf/1709.07417"
+        },
+        {
+            "id": "Houthooft_et+al_2018_a",
+            "entry": "Rein Houthooft, Richard Y Chen, Phillip Isola, Bradly C Stadie, Filip Wolski, Jonathan Ho, and Pieter Abbeel. Evolved policy gradients. arXiv preprint arXiv:1802.04821, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04821"
+        },
+        {
+            "id": "Bach_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Francis Bach and David Blei, editors, Proceedings of the 32nd International Conference on Machine Learning, volume 37 of Proceedings of Machine Learning Research, pages 448\u2013456, Lille, France, 07\u201309 Jul 2015. PMLR. URL http://proceedings.mlr.press/v37/ioffe15.html.",
+            "url": "http://proceedings.mlr.press/v37/ioffe15.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Francis%20Bach%20and%20David%20Blei%20editors%20Proceedings%20of%20the%2032nd%20International%20Conference%20on%20Machine%20Learning%20volume%2037%20of%20Proceedings%20of%20Machine%20Learning%20Research%20pages%20448456%20Lille%20France%200709%20Jul%202015%20PMLR%20URL%20httpproceedingsmlrpressv37ioffe15html"
+        },
+        {
+            "id": "Whittington_2017_a",
+            "entry": "James CR Whittington and Rafal Bogacz. An approximation of the error backpropagation algorithm in a predictive coding network with local hebbian synaptic plasticity. Neural computation, 29(5):1229\u20131262, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Whittington%2C%20James%20C.R.%20Bogacz%2C%20Rafal%20An%20approximation%20of%20the%20error%20backpropagation%20algorithm%20in%20a%20predictive%20coding%20network%20with%20local%20hebbian%20synaptic%20plasticity%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Whittington%2C%20James%20C.R.%20Bogacz%2C%20Rafal%20An%20approximation%20of%20the%20error%20backpropagation%20algorithm%20in%20a%20predictive%20coding%20network%20with%20local%20hebbian%20synaptic%20plasticity%202017"
+        },
+        {
+            "id": "Lillicrap_et+al_2016_a",
+            "entry": "Timothy P Lillicrap, Daniel Cownden, Douglas B Tweed, and Colin J Akerman. Random synaptic feedback weights support error backpropagation for deep learning. Nature communications, 7:13276, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lillicrap%2C%20Timothy%20P.%20Cownden%2C%20Daniel%20Tweed%2C%20Douglas%20B.%20Akerman%2C%20Colin%20J.%20Random%20synaptic%20feedback%20weights%20support%20error%20backpropagation%20for%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lillicrap%2C%20Timothy%20P.%20Cownden%2C%20Daniel%20Tweed%2C%20Douglas%20B.%20Akerman%2C%20Colin%20J.%20Random%20synaptic%20feedback%20weights%20support%20error%20backpropagation%20for%20deep%20learning%202016"
+        },
+        {
+            "id": "Pascanu_et+al_2013_a",
+            "entry": "Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. On the difficulty of training recurrent neural networks. In International Conference on Machine Learning, pages 1310\u20131318, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pascanu%2C%20Razvan%20Mikolov%2C%20Tomas%20Bengio%2C%20Yoshua%20On%20the%20difficulty%20of%20training%20recurrent%20neural%20networks%202013"
+        },
+        {
+            "id": "Shaban_et+al_2018_a",
+            "entry": "Amirreza Shaban, Ching-An Cheng, Nathan Hatch, and Byron Boots. Truncated back-propagation for bilevel optimization. arXiv preprint arXiv:1810.10667, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.10667"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Russakovsky_et+al_2015_a",
+            "entry": "Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg, and Li Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. International Journal of Computer Vision (IJCV), 115(3):211\u2013252, 2015. doi: 10.1007/s11263-015-0816-y.",
+            "crossref": "https://dx.doi.org/10.1007/s11263-015-0816-y",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/s11263-015-0816-y"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, L\u00e9on Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20L%C3%A9on%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "Han Xiao, Kashif Rasul, and Roland Vollgraf. Fashion-mnist: a novel image dataset for benchmarking machine learning algorithms, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20Han%20Rasul%2C%20Kashif%20Vollgraf%2C%20Roland%20Fashion-mnist%3A%20a%20novel%20image%20dataset%20for%20benchmarking%20machine%20learning%20algorithms%202017"
+        },
+        {
+            "id": "Maas_et+al_2011_a",
+            "entry": "Andrew L. Maas, Raymond E. Daly, Peter T. Pham, Dan Huang, Andrew Y. Ng, and Christopher Potts. Learning word vectors for sentiment analysis. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies, pages 142\u2013150, Portland, Oregon, USA, June 2011. Association for Computational Linguistics. URL http://www.aclweb.org/anthology/ P11-1015.",
+            "url": "http://www.aclweb.org/anthology/P11-1015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maas%2C%20Andrew%20L.%20Daly%2C%20Raymond%20E.%20Pham%2C%20Peter%20T.%20Huang%2C%20Dan%20Learning%20word%20vectors%20for%20sentiment%20analysis%202011-06"
+        },
+        {
+            "id": "Abadi_et+al_2016_a",
+            "entry": "Mart\u00edn Abadi, Paul Barham, Jianmin Chen, Zhifeng Chen, Andy Davis, Jeffrey Dean, Matthieu Devin, Sanjay Ghemawat, Geoffrey Irving, Michael Isard, et al. Tensorflow: A system for large-scale machine learning. In OSDI, volume 16, pages 265\u2013283, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Abadi%2C%20Mart%C3%ADn%20Barham%2C%20Paul%20Chen%2C%20Jianmin%20Chen%2C%20Zhifeng%20Tensorflow%3A%20A%20system%20for%20large-scale%20machine%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Abadi%2C%20Mart%C3%ADn%20Barham%2C%20Paul%20Chen%2C%20Jianmin%20Chen%2C%20Zhifeng%20Tensorflow%3A%20A%20system%20for%20large-scale%20machine%20learning%202016"
+        },
+        {
+            "id": "Maas_et+al_2013_a",
+            "entry": "Andrew L Maas, Awni Y Hannun, and Andrew Y Ng. Rectifier nonlinearities improve neural network acoustic models. In Proc. icml, volume 30, page 3, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20Ng%2C%20Andrew%20Y.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20Ng%2C%20Andrew%20Y.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013"
+        },
+        {
+            "id": "Ramachandran_et+al_2017_a",
+            "entry": "Prajit Ramachandran, Barret Zoph, and Quoc Le. Searching for activation functions. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramachandran%2C%20Prajit%20Zoph%2C%20Barret%20Le%2C%20Quoc%20Searching%20for%20activation%20functions%202017"
+        },
+        {
+            "id": "Pascanu_et+al_2012_a",
+            "entry": "Razvan Pascanu, Tomas Mikolov, and Yoshua Bengio. Understanding the exploding gradient problem. CoRR, abs/1211.5063, 2012.",
+            "arxiv_url": "https://arxiv.org/pdf/1211.5063"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Volodymyr%20Mnih%20Koray%20Kavukcuoglu%20David%20Silver%20Alex%20Graves%20Ioannis%20Antonoglou%20Daan%20Wierstra%20and"
+        },
+        {
+            "id": "Riedmiller_2013_a",
+            "entry": "Martin Riedmiller. Playing atari with deep reinforcement learning. arXiv preprint arXiv:1312.5602, 2013. Barak Pearlmutter. An investigation of the gradient descent process in neural networks. PhD thesis, Carnegie",
+            "arxiv_url": "https://arxiv.org/pdf/1312.5602"
+        },
+        {
+            "id": "Mellon_1996_a",
+            "entry": "Mellon University Pittsburgh, PA, 1996. Samuel S Schoenholz, Justin Gilmer, Surya Ganguli, and Jascha Sohl-Dickstein. Deep information propagation.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mellon%20University%20Pittsburgh%2C%20P.A.%20Deep%20information%20propagation%201996"
+        },
+        {
+            "id": "arXiv_2016_a",
+            "entry": "arXiv preprint arXiv:1611.01232, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01232"
+        }
+    ]
+}

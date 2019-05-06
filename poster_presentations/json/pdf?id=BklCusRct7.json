@@ -1,0 +1,196 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "OPTIMAL TRANSPORT MAPS FOR DISTRIBUTION",
+        "author": "PRESERVING OPERATIONS ON LATENT SPACES OF",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BklCusRct7"
+        },
+        "journal": "White",
+        "abstract": "Generative models such as Variational Auto Encoders (VAEs) and Generative Adversarial Networks (GANs) are typically trained for a fixed prior distribution in the latent space, such as uniform or Gaussian. After a trained model is obtained, one can sample the Generator in various forms for exploration and understanding, such as interpolating between two samples, sampling in the vicinity of a sample or exploring differences between a pair of samples applied to a third sample. However, the latent space operations commonly used in the literature so far induce a distribution mismatch between the resulting outputs and the prior distribution the model was trained on. Previous works have attempted to reduce this mismatch with heuristic modification to the operations or by changing the latent distribution and re-training models. In this paper, we propose a framework for modifying the latent space operations such that the distribution mismatch is fully eliminated. Our approach is based on optimal transport maps, which adapt the latent space operations such that they fully match the prior distribution, while minimally modifying the original operation. Our matched operations are readily obtained for the commonly used operations and distributions and require no adjustment to the training procedure."
+    },
+    "keywords": [
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        },
+        {
+            "term": "prior distribution",
+            "url": "https://en.wikipedia.org/wiki/prior_distribution"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "optimal transport",
+            "url": "https://en.wikipedia.org/wiki/optimal_transport"
+        }
+    ],
+    "abbreviations": {
+        "VAEs": "Variational Autoencoders",
+        "GANs": "Generative Adversarial Networks",
+        "MP": "map f for",
+        "SLERP": "spherical interpolation"
+    },
+    "highlights": [
+        "<strong>INTRODUCTION & RELATED WORK</strong><br/><br/>Generative models such as Variational Autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a></a></a>) and Generative Adversarial Networks (GANs) (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a></a></a></a>) have emerged as popular techniques for unsupervised learning of intractable distributions",
+        "For both Variational Autoencoders and Generative Adversarial Networks, using some data X we end up with a trained generator G, that is supposed to map latent samples z from the fixed prior distribution to output samples G(z) which have the same distribution as the data",
+        "The generator output for latent samples produced with linear interpolation, spherical interpolation of White (2016) and our proposed matched interpolation will be compared.\n2-point interpolation We begin with the classic example of 2-point interpolation: Figure 4 shows three examples per dataset for an interpolation between 2 points in latent space",
+        "Each example is first done via linear interpolation, spherical interpolation and matched interpolation",
+        "We proposed a framework that fully eliminates the distribution mismatch in the common latent space operations used for generative models",
+        "The matched operators give a significantly higher quality samples compared to the originals, having the potential to become standard tools for evaluating and exploring generative models"
+    ],
+    "key_statements": [
+        "<strong>INTRODUCTION & RELATED WORK</strong><br/><br/>Generative models such as Variational Autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a></a></a>) and Generative Adversarial Networks (GANs) (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a></a></a></a>) have emerged as popular techniques for unsupervised learning of intractable distributions",
+        "Variational Autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a>) are trained for a fixed prior distribution, but this is done through the loss of an Autoencoder that minimizes the variational lower bound of the data likelihood",
+        "For both Variational Autoencoders and Generative Adversarial Networks, using some data X we end up with a trained generator G, that is supposed to map latent samples z from the fixed prior distribution to output samples G(z) which have the same distribution as the data",
+        "We propose to use distribution matching transport maps, to obtain analogous latent space operations which preserve the prior distribution of samples from prior linear matched spherical (b) Uniform prior distribu- (c) Linear midpoint distrition",
+        "DISTRIBUTION MATCHING WITH OPTIMAL TRANSPORT In order to address the distribution mismatch, we propose a simple and intuitive framework for constructing distribution preserving operators, via optimal transport: py2 py2\n0.25 prior midpoint linear midpoint matched\n0.2 midpoint spherical",
+        "Compared to the original scores of the trained models, our matched operations are statistically indistinguishable while the linear interpolation gives a significantly lower score in all settings. This is not surprising, since our matched operations are guaranteed to produce samples that come from the same distribution as the random samples",
+        "The generator output for latent samples produced with linear interpolation, spherical interpolation of White (2016) and our proposed matched interpolation will be compared.\n2-point interpolation We begin with the classic example of 2-point interpolation: Figure 4 shows three examples per dataset for an interpolation between 2 points in latent space",
+        "Each example is first done via linear interpolation, spherical interpolation and matched interpolation",
+        "We proposed a framework that fully eliminates the distribution mismatch in the common latent space operations used for generative models",
+        "The matched operators give a significantly higher quality samples compared to the originals, having the potential to become standard tools for evaluating and exploring generative models"
+    ],
+    "summary": [
+        "<strong>INTRODUCTION & RELATED WORK</strong><br/><br/>Generative models such as Variational Autoencoders (VAEs) (<a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\"><a class=\"ref-link\" id=\"cKingma_2013_a\" href=\"#rKingma_2013_a\">Kingma & Welling, 2013</a></a></a>) and Generative Adversarial Networks (GANs) (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a></a></a></a>) have emerged as popular techniques for unsupervised learning of intractable distributions.",
+        "The operations typically used so far, such as linear interpolation (<a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2014_a\" href=\"#rGoodfellow_et+al_2014_a\">Goodfellow et al, 2014</a></a>), spherical interpolation (White, 2016), vicinity sampling and vector arithmetic (<a class=\"ref-link\" id=\"cRadford_et+al_2015_a\" href=\"#rRadford_et+al_2015_a\">Radford et al, 2015</a>), cause a distribution mismatch between the latent prior distribution and the results of the operations.",
+        "We propose to use distribution matching transport maps, to obtain analogous latent space operations which preserve the prior distribution of samples from prior linear matched spherical (b) Uniform prior distribu- (c) Linear midpoint distrition.",
+        "<a class=\"ref-link\" id=\"cKilcher_et+al_2018_a\" href=\"#rKilcher_et+al_2018_a\">Kilcher et al (2018</a>) further analyze the distribution mismatch observed by White (2016) for the special case of Gaussian priors, and propose an alternative prior distribution with dependent components which produces less distribution mismatch for linear interpolation, at the cost of needing to re-train and re-tune the generative models.",
+        "Interpolations in 2-D For Figure 1, we sample 1 million pairs of points in two dimension, from a uniform prior, and estimate numerically the midpoint distribution of linear interpolation, our proposed matched interpolation and the spherical interpolation of White (2016).",
+        "Interpolations in 100-D For Figure 2, we sample 1 million pairs of points in d = 100 dimensions, using either i.i.d. uniform components on [\u22121, 1] or Gaussian N (0, 1) and compute the distribution of the squared norm of the midpoints.",
+        "The models for LSUN and the icon dataset where both trained on a uniform latent prior distribution, while for CelebA a Gaussian prior was used.",
+        "Compared to the original scores of the trained models, our matched operations are statistically indistinguishable while the linear interpolation gives a significantly lower score in all settings.",
+        "The generator output for latent samples produced with linear interpolation, SLERP of White (2016) and our proposed matched interpolation will be compared.",
+        "For LLD icon dataset (a) and LSUN (b), outputs are produced with DCGAN using a uniform prior distribution, whereas the CelebA model (c) uses a Gaussian prior.",
+        "Figure 5: 4-point interpolation between 4 sampled points from DCGAN trained on LSUN (128 \u00d7 128) using a uniform prior.",
+        "As a result of the repeated application of the vicinity sampling operation, the divergence from the prior distribution in the non-matched case becomes stronger with each step, resulting in completely unrecognizable output images on the LSUN and LLD icon models.",
+        "We proposed a framework that fully eliminates the distribution mismatch in the common latent space operations used for generative models.",
+        "Our approach uses optimal transport to minimally modify the operations such that they fully preserve the prior distribution.",
+        "The matched operators give a significantly higher quality samples compared to the originals, having the potential to become standard tools for evaluating and exploring generative models"
+    ],
+    "headline": "We propose a framework for modifying the latent space operations such that the distribution mismatch is fully eliminated",
+    "reference_links": [
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Gregoire Mesnil, Yann Dauphin, and Salah Rifai. Better mixing via deep representations. In Proceedings of the 30th International Conference on Machine Learning (ICML-13), pp. 552\u2013560, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Mesnil%2C%20Gregoire%20Dauphin%2C%20Yann%20Rifai%2C%20Salah%20Better%20mixing%20via%20deep%20representations%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Mesnil%2C%20Gregoire%20Dauphin%2C%20Yann%20Rifai%2C%20Salah%20Better%20mixing%20via%20deep%20representations%202013"
+        },
+        {
+            "id": "Brock_et+al_2016_a",
+            "entry": "Andrew Brock, Theodore Lim, James M Ritchie, and Nick Weston. Neural photo editing with introspective adversarial networks. arXiv preprint arXiv:1609.07093, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.07093"
+        },
+        {
+            "id": "Dosovitskiy_et+al_2015_a",
+            "entry": "Alexey Dosovitskiy, Jost Tobias Springenberg, and Thomas Brox. Learning to generate chairs with convolutional neural networks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 1538\u20131546, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dosovitskiy%2C%20Alexey%20Springenberg%2C%20Jost%20Tobias%20Brox%2C%20Thomas%20Learning%20to%20generate%20chairs%20with%20convolutional%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dosovitskiy%2C%20Alexey%20Springenberg%2C%20Jost%20Tobias%20Brox%2C%20Thomas%20Learning%20to%20generate%20chairs%20with%20convolutional%20neural%20networks%202015"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron Courville. Improved training of wasserstein gans. arXiv:1704.00028v2, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.00028v2"
+        },
+        {
+            "id": "Kantorovich_1942_a",
+            "entry": "Leonid Vitalievich Kantorovich. On the translocation of masses. In Dokl. Akad. Nauk SSSR, volume 37, pp. 199\u2013201, 1942.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kantorovich%2C%20Leonid%20Vitalievich%20On%20the%20translocation%20of%20masses.%20In%20Dokl%201942",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kantorovich%2C%20Leonid%20Vitalievich%20On%20the%20translocation%20of%20masses.%20In%20Dokl%201942"
+        },
+        {
+            "id": "Kilcher_et+al_2018_a",
+            "entry": "Yannic Kilcher, Aurelien Lucchi, and Thomas Hofmann. Semantic interpolation in implicit models. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=H15odZ-C-.",
+            "url": "https://openreview.net/forum?id=H15odZ-C-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kilcher%2C%20Yannic%20Lucchi%2C%20Aurelien%20Hofmann%2C%20Thomas%20Semantic%20interpolation%20in%20implicit%20models%202018"
+        },
+        {
+            "id": "Kingma_2013_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In Proceedings of International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015"
+        },
+        {
+            "id": "Mackay_2003_a",
+            "entry": "David JC MacKay. Information theory, inference and learning algorithms. Cambridge university press, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MacKay%2C%20David%20J.C.%20Information%20theory%2C%20inference%20and%20learning%20algorithms%202003"
+        },
+        {
+            "id": "Makhzani_et+al_2015_a",
+            "entry": "Alireza Makhzani, Jonathon Shlens, Navdeep Jaitly, Ian Goodfellow, and Brendan Frey. Adversarial autoencoders. arXiv preprint arXiv:1511.05644, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05644"
+        },
+        {
+            "id": "Monge_1781_a",
+            "entry": "Gaspard Monge. Memoire sur la theorie des deblais et des remblais. Histoire de l\u2019Academie Royale des Sciences de Paris, 1781.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monge%2C%20Gaspard%20Memoire%20sur%20la%20theorie%20des%20deblais%20et%20des%20remblais.%20Histoire%20de%20l%E2%80%99Academie%20Royale%20des%20Sciences%201781"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Reed_et+al_2016_a",
+            "entry": "Scott Reed, Zeynep Akata, Xinchen Yan, Lajanugen Logeswaran, Bernt Schiele, and Honglak Lee. Generative adversarial text to image synthesis. arXiv preprint arXiv:1605.05396, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.05396"
+        },
+        {
+            "id": "Sage_et+al_2017_a",
+            "entry": "Alexander Sage, Eirikur Agustsson, Radu Timofte, and Luc Van Gool. Lld: Large logo dataset. 2017. URL https://data.vision.ee.ethz.ch/cvl/lld/.",
+            "url": "https://data.vision.ee.ethz.ch/cvl/lld/"
+        },
+        {
+            "id": "Sage_et+al_2018_a",
+            "entry": "Alexander Sage, Eirikur Agustsson, Radu Timofte, and Luc Van Gool. Logo synthesis and manipulation with clustered generative adversarial networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sage%2C%20Alexander%20Agustsson%2C%20Eirikur%20Timofte%2C%20Radu%20Gool%2C%20Luc%20Van%20Logo%20synthesis%20and%20manipulation%20with%20clustered%20generative%20adversarial%20networks%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sage%2C%20Alexander%20Agustsson%2C%20Eirikur%20Timofte%2C%20Radu%20Gool%2C%20Luc%20Van%20Logo%20synthesis%20and%20manipulation%20with%20clustered%20generative%20adversarial%20networks%202018-06"
+        },
+        {
+            "id": "Salimans_et+al_2016_a",
+            "entry": "Tim Salimans, Ian Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, and Xi Chen. Improved techniques for training gans. In Advances in Neural Information Processing Systems, pp. 2234\u20132242, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20Tim%20Goodfellow%2C%20Ian%20Zaremba%2C%20Wojciech%20Cheung%2C%20Vicki%20Improved%20techniques%20for%20training%20gans%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20Tim%20Goodfellow%2C%20Ian%20Zaremba%2C%20Wojciech%20Cheung%2C%20Vicki%20Improved%20techniques%20for%20training%20gans%202016"
+        },
+        {
+            "id": "Santambrogio_2015_a",
+            "entry": "Filippo Santambrogio. Optimal transport for applied mathematicians. Birkauser, NY, 2015. Cedric Villani. Topics in optimal transportation. Number 58. American Mathematical Soc., 2003. Cedric Villani. Optimal transport: old and new, volume 338. Springer Science & Business Media, 2008. Tom White. Sampling generative networks. arXiv preprint arXiv:1609.04468, 2016. Fisher Yu, Ari Seff, Yinda Zhang, Shuran Song, Thomas Funkhouser, and Jianxiong Xiao. Lsun: Construction of a large-scale image dataset using deep learning with humans in the loop. arXiv preprint arXiv:1506.03365, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.04468"
+        },
+        {
+            "id": "We_2016_a",
+            "entry": "We note that the analysis here can bee seen as a more rigorous version of an observation made by White (2016), who experimentally show that there is a significant difference between the average norm of the midpoint of linear interpolation and the points of the prior, for uniform and Gaussian distributions.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20note%20that%20the%20analysis%20here%20can%20bee%20seen%20as%20a%20more%20rigorous%20version%20of%20an%20observation%20made%20by%20White%202016%20who%20experimentally%20show%20that%20there%20is%20a%20significant%20difference%20between%20the%20average%20norm%20of%20the%20midpoint%20of%20linear%20interpolation%20and%20the%20points%20of%20the%20prior%20for%20uniform%20and%20Gaussian%20distributions"
+        },
+        {
+            "id": "We_2003_a",
+            "entry": "We note that this property is well known for i.i.d Gaussian entries (see e.g. Ex. 6.14 in MacKay (2003)). For Uniform distribution on the hypercube it is also well known that the mass is concentrated in the corner points (which is consistent with the claim here since the corner points lie on a sphere).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20note%20that%20this%20property%20is%20well%20known%20for%20iid%20Gaussian%20entries%20see%20eg%20Ex%20614%20in%20MacKay%202003%20For%20Uniform%20distribution%20on%20the%20hypercube%20it%20is%20also%20well%20known%20that%20the%20mass%20is%20concentrated%20in%20the%20corner%20points%20which%20is%20consistent%20with%20the%20claim%20here%20since%20the%20corner%20points%20lie%20on%20a%20sphere",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20note%20that%20this%20property%20is%20well%20known%20for%20iid%20Gaussian%20entries%20see%20eg%20Ex%20614%20in%20MacKay%202003%20For%20Uniform%20distribution%20on%20the%20hypercube%20it%20is%20also%20well%20known%20that%20the%20mass%20is%20concentrated%20in%20the%20corner%20points%20which%20is%20consistent%20with%20the%20claim%20here%20since%20the%20corner%20points%20lie%20on%20a%20sphere"
+        },
+        {
+            "id": "Lemma_2015_a",
+            "entry": "Lemma 1 (Theorem 2.5 in Santambrogio (2015)). Suppose a mapping g(x) is non-decreasing and maps a continuous distribution pX to a distribution pY, i.e.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lemma%201%20Theorem%2025%20in%20Santambrogio%202015%20Suppose%20a%20mapping%20gx%20is%20nondecreasing%20and%20maps%20a%20continuous%20distribution%20pX%20to%20a%20distribution%20pY%20ie",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lemma%201%20Theorem%2025%20in%20Santambrogio%202015%20Suppose%20a%20mapping%20gx%20is%20nondecreasing%20and%20maps%20a%20continuous%20distribution%20pX%20to%20a%20distribution%20pY%20ie"
+        }
+    ]
+}

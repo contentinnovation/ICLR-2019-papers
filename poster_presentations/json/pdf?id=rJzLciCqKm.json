@@ -1,0 +1,346 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING FROM POSITIVE AND UNLABELED DATA WITH A SELECTION BIAS",
+        "author": "Masahiro Kato, Takeshi Teshima, and Junya Honda",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJzLciCqKm"
+        },
+        "abstract": "We consider the problem of learning a binary classifier only from positive data and unlabeled data (PU learning). Recent methods of PU learning commonly assume that the labeled positive data are identically distributed as the unlabeled positive data. However, this assumption is unrealistic in many instances of PU learning because it fails to capture the existence of a selection bias in the labeling process. When the data has selection bias, it is difficult to learn the Bayes optimal classifier by conventional methods of PU learning. In this paper, we propose a method to partially identify the classifier. The proposed algorithm learns a scoring function that preserves the order induced by the class posterior under mild assumptions, which can be used as a classifier by setting an appropriate threshold. Through experiments, we show that the method outperforms previous methods for PU learning on various real-world datasets."
+    },
+    "keywords": [
+        {
+            "term": "false negatives",
+            "url": "https://en.wikipedia.org/wiki/false_negatives"
+        },
+        {
+            "term": "Plessis",
+            "url": "https://en.wikipedia.org/wiki/Plessis"
+        },
+        {
+            "term": "density ratio",
+            "url": "https://en.wikipedia.org/wiki/density_ratio"
+        },
+        {
+            "term": "false positives",
+            "url": "https://en.wikipedia.org/wiki/false_positives"
+        },
+        {
+            "term": "binary classifier",
+            "url": "https://en.wikipedia.org/wiki/binary_classifier"
+        },
+        {
+            "term": "breakeven point",
+            "url": "https://en.wikipedia.org/wiki/Breakeven_Point"
+        },
+        {
+            "term": "multilayer perceptron",
+            "url": "https://en.wikipedia.org/wiki/multilayer_perceptron"
+        },
+        {
+            "term": "Econometrics",
+            "url": "https://en.wikipedia.org/wiki/Econometrics"
+        },
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        },
+        {
+            "term": "real world",
+            "url": "https://en.wikipedia.org/wiki/real_world"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "outlier detection",
+            "url": "https://en.wikipedia.org/wiki/outlier_detection"
+        },
+        {
+            "term": "selection bias",
+            "url": "https://en.wikipedia.org/wiki/selection_bias"
+        }
+    ],
+    "abbreviations": {
+        "SCAR": "selected completely at random\u201d",
+        "TP": "true positives",
+        "TN": "true negatives",
+        "FP": "false positives",
+        "FN": "false negatives",
+        "BEP": "breakeven point",
+        "LSIF": "Least-squares importance fitting",
+        "uLSIF": "unconstrained Least-Squares Importance Fitting",
+        "s(X)": "s(X)] + Eu[",
+        "MLP": "multilayer perceptron"
+    },
+    "highlights": [
+        "We consider a situation that there are only positive and unlabeled data, and train a binary classifier only from them (PU learning)",
+        "\u201cselected completely at random\u201d (SCAR) is traditionally assumed, i.e., the positive labeled data are identically distributed as the positive unlabeled data (<a class=\"ref-link\" id=\"cElkan_2008_a\" href=\"#rElkan_2008_a\">Elkan & Noto, 2008</a>; du Plessis et al, 2015)",
+        "We proposed a novel framework for PU learning with a selection bias in positive data",
+        "We put the assumption of the invariance of order and showed the density ratio of labeled positive data and unlabeled data has the same order as the class-conditional distribution for inputs",
+        "We proposed a method based on partial identification in which we first estimate the density ratio and use it as a classifier by setting a threshold",
+        "As we showed in the experiments, our method outperforms previous PU methods on real-world data"
+    ],
+    "key_statements": [
+        "We consider a situation that there are only positive and unlabeled data, and train a binary classifier only from them (PU learning). This problem arises in various practical situations, such as information retrieval and outlier detection (<a class=\"ref-link\" id=\"cElkan_2008_a\" href=\"#rElkan_2008_a\">Elkan & Noto, 2008</a>; <a class=\"ref-link\" id=\"cWard_et+al_2009_a\" href=\"#rWard_et+al_2009_a\">Ward et al, 2009</a>; <a class=\"ref-link\" id=\"cScott_2009_a\" href=\"#rScott_2009_a\">Scott & Blanchard, 2009</a>; <a class=\"ref-link\" id=\"cBlanchard_et+al_2010_a\" href=\"#rBlanchard_et+al_2010_a\">Blanchard et al, 2010</a>; <a class=\"ref-link\" id=\"cLi_et+al_2009_a\" href=\"#rLi_et+al_2009_a\">Li et al, 2009</a>; Nguyen et al, 2011)",
+        "\u201cselected completely at random\u201d (SCAR) is traditionally assumed, i.e., the positive labeled data are identically distributed as the positive unlabeled data (<a class=\"ref-link\" id=\"cElkan_2008_a\" href=\"#rElkan_2008_a\">Elkan & Noto, 2008</a>; du Plessis et al, 2015)",
+        "There is a selection bias (<a class=\"ref-link\" id=\"cHeckman_1979_a\" href=\"#rHeckman_1979_a\">Heckman, 1979</a>; <a class=\"ref-link\" id=\"cManski_2008_a\" href=\"#rManski_2008_a\">Manski, 2008</a>; Angrist & Pischke, 2008); the distribution of the positive data may differ between the labeled data and the unlabeled data",
+        "We introduce an assumption that is weaker than selected completely at random\u201d",
+        "When there is no selection bias, we can replace the expectations with the corresponding sample averages to obtain an unbiased estimator of the classification risk",
+        "An unbiased estimator for the pseudo classification risk can be obtained by replacing the expectations with the corresponding sample averages even if there is a selection bias",
+        "In order to implement PU learning with deep neural networks, <a class=\"ref-link\" id=\"cKiryo_et+al_2017_a\" href=\"#rKiryo_et+al_2017_a\">Kiryo et al (2017</a>) proposed the following non-negative risk, f2 = arg min \u2212\u03c0Ebpias[log(f (X))] + \u03c0Epbias[log(1 \u2212 f (X))] \u2212 Eu[log(1 \u2212 f (X))] + R(f ) , f \u2208H",
+        "By using the test inputs or held-out training data, {xite}in=te1 \u223c p(x), we find \u03b8\u03c0 that satisfies",
+        "Except for the document dataset, we show the details of datasets in Table 1 and made positive data with a selection bias based on estimators of p(y = +1|x) as we show in each experiments",
+        "We proposed a novel framework for PU learning with a selection bias in positive data",
+        "We put the assumption of the invariance of order and showed the density ratio of labeled positive data and unlabeled data has the same order as the class-conditional distribution for inputs",
+        "We proposed a method based on partial identification in which we first estimate the density ratio and use it as a classifier by setting a threshold",
+        "As we showed in the experiments, our method outperforms previous PU methods on real-world data"
+    ],
+    "summary": [
+        "We consider a situation that there are only positive and unlabeled data, and train a binary classifier only from them (PU learning).",
+        "As stated by <a class=\"ref-link\" id=\"cElkan_2008_a\" href=\"#rElkan_2008_a\">Elkan & Noto (2008</a>), even if the class prior is given, we cannot estimate p(y = +1|x) only from positive data and unlabeled data without any assumption in PU learning.",
+        "In the case-control scenario, a standard assumption is SCAR, i.e. p(x|y = +1, o = +1) = p(x|y = +1, o = 0), so that p(y = +1|x) can be estimated from the data in principle.",
+        "In order to apply methods of learning from noisy labels to PU learning, we need to assume the censoring scenario and these methods cannot be applied to our problem setting based on the case-control scenario.",
+        "Our problem setting, namely the case-control scenario with invariance of order, is different from the existing works of learning from instance-dependent noisy labels.",
+        "Under the assumption of invariance of order, namely minimizing a pseudo classification risk and direct density ratio estimation.",
+        "When there is no selection bias, we can replace the expectations with the corresponding sample averages to obtain an unbiased estimator of the classification risk.",
+        "An unbiased estimator for the pseudo classification risk can be obtained by replacing the expectations with the corresponding sample averages even if there is a selection bias.",
+        "In order to implement PU learning with deep neural networks, <a class=\"ref-link\" id=\"cKiryo_et+al_2017_a\" href=\"#rKiryo_et+al_2017_a\">Kiryo et al (2017</a>) proposed the following non-negative risk, f2 = arg min \u2212\u03c0Ebpias[log(f (X))] + \u03c0Epbias[log(1 \u2212 f (X))] \u2212 Eu[log(1 \u2212 f (X))] + R(f ) , f \u2208H",
+        "Except for the document dataset, we show the details of datasets in Table 1 and made positive data with a selection bias based on estimators of p(y = +1|x) as we show in each experiments.",
+        "For the hypothesis class H in the risk minimization of PU learning (5), we use the following model with the sigmoid function: H :=",
+        "We trained a classifier by minimizing the empirical risk of PU learning (4) and the density ratio estimation (7).",
+        "For the class prior estimator, we used the KM2 method by <a class=\"ref-link\" id=\"cRamaswamy_et+al_2016_a\" href=\"#rRamaswamy_et+al_2016_a\">Ramaswamy et al (2016</a>), which is considered to be the state-of-the-art method in the case-control scenario under SCAR.",
+        "We put the assumption of the invariance of order and showed the density ratio of labeled positive data and unlabeled data has the same order as the class-conditional distribution for inputs.",
+        "We proposed a method based on partial identification in which we first estimate the density ratio and use it as a classifier by setting a threshold.",
+        "As we showed in the experiments, our method outperforms previous PU methods on real-world data"
+    ],
+    "headline": "We propose a method to partially identify the classifier",
+    "reference_links": [
+        {
+            "id": "Joshua_2008_a",
+            "entry": "Joshua D. Angrist and J\u00f6rn-Steffen Pischke. Mostly Harmless Econometrics: An Empiricist\u2019s Companion. Princeton University Press, December 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Joshua%2C%20D.%20Angrist%20and%20J%C3%B6rn-Steffen%20Pischke.%20Mostly%20Harmless%20Econometrics%3A%20An%20Empiricist%E2%80%99s%20Companion%202008-12"
+        },
+        {
+            "id": "Bekker_2018_a",
+            "entry": "Jessa Bekker and Jesse Davis. Learning from positive and unlabeled data under the selected at random assumption. In Proceedings of the Second International Workshop on Learning with Imbalanced Domains: Theory and Applications, volume 94 of Proceedings of Machine Learning Research, pp. 8\u201322. PMLR, 10 Sep 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bekker%2C%20Jessa%20Davis%2C%20Jesse%20Learning%20from%20positive%20and%20unlabeled%20data%20under%20the%20selected%20at%20random%20assumption%202018-09-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bekker%2C%20Jessa%20Davis%2C%20Jesse%20Learning%20from%20positive%20and%20unlabeled%20data%20under%20the%20selected%20at%20random%20assumption%202018-09-10"
+        },
+        {
+            "id": "Bekker_0000_a",
+            "entry": "Jessa Bekker and Jesse Davis. Beyond the selected completely at random assumption for learning from positive and unlabeled data. arXiv:1809.03207, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.03207"
+        },
+        {
+            "id": "Blanchard_et+al_2010_a",
+            "entry": "Gilles Blanchard, Gyemin Lee, and Clayton Scott. Semi-supervised novelty detection. Journal of Machine Learning Research, 11(Nov):2973\u20133009, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blanchard%2C%20Gilles%20Lee%2C%20Gyemin%20Scott%2C%20Clayton%20Semi-supervised%20novelty%20detection%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blanchard%2C%20Gilles%20Lee%2C%20Gyemin%20Scott%2C%20Clayton%20Semi-supervised%20novelty%20detection%202010"
+        },
+        {
+            "id": "Boeckmann_et+al_2003_a",
+            "entry": "Brigitte Boeckmann, Amos Bairoch, Rolf Apweiler, Marie-Claude Blatter, Anne Estreicher, Elisabeth Gasteiger, Maria J Martin, Karine Michoud, Claire O\u2019donovan, Isabelle Phan, et al. The SWISSPROT protein knowledgebase and its supplement trembl in 2003. Nucleic acids research, 31(1): 365\u2013370, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brigitte%20Boeckmann%20Amos%20Bairoch%20Rolf%20Apweiler%20MarieClaude%20Blatter%20Anne%20Estreicher%20Elisabeth%20Gasteiger%20Maria%20J%20Martin%20Karine%20Michoud%20Claire%20Odonovan%20Isabelle%20Phan%20et%20al%20The%20SWISSPROT%20protein%20knowledgebase%20and%20its%20supplement%20trembl%20in%202003%20Nucleic%20acids%20research%20311%20365370%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brigitte%20Boeckmann%20Amos%20Bairoch%20Rolf%20Apweiler%20MarieClaude%20Blatter%20Anne%20Estreicher%20Elisabeth%20Gasteiger%20Maria%20J%20Martin%20Karine%20Michoud%20Claire%20Odonovan%20Isabelle%20Phan%20et%20al%20The%20SWISSPROT%20protein%20knowledgebase%20and%20its%20supplement%20trembl%20in%202003%20Nucleic%20acids%20research%20311%20365370%202003"
+        },
+        {
+            "id": "Bootkrajang_2016_a",
+            "entry": "Jakramate Bootkrajang. A generalised label noise model for classification in the presence of annotation errors. Neurocomputing, 192(C):61\u201371, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bootkrajang%2C%20Jakramate%20A%20generalised%20label%20noise%20model%20for%20classification%20in%20the%20presence%20of%20annotation%20errors%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bootkrajang%2C%20Jakramate%20A%20generalised%20label%20noise%20model%20for%20classification%20in%20the%20presence%20of%20annotation%20errors%202016"
+        },
+        {
+            "id": "Du_2015_a",
+            "entry": "Jun Du and Zhihua Cai. Modelling class noise with symmetric and asymmetric distributions. In AAAI Conference on Artificial Intelligence, AAAI\u201915, pp. 2589\u20132595. AAAI Press, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Du%2C%20Jun%20Cai%2C%20Zhihua%20Modelling%20class%20noise%20with%20symmetric%20and%20asymmetric%20distributions%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Du%2C%20Jun%20Cai%2C%20Zhihua%20Modelling%20class%20noise%20with%20symmetric%20and%20asymmetric%20distributions%202015"
+        },
+        {
+            "id": "Du_et+al_2014_a",
+            "entry": "M. C. du Plessis, Gang. Niu, and Masashi Sugiyama. Analysis of learning from positive and unlabeled data. In NIPS, pp. 703\u2013711, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=du%20Plessis%2C%20M.C.%20Niu%2C%20Gang%20Sugiyama%2C%20Masashi%20Analysis%20of%20learning%20from%20positive%20and%20unlabeled%20data%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=du%20Plessis%2C%20M.C.%20Niu%2C%20Gang%20Sugiyama%2C%20Masashi%20Analysis%20of%20learning%20from%20positive%20and%20unlabeled%20data%202014"
+        },
+        {
+            "id": "Du_2014_b",
+            "entry": "Marthinus Christoffel du Plessis and Masashi Sugiyama. Class prior estimation from positive and unlabeled data. IEICE Transactions on Information and Systems, E97-D(5):1358\u20131362, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=du%20Plessis%2C%20Marthinus%20Christoffel%20Sugiyama%2C%20Masashi%20Class%20prior%20estimation%20from%20positive%20and%20unlabeled%20data%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=du%20Plessis%2C%20Marthinus%20Christoffel%20Sugiyama%2C%20Masashi%20Class%20prior%20estimation%20from%20positive%20and%20unlabeled%20data%202014"
+        },
+        {
+            "id": "Du_et+al_2015_b",
+            "entry": "Marthinus Christoffel du Plessis, Gang. Niu, and Masashi Sugiyama. Convex formulation for learning from positive and unlabeled data. In ICML, pp. 1386\u20131394, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=du%20Plessis%2C%20Marthinus%20Christoffel%20Niu%2C%20Gang%20Sugiyama%2C%20Masashi%20Convex%20formulation%20for%20learning%20from%20positive%20and%20unlabeled%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=du%20Plessis%2C%20Marthinus%20Christoffel%20Niu%2C%20Gang%20Sugiyama%2C%20Masashi%20Convex%20formulation%20for%20learning%20from%20positive%20and%20unlabeled%20data%202015"
+        },
+        {
+            "id": "Du_et+al_2016_a",
+            "entry": "Marthinus Christoffel du Plessis, Gang Niu, and Masashi Sugiyama. Class-prior estimation for learning from positive and unlabeled data. In ACML, pp. 221\u2013236, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=du%20Plessis%2C%20Marthinus%20Christoffel%20Niu%2C%20Gang%20Sugiyama%2C%20Masashi%20Class-prior%20estimation%20for%20learning%20from%20positive%20and%20unlabeled%20data%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=du%20Plessis%2C%20Marthinus%20Christoffel%20Niu%2C%20Gang%20Sugiyama%2C%20Masashi%20Class-prior%20estimation%20for%20learning%20from%20positive%20and%20unlabeled%20data%202016"
+        },
+        {
+            "id": "Elkan_2008_a",
+            "entry": "Charles Elkan and Keith Noto. Learning classifiers from only positive and unlabeled data. In ICDM, pp. 213\u2013220, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elkan%2C%20Charles%20Noto%2C%20Keith%20Learning%20classifiers%20from%20only%20positive%20and%20unlabeled%20data%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elkan%2C%20Charles%20Noto%2C%20Keith%20Learning%20classifiers%20from%20only%20positive%20and%20unlabeled%20data%202008"
+        },
+        {
+            "id": "Heckman_1979_a",
+            "entry": "James Heckman. Sample selection bias as a specification error. Econometrica, 47(1):153\u201361, 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heckman%2C%20James%20Sample%20selection%20bias%20as%20a%20specification%20error%201979",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heckman%2C%20James%20Sample%20selection%20bias%20as%20a%20specification%20error%201979"
+        },
+        {
+            "id": "Hido_et+al_2011_a",
+            "entry": "Shohei Hido, Yuta Tsuboi, Hisashi Kashima, Masashi Sugiyama, and Takafumi Kanamori. Statistical outlier detection using direct density ratio estimation. Knowledge and Information Systems, 26(2): 309\u2013336, Feb 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hido%2C%20Shohei%20Tsuboi%2C%20Yuta%20Kashima%2C%20Hisashi%20Sugiyama%2C%20Masashi%20Statistical%20outlier%20detection%20using%20direct%20density%20ratio%20estimation%202011-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hido%2C%20Shohei%20Tsuboi%2C%20Yuta%20Kashima%2C%20Hisashi%20Sugiyama%2C%20Masashi%20Statistical%20outlier%20detection%20using%20direct%20density%20ratio%20estimation%202011-02"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In ICML, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Jain_et+al_2016_a",
+            "entry": "Shantanu Jain, Martha White, Michael W Trosset, and Predrag Radivojac. Nonparametric semisupervised learning of class proportions. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jain%2C%20Shantanu%20White%2C%20Martha%20Trosset%2C%20Michael%20W.%20Radivojac%2C%20Predrag%20Nonparametric%20semisupervised%20learning%20of%20class%20proportions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jain%2C%20Shantanu%20White%2C%20Martha%20Trosset%2C%20Michael%20W.%20Radivojac%2C%20Predrag%20Nonparametric%20semisupervised%20learning%20of%20class%20proportions%202016"
+        },
+        {
+            "id": "Kanamori_et+al_2009_a",
+            "entry": "Takafumi. Kanamori, Shohei Hido, and Masashi Sugiyama. A least-squares approach to direct importance estimation. Journal of Machine Learning Research, 10(Jul.):1391\u20131445, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kanamori%2C%20Takafumi%20Hido%2C%20Shohei%20Sugiyama%2C%20Masashi%20A%20least-squares%20approach%20to%20direct%20importance%20estimation%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kanamori%2C%20Takafumi%20Hido%2C%20Shohei%20Sugiyama%2C%20Masashi%20A%20least-squares%20approach%20to%20direct%20importance%20estimation%202009"
+        },
+        {
+            "id": "Kato_et+al_2018_a",
+            "entry": "Masahiro Kato, Liyuan Xu, Gang Niu, and Masashi Sugiyama. Alternate estimation of a classifier and the class-prior from positive and unlabeled data. arXiv:1809.05710, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.05710"
+        },
+        {
+            "id": "Kiryo_et+al_2017_a",
+            "entry": "Ryuichi Kiryo, Gang Niu, Marthinus Christoffel du Plessis, and Masashi Sugiyama. Positiveunlabeled learning with non-negative risk estimator. In NIPS, pp. 1675\u20131685, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kiryo%2C%20Ryuichi%20Niu%2C%20Gang%20du%20Plessis%2C%20Marthinus%20Christoffel%20Sugiyama%2C%20Masashi%20Positiveunlabeled%20learning%20with%20non-negative%20risk%20estimator%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kiryo%2C%20Ryuichi%20Niu%2C%20Gang%20du%20Plessis%2C%20Marthinus%20Christoffel%20Sugiyama%2C%20Masashi%20Positiveunlabeled%20learning%20with%20non-negative%20risk%20estimator%202017"
+        },
+        {
+            "id": "Li_et+al_2009_a",
+            "entry": "Xiao-Li Li, Philip S Yu, Bing Liu, and See-Kiong Ng. Positive unlabeled learning for data stream classification. In ICDM, pp. 259\u2013270, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Xiao-Li%20Yu%2C%20Philip%20S.%20Liu%2C%20Bing%20and%20See-Kiong%20Ng.%20Positive%20unlabeled%20learning%20for%20data%20stream%20classification%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Xiao-Li%20Yu%2C%20Philip%20S.%20Liu%2C%20Bing%20and%20See-Kiong%20Ng.%20Positive%20unlabeled%20learning%20for%20data%20stream%20classification%202009"
+        },
+        {
+            "id": "Lipton_et+al_2014_a",
+            "entry": "Zachary C. Lipton, Charles Elkan, and Balakrishnan Naryanaswamy. Optimal thresholding of classifiers to maximize F1 measure. In Machine Learning and Knowledge Discovery in Databases, pp. 225\u2013239, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lipton%2C%20Zachary%20C.%20Elkan%2C%20Charles%20Naryanaswamy%2C%20Balakrishnan%20Optimal%20thresholding%20of%20classifiers%20to%20maximize%20F1%20measure%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lipton%2C%20Zachary%20C.%20Elkan%2C%20Charles%20Naryanaswamy%2C%20Balakrishnan%20Optimal%20thresholding%20of%20classifiers%20to%20maximize%20F1%20measure%202014"
+        },
+        {
+            "id": "Manski_2008_a",
+            "entry": "Charles Manski. Partial Identification in Econometrics. Palgrave-Macmillan, 2 edition, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Manski%2C%20Charles%20Partial%20Identification%20in%20Econometrics%202008"
+        },
+        {
+            "id": "Marlin_2009_a",
+            "entry": "Benjamin M. Marlin and Richard S. Zemel. Collaborative prediction and ranking with non-random missing data. In ACM Conference on Recommender Systems, RecSys \u201909, pp. 5\u201312, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marlin%2C%20Benjamin%20M.%20Zemel%2C%20Richard%20S.%20Collaborative%20prediction%20and%20ranking%20with%20non-random%20missing%20data%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marlin%2C%20Benjamin%20M.%20Zemel%2C%20Richard%20S.%20Collaborative%20prediction%20and%20ranking%20with%20non-random%20missing%20data%202009"
+        },
+        {
+            "id": "Nair_2010_a",
+            "entry": "Vinod Nair and Geoffrey E. Hinton. Rectified linear units improve restricted boltzmann machines. In ICML, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Nguyen_2011_a",
+            "entry": "Minh Nhut Nguyen, Xiaoli-Li Li, and See-Kiong Ng. Positive unlabeled leaning for time series classification. In IJCAI, pp. 1421\u20131426, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20Minh%20Nhut%20Li%2C%20Xiaoli-Li%20and%20See-Kiong%20Ng.%20Positive%20unlabeled%20leaning%20for%20time%20series%20classification%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Minh%20Nhut%20Li%2C%20Xiaoli-Li%20and%20See-Kiong%20Ng.%20Positive%20unlabeled%20leaning%20for%20time%20series%20classification%202011"
+        },
+        {
+            "id": "Sakai_2016_a",
+            "entry": "Sakai, Y. Ma, and Masashi Sugiyama. Theoretical comparisons of positive-unlabeled learning against positive-negative learning. In NIP, pp. 1199\u20131207, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sakai%2C%20Y.Ma%20Sugiyama%2C%20Masashi%20Theoretical%20comparisons%20of%20positive-unlabeled%20learning%20against%20positive-negative%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sakai%2C%20Y.Ma%20Sugiyama%2C%20Masashi%20Theoretical%20comparisons%20of%20positive-unlabeled%20learning%20against%20positive-negative%20learning%202016"
+        },
+        {
+            "id": "Powers_0000_a",
+            "entry": "David M. W. Powers. Visualization of tradeoff in evaluation: from precision-recall & PN to LIFT, ROC & BIRD. arXiv:1505.00401, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1505.00401"
+        },
+        {
+            "id": "Ramaswamy_et+al_2016_a",
+            "entry": "Harish Ramaswamy, Clayton Scott, and Ambuj Tewari. Mixture proportion estimation via kernel embeddings of distributions. In ICML, pp. 2052\u20132060, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ramaswamy%2C%20Harish%20Scott%2C%20Clayton%20Tewari%2C%20Ambuj%20Mixture%20proportion%20estimation%20via%20kernel%20embeddings%20of%20distributions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ramaswamy%2C%20Harish%20Scott%2C%20Clayton%20Tewari%2C%20Ambuj%20Mixture%20proportion%20estimation%20via%20kernel%20embeddings%20of%20distributions%202016"
+        },
+        {
+            "id": "Sammut_0000_a",
+            "entry": "Claude Sammut and Geoffrey I. Webb (eds.). Breakeven Point, pp. 137\u2013138.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sammut%2C%20Claude%20I%2C%20Geoffrey%20Webb%20%28eds.%29.%20Breakeven%20Point"
+        },
+        {
+            "id": "Springer_2010_a",
+            "entry": "Springer US, Boston, MA, 2010. ISBN 978-0-387-30164-8. doi: 10.1007/978-0-387-30164-8_88.",
+            "crossref": "https://dx.doi.org/10.1007/978-0-387-30164-8_88"
+        },
+        {
+            "id": "Schnabel_et+al_2016_a",
+            "entry": "Tobias Schnabel, Adith Swaminathan, Ashudeep Singh, Navin Chandak, and Thorsten Joachims. Recommendations as treatments: Debiasing learning and evaluation. In ICML, volume 48, pp. 1670\u20131679, New York, New York, USA, 20\u201322 Jun 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schnabel%2C%20Tobias%20Swaminathan%2C%20Adith%20Singh%2C%20Ashudeep%20Chandak%2C%20Navin%20Recommendations%20as%20treatments%3A%20Debiasing%20learning%20and%20evaluation%202016-06-20",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schnabel%2C%20Tobias%20Swaminathan%2C%20Adith%20Singh%2C%20Ashudeep%20Chandak%2C%20Navin%20Recommendations%20as%20treatments%3A%20Debiasing%20learning%20and%20evaluation%202016-06-20"
+        },
+        {
+            "id": "Scott_2009_a",
+            "entry": "Clayton Scott and Gilles Blanchard. Novelty detection: Unlabeled data definitely help. In AISTATS, pp. 464\u2013471, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scott%2C%20Clayton%20Blanchard%2C%20Gilles%20Novelty%20detection%3A%20Unlabeled%20data%20definitely%20help%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scott%2C%20Clayton%20Blanchard%2C%20Gilles%20Novelty%20detection%3A%20Unlabeled%20data%20definitely%20help%202009"
+        },
+        {
+            "id": "Springenberg_et+al_2015_a",
+            "entry": "J.T. Springenberg, A. Dosovitskiy, T. Brox, and M. Riedmiller. Striving for simplicity: The all convolutional net. In ICLR (workshop track), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Springenberg%2C%20J.T.%20Dosovitskiy%2C%20A.%20Brox%2C%20T.%20Riedmiller%2C%20M.%20Striving%20for%20simplicity%3A%20The%20all%20convolutional%20net%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Springenberg%2C%20J.T.%20Dosovitskiy%2C%20A.%20Brox%2C%20T.%20Riedmiller%2C%20M.%20Striving%20for%20simplicity%3A%20The%20all%20convolutional%20net%202015"
+        },
+        {
+            "id": "Sugiyama_et+al_2012_a",
+            "entry": "Masashi Sugiyama, Taiji Suzuki, and Takafumi Kanamori. Density Ratio Estimation in Machine Learning. Cambridge University Press, New York, NY, USA, 1st edition, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sugiyama%2C%20Masashi%20Suzuki%2C%20Taiji%20Kanamori%2C%20Takafumi%20Density%20Ratio%20Estimation%20in%20Machine%20Learning%202012"
+        },
+        {
+            "id": "Ward_et+al_2009_a",
+            "entry": "Gill Ward, Trevor Hastie, Simon Barry, Jane Elith, and John R Leathwick. Presence-only data and the em algorithm. Biometrics, 65(2):554\u2013563, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ward%2C%20Gill%20Hastie%2C%20Trevor%20Barry%2C%20Simon%20Elith%2C%20Jane%20Presence-only%20data%20and%20the%20em%20algorithm%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ward%2C%20Gill%20Hastie%2C%20Trevor%20Barry%2C%20Simon%20Elith%2C%20Jane%20Presence-only%20data%20and%20the%20em%20algorithm%202009"
+        },
+        {
+            "id": "1",
+            "entry": "1. If we assume \u03bb = \u03bc = 0, then the KKT condition is reduced to z\u2217",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=If%20we%20assume%20%CE%BB%20%20%CE%BC%20%200%20then%20the%20KKT%20condition%20is%20reduced%20to%20z"
+        },
+        {
+            "id": "2",
+            "entry": "2. If we assume \u03bb > 0 and \u03bc = 0, the KKT condition is reduced to z\u2217 = 1 \u2212, (1 \u2212 )p(x) \u2212 \u03c0p(x|y = +1, o = +1)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=If%20we%20assume%20%CE%BB%20%200%20and%20%CE%BC%20%200%20the%20KKT%20condition%20is%20reduced%20to%20z%20%201%20%201%20%20px%20%20%CF%80pxy%20%201%20o%20%201",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=If%20we%20assume%20%CE%BB%20%200%20and%20%CE%BC%20%200%20the%20KKT%20condition%20is%20reduced%20to%20z%20%201%20%201%20%20px%20%20%CF%80pxy%20%201%20o%20%201"
+        },
+        {
+            "id": "3",
+            "entry": "3. If we assume \u03bb = 0 and \u03bc > 0, the KKT condition is reduced to z\u2217 =, p(x) \u2212 \u03c0p(x|y = +1, o = +1)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=If%20we%20assume%20%CE%BB%20%200%20and%20%CE%BC%20%200%20the%20KKT%20condition%20is%20reduced%20to%20z%20%20px%20%20%CF%80pxy%20%201%20o%20%201"
+        },
+        {
+            "id": "4",
+            "entry": "4. If \u03bb, \u03bc > 0, there is no feasible solution. D NETWORK STRUCTURE USED IN SECTIONS 5.2 AND SECTIONS 5.3 In Section 5.2, we used the MNIST and CIFAR-10 datasets. The model for the MNIST dataset was a 3-layer multilayer perceptron (MLP) with ReLU (Nair & Hinton, 2010) (more specifically, 784-100-1). The model for the CIFAR-10 dataset was an all convolutional net (Springenberg et al., 2015): (32 \u00d7 32 \u00d7 3)-[C(3 \u00d7 3, 96)] \u00d7 2-C(3 \u00d7 3, 96, 2)-[C(3 \u00d7 3, 192)] \u00d7 2-C(3 \u00d7 3, 192, 2)-C(3 \u00d7 3, 192)-C(1 \u00d7 1, 192)-C(1 \u00d7 1, 10)-1000-1000-1, where the input is a 32 \u00d7 32 RGB image, C(3 \u00d7 3, 96) means 96 channels of 3 \u00d7 3 convolutions followed by ReLU, [\u00b7] \u00d7 2 means there are two such layers, C(3 \u00d7 3, 96, 2) means a similar layer but with stride 2, etc.; it is one of the best architectures for CIFAR-10. Batch normalization (Ioffe & Szegedy, 2015) was applied before hidden layers. In Section 5.3, the model for this dataset was a 5-layer multilayer perceptron (MLP) with ReLU (more specifically, 78894-300-300-300-300-1).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=If%20%CE%BB%20%CE%BC%20%200%20there%20is%20no%20feasible%20solution%20D%20NETWORK%20STRUCTURE%20USED%20IN%20SECTIONS%2052%20AND%20SECTIONS%2053%20In%20Section%2052%20we%20used%20the%20MNIST%20and%20CIFAR10%20datasets%20The%20model%20for%20the%20MNIST%20dataset%20was%20a%203layer%20multilayer%20perceptron%20MLP%20with%20ReLU%20Nair%20%20Hinton%202010%20more%20specifically%207841001%20The%20model%20for%20the%20CIFAR10%20dataset%20was%20an%20all%20convolutional%20net%20Springenberg%20et%20al%202015%2032%20%2032%20%203C3%20%203%2096%20%202C3%20%203%2096%202C3%20%203%20192%20%202C3%20%203%20192%202C3%20%203%20192C1%20%201%20192C1%20%201%2010100010001%20where%20the%20input%20is%20a%2032%20%2032%20RGB%20image%20C3%20%203%2096%20means%2096%20channels%20of%203%20%203%20convolutions%20followed%20by%20ReLU%20%20%202%20means%20there%20are%20two%20such%20layers%20C3%20%203%2096%202%20means%20a%20similar%20layer%20but%20with%20stride%202%20etc%20it%20is%20one%20of%20the%20best%20architectures%20for%20CIFAR10%20Batch%20normalization%20Ioffe%20%20Szegedy%202015%20was%20applied%20before%20hidden%20layers%20In%20Section%2053%20the%20model%20for%20this%20dataset%20was%20a%205layer%20multilayer%20perceptron%20MLP%20with%20ReLU%20more%20specifically%20788943003003003001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=If%20%CE%BB%20%CE%BC%20%200%20there%20is%20no%20feasible%20solution%20D%20NETWORK%20STRUCTURE%20USED%20IN%20SECTIONS%2052%20AND%20SECTIONS%2053%20In%20Section%2052%20we%20used%20the%20MNIST%20and%20CIFAR10%20datasets%20The%20model%20for%20the%20MNIST%20dataset%20was%20a%203layer%20multilayer%20perceptron%20MLP%20with%20ReLU%20Nair%20%20Hinton%202010%20more%20specifically%207841001%20The%20model%20for%20the%20CIFAR10%20dataset%20was%20an%20all%20convolutional%20net%20Springenberg%20et%20al%202015%2032%20%2032%20%203C3%20%203%2096%20%202C3%20%203%2096%202C3%20%203%20192%20%202C3%20%203%20192%202C3%20%203%20192C1%20%201%20192C1%20%201%2010100010001%20where%20the%20input%20is%20a%2032%20%2032%20RGB%20image%20C3%20%203%2096%20means%2096%20channels%20of%203%20%203%20convolutions%20followed%20by%20ReLU%20%20%202%20means%20there%20are%20two%20such%20layers%20C3%20%203%2096%202%20means%20a%20similar%20layer%20but%20with%20stride%202%20etc%20it%20is%20one%20of%20the%20best%20architectures%20for%20CIFAR10%20Batch%20normalization%20Ioffe%20%20Szegedy%202015%20was%20applied%20before%20hidden%20layers%20In%20Section%2053%20the%20model%20for%20this%20dataset%20was%20a%205layer%20multilayer%20perceptron%20MLP%20with%20ReLU%20more%20specifically%20788943003003003001"
+        }
+    ]
+}

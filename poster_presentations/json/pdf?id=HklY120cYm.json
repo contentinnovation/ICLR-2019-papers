@@ -1,0 +1,243 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Deconvolution and Checkerboard Artifacts",
+        "author": "Augustus Odena, Vincent Dumoulin, Chris Olah",
+        "date": 2017,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HklY120cYm",
+            "doi": "10.23915/distill.00003"
+        },
+        "journal": "Distill",
+        "volume": "1",
+        "abstract": "In this work, we propose a new solution for parallel wave generation by WaveNet. In contrast to parallel WaveNet (van den Oord et al., 2018), we distill a Gaussian inverse autoregressive flow from the autoregressive WaveNet by minimizing a regularized KL divergence between their highly-peaked output distributions. Our method computes the KL divergence in closed-form, which simplifies the training algorithm and provides very efficient distillation. In addition, we introduce the first text-to-wave neural architecture for speech synthesis, which is fully convolutional and enables fast end-to-end training from scratch. It significantly outperforms the previous pipeline that connects a text-to-spectrogram model to a separately trained WaveNet (<a class=\"ref-link\" id=\"cPing_et+al_2018_a\" href=\"#rPing_et+al_2018_a\">Ping et al., 2018</a>). We also successfully distill a parallel waveform synthesizer conditioned on the hidden representation in this end-to-end model. 1"
+    },
+    "keywords": [
+        {
+            "term": "high fidelity",
+            "url": "https://en.wikipedia.org/wiki/high_fidelity"
+        },
+        {
+            "term": "maximum likelihood estimation",
+            "url": "https://en.wikipedia.org/wiki/maximum_likelihood_estimation"
+        },
+        {
+            "term": "speech synthesis",
+            "url": "https://en.wikipedia.org/wiki/speech_synthesis"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "mean opinion score",
+            "url": "https://en.wikipedia.org/wiki/mean_opinion_score"
+        },
+        {
+            "term": "mixture of Gaussians",
+            "url": "https://en.wikipedia.org/wiki/mixture_of_Gaussians"
+        }
+    ],
+    "abbreviations": {
+        "MoL": "mixture of Logistics",
+        "IAF": "inverse autoregressive flow",
+        "MLE": "maximum likelihood estimation",
+        "STFT": "short-term Fourier transform",
+        "DV3": "Deep Voice 3",
+        "GLU": "gated linear unit",
+        "MoG": "mixture of Gaussians",
+        "MOS": "mean opinion score",
+        "CLL": "conditional log-likelihoods"
+    },
+    "highlights": [
+        "Called text-to-speech (TTS), is traditionally done with complex multi-stage hand-engineered pipelines (Taylor, 2009)",
+        "We propose a novel parallel wave generation method based on the Gaussian inverse autoregressive flow",
+        "We first demonstrate that a single Gaussian output distribution is sufficient for modeling the raw waveform in WaveNet without degeneration of audio quality",
+        "We propose a parallel wave generation method based on Gaussian inverse autoregressive flow (IAF), in which the inverse autoregressive flow is distilled from the autoregressive WaveNet by minimizing a regularized KL divergence for highly peaked distributions",
+        "We propose the first text-to-wave neural architecture for TTS, which can be trained from scratch in an end-to-end manner",
+        "We demonstrate appealing results by distilling a parallel neural vocoder conditioned on the hidden representation within the end-to-end model"
+    ],
+    "key_statements": [
+        "Called text-to-speech (TTS), is traditionally done with complex multi-stage hand-engineered pipelines (Taylor, 2009)",
+        "We propose a novel parallel wave generation method based on the Gaussian inverse autoregressive flow",
+        "We demonstrate that a single variance-bounded Gaussian is sufficient for modeling the raw waveform in WaveNet without degradation of audio quality",
+        "We propose the parallel wave generation method in Section 3, and present the text-to-wave architecture in Section 4",
+        "We propose the first text-to-wave neural architecture for TTS based on Deep Voice 3 (<a class=\"ref-link\" id=\"cPing_et+al_2018_a\" href=\"#rPing_et+al_2018_a\">Ping et al, 2018</a>)",
+        "We demonstrate that a single Gaussian output distribution for WaveNet suffices to model the raw waveform",
+        "We found that training student inverse autoregressive flow with KL divergence loss alone will lead to whisper voices. van den Oord et al (2018) advocates the average power loss to solve this issue, which is coupled with the short length of training audio clip (i.e. 0.32s) in their experiments",
+        "When the whole model is trained from scratch, we found it performs slightly worse than the separate training pipeline",
+        "Vocoder: A Gaussian autoregressive WaveNet to synthesize the waveform, which is conditioned on the upsampled hidden representation from the bridge-net",
+        "We find that normalizing log-mel spectrogram to the range of [0, 1] improves the synthesized audio quality (e.g., Yamamoto, 2018)",
+        "We train 20-layers WaveNets conditioned on ground-truth log-mel spectrogram with various output distributions, including single Gaussian, 10-component mixture of Gaussians (MoG), 10-component mixture of Logistics (MoL), and softmax with 2048 linearly quantized channels",
+        "All models share the same architecture except the output distributions, and they are trained for 1000K steps using the Adam optimizer (Kingma and Ba, 2015) with batch-size 8 and 0.5s audio clips",
+        "We report the mean opinion score (MOS) for naturalness evaluation in Table 1",
+        "We include the conditional log-likelihoods (CLL) on test audios for continuous output WaveNets, where the Gaussian, mixture of Gaussians, and mixture of Logistics are trained with the same clipping constant \u22129",
+        "Training conditioner network of student model from scratch leads to worse result. We test both the forward and reverse KL divergences combined with the short-term Fourier transform-loss, and we set their combination coefficients to one in all experiments",
+        "We first demonstrate that a single Gaussian output distribution is sufficient for modeling the raw waveform in WaveNet without degeneration of audio quality",
+        "We propose a parallel wave generation method based on Gaussian inverse autoregressive flow (IAF), in which the inverse autoregressive flow is distilled from the autoregressive WaveNet by minimizing a regularized KL divergence for highly peaked distributions",
+        "We propose the first text-to-wave neural architecture for TTS, which can be trained from scratch in an end-to-end manner",
+        "We demonstrate appealing results by distilling a parallel neural vocoder conditioned on the hidden representation within the end-to-end model"
+    ],
+    "summary": [
+        "Called text-to-speech (TTS), is traditionally done with complex multi-stage hand-engineered pipelines (Taylor, 2009).",
+        "To backpropagate through random samples during distillation, parallel WaveNet employs the mixture of logistics (MoL) distribution (<a class=\"ref-link\" id=\"cSalimans_et+al_2017_a\" href=\"#rSalimans_et+al_2017_a\">Salimans et al, 2017</a>) as the output distribution for teacher WaveNet, and a logistic distribution based inverse autoregressive flow (IAF) (<a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a>) as the student model.",
+        "2. We distill a Gaussian IAF from the autoregressive WaveNet by minimizing a regularized KL divergence between their peaked output distributions.",
+        "We distill a Gaussian IAF from a pretrained autoregressive generative model by minimizing a numerically stable variant of KL divergence.",
+        "We demonstrate that a single Gaussian output distribution for WaveNet suffices to model the raw waveform.",
+        "Vocoder: A Gaussian autoregressive WaveNet to synthesize the waveform, which is conditioned on the upsampled hidden representation from the bridge-net.",
+        "Data: We use an internal English speech dataset containing about 20 hours of audio from a female speaker with a sampling rate of 48 kHz. We downsample the audios to 24 kHz. Autoregressive WaveNet: We first show that a single Gaussian output distribution for autoregressive WaveNet suffices to model the raw waveform.",
+        "We train 20-layers WaveNets conditioned on ground-truth log-mel spectrogram with various output distributions, including single Gaussian, 10-component mixture of Gaussians (MoG), 10-component mixture of Logistics (MoL), and softmax with 2048 linearly quantized channels.",
+        "We set the filter size of dilated convolutions to 2 for teacher WaveNet. All models share the same architecture except the output distributions, and they are trained for 1000K steps using the Adam optimizer (Kingma and Ba, 2015) with batch-size 8 and 0.5s audio clips.",
+        "We include the conditional log-likelihoods (CLL) on test audios for continuous output WaveNets, where the Gaussian, MoG, and MoL are trained with the same clipping constant \u22129.",
+        "We first demonstrate that a single Gaussian output distribution is sufficient for modeling the raw waveform in WaveNet without degeneration of audio quality.",
+        "We propose a parallel wave generation method based on Gaussian inverse autoregressive flow (IAF), in which the IAF is distilled from the autoregressive WaveNet by minimizing a regularized KL divergence for highly peaked distributions.",
+        "In contrast to parallel WaveNet, our distillation algorithm estimates the KL divergence in closed-form and largely stabilizes the training procedure.",
+        "We demonstrate appealing results by distilling a parallel neural vocoder conditioned on the hidden representation within the end-to-end model."
+    ],
+    "headline": "We propose a new solution for parallel wave generation by WaveNet",
+    "reference_links": [
+        {
+            "id": "Ar_et+al_2017_a",
+            "entry": "S. O. Ar\u0131k, M. Chrzanowski, A. Coates, G. Diamos, A. Gibiansky, Y. Kang, X. Li, J. Miller, J. Raiman, S. Sengupta, and M. Shoeybi. Deep Voice: Real-time neural text-to-speech. In ICML, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%20O%20Ar%C4%B1k%20M%20Chrzanowski%20A%20Coates%20G%20Diamos%20A%20Gibiansky%20Y%20Kang%20X%20Li%20J%20Miller%20J%20Raiman%20S%20Sengupta%20and%20M%20Shoeybi%20Deep%20Voice%20Realtime%20neural%20texttospeech%20In%20ICML%202017a",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%20O%20Ar%C4%B1k%20M%20Chrzanowski%20A%20Coates%20G%20Diamos%20A%20Gibiansky%20Y%20Kang%20X%20Li%20J%20Miller%20J%20Raiman%20S%20Sengupta%20and%20M%20Shoeybi%20Deep%20Voice%20Realtime%20neural%20texttospeech%20In%20ICML%202017a"
+        },
+        {
+            "id": "Ar_et+al_2017_b",
+            "entry": "S. O. Ar\u0131k, G. Diamos, A. Gibiansky, J. Miller, K. Peng, W. Ping, J. Raiman, and Y. Zhou. Deep Voice 2: Multi-speaker neural text-to-speech. In NIPS, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%20O%20Ar%C4%B1k%20G%20Diamos%20A%20Gibiansky%20J%20Miller%20K%20Peng%20W%20Ping%20J%20Raiman%20and%20Y%20Zhou%20Deep%20Voice%202%20Multispeaker%20neural%20texttospeech%20In%20NIPS%202017b",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%20O%20Ar%C4%B1k%20G%20Diamos%20A%20Gibiansky%20J%20Miller%20K%20Peng%20W%20Ping%20J%20Raiman%20and%20Y%20Zhou%20Deep%20Voice%202%20Multispeaker%20neural%20texttospeech%20In%20NIPS%202017b"
+        },
+        {
+            "id": "Bahdanau_et+al_2015_a",
+            "entry": "D. Bahdanau, K. Cho, and Y. Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bahdanau%2C%20D.%20Cho%2C%20K.%20Bengio%2C%20Y.%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bahdanau%2C%20D.%20Cho%2C%20K.%20Bengio%2C%20Y.%20Neural%20machine%20translation%20by%20jointly%20learning%20to%20align%20and%20translate%202015"
+        },
+        {
+            "id": "Bucilua_et+al_2006_a",
+            "entry": "C. Bucilua, R. Caruana, and A. Niculescu-Mizil. Model compression. In ACM SIGKDD, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bucilua%2C%20C.%20Caruana%2C%20R.%20Niculescu-Mizil%2C%20A.%20Model%20compression%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bucilua%2C%20C.%20Caruana%2C%20R.%20Niculescu-Mizil%2C%20A.%20Model%20compression%202006"
+        },
+        {
+            "id": "Chung_et+al_2015_a",
+            "entry": "J. Chung, K. Kastner, L. Dinh, K. Goel, A. C. Courville, and Y. Bengio. A recurrent latent variable model for sequential data. In NIPS, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20J.%20Kastner%2C%20K.%20Dinh%2C%20L.%20Goel%2C%20K.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20J.%20Kastner%2C%20K.%20Dinh%2C%20L.%20Goel%2C%20K.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015"
+        },
+        {
+            "id": "Dinh_et+al_2014_a",
+            "entry": "L. Dinh, D. Krueger, and Y. Bengio. NICE: Non-linear independent components estimation. arXiv preprint arXiv:1410.8516, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1410.8516"
+        },
+        {
+            "id": "Dinh_et+al_1984_a",
+            "entry": "L. Dinh, J. Sohl-Dickstein, and S. Bengio. Density estimation using Real NVP. In ICLR, 2017. D. Griffin and J. Lim. Signal estimation from modified short-time Fourier transform. IEEE Transactions on Acoustics, Speech, and Signal Processing, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dinh%2C%20L.%20Sohl-Dickstein%2C%20J.%20Bengio%2C%20S.%20Density%20estimation%20using%20Real%20NVP%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20L.%20Sohl-Dickstein%2C%20J.%20Bengio%2C%20S.%20Density%20estimation%20using%20Real%20NVP%201984"
+        },
+        {
+            "id": "Gu_et+al_2018_a",
+            "entry": "J. Gu, J. Bradbury, C. Xiong, V. O. Li, and R. Socher. Non-autoregressive neural machine translation. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20J.%20Bradbury%2C%20J.%20Xiong%2C%20C.%20Li%2C%20V.O.%20Non-autoregressive%20neural%20machine%20translation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20J.%20Bradbury%2C%20J.%20Xiong%2C%20C.%20Li%2C%20V.O.%20Non-autoregressive%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "G. Hinton, O. Vinyals, and J. Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Kaiser_et+al_2014_a",
+            "entry": "\u0141. Kaiser, A. Roy, A. Vaswani, N. Pamar, S. Bengio, J. Uszkoreit, and N. Shazeer. Fast decoding in sequence models using discrete latent variables. arXiv preprint arXiv:1803.03382, 2018. Y. Kim and A. M. Rush. Sequence-level knowledge distillation. In EMNLP, 2016. D. P. Kingma and J. Ba. Adam: A method for stochastic optimization. In ICLR, 2015. D. P. Kingma and M. Welling. Auto-encoding variational Bayes. In ICLR, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03382"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "D. P. Kingma, T. Salimans, R. Jozefowicz, X. Chen, I. Sutskever, and M. Welling. Improving variational inference with inverse autoregressive flow. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20D.P.%20Salimans%2C%20T.%20Jozefowicz%2C%20R.%20Chen%2C%20X.%20Improving%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20D.P.%20Salimans%2C%20T.%20Jozefowicz%2C%20R.%20Chen%2C%20X.%20Improving%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "J. Lee, E. Mansimov, and K. Cho. Deterministic non-autoregressive neural sequence modeling by iterative refinement. arXiv preprint arXiv:1802.06901, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06901"
+        },
+        {
+            "id": "Mehri_et+al_2017_a",
+            "entry": "S. Mehri, K. Kumar, I. Gulrajani, R. Kumar, S. Jain, J. Sotelo, A. Courville, and Y. Bengio. SampleRNN: An unconditional end-to-end neural audio generation model. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mehri%2C%20S.%20Kumar%2C%20K.%20Gulrajani%2C%20I.%20Kumar%2C%20R.%20SampleRNN%3A%20An%20unconditional%20end-to-end%20neural%20audio%20generation%20model%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mehri%2C%20S.%20Kumar%2C%20K.%20Gulrajani%2C%20I.%20Kumar%2C%20R.%20SampleRNN%3A%20An%20unconditional%20end-to-end%20neural%20audio%20generation%20model%202017"
+        },
+        {
+            "id": "Morise_et+al_2016_a",
+            "entry": "M. Morise, F. Yokomori, and K. Ozawa. WORLD: a vocoder-based high-quality speech synthesis system for real-time applications. IEICE Transactions on Information and Systems, 2016. K. Murphy. Machine learning, a probabilistic perspective, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Morise%2C%20M.%20Yokomori%2C%20F.%20Ozawa%2C%20K.%20WORLD%3A%20a%20vocoder-based%20high-quality%20speech%20synthesis%20system%20for%20real-time%20applications%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Morise%2C%20M.%20Yokomori%2C%20F.%20Ozawa%2C%20K.%20WORLD%3A%20a%20vocoder-based%20high-quality%20speech%20synthesis%20system%20for%20real-time%20applications%202016"
+        },
+        {
+            "id": "Odena_et+al_2016_a",
+            "entry": "A. Odena, V. Dumoulin, and C. Olah. Deconvolution and checkerboard artifacts. Distill, 2016. doi: 10.23915/distill.00003. URL http://distill.pub/2016/deconv-checkerboard. R. Pascanu, T. Mikolov, and Y. Bengio. On the difficulty of training recurrent neural networks. In",
+            "crossref": "https://dx.doi.org/10.23915/distill.00003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.23915/distill.00003"
+        },
+        {
+            "id": "Ping_et+al_2018_a",
+            "entry": "W. Ping, K. Peng, A. Gibiansky, S. O. Arik, A. Kannan, S. Narang, J. Raiman, and J. Miller. Deep Voice 3: Scaling text-to-speech with convolutional sequence learning. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ping%2C%20W.%20Peng%2C%20K.%20Gibiansky%2C%20A.%20Arik%2C%20S.O.%20Deep%20Voice%203%3A%20Scaling%20text-to-speech%20with%20convolutional%20sequence%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ping%2C%20W.%20Peng%2C%20K.%20Gibiansky%2C%20A.%20Arik%2C%20S.O.%20Deep%20Voice%203%3A%20Scaling%20text-to-speech%20with%20convolutional%20sequence%20learning%202018"
+        },
+        {
+            "id": "Rezende_2015_a",
+            "entry": "D. J. Rezende and S. Mohamed. Variational inference with normalizing flows. In ICML, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20D.J.%20Mohamed%2C%20S.%20Variational%20inference%20with%20normalizing%20flows%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20D.J.%20Mohamed%2C%20S.%20Variational%20inference%20with%20normalizing%20flows%202015"
+        },
+        {
+            "id": "F_2011_a",
+            "entry": "F. Ribeiro, D. Flor\u00eancio, C. Zhang, and M. Seltzer. CrowdMOS: An approach for crowdsourcing mean opinion score studies. In ICASSP, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=F.%20Ribeiro%2C%20D.%20Flor%C3%AAncio%2C%20C.%20Zhang%20Seltzer%2C%20M.%20CrowdMOS%3A%20An%20approach%20for%20crowdsourcing%20mean%20opinion%20score%20studies%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=F.%20Ribeiro%2C%20D.%20Flor%C3%AAncio%2C%20C.%20Zhang%20Seltzer%2C%20M.%20CrowdMOS%3A%20An%20approach%20for%20crowdsourcing%20mean%20opinion%20score%20studies%202011"
+        },
+        {
+            "id": "Roy_et+al_2018_a",
+            "entry": "A. Roy, A. Vaswani, A. Neelakantan, and N. Parmar. Theory and experiments on vector quantized autoencoders. arXiv preprint arXiv:1805.11063, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11063"
+        },
+        {
+            "id": "Salimans_et+al_2017_a",
+            "entry": "T. Salimans, A. Karpathy, X. Chen, and D. P. Kingma. PixelCNN++: Improving the PixelCNN with discretized logistic mixture likelihood and other modifications. In ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Salimans%2C%20T.%20Karpathy%2C%20A.%20Chen%2C%20X.%20Kingma%2C%20D.P.%20PixelCNN%2B%2B%3A%20Improving%20the%20PixelCNN%20with%20discretized%20logistic%20mixture%20likelihood%20and%20other%20modifications%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Salimans%2C%20T.%20Karpathy%2C%20A.%20Chen%2C%20X.%20Kingma%2C%20D.P.%20PixelCNN%2B%2B%3A%20Improving%20the%20PixelCNN%20with%20discretized%20logistic%20mixture%20likelihood%20and%20other%20modifications%202017"
+        },
+        {
+            "id": "Shen_et+al_2018_a",
+            "entry": "J. Shen, R. Pang, R. J. Weiss, M. Schuster, N. Jaitly, Z. Yang, Z. Chen, Y. Zhang, Y. Wang, R. Skerry-Ryan, et al. Natural TTS synthesis by conditioning WaveNet on mel spectrogram predictions. In ICASSP, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20J.%20Pang%2C%20R.%20Weiss%2C%20R.J.%20Schuster%2C%20M.%20synthesis%20by%20conditioning%20WaveNet%20on%20mel%20spectrogram%20predictions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20J.%20Pang%2C%20R.%20Weiss%2C%20R.J.%20Schuster%2C%20M.%20synthesis%20by%20conditioning%20WaveNet%20on%20mel%20spectrogram%20predictions%202018"
+        },
+        {
+            "id": "Sotelo_et+al_2017_a",
+            "entry": "J. Sotelo, S. Mehri, K. Kumar, J. F. Santos, K. Kastner, A. Courville, and Y. Bengio. Char2wav: End-to-end speech synthesis. ICLR workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sotelo%2C%20J.%20Mehri%2C%20S.%20Kumar%2C%20K.%20Santos%2C%20J.F.%20Char2wav%3A%20End-to-end%20speech%20synthesis%202017"
+        },
+        {
+            "id": "Taigman_et+al_2009_a",
+            "entry": "Y. Taigman, L. Wolf, A. Polyak, and E. Nachmani. VoiceLoop: Voice fitting and synthesis via a phonological loop. In ICLR, 2018. P. Taylor. Text-to-Speech Synthesis. Cambridge University Press, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taigman%2C%20Y.%20Wolf%2C%20L.%20Polyak%2C%20A.%20Nachmani%2C%20E.%20VoiceLoop%3A%20Voice%20fitting%20and%20synthesis%20via%20a%20phonological%20loop%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Taigman%2C%20Y.%20Wolf%2C%20L.%20Polyak%2C%20A.%20Nachmani%2C%20E.%20VoiceLoop%3A%20Voice%20fitting%20and%20synthesis%20via%20a%20phonological%20loop%202009"
+        },
+        {
+            "id": "Uria_et+al_2018_a",
+            "entry": "B. Uria, I. Murray, and H. Larochelle. Rnade: The real-valued neural autoregressive density-estimator. In Advances in Neural Information Processing Systems, pages 2175\u20132183, 2013. A. van den Oord, S. Dieleman, H. Zen, K. Simonyan, O. Vinyals, A. Graves, N. Kalchbrenner, A. Senior, and K. Kavukcuoglu. WaveNet: A generative model for raw audio. arXiv preprint arXiv:1609.03499, 2016a. A. van den Oord, N. Kalchbrenner, L. Espeholt, O. Vinyals, A. Graves, et al. Conditional image generation with PixelCNN decoders. In NIPS, 2016b. A. van den Oord, Y. Li, I. Babuschkin, K. Simonyan, O. Vinyals, K. Kavukcuoglu, G. v. d. Driessche, E. Lockhart, L. C. Cobo, F. Stimberg, et al. Parallel WaveNet: Fast high-fidelity speech synthesis. In ICML, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.03499"
+        },
+        {
+            "id": "Wang_et+al_2017_a",
+            "entry": "Y. Wang, R. Skerry-Ryan, D. Stanton, Y. Wu, R. J. Weiss, N. Jaitly, Z. Yang, Y. Xiao, Z. Chen, S. Bengio, Q. Le, Y. Agiomyrgiannakis, R. Clark, and R. A. Saurous. Tacotron: Towards end-to-end speech synthesis. In Interspeech, 2017. R. Yamamoto. WaveNet vocoder, 2018. URL https://github.com/r9y9/wavenet_vocoder. Y. Zhao, S. Takaki, H.-T. Luong, J. Yamagishi, D. Saito, and N. Minematsu. Wasserstein GAN and waveform loss-based acoustic model training for multi-speaker text-to-speech synthesis systems using a WaveNet vocoder. IEEE Access, 2018.",
+            "url": "https://github.com/r9y9/wavenet_vocoder",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Y.%20Skerry-Ryan%2C%20R.%20Stanton%2C%20D.%20Wu%2C%20Y.%20Tacotron%3A%20Towards%20end-to-end%20speech%20synthesis%202017"
+        }
+    ]
+}

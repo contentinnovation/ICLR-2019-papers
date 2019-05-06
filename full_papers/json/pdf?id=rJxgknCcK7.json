@@ -1,0 +1,203 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "FFJORD: FREE-FORM CONTINUOUS DYNAMICS FOR SCALABLE REVERSIBLE GENERATIVE MODELS",
+        "author": "Will Grathwohl, Ricky T. Q. Chen, Jesse Bettencourt, Ilya Sutskever, David Duvenaud",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rJxgknCcK7"
+        },
+        "journal": "NVP",
+        "abstract": "Reversible generative models map points from a simple distribution to a complex distribution through an easily invertible neural network. Likelihood-based training of these models requires restricting their architectures to allow cheap computation of Jacobian determinants. Alternatively, the Jacobian trace can be used if the transformation is specified by an ordinary differential equation. In this paper, we use Hutchinson\u2019s trace estimator to give a scalable unbiased estimate of the logdensity. The result is a continuous-time invertible generative model with unbiased density estimation and one-pass sampling, while allowing unrestricted neural network architectures. We demonstrate our approach on high-dimensional density estimation, image generation, and variational inference, improving the state-ofthe-art among exact likelihood methods with efficient sampling."
+    },
+    "keywords": [
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        },
+        {
+            "term": "high dimensional",
+            "url": "https://en.wikipedia.org/wiki/high_dimensional"
+        },
+        {
+            "term": "Generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/Generative_adversarial_networks"
+        },
+        {
+            "term": "variational inference",
+            "url": "https://en.wikipedia.org/wiki/variational_inference"
+        },
+        {
+            "term": "density estimation",
+            "url": "https://en.wikipedia.org/wiki/density_estimation"
+        },
+        {
+            "term": "NICE",
+            "url": "https://en.wikipedia.org/wiki/NICE"
+        },
+        {
+            "term": "formula",
+            "url": "https://en.wikipedia.org/wiki/formula"
+        }
+    ],
+    "abbreviations": {
+        "CNF": "Continous Normalizing Flows",
+        "GANs": "Generative adversarial networks",
+        "VAEs": "Variational autoencoders",
+        "FFJORD": "Free-Form Jacobian of Reversible Dyanamics",
+        "NFE": "number of function evaluations"
+    },
+    "highlights": [
+        "Reversible generative models use cheaply invertible neup(z(t1))<br/><br/>ral networks to transform samples from a fixed base distribution",
+        "We demonstrate Free-Form Jacobian of Reversible Dyanamics on a variety of density estimation tasks, and for approximate inference in variational autoencoders (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Welling, 2014</a>)",
+        "We have presented Free-Form Jacobian of Reversible Dyanamics, a reversible generative model for high-dimensional data which can compute exact log-likelihoods and can be sampled from efficiently",
+        "Our model uses continuoustime dynamics to produce a generative model which is parameterized by an unrestricted neural network",
+        "Our model stands in contrast to other methods with similar properties which rely on restricted, hand-engineered neural network architectures",
+        "We demonstrated that this additional flexibility allows our approach to achieve on-par or improved performance on density estimation and variational inference"
+    ],
+    "key_statements": [
+        "Reversible generative models use cheaply invertible neup(z(t1))<br/><br/>ral networks to transform samples from a fixed base distribution",
+        "NVP (<a class=\"ref-link\" id=\"cDinh_et+al_2017_a\" href=\"#rDinh_et+al_2017_a\">Dinh et al, 2017</a>), and Glow (<a class=\"ref-link\" id=\"cKingma_2018_a\" href=\"#rKingma_2018_a\">Kingma & Dhariwal, 2018</a>). These models are easy to sample from, and can be trained by maximum likelihood using the change of variables formula",
+        "By restricting the functional form of f , various determinant identities can be exploited (Rezende & Mohamed, 2015; Berg et al, 2018). These models cannot be trained as generative models from data because they do not have a tractable inverse f \u22121",
+        "We demonstrate Free-Form Jacobian of Reversible Dyanamics on a variety of density estimation tasks, and for approximate inference in variational autoencoders (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma & Welling, 2014</a>)",
+        "We used Hutchinson\u2019s trace estimator (7) during training and the exact trace when reporting test results. This was done in all experiments except for our density estimation models trained on MNIST and CIFAR10 where computing the exact Jacobian trace was too expensive",
+        "We find that Glow learns to stretch the unimodal base distribution into multiple modes but has trouble modeling the areas of low probability between disconnected regions",
+        "On MNIST we find that Free-Form Jacobian of Reversible Dyanamics can model the data as effectively as Glow and Real NVP using only a single flow defined by a single neural network",
+        "The full computational cost of integrating the instantaneous change of variables (2) is O(DHL) where D is dimensionality of the data, H is the size of the hidden state, and L is the number of function evaluations (NFE) that the adaptive solver uses to integrate the ODE",
+        "We find that the number of function evaluations increases throughout training, but converges to the same value, independent of D",
+        "We have presented Free-Form Jacobian of Reversible Dyanamics, a reversible generative model for high-dimensional data which can compute exact log-likelihoods and can be sampled from efficiently",
+        "Our model uses continuoustime dynamics to produce a generative model which is parameterized by an unrestricted neural network",
+        "Our model stands in contrast to other methods with similar properties which rely on restricted, hand-engineered neural network architectures",
+        "We demonstrated that this additional flexibility allows our approach to achieve on-par or improved performance on density estimation and variational inference",
+        "Free-Form Jacobian of Reversible Dyanamics is empirically slower to evaluate than other reversible models like Real NVP or Glow, so we are interested in ways to reduce the number of function evaluations used by the ODE-solver without hurting predictive performance"
+    ],
+    "summary": [
+        "Reversible generative models use cheaply invertible neup(z(t1))<br/><br/>ral networks to transform samples from a fixed base distribution.",
+        "Throughout this work, we refer to reversible generative models as those which use the change of variables to transform a base distribution to the model distribution while maintaining both efficient density estimation and efficient sampling capabilities using a single pass of the model.",
+        "Variational Autoencoders Generative Adversarial Nets Likelihood-based Autoregressive Normalizing Flows Reverse-NF, MAF, TAN NICE, Real NVP, Glow, Planar CNF FFJORD",
+        "Our complete method uses the dynamics defined in (2) and the efficient log-likelihood estimator of (8) to produce the first scalable and reversible generative model with an unconstrained Jacobian.",
+        "Assuming the cost of evaluating f is on the order of O(DH) where D is the dimensionality of the data and H is the size of the largest hidden layer in f , the cost of computing the likelihood in models with repeated use of invertible transformations (1) is O((DH + D3)L) where L is the number of transformations used.",
+        "This was done in all experiments except for our density estimation models trained on MNIST and CIFAR10 where computing the exact Jacobian trace was too expensive.",
+        "We first train on 2 dimensional data to visualize the model and the learned dynamics.2 In Figure 2, we show that by warping a simple isotropic Gaussian, FFJORD can fit both multi-modal and even discontinuous distributions.",
+        "On MNIST we find that FFJORD can model the data as effectively as Glow and Real NVP using only a single flow defined by a single neural network.",
+        "Loss during training is plotted in Figure 4, where we use the trace estimator directly on the D\u00d7D Jacobian, or we use the bottleneck trick to reduce the dimension to H \u00d7 H.",
+        "The full computational cost of integrating the instantaneous change of variables (2) is O(DHL) where D is dimensionality of the data, H is the size of the hidden state, and L is the number of function evaluations (NFE) that the adaptive solver uses to integrate the ODE.",
+        "We have presented FFJORD, a reversible generative model for high-dimensional data which can compute exact log-likelihoods and can be sampled from efficiently.",
+        "All required quantities for training and sampling can be computed using automatic differentiation, Hutchinson\u2019s trace estimator, and black-box ODE solvers.",
+        "FFJORD is empirically slower to evaluate than other reversible models like Real NVP or Glow, so we are interested in ways to reduce the number of function evaluations used by the ODE-solver without hurting predictive performance.",
+        "We demonstrated that this additional flexibility allows our approach to achieve on-par or improved performance on density estimation and variational inference"
+    ],
+    "headline": "We demonstrate our approach on high-dimensional density estimation, image generation, and variational inference, improving the state-ofthe-art among exact likelihood methods with efficient sampling",
+    "reference_links": [
+        {
+            "id": "Adams_et+al_2018_a",
+            "entry": "R. P. Adams, J. Pennington, M. J. Johnson, J. Smith, Y. Ovadia, B. Patton, and J. Saunderson. Estimating the Spectral Density of Large Implicit Matrices. ArXiv e-prints, February 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adams%2C%20R.P.%20Pennington%2C%20J.%20Johnson%2C%20M.J.%20Smith%2C%20J.%20Estimating%20the%20Spectral%20Density%20of%20Large%20Implicit%20Matrices.%20ArXiv%20e-prints%202018-02"
+        },
+        {
+            "id": "Andersson_2013_a",
+            "entry": "Joel Andersson. A general-purpose software framework for dynamic optimization. PhD thesis, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andersson%2C%20Joel%20A%20general-purpose%20software%20framework%20for%20dynamic%20optimization%202013"
+        },
+        {
+            "id": "Van_et+al_2018_a",
+            "entry": "Rianne van den Berg, Leonard Hasenclever, Jakub M Tomczak, and Max Welling. Sylvester normalizing flows for variational inference. arXiv preprint arXiv:1803.05649, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05649"
+        },
+        {
+            "id": "Chen_et+al_2018_a",
+            "entry": "Ricky T. Q. Chen, Yulia Rubanova, Jesse Bettencourt, and David Duvenaud. Neural ordinary differential equations. Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ricky%20T%20Q%20Chen%20Yulia%20Rubanova%20Jesse%20Bettencourt%20and%20David%20Duvenaud%20Neural%20ordinary%20differential%20equations%20Advances%20in%20Neural%20Information%20Processing%20Systems%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ricky%20T%20Q%20Chen%20Yulia%20Rubanova%20Jesse%20Bettencourt%20and%20David%20Duvenaud%20Neural%20ordinary%20differential%20equations%20Advances%20in%20Neural%20Information%20Processing%20Systems%202018"
+        },
+        {
+            "id": "Dinh_et+al_2014_a",
+            "entry": "Laurent Dinh, David Krueger, and Yoshua Bengio. NICE: Non-linear independent components estimation. International Conference on Learning Representations Workshop, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dinh%2C%20Laurent%20Krueger%2C%20David%20Bengio%2C%20Yoshua%20NICE%3A%20Non-linear%20independent%20components%20estimation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20Laurent%20Krueger%2C%20David%20Bengio%2C%20Yoshua%20NICE%3A%20Non-linear%20independent%20components%20estimation%202014"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio. Density estimation using Real NVP. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dinh%2C%20Laurent%20Sohl-Dickstein%2C%20Jascha%20Bengio%2C%20Samy%20Density%20estimation%20using%20Real%20NVP%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20Laurent%20Sohl-Dickstein%2C%20Jascha%20Bengio%2C%20Samy%20Density%20estimation%20using%20Real%20NVP%202017"
+        },
+        {
+            "id": "Germain_et+al_2015_a",
+            "entry": "Mathieu Germain, Karol Gregor, Iain Murray, and Hugo Larochelle. Made: Masked autoencoder for distribution estimation. In International Conference on Machine Learning, pp. 881\u2013889, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Germain%2C%20Mathieu%20Gregor%2C%20Karol%20Murray%2C%20Iain%20Larochelle%2C%20Hugo%20Made%3A%20Masked%20autoencoder%20for%20distribution%20estimation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Germain%2C%20Mathieu%20Gregor%2C%20Karol%20Murray%2C%20Iain%20Larochelle%2C%20Hugo%20Made%3A%20Masked%20autoencoder%20for%20distribution%20estimation%202015"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pp. 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Chin-Wei Huang, David Krueger, Alexandre Lacoste, and Aaron Courville. Neural autoregressive flows. International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=ChinWei%20Huang%20David%20Krueger%20Alexandre%20Lacoste%20and%20Aaron%20Courville%20Neural%20autoregressive%20flows%20International%20Conference%20on%20Machine%20Learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=ChinWei%20Huang%20David%20Krueger%20Alexandre%20Lacoste%20and%20Aaron%20Courville%20Neural%20autoregressive%20flows%20International%20Conference%20on%20Machine%20Learning%202018"
+        },
+        {
+            "id": "Hutchinson_1989_a",
+            "entry": "M.F. Hutchinson. A stochastic estimator of the trace of the influence matrix for laplacian smoothing splines. 18:1059\u20131076, 01 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hutchinson%2C%20M.F.%20A%20stochastic%20estimator%20of%20the%20trace%20of%20the%20influence%20matrix%20for%20laplacian%20smoothing%20splines%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hutchinson%2C%20M.F.%20A%20stochastic%20estimator%20of%20the%20trace%20of%20the%20influence%20matrix%20for%20laplacian%20smoothing%20splines%201989"
+        },
+        {
+            "id": "Khalil_0000_a",
+            "entry": "H.K. Khalil. Nonlinear Systems. Pearson Education. Prentice Hall, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Khalil%2C%20H.K.%20Nonlinear%20Systems"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2018_a",
+            "entry": "Diederik P Kingma and Prafulla Dhariwal. Glow: Generative flow with invertible 1x1 convolutions. Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Dhariwal%2C%20Prafulla%20Glow%3A%20Generative%20flow%20with%20invertible%201x1%20convolutions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Dhariwal%2C%20Prafulla%20Glow%3A%20Generative%20flow%20with%20invertible%201x1%20convolutions%202018"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, pp. 4743\u20134751, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Miyato_et+al_2018_a",
+            "entry": "Takeru Miyato, Toshiki Kataoka, Masanori Koyama, and Yuichi Yoshida. Spectral normalization for generative adversarial networks. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Miyato%2C%20Takeru%20Kataoka%2C%20Toshiki%20Koyama%2C%20Masanori%20Yoshida%2C%20Yuichi%20Spectral%20normalization%20for%20generative%20adversarial%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Miyato%2C%20Takeru%20Kataoka%2C%20Toshiki%20Koyama%2C%20Masanori%20Yoshida%2C%20Yuichi%20Spectral%20normalization%20for%20generative%20adversarial%20networks%202018"
+        },
+        {
+            "id": "Oliva_et+al_2018_a",
+            "entry": "Junier B Oliva, Avinava Dubey, Barnabas Poczos, Jeff Schneider, and Eric P Xing. Transformation autoregressive networks. International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oliva%2C%20Junier%20B.%20Dubey%2C%20Avinava%20Poczos%2C%20Barnabas%20Schneider%2C%20Jeff%20and%20Eric%20P%20Xing.%20Transformation%20autoregressive%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oliva%2C%20Junier%20B.%20Dubey%2C%20Avinava%20Poczos%2C%20Barnabas%20Schneider%2C%20Jeff%20and%20Eric%20P%20Xing.%20Transformation%20autoregressive%20networks%202018"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, and Koray Kavukcuoglu. Pixel recurrent neural networks. International Conference on Machine Learning, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Kavukcuoglu%2C%20Koray%20Pixel%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Kavukcuoglu%2C%20Koray%20Pixel%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Rumelhart_2017_a",
+            "entry": "Published as a conference paper at ICLR 2019 George Papamakarios, Iain Murray, and Theo Pavlakou. Masked autoregressive flow for density estimation. In Advances in Neural Information Processing Systems, pp. 2338\u20132347, 2017. Lev Semenovich Pontryagin. Mathematical theory of optimal processes. Routledge, 1962. Danilo Jimenez Rezende and Shakir Mohamed. Variational inference with normalizing flows. International Conference on Machine Learning, 2015. David E Rumelhart, Geoffrey E Hinton, and Ronald J Williams. Learning representations by backpropagating errors. Nature, 323(6088):533, 1986. Lawrence F Shampine. Some practical Runge-Kutta formulas. Mathematics of Computation, 46 (173):135\u2013150, 1986.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20George%20Papamakarios%20Iain%20Murray%20and%20Theo%20Pavlakou%20Masked%20autoregressive%20flow%20for%20density%20estimation%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2023382347%202017%20Lev%20Semenovich%20Pontryagin%20Mathematical%20theory%20of%20optimal%20processes%20Routledge%201962%20Danilo%20Jimenez%20Rezende%20and%20Shakir%20Mohamed%20Variational%20inference%20with%20normalizing%20flows%20International%20Conference%20on%20Machine%20Learning%202015%20David%20E%20Rumelhart%20Geoffrey%20E%20Hinton%20and%20Ronald%20J%20Williams%20Learning%20representations%20by%20backpropagating%20errors%20Nature%203236088533%201986%20Lawrence%20F%20Shampine%20Some%20practical%20RungeKutta%20formulas%20Mathematics%20of%20Computation%2046%20173135150%201986",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20George%20Papamakarios%20Iain%20Murray%20and%20Theo%20Pavlakou%20Masked%20autoregressive%20flow%20for%20density%20estimation%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2023382347%202017%20Lev%20Semenovich%20Pontryagin%20Mathematical%20theory%20of%20optimal%20processes%20Routledge%201962%20Danilo%20Jimenez%20Rezende%20and%20Shakir%20Mohamed%20Variational%20inference%20with%20normalizing%20flows%20International%20Conference%20on%20Machine%20Learning%202015%20David%20E%20Rumelhart%20Geoffrey%20E%20Hinton%20and%20Ronald%20J%20Williams%20Learning%20representations%20by%20backpropagating%20errors%20Nature%203236088533%201986%20Lawrence%20F%20Shampine%20Some%20practical%20RungeKutta%20formulas%20Mathematics%20of%20Computation%2046%20173135150%201986"
+        }
+    ]
+}

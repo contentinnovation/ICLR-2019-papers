@@ -1,0 +1,313 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "VARIATIONAL AUTOENCODERS WITH JOINTLY OPTIMIZED LATENT DEPENDENCY STRUCTURE",
+        "author": "Jiawei He,\u2217 & Yu Gong,\u2217 {jha203, gongyug}@sfu.ca",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJgsCjCqt7"
+        },
+        "abstract": "We propose a method for learning the dependency structure between latent variables in deep latent variable models. Our general modeling and inference framework combines the complementary strengths of deep generative models and probabilistic graphical models. In particular, we express the latent variable space of a variational autoencoder (VAE) in terms of a Bayesian network with a learned, flexible dependency structure. The network parameters, variational parameters as well as the latent topology are optimized simultaneously with a single objective. Inference is formulated via a sampling procedure that produces expectations over latent variable structures and incorporates top-down and bottom-up reasoning over latent variable values. We validate our framework in extensive experiments on MNIST, Omniglot, and CIFAR-10. Comparisons to state-of-the-art structured variational autoencoder baselines show improvements in terms of the expressiveness of the learned model."
+    },
+    "keywords": [
+        {
+            "term": "latent variable model",
+            "url": "https://en.wikipedia.org/wiki/latent_variable_model"
+        },
+        {
+            "term": "evidence lower bound",
+            "url": "https://en.wikipedia.org/wiki/evidence_lower_bound"
+        },
+        {
+            "term": "directed acyclic graph",
+            "url": "https://en.wikipedia.org/wiki/directed_acyclic_graph"
+        }
+    ],
+    "abbreviations": {
+        "VAE": "variational autoencoder",
+        "ELBO": "evidence lower bound",
+        "VAEs": "Variational autoencoders",
+        "DAG": "directed acyclic graph",
+        "of N": "of node n",
+        "FC-VAEs": "fullyconnected VAEs"
+    },
+    "highlights": [
+        "Deep latent variable models offer an effective method for automatically learning structure from data",
+        "Lcan be interpreted as the expected evidence lower bound under the distribution of dependency structures induced by p(c), which we estimate by sampling c \u223c p(c) and evaluating Lc",
+        "We share the gating variables c between encoder and decoder), because we observed improved empirical performance when doing so: training a Graph variational autoencoder decoder with a predefined, fully-connected encoder graph results in a mean test log-likelihood of \u221283.40 nats on MNIST, which is worse than the performance of FC-variational autoencoder (\u221282.80 nats) and Graph variational autoencoder (\u221282.58 nats)",
+        "We presented a novel method for structure learning in latent variable models, which uses dependency gating variables, together with a modified objective and discrete differentiation techniques, to effectively transform discrete structure learning into a continuous optimization problem",
+        "The learned latent dependency structures improve the performance of latent variable models over comparable baselines with predefined dependency structures"
+    ],
+    "key_statements": [
+        "Deep latent variable models offer an effective method for automatically learning structure from data",
+        "Distribution may take a simple form, marginalizing over the parent variable can result in an arbitrarily complex distribution. Models with these more flexible latent dependency structures have been shown to result in improved performance (S\u00f8nderby et al, 2016; <a class=\"ref-link\" id=\"cBurda_et+al_2016_a\" href=\"#rBurda_et+al_2016_a\">Burda et al, 2016</a>; <a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a>)",
+        "We propose a method for learning dependency structures in latent variable models",
+        "We show that the learned dependency structures result in models that more accurately model the data distribution, outperforming several common predefined latent dependency structures.\n2.1",
+        "Unlike the model parameters (\u03c6, \u03b8), which are optimized over a continuous domain, the latent dependency structure is discrete, without a clear ordering",
+        "Lcan be interpreted as the expected evidence lower bound under the distribution of dependency structures induced by p(c), which we estimate by sampling c \u223c p(c) and evaluating Lc",
+        "In Section 4.3, we provide quantitative comparisons with common predefined latent dependency structures on benchmark datasets",
+        "We observed that the learned structure is stable across training runs with different seeds for parameter initialization and mini-batch sampling, supporting the hypothesis that the inferred structure depends on the model parameterization and the dataset.\n2We implement classic variational autoencoder using a more complex encoder to match the number of parameters of the structured methods",
+        "We share the gating variables c between encoder and decoder), because we observed improved empirical performance when doing so: training a Graph variational autoencoder decoder with a predefined, fully-connected encoder graph results in a mean test log-likelihood of \u221283.40 nats on MNIST, which is worse than the performance of FC-variational autoencoder (\u221282.80 nats) and Graph variational autoencoder (\u221282.58 nats)",
+        "It is plausible that the benefit of learning the dependency structure may stem from the ability to alter the optimization landscape, using the dependency gates to move through the model parameter space more coarsely and rapidly",
+        "We presented a novel method for structure learning in latent variable models, which uses dependency gating variables, together with a modified objective and discrete differentiation techniques, to effectively transform discrete structure learning into a continuous optimization problem",
+        "The learned latent dependency structures improve the performance of latent variable models over comparable baselines with predefined dependency structures"
+    ],
+    "summary": [
+        "Deep latent variable models offer an effective method for automatically learning structure from data.",
+        "Models with these more flexible latent dependency structures have been shown to result in improved performance (S\u00f8nderby et al, 2016; <a class=\"ref-link\" id=\"cBurda_et+al_2016_a\" href=\"#rBurda_et+al_2016_a\">Burda et al, 2016</a>; <a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a>).",
+        "We propose a method for learning dependency structures in latent variable models.",
+        "This technique introduces dependencies between the dimensions of the approximate posterior, often mirroring the dependency structure of the latent variable model.",
+        "Unlike the mean field approximate posterior, which conditions each dimension only on the data example, x, the distributions in Eq (4) account for latent dependencies by conditioning on samples from the parent variables.",
+        "Unlike the model parameters (\u03c6, \u03b8), which are optimized over a continuous domain, the latent dependency structure is discrete, without a clear ordering.",
+        "To avoid this intractable procedure, we place a distribution over c, directly optimize the parameters of this distribution to arrive at a single, learned latent dependency structure.",
+        "Lcan be interpreted as the expected ELBO under the distribution of dependency structures induced by p(c), which we estimate by sampling c \u223c p(c) and evaluating Lc. We note that Lis not a proper variational bound, as it is not guaranteed to recover the marginal likelihood if the approximate posterior matches the true posterior.",
+        "We observed that the learned structure is stable across training runs with different seeds for parameter initialization and mini-batch sampling, supporting the hypothesis that the inferred structure depends on the model parameterization and the dataset.",
+        "The learned dependency structure in our proposed Graph VAE consistently outperforms models with both fewer (VAE, ladder VAE) and more (FC-VAE) latent dependencies.",
+        "We share the gating variables c between encoder and decoder), because we observed improved empirical performance when doing so: training a Graph VAE decoder with a predefined, fully-connected encoder graph results in a mean test log-likelihood of \u221283.40 nats on MNIST, which is worse than the performance of FC-VAE (\u221282.80 nats) and Graph VAE (\u221282.58 nats).",
+        "It is plausible that the benefit of learning the dependency structure may stem from the ability to alter the optimization landscape, using the dependency gates to move through the model parameter space more coarsely and rapidly.",
+        "We presented a novel method for structure learning in latent variable models, which uses dependency gating variables, together with a modified objective and discrete differentiation techniques, to effectively transform discrete structure learning into a continuous optimization problem.",
+        "The approach presented here provides directions for further research in structure learning for other tasks, including undirected graphical models, time-series models, and discriminative models"
+    ],
+    "headline": "We propose a method for learning the dependency structure between latent variables in deep latent variable models",
+    "reference_links": [
+        {
+            "id": "Barron_et+al_1998_a",
+            "entry": "A. Barron, J. Rissanen, and B. Yu. The Minimum Description Length Principle in Coding and Modeling. In IEEE Transactions on Information Theory, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barron%2C%20A.%20Rissanen%2C%20J.%20Yu%2C%20B.%20The%20Minimum%20Description%20Length%20Principle%20in%20Coding%20and%20Modeling%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barron%2C%20A.%20Rissanen%2C%20J.%20Yu%2C%20B.%20The%20Minimum%20Description%20Length%20Principle%20in%20Coding%20and%20Modeling%201998"
+        },
+        {
+            "id": "Bowman_et+al_2016_a",
+            "entry": "Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. In Proceedings of The 20th SIGNLL Conference on Computational Natural Language Learning, pp. 10\u201321, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bowman%2C%20Samuel%20R.%20Vilnis%2C%20Luke%20Vinyals%2C%20Oriol%20Dai%2C%20Andrew%20Generating%20sentences%20from%20a%20continuous%20space%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bowman%2C%20Samuel%20R.%20Vilnis%2C%20Luke%20Vinyals%2C%20Oriol%20Dai%2C%20Andrew%20Generating%20sentences%20from%20a%20continuous%20space%202016"
+        },
+        {
+            "id": "Burda_et+al_2016_a",
+            "entry": "Yuri Burda, Roger Grosse, and Ruslan Salakhutdinov. Importance weighted autoencoders. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Burda%2C%20Yuri%20Grosse%2C%20Roger%20Salakhutdinov%2C%20Ruslan%20Importance%20weighted%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Burda%2C%20Yuri%20Grosse%2C%20Roger%20Salakhutdinov%2C%20Ruslan%20Importance%20weighted%20autoencoders%202016"
+        },
+        {
+            "id": "Cheng_et+al_2002_a",
+            "entry": "Jie Cheng, Russell Greiner, Jonathan Kelly, David Bell, and Weiru Liu. Learning Bayesian Networks from Data: An Information-theoretic Approach. In Artificial Intelligence, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cheng%2C%20Jie%20Greiner%2C%20Russell%20Kelly%2C%20Jonathan%20Bell%2C%20David%20Learning%20Bayesian%20Networks%20from%20Data%3A%20An%20Information-theoretic%20Approach%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cheng%2C%20Jie%20Greiner%2C%20Russell%20Kelly%2C%20Jonathan%20Bell%2C%20David%20Learning%20Bayesian%20Networks%20from%20Data%3A%20An%20Information-theoretic%20Approach%202002"
+        },
+        {
+            "id": "Chung_et+al_2015_a",
+            "entry": "Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron C Courville, and Yoshua Bengio. A recurrent latent variable model for sequential data. In Advances in neural information processing systems, pp. 2980\u20132988, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chung%2C%20Junyoung%20Kastner%2C%20Kyle%20Dinh%2C%20Laurent%20Goel%2C%20Kratarth%20and%20Yoshua%20Bengio.%20A%20recurrent%20latent%20variable%20model%20for%20sequential%20data%202015"
+        },
+        {
+            "id": "Dayan_et+al_1995_a",
+            "entry": "Peter Dayan, Geoffrey E Hinton, Radford M Neal, and Richard S Zemel. The helmholtz machine. Neural computation, 7(5):889\u2013904, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Neal%2C%20Radford%20M.%20Zemel%2C%20Richard%20S.%20The%20helmholtz%20machine%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Neal%2C%20Radford%20M.%20Zemel%2C%20Richard%20S.%20The%20helmholtz%20machine%201995"
+        },
+        {
+            "id": "Fraccaro_et+al_2016_a",
+            "entry": "Marco Fraccaro, S\u00f8ren Kaae S\u00f8nderby, Ulrich Paquet, and Ole Winther. Sequential neural models with stochastic layers. In Advances in neural information processing systems, pp. 2199\u20132207, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fraccaro%2C%20Marco%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Paquet%2C%20Ulrich%20Winther%2C%20Ole%20Sequential%20neural%20models%20with%20stochastic%20layers%202016"
+        },
+        {
+            "id": "Goyal_2017_a",
+            "entry": "Prasoon Goyal, Zhiting Hu, Xiaodan Liang, Chenyu Wang, Eric P Xing, and Carnegie Mellon. Nonparametric variational auto-encoders for hierarchical representation learning. In ICCV, pp. 5104\u20135112, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goyal%2C%20Prasoon%20Hu%2C%20Zhiting%20Xiaodan%20Liang%2C%20Chenyu%20Wang%2C%20Eric%20P%20Xing%2C%20and%20Carnegie%20Mellon.%20Nonparametric%20variational%20auto-encoders%20for%20hierarchical%20representation%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goyal%2C%20Prasoon%20Hu%2C%20Zhiting%20Xiaodan%20Liang%2C%20Chenyu%20Wang%2C%20Eric%20P%20Xing%2C%20and%20Carnegie%20Mellon.%20Nonparametric%20variational%20auto-encoders%20for%20hierarchical%20representation%20learning%202017"
+        },
+        {
+            "id": "Gregor_et+al_2014_a",
+            "entry": "Karol Gregor, Ivo Danihelka, Andriy Mnih, Charles Blundell, and Daan Wierstra. Deep autoregressive networks. In International Conference on Machine Learning, pp. 1242\u20131250, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20Karol%20Danihelka%2C%20Ivo%20Mnih%2C%20Andriy%20Blundell%2C%20Charles%20Deep%20autoregressive%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20Karol%20Danihelka%2C%20Ivo%20Mnih%2C%20Andriy%20Blundell%2C%20Charles%20Deep%20autoregressive%20networks%202014"
+        },
+        {
+            "id": "Gregor_et+al_2015_a",
+            "entry": "Karol Gregor, Ivo Danihelka, Alex Graves, Danilo Rezende, and Daan Wierstra. Draw: A recurrent neural network for image generation. In International Conference on Machine Learning, pp. 1462\u20131471, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20Karol%20Danihelka%2C%20Ivo%20Graves%2C%20Alex%20Rezende%2C%20Danilo%20Draw%3A%20A%20recurrent%20neural%20network%20for%20image%20generation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20Karol%20Danihelka%2C%20Ivo%20Graves%2C%20Alex%20Rezende%2C%20Danilo%20Draw%3A%20A%20recurrent%20neural%20network%20for%20image%20generation%202015"
+        },
+        {
+            "id": "He_et+al_2018_a",
+            "entry": "Jiawei He, Andreas Lehrmann, Joseph Marino, Greg Mori, and Leonid Sigal. Probabilistic video generation using holistic attribute control. In European Conference on Computer Vision, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Jiawei%20Lehrmann%2C%20Andreas%20Marino%2C%20Joseph%20Mori%2C%20Greg%20Probabilistic%20video%20generation%20using%20holistic%20attribute%20control%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Jiawei%20Lehrmann%2C%20Andreas%20Marino%2C%20Joseph%20Mori%2C%20Greg%20Probabilistic%20video%20generation%20using%20holistic%20attribute%20control%202018"
+        },
+        {
+            "id": "Heckerman_et+al_1999_a",
+            "entry": "D. Heckerman, C. Meek, and G. Cooper. A Bayesian Approach to Causal Discovery. In Computation, Causation, Discovery, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heckerman%2C%20D.%20Meek%2C%20C.%20Cooper%2C%20G.%20A%20Bayesian%20Approach%20to%20Causal%20Discovery%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heckerman%2C%20D.%20Meek%2C%20C.%20Cooper%2C%20G.%20A%20Bayesian%20Approach%20to%20Causal%20Discovery%201999"
+        },
+        {
+            "id": "Heckerman_et+al_1995_a",
+            "entry": "David Heckerman, Dan Geiger, and David M. Chickering. Learning Bayesian Networks: The Combination of Knowledge and Statistical Data. In Machine Learning, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heckerman%2C%20David%20Geiger%2C%20Dan%20Chickering%2C%20David%20M.%20Learning%20Bayesian%20Networks%3A%20The%20Combination%20of%20Knowledge%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heckerman%2C%20David%20Geiger%2C%20Dan%20Chickering%2C%20David%20M.%20Learning%20Bayesian%20Networks%3A%20The%20Combination%20of%20Knowledge%201995"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Jang_et+al_2017_a",
+            "entry": "Eric Jang, Shixiang Gu, and Ben Poole. Categorical reparametrization with gumble-softmax. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparametrization%20with%20gumble-softmax%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jang%2C%20Eric%20Gu%2C%20Shixiang%20Poole%2C%20Ben%20Categorical%20reparametrization%20with%20gumble-softmax%202017"
+        },
+        {
+            "id": "Johnson_et+al_2016_a",
+            "entry": "Matthew Johnson, David K Duvenaud, Alex Wiltschko, Ryan P Adams, and Sandeep R Datta. Composing graphical models with neural networks for structured representations and fast inference. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett (eds.), Advances in Neural Information Processing Systems 29, pp. 2946\u20132954. Curran Associates, Inc., 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Matthew%20Duvenaud%2C%20David%20K.%20Wiltschko%2C%20Alex%20Adams%2C%20Ryan%20P.%20Composing%20graphical%20models%20with%20neural%20networks%20for%20structured%20representations%20and%20fast%20inference%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Matthew%20Duvenaud%2C%20David%20K.%20Wiltschko%2C%20Alex%20Adams%2C%20Ryan%20P.%20Composing%20graphical%20models%20with%20neural%20networks%20for%20structured%20representations%20and%20fast%20inference%202016"
+        },
+        {
+            "id": "Jordan_et+al_1999_a",
+            "entry": "Michael I Jordan, Zoubin Ghahramani, Tommi S Jaakkola, and Lawrence K Saul. An introduction to variational methods for graphical models. Machine learning, 37(2):183\u2013233, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jordan%2C%20Michael%20I.%20Ghahramani%2C%20Zoubin%20Jaakkola%2C%20Tommi%20S.%20Saul%2C%20Lawrence%20K.%20An%20introduction%20to%20variational%20methods%20for%20graphical%20models%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jordan%2C%20Michael%20I.%20Ghahramani%2C%20Zoubin%20Jaakkola%2C%20Tommi%20S.%20Saul%2C%20Lawrence%20K.%20An%20introduction%20to%20variational%20methods%20for%20graphical%20models%201999"
+        },
+        {
+            "id": "Kass_1995_a",
+            "entry": "R. Kass and A. Raftery. Bayes Factors. In Journal of the American Statistical Association, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=R%20Kass%20and%20A%20Raftery%20Bayes%20Factors%20In%20Journal%20of%20the%20American%20Statistical%20Association%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=R%20Kass%20and%20A%20Raftery%20Bayes%20Factors%20In%20Journal%20of%20the%20American%20Statistical%20Association%201995"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-encoding variational bayes. In International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, pp. 4743\u20134751, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Koivisto_2004_a",
+            "entry": "M. Koivisto and K. Sood. Exact Bayesian Structure Discovery in Bayesian Networks. In Journal of Machine Learning Research, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koivisto%2C%20M.%20Sood%2C%20K.%20Exact%20Bayesian%20Structure%20Discovery%20in%20Bayesian%20Networks%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koivisto%2C%20M.%20Sood%2C%20K.%20Exact%20Bayesian%20Structure%20Discovery%20in%20Bayesian%20Networks%202004"
+        },
+        {
+            "id": "Koller_2009_a",
+            "entry": "Daphne Koller and Nir Friedman. Probabilistic Graphical Models. MIT Press, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koller%2C%20Daphne%20Friedman%2C%20Nir%20Probabilistic%20Graphical%20Models%202009"
+        },
+        {
+            "id": "Krishnan_et+al_2017_a",
+            "entry": "Rahul G Krishnan, Dawen Liang, and Matthew Hoffman. On the challenges of learning with inference networks on sparse, high-dimensional data. arXiv preprint arXiv:1710.06085, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.06085"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Technical report, Citeseer, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Lake_et+al_2013_a",
+            "entry": "Brenden M Lake, Ruslan R Salakhutdinov, and Josh Tenenbaum. One-shot learning by inverting a compositional causal process. In C. J. C. Burges, L. Bottou, M. Welling, Z. Ghahramani, and K. Q. Weinberger (eds.), Advances in Neural Information Processing Systems 26, pp. 2526\u20132534. Curran Associates, Inc., 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20R.%20Tenenbaum%2C%20Josh%20One-shot%20learning%20by%20inverting%20a%20compositional%20causal%20process%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20M.%20Salakhutdinov%2C%20Ruslan%20R.%20Tenenbaum%2C%20Josh%20One-shot%20learning%20by%20inverting%20a%20compositional%20causal%20process%202013"
+        },
+        {
+            "id": "Larochelle_2011_a",
+            "entry": "Hugo Larochelle and Iain Murray. The neural autoregressive distribution estimator. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics, pp. 29\u201337, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Larochelle%2C%20Hugo%20Murray%2C%20Iain%20The%20neural%20autoregressive%20distribution%20estimator%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Larochelle%2C%20Hugo%20Murray%2C%20Iain%20The%20neural%20autoregressive%20distribution%20estimator%202011"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Y. Lecun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, Nov 1998. ISSN 0018-9219. doi: 10.1109/5.726791.",
+            "crossref": "https://dx.doi.org/10.1109/5.726791",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/5.726791"
+        },
+        {
+            "id": "Lehmann_2008_a",
+            "entry": "Erich L. Lehmann and Joseph P. Romano. Testing Statistical Hypotheses. Springer, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehmann%2C%20Erich%20L.%20Romano%2C%20Joseph%20P.%20Testing%20Statistical%20Hypotheses%202008"
+        },
+        {
+            "id": "Lehrmann_2017_a",
+            "entry": "Andreas M. Lehrmann and Leonid Sigal. Non-parametric structured output networks. In Advances in neural information processing systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehrmann%2C%20Andreas%20M.%20Sigal%2C%20Leonid%20Non-parametric%20structured%20output%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lehrmann%2C%20Andreas%20M.%20Sigal%2C%20Leonid%20Non-parametric%20structured%20output%20networks%202017"
+        },
+        {
+            "id": "Maddison_2017_a",
+            "entry": "Chris J Maddison, Andriy Mnih, and Yee Whye Teh. The concrete distribution: A continuous relaxation of discrete random variables. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maddison%2C%20Chris%20J.%20Mnih%2C%20Andriy%20and%20Yee%20Whye%20Teh.%20The%20concrete%20distribution%3A%20A%20continuous%20relaxation%20of%20discrete%20random%20variables%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maddison%2C%20Chris%20J.%20Mnih%2C%20Andriy%20and%20Yee%20Whye%20Teh.%20The%20concrete%20distribution%3A%20A%20continuous%20relaxation%20of%20discrete%20random%20variables%202017"
+        },
+        {
+            "id": "Marino_et+al_2018_a",
+            "entry": "Joseph Marino, Yisong Yue, and Stephan Mandt. Iterative amortized inference. In International Conference on Machine Learning, pp. 3400\u20133409, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marino%2C%20Joseph%20Yue%2C%20Yisong%20Mandt%2C%20Stephan%20Iterative%20amortized%20inference%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marino%2C%20Joseph%20Yue%2C%20Yisong%20Mandt%2C%20Stephan%20Iterative%20amortized%20inference%202018"
+        },
+        {
+            "id": "Nair_2010_a",
+            "entry": "Vinod Nair and Geoffrey E Hinton. Rectified linear units improve restricted boltzmann machines. In Proceedings of the 27th international conference on machine learning (ICML-10), pp. 807\u2013814, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. In NIPS-W, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPSW%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Adam%20Paszke%20Sam%20Gross%20Soumith%20Chintala%20Gregory%20Chanan%20Edward%20Yang%20Zachary%20DeVito%20Zeming%20Lin%20Alban%20Desmaison%20Luca%20Antiga%20and%20Adam%20Lerer%20Automatic%20differentiation%20in%20pytorch%20In%20NIPSW%202017"
+        },
+        {
+            "id": "Rezende_2015_a",
+            "entry": "Danilo Rezende and Shakir Mohamed. Variational inference with normalizing flows. In International Conference on Machine Learning, pp. 1530\u20131538, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Mohamed%2C%20Shakir%20Variational%20inference%20with%20normalizing%20flows%202015"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In International Conference on Machine Learning, pp. 1278\u20131286, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "S_et+al_2016_a",
+            "entry": "Casper Kaae S\u00f8nderby, Tapani Raiko, Lars Maal\u00f8e, S\u00f8ren Kaae S\u00f8nderby, and Ole Winther. Ladder variational autoencoders. In Advances in neural information processing systems, pp. 3738\u20133746, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%C3%B8nderby%2C%20Casper%20Kaae%20Raiko%2C%20Tapani%20Maal%C3%B8e%2C%20Lars%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Ladder%20variational%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%C3%B8nderby%2C%20Casper%20Kaae%20Raiko%2C%20Tapani%20Maal%C3%B8e%2C%20Lars%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Ladder%20variational%20autoencoders%202016"
+        },
+        {
+            "id": "Vikram_et+al_2018_a",
+            "entry": "Sharad Vikram, Matthew D Hoffman, and Matthew J Johnson. The loracs prior for vaes: Letting the trees speak for the data. arXiv preprint arXiv:1810.06891, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.06891"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Stefan Webb, Adam Golinski, Robert Zinkov, N Siddharth, Tom Rainforth, Yee Whye Teh, and",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Stefan%20Webb%20Adam%20Golinski%20Robert%20Zinkov%20N%20Siddharth%20Tom%20Rainforth%20Yee%20Whye%20Teh%20and"
+        },
+        {
+            "id": "Wood_2018_a",
+            "entry": "Frank Wood. Faithful inversion of generative models for effective amortized inference. In Advances in Neural Information Processing Systems, 2018. Li Yingzhen and Stephan Mandt. Disentangled sequential autoencoder. In International Conference on Machine Learning, pp. 5656\u20135665, 2018. Shengjia Zhao, Jiaming Song, and Stefano Ermon. Learning hierarchical features from deep generative models. In International Conference on Machine Learning, pp. 4091\u20134099, 2017. Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. arXiv preprint arXiv:1611.01578, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01578"
+        },
+        {
+            "id": "All_0.25 every 200_b",
+            "entry": "All models were implemented with PyTorch (Paszke et al., 2017) and trained using the Adam (Kingma & Ba, 2015) optimizer with a mini-batch size of 64 and learning rate of 1e\u22123. Learning rate is decresed by 0.25 every 200 epochs. The Gumbel-softmax temperature was initialized at 1 and decreased to 0.99epoch at each epoch. MNIST and Omniglot took 2000 epochs to converge, and CIFAR took 3000 epochs to converge.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=All%20models%20were%20implemented%20with%20PyTorch%20Paszke%20et%20al%202017%20and%20trained%20using%20the%20Adam%20Kingma%20%20Ba%202015%20optimizer%20with%20a%20minibatch%20size%20of%2064%20and%20learning%20rate%20of%201e3%20Learning%20rate%20is%20decresed%20by%20025%20every%20200%20epochs%20The%20Gumbelsoftmax%20temperature%20was%20initialized%20at%201%20and%20decreased%20to%20099epoch%20at%20each%20epoch%20MNIST%20and%20Omniglot%20took%202000%20epochs%20to%20converge%20and%20CIFAR%20took%203000%20epochs%20to%20converge",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=All%20models%20were%20implemented%20with%20PyTorch%20Paszke%20et%20al%202017%20and%20trained%20using%20the%20Adam%20Kingma%20%20Ba%202015%20optimizer%20with%20a%20minibatch%20size%20of%2064%20and%20learning%20rate%20of%201e3%20Learning%20rate%20is%20decresed%20by%20025%20every%20200%20epochs%20The%20Gumbelsoftmax%20temperature%20was%20initialized%20at%201%20and%20decreased%20to%20099epoch%20at%20each%20epoch%20MNIST%20and%20Omniglot%20took%202000%20epochs%20to%20converge%20and%20CIFAR%20took%203000%20epochs%20to%20converge"
+        }
+    ]
+}

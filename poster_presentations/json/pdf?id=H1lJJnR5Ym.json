@@ -1,0 +1,406 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "EXPLORATION BY RANDOM NETWORK DISTILLATION",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1lJJnR5Ym"
+        },
+        "abstract": "We introduce an exploration bonus for deep reinforcement learning methods that is easy to implement and adds minimal overhead to the computation performed. The bonus is the error of a neural network predicting features of the observations given by a fixed randomly initialized neural network. We also introduce a method to flexibly combine intrinsic and extrinsic rewards. We find that the random network distillation (RND) bonus combined with this increased flexibility enables significant progress on several hard exploration Atari games. In particular we establish state of the art performance on Montezuma\u2019s Revenge, a game famously difficult for deep reinforcement learning methods. To the best of our knowledge, this is the first method that achieves better than average human performance on this game without using demonstrations or having access to the underlying state of the game, and occasionally completes the first level. This suggests that relatively simple methods that scale well can be sufficient to tackle challenging exploration problems."
+    },
+    "keywords": [
+        {
+            "term": "extrinsic reward",
+            "url": "https://en.wikipedia.org/wiki/extrinsic_reward"
+        },
+        {
+            "term": "montezumas revenge",
+            "url": "https://en.wikipedia.org/wiki/montezumas_revenge"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "reward function",
+            "url": "https://en.wikipedia.org/wiki/reward_function"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Intrinsic motivation",
+            "url": "https://en.wikipedia.org/wiki/Intrinsic_motivation"
+        }
+    ],
+    "abbreviations": {
+        "RND": "random network distillation",
+        "RL": "Reinforcement learning"
+    },
+    "highlights": [
+        "Reinforcement learning (RL) methods work by maximizing the expected return of a policy",
+        "We find that even when disregarding the extrinsic reward altogether, an agent maximizing the random network distillation exploration bonus consistently finds more than half of the rooms in Montezuma\u2019s Revenge",
+        "This paper introduced an exploration method based on random network distillation and experimentally showed that the method is capable of performing directed exploration on several Atari games with very sparse rewards",
+        "These experiments suggest that progress on hard exploration games is possible with relatively simple generic methods, especially when applied at scale",
+        "They suggest that methods that are able to treat the stream of intrinsic rewards separately from the stream of extrinsic rewards can benefit from such flexibility",
+        "We find that the random network distillation exploration bonus is sufficient to deal with local exploration, i.e. exploring the consequences of short-term decisions, like whether to interact with a particular object, or avoid it"
+    ],
+    "key_statements": [
+        "Reinforcement learning (RL) methods work by maximizing the expected return of a policy",
+        "This paper introduces an exploration bonus that is simple to implement, works well with high-dimensional observations, can be used with any policy optimization algorithm, and is efficient to compute as it requires only a single forward pass of a neural network on a batch of experience",
+        "Our exploration bonus is based on the observation that neural networks tend to have significantly lower prediction errors on examples similar to those on which they have been trained",
+        "We propose an alternative solution to this undesirable stochasticity by defining an exploration bonus using a prediction problem where the answer is a deterministic function of its inputs",
+        "We find that even when disregarding the extrinsic reward altogether, an agent maximizing the random network distillation exploration bonus consistently finds more than half of the rooms in Montezuma\u2019s Revenge",
+        "To combine the exploration bonus with the extrinsic rewards we introduce a modification of Proximal Policy Optimization (PPO, Schulman et al (2017)) that uses two value heads for the two reward streams",
+        "In Section 2.3 we argued that exploration with random network distillation might be more natural in the non-episodic setting",
+        "We evaluate random network distillation\u2019s performance on six hard exploration Atari games: Gravitar, Montezuma\u2019s Revenge, Pitfall!, Private Eye, Solaris, and Venture",
+        "Figure 7 shows that dynamics-based exploration performs significantly worse than random network distillation with the same CNN policy on Montezuma\u2019s Revenge, PrivateEye, and Solaris, and performs on Venture, Pitfall, and Gravitar",
+        "This paper introduced an exploration method based on random network distillation and experimentally showed that the method is capable of performing directed exploration on several Atari games with very sparse rewards",
+        "These experiments suggest that progress on hard exploration games is possible with relatively simple generic methods, especially when applied at scale",
+        "They suggest that methods that are able to treat the stream of intrinsic rewards separately from the stream of extrinsic rewards can benefit from such flexibility",
+        "We find that the random network distillation exploration bonus is sufficient to deal with local exploration, i.e. exploring the consequences of short-term decisions, like whether to interact with a particular object, or avoid it"
+    ],
+    "summary": [
+        "Reinforcement learning (RL) methods work by maximizing the expected return of a policy.",
+        "Our exploration bonus is based on the observation that neural networks tend to have significantly lower prediction errors on examples similar to those on which they have been trained.",
+        "We find that even when disregarding the extrinsic reward altogether, an agent maximizing the RND exploration bonus consistently finds more than half of the rooms in Montezuma\u2019s Revenge.",
+        "This is the thought experiment where an agent that is rewarded for errors in the prediction of its forward dynamics model gets attracted to stochastic transitions in the environment.",
+        "We begin with an intrinsic reward only experiment on Montezuma\u2019s Revenge in Section 3.1 to isolate the inductive bias of the RND bonus, follow by extensive ablations of RND on Montezuma\u2019s Revenge in Sections 3.2-3.5 to understand the factors that contribute to RND\u2019s performance, and conclude with a comparison to baseline methods on 6 hard exploration Atari games in Section 3.6.",
+        "We report two measures of exploration performance in Figure 3: mean episodic return, and the number of rooms the agent finds over the training run.",
+        "Figure 5 shows that agents trained with larger batches of experience collected from more parallel environments obtain higher mean returns after similar numbers of updates.",
+        "This means that we can implement an apples to apples comparison and change the loss in RND so the predictor network predicts the random features of the observation given the current observation and action, while holding fixed all other parts of our method such as dual value heads, non-episodic intrinsic returns, normalization schemes etc.",
+        "This provides an ablation of the prediction problem defining the exploration bonus, while being representative of a class of prior work using forward dynamics error.",
+        "Our expectation was that these methods should be fairly similar except where the dynamics-based agent is able to exploit non-determinism in the environment to get intrinsic reward.",
+        "Figure 7 shows that dynamics-based exploration performs significantly worse than RND with the same CNN policy on Montezuma\u2019s Revenge, PrivateEye, and Solaris, and performs on Venture, Pitfall, and Gravitar.",
+        "Combining DQN with a pseudo-count exploration bonus <a class=\"ref-link\" id=\"cBellemare_et+al_2016_a\" href=\"#rBellemare_et+al_2016_a\">Bellemare et al (2016</a>) set a new state of the art performance, exploring 15 rooms and getting best return of 6,600.",
+        "Expert demonstrations can be used effectively to simplify the exploration problem in Montezuma\u2019s Revenge, and a number of works (<a class=\"ref-link\" id=\"cSalimans_2018_a\" href=\"#rSalimans_2018_a\">Salimans & Chen, 2018</a>; <a class=\"ref-link\" id=\"cPohlen_et+al_2018_a\" href=\"#rPohlen_et+al_2018_a\">Pohlen et al, 2018</a>; <a class=\"ref-link\" id=\"cAytar_et+al_2018_a\" href=\"#rAytar_et+al_2018_a\">Aytar et al, 2018</a>; <a class=\"ref-link\" id=\"cGarmulewicz_et+al_2018_a\" href=\"#rGarmulewicz_et+al_2018_a\">Garmulewicz et al, 2018</a>) have achieved performance comparable to or better than that of human experts."
+    ],
+    "headline": "We introduce an exploration bonus for deep reinforcement learning methods that is easy to implement and adds minimal overhead to the computation performed",
+    "reference_links": [
+        {
+            "id": "Achiam_2017_a",
+            "entry": "Joshua Achiam and Shankar Sastry. Surprise-based intrinsic motivation for deep reinforcement learning. arXiv:1703.01732, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01732"
+        },
+        {
+            "id": "Achiam_et+al_2018_a",
+            "entry": "Joshua Achiam, Harrison Edwards, Dario Amodei, and Pieter Abbeel. Variational option discovery algorithms. arXiv preprint arXiv:1807.10299, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.10299"
+        },
+        {
+            "id": "Aytar_et+al_2018_a",
+            "entry": "Yusuf Aytar, Tobias Pfaff, David Budden, Tom Le Paine, Ziyu Wang, and Nando de Freitas. Playing hard exploration games by watching YouTube. arXiv preprint arXiv:1805.11592, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11592"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bellemare_et+al_2017_a",
+            "entry": "Marc G Bellemare, Will Dabney, and Remi Munos. A distributional perspective on reinforcement learning. arXiv preprint arXiv:1707.06887, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06887"
+        },
+        {
+            "id": "Burda_et+al_2018_a",
+            "entry": "Yuri Burda, Harri Edwards, Deepak Pathak, Amos Storkey, Trevor Darrell, and Alexei A. Efros. Large-scale study of curiosity-driven learning. In arXiv:1808.04355, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04355"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Richard Y Chen, John Schulman, Pieter Abbeel, and Szymon Sidor. UCB and infogain exploration via q-ensembles. arXiv:1706.01502, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01502"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart Van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using RNN encoder-decoder for statistical machine translation. arXiv preprint arXiv:1406.1078, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1406.1078"
+        },
+        {
+            "id": "Denil_et+al_2016_a",
+            "entry": "Misha Denil, Pulkit Agrawal, Tejas D Kulkarni, Tom Erez, Peter Battaglia, and Nando de Freitas. Learning to perform physics experiments via deep reinforcement learning. arXiv preprint arXiv:1611.01843, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01843"
+        },
+        {
+            "id": "Espeholt_et+al_2018_a",
+            "entry": "Lasse Espeholt, Hubert Soyer, Remi Munos, Karen Simonyan, Volodymir Mnih, Tom Ward, Yotam Doron, Vlad Firoiu, Tim Harley, Iain Dunning, et al. IMPALA: Scalable distributed Deep-RL with importance weighted actor-learner architectures. arXiv preprint arXiv:1802.01561, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01561"
+        },
+        {
+            "id": "Eysenbach_et+al_2018_a",
+            "entry": "Benjamin Eysenbach, Abhishek Gupta, Julian Ibarz, and Sergey Levine. Diversity is all you need: Learning skills without a reward function. arXiv preprint, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eysenbach%2C%20Benjamin%20Gupta%2C%20Abhishek%20Ibarz%2C%20Julian%20Levine%2C%20Sergey%20Diversity%20is%20all%20you%20need%3A%20Learning%20skills%20without%20a%20reward%20function.%20arXiv%20p%202018"
+        },
+        {
+            "id": "Fortunato_et+al_2017_a",
+            "entry": "Meire Fortunato, Mohammad Gheshlaghi Azar, Bilal Piot, Jacob Menick, Ian Osband, Alex Graves, Vlad Mnih, Remi Munos, Demis Hassabis, Olivier Pietquin, Charles Blundell, and Shane Legg. Noisy networks for exploration. arXiv:1706.10295, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.10295"
+        },
+        {
+            "id": "Fox_et+al_2018_a",
+            "entry": "Lior Fox, Leshem Choshen, and Yonatan Loewenstein. Dora the explorer: Directed outreaching reinforcement action-selection. International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fox%2C%20Lior%20Choshen%2C%20Leshem%20Loewenstein%2C%20Yonatan%20Dora%20the%20explorer%3A%20Directed%20outreaching%20reinforcement%20action-selection%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fox%2C%20Lior%20Choshen%2C%20Leshem%20Loewenstein%2C%20Yonatan%20Dora%20the%20explorer%3A%20Directed%20outreaching%20reinforcement%20action-selection%202018"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Justin Fu, John D Co-Reyes, and Sergey Levine. EX2: Exploration with exemplar models for deep reinforcement learning. NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fu%2C%20Justin%20Co-Reyes%2C%20John%20D.%20Levine%2C%20Sergey%20EX2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fu%2C%20Justin%20Co-Reyes%2C%20John%20D.%20Levine%2C%20Sergey%20EX2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Garmulewicz_et+al_2018_a",
+            "entry": "Micha\u0142 Garmulewicz, Henryk Michalewski, and Piotr Mi\u0142os. Expert-augmented actor-critic for vizdoom and montezumas revenge. arXiv preprint arXiv:1809.03447, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.03447"
+        },
+        {
+            "id": "Gregor_et+al_2017_a",
+            "entry": "Karol Gregor, Danilo Jimenez Rezende, and Daan Wierstra. Variational intrinsic control. ICLR Workshop, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gregor%2C%20Karol%20Rezende%2C%20Danilo%20Jimenez%20Wierstra%2C%20Daan%20Variational%20intrinsic%20control%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gregor%2C%20Karol%20Rezende%2C%20Danilo%20Jimenez%20Wierstra%2C%20Daan%20Variational%20intrinsic%20control%202017"
+        },
+        {
+            "id": "Haber_et+al_2018_a",
+            "entry": "Nick Haber, Damian Mrowca, Li Fei-Fei, and Daniel LK Yamins. Learning to play with intrinsicallymotivated self-aware agents. arXiv preprint arXiv:1802.07442, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.07442"
+        },
+        {
+            "id": "Hessel_et+al_2017_a",
+            "entry": "Matteo Hessel, Joseph Modayil, Hado Van Hasselt, Tom Schaul, Georg Ostrovski, Will Dabney, Dan Horgan, Bilal Piot, Mohammad Azar, and David Silver. Rainbow: Combining improvements in deep reinforcement learning. arXiv preprint arXiv:1710.02298, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.02298"
+        },
+        {
+            "id": "Horgan_et+al_2018_a",
+            "entry": "Dan Horgan, John Quan, David Budden, Gabriel Barth-Maron, Matteo Hessel, Hado Van Hasselt, and David Silver. Distributed prioritized experience replay. arXiv preprint arXiv:1803.00933, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00933"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. VIME: Variational information maximizing exploration. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20VIME%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20VIME%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Jarrett_et+al_2009_a",
+            "entry": "Kevin Jarrett, Koray Kavukcuoglu, Yann LeCun, et al. What is the best multi-stage architecture for object recognition? In Computer Vision, 2009 IEEE 12th International Conference on, pp. 2146\u20132153. IEEE, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jarrett%2C%20Kevin%20Kavukcuoglu%2C%20Koray%20LeCun%2C%20Yann%20What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition%3F%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jarrett%2C%20Kevin%20Kavukcuoglu%2C%20Koray%20LeCun%2C%20Yann%20What%20is%20the%20best%20multi-stage%20architecture%20for%20object%20recognition%3F%202009"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. ICLR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kulkarni_et+al_2016_a",
+            "entry": "Tejas D Kulkarni, Karthik Narasimhan, Ardavan Saeedi, and Josh Tenenbaum. Hierarchical deep reinforcement learning: Integrating temporal abstraction and intrinsic motivation. In Advances in neural information processing systems, pp. 3675\u20133683, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulkarni%2C%20Tejas%20D.%20Narasimhan%2C%20Karthik%20Saeedi%2C%20Ardavan%20Tenenbaum%2C%20Josh%20Hierarchical%20deep%20reinforcement%20learning%3A%20Integrating%20temporal%20abstraction%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulkarni%2C%20Tejas%20D.%20Narasimhan%2C%20Karthik%20Saeedi%2C%20Ardavan%20Tenenbaum%2C%20Josh%20Hierarchical%20deep%20reinforcement%20learning%3A%20Integrating%20temporal%20abstraction%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Lopes_et+al_2012_a",
+            "entry": "Manuel Lopes, Tobias Lang, Marc Toussaint, and Pierre-Yves Oudeyer. Exploration in model-based reinforcement learning by empirically estimating learning progress. In NIPS, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lopes%2C%20Manuel%20Lang%2C%20Tobias%20Toussaint%2C%20Marc%20Oudeyer%2C%20Pierre-Yves%20Exploration%20in%20model-based%20reinforcement%20learning%20by%20empirically%20estimating%20learning%20progress%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lopes%2C%20Manuel%20Lang%2C%20Tobias%20Toussaint%2C%20Marc%20Oudeyer%2C%20Pierre-Yves%20Exploration%20in%20model-based%20reinforcement%20learning%20by%20empirically%20estimating%20learning%20progress%202012"
+        },
+        {
+            "id": "Machado_et+al_2017_a",
+            "entry": "Marlos C Machado, Marc G Bellemare, Erik Talvitie, Joel Veness, Matthew Hausknecht, and Michael Bowling. Revisiting the arcade learning environment: Evaluation protocols and open problems for general agents. arXiv preprint arXiv:1709.06009, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.06009"
+        },
+        {
+            "id": "Machado_et+al_2018_a",
+            "entry": "Marlos C Machado, Marc G Bellemare, and Michael Bowling. Count-based exploration with the successor representation. arXiv preprint arXiv:1807.11622, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.11622"
+        },
+        {
+            "id": "Mnih_et+al_2013_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. Playing Atari with deep reinforcement learning. arXiv preprint arXiv:1312.5602, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.5602"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg, and Demis Hassabis. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, February 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015-02"
+        },
+        {
+            "id": "Mnih_et+al_2016_a",
+            "entry": "Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In ICML, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Badia%2C%20Adria%20Puigdomenech%20Mirza%2C%20Mehdi%20Graves%2C%20Alex%20Asynchronous%20methods%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "O_et+al_2017_a",
+            "entry": "Brendan O\u2019Donoghue, Ian Osband, Remi Munos, and Volodymyr Mnih. The uncertainty Bellman equation and exploration. arXiv preprint arXiv:1709.05380, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.05380"
+        },
+        {
+            "id": "Oh_et+al_2018_a",
+            "entry": "Junhyuk Oh, Yijie Guo, Satinder Singh, and Honglak Lee. Self-imitation learning. arXiv preprint arXiv:1806.05635, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.05635"
+        },
+        {
+            "id": "Five_2018_a",
+            "entry": "OpenAI. OpenAI Five. https://blog.openai.com/openai-five/, 2018.",
+            "url": "https://blog.openai.com/openai-five/"
+        },
+        {
+            "id": "Openai_2018_a",
+            "entry": "OpenAI,:, M. Andrychowicz, B. Baker, M. Chociej, R. Jozefowicz, B. McGrew, J. Pachocki, A. Petron, M. Plappert, G. Powell, A. Ray, J. Schneider, S. Sidor, J. Tobin, P. Welinder, L. Weng, and W. Zaremba. Learning Dexterous In-Hand Manipulation. ArXiv e-prints, August 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=OpenAI%20M%20Andrychowicz%20B%20Baker%20M%20Chociej%20R%20Jozefowicz%20B%20McGrew%20J%20Pachocki%20A%20Petron%20M%20Plappert%20G%20Powell%20A%20Ray%20J%20Schneider%20S%20Sidor%20J%20Tobin%20P%20Welinder%20L%20Weng%20and%20W%20Zaremba%20Learning%20Dexterous%20InHand%20Manipulation%20ArXiv%20eprints%20August%202018"
+        },
+        {
+            "id": "Osband_et+al_2016_a",
+            "entry": "Ian Osband, Charles Blundell, Alexander Pritzel, and Benjamin Van Roy. Deep exploration via bootstrapped DQN. In NIPS, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Blundell%2C%20Charles%20Pritzel%2C%20Alexander%20Roy%2C%20Benjamin%20Van%20Deep%20exploration%20via%20bootstrapped%20DQN%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Blundell%2C%20Charles%20Pritzel%2C%20Alexander%20Roy%2C%20Benjamin%20Van%20Deep%20exploration%20via%20bootstrapped%20DQN%202016"
+        },
+        {
+            "id": "Osband_et+al_2018_a",
+            "entry": "Ian Osband, John Aslanides, and Albin Cassirer. Randomized prior functions for deep reinforcement learning. arXiv preprint arXiv:1806.03335, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.03335"
+        },
+        {
+            "id": "Ostrovski_et+al_2018_a",
+            "entry": "Georg Ostrovski, Marc G Bellemare, Aaron van den Oord, and Remi Munos. Count-based exploration with neural density models. International Conference for Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ostrovski%2C%20Georg%20Bellemare%2C%20Marc%20G.%20van%20den%20Oord%2C%20Aaron%20Munos%2C%20Remi%20Count-based%20exploration%20with%20neural%20density%20models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ostrovski%2C%20Georg%20Bellemare%2C%20Marc%20G.%20van%20den%20Oord%2C%20Aaron%20Munos%2C%20Remi%20Count-based%20exploration%20with%20neural%20density%20models%202018"
+        },
+        {
+            "id": "Oudeyer_et+al_2007_a",
+            "entry": "Pierre-Yves Oudeyer, Frdric Kaplan, and Verena V Hafner. Intrinsic motivation systems for autonomous mental development. Evolutionary Computation, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frdric%20Hafner%2C%20Verena%20V.%20Intrinsic%20motivation%20systems%20for%20autonomous%20mental%20development%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frdric%20Hafner%2C%20Verena%20V.%20Intrinsic%20motivation%20systems%20for%20autonomous%20mental%20development%202007"
+        },
+        {
+            "id": "Pathak_et+al_2017_a",
+            "entry": "Deepak Pathak, Pulkit Agrawal, Alexei A. Efros, and Trevor Darrell. Curiosity-driven exploration by self-supervised prediction. In ICML, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction%202017"
+        },
+        {
+            "id": "Plappert_et+al_2017_a",
+            "entry": "Matthias Plappert, Rein Houthooft, Prafulla Dhariwal, Szymon Sidor, Richard Y Chen, Xi Chen, Tamim Asfour, Pieter Abbeel, and Marcin Andrychowicz. Parameter space noise for exploration. arXiv:1706.01905, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01905"
+        },
+        {
+            "id": "Pohlen_et+al_2018_a",
+            "entry": "Tobias Pohlen, Bilal Piot, Todd Hester, Mohammad Gheshlaghi Azar, Dan Horgan, David Budden, Gabriel Barth-Maron, Hado van Hasselt, John Quan, Mel Vecer\u0131k, et al. Observe and look further: Achieving consistent performance on Atari. arXiv preprint arXiv:1805.11593, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11593"
+        },
+        {
+            "id": "Pong_et+al_2018_a",
+            "entry": "Vitchyr Pong, Shixiang Gu, Murtaza Dalal, and Sergey Levine. Temporal difference models: Modelfree deep RL for model-based control. arXiv preprint arXiv:1802.09081, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09081"
+        },
+        {
+            "id": "Rahimi_2008_a",
+            "entry": "Ali Rahimi and Benjamin Recht. Random features for large-scale kernel machines. In Advances in neural information processing systems, pp. 1177\u20131184, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Random%20features%20for%20large-scale%20kernel%20machines%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rahimi%2C%20Ali%20Recht%2C%20Benjamin%20Random%20features%20for%20large-scale%20kernel%20machines%202008"
+        },
+        {
+            "id": "Roijers_et+al_2013_a",
+            "entry": "Diederik M Roijers, Peter Vamplew, Shimon Whiteson, and Richard Dazeley. A survey of multiobjective sequential decision-making. Journal of Artificial Intelligence Research, 48:67\u2013113, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roijers%2C%20Diederik%20M.%20Vamplew%2C%20Peter%20Whiteson%2C%20Shimon%20Dazeley%2C%20Richard%20A%20survey%20of%20multiobjective%20sequential%20decision-making%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Roijers%2C%20Diederik%20M.%20Vamplew%2C%20Peter%20Whiteson%2C%20Shimon%20Dazeley%2C%20Richard%20A%20survey%20of%20multiobjective%20sequential%20decision-making%202013"
+        },
+        {
+            "id": "Salimans_2018_a",
+            "entry": "Tim Salimans and Richard Chen. Learning Montezuma\u2019s Revenge from a single demonstration. https://blog.openai.com/learning-montezumas-revenge-from-a-single-demonstration/, 2018.",
+            "url": "https://blog.openai.com/learning-montezumas-revenge-from-a-single-demonstration/"
+        },
+        {
+            "id": "Saxe_et+al_2011_a",
+            "entry": "Andrew M Saxe, Pang Wei Koh, Zhenghao Chen, Maneesh Bhand, Bipin Suresh, and Andrew Y Ng. On random weights and unsupervised feature learning. In ICML, pp. 1089\u20131096, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Saxe%2C%20Andrew%20M.%20Koh%2C%20Pang%20Wei%20Chen%2C%20Zhenghao%20Bhand%2C%20Maneesh%20Bipin%20Suresh%2C%20and%20Andrew%20Y%20Ng.%20On%20random%20weights%20and%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saxe%2C%20Andrew%20M.%20Koh%2C%20Pang%20Wei%20Chen%2C%20Zhenghao%20Bhand%2C%20Maneesh%20Bipin%20Suresh%2C%20and%20Andrew%20Y%20Ng.%20On%20random%20weights%20and%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Schmidhuber_1991_a",
+            "entry": "Jurgen Schmidhuber. Curious model-building control systems. In Neural Networks, 1991. 1991 IEEE International Joint Conference on, pp. 1458\u20131463. IEEE, 1991a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Curious%20model-building%20control%20systems%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20Curious%20model-building%20control%20systems%201991"
+        },
+        {
+            "id": "Schmidhuber_1991_b",
+            "entry": "Jurgen Schmidhuber. A possibility for implementing curiosity and boredom in model-building neural controllers. In Proceedings of the First International Conference on Simulation of Adaptive Behavior, 1991b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20A%20possibility%20for%20implementing%20curiosity%20and%20boredom%20in%20model-building%20neural%20controllers%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20A%20possibility%20for%20implementing%20curiosity%20and%20boredom%20in%20model-building%20neural%20controllers%201991"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J. Maddison, Arthur Guez, Laurent Sifre, George van den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, Sander Dieleman, Dominik Grewe, John Nham, Nal Kalchbrenner, Ilya Sutskever, Timothy Lillicrap, Madeleine Leach, Koray Kavukcuoglu, Thore Graepel, and Demis Hassabis. Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484\u2013489, Jan 2016. ISSN 0028-0836. doi: 10.1038/nature16961.",
+            "crossref": "https://dx.doi.org/10.1038/nature16961",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1038/nature16961"
+        },
+        {
+            "id": "Stadie_et+al_2015_a",
+            "entry": "Bradly C Stadie, Sergey Levine, and Pieter Abbeel. Incentivizing exploration in reinforcement learning with deep predictive models. NIPS Workshop, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stadie%2C%20Bradly%20C.%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Incentivizing%20exploration%20in%20reinforcement%20learning%20with%20deep%20predictive%20models%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stadie%2C%20Bradly%20C.%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Incentivizing%20exploration%20in%20reinforcement%20learning%20with%20deep%20predictive%20models%202015"
+        },
+        {
+            "id": "Stanton_2018_a",
+            "entry": "Christopher Stanton and Jeff Clune. Deep curiosity search: Intra-life exploration improves performance on challenging deep reinforcement learning problems. arXiv preprint arXiv:1806.00553, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.00553"
+        },
+        {
+            "id": "Still_2012_a",
+            "entry": "Susanne Still and Doina Precup. An information-theoretic approach to curiosity-driven reinforcement learning. Theory in Biosciences, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Still%2C%20Susanne%20Precup%2C%20Doina%20An%20information-theoretic%20approach%20to%20curiosity-driven%20reinforcement%20learning%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Still%2C%20Susanne%20Precup%2C%20Doina%20An%20information-theoretic%20approach%20to%20curiosity-driven%20reinforcement%20learning%202012"
+        },
+        {
+            "id": "Strehl_2008_a",
+            "entry": "Alexander L Strehl and Michael L Littman. An analysis of model-based interval estimation for markov decision processes. Journal of Computer and System Sciences, 74(8):1309\u20131331, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strehl%2C%20Alexander%20L.%20Littman%2C%20Michael%20L.%20An%20analysis%20of%20model-based%20interval%20estimation%20for%20markov%20decision%20processes%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Strehl%2C%20Alexander%20L.%20Littman%2C%20Michael%20L.%20An%20analysis%20of%20model-based%20interval%20estimation%20for%20markov%20decision%20processes%202008"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2018_a",
+            "entry": "Sainbayar Sukhbaatar, Ilya Kostrikov, Arthur Szlam, and Rob Fergus. Intrinsic motivation and automatic curricula via asymmetric self-play. In ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sukhbaatar%2C%20Sainbayar%20Kostrikov%2C%20Ilya%20Szlam%2C%20Arthur%20Fergus%2C%20Rob%20Intrinsic%20motivation%20and%20automatic%20curricula%20via%20asymmetric%20self-play%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sukhbaatar%2C%20Sainbayar%20Kostrikov%2C%20Ilya%20Szlam%2C%20Arthur%20Fergus%2C%20Rob%20Intrinsic%20motivation%20and%20automatic%20curricula%20via%20asymmetric%20self-play%202018"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "Haoran Tang, Rein Houthooft, Davis Foote, Adam Stooke, Xi Chen, Yan Duan, John Schulman, Filip DeTurck, and Pieter Abbeel. # exploration: A study of count-based exploration for deep reinforcement learning. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Haoran%20Houthooft%2C%20Rein%20Foote%2C%20Davis%20Stooke%2C%20Adam%20%23%20exploration%3A%20A%20study%20of%20count-based%20exploration%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Haoran%20Houthooft%2C%20Rein%20Foote%2C%20Davis%20Stooke%2C%20Adam%20%23%20exploration%3A%20A%20study%20of%20count-based%20exploration%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Yang_et+al_2015_a",
+            "entry": "Zichao Yang, Marcin Moczulski, Misha Denil, Nando de Freitas, Alex Smola, Le Song, and Ziyu Wang. Deep fried convnets. In Proceedings of the IEEE International Conference on Computer Vision, pp. 1476\u20131483, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Zichao%20Moczulski%2C%20Marcin%20Denil%2C%20Misha%20de%20Freitas%2C%20Nando%20Deep%20fried%20convnets%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Zichao%20Moczulski%2C%20Marcin%20Denil%2C%20Misha%20de%20Freitas%2C%20Nando%20Deep%20fried%20convnets%202015"
+        },
+        {
+            "id": "Zoph_2016_a",
+            "entry": "Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. arXiv preprint arXiv:1611.01578, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01578"
+        },
+        {
+            "id": "An_2017_a",
+            "entry": "An exploration bonus can be used with any RL algorithm by modifying the rewards used to train the model (i.e., rt = it + et). We combine our proposed exploration bonus with a baseline reinforcement learning algorithm PPO (Schulman et al., 2017). PPO is a policy gradient method that we have found to require little tuning for good performance. For algorithmic details see Algorithm 1.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=An%20exploration%20bonus%20can%20be%20used%20with%20any%20RL%20algorithm%20by%20modifying%20the%20rewards%20used%20to%20train%20the%20model%20ie%20rt%20%20it%20%20et%20We%20combine%20our%20proposed%20exploration%20bonus%20with%20a%20baseline%20reinforcement%20learning%20algorithm%20PPO%20Schulman%20et%20al%202017%20PPO%20is%20a%20policy%20gradient%20method%20that%20we%20have%20found%20to%20require%20little%20tuning%20for%20good%20performance%20For%20algorithmic%20details%20see%20Algorithm%201",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=An%20exploration%20bonus%20can%20be%20used%20with%20any%20RL%20algorithm%20by%20modifying%20the%20rewards%20used%20to%20train%20the%20model%20ie%20rt%20%20it%20%20et%20We%20combine%20our%20proposed%20exploration%20bonus%20with%20a%20baseline%20reinforcement%20learning%20algorithm%20PPO%20Schulman%20et%20al%202017%20PPO%20is%20a%20policy%20gradient%20method%20that%20we%20have%20found%20to%20require%20little%20tuning%20for%20good%20performance%20For%20algorithmic%20details%20see%20Algorithm%201"
+        },
+        {
+            "id": "Table_2017_b",
+            "entry": "Table 1 contains details of how we preprocessed the environment for our experiments. We followed the recommendations in Machado et al. (2017) in using sticky actions in order to make the environments non-deterministic so that memorization of action sequences is not possible. In Table 2 we show additional preprocessing details for the policy and value networks. In Table 3 we show additional preprocessing details for the predictor and target networks.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Table%201%20contains%20details%20of%20how%20we%20preprocessed%20the%20environment%20for%20our%20experiments%20We%20followed%20the%20recommendations%20in%20Machado%20et%20al%202017%20in%20using%20sticky%20actions%20in%20order%20to%20make%20the%20environments%20nondeterministic%20so%20that%20memorization%20of%20action%20sequences%20is%20not%20possible%20In%20Table%202%20we%20show%20additional%20preprocessing%20details%20for%20the%20policy%20and%20value%20networks%20In%20Table%203%20we%20show%20additional%20preprocessing%20details%20for%20the%20predictor%20and%20target%20networks",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Table%201%20contains%20details%20of%20how%20we%20preprocessed%20the%20environment%20for%20our%20experiments%20We%20followed%20the%20recommendations%20in%20Machado%20et%20al%202017%20in%20using%20sticky%20actions%20in%20order%20to%20make%20the%20environments%20nondeterministic%20so%20that%20memorization%20of%20action%20sequences%20is%20not%20possible%20In%20Table%202%20we%20show%20additional%20preprocessing%20details%20for%20the%20policy%20and%20value%20networks%20In%20Table%203%20we%20show%20additional%20preprocessing%20details%20for%20the%20predictor%20and%20target%20networks"
+        }
+    ]
+}

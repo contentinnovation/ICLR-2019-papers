@@ -1,0 +1,289 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "A GENERATIVE MODEL FOR ELECTRON PATHS",
+        "author": "John Bradshaw University of Cambridge Max Planck Institute, T\u00fcbingen jab,@cam.ac.uk",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=r1x4BnCqKX",
+            "doi": "10.6084/m9.f"
+        },
+        "abstract": "Chemical reactions can be described as the stepwise redistribution of electrons in molecules. As such, reactions are often depicted using \u201carrow-pushing\u201d diagrams which show this movement as a sequence of arrows. We propose an electron path prediction model (ELECTRO) to learn these sequences directly from raw reaction data. Instead of predicting product molecules directly from reactant molecules in one shot, learning a model of electron movement has the benefits of (a) being easy for chemists to interpret, (b) incorporating constraints of chemistry, such as balanced atom counts before and after the reaction, and (c) naturally encoding the sparsity of chemical reactions, which usually involve changes in only a small number of atoms in the reactants. We design a method to extract approximate reaction paths from any dataset of atom-mapped reaction SMILES strings. Our model achieves excellent performance on an important subset of the USPTO reaction dataset, comparing favorably to the strongest baselines. Furthermore, we show that our model recovers a basic knowledge of chemistry without being explicitly trained to do so."
+    },
+    "keywords": [
+        {
+            "term": "chemical reaction network",
+            "url": "https://en.wikipedia.org/wiki/chemical_reaction_network"
+        },
+        {
+            "term": "quantum chemistry",
+            "url": "https://en.wikipedia.org/wiki/quantum_chemistry"
+        },
+        {
+            "term": "Chemical reactions",
+            "url": "https://en.wikipedia.org/wiki/Chemical_reactions"
+        },
+        {
+            "term": "reaction mechanism",
+            "url": "https://en.wikipedia.org/wiki/reaction_mechanism"
+        },
+        {
+            "term": "molecular graph",
+            "url": "https://en.wikipedia.org/wiki/molecular_graph"
+        }
+    ],
+    "abbreviations": {
+        "ELECTRO": "electron path prediction model",
+        "LEF": "linear electron flow",
+        "GGNN": "Gated Graph Neural Network"
+    },
+    "highlights": [
+        "The ability to reliably predict the products of chemical reactions is of central importance to the manufacture of medicines and materials, and to understand many processes in molecular biology",
+        "Chemical reactions can be treated as rules that \u201crewrite\u201d reactant molecules to products, which abstracts away the individual electron redistribution steps into a single, global transformation step",
+        "To combine the advantages of both approaches, chemists use a powerful qualitative model of quantum chemistry colloquially called \u201carrow pushing\u201d, which simplifies the stepwise electron shifts using sequences of arrows which indicate the path of electrons throughout molecular graphs (<a class=\"ref-link\" id=\"cHerges_1994_b\" href=\"#rHerges_1994_b\">Herges, 1994b</a>)",
+        "If reactions fall into this class, a chemical reaction can be modelled as pairs of electrons moving in a single path through the reactant atoms",
+        "In this paper we proposed electron path prediction model, a model for predicting electron paths for reactions with linear electron flow",
+        "Our model (i) produces output that is easy for chemists to interpret, and exploits the sparsity and compositionality involved in chemical reactions"
+    ],
+    "key_statements": [
+        "The ability to reliably predict the products of chemical reactions is of central importance to the manufacture of medicines and materials, and to understand many processes in molecular biology",
+        "All chemical reactions can be described by the stepwise rearrangement of electrons in molecules (<a class=\"ref-link\" id=\"cHerges_1994_b\" href=\"#rHerges_1994_b\">Herges, 1994b</a>)",
+        "Chemical reactions can be treated as rules that \u201crewrite\u201d reactant molecules to products, which abstracts away the individual electron redistribution steps into a single, global transformation step",
+        "To combine the advantages of both approaches, chemists use a powerful qualitative model of quantum chemistry colloquially called \u201carrow pushing\u201d, which simplifies the stepwise electron shifts using sequences of arrows which indicate the path of electrons throughout molecular graphs (<a class=\"ref-link\" id=\"cHerges_1994_b\" href=\"#rHerges_1994_b\">Herges, 1994b</a>)",
+        "If reactions fall into this class, a chemical reaction can be modelled as pairs of electrons moving in a single path through the reactant atoms",
+        "We propose a novel generative model for modeling the reaction mechanism of linear electron flow reactions",
+        "We propose an end-to-end generative model for predicting reaction mechanisms, electron path prediction model, that is fully differentiable",
+        "Observe that since linear electron flow reactions are a single path of electrons (\u00a72.3), at any step t, the step at in the path depends only on (i) the intermediate molecules formed by the action path up to that point Mt, the previous action taken at\u22121, and the point of time t through the path, indicating whether we are on an add or remove bond step",
+        "We evaluate accuracy by checking whether the sequence of integers extracted from the raw data as described in Section 4 is an exact match with the sequence of integers output by electron path prediction model",
+        "The first figure in the appendix shows an example of a reaction with symmetries, where different electron paths produce the exact same product",
+        "To obtain a ranked list of products for our model, we compute this canonicalized product SMILES for each of the predictions found by beam search over electron paths, removing duplicates along the way",
+        "In this paper we proposed electron path prediction model, a model for predicting electron paths for reactions with linear electron flow",
+        "Our model (i) produces output that is easy for chemists to interpret, and exploits the sparsity and compositionality involved in chemical reactions"
+    ],
+    "summary": [
+        "The ability to reliably predict the products of chemical reactions is of central importance to the manufacture of medicines and materials, and to understand many processes in molecular biology.",
+        "We call our model ELECTRO, as it directly predicts the path of electrons through molecules.",
+        "All chemical reactions involve the stepwise movement of electrons along the atoms in a set of reactant molecules.",
+        "If reactions fall into this class, a chemical reaction can be modelled as pairs of electrons moving in a single path through the reactant atoms.",
+        "Further for LEF reactions, the movement of the electrons along the linear path will alternately remove existing bonds and form new ones.",
+        "We propose an end-to-end generative model for predicting reaction mechanisms, ELECTRO, that is fully differentiable.",
+        "Observe that since LEF reactions are a single path of electrons (\u00a72.3), at any step t, the step at in the path depends only on (i) the intermediate molecules formed by the action path up to that point Mt, the previous action taken at\u22121, and the point of time t through the path, indicating whether we are on an add or remove bond step.",
+        "Input: Reactant molecules M0, reagents Me, atom embedding function hA(\u00b7), graph embedding functions greagent(\u00b7) and gcont(\u00b7), additional logit functions f start(\u00b7), f remove(\u00b7), f add(\u00b7), time steps T max",
+        "Prediction Once trained, we can use our model to sample chemically-valid paths given an input set of reactants M0 and reagents Me, by simulating from the conditional distributions until sampling a continue value equal to zero.",
+        "We describe two data processing techniques that allow us to identify reagents, reactions with LEF topology, and extract an underlying electron path.",
+        "The first figure in the appendix shows an example of a reaction with symmetries, where different electron paths produce the exact same product.",
+        "The top-5 accuracy for a particular reaction may include multiple different electron paths that yield the same product molecule.",
+        "To approximate this we (a) take the predicted electron path, (b) apply these edits to the reactants to produce a product graph WLDN (<a class=\"ref-link\" id=\"cJin_et+al_2017_a\" href=\"#rJin_et+al_2017_a\">Jin et al, 2017</a>) Seq2Seq FTS (<a class=\"ref-link\" id=\"cSchwaller_et+al_2018_a\" href=\"#rSchwaller_et+al_2018_a\"><a class=\"ref-link\" id=\"cSchwaller_et+al_2018_a\" href=\"#rSchwaller_et+al_2018_a\">Schwaller et al, 2018</a></a>) Seq2Seq (<a class=\"ref-link\" id=\"cSchwaller_et+al_2018_a\" href=\"#rSchwaller_et+al_2018_a\"><a class=\"ref-link\" id=\"cSchwaller_et+al_2018_a\" href=\"#rSchwaller_et+al_2018_a\">Schwaller et al, 2018</a></a>)",
+        "To obtain a ranked list of products for our model, we compute this canonicalized product SMILES for each of the predictions found by beam search over electron paths, removing duplicates along the way.",
+        "In this paper we proposed ELECTRO, a model for predicting electron paths for reactions with linear electron flow.",
+        "As a byproduct of predicting reaction mechanisms we are able to perform reaction product prediction, comparing favorably to the strongest baselines on this task"
+    ],
+    "headline": "We propose an electron path prediction model to learn these sequences directly from raw reaction data",
+    "reference_links": [
+        {
+            "id": "Bergeler_et+al_2015_a",
+            "entry": "Maike Bergeler, Gregor N Simm, Jonny Proppe, and Markus Reiher. Heuristics-guided exploration of reaction mechanisms. Journal of chemical theory and computation, 11(12):5712\u20135722, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bergeler%2C%20Maike%20Simm%2C%20Gregor%20N.%20Proppe%2C%20Jonny%20Reiher%2C%20Markus%20Heuristics-guided%20exploration%20of%20reaction%20mechanisms%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bergeler%2C%20Maike%20Simm%2C%20Gregor%20N.%20Proppe%2C%20Jonny%20Reiher%2C%20Markus%20Heuristics-guided%20exploration%20of%20reaction%20mechanisms%202015"
+        },
+        {
+            "id": "Cho_et+al_2014_a",
+            "entry": "Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. Learning phrase representations using RNN Encoder\u2013Decoder for statistical machine translation. In Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP), pages 1724\u20131734, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cho%2C%20Kyunghyun%20van%20Merrienboer%2C%20Bart%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20RNN%20Encoder%E2%80%93Decoder%20for%20statistical%20machine%20translation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cho%2C%20Kyunghyun%20van%20Merrienboer%2C%20Bart%20Gulcehre%2C%20Caglar%20Bahdanau%2C%20Dzmitry%20Learning%20phrase%20representations%20using%20RNN%20Encoder%E2%80%93Decoder%20for%20statistical%20machine%20translation%202014"
+        },
+        {
+            "id": "Coley_et+al_2017_a",
+            "entry": "Connor W Coley, Regina Barzilay, Tommi S Jaakkola, William H Green, and Klavs F Jensen. Prediction of organic reaction outcomes using machine learning. ACS central science, 3(5): 434\u2013443, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coley%2C%20Connor%20W.%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20S.%20Green%2C%20William%20H.%20Prediction%20of%20organic%20reaction%20outcomes%20using%20machine%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coley%2C%20Connor%20W.%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20S.%20Green%2C%20William%20H.%20Prediction%20of%20organic%20reaction%20outcomes%20using%20machine%20learning%202017"
+        },
+        {
+            "id": "Duvenaud_et+al_2015_a",
+            "entry": "David K Duvenaud, Dougal Maclaurin, Jorge Iparraguirre, Rafael Bombarell, Timothy Hirzel, Al\u00e1n Aspuru-Guzik, and Ryan P Adams. Convolutional networks on graphs for learning molecular fingerprints. In Advances in Neural Information Processing Systems 28, pages 2224\u20132232, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duvenaud%2C%20David%20K.%20Maclaurin%2C%20Dougal%20Iparraguirre%2C%20Jorge%20Bombarell%2C%20Rafael%20Convolutional%20networks%20on%20graphs%20for%20learning%20molecular%20fingerprints%202015"
+        },
+        {
+            "id": "Effland_et+al_1981_a",
+            "entry": "Richard Effland, Beth Ann Gardner, and Joseph Strupczewski. Synthesis of 2,3dihydrospiro[benzofuran-2,4\u2019-piperidines] and 2,3-dihydrospiro[benzofuran-2,3\u2019-pyrrolidines]. J. Heterocyclic Chem., 18(4):811\u2013814, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Effland%2C%20Richard%20Gardner%2C%20Beth%20Ann%20Strupczewski%2C%20Joseph%20Synthesis%20of%202%2C3dihydrospiro%5Bbenzofuran-2%2C4%E2%80%99-piperidines%5D%20and%202%2C3-dihydrospiro%5Bbenzofuran-2%2C3%E2%80%99-pyrrolidines%5D%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Effland%2C%20Richard%20Gardner%2C%20Beth%20Ann%20Strupczewski%2C%20Joseph%20Synthesis%20of%202%2C3dihydrospiro%5Bbenzofuran-2%2C4%E2%80%99-piperidines%5D%20and%202%2C3-dihydrospiro%5Bbenzofuran-2%2C3%E2%80%99-pyrrolidines%5D%201981"
+        },
+        {
+            "id": "Fooshee_et+al_2018_a",
+            "entry": "David Fooshee, Aaron Mood, Eugene Gutman, Mohammadamin Tavakoli, Gregor Urban, Frances Liu, Nancy Huynh, David Van Vranken, and Pierre Baldi. Deep learning for chemical reaction prediction. Molecular Systems Design & Engineering, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fooshee%2C%20David%20Mood%2C%20Aaron%20Gutman%2C%20Eugene%20Tavakoli%2C%20Mohammadamin%20Deep%20learning%20for%20chemical%20reaction%20prediction%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fooshee%2C%20David%20Mood%2C%20Aaron%20Gutman%2C%20Eugene%20Tavakoli%2C%20Mohammadamin%20Deep%20learning%20for%20chemical%20reaction%20prediction%202018"
+        },
+        {
+            "id": "Gilmer_et+al_2017_a",
+            "entry": "Justin Gilmer, Samuel S Schoenholz, Patrick F Riley, Oriol Vinyals, and George E Dahl. Neural message passing for quantum chemistry. In Proceedings of the 34th International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Oriol%20Vinyals%2C%20and%20George%20E%20Dahl.%20Neural%20message%20passing%20for%20quantum%20chemistry%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gilmer%2C%20Justin%20Schoenholz%2C%20Samuel%20S.%20Riley%2C%20Patrick%20F.%20Oriol%20Vinyals%2C%20and%20George%20E%20Dahl.%20Neural%20message%20passing%20for%20quantum%20chemistry%202017"
+        },
+        {
+            "id": "Herges_1994_a",
+            "entry": "Rainer Herges. Coarctate transition states: The discovery of a reaction principle. Journal of chemical information and computer sciences, 34(1):91\u2013102, 1994a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Herges%2C%20Rainer%20Coarctate%20transition%20states%3A%20The%20discovery%20of%20a%20reaction%20principle%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Herges%2C%20Rainer%20Coarctate%20transition%20states%3A%20The%20discovery%20of%20a%20reaction%20principle%201994"
+        },
+        {
+            "id": "Herges_1994_b",
+            "entry": "Rainer Herges. Organizing principle of complex reactions and theory of coarctate transition states. Angewandte Chemie Int. Ed., 33(3):255\u2013276, 1994b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Herges%2C%20Rainer%20Organizing%20principle%20of%20complex%20reactions%20and%20theory%20of%20coarctate%20transition%20states%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Herges%2C%20Rainer%20Organizing%20principle%20of%20complex%20reactions%20and%20theory%20of%20coarctate%20transition%20states%201994"
+        },
+        {
+            "id": "Jin_et+al_2017_a",
+            "entry": "Wengong Jin, Connor Coley, Regina Barzilay, and Tommi Jaakkola. Predicting organic reaction outcomes with Weisfeiler-Lehman network. In Advances in Neural Information Processing Systems 30, pages 2604\u20132613, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jin%2C%20Wengong%20Coley%2C%20Connor%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Predicting%20organic%20reaction%20outcomes%20with%20Weisfeiler-Lehman%20network%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jin%2C%20Wengong%20Coley%2C%20Connor%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Predicting%20organic%20reaction%20outcomes%20with%20Weisfeiler-Lehman%20network%202017"
+        },
+        {
+            "id": "Johnson_2017_a",
+            "entry": "Daniel D Johnson. Learning graphical state transitions. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Daniel%20D.%20Learning%20graphical%20state%20transitions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Daniel%20D.%20Learning%20graphical%20state%20transitions%202017"
+        },
+        {
+            "id": "Kayala_2012_a",
+            "entry": "Matthew A Kayala and Pierre Baldi. ReactionPredictor: Prediction of complex chemical reactions at the mechanistic level using machine learning. J. Chem. Inf. Mod., 52(10):2526\u20132540, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kayala%2C%20Matthew%20A.%20Baldi%2C%20Pierre%20ReactionPredictor%3A%20Prediction%20of%20complex%20chemical%20reactions%20at%20the%20mechanistic%20level%20using%20machine%20learning%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kayala%2C%20Matthew%20A.%20Baldi%2C%20Pierre%20ReactionPredictor%3A%20Prediction%20of%20complex%20chemical%20reactions%20at%20the%20mechanistic%20level%20using%20machine%20learning%202012"
+        },
+        {
+            "id": "Kayala_2011_a",
+            "entry": "Matthew A. Kayala and Pierre F. Baldi. A machine learning approach to predict chemical reactions. In Advances in Neural Information Processing Systems 24, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kayala%2C%20Matthew%20A.%20Baldi%2C%20Pierre%20F.%20A%20machine%20learning%20approach%20to%20predict%20chemical%20reactions%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kayala%2C%20Matthew%20A.%20Baldi%2C%20Pierre%20F.%20A%20machine%20learning%20approach%20to%20predict%20chemical%20reactions%202011"
+        },
+        {
+            "id": "Kayala_et+al_2011_b",
+            "entry": "Matthew A Kayala, Chlo\u00e9-Agathe Azencott, Jonathan H Chen, and Pierre Baldi. Learning to predict chemical reactions. J. Chem. Inf. Mod., 51(9):2209\u20132222, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kayala%2C%20Matthew%20A.%20Azencott%2C%20Chlo%C3%A9-Agathe%20Chen%2C%20Jonathan%20H.%20Baldi%2C%20Pierre%20Learning%20to%20predict%20chemical%20reactions%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kayala%2C%20Matthew%20A.%20Azencott%2C%20Chlo%C3%A9-Agathe%20Chen%2C%20Jonathan%20H.%20Baldi%2C%20Pierre%20Learning%20to%20predict%20chemical%20reactions%202011"
+        },
+        {
+            "id": "Kim_et+al_2018_a",
+            "entry": "Yeonjoon Kim, Jin Woo Kim, Zeehyo Kim, and Woo Youn Kim. Efficient prediction of reaction paths through molecular graph and reaction network analysis. Chemical Science, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yeonjoon%20Kim%2C%20Jin%20Woo%20Kim%2C%20Zeehyo%20Kim%2C%20Woo%20Youn%20Efficient%20prediction%20of%20reaction%20paths%20through%20molecular%20graph%20and%20reaction%20network%20analysis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yeonjoon%20Kim%2C%20Jin%20Woo%20Kim%2C%20Zeehyo%20Kim%2C%20Woo%20Youn%20Efficient%20prediction%20of%20reaction%20paths%20through%20molecular%20graph%20and%20reaction%20network%20analysis%202018"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kipf_2017_a",
+            "entry": "Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks. In International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-supervised%20classification%20with%20graph%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kipf%2C%20Thomas%20N.%20Welling%2C%20Max%20Semi-supervised%20classification%20with%20graph%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Klein_et+al_2017_a",
+            "entry": "G. Klein, Y. Kim, Y. Deng, J. Senellart, and A. M. Rush. OpenNMT: Open-source toolkit for neural machine translation. arXiv preprint arXiv:1701.02810, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.02810"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Yujia Li, Richard Zemel, Marc Brockschmidt, and Daniel Tarlow. Gated graph sequence neural networks. In International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yujia%20Zemel%2C%20Richard%20Brockschmidt%2C%20Marc%20Tarlow%2C%20Daniel%20Gated%20graph%20sequence%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yujia%20Zemel%2C%20Richard%20Brockschmidt%2C%20Marc%20Tarlow%2C%20Daniel%20Gated%20graph%20sequence%20neural%20networks%202016"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Yujia Li, Oriol Vinyals, Chris Dyer, Razvan Pascanu, and Peter Battaglia. Learning deep generative models of graphs. arXiv preprint arXiv:1803.03324, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.03324"
+        },
+        {
+            "id": "Lowe_1976_a",
+            "entry": "Daniel Lowe. Chemical reactions from US patents (1976-Sep2016). 6 2017. doi: 10. 6084/m9.figshare.5104873.v1. URL https://figshare.com/articles/Chemical_reactions_from_US_patents_1976-Sep2016_/5104873.",
+            "crossref": "https://dx.doi.org/10.6084/m9.figshare.5104873.v1"
+        },
+        {
+            "id": "Lowe_2012_a",
+            "entry": "Daniel Mark Lowe. Extraction of chemical structures and reactions from the literature. PhD thesis, University of Cambridge, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lowe%2C%20Daniel%20Mark%20Extraction%20of%20chemical%20structures%20and%20reactions%20from%20the%20literature%202012"
+        },
+        {
+            "id": "Nandi_et+al_2017_a",
+            "entry": "Surajit Nandi, Suzanne R McAnanama-Brereton, Mark P Waller, and Anakuthil Anoop. A tabusearch based strategy for modeling molecular aggregates and binary reactions. Computational and Theoretical Chemistry, 1111:69\u201381, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nandi%2C%20Surajit%20McAnanama-Brereton%2C%20Suzanne%20R.%20Waller%2C%20Mark%20P.%20and%20Anakuthil%20Anoop.%20A%20tabusearch%20based%20strategy%20for%20modeling%20molecular%20aggregates%20and%20binary%20reactions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nandi%2C%20Surajit%20McAnanama-Brereton%2C%20Suzanne%20R.%20Waller%2C%20Mark%20P.%20and%20Anakuthil%20Anoop.%20A%20tabusearch%20based%20strategy%20for%20modeling%20molecular%20aggregates%20and%20binary%20reactions%202017"
+        },
+        {
+            "id": "Rappoport_et+al_2014_a",
+            "entry": "Dmitrij Rappoport, Cooper J Galvin, Dmitry Yu Zubarev, and Al\u00e1n Aspuru-Guzik. Complex chemical reaction networks from heuristics-aided quantum chemistry. Journal of chemical theory and computation, 10(3):897\u2013907, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rappoport%2C%20Dmitrij%20Galvin%2C%20Cooper%20J.%20Zubarev%2C%20Dmitry%20Yu%20Aspuru-Guzik%2C%20Al%C3%A1n%20Complex%20chemical%20reaction%20networks%20from%20heuristics-aided%20quantum%20chemistry%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rappoport%2C%20Dmitrij%20Galvin%2C%20Cooper%20J.%20Zubarev%2C%20Dmitry%20Yu%20Aspuru-Guzik%2C%20Al%C3%A1n%20Complex%20chemical%20reaction%20networks%20from%20heuristics-aided%20quantum%20chemistry%202014"
+        },
+        {
+            "id": "Rdkit_0000_a",
+            "entry": "RDKit, online. RDKit: Open-source cheminformatics. http://www.rdkit.org.[Online; accessed 01-February-2018].",
+            "url": "http://www.rdkit.org.[Online"
+        },
+        {
+            "id": "Sadowski_et+al_2016_a",
+            "entry": "Peter Sadowski, David Fooshee, Niranjan Subrahmanya, and Pierre Baldi. Synergies between quantum mechanics and machine learning in reaction prediction. J. Chem. Inf. Model., 56(11): 2125\u20132128, November 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sadowski%2C%20Peter%20Fooshee%2C%20David%20Subrahmanya%2C%20Niranjan%20Baldi%2C%20Pierre%20Synergies%20between%20quantum%20mechanics%20and%20machine%20learning%20in%20reaction%20prediction%202016-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sadowski%2C%20Peter%20Fooshee%2C%20David%20Subrahmanya%2C%20Niranjan%20Baldi%2C%20Pierre%20Synergies%20between%20quantum%20mechanics%20and%20machine%20learning%20in%20reaction%20prediction%202016-11"
+        },
+        {
+            "id": "Schwaller_et+al_2018_a",
+            "entry": "Philippe Schwaller, Th\u00e9ophile Gaudin, D\u00e1vid L\u00e1nyi, Costas Bekas, and Teodoro Laino. \u201cFound in Translation\u201d: predicting outcomes of complex organic chemistry reactions using neural sequenceto-sequence models. Chem. Sci., 9:6091\u20136098, 2018. doi: 10.1039/C8SC02339E. URL http://dx.doi.org/10.1039/C8SC02339E.",
+            "crossref": "https://dx.doi.org/10.1039/C8SC02339E",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1039/C8SC02339E"
+        },
+        {
+            "id": "Segler_2017_a",
+            "entry": "Marwin HS Segler and Mark P Waller. Neural-symbolic machine learning for retrosynthesis and reaction prediction. Chem. Eur. J., 23(25):5966\u20135971, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Segler%2C%20Marwin%20H.S.%20Waller%2C%20Mark%20P.%20Neural-symbolic%20machine%20learning%20for%20retrosynthesis%20and%20reaction%20prediction%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Segler%2C%20Marwin%20H.S.%20Waller%2C%20Mark%20P.%20Neural-symbolic%20machine%20learning%20for%20retrosynthesis%20and%20reaction%20prediction%202017"
+        },
+        {
+            "id": "Segler_2017_b",
+            "entry": "Marwin HS Segler and Mark P Waller. Modelling chemical reasoning to predict and invent reactions. Chem. Eur. J., 23(25):6118\u20136128, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Segler%2C%20Marwin%20H.S.%20Waller%2C%20Mark%20P.%20Modelling%20chemical%20reasoning%20to%20predict%20and%20invent%20reactions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Segler%2C%20Marwin%20H.S.%20Waller%2C%20Mark%20P.%20Modelling%20chemical%20reasoning%20to%20predict%20and%20invent%20reactions%202017"
+        },
+        {
+            "id": "Segler_et+al_2018_a",
+            "entry": "Marwin HS Segler, Mike Preuss, and Mark P Waller. Planning chemical syntheses with deep neural networks and symbolic AI. Nature, 555(7698):604, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Segler%2C%20Marwin%20H.S.%20Preuss%2C%20Mike%20Waller%2C%20Mark%20P.%20Planning%20chemical%20syntheses%20with%20deep%20neural%20networks%20and%20symbolic%20AI%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Segler%2C%20Marwin%20H.S.%20Preuss%2C%20Mike%20Waller%2C%20Mark%20P.%20Planning%20chemical%20syntheses%20with%20deep%20neural%20networks%20and%20symbolic%20AI%202018"
+        },
+        {
+            "id": "Simm_2017_a",
+            "entry": "Gregor N Simm and Markus Reiher. Context-driven exploration of complex chemical reaction networks. Journal of chemical theory and computation, 13(12):6108\u20136119, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simm%2C%20Gregor%20N.%20Reiher%2C%20Markus%20Context-driven%20exploration%20of%20complex%20chemical%20reaction%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simm%2C%20Gregor%20N.%20Reiher%2C%20Markus%20Context-driven%20exploration%20of%20complex%20chemical%20reaction%20networks%202017"
+        },
+        {
+            "id": "Wei_et+al_2016_a",
+            "entry": "Jennifer N Wei, David Duvenaud, and Al\u00e1n Aspuru-Guzik. Neural networks for the prediction of organic chemistry reactions. ACS central science, 2(10):725\u2013732, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wei%2C%20Jennifer%20N.%20Duvenaud%2C%20David%20Aspuru-Guzik%2C%20Al%C3%A1n%20Neural%20networks%20for%20the%20prediction%20of%20organic%20chemistry%20reactions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wei%2C%20Jennifer%20N.%20Duvenaud%2C%20David%20Aspuru-Guzik%2C%20Al%C3%A1n%20Neural%20networks%20for%20the%20prediction%20of%20organic%20chemistry%20reactions%202016"
+        },
+        {
+            "id": "1",
+            "entry": "1. Introduction to methodology and encoding rules. Journal of chemical information and computer sciences, 28(1):31\u201336, 1988. Qing-You Zhang and Jo\u00e3o Aires-de Sousa. Structure-based classification of chemical reactions without assignment of reaction centers. J. Chem. Inf. Mod., 45(6):1775\u20131783, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Introduction%20to%20methodology%20and%20encoding%20rules%20Journal%20of%20chemical%20information%20and%20computer%20sciences%202813136%201988%20QingYou%20Zhang%20and%20Jo%C3%A3o%20Airesde%20Sousa%20Structurebased%20classification%20of%20chemical%20reactions%20without%20assignment%20of%20reaction%20centers%20J%20Chem%20Inf%20Mod%2045617751783%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Introduction%20to%20methodology%20and%20encoding%20rules%20Journal%20of%20chemical%20information%20and%20computer%20sciences%202813136%201988%20QingYou%20Zhang%20and%20Jo%C3%A3o%20Airesde%20Sousa%20Structurebased%20classification%20of%20chemical%20reactions%20without%20assignment%20of%20reaction%20centers%20J%20Chem%20Inf%20Mod%2045617751783%202005"
+        },
+        {
+            "id": "Zhao_et+al_2017_a",
+            "entry": "R. Zhao, T. Luong, and E. Brevdo. Neural machine translation (seq2seq) tutorial, 2017. URL https://github.com/tensorflow/nmt.",
+            "url": "https://github.com/tensorflow/nmt",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=R%20Zhao%20T%20Luong%20and%20E%20Brevdo%20Neural%20machine%20translation%20seq2seq%20tutorial%202017%20URL%20httpsgithubcomtensorflownmt"
+        },
+        {
+            "id": "Zimmerman_2013_a",
+            "entry": "Paul M Zimmerman. Automated discovery of chemically reasonable elementary reaction steps. Journal of computational chemistry, 34(16):1385\u20131392, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zimmerman%2C%20Paul%20M.%20Automated%20discovery%20of%20chemically%20reasonable%20elementary%20reaction%20steps%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zimmerman%2C%20Paul%20M.%20Automated%20discovery%20of%20chemically%20reasonable%20elementary%20reaction%20steps%202013"
+        }
+    ]
+}

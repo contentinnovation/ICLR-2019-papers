@@ -1,0 +1,355 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "UNDERSTANDING AND IMPROVING INTERPOLATION IN AUTOENCODERS VIA AN ADVERSARIAL REGULARIZER",
+        "author": "David Berthelot, Google Brain dberth@google.com",
+        "date": 2018,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1fQSiCcYm"
+        },
+        "abstract": "Autoencoders provide a powerful framework for learning compressed representations by encoding all of the information needed to reconstruct a data point in a latent code. In some cases, autoencoders can \u201cinterpolate\u201d: By decoding the convex combination of the latent codes for two datapoints, the autoencoder can produce an output which semantically mixes characteristics from the datapoints. In this paper, we propose a regularization procedure which encourages interpolated outputs to appear more realistic by fooling a critic network which has been trained to recover the mixing coefficient from interpolated data. We then develop a simple benchmark task where we can quantitatively measure the extent to which various autoencoders can interpolate and show that our regularizer dramatically improves interpolation in this setting. We also demonstrate empirically that our regularizer produces latent codes which are more effective on downstream tasks, suggesting a possible link between interpolation abilities and learning useful representations."
+    },
+    "keywords": [
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "exponential moving average",
+            "url": "https://en.wikipedia.org/wiki/exponential_moving_average"
+        },
+        {
+            "term": "unsupervised feature learning",
+            "url": "https://en.wikipedia.org/wiki/unsupervised_feature_learning"
+        },
+        {
+            "term": "Generative Adversarial Network",
+            "url": "https://en.wikipedia.org/wiki/Generative_Adversarial_Network"
+        },
+        {
+            "term": "feature learning",
+            "url": "https://en.wikipedia.org/wiki/feature_learning"
+        },
+        {
+            "term": "Expectation Maximization",
+            "url": "https://en.wikipedia.org/wiki/Expectation_Maximization"
+        }
+    ],
+    "abbreviations": {
+        "ACAI": "Autoencoder Interpolation",
+        "GAN": "Generative Adversarial Network",
+        "VAE": "Variational Autoencoder",
+        "AAE": "Adversarial Autoencoder",
+        "VQ-VAE": "Vector Quantized Variational Autoencoder",
+        "EMA": "exponential moving average",
+        "EM": "Expectation Maximization"
+    },
+    "highlights": [
+        "One goal of unsupervised learning is to uncover the underlying structure of a dataset without using explicit labels",
+        "Our goal in this paper is threefold: First, we introduce a regularization strategy with the specific goal of encouraging improved interpolations in autoencoders; second, we develop a synthetic benchmark where the slippery concept of a \u201csemantically meaningful interpolation\u201d is quantitatively measurable and evaluate common autoencoders on this task; and third, we confirm the intuition that good interpolation can result in a useful representation by showing that the improved interpolation ability produced by our regularizer elicits improved representation learning performance on downstream tasks",
+        "We found the denoising autoencoder, Variational Autoencoder, and Autoencoder Interpolation obtained significantly higher performance compared to the remaining models",
+        "We proposed Adversarially Constrained Autoencoder Interpolation (ACAI), which uses a critic to encourage interpolated datapoints to be more realistic",
+        "To make interpolation a quantifiable concept, we proposed a synthetic benchmark and showed that Autoencoder Interpolation substantially outperformed common autoencoder models",
+        "We studied the effect of improved interpolation on downstream tasks, and showed that Autoencoder Interpolation led to improved performance for feature learning and unsupervised clustering"
+    ],
+    "key_statements": [
+        "One goal of unsupervised learning is to uncover the underlying structure of a dataset without using explicit labels",
+        "A common architecture used for this purpose is the autoencoder, which learns to map datapoints to a latent code from which the data can be recovered with minimal information loss",
+        "The latent code is lower dimensional than the data, which indicates that autoencoders can perform some form of dimensionality reduction",
+        "Our goal in this paper is threefold: First, we introduce a regularization strategy with the specific goal of encouraging improved interpolations in autoencoders; second, we develop a synthetic benchmark where the slippery concept of a \u201csemantically meaningful interpolation\u201d is quantitatively measurable and evaluate common autoencoders on this task; and third, we confirm the intuition that good interpolation can result in a useful representation by showing that the improved interpolation ability produced by our regularizer elicits improved representation learning performance on downstream tasks",
+        "We find empirically that this constraint results in realistic and smooth interpolations in practice in addition to providing improved performance on downstream tasks",
+        "We find in practice that encouraging this behavior produces semantically smooth interpolations and improved representation learning performance, which we demonstrate",
+        "We found the denoising autoencoder, Variational Autoencoder, and Autoencoder Interpolation obtained significantly higher performance compared to the remaining models",
+        "We found a single-layer classifier applied directly to image pixels achieved an accuracy of 92.31%, 23.48%, and 39.70% on MNIST, SVHN, and CIFAR-10 respectively, so classifying using the representation learned by Autoencoder Interpolation provides a huge benefit",
+        "We proposed Adversarially Constrained Autoencoder Interpolation (ACAI), which uses a critic to encourage interpolated datapoints to be more realistic",
+        "To make interpolation a quantifiable concept, we proposed a synthetic benchmark and showed that Autoencoder Interpolation substantially outperformed common autoencoder models",
+        "We studied the effect of improved interpolation on downstream tasks, and showed that Autoencoder Interpolation led to improved performance for feature learning and unsupervised clustering"
+    ],
+    "summary": [
+        "One goal of unsupervised learning is to uncover the underlying structure of a dataset without using explicit labels.",
+        "This property may suggest that an autoencoder which interpolates well could provide a good learned representation for downstream tasks because similar points are clustered.",
+        "If the interpolation is not smooth, there may be \u201cdiscontinuities\u201d in latent space which could result in the representation being less useful as a learned feature.",
+        "We find in practice that encouraging this behavior produces semantically smooth interpolations and improved representation learning performance, which we demonstrate .",
+        "Minimizing this loss function can be considered maximizing a lower bound on the likelihood of the training set, producing a likelihood-based generative model which allows novel data points to be sampled by first sampling z \u223c p(z) and computing g\u03c6(z).",
+        "Various modified objectives (<a class=\"ref-link\" id=\"cHiggins_et+al_2017_a\" href=\"#rHiggins_et+al_2017_a\">Higgins et al, 2017</a>; <a class=\"ref-link\" id=\"cZhao_et+al_2017_a\" href=\"#rZhao_et+al_2017_a\">Zhao et al, 2017</a>), improved prior distributions (<a class=\"ref-link\" id=\"cKingma_et+al_2016_a\" href=\"#rKingma_et+al_2016_a\">Kingma et al, 2016</a>; <a class=\"ref-link\" id=\"cTomczak_2016_a\" href=\"#rTomczak_2016_a\">Tomczak & Welling, 2016</a>; 2017) and improved model architectures (S\u00f8nderby et al, 2016; Chen et al, 2016b; <a class=\"ref-link\" id=\"cGulrajani_et+al_2016_a\" href=\"#rGulrajani_et+al_2016_a\">Gulrajani et al, 2016</a>) have been proposed to better the VAE\u2019s performance on downstream tasks, but in this paper we solely consider the \u201cvanilla\u201d VAE objective and prior described above applied to our baseline autoencoder structure.",
+        "We found dramatically improved performance on the lines benchmark when using ACAI \u2013 it achieved the best Mean Distance and Smoothness score among the autoencoders we considered.",
+        "We will evaluate whether using our proposed regularizer results in latent space representations which provide better performance in supervised learning and clustering.",
+        "We found a single-layer classifier applied directly to image pixels achieved an accuracy of 92.31%, 23.48%, and 39.70% on MNIST, SVHN, and CIFAR-10 respectively, so classifying using the representation learned by ACAI provides a huge benefit.",
+        "Clustering If an autoencoder groups points with common salient characteristics close together in latent space without observing any labels, it arguably has uncovered some important structure in the data in an unsupervised fashion.",
+        "We proposed Adversarially Constrained Autoencoder Interpolation (ACAI), which uses a critic to encourage interpolated datapoints to be more realistic.",
+        "These findings confirm our intuition that improving the interpolation abilities of a baseline autoencoder can produce a better learned representation for downstream tasks.",
+        "We emphasize that we do not claim that good interpolation always implies a good representation \u2013 for example, the AAE produced smooth and realistic interpolations but fared poorly in our representations learning experiments and the denoising autoencoder had low-quality interpolations but provided a useful representation."
+    ],
+    "headline": "We propose a regularization procedure which encourages interpolated outputs to appear more realistic by fooling a critic network which has been trained to recover the mixing coefficient from interpolated data",
+    "reference_links": [
+        {
+            "id": "Arora_et+al_2017_a",
+            "entry": "Sanjeev Arora, Rong Ge, Yingyu Liang, Tengyu Ma, and Yi Zhang. Generalization and equilibrium in generative adversarial nets (gans). In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20Sanjeev%20Ge%2C%20Rong%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20Generalization%20and%20equilibrium%20in%20generative%20adversarial%20nets%20%28gans%29%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arora%2C%20Sanjeev%20Ge%2C%20Rong%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20Generalization%20and%20equilibrium%20in%20generative%20adversarial%20nets%20%28gans%29%202017"
+        },
+        {
+            "id": "Bengio_et+al_2007_a",
+            "entry": "Yoshua Bengio, Pascal Lamblin, Dan Popovici, and Hugo Larochelle. Greedy layer-wise training of deep networks. In Advances in neural information processing systems, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Lamblin%2C%20Pascal%20Popovici%2C%20Dan%20Larochelle%2C%20Hugo%20Greedy%20layer-wise%20training%20of%20deep%20networks%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Lamblin%2C%20Pascal%20Popovici%2C%20Dan%20Larochelle%2C%20Hugo%20Greedy%20layer-wise%20training%20of%20deep%20networks%202007"
+        },
+        {
+            "id": "Bengio_et+al_0000_a",
+            "entry": "Yoshua Bengio, Nicholas Leonard, and Aaron Courville. Estimating or propagating gradients through stochastic neurons for conditional computation. arXiv preprint arXiv:1308.3432, 2013a.",
+            "arxiv_url": "https://arxiv.org/pdf/1308.3432"
+        },
+        {
+            "id": "Bengio_et+al_2013_a",
+            "entry": "Yoshua Bengio, Gregoire Mesnil, Yann Dauphin, and Salah Rifai. Better mixing via deep representations. In International Conference on Machine Learning, 2013b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Yoshua%20Mesnil%2C%20Gregoire%20Dauphin%2C%20Yann%20Rifai%2C%20Salah%20Better%20mixing%20via%20deep%20representations%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Yoshua%20Mesnil%2C%20Gregoire%20Dauphin%2C%20Yann%20Rifai%2C%20Salah%20Better%20mixing%20via%20deep%20representations%202013"
+        },
+        {
+            "id": "Bourlard_1988_a",
+            "entry": "Herve Bourlard and Yves Kamp. Auto-association by multilayer perceptrons and singular value decomposition. Biological cybernetics, 59(4-5), 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bourlard%2C%20Herve%20Kamp%2C%20Yves%20Auto-association%20by%20multilayer%20perceptrons%20and%20singular%20value%20decomposition%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bourlard%2C%20Herve%20Kamp%2C%20Yves%20Auto-association%20by%20multilayer%20perceptrons%20and%20singular%20value%20decomposition%201988"
+        },
+        {
+            "id": "Bowman_et+al_2015_a",
+            "entry": "Samuel R. Bowman, Luke Vilnis, Oriol Vinyals, Andrew M. Dai, Rafal Jozefowicz, and Samy Bengio. Generating sentences from a continuous space. arXiv preprint arXiv:1511.06349, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06349"
+        },
+        {
+            "id": "Carter_2017_a",
+            "entry": "Shan Carter and Michael Nielsen. Using artificial intelligence to augment human intelligence. Distill, 2017. https://distill.pub/2017/aia.",
+            "url": "https://distill.pub/2017/aia",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carter%2C%20Shan%20Nielsen%2C%20Michael%20Using%20artificial%20intelligence%20to%20augment%20human%20intelligence%202017"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, and Pieter Abbeel. InfoGAN: Interpretable representation learning by information maximizing generative adversarial nets. In Advances in neural information processing systems, pp. 2172\u20132180, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20InfoGAN%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20InfoGAN%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016"
+        },
+        {
+            "id": "Chen_et+al_0000_a",
+            "entry": "Xi Chen, Diederik P. Kingma, Tim Salimans, Yan Duan, Prafulla Dhariwal, John Schulman, Ilya Sutskever, and Pieter Abbeel. Variational lossy autoencoder. arXiv preprint arXiv:1611.02731, 2016b.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02731"
+        },
+        {
+            "id": "Coates_et+al_2011_a",
+            "entry": "Adam Coates, Andrew Ng, and Honglak Lee. An analysis of single-layer networks in unsupervised feature learning. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coates%2C%20Adam%20Ng%2C%20Andrew%20Lee%2C%20Honglak%20An%20analysis%20of%20single-layer%20networks%20in%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coates%2C%20Adam%20Ng%2C%20Andrew%20Lee%2C%20Honglak%20An%20analysis%20of%20single-layer%20networks%20in%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Dinh_et+al_2016_a",
+            "entry": "Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio. Density estimation using real nvp. arXiv preprint arXiv:1605.08803, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.08803"
+        },
+        {
+            "id": "Dumoulin_et+al_2016_a",
+            "entry": "Vincent Dumoulin, Ishmael Belghazi, Ben Poole, Olivier Mastropietro, Alex Lamb, Martin Arjovsky, and Aaron Courville. Adversarially learned inference. arXiv preprint arXiv:1606.00704, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.00704"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Pouget-Abadie%2C%20Jean%20Mirza%2C%20Mehdi%20Xu%2C%20Bing%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Gulrajani_et+al_2016_a",
+            "entry": "Ishaan Gulrajani, Kundan Kumar, Faruk Ahmed, Adrien Ali Taiga, Francesco Visin, David Vazquez, and Aaron Courville. PixelVAE: A latent variable model for natural images. arXiv preprint arXiv:1611.05013, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.05013"
+        },
+        {
+            "id": "Ha_2018_a",
+            "entry": "David Ha and Douglas Eck. A neural representation of sketch drawings. In Sixth International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ha%2C%20David%20Eck%2C%20Douglas%20A%20neural%20representation%20of%20sketch%20drawings%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ha%2C%20David%20Eck%2C%20Douglas%20A%20neural%20representation%20of%20sketch%20drawings%202018"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. beta-VAE: Learning basic visual concepts with a constrained variational framework. In Fifth International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-VAE%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017"
+        },
+        {
+            "id": "Hu_et+al_2017_a",
+            "entry": "Weihua Hu, Takeru Miyato, Seiya Tokui, Eiichi Matsumoto, and Masashi Sugiyama. Learning discrete representations via information maximizing self augmented training. arXiv preprint arXiv:1702.08720, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08720"
+        },
+        {
+            "id": "Huszar_2017_a",
+            "entry": "Ferenc Huszar. Gaussian distributions are soap bubbles. inFERENCe, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huszar%2C%20Ferenc%20Gaussian%20distributions%20are%20soap%20bubbles%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huszar%2C%20Ferenc%20Gaussian%20distributions%20are%20soap%20bubbles%202017"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P. Kingma and Max Welling. Auto-encoding variational bayes. In Third International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-encoding%20variational%20bayes%202014"
+        },
+        {
+            "id": "Kingma_et+al_2016_a",
+            "entry": "Diederik P. Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, and Max Welling. Improved variational inference with inverse autoregressive flow. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Salimans%2C%20Tim%20Jozefowicz%2C%20Rafal%20Chen%2C%20Xi%20Improved%20variational%20inference%20with%20inverse%20autoregressive%20flow%202016"
+        },
+        {
+            "id": "Krause_et+al_2010_a",
+            "entry": "Andreas Krause, Pietro Perona, and Ryan G. Gomes. Discriminative clustering by regularized information maximization. In Advances in neural information processing systems, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krause%2C%20Andreas%20Perona%2C%20Pietro%20Gomes%2C%20Ryan%20G.%20Discriminative%20clustering%20by%20regularized%20information%20maximization%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krause%2C%20Andreas%20Perona%2C%20Pietro%20Gomes%2C%20Ryan%20G.%20Discriminative%20clustering%20by%20regularized%20information%20maximization%202010"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky. Learning multiple layers of features from tiny images. Technical report, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Lecun_1998_a",
+            "entry": "Yann LeCun. The mnist database of handwritten digits. 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20The%20mnist%20database%20of%20handwritten%20digits%201998"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Shuang Liu, Olivier Bousquet, and Kamalika Chaudhuri. Approximation and convergence properties of generative adversarial learning. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Shuang%20Bousquet%2C%20Olivier%20Chaudhuri%2C%20Kamalika%20Approximation%20and%20convergence%20properties%20of%20generative%20adversarial%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Shuang%20Bousquet%2C%20Olivier%20Chaudhuri%2C%20Kamalika%20Approximation%20and%20convergence%20properties%20of%20generative%20adversarial%20learning%202017"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In Proceedings of International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015"
+        },
+        {
+            "id": "Maas_et+al_2013_a",
+            "entry": "Andrew L. Maas, Awni Y. Hannun, and Andrew Y. Ng. Rectifier nonlinearities improve neural network acoustic models. In International Conference on Machine Learning, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20Ng%2C%20Andrew%20Y.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20Ng%2C%20Andrew%20Y.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013"
+        },
+        {
+            "id": "Macqueen_1967_a",
+            "entry": "James MacQueen. Some methods for classification and analysis of multivariate observations. In Proceedings of 5th Berkeley Symposium on Mathematical Statistics and Probability, 1967.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MacQueen%2C%20James%20Some%20methods%20for%20classification%20and%20analysis%20of%20multivariate%20observations%201967",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MacQueen%2C%20James%20Some%20methods%20for%20classification%20and%20analysis%20of%20multivariate%20observations%201967"
+        },
+        {
+            "id": "Makhzani_et+al_2015_a",
+            "entry": "Alireza Makhzani, Jonathon Shlens, Navdeep Jaitly, Ian Goodfellow, and Brendan Frey. Adversarial autoencoders. arXiv preprint arXiv:1511.05644, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.05644"
+        },
+        {
+            "id": "Mao_et+al_2017_a",
+            "entry": "Xudong Mao, Qing Li, Haoran Xie, Raymond YK Lau, Zhen Wang, and Stephen Paul Smolley. Least squares generative adversarial networks. In IEEE International Conference on Computer Vision, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mao%2C%20Xudong%20Li%2C%20Qing%20Xie%2C%20Haoran%20Lau%2C%20Raymond%20Y.K.%20Least%20squares%20generative%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mao%2C%20Xudong%20Li%2C%20Qing%20Xie%2C%20Haoran%20Lau%2C%20Raymond%20Y.K.%20Least%20squares%20generative%20adversarial%20networks%202017"
+        },
+        {
+            "id": "Mathieu_et+al_2016_a",
+            "entry": "Michael F. Mathieu, Junbo Jake Zhao, Aditya Ramesh, Pablo Sprechmann, and Yann LeCun. Disentangling factors of variation in deep representation using adversarial training. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mathieu%2C%20Michael%20F.%20Zhao%2C%20Junbo%20Jake%20Ramesh%2C%20Aditya%20Sprechmann%2C%20Pablo%20Disentangling%20factors%20of%20variation%20in%20deep%20representation%20using%20adversarial%20training%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mathieu%2C%20Michael%20F.%20Zhao%2C%20Junbo%20Jake%20Ramesh%2C%20Aditya%20Sprechmann%2C%20Pablo%20Disentangling%20factors%20of%20variation%20in%20deep%20representation%20using%20adversarial%20training%202016"
+        },
+        {
+            "id": "Mescheder_et+al_2017_a",
+            "entry": "Lars Mescheder, Sebastian Nowozin, and Andreas Geiger. Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks. arXiv preprint arXiv:1701.04722, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.04722"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y. Ng. Reading digits in natural images with unsupervised feature learning. In NIPS workshop on deep learning and unsupervised feature learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20digits%20in%20natural%20images%20with%20unsupervised%20feature%20learning%202011"
+        },
+        {
+            "id": "Odena_et+al_2016_a",
+            "entry": "Augustus Odena, Vincent Dumoulin, and Chris Olah. Deconvolution and checkerboard artifacts. Distill, 2016. URL http://distill.pub/2016/deconv-checkerboard.",
+            "url": "http://distill.pub/2016/deconv-checkerboard",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Odena%2C%20Augustus%20Dumoulin%2C%20Vincent%20Olah%2C%20Chris%20Deconvolution%20and%20checkerboard%20artifacts%202016"
+        },
+        {
+            "id": "Radford_et+al_2015_a",
+            "entry": "Alec Radford, Luke Metz, and Soumith Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06434"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Jimenez Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In International Conference on Machine Learning, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Jimenez%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20backpropagation%20and%20approximate%20inference%20in%20deep%20generative%20models%202014"
+        },
+        {
+            "id": "Roberts_et+al_2018_a",
+            "entry": "Adam Roberts, Jesse Engel, Colin Raffel, Curtis Hawthorne, and Douglas Eck. A hierarchical latent vector model for learning long-term structure in music. arXiv preprint arXiv:1803.05428, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05428"
+        },
+        {
+            "id": "Roy_et+al_2018_a",
+            "entry": "Aurko Roy, Ashish Vaswani, Arvind Neelakantan, and Niki Parmar. Theory and experiments on vector quantized autoencoders. arXiv preprint arXiv:1805.11063, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11063"
+        },
+        {
+            "id": "S_et+al_2016_a",
+            "entry": "Casper Kaae S\u00f8nderby, Tapani Raiko, Lars Maal\u00f8e, S\u00f8ren Kaae S\u00f8nderby, and Ole Winther. Ladder variational autoencoders. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%C3%B8nderby%2C%20Casper%20Kaae%20Raiko%2C%20Tapani%20Maal%C3%B8e%2C%20Lars%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Ladder%20variational%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%C3%B8nderby%2C%20Casper%20Kaae%20Raiko%2C%20Tapani%20Maal%C3%B8e%2C%20Lars%20S%C3%B8nderby%2C%20S%C3%B8ren%20Kaae%20Ladder%20variational%20autoencoders%202016"
+        },
+        {
+            "id": "Tolstikhin_et+al_2017_a",
+            "entry": "Ilya Tolstikhin, Olivier Bousquet, Sylvain Gelly, and Bernhard Schoelkopf. Wasserstein auto-encoders. In Fifth International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tolstikhin%2C%20Ilya%20Bousquet%2C%20Olivier%20Gelly%2C%20Sylvain%20Schoelkopf%2C%20Bernhard%20Wasserstein%20auto-encoders%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tolstikhin%2C%20Ilya%20Bousquet%2C%20Olivier%20Gelly%2C%20Sylvain%20Schoelkopf%2C%20Bernhard%20Wasserstein%20auto-encoders%202017"
+        },
+        {
+            "id": "Tomczak_2016_a",
+            "entry": "Jakub M. Tomczak and Max Welling. Improving variational auto-encoders using householder flow. arXiv preprint arXiv:1611.09630, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.09630"
+        },
+        {
+            "id": "Tomczak_2017_a",
+            "entry": "Jakub M. Tomczak and Max Welling. Vae with a vampprior. arXiv preprint arXiv:1705.07120, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07120"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Aaron van den Oord, Nal Kalchbrenner, Lasse Espeholt, Oriol Vinyals, Alex Graves, et al. Conditional image generation with pixelcnn decoders. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Espeholt%2C%20Lasse%20Vinyals%2C%20Oriol%20Conditional%20image%20generation%20with%20pixelcnn%20decoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Oord%2C%20Aaron%20Kalchbrenner%2C%20Nal%20Espeholt%2C%20Lasse%20Vinyals%2C%20Oriol%20Conditional%20image%20generation%20with%20pixelcnn%20decoders%202016"
+        },
+        {
+            "id": "Van_2017_a",
+            "entry": "Aaron van den Oord, Oriol Vinyals, et al. Neural discrete representation learning. In Advances in Neural Information Processing Systems, pp. 6309\u20136318, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aaron%20van%20den%20Oord%20Oriol%20Vinyals%20et%20al%20Neural%20discrete%20representation%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2063096318%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aaron%20van%20den%20Oord%20Oriol%20Vinyals%20et%20al%20Neural%20discrete%20representation%20learning%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2063096318%202017"
+        },
+        {
+            "id": "Verma_et+al_2018_a",
+            "entry": "Vikas Verma, Alex Lamb, Christopher Beckham, Aaron Courville, Ioannis Mitliagkis, and Yoshua Bengio. Manifold mixup: Encouraging meaningful on-manifold interpolation as a regularizer. arXiv preprint arXiv:1806.05236, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.05236"
+        },
+        {
+            "id": "Vincent_et+al_2010_a",
+            "entry": "Pascal Vincent, Hugo Larochelle, Isabelle Lajoie, Yoshua Bengio, and Pierre-Antoine Manzagol. Stacked denoising autoencoders: Learning useful representations in a deep network with a local denoising criterion. Journal of Machine Learning Research, 11, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vincent%2C%20Pascal%20Larochelle%2C%20Hugo%20Lajoie%2C%20Isabelle%20Bengio%2C%20Yoshua%20Stacked%20denoising%20autoencoders%3A%20Learning%20useful%20representations%20in%20a%20deep%20network%20with%20a%20local%20denoising%20criterion%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vincent%2C%20Pascal%20Larochelle%2C%20Hugo%20Lajoie%2C%20Isabelle%20Bengio%2C%20Yoshua%20Stacked%20denoising%20autoencoders%3A%20Learning%20useful%20representations%20in%20a%20deep%20network%20with%20a%20local%20denoising%20criterion%202010"
+        },
+        {
+            "id": "White_2016_a",
+            "entry": "Tom White. Sampling generative networks: Notes on a few effective techniques. arXiv preprint arXiv:1609.04468, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.04468"
+        },
+        {
+            "id": "Xie_et+al_2016_a",
+            "entry": "Junyuan Xie, Ross Girshick, and Ali Farhadi. Unsupervised deep embedding for clustering analysis. In International conference on machine learning, pp. 478\u2013487, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xie%2C%20Junyuan%20Girshick%2C%20Ross%20Farhadi%2C%20Ali%20Unsupervised%20deep%20embedding%20for%20clustering%20analysis%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xie%2C%20Junyuan%20Girshick%2C%20Ross%20Farhadi%2C%20Ali%20Unsupervised%20deep%20embedding%20for%20clustering%20analysis%202016"
+        },
+        {
+            "id": "Zhao_et+al_2017_a",
+            "entry": "Shengjia Zhao, Jiaming Song, and Stefano Ermon. InfoVAE: Information maximizing variational autoencoders. arXiv preprint arXiv:1706.02262, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02262"
+        }
+    ]
+}

@@ -1,0 +1,265 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "THERE ARE MANY CONSISTENT EXPLANATIONS OF UNLABELED DATA: WHY YOU SHOULD AVERAGE",
+        "author": "Ben Athiwaratkun, Marc Finzi, Pavel Izmailov, Andrew Gordon Wilson {pa, maf, pi, andrew}@cornell.edu Cornell University",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rkgKBhA5Y7"
+        },
+        "abstract": "Presently the most successful approaches to semi-supervised learning are based on consistency regularization, whereby a model is trained to be robust to small perturbations of its inputs and parameters. To understand consistency regularization, we conceptually explore how loss geometry interacts with training procedures. The consistency loss dramatically improves generalization performance over supervisedonly training; however, we show that SGD struggles to converge on the consistency loss and continues to make large steps that lead to changes in predictions on the test data. Motivated by these observations, we propose to train consistencybased methods with Stochastic Weight Averaging (SWA), a recent approach which averages weights along the trajectory of SGD with a modified learning rate schedule. We also propose fast-SWA, which further accelerates convergence by averaging multiple points within each cycle of a cyclical learning rate schedule. With weight averaging, we achieve the best known semi-supervised results on CIFAR-10 and CIFAR-100, over many different quantities of labeled training data. For example, we achieve 5.0% error on CIFAR-10 with only 4000 labels, compared to the previous best result in the literature of 6.3%."
+    },
+    "keywords": [
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        },
+        {
+            "term": "exponential moving average",
+            "url": "https://en.wikipedia.org/wiki/exponential_moving_average"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "rate schedule",
+            "url": "https://en.wikipedia.org/wiki/rate_schedule"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "generative adversarial networks",
+            "url": "https://en.wikipedia.org/wiki/generative_adversarial_networks"
+        },
+        {
+            "term": "mean teacher",
+            "url": "https://en.wikipedia.org/wiki/Mean_Teacher"
+        },
+        {
+            "term": "semi supervised learning",
+            "url": "https://en.wikipedia.org/wiki/semi_supervised_learning"
+        }
+    ],
+    "abbreviations": {
+        "SWA": "stochastic weight averaging",
+        "GANs": "generative adversarial networks",
+        "EMA": "exponential moving average",
+        "TE": "Temporal Ensembling",
+        "VAT": "Virtual Adversarial Training",
+        "SGD": "stochastic gradient descent"
+    },
+    "highlights": [
+        "Recent advances in deep unsupervised learning, such as generative adversarial networks (GANs) (Goodfellow et al, 2014), have led to an explosion of interest in semi-supervised learning",
+        "We propose to average the weights corresponding to stochastic gradient descent iterates, or ensemble the predictions of the models corresponding to these weights",
+        "In Section 3.3 we demonstrate that both ensembling predictions and averaging weights of the networks corresponding to different training epochs significantly improve generalization performance and find that the improvement is much larger for the \u21e7 and Mean Teacher models compared to supervised training",
+        "We find that the performance gains of fast-stochastic weight averaging over base models are higher for the \u21e7 model compared to the MT model, which is consistent with the convexity observation in Section 3.3 and Figure 2",
+        "Applying fast-stochastic weight averaging to this model on domain adaptation from CIFAR-10 to STL we were able to improve the best results reported in the literature from 19.9% to 16.8%",
+        "By analyzing solutions along the training trajectories for two of the most successful models in this class, the \u21e7 and Mean Teacher models, we have seen that rather than converging to a single solution stochastic gradient descent continues to explore a diverse set of plausible solutions late into training"
+    ],
+    "key_statements": [
+        "Recent advances in deep unsupervised learning, such as generative adversarial networks (GANs) (Goodfellow et al, 2014), have led to an explosion of interest in semi-supervised learning",
+        "We provide several novel observations about the training objective and optimization trajectories of the popular \u21e7 (Laine and Aila, 2017) and Mean Teacher (Tarvainen and Valpola, 2017) consistency-based models",
+        "We propose to improve stochastic gradient descent solutions via stochastic weight averaging (SWA) (<a class=\"ref-link\" id=\"cIzmailov_et+al_2018_a\" href=\"#rIzmailov_et+al_2018_a\">Izmailov et al, 2018</a>), a recent method that averages weights of the networks corresponding to different training epochs to obtain a single model with improved generalization",
+        "We show in Section 3.1 that a simplified \u21e7 model implicitly regularizes the norm of the Jacobian of the network outputs with respect to both its inputs and its weights, which in turn encourages flatter solutions",
+        "Interpolating between the weights corresponding to different epochs of training we demonstrate that the solutions of \u21e7 and Mean Teacher models are flatter along these directions (Figure 1b)",
+        "In Section 3.2, we compare the training trajectories of the \u21e7, Mean Teacher, and supervised models and find that the distances between the weights corresponding to different epochs are much larger for the consistency based models",
+        "We propose to average the weights corresponding to stochastic gradient descent iterates, or ensemble the predictions of the models corresponding to these weights",
+        "We show that the stochastic gradient descent iterates correspond to models with diverse predictions \u2013 using weight averaging or ensembling allows us to make use of the improved diversity and obtain a better solution compared to the stochastic gradient descent iterates",
+        "In Section 3.3 we demonstrate that both ensembling predictions and averaging weights of the networks corresponding to different training epochs significantly improve generalization performance and find that the improvement is much larger for the \u21e7 and Mean Teacher models compared to supervised training",
+        "Motivated by our observations in Section 3 we propose to apply Stochastic Weight Averaging (SWA) (<a class=\"ref-link\" id=\"cIzmailov_et+al_2018_a\" href=\"#rIzmailov_et+al_2018_a\">Izmailov et al, 2018</a>) to the \u21e7 and Mean Teacher models",
+        "We propose fast-stochastic weight averaging, which (1) uses a learning rate schedule with longer cycles to increase the distance between the weights that are averaged and the diversity of the corresponding predictions; and (2) averages weights of multiple networks within each cycle",
+        "In Section 5, we show that fast-stochastic weight averaging converges to a good solution much faster than stochastic weight averaging",
+        "We briefly review semi-supervised learning with consistency-based models",
+        "This class of models encourages predictions to stay similar under small perturbations of inputs or network parameters",
+        "In Section 3.1, we study a simplified version of the \u21e7 model theoretically and show that it penalizes the norm of the Jacobian of the outputs with respect to inputs, as well as the eigenvalues of the Hessian, both of which have been related to generalization (Sokolicet al., 2017; Novak et al, 2018; <a class=\"ref-link\" id=\"cDinh_et+al_2017_a\" href=\"#rDinh_et+al_2017_a\">Dinh et al, 2017a</a>; <a class=\"ref-link\" id=\"cChaudhari_et+al_2016_a\" href=\"#rChaudhari_et+al_2016_a\">Chaudhari et al, 2016</a>)",
+        "In Section 3.3 we show that averaging weights or ensembling predictions of the models proposed by stochastic gradient descent at different training epochs can lead to substantial gains in accuracy and that these gains are much larger for \u21e7 and MT than for supervised training.\n3.1",
+        "We explore the trajectories followed by stochastic gradient descent for the consistency-based models and compare them to the trajectories in supervised training.\n50 100 150 Epoch (a) Gradient Norm\n0 30 20 10 0 10 20 30 Ray distance (b) stochastic gradient descent-stochastic gradient descent Rays\n0 0 5 10 15 20 25 30 Ray distance (c) \u21e7 model\n0 0 5 10 15 20 25 30 Ray distance (d) Supervised model",
+        "Using the the same pairs from above, we evaluate the performance of the model formed by averaging the pairs of weights, Cavg(w1, w2)",
+        "We find stochastic gradient descent iterates at the periphery of this flat region",
+        "stochastic weight averaging typically starts from a pre-trained model, and averages points in weight space traversed by stochastic gradient descent with a constant or cyclical learning rate",
+        "We propose to apply stochastic weight averaging to the student network both for the \u21e7 and Mean Teacher models",
+        "We propose fast-stochastic weight averaging, a modification of stochastic weight averaging that averages networks corresponding to every k < c epochs starting from epochc",
+        "We evaluate the \u21e7 and MT models (Section 4) on CIFAR-10 and CIFAR-100 with varying numbers of labeled examples",
+        "We show that fast-stochastic weight averaging and stochastic weight averaging improve the performance of the \u21e7 and MT models, as we expect from our observations in Section 3",
+        "We demonstrate that the preposed fast-stochastic weight averaging obtains high performance much faster than stochastic weight averaging",
+        "We evaluate stochastic weight averaging applied to a consistency-based domain adaptation model (<a class=\"ref-link\" id=\"cFrench_et+al_2018_a\" href=\"#rFrench_et+al_2018_a\">French et al, 2018</a>), closely related to the MT model, for adapting CIFAR-10 to STL",
+        "We evaluate the weight averaging methods stochastic weight averaging and fast-stochastic weight averaging on different network architectures and learning rate schedules",
+        "We evaluate the proposed fast-stochastic weight averaging method using the \u21e7 and MT models on the CIFAR-10 dataset (Krizhevsky)",
+        "We found that the improvement on Virtual Adversarial Training is not drastic \u2013 our base implementation obtains 11.26% error where fast-stochastic weight averaging reduces it to 10.97%",
+        "We provide additional plots in Section A.2 showing the convergence of the \u21e7 and MT models in all label settings, where we observe similar trends that fast-stochastic weight averaging results in faster error reduction",
+        "We find that the performance gains of fast-stochastic weight averaging over base models are higher for the \u21e7 model compared to the MT model, which is consistent with the convexity observation in Section 3.3 and Figure 2",
+        "We evaluate the \u21e7 and MT models with fast-stochastic weight averaging on CIFAR-100",
+        "In Figure 5 we show the errors of MT, stochastic weight averaging and fast-stochastic weight averaging as a function of iteration on CIFAR-100 for the 10k and 50k+500k label settings",
+        "A recent model by <a class=\"ref-link\" id=\"cFrench_et+al_2018_a\" href=\"#rFrench_et+al_2018_a\">French et al (2018</a>) applies the consistency enforcing principle for domain adaptation and achieves state-of-the-art results on many datasets",
+        "Applying fast-stochastic weight averaging to this model on domain adaptation from CIFAR-10 to STL we were able to improve the best results reported in the literature from 19.9% to 16.8%",
+        "By analyzing solutions along the training trajectories for two of the most successful models in this class, the \u21e7 and Mean Teacher models, we have seen that rather than converging to a single solution stochastic gradient descent continues to explore a diverse set of plausible solutions late into training",
+        "We believe that application-specific analysis of the geometric properties of the training objective and optimization trajectories will further improve results over a wide range of application specific areas, including reinforcement learning with sparse rewards, generative adversarial networks (Yaz\u0131c\u0131 et al, 2018), or semi-supervised natural language processing"
+    ],
+    "summary": [
+        "Recent advances in deep unsupervised learning, such as generative adversarial networks (GANs) (Goodfellow et al, 2014), have led to an explosion of interest in semi-supervised learning.",
+        "In Section 3.2, we compare the training trajectories of the \u21e7, Mean Teacher, and supervised models and find that the distances between the weights corresponding to different epochs are much larger for the consistency based models.",
+        "In Section 3.3 we demonstrate that both ensembling predictions and averaging weights of the networks corresponding to different training epochs significantly improve generalization performance and find that the improvement is much larger for the \u21e7 and Mean Teacher models compared to supervised training.",
+        "In Section 3.3 we show that averaging weights or ensembling predictions of the models proposed by SGD at different training epochs can lead to substantial gains in accuracy and that these gains are much larger for \u21e7 and MT than for supervised training.",
+        "For further understand this observation, we analyze the behavior of train and test errors in the region of weight space around the solutions of the \u21e7 and Mean Teacher models.",
+        "In Section 3.2 we observed that for the \u21e7 and Mean Teacher models SGD traverses a large flat region of the weight space late in training.",
+        "In Section 3 we analyzed averaging pairs of weights corresponding to different epochs of training and showed that it improves the test accuracy.",
+        "SWA typically starts from a pre-trained model, and averages points in weight space traversed by SGD with a constant or cyclical learning rate.",
+        "We find that the cyclical learning rate improves the base models beyond the usual cosine annealing schedule and increases the performance of fast-SWA as training progresses.",
+        "We provide additional plots in Section A.2 showing the convergence of the \u21e7 and MT models in all label settings, where we observe similar trends that fast-SWA results in faster error reduction.",
+        "We find that the performance gains of fast-SWA over base models are higher for the \u21e7 model compared to the MT model, which is consistent with the convexity observation in Section 3.3 and Figure 2.",
+        "We visualize the results in Figure 4b, where we again observe that fast-SWA substantially improves performance for every configuration of the number of labeled and unlabeled data.",
+        "Applying a variant of the recently proposed stochastic weight averaging (SWA) we advance the best known semi-supervised results on classification benchmarks.",
+        "We believe that application-specific analysis of the geometric properties of the training objective and optimization trajectories will further improve results over a wide range of application specific areas, including reinforcement learning with sparse rewards, generative adversarial networks (Yaz\u0131c\u0131 et al, 2018), or semi-supervised natural language processing."
+    ],
+    "headline": "We conceptually explore how loss geometry interacts with training procedures",
+    "reference_links": [
+        {
+            "id": "Arora_et+al_2018_a",
+            "entry": "S. Arora, R. Ge, B. Neyshabur, and Y. Zhang. Stronger generalization bounds for deep nets via a compression approach. In ICML, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20S.%20Ge%2C%20R.%20Neyshabur%2C%20B.%20Zhang%2C%20Y.%20Stronger%20generalization%20bounds%20for%20deep%20nets%20via%20a%20compression%20approach%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arora%2C%20S.%20Ge%2C%20R.%20Neyshabur%2C%20B.%20Zhang%2C%20Y.%20Stronger%20generalization%20bounds%20for%20deep%20nets%20via%20a%20compression%20approach%202018"
+        },
+        {
+            "id": "Avron_2011_a",
+            "entry": "H. Avron and S. Toledo. Randomized algorithms for estimating the trace of an implicit symmetric positive semi-definite matrix. Journal of the ACM, 58(2):1\u201334, Apr. 2011. ISSN 00045411. doi: 10.1145/1944345.1944349.",
+            "crossref": "https://dx.doi.org/10.1145/1944345.1944349",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/1944345.1944349"
+        },
+        {
+            "id": "Bachman_et+al_2014_a",
+            "entry": "P. Bachman, O. Alsharif, and D. Precup. Learning with pseudo-ensembles. In Advances in Neural Information Processing Systems, pages 3365\u20133373, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bachman%2C%20P.%20Alsharif%2C%20O.%20Precup%2C%20D.%20Learning%20with%20pseudo-ensembles%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bachman%2C%20P.%20Alsharif%2C%20O.%20Precup%2C%20D.%20Learning%20with%20pseudo-ensembles%202014"
+        },
+        {
+            "id": "Chaudhari_et+al_2016_a",
+            "entry": "P. Chaudhari, A. Choromanska, S. Soatto, Y. LeCun, C. Baldassi, C. Borgs, J. Chayes, L. Sagun, and R. Zecchina. Entropy-SGD: Biasing Gradient Descent Into Wide Valleys. arXiv:1611.01838 [cs, stat], Nov. 2016. arXiv: 1611.01838.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01838"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "L. Dinh, R. Pascanu, S. Bengio, and Y. Bengio. Sharp Minima Can Generalize For Deep Nets. arXiv:1703.04933 [cs], Mar. 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04933"
+        },
+        {
+            "id": "Dinh_et+al_2017_b",
+            "entry": "L. Dinh, R. Pascanu, S. Bengio, and Y. Bengio. Sharp minima can generalize for deep nets. In ICML, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dinh%2C%20L.%20Pascanu%2C%20R.%20Bengio%2C%20S.%20Bengio%2C%20Y.%20Sharp%20minima%20can%20generalize%20for%20deep%20nets%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20L.%20Pascanu%2C%20R.%20Bengio%2C%20S.%20Bengio%2C%20Y.%20Sharp%20minima%20can%20generalize%20for%20deep%20nets%202017"
+        },
+        {
+            "id": "French_et+al_2018_a",
+            "entry": "G. French, M. Mackiewicz, and M. Fisher. Self-ensembling for visual domain adaptation. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=French%2C%20G.%20Mackiewicz%2C%20M.%20Fisher%2C%20M.%20Self-ensembling%20for%20visual%20domain%20adaptation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=French%2C%20G.%20Mackiewicz%2C%20M.%20Fisher%2C%20M.%20Self-ensembling%20for%20visual%20domain%20adaptation%202018"
+        },
+        {
+            "id": "Gastaldi_2017_a",
+            "entry": "X. Gastaldi. Shake-shake regularization. CoRR, abs/1705.07485, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.07485"
+        },
+        {
+            "id": "Bengio_2014_a",
+            "entry": "Y. Bengio. Generative adversarial nets. In Advances in neural information processing systems, pages 2672\u20132680, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bengio%2C%20Y.%20Generative%20adversarial%20nets%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bengio%2C%20Y.%20Generative%20adversarial%20nets%202014"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "I. Goodfellow, O. Vinyals, and A. Saxe. Qualitatively characterizing neural network optimization problems. International Conference on Learning Representations, 2015. G. Gur-Ari, D. A. Roberts, and E. Dyer. Gradient descent happens in a tiny subspace. In CoRR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20I.%20Vinyals%2C%20O.%20Saxe%2C%20A.%20Qualitatively%20characterizing%20neural%20network%20optimization%20problems.%20International%20Conference%20on%20Learning%20Representations%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20I.%20Vinyals%2C%20O.%20Saxe%2C%20A.%20Qualitatively%20characterizing%20neural%20network%20optimization%20problems.%20International%20Conference%20on%20Learning%20Representations%202015"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. CoRR, abs/1512.03385, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1512.03385"
+        },
+        {
+            "id": "Izmailov_et+al_2018_a",
+            "entry": "P. Izmailov, D. Podoprikhin, T. Garipov, D. Vetrov, and A. G. Wilson. Averaging weights leads to wider optima and better generalization. arXiv preprint arXiv:1803.05407, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05407"
+        },
+        {
+            "id": "Keskar_et+al_2017_a",
+            "entry": "N. S. Keskar, D. Mudigere, J. Nocedal, M. Smelyanskiy, and P. T. P. Tang. On large-batch training for deep learning: Generalization gap and sharp minima. ICLR, 2017. D. P. Kingma and J. Ba. Adam: A method for stochastic optimization. ICLR, 2015. A. Krizhevsky. Learning Multiple Layers of Features from Tiny Images. page 60. S. Laine and T. Aila. Temporal Ensembling for Semi-Supervised Learning. arXiv:1610.02242 [cs], Oct. 2016. S. Laine and T. Aila. Temporal ensembling for semi-supervised learning. International Conference on Learning Representations, 2017. I. Loshchilov and F. Hutter. SGDR: stochastic gradient descent with restarts. CoRR, abs/1608.03983, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.02242"
+        },
+        {
+            "id": "Luo_et+al_2018_a",
+            "entry": "Y. Luo, J. Zhu, M. Li, Y. Ren, and B. Zhang. Smooth neighbors on teacher graphs for semi-supervised learning. In CVPR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20Y.%20Zhu%2C%20J.%20Li%2C%20M.%20Ren%2C%20Y.%20Smooth%20neighbors%20on%20teacher%20graphs%20for%20semi-supervised%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20Y.%20Zhu%2C%20J.%20Li%2C%20M.%20Ren%2C%20Y.%20Smooth%20neighbors%20on%20teacher%20graphs%20for%20semi-supervised%20learning%202018"
+        },
+        {
+            "id": "Mandt_et+al_2017_a",
+            "entry": "S. Mandt, M. D. Hoffman, and D. M. Blei. Stochastic gradient descent as approximate bayesian inference. arXiv preprint arXiv:1704.04289, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.04289"
+        },
+        {
+            "id": "Miyato_et+al_2017_a",
+            "entry": "T. Miyato, S. Maeda, M. Koyama, and S. Ishii. Virtual adversarial training: a regularization method for supervised and semi-supervised learning. CoRR, abs/1704.03976, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03976"
+        },
+        {
+            "id": "Novak_et+al_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 R. Novak, Y. Bahri, D. A. Abolafia, J. Pennington, and J. Sohl-Dickstein. Sensitivity and generalization in neural networks: an empirical study. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Novak%2C%20R.%20Bahri%2C%20Y.%20Abolafia%2C%20D.A.%20Pennington%2C%20J.%20Published%20as%20a%20conference%20paper%20at%20ICLR%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Novak%2C%20R.%20Bahri%2C%20Y.%20Abolafia%2C%20D.A.%20Pennington%2C%20J.%20Published%20as%20a%20conference%20paper%20at%20ICLR%202019"
+        },
+        {
+            "id": "Oliver_et+al_2018_a",
+            "entry": "A. Oliver, A. Odena, C. Raffel, E. D. Cubuk, and I. J. Goodfellow. Realistic evaluation of deep semi-supervised learning algorithms. ICLR Workshop, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oliver%2C%20A.%20Odena%2C%20A.%20Raffel%2C%20C.%20Cubuk%2C%20E.D.%20Realistic%20evaluation%20of%20deep%20semi-supervised%20learning%20algorithms%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oliver%2C%20A.%20Odena%2C%20A.%20Raffel%2C%20C.%20Cubuk%2C%20E.D.%20Realistic%20evaluation%20of%20deep%20semi-supervised%20learning%20algorithms%202018"
+        },
+        {
+            "id": "Park_et+al_2017_a",
+            "entry": "S. Park, J.-K. Park, S.-J. Shin, and I.-C. Moon. Adversarial Dropout for Supervised and Semisupervised Learning. arXiv:1707.03631 [cs], July 2017. arXiv: 1707.03631. L. Sagun, U. Evci, V. U. G\u00fcney, Y. Dauphin, and L. Bottou. Empirical analysis of the hessian of over-parametrized neural networks. CoRR, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.03631"
+        },
+        {
+            "id": "J_2016_a",
+            "entry": "Perturbations for Deep Semi-Supervised Learning. arXiv:1606.04586 [cs], June 2016. arXiv: 1606.04586. J. Schmidhuber and S. Hochreiter. Flat minima. Neural Computation, 1997.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.04586"
+        },
+        {
+            "id": "Shu_et+al_2018_a",
+            "entry": "R. Shu, H. Bui, H. Narui, and S. Ermon. A DIRT-t approach to unsupervised domain adaptation. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shu%2C%20R.%20Bui%2C%20H.%20Narui%2C%20H.%20Ermon%2C%20S.%20A%20DIRT-t%20approach%20to%20unsupervised%20domain%20adaptation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shu%2C%20R.%20Bui%2C%20H.%20Narui%2C%20H.%20Ermon%2C%20S.%20A%20DIRT-t%20approach%20to%20unsupervised%20domain%20adaptation%202018"
+        },
+        {
+            "id": "Sokolic_et+al_2017_a",
+            "entry": "J. Sokolic, R. Giryes, G. Sapiro, and M. R. Rodrigues. Robust large margin deep neural networks. IEEE Transactions on Signal Processing, 65(16):4265\u20134280, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sokolic%2C%20J.%20Giryes%2C%20R.%20Sapiro%2C%20G.%20Rodrigues%2C%20M.R.%20Robust%20large%20margin%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sokolic%2C%20J.%20Giryes%2C%20R.%20Sapiro%2C%20G.%20Rodrigues%2C%20M.R.%20Robust%20large%20margin%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Srivastava_et+al_2014_a",
+            "entry": "N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever, and R. Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting. The Journal of Machine Learning Research, 15(1): 1929\u20131958, 2014. A. Tarvainen and H. Valpola. Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results. In NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20N.%20Hinton%2C%20G.%20Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20N.%20Hinton%2C%20G.%20Krizhevsky%2C%20A.%20Sutskever%2C%20I.%20Dropout%3A%20A%20simple%20way%20to%20prevent%20neural%20networks%20from%20overfitting%202014"
+        },
+        {
+            "id": "Torralba_et+al_2008_a",
+            "entry": "A. Torralba, R. Fergus, and W. T. Freeman. 80 million tiny images: A large data set for nonparametric object and scene recognition. IEEE Trans. Pattern Anal. Mach. Intell., 30(11):1958\u20131970, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Torralba%2C%20A.%20Fergus%2C%20R.%20Freeman%2C%20W.T.%2080%20million%20tiny%20images%3A%20A%20large%20data%20set%20for%20nonparametric%20object%20and%20scene%20recognition%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Torralba%2C%20A.%20Fergus%2C%20R.%20Freeman%2C%20W.T.%2080%20million%20tiny%20images%3A%20A%20large%20data%20set%20for%20nonparametric%20object%20and%20scene%20recognition%202008"
+        },
+        {
+            "id": "Yaz_et+al_2018_a",
+            "entry": "Y. Yaz\u0131c\u0131, C.-S. Foo, S. Winkler, K.-H. Yap, G. Piliouras, and V. Chandrasekhar. The Unusual Effectiveness of Averaging in GAN Training. ArXiv, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yaz%C4%B1c%C4%B1%2C%20Y.%20Foo%2C%20C.-S.%20Winkler%2C%20S.%20Yap%2C%20K.-H.%20The%20Unusual%20Effectiveness%20of%20Averaging%20in%20GAN%20Training%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yaz%C4%B1c%C4%B1%2C%20Y.%20Foo%2C%20C.-S.%20Winkler%2C%20S.%20Yap%2C%20K.-H.%20The%20Unusual%20Effectiveness%20of%20Averaging%20in%20GAN%20Training%202018"
+        },
+        {
+            "id": "Zhu_et+al_2003_a",
+            "entry": "X. Zhu, Z. Ghahramani, and J. Lafferty. Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions. ICML, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20X.%20Ghahramani%2C%20Z.%20Lafferty%2C%20J.%20Semi-Supervised%20Learning%20Using%20Gaussian%20Fields%20and%20Harmonic%20Functions%202003"
+        }
+    ]
+}

@@ -1,0 +1,268 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "date": 2019,
+        "title": "FEATURE-WISE BIAS AMPLIFICATION",
+        "author": "Klas Leino, Matt Fredrikson, Emily Black, Shayak Sen, & Anupam Datta Carnegie Mellon University",
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1ecm2C9K7"
+        },
+        "abstract": "We study the phenomenon of bias amplification in classifiers, wherein a machine learning model learns to predict classes with a greater disparity than the underlying ground truth. We demonstrate that bias amplification can arise via an inductive bias in gradient descent methods that results in the overestimation of the importance of moderately-predictive \u201cweak\u201d features if insufficient training data is available. This overestimation gives rise to feature-wise bias amplification \u2013 a previously unreported form of bias that can be traced back to the features of a trained model. Through analysis and experiments, we show that while some bias cannot be mitigated without sacrificing accuracy, feature-wise bias amplification can be mitigated through targeted feature selection. We present two new feature selection algorithms for mitigating bias amplification in linear models, and show how they can be adapted to convolutional neural networks efficiently. Our experiments on synthetic and real data demonstrate that these algorithms consistently lead to reduced bias without harming accuracy, in some cases eliminating predictive bias altogether while providing modest gains in accuracy."
+    },
+    "keywords": [
+        {
+            "term": "learning rule",
+            "url": "https://en.wikipedia.org/wiki/learning_rule"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "feature selection",
+            "url": "https://en.wikipedia.org/wiki/feature_selection"
+        },
+        {
+            "term": "Gaussian Naive Bayes",
+            "url": "https://en.wikipedia.org/wiki/Gaussian_Naive_Bayes"
+        }
+    ],
+    "abbreviations": {
+        "GNB": "Gaussian Naive Bayes"
+    },
+    "highlights": [
+        "Bias amplification occurs when the distribution over prediction outputs is skewed in comparison to the prior distribution of the prediction target",
+        "We examine bias amplification in the context of binary classifiers, and show that it can be decomposed into a component that is intrinsic to the model, and one that arises from the inductive bias of gradient descent on certain feature configurations",
+        "Summary: Bias amplification may be unavoidable when the learning rule is a good fit for the data, but the features are less effective at distinguishing between classes than the prior",
+        "The effect is strong enough to manifest in real settings where generative assumptions do not hold, but Gaussian Naive Bayes outperforms other linear classifiers",
+        "Summary: When the data is distributed asymmetrically with respect to features\u2019 orientation towards a class, gradient descent may lead to systematic bias especially when many of the asymmetric features are weak predictors",
+        "This bias is a result of the learning rule, as it manifests in cases where a Bayes-optimal predictor would exhibit no bias, and it may be possible to mitigate it without harming accuracy.\n4 MITIGATING FEATURE-WISE BIAS AMPLIFICATION"
+    ],
+    "key_statements": [
+        "Bias amplification occurs when the distribution over prediction outputs is skewed in comparison to the prior distribution of the prediction target",
+        "We examine bias amplification in the context of binary classifiers, and show that it can be decomposed into a component that is intrinsic to the model, and one that arises from the inductive bias of gradient descent on certain feature configurations",
+        "Our analysis suggests a model would exhibit feature-wise bias amplification towards female prediction, because there are more weak features oriented towards that class",
+        "In contrast to prior work, we demonstrate that bias amplification can occur without existing imbalances in the training set",
+        "Because the features in x are independent given the class label, the Bayes-optimal learning rule for this data is Gaussian Naive Bayes, which is expressible as a linear classifier (<a class=\"ref-link\" id=\"cMurphy_2012_a\" href=\"#rMurphy_2012_a\">Murphy, 2012</a>)",
+        "Summary: Bias amplification may be unavoidable when the learning rule is a good fit for the data, but the features are less effective at distinguishing between classes than the prior",
+        "The effect is strong enough to manifest in real settings where generative assumptions do not hold, but Gaussian Naive Bayes outperforms other linear classifiers",
+        "Summary: When the data is distributed asymmetrically with respect to features\u2019 orientation towards a class, gradient descent may lead to systematic bias especially when many of the asymmetric features are weak predictors",
+        "This bias is a result of the learning rule, as it manifests in cases where a Bayes-optimal predictor would exhibit no bias, and it may be possible to mitigate it without harming accuracy.\n4 MITIGATING FEATURE-WISE BIAS AMPLIFICATION",
+        "Our analysis suggests an approach for removing such bias, namely by identifying and removing the weak features that are systematically overestimated by gradient descent",
+        "We present empirical evidence to support our claim that feature-wise bias amplification can safely be removed without harming the accuracy of the classifier"
+    ],
+    "summary": [
+        "Bias amplification occurs when the distribution over prediction outputs is skewed in comparison to the prior distribution of the prediction target.",
+        "Our analysis suggests a model would exhibit feature-wise bias amplification towards female prediction, because there are more weak features oriented towards that class.",
+        "We observe that in addition to mitigating bias amplification, these feature selection methods reduce generalization error relative to an 1 regularization baseline for both linear models and deep networks (Table 1).",
+        "This means that removing feature-wise bias would make the model more faithful to the data it was given, generally increasing accuracy.",
+        "Because the features in x are independent given the class label, the Bayes-optimal learning rule for this data is Gaussian Naive Bayes, which is expressible as a linear classifier (<a class=\"ref-link\" id=\"cMurphy_2012_a\" href=\"#rMurphy_2012_a\">Murphy, 2012</a>).",
+        "Summary: Bias amplification may be unavoidable when the learning rule is a good fit for the data, but the features are less effective at distinguishing between classes than the prior.",
+        "Our results show that in the particular case of conditionally-independent Gaussian data, the Bayes-optimal predictor suffers from bias as the Mahalanobis distance between class means decreases, leading to a noticeable increase even when the prior is only somewhat biased.",
+        "This suggests gradient descent tends to \u201coveruse\u201d the weak features prior to convergence, leading to systematic bias that over-predicts the majority class in asymmetric regimes.",
+        "Summary: When the data is distributed asymmetrically with respect to features\u2019 orientation towards a class, gradient descent may lead to systematic bias especially when many of the asymmetric features are weak predictors.",
+        "In Section 5, we show that these methods are effective at mitigating bias without harming accuracy on both logistic predictors and deep networks.",
+        "We present empirical evidence to support our claim that feature-wise bias amplification can safely be removed without harming the accuracy of the classifier.",
+        "We show this on both logistic predictors and deep networks by measuring the bias on several benchmark datasets, and running the parity and expert mitigation approaches described in Section 4.",
+        "On the prostate dataset, influence-directed experts removed 80% of the prediction bias while improving accuracy from 57.7% to 90.2%.",
+        "Table 1 shows that on linear models, feature parity always improves or maintains the model in terms of both bias amplification and accuracy.",
+        "The results suggest that influence-directed experts are the most effective mitigation technique, both in terms of bias removal and accuracy improvement.",
+        "The results show that deep networks tend to have a less significant feature asymmetry than data used for logistic models, which we would expect to render the feature parity approach less effective."
+    ],
+    "headline": "We study the phenomenon of bias amplification in classifiers, wherein a machine learning model learns to predict classes with a greater disparity than the underlying ground truth",
+    "reference_links": [
+        {
+            "id": "Zafar_et+al_2015_a",
+            "entry": "Muhammad Bilal Zafar, Isabel Valera, Manuel Gomez Rodriguez, and Krishna P. Gummadi. Fairness Constraints: Mechanisms for Fair Classification. arXiv e-prints, art. arXiv:1507.05259, Jul 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.05259"
+        },
+        {
+            "id": "Friedler_2018_a",
+            "entry": "Reuben Binns. Fairml. In Sorelle A. Friedler and Christo Wilson (eds.), Proceedings of the 1st Conference on Fairness, Accountability and Transparency, volume 81 of Proceedings of Machine Learning Research, pp. 149\u2013159, New York, NY, USA, 23\u201324 Feb 2018. PMLR. URL http://proceedings.mlr.press/v81/binns18a.html.",
+            "url": "http://proceedings.mlr.press/v81/binns18a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reuben%20Binns%20Fairml%20In%20Sorelle%20A%20Friedler%20and%20Christo%20Wilson%20eds%20Proceedings%20of%20the%201st%20Conference%20on%20Fairness%20Accountability%20and%20Transparency%20volume%2081%20of%20Proceedings%20of%20Machine%20Learning%20Research%20pp%20149159%20New%20York%20NY%20USA%202324%20Feb%202018%20PMLR%20URL%20httpproceedingsmlrpressv81binns18ahtml"
+        },
+        {
+            "id": "Bolukbasi_et+al_2016_a",
+            "entry": "Tolga Bolukbasi, Kai-Wei Chang, James Y. Zou, Venkatesh Saligrama, and Adam Kalai. Man is to computer programmer as woman is to homemaker? debiasing word embeddings. CoRR, abs/1607.06520, 2016. URL http://arxiv.org/abs/1607.06520.",
+            "url": "http://arxiv.org/abs/1607.06520",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06520"
+        },
+        {
+            "id": "Buda_et+al_2017_a",
+            "entry": "Mateusz Buda, Atsuto Maki, and Maciej A. Mazurowski. A systematic study of the class imbalance problem in convolutional neural networks. CoRR, abs/1710.05381, 2017. URL http://arxiv.org/abs/1710.05381.",
+            "url": "http://arxiv.org/abs/1710.05381",
+            "arxiv_url": "https://arxiv.org/pdf/1710.05381"
+        },
+        {
+            "id": "Burns_et+al_2018_a",
+            "entry": "Kaylee Burns, Lisa Anne Hendricks, Trevor Darrell, and Anna Rohrbach. Women also snowboard: Overcoming bias in captioning models. CoRR, abs/1803.09797, 2018. URL http://arxiv.org/abs/1803.09797.",
+            "url": "http://arxiv.org/abs/1803.09797",
+            "arxiv_url": "https://arxiv.org/pdf/1803.09797"
+        },
+        {
+            "id": "Girish_2014_a",
+            "entry": "Girish Chandrashekar and Ferat Sahin. A survey on feature selection methods. Computers and Electrical Engineering, 40(1):16 \u2013 28, 2014. ISSN 0045-7906. doi: https://doi.org/10.1016/j.compeleceng.2013.11.024.40th-year commemorative issue.",
+            "crossref": "https://dx.doi.org/10.1016/j.compeleceng.2013.11.024.40th-year",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.compeleceng.2013.11.024.40th-year"
+        },
+        {
+            "id": "Chawla_2005_a",
+            "entry": "Nitesh Chawla. Data mining for imbalanced datasets: An overview, 01 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chawla%2C%20Nitesh%20Data%20mining%20for%20imbalanced%20datasets%3A%20An%20overview%2C%2001%202005"
+        },
+        {
+            "id": "Dastin_2018_a",
+            "entry": "Jeffrey Dastin. Amazon scraps secret ai recruiting tool that showed bias against women, Oct 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dastin%2C%20Jeffrey%20Amazon%20scraps%20secret%20ai%20recruiting%20tool%20that%20showed%20bias%20against%20women%202018-10"
+        },
+        {
+            "id": "Dheeru_2017_a",
+            "entry": "Dua Dheeru and Efi Karra Taniskidou. UCI machine learning repository, 2017. URL http://archive.ics.uci.edu/ml.",
+            "url": "http://archive.ics.uci.edu/ml"
+        },
+        {
+            "id": "Geman_et+al_1992_a",
+            "entry": "Stuart Geman, Elie Bienenstock, and Rene Doursat. Neural networks and the bias/variance dilemma. Neural Comput., 4(1):1\u201358, January 1992. ISSN 0899-7667. doi: 10.1162/neco.1992.4.1.1.",
+            "crossref": "https://dx.doi.org/10.1162/neco.1992.4.1.1",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1162/neco.1992.4.1.1"
+        },
+        {
+            "id": "Gunasekar_et+al_2018_a",
+            "entry": "S. Gunasekar, J. Lee, D. Soudry, and N. Srebro. Implicit Bias of Gradient Descent on Linear Convolutional Networks. ArXiv e-prints, June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gunasekar%2C%20S.%20Lee%2C%20J.%20Soudry%2C%20D.%20Srebro%2C%20N.%20Implicit%20Bias%20of%20Gradient%20Descent%20on%20Linear%20Convolutional%20Networks.%20ArXiv%20e-prints%202018-06"
+        },
+        {
+            "id": "Hart_2017_a",
+            "entry": "Robert D. Hart. If youre not a white male, artificial intelligences use in healthcare could be dangerous. https://goo.gl/Mtgf8B, July 10 2017. Retrieved 9/25/18., 2017.",
+            "url": "https://goo.gl/Mtgf8B"
+        },
+        {
+            "id": "Havaei_et+al_2015_a",
+            "entry": "Mohammad Havaei, Axel Davy, David Warde-Farley, Antoine Biard, Aaron C. Courville, Yoshua Bengio, Chris Pal, Pierre-Marc Jodoin, and Hugo Larochelle. Brain tumor segmentation with deep neural networks. CoRR, abs/1505.03540, 2015. URL http://arxiv.org/abs/1505.03540.",
+            "url": "http://arxiv.org/abs/1505.03540",
+            "arxiv_url": "https://arxiv.org/pdf/1505.03540"
+        },
+        {
+            "id": "He_2009_a",
+            "entry": "H. He and E. A. Garcia. Learning from imbalanced data. IEEE Transactions on Knowledge and Data Engineering, 21(9):1263\u20131284, Sept 2009. ISSN 1041-4347. doi: 10.1109/TKDE.2008.239.",
+            "crossref": "https://dx.doi.org/10.1109/TKDE.2008.239",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TKDE.2008.239"
+        },
+        {
+            "id": "Kim_et+al_2015_a",
+            "entry": "Been Kim, Julie A Shah, and Finale Doshi-Velez. Mind the gap: A generative approach to interpretable feature selection and extraction. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett (eds.), Advances in Neural Information Processing Systems 28, pp. 2260\u20132268. Curran Associates, Inc., 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Been%20Shah%2C%20Julie%20A.%20Doshi-Velez%2C%20Finale%20Mind%20the%20gap%3A%20A%20generative%20approach%20to%20interpretable%20feature%20selection%20and%20extraction%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Been%20Shah%2C%20Julie%20A.%20Doshi-Velez%2C%20Finale%20Mind%20the%20gap%3A%20A%20generative%20approach%20to%20interpretable%20feature%20selection%20and%20extraction%202015"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "A. Krizhevsky and G. Hinton. Learning multiple layers of features from tiny images. Master\u2019s thesis, Department of Computer Science, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20A.%20Hinton%2C%20G.%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Leino_et+al_2018_a",
+            "entry": "Klas Leino, Linyi Li, Shayak Sen, Anupam Datta, and Matt Fredrikson. Influence-directed explanations for deep convolutional networks. CoRR, abs/1802.03788, 2018. URL http://arxiv.org/abs/1802.03788.",
+            "url": "http://arxiv.org/abs/1802.03788",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03788"
+        },
+        {
+            "id": "Li_et+al_2016_a",
+            "entry": "Jundong Li, Kewei Cheng, Suhang Wang, Fred Morstatter, Robert P Trevino, Jiliang Tang, and Huan Liu. Feature selection: A data perspective. arXiv preprint arXiv:1601.07996, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1601.07996"
+        },
+        {
+            "id": "Liu_et+al_2015_a",
+            "entry": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In Proceedings of International Conference on Computer Vision (ICCV), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ziwei%20Luo%2C%20Ping%20Wang%2C%20Xiaogang%20Tang%2C%20Xiaoou%20Deep%20learning%20face%20attributes%20in%20the%20wild%202015"
+        },
+        {
+            "id": "Maloof_2003_a",
+            "entry": "Marcus A. Maloof. Learning when data sets are imbalanced and when costs are unequeal and unknown, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maloof%2C%20Marcus%20A.%20Learning%20when%20data%20sets%20are%20imbalanced%20and%20when%20costs%20are%20unequeal%20and%20unknown%202003"
+        },
+        {
+            "id": "Mazurowski_et+al_2008_a",
+            "entry": "Maciej A. Mazurowski, Piotr A. Habas, Jacek M. Zurada, Joseph Y. Lo, Jay A. Baker, and Georgia D. Tourassi. Training neural network classifiers for medical decision making: The effects of imbalanced datasets on classification performance. Neural Networks, 21(2):427 \u2013 436, 2008. ISSN 0893-6080. doi: https://doi.org/10.1016/j.neunet.2007.12.031. URL http://www.sciencedirect.com/science/article/pii/S0893608007002407. Advances in Neural Networks Research: IJCNN 07.",
+            "crossref": "https://dx.doi.org/10.1016/j.neunet.2007.12.031",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.neunet.2007.12.031"
+        },
+        {
+            "id": "Murphey_et+al_2004_a",
+            "entry": "Yi Murphey, Hong Guo, and Lee Feldkamp. Neural learning from unbalanced data: Special issue: Engineering intelligent systems (guest editor: Lszl monostori). 21, 09 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murphey%2C%20Yi%20Guo%2C%20Hong%20Feldkamp%2C%20Lee%20Neural%20learning%20from%20unbalanced%20data%3A%20Special%20issue%3A%20Engineering%20intelligent%20systems%202004"
+        },
+        {
+            "id": "Murphy_2012_a",
+            "entry": "Kevin P. Murphy. Machine Learning: A Probabilistic Perspective. The MIT Press, 2012. ISBN 0262018020, 9780262018029.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murphy%2C%20Kevin%20P.%20Machine%20Learning%3A%20A%20Probabilistic%20Perspective%202012"
+        },
+        {
+            "id": "Oommen_et+al_2011_a",
+            "entry": "Thomas Oommen, Laurie Baise, and Richard Vogel. Sampling bias and class imbalance in maximum-likelihood logistic regression. 43:99\u2013120, 10 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oommen%2C%20Thomas%20Baise%2C%20Laurie%20Vogel%2C%20Richard%20Sampling%20bias%20and%20class%20imbalance%20in%20maximum-likelihood%20logistic%20regression%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oommen%2C%20Thomas%20Baise%2C%20Laurie%20Vogel%2C%20Richard%20Sampling%20bias%20and%20class%20imbalance%20in%20maximum-likelihood%20logistic%20regression%202011"
+        },
+        {
+            "id": "Rennie_et+al_2003_a",
+            "entry": "Jason D. M. Rennie, Lawrence Shih, Jaime Teevan, and David R. Karger. Tackling the poor assumptions of naive bayes text classifiers. In Proceedings of the Twentieth International Conference on International Conference on Machine Learning, ICML\u201903, pp. 616\u2013623. AAAI Press, 2003. ISBN 1-57735-189-4. URL http://dl.acm.org/citation.cfm?id=3041838.3041916.",
+            "url": "http://dl.acm.org/citation.cfm?id=3041838.3041916",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rennie%2C%20Jason%20D.M.%20Shih%2C%20Lawrence%20Teevan%2C%20Jaime%20Karger%2C%20David%20R.%20Tackling%20the%20poor%20assumptions%20of%20naive%20bayes%20text%20classifiers%202003"
+        },
+        {
+            "id": "Simonyan_et+al_2013_a",
+            "entry": "Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside convolutional networks: Visualising image classification models and saliency maps. CoRR, abs/1312.6034, 2013. URL http://arxiv.org/abs/1312.6034.",
+            "url": "http://arxiv.org/abs/1312.6034",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6034"
+        },
+        {
+            "id": "Soudry_et+al_2017_a",
+            "entry": "D. Soudry, E. Hoffer, M. Shpigel Nacson, S. Gunasekar, and N. Srebro. The Implicit Bias of Gradient Descent on Separable Data. ArXiv e-prints, October 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Soudry%2C%20D.%20Hoffer%2C%20E.%20Nacson%2C%20M.Shpigel%20Gunasekar%2C%20S.%20The%20Implicit%20Bias%20of%20Gradient%20Descent%20on%20Separable%20Data.%20ArXiv%20e-prints%202017-10"
+        },
+        {
+            "id": "Stock_2017_a",
+            "entry": "Pierre Stock and Moustapha Cisse. Convnets and imagenet beyond accuracy: Explanations, bias detection, adversarial examples and model criticism. CoRR, abs/1711.11443, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.11443"
+        },
+        {
+            "id": "Sundararajan_et+al_2017_a",
+            "entry": "Mukund Sundararajan, Ankur Taly, and Qiqi Yan. Axiomatic attribution for deep networks. CoRR, abs/1703.01365, 2017. URL http://arxiv.org/abs/1703.01365.",
+            "url": "http://arxiv.org/abs/1703.01365",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01365"
+        },
+        {
+            "id": "Wallace_et+al_2011_a",
+            "entry": "B. C. Wallace, K. Small, C. E. Brodley, and T. A. Trikalinos. Class imbalance, redux. In 2011 IEEE 11th International Conference on Data Mining, 2011a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wallace%2C%20B.C.%20Small%2C%20K.%20Brodley%2C%20C.E.%20Trikalinos%2C%20T.A.%20Class%20imbalance%2C%20redux%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wallace%2C%20B.C.%20Small%2C%20K.%20Brodley%2C%20C.E.%20Trikalinos%2C%20T.A.%20Class%20imbalance%2C%20redux%202011"
+        },
+        {
+            "id": "Wallace_et+al_2011_b",
+            "entry": "B. C. Wallace, K. Small, C. E. Brodley, and T. A. Trikalinos. Class imbalance, redux. In 2011 IEEE 11th International Conference on Data Mining, pp. 754\u2013763, Dec 2011b. doi: 10.1109/ICDM. 2011.33.",
+            "crossref": "https://dx.doi.org/10.1109/ICDM.2011.33",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/ICDM.2011.33"
+        },
+        {
+            "id": "Zhang_2004_a",
+            "entry": "Harry Zhang. The optimality of naive bayes. AA, 1(2):3, 2004. Jieyu Zhao, Tianlu Wang, Mark Yatskar, Vicente Ordonez, and Kai-Wei Chang. Men also like shopping: Reducing gender bias amplification using corpus-level constraints. CoRR, abs/1707.09457, 2017. URL http://arxiv.org/abs/1707.09457. Indre Zliobaite. On the relation between accuracy and fairness in binary classification. CoRR, abs/1505.05723, 2015. URL http://arxiv.org/abs/1505.05723.",
+            "url": "http://arxiv.org/abs/1707.09457",
+            "arxiv_url": "https://arxiv.org/pdf/1707.09457"
+        },
+        {
+            "id": "Proof._2012_a",
+            "entry": "Proof. Note that the Bayes-optimal classifier can be expressed as a linear weighted sum (Murphy, 2012) in terms of parameters w, \u02c6b as shown in Equation 8.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Proof%20Note%20that%20the%20Bayesoptimal%20classifier%20can%20be%20expressed%20as%20a%20linear%20weighted%20sum%20Murphy%202012%20in%20terms%20of%20parameters%20w%20%CB%86b%20as%20shown%20in%20Equation%208",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Proof%20Note%20that%20the%20Bayesoptimal%20classifier%20can%20be%20expressed%20as%20a%20linear%20weighted%20sum%20Murphy%202012%20in%20terms%20of%20parameters%20w%20%CB%86b%20as%20shown%20in%20Equation%208"
+        }
+    ]
+}

@@ -1,0 +1,342 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "MULTIPLE-ATTRIBUTE TEXT REWRITING",
+        "author": "Guillaume Lample, Sandeep Subramanian, Eric Michael Smith, Ludovic Denoyer, Marc\u2019Aurelio Ranzato, Y-Lan Boureau, 1Facebook AI Research, 2MILA, Universitede Montreal 3Sorbonne Universites, UPMC Univ Paris 06 sandeep.subramanian.1@umontreal.ca {glample,ems,denoyer,ranzato,ylan}@fb.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1g2NhC5KQ"
+        },
+        "abstract": "The dominant approach to unsupervised \u201cstyle transfer\u201d in text is based on the idea of learning a latent representation, which is independent of the attributes specifying its \u201cstyle\u201d. In this paper, we show that this condition is not necessary and is not always met in practice, even with domain adversarial training that explicitly aims at learning such disentangled representations. We thus propose a new model that controls several factors of variation in textual data where this condition on disentanglement is replaced with a simpler mechanism based on back-translation. Our method allows control over multiple attributes, like gender, sentiment, product type, etc., and a more fine-grained control on the trade-off between content preservation and change of style with a pooling operator in the latent space. Our experiments demonstrate that the fully entangled model produces better generations, even when tested on new and more challenging benchmarks comprising reviews with multiple sentences and multiple attributes."
+    },
+    "keywords": [
+        {
+            "term": "social media",
+            "url": "https://en.wikipedia.org/wiki/social_media"
+        },
+        {
+            "term": "neural machine translation",
+            "url": "https://en.wikipedia.org/wiki/neural_machine_translation"
+        },
+        {
+            "term": "machine translation",
+            "url": "https://en.wikipedia.org/wiki/machine_translation"
+        }
+    ],
+    "abbreviations": {
+        "DAE": "Denoising auto-encoding",
+        "BPE": "byte-pair encodings"
+    },
+    "highlights": [
+        "One of the objectives of unsupervised learning is to learn representations of data that enable fine control over the underlying latent factors of variation, e.g., pose and viewpoint of objects in images, or writer style and sentiment of a product review",
+        "This paper aims to extend previous studies on \u201cstyle transfer\u201d along three axes. (i) First, we seek to gain a better understanding of what is necessary to make things work, and in particular, whether",
+        "The resulting model is similar to recently proposed methods for unsupervised machine translation (<a class=\"ref-link\" id=\"cLample_et+al_2017_a\" href=\"#rLample_et+al_2017_a\">Lample et al, 2017a</a>; 2018; <a class=\"ref-link\" id=\"cArtetxe_et+al_2018_a\" href=\"#rArtetxe_et+al_2018_a\">Artetxe et al, 2018</a>; Zhang et al, 2018b), but with two major differences: (a) we use a pooling operator which is used to control the trade-off between style transfer and content preservation; and (b) we extend this model to support multiple attribute control. in Sec. 4.1 we point out that current style transfer benchmarks based on collections of user reviews have severe limitations, as they only consider a single attribute control, and very small sentences in isolation with noisy labels",
+        "We propose a new set of benchmarks based on existing review datasets, which comprise full reviews, where multiple attributes are extracted from each review",
+        "We introduce the following components: Attribute conditioning In order to handle multiple attributes, we separately embed each target attribute value and average their embeddings",
+        "We demonstrate that our model does not suffer significant drops in performance when controlling multiple attributes over a single one"
+    ],
+    "key_statements": [
+        "One of the objectives of unsupervised learning is to learn representations of data that enable fine control over the underlying latent factors of variation, e.g., pose and viewpoint of objects in images, or writer style and sentiment of a product review",
+        "This paper aims to extend previous studies on \u201cstyle transfer\u201d along three axes. (i) First, we seek to gain a better understanding of what is necessary to make things work, and in particular, whether",
+        "The resulting model is similar to recently proposed methods for unsupervised machine translation (<a class=\"ref-link\" id=\"cLample_et+al_2017_a\" href=\"#rLample_et+al_2017_a\">Lample et al, 2017a</a>; 2018; <a class=\"ref-link\" id=\"cArtetxe_et+al_2018_a\" href=\"#rArtetxe_et+al_2018_a\">Artetxe et al, 2018</a>; Zhang et al, 2018b), but with two major differences: (a) we use a pooling operator which is used to control the trade-off between style transfer and content preservation; and (b) we extend this model to support multiple attribute control. in Sec. 4.1 we point out that current style transfer benchmarks based on collections of user reviews have severe limitations, as they only consider a single attribute control, and very small sentences in isolation with noisy labels",
+        "We propose a new set of benchmarks based on existing review datasets, which comprise full reviews, where multiple attributes are extracted from each review",
+        "We introduce the following components: Attribute conditioning In order to handle multiple attributes, we separately embed each target attribute value and average their embeddings",
+        "We demonstrate that our model does not suffer significant drops in performance when controlling multiple attributes over a single one"
+    ],
+    "summary": [
+        "One of the objectives of unsupervised learning is to learn representations of data that enable fine control over the underlying latent factors of variation, e.g., pose and viewpoint of objects in images, or writer style and sentiment of a product review.",
+        "The resulting model is similar to recently proposed methods for unsupervised machine translation (<a class=\"ref-link\" id=\"cLample_et+al_2017_a\" href=\"#rLample_et+al_2017_a\">Lample et al, 2017a</a>; 2018; <a class=\"ref-link\" id=\"cArtetxe_et+al_2018_a\" href=\"#rArtetxe_et+al_2018_a\">Artetxe et al, 2018</a>; Zhang et al, 2018b), but with two major differences: (a) we use a pooling operator which is used to control the trade-off between style transfer and content preservation; and (b) we extend this model to support multiple attribute control.",
+        "Evaluation of controlled text generation can inform the design of a more streamlined approach: generated sentences should (1) be fluent, (2) make use of the specified attribute values, and (3) preserve the rest of the content of the input.",
+        "The motivating observation is that models that compute one latent vector representation per input word usually perform individual word replacement, while models without attention are much less literal and tend to lose content but have an easier time changing the input sentence with the desired set of attributes.",
+        "The hyper-parameters of our model are: \u03bbAE and \u03bbBT trading off the denoising auto-encoder term versus the back-translation term, the temperature T used to produce unbiased generations (<a class=\"ref-link\" id=\"cEdunov_et+al_2018_a\" href=\"#rEdunov_et+al_2018_a\">Edunov et al, 2018</a>) and to control the amount of content preservation, and the pooling window size w.",
+        "We labeled reviews with the following product categories based on the meta-data: Books, Clothing, Electronics, Movies, Music.",
+        "We would like our systems to simultaneously 1) produce sentences that conform to the set of pre-specified attribute(s), 2) preserve the structure and content of the input, and 3) generate fluent language.",
+        "We compare the same set of models as in <a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\"><a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\">Li et al (2018</a></a>) with the addition of our model and our own implementation of the Fader network (Lample et al, 2017b), which corresponds to our model without back-translation and without attention mechanism, but uses domain adversarial training (<a class=\"ref-link\" id=\"cGanin_et+al_2016_a\" href=\"#rGanin_et+al_2016_a\">Ganin et al, 2016</a>) to remove information about sentiment from the encoder\u2019s representation.",
+        "Table 5 shows the fluency, content preservation and attribute control scores obtained by our model, DeleteAndRetrieve (DAR) and turkers from <a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\"><a class=\"ref-link\" id=\"cLi_et+al_2018_a\" href=\"#rLi_et+al_2018_a\">Li et al (2018</a></a>) 4 on the SYelp dataset.",
+        "In Table 7, we report results from an ablation study on the SYelp and FYelp datasets to understand the impact of the different model components on overall performance.",
+        "We find that a model with all of these components, except for domain adversarial training, performs the best, further validating our hypothesis in Section 3.1 that it is possible to control attributes of text without disentangled representations.",
+        "The source code and benchmarks will be made available to the research community after the reviewing process"
+    ],
+    "headline": "We show that this condition is not necessary and is not always met in practice, even with domain adversarial training that explicitly aims at learning such disentangled representations",
+    "reference_links": [
+        {
+            "id": "Artetxe_et+al_2018_a",
+            "entry": "Mikel Artetxe, Gorka Labaka, Eneko Agirre, and Kyunghyun Cho. Unsupervised neural machine translation. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Artetxe%2C%20Mikel%20Labaka%2C%20Gorka%20Agirre%2C%20Eneko%20Cho%2C%20Kyunghyun%20Unsupervised%20neural%20machine%20translation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Artetxe%2C%20Mikel%20Labaka%2C%20Gorka%20Agirre%2C%20Eneko%20Cho%2C%20Kyunghyun%20Unsupervised%20neural%20machine%20translation%202018"
+        },
+        {
+            "id": "Bahdanau_et+al_2014_a",
+            "entry": "Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. Neural machine translation by jointly learning to align and translate. arXiv preprint arXiv:1409.0473, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.0473"
+        },
+        {
+            "id": "Bolukbasi_et+al_2016_a",
+            "entry": "Tolga Bolukbasi, Kai-Wei Chang, James Y Zou, Venkatesh Saligrama, and Adam T Kalai. Man is to computer programmer as woman is to homemaker? debiasing word embeddings. In Advances in Neural Information Processing Systems, pp. 4349\u20134357, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bolukbasi%2C%20Tolga%20Chang%2C%20Kai-Wei%20Zou%2C%20James%20Y.%20Saligrama%2C%20Venkatesh%20Man%20is%20to%20computer%20programmer%20as%20woman%20is%20to%20homemaker%3F%20debiasing%20word%20embeddings%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bolukbasi%2C%20Tolga%20Chang%2C%20Kai-Wei%20Zou%2C%20James%20Y.%20Saligrama%2C%20Venkatesh%20Man%20is%20to%20computer%20programmer%20as%20woman%20is%20to%20homemaker%3F%20debiasing%20word%20embeddings%202016"
+        },
+        {
+            "id": "Carlson_et+al_2017_a",
+            "entry": "Keith Carlson, Allen Riddell, and Daniel Rockmore. Zero-shot style transfer in text using recurrent neural networks. arXiv preprint arXiv:1711.04731, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.04731"
+        },
+        {
+            "id": "Chen_2017_a",
+            "entry": "Mickael Chen, Ludovic Denoyer, and Thierry Artieres. Multi-view data generation without view supervision. In ICLR 2018, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Mickael%20Denoyer%2C%20Ludovic%20and%20Thierry%20Artieres.%20Multi-view%20data%20generation%20without%20view%20supervision%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Mickael%20Denoyer%2C%20Ludovic%20and%20Thierry%20Artieres.%20Multi-view%20data%20generation%20without%20view%20supervision%202017"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, and Pieter Abbeel. Infogan: Interpretable representation learning by information maximizing generative adversarial nets. In Advances in neural information processing systems, pp. 2172\u20132180, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Infogan%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chen%2C%20Xi%20Duan%2C%20Yan%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Infogan%3A%20Interpretable%20representation%20learning%20by%20information%20maximizing%20generative%20adversarial%20nets%202016"
+        },
+        {
+            "id": "Alexis_2017_a",
+            "entry": "Alexis Conneau, Guillaume Lample, Marc\u2019Aurelio Ranzato, Ludovic Denoyer, and Herve Jegou. Word translation without parallel data. arXiv preprint arXiv:1710.04087, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.04087"
+        },
+        {
+            "id": "Dos_et+al_2018_a",
+            "entry": "Cicero Nogueira dos Santos, Igor Melnyk, and Inkit Padhi. Fighting offensive language on social media with unsupervised text style transfer. arXiv preprint arXiv:1805.07685, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.07685"
+        },
+        {
+            "id": "Edunov_et+al_2018_a",
+            "entry": "Sergey Edunov, Myle Ott, Michael Auli, and David Grangier. Understanding back-translation at scale. arXiv preprint arXiv:1808.09381, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.09381"
+        },
+        {
+            "id": "Ficler_2017_a",
+            "entry": "Jessica Ficler and Yoav Goldberg. Controlling linguistic style aspects in neural language generation. arXiv preprint arXiv:1707.02633, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.02633"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Zhenxin Fu, Xiaoye Tan, Nanyun Peng, Dongyan Zhao, and Rui Yan. Style transfer in text: Exploration and evaluation. arXiv preprint arXiv:1711.06861, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.06861"
+        },
+        {
+            "id": "Ganin_et+al_2016_a",
+            "entry": "Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo Larochelle, Francois Laviolette, Mario Marchand, and Victor Lempitsky. Domain-adversarial training of neural networks. The Journal of Machine Learning Research, 17(1):2096\u20132030, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ganin%2C%20Yaroslav%20Ustinova%2C%20Evgeniya%20Ajakan%2C%20Hana%20Germain%2C%20Pascal%20Domain-adversarial%20training%20of%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ganin%2C%20Yaroslav%20Ustinova%2C%20Evgeniya%20Ajakan%2C%20Hana%20Germain%2C%20Pascal%20Domain-adversarial%20training%20of%20neural%20networks%202016"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Di He, Yingce Xia, Tao Qin, Liwei Wang, Nenghai Yu, Tieyan Liu, and Wei-Ying Ma. Dual learning for machine translation. In Advances in Neural Information Processing Systems, pp. 820\u2013828, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Di%20Xia%2C%20Yingce%20Qin%2C%20Tao%20Wang%2C%20Liwei%20and%20Wei-Ying%20Ma.%20Dual%20learning%20for%20machine%20translation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Di%20Xia%2C%20Yingce%20Qin%2C%20Tao%20Wang%2C%20Liwei%20and%20Wei-Ying%20Ma.%20Dual%20learning%20for%20machine%20translation%202016"
+        },
+        {
+            "id": "He_2016_b",
+            "entry": "Ruining He and Julian McAuley. Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering. In proceedings of the 25th international conference on world wide web, pp. 507\u2013517. International World Wide Web Conferences Steering Committee, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Ruining%20McAuley%2C%20Julian%20Ups%20and%20downs%3A%20Modeling%20the%20visual%20evolution%20of%20fashion%20trends%20with%20one-class%20collaborative%20filtering.%20In%20proceedings%20of%20the%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Ruining%20McAuley%2C%20Julian%20Ups%20and%20downs%3A%20Modeling%20the%20visual%20evolution%20of%20fashion%20trends%20with%20one-class%20collaborative%20filtering.%20In%20proceedings%20of%20the%202016"
+        },
+        {
+            "id": "Heafield_2011_a",
+            "entry": "Kenneth Heafield. Kenlm: Faster and smaller language model queries. In Proceedings of the Sixth Workshop on Statistical Machine Translation, pp. 187\u2013197. Association for Computational Linguistics, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Heafield%2C%20Kenneth%20Kenlm%3A%20Faster%20and%20smaller%20language%20model%20queries%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Heafield%2C%20Kenneth%20Kenlm%3A%20Faster%20and%20smaller%20language%20model%20queries%202011"
+        },
+        {
+            "id": "Higgins_et+al_2017_a",
+            "entry": "Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, and Alexander Lerchner. beta-vae: Learning basic visual concepts with a constrained variational framework. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-vae%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Higgins%2C%20Irina%20Matthey%2C%20Loic%20Pal%2C%20Arka%20Burgess%2C%20Christopher%20beta-vae%3A%20Learning%20basic%20visual%20concepts%20with%20a%20constrained%20variational%20framework%202017"
+        },
+        {
+            "id": "Hu_et+al_2017_a",
+            "entry": "Zhiting Hu, Zichao Yang, Xiaodan Liang, Ruslan Salakhutdinov, and Eric P Xing. Toward controlled generation of text. arXiv preprint arXiv:1703.00955, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.00955"
+        },
+        {
+            "id": "Isola_et+al_2017_a",
+            "entry": "Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A Efros. Image-to-image translation with conditional adversarial networks. CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Isola%2C%20Phillip%20Zhu%2C%20Jun-Yan%20Zhou%2C%20Tinghui%20and%20Alexei%20A%20Efros.%20Image-to-image%20translation%20with%20conditional%20adversarial%20networks%202017"
+        },
+        {
+            "id": "John_et+al_2018_a",
+            "entry": "Vineet John, Lili Mou, Hareesh Bahuleyan, and Olga Vechtomova. Disentangled representation learning for non-parallel text style transfer. arXiv preprint arXiv:1808.04339, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04339"
+        },
+        {
+            "id": "Joulin_et+al_2016_a",
+            "entry": "Armand Joulin, Edouard Grave, Piotr Bojanowski, and Tomas Mikolov. Bag of tricks for efficient text classification. arXiv preprint arXiv:1607.01759, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.01759"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Koehn_et+al_2007_a",
+            "entry": "Philipp Koehn, Hieu Hoang, Alexandra Birch, Chris Callison-Burch, Marcello Federico, Nicola Bertoldi, Brooke Cowan, Wade Shen, Christine Moran, Richard Zens, Ondrej Bojar Chris Dyer, Alexandra Constantin, and Evan Herbst. Moses: Open source toolkit for statistical machine translation. In Annual Meeting of the Association for Computational Linguistics (ACL), demo session, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koehn%2C%20Philipp%20Hoang%2C%20Hieu%20Birch%2C%20Alexandra%20Callison-Burch%2C%20Chris%20Moses%3A%20Open%20source%20toolkit%20for%20statistical%20machine%20translation%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koehn%2C%20Philipp%20Hoang%2C%20Hieu%20Birch%2C%20Alexandra%20Callison-Burch%2C%20Chris%20Moses%3A%20Open%20source%20toolkit%20for%20statistical%20machine%20translation%202007"
+        },
+        {
+            "id": "Kulkarni_et+al_2015_a",
+            "entry": "Tejas D Kulkarni, William F Whitney, Pushmeet Kohli, and Josh Tenenbaum. Deep convolutional inverse graphics network. In Advances in neural information processing systems, pp. 2539\u20132547, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulkarni%2C%20Tejas%20D.%20Whitney%2C%20William%20F.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Josh%20Deep%20convolutional%20inverse%20graphics%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulkarni%2C%20Tejas%20D.%20Whitney%2C%20William%20F.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Josh%20Deep%20convolutional%20inverse%20graphics%20network%202015"
+        },
+        {
+            "id": "Lample_et+al_0000_a",
+            "entry": "Guillaume Lample, Ludovic Denoyer, and Marc\u2019Aurelio Ranzato. Unsupervised machine translation using monolingual corpora only. arXiv preprint arXiv:1711.00043, 2017a.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.00043"
+        },
+        {
+            "id": "Lample_et+al_2017_a",
+            "entry": "Guillaume Lample, Neil Zeghidour, Nicolas Usunier, Antoine Bordes, Ludovic Denoyer, et al. Fader networks: Manipulating images by sliding attributes. In Advances in Neural Information Processing Systems, pp. 5967\u20135976, 2017b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lample%2C%20Guillaume%20Zeghidour%2C%20Neil%20Usunier%2C%20Nicolas%20Bordes%2C%20Antoine%20Fader%20networks%3A%20Manipulating%20images%20by%20sliding%20attributes%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lample%2C%20Guillaume%20Zeghidour%2C%20Neil%20Usunier%2C%20Nicolas%20Bordes%2C%20Antoine%20Fader%20networks%3A%20Manipulating%20images%20by%20sliding%20attributes%202017"
+        },
+        {
+            "id": "Lample_et+al_2018_a",
+            "entry": "Guillaume Lample, Myle Ott, Alexis Conneau, Ludovic Denoyer, and Marc\u2019Aurelio Ranzato. Phrase-based & neural unsupervised machine translation. arXiv preprint arXiv:1804.07755, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.07755"
+        },
+        {
+            "id": "Li_et+al_2018_a",
+            "entry": "Juncen Li, Robin Jia, He He, and Percy Liang. Delete, retrieve, generate: A simple approach to sentiment and style transfer. arXiv preprint arXiv:1804.06437, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.06437"
+        },
+        {
+            "id": "Liu_2016_a",
+            "entry": "Ming-Yu Liu and Oncel Tuzel. Coupled generative adversarial networks. In Advances in neural information processing systems, pp. 469\u2013477, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Ming-Yu%20Tuzel%2C%20Oncel%20Coupled%20generative%20adversarial%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Ming-Yu%20Tuzel%2C%20Oncel%20Coupled%20generative%20adversarial%20networks%202016"
+        },
+        {
+            "id": "Michel_2018_a",
+            "entry": "Paul Michel and Graham Neubig. Extreme adaptation for personalized neural machine translation. arXiv preprint arXiv:1805.01817, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.01817"
+        },
+        {
+            "id": "Miller_et+al_2017_a",
+            "entry": "Alexander H Miller, Will Feng, Adam Fisch, Jiasen Lu, Dhruv Batra, Antoine Bordes, Devi Parikh, and Jason Weston. Parlai: A dialog research software platform. arXiv preprint arXiv:1705.06476, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.06476"
+        },
+        {
+            "id": "Mirza_2014_a",
+            "entry": "Mehdi Mirza and Simon Osindero. Conditional generative adversarial nets. arXiv preprint arXiv:1411.1784, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1411.1784"
+        },
+        {
+            "id": "Papineni_et+al_2002_a",
+            "entry": "Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. Bleu: a method for automatic evaluation of machine translation. In Proceedings of the 40th annual meeting on association for computational linguistics, pp. 311\u2013318. Association for Computational Linguistics, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papineni%2C%20Kishore%20Roukos%2C%20Salim%20Ward%2C%20Todd%20Zhu%2C%20Wei-Jing%20Bleu%3A%20a%20method%20for%20automatic%20evaluation%20of%20machine%20translation%202002"
+        },
+        {
+            "id": "Prabhumoye_et+al_2018_a",
+            "entry": "Shrimai Prabhumoye, Yulia Tsvetkov, Ruslan Salakhutdinov, and Alan W Black. Style transfer through back-translation. arXiv preprint arXiv:1804.09000, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.09000"
+        },
+        {
+            "id": "Reddy_2016_a",
+            "entry": "Sravana Reddy and Kevin Knight. Obfuscating gender in social media writing. In Proceedings of the First Workshop on NLP and Computational Social Science, pp. 17\u201326, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Reddy%2C%20Sravana%20Knight%2C%20Kevin%20Obfuscating%20gender%20in%20social%20media%20writing%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddy%2C%20Sravana%20Knight%2C%20Kevin%20Obfuscating%20gender%20in%20social%20media%20writing%202016"
+        },
+        {
+            "id": "Sennrich_et+al_0000_a",
+            "entry": "Rico Sennrich, Barry Haddow, and Alexandra Birch. Improving neural machine translation models with monolingual data. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics, pp. 86\u201396, 2015a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Improving%20neural%20machine%20translation%20models%20with%20monolingual%20data",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Improving%20neural%20machine%20translation%20models%20with%20monolingual%20data"
+        },
+        {
+            "id": "Sennrich_et+al_2015_a",
+            "entry": "Rico Sennrich, Barry Haddow, and Alexandra Birch. Neural machine translation of rare words with subword units. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics, pp. 1715\u20131725, 2015b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sennrich%2C%20Rico%20Haddow%2C%20Barry%20Birch%2C%20Alexandra%20Neural%20machine%20translation%20of%20rare%20words%20with%20subword%20units%202015"
+        },
+        {
+            "id": "Shen_et+al_2017_a",
+            "entry": "Tianxiao Shen, Tao Lei, Regina Barzilay, and Tommi Jaakkola. Style transfer from non-parallel text by cross-alignment. In Advances in Neural Information Processing Systems, pp. 6830\u20136841, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Tianxiao%20Lei%2C%20Tao%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Style%20transfer%20from%20non-parallel%20text%20by%20cross-alignment%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Tianxiao%20Lei%2C%20Tao%20Barzilay%2C%20Regina%20Jaakkola%2C%20Tommi%20Style%20transfer%20from%20non-parallel%20text%20by%20cross-alignment%202017"
+        },
+        {
+            "id": "Sohn_et+al_2015_a",
+            "entry": "Kihyuk Sohn, Honglak Lee, and Xinchen Yan. Learning structured output representation using deep conditional generative models. In Advances in Neural Information Processing Systems, pp. 3483\u20133491, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sohn%2C%20Kihyuk%20Lee%2C%20Honglak%20Yan%2C%20Xinchen%20Learning%20structured%20output%20representation%20using%20deep%20conditional%20generative%20models%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sohn%2C%20Kihyuk%20Lee%2C%20Honglak%20Yan%2C%20Xinchen%20Learning%20structured%20output%20representation%20using%20deep%20conditional%20generative%20models%202015"
+        },
+        {
+            "id": "Taigman_et+al_2016_a",
+            "entry": "Yaniv Taigman, Adam Polyak, and Lior Wolf. Unsupervised cross-domain image generation. arXiv preprint arXiv:1611.02200, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.02200"
+        },
+        {
+            "id": "Xu_et+al_2018_a",
+            "entry": "Jingjing Xu, Xu Sun, Qi Zeng, Xuancheng Ren, Xiaodong Zhang, Houfeng Wang, and Wenjie Li. Unpaired sentiment-to-sentiment translation: A cycled reinforcement learning approach. arXiv preprint arXiv:1805.05181, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.05181"
+        },
+        {
+            "id": "Yang_et+al_2015_a",
+            "entry": "Jimei Yang, Scott E Reed, Ming-Hsuan Yang, and Honglak Lee. Weakly-supervised disentangling with recurrent transformations for 3d view synthesis. In Advances in Neural Information Processing Systems, pp. 1099\u20131107, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Jimei%20Reed%2C%20Scott%20E.%20Yang%2C%20Ming-Hsuan%20Lee%2C%20Honglak%20Weakly-supervised%20disentangling%20with%20recurrent%20transformations%20for%203d%20view%20synthesis%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Jimei%20Reed%2C%20Scott%20E.%20Yang%2C%20Ming-Hsuan%20Lee%2C%20Honglak%20Weakly-supervised%20disentangling%20with%20recurrent%20transformations%20for%203d%20view%20synthesis%202015"
+        },
+        {
+            "id": "Yang_et+al_2018_a",
+            "entry": "Zichao Yang, Zhiting Hu, Chris Dyer, Eric P Xing, and Taylor Berg-Kirkpatrick. Unsupervised text style transfer using language models as discriminators. arXiv preprint arXiv:1805.11749, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11749"
+        },
+        {
+            "id": "Zhang_et+al_0000_a",
+            "entry": "Ye Zhang, Nan Ding, and Radu Soricut. Shaped: Shared-private encoder-decoder for text style adaptation. arXiv preprint arXiv:1804.04093, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.04093"
+        },
+        {
+            "id": "Zhang_et+al_0000_b",
+            "entry": "Zhirui Zhang, Shuo Ren, Shujie Liu, Jianyong Wang, Peng Chen, Mu Li, Ming Zhou, and Enhong Chen. Style transfer as unsupervised machine translation. arXiv preprint arXiv:1808.07894, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.07894"
+        },
+        {
+            "id": "Zhang_et+al_0000_c",
+            "entry": "Zhirui Zhang, Shuo Ren, Shujie Liu, Jianyong Wang, Peng Chen, Mu Li, Ming Zhou, and Enhong Chen. Style transfer as unsupervised machine translation. arXiv preprint arXiv:1808.07894, 2018c.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.07894"
+        },
+        {
+            "id": "Zhao_et+al_2018_a",
+            "entry": "Yanpeng Zhao, Wei Bi, Deng Cai, Xiaojiang Liu, Kewei Tu, and Shuming Shi. Language style transfer from sentences with arbitrary unknown styles. arXiv preprint arXiv:1808.04071, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04071"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. arXiv preprint, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Jun-Yan%20Park%2C%20Taesung%20Isola%2C%20Phillip%20and%20Alexei%20A%20Efros.%20Unpaired%20image-to-image%20translation%20using%20cycle-consistent%20adversarial%20networks.%20arXiv%20p%202017"
+        },
+        {
+            "id": "We_2018_a",
+            "entry": "We used the Adam optimizer (Kingma & Ba, 2014) with a learning rate of 10\u22124, \u03b21 = 0.5, and a batch size of 32. As in Lample et al. (2018), we fix \u03bbBT = 1, and set \u03bbAE to 1 at the beginning of the experiment, and linearly decrease it to 0 over the first 300, 000 iterations. We use greedy decoding at inference. When generating pseudo-parallel data via back-translation, we found that increasing the temperature over the course of training from greedy generation to multinomial sampling with a temperature of 0.5 linearly over 300,000 steps was useful (Edunov et al., 2018). Since the class distribution for different attributes in both the Yelp and Amazon datasets are skewed, we train with balanced minibatches when there is only a single attribute being controlled and with independent and uniformly sampled attribute values otherwise. The synthetic target attributes during back-translation yare also balanced by uniform sampling.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20used%20the%20Adam%20optimizer%20Kingma%20%20Ba%202014%20with%20a%20learning%20rate%20of%20104%20%CE%B21%20%2005%20and%20a%20batch%20size%20of%2032%20As%20in%20Lample%20et%20al%202018%20we%20fix%20%CE%BBBT%20%201%20and%20set%20%CE%BBAE%20to%201%20at%20the%20beginning%20of%20the%20experiment%20and%20linearly%20decrease%20it%20to%200%20over%20the%20first%20300%20000%20iterations%20We%20use%20greedy%20decoding%20at%20inference%20When%20generating%20pseudoparallel%20data%20via%20backtranslation%20we%20found%20that%20increasing%20the%20temperature%20over%20the%20course%20of%20training%20from%20greedy%20generation%20to%20multinomial%20sampling%20with%20a%20temperature%20of%2005%20linearly%20over%20300000%20steps%20was%20useful%20Edunov%20et%20al%202018%20Since%20the%20class%20distribution%20for%20different%20attributes%20in%20both%20the%20Yelp%20and%20Amazon%20datasets%20are%20skewed%20we%20train%20with%20balanced%20minibatches%20when%20there%20is%20only%20a%20single%20attribute%20being%20controlled%20and%20with%20independent%20and%20uniformly%20sampled%20attribute%20values%20otherwise%20The%20synthetic%20target%20attributes%20during%20backtranslation%20yare%20also%20balanced%20by%20uniform%20sampling",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20used%20the%20Adam%20optimizer%20Kingma%20%20Ba%202014%20with%20a%20learning%20rate%20of%20104%20%CE%B21%20%2005%20and%20a%20batch%20size%20of%2032%20As%20in%20Lample%20et%20al%202018%20we%20fix%20%CE%BBBT%20%201%20and%20set%20%CE%BBAE%20to%201%20at%20the%20beginning%20of%20the%20experiment%20and%20linearly%20decrease%20it%20to%200%20over%20the%20first%20300%20000%20iterations%20We%20use%20greedy%20decoding%20at%20inference%20When%20generating%20pseudoparallel%20data%20via%20backtranslation%20we%20found%20that%20increasing%20the%20temperature%20over%20the%20course%20of%20training%20from%20greedy%20generation%20to%20multinomial%20sampling%20with%20a%20temperature%20of%2005%20linearly%20over%20300000%20steps%20was%20useful%20Edunov%20et%20al%202018%20Since%20the%20class%20distribution%20for%20different%20attributes%20in%20both%20the%20Yelp%20and%20Amazon%20datasets%20are%20skewed%20we%20train%20with%20balanced%20minibatches%20when%20there%20is%20only%20a%20single%20attribute%20being%20controlled%20and%20with%20independent%20and%20uniformly%20sampled%20attribute%20values%20otherwise%20The%20synthetic%20target%20attributes%20during%20backtranslation%20yare%20also%20balanced%20by%20uniform%20sampling"
+        },
+        {
+            "id": "FYelp:_2018_b",
+            "entry": "FYelp: Reviews, their rating, user information and restaurant/business categories are obtained from the available metadata. We construct sentiment labels by grouping 1/2 star ratings into the negative category and 4/5 into the positive category while discarding 3 star reviews. To determine the gender of the person writing a review, we obtain their name from the available user information and then look it up in a list of gendered names5 following Prabhumoye et al. (2018); Reddy & Knight (2016). We discard reviews for which we were unable to obtain gender information with this technique. Restaurant/business category meta-data is available for each review, from which we discard all reviews that were not written about restaurants. Amongst restaurant reviews, we manually group restaurant categories into \u201cparent\u201d categories to cover a significant fraction of the dataset. The grouping is as follows:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=FYelp%20Reviews%20their%20rating%20user%20information%20and%20restaurantbusiness%20categories%20are%20obtained%20from%20the%20available%20metadata%20We%20construct%20sentiment%20labels%20by%20grouping%2012%20star%20ratings%20into%20the%20negative%20category%20and%2045%20into%20the%20positive%20category%20while%20discarding%203%20star%20reviews%20To%20determine%20the%20gender%20of%20the%20person%20writing%20a%20review%20we%20obtain%20their%20name%20from%20the%20available%20user%20information%20and%20then%20look%20it%20up%20in%20a%20list%20of%20gendered%20names5%20following%20Prabhumoye%20et%20al%202018%20Reddy%20%20Knight%202016%20We%20discard%20reviews%20for%20which%20we%20were%20unable%20to%20obtain%20gender%20information%20with%20this%20technique%20Restaurantbusiness%20category%20metadata%20is%20available%20for%20each%20review%20from%20which%20we%20discard%20all%20reviews%20that%20were%20not%20written%20about%20restaurants%20Amongst%20restaurant%20reviews%20we%20manually%20group%20restaurant%20categories%20into%20parent%20categories%20to%20cover%20a%20significant%20fraction%20of%20the%20dataset%20The%20grouping%20is%20as%20follows",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=FYelp%20Reviews%20their%20rating%20user%20information%20and%20restaurantbusiness%20categories%20are%20obtained%20from%20the%20available%20metadata%20We%20construct%20sentiment%20labels%20by%20grouping%2012%20star%20ratings%20into%20the%20negative%20category%20and%2045%20into%20the%20positive%20category%20while%20discarding%203%20star%20reviews%20To%20determine%20the%20gender%20of%20the%20person%20writing%20a%20review%20we%20obtain%20their%20name%20from%20the%20available%20user%20information%20and%20then%20look%20it%20up%20in%20a%20list%20of%20gendered%20names5%20following%20Prabhumoye%20et%20al%202018%20Reddy%20%20Knight%202016%20We%20discard%20reviews%20for%20which%20we%20were%20unable%20to%20obtain%20gender%20information%20with%20this%20technique%20Restaurantbusiness%20category%20metadata%20is%20available%20for%20each%20review%20from%20which%20we%20discard%20all%20reviews%20that%20were%20not%20written%20about%20restaurants%20Amongst%20restaurant%20reviews%20we%20manually%20group%20restaurant%20categories%20into%20parent%20categories%20to%20cover%20a%20significant%20fraction%20of%20the%20dataset%20The%20grouping%20is%20as%20follows"
+        },
+        {
+            "id": "Amazon:_2016_a",
+            "entry": "Amazon: Reviews, their rating, user information and restaurant/business categories are obtained from the metadata made available by He & McAuley (2016). We construct sentiment labels in the same manner as in FYelp. We did not experiment with gender labels, since we found that Amazon usernames seldom use real names. We group Amazon product categories into \u201cparent categories\u201d manually, similar to FYelp as follows:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Amazon%20Reviews%20their%20rating%20user%20information%20and%20restaurantbusiness%20categories%20are%20obtained%20from%20the%20metadata%20made%20available%20by%20He%20%20McAuley%202016%20We%20construct%20sentiment%20labels%20in%20the%20same%20manner%20as%20in%20FYelp%20We%20did%20not%20experiment%20with%20gender%20labels%20since%20we%20found%20that%20Amazon%20usernames%20seldom%20use%20real%20names%20We%20group%20Amazon%20product%20categories%20into%20parent%20categories%20manually%20similar%20to%20FYelp%20as%20follows",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Amazon%20Reviews%20their%20rating%20user%20information%20and%20restaurantbusiness%20categories%20are%20obtained%20from%20the%20metadata%20made%20available%20by%20He%20%20McAuley%202016%20We%20construct%20sentiment%20labels%20in%20the%20same%20manner%20as%20in%20FYelp%20We%20did%20not%20experiment%20with%20gender%20labels%20since%20we%20found%20that%20Amazon%20usernames%20seldom%20use%20real%20names%20We%20group%20Amazon%20product%20categories%20into%20parent%20categories%20manually%20similar%20to%20FYelp%20as%20follows"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "5https://www.ssa.gov/oact/babynames/names.zip",
+            "url": "http://www.ssa.gov/oact/babynames/names.zip"
+        }
+    ]
+}

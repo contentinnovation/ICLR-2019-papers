@@ -1,0 +1,239 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "EPISODIC CURIOSITY THROUGH REACHABILITY",
+        "author": "Nikolay Savinov \u22171 Anton Raichuk \u22171 Raphael Marinier \u22171 Damien Vincent \u22171 Marc Pollefeys 3 Timothy Lillicrap 2 Sylvain Gelly 1",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkeK3s0qKQ"
+        },
+        "abstract": "Rewards are sparse in the real world and most today\u2019s reinforcement learning algorithms struggle with such sparsity. One solution to this problem is to allow the agent to create rewards for itself \u2014 thus making rewards dense and more suitable for learning. In particular, inspired by curious behaviour in animals, observing something novel could be rewarded with a bonus. Such bonus is summed up with the real task reward \u2014 making it possible for RL algorithms to learn from the combined reward. We propose a new curiosity method which uses episodic memory to form the novelty bonus. To determine the bonus, the current observation is compared with the observations in memory. Crucially, the comparison is done based on how many environment steps it takes to reach the current observation from those in memory \u2014 which incorporates rich information about environment dynamics. This allows us to overcome the known \u201ccouch-potato\u201d issues of prior work \u2014 when the agent finds a way to instantly gratify itself by exploiting actions which lead to hardly predictable consequences. We test our approach in visually rich 3D environments in VizDoom, DMLab and MuJoCo. In navigational tasks from VizDoom and DMLab, our agent outperforms the state-of-the-art curiosity method ICM. In MuJoCo, an ant equipped with our curiosity module learns locomotion out of the first-person-view curiosity only. The code is available at https://github.com/google-research/episodic-curiosity."
+    },
+    "keywords": [
+        {
+            "term": "intrinsic motivation",
+            "url": "https://en.wikipedia.org/wiki/intrinsic_motivation"
+        },
+        {
+            "term": "real world",
+            "url": "https://en.wikipedia.org/wiki/real_world"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "couch potato",
+            "url": "https://en.wikipedia.org/wiki/couch_potato"
+        },
+        {
+            "term": "episodic memory",
+            "url": "https://en.wikipedia.org/wiki/episodic_memory"
+        }
+    ],
+    "abbreviations": {
+        "EC": "episodic curiosity"
+    },
+    "highlights": [
+        "In terms of quantitative evaluation, our method reaches the goal at least 2 times more often in the procedurally generated test levels in DMLab with a very sparse reward",
+        "The reward bonus is summed up with the original task reward and optimized by standard RL algorithms. Such an approach is motivated by neuroscience studies of animals: an animal has an ability to reward itself for something novel \u2013 the mechanism biologically built into its dopamine release system",
+        "We further introduce an episodic curiosity (EC) module which alleviates this problem",
+        "The simplest baseline for our approach is just the basic RL algorithm applied to the task reward",
+        "We test static-maze goal reaching in VizDoom environments from prior work to verify that our baseline re-implementation is correct",
+        "In this work we propose a new model of curiosity based on episodic memory and the ideas of reachability"
+    ],
+    "key_statements": [
+        "In terms of quantitative evaluation, our method reaches the goal at least 2 times more often in the procedurally generated test levels in DMLab with a very sparse reward",
+        "The reward bonus is summed up with the original task reward and optimized by standard RL algorithms. Such an approach is motivated by neuroscience studies of animals: an animal has an ability to reward itself for something novel \u2013 the mechanism biologically built into its dopamine release system",
+        "We further introduce an episodic curiosity (EC) module which alleviates this problem",
+        "The simplest baseline for our approach is just the basic RL algorithm applied to the task reward",
+        "We test static-maze goal reaching in VizDoom environments from prior work to verify that our baseline re-implementation is correct",
+        "Our method is at the intersection of multiple topics: curiosity, episodic memory and temporal distance prediction",
+        "A few works demonstrated the possibility to learn exploration behaviour in visually rich 3D environments like DMLab (<a class=\"ref-link\" id=\"cBeattie_et+al_2016_a\" href=\"#rBeattie_et+al_2016_a\">Beattie et al, 2016</a>) and VizDoom (<a class=\"ref-link\" id=\"cKempka_et+al_2016_a\" href=\"#rKempka_et+al_2016_a\">Kempka et al, 2016</a>). (Pathak et al, 2017) trains a predictor for the embedding of the observation and if the reality is significantly different from the prediction \u2014 rewards the agent",
+        "Another work (<a class=\"ref-link\" id=\"cFu_et+al_2017_a\" href=\"#rFu_et+al_2017_a\">Fu et al, 2017</a>) trains a temporal distance predictor and uses this predictor to establish novelty: if the observation is easy to classify versus previous observations, it is novel. This method does not use episodic memory, and the predictor is used in way which is different from our work",
+        "In this work we propose a new model of curiosity based on episodic memory and the ideas of reachability"
+    ],
+    "summary": [
+        "In terms of quantitative evaluation, our method reaches the goal at least 2 times more often in the procedurally generated test levels in DMLab with a very sparse reward.",
+        "The episodic curiosity (EC) module takes the current observation o as input and produces a reward bonus b.",
+        "The purpose of this module is to check for reachable observations in memory and if none is found \u2014 assign larger reward bonus to the current time step.",
+        "We have explored two settings for training a reachability network: using a random policy and together with the task-solving policy.",
+        "As follows from the results in (Pathak et al, 2017; <a class=\"ref-link\" id=\"cFu_et+al_2017_a\" href=\"#rFu_et+al_2017_a\"><a class=\"ref-link\" id=\"cFu_et+al_2017_a\" href=\"#rFu_et+al_2017_a\">Fu et al, 2017</a></a>), ICM is superior to methods VIME (<a class=\"ref-link\" id=\"cHouthooft_et+al_2016_a\" href=\"#rHouthooft_et+al_2016_a\">Houthooft et al, 2016</a>), #Exploration (<a class=\"ref-link\" id=\"cTang_et+al_2017_a\" href=\"#rTang_et+al_2017_a\">Tang et al, 2017</a>) and EX2 (<a class=\"ref-link\" id=\"cFu_et+al_2017_a\" href=\"#rFu_et+al_2017_a\"><a class=\"ref-link\" id=\"cFu_et+al_2017_a\" href=\"#rFu_et+al_2017_a\">Fu et al, 2017</a></a>) on the curiosity tasks in visually rich 3D environments.",
+        "Note that bonus scalar \u03b1 depends on the range of task rewards, the environments in VizDoom and DMLab have similar ranges within each platform \u2014 so our approach with re-using \u03b1 for multiple environments works.",
+        "We test static-maze goal reaching in VizDoom environments from prior work to verify that our baseline re-implementation is correct.",
+        "We test the goal-reaching behaviour in procedurally generated mazes in DMLab. Third, we train no-reward maze exploration on the levels from DMLab and report Grid Oracle reward as an approximate measure of the maze coverage.",
+        "We demonstrate that our curiosity bonus does not significantly deteriorate performance in two dense reward tasks in DMLab. All the experiments were conducted under the same environment interaction budget for all methods (R-network pre-training is included in this budget).",
+        "Our method works on-par with the ICM baseline in terms of final performance, quickly reaching 100% success rate in all three sub-tasks.",
+        "In a spirit similar to those works, our method implicitly defines goals that are at least some fixed number of steps away by using the reachability network.",
+        "(<a class=\"ref-link\" id=\"cSavinov_et+al_2018_a\" href=\"#rSavinov_et+al_2018_a\">Savinov et al, 2018</a>) does compare to the episodic memory buffer but solves a different task \u2014 given an already provided exploration video, navigate to a goal \u2014 which is complementary to the task in our work.",
+        "This allows us to overcome the known \u201ccouch-potato\u201d issues of prior work and outperform the previous curiosity state-of-the-art method ICM in visually rich 3D environments from VizDoom and DMLab. Our method allows a MuJoCo ant to learn locomotion purely out of first-personview curiosity.",
+        "Can we use memory content retrieved based on reachability to guide exploration behaviour in the test time? This could open opportunities to learn exploration in new tasks in a few-shot style \u2014 which is currently a big scientific challenge"
+    ],
+    "headline": "We propose a new curiosity method which uses episodic memory to form the novelty bonus",
+    "reference_links": [
+        {
+            "id": "Aytar_et+al_2018_a",
+            "entry": "Yusuf Aytar, Tobias Pfaff, David Budden, Tom Le Paine, Ziyu Wang, and Nando de Freitas. Playing hard exploration games by watching youtube. arXiv preprint arXiv:1805.11592, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.11592"
+        },
+        {
+            "id": "Baranes_2013_a",
+            "entry": "Adrien Baranes and Pierre-Yves Oudeyer. Active learning of inverse models with intrinsically motivated goal exploration in robots. Robotics and Autonomous Systems, 61(1):49\u201373, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baranes%2C%20Adrien%20Oudeyer%2C%20Pierre-Yves%20Active%20learning%20of%20inverse%20models%20with%20intrinsically%20motivated%20goal%20exploration%20in%20robots%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baranes%2C%20Adrien%20Oudeyer%2C%20Pierre-Yves%20Active%20learning%20of%20inverse%20models%20with%20intrinsically%20motivated%20goal%20exploration%20in%20robots%202013"
+        },
+        {
+            "id": "Beattie_et+al_2016_a",
+            "entry": "Charles Beattie, Joel Z Leibo, Denis Teplyashin, Tom Ward, Marcus Wainwright, Heinrich Kuttler, Andrew Lefrancq, Simon Green, V\u0131ctor Valdes, Amir Sadik, et al. Deepmind lab. arXiv preprint arXiv:1612.03801, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1612.03801"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In Advances in Neural Information Processing Systems, pp. 1471\u20131479, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bellemare_et+al_2013_a",
+            "entry": "Marc G Bellemare, Yavar Naddaf, Joel Veness, and Michael Bowling. The arcade learning environment: An evaluation platform for general agents. Journal of Artificial Intelligence Research, 47: 253\u2013279, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20G.%20Naddaf%2C%20Yavar%20Veness%2C%20Joel%20Bowling%2C%20Michael%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20G.%20Naddaf%2C%20Yavar%20Veness%2C%20Joel%20Bowling%2C%20Michael%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013"
+        },
+        {
+            "id": "Blundell_et+al_2016_a",
+            "entry": "Charles Blundell, Benigno Uria, Alexander Pritzel, Yazhe Li, Avraham Ruderman, Joel Z Leibo, Jack Rae, Daan Wierstra, and Demis Hassabis. Model-free episodic control. arXiv preprint arXiv:1606.04460, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.04460"
+        },
+        {
+            "id": "Burda_et+al_0000_a",
+            "entry": "Yuri Burda, Harri Edwards, Deepak Pathak, Amos Storkey, Trevor Darrell, and Alexei A Efros. Large-scale study of curiosity-driven learning. arXiv preprint arXiv:1808.04355, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04355"
+        },
+        {
+            "id": "Burda_et+al_0000_b",
+            "entry": "Yuri Burda, Harrison Edwards, Amos Storkey, and Oleg Klimov. Exploration by random network distillation. arXiv preprint arXiv:1810.12894, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.12894"
+        },
+        {
+            "id": "Conti_et+al_2018_a",
+            "entry": "Edoardo Conti, Vashisht Madhavan, Felipe Petroski Such, Joel Lehman, Kenneth Stanley, and Jeff Clune. Improving exploration in evolution strategies for deep reinforcement learning via a population of novelty-seeking agents. In Advances in Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Conti%2C%20Edoardo%20Madhavan%2C%20Vashisht%20Such%2C%20Felipe%20Petroski%20Lehman%2C%20Joel%20Improving%20exploration%20in%20evolution%20strategies%20for%20deep%20reinforcement%20learning%20via%20a%20population%20of%20novelty-seeking%20agents%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Conti%2C%20Edoardo%20Madhavan%2C%20Vashisht%20Such%2C%20Felipe%20Petroski%20Lehman%2C%20Joel%20Improving%20exploration%20in%20evolution%20strategies%20for%20deep%20reinforcement%20learning%20via%20a%20population%20of%20novelty-seeking%20agents%202018"
+        },
+        {
+            "id": "Espeholt_et+al_2018_a",
+            "entry": "Lasse Espeholt, Hubert Soyer, Remi Munos, Karen Simonyan, Volodymir Mnih, Tom Ward, Yotam Doron, Vlad Firoiu, Tim Harley, Iain Dunning, et al. Impala: Scalable distributed deep-rl with importance weighted actor-learner architectures. arXiv preprint arXiv:1802.01561, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.01561"
+        },
+        {
+            "id": "Eysenbach_et+al_2018_a",
+            "entry": "Benjamin Eysenbach, Abhishek Gupta, Julian Ibarz, and Sergey Levine. Diversity is all you need: Learning skills without a reward function. arXiv preprint arXiv:1802.06070, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06070"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Justin Fu, John Co-Reyes, and Sergey Levine. Ex2: Exploration with exemplar models for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2577\u20132587, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Held_et+al_2017_a",
+            "entry": "David Held, Xinyang Geng, Carlos Florensa, and Pieter Abbeel. Automatic goal generation for reinforcement learning agents. arXiv preprint arXiv:1705.06366, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.06366"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pp. 1109\u20131117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Kempka_et+al_2016_a",
+            "entry": "Micha\u0142 Kempka, Marek Wydmuch, Grzegorz Runc, Jakub Toczek, and Wojciech Jaskowski. Vizdoom: A doom-based ai research platform for visual reinforcement learning. In Computational Intelligence and Games (CIG), 2016 IEEE Conference on, pp. 1\u20138. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kempka%2C%20Micha%C5%82%20Wydmuch%2C%20Marek%20Runc%2C%20Grzegorz%20Toczek%2C%20Jakub%20Vizdoom%3A%20A%20doom-based%20ai%20research%20platform%20for%20visual%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kempka%2C%20Micha%C5%82%20Wydmuch%2C%20Marek%20Runc%2C%20Grzegorz%20Toczek%2C%20Jakub%20Vizdoom%3A%20A%20doom-based%20ai%20research%20platform%20for%20visual%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Lehman_2011_a",
+            "entry": "Joel Lehman and Kenneth O Stanley. Abandoning objectives: Evolution through the search for novelty alone. Evolutionary computation, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehman%2C%20Joel%20Stanley%2C%20Kenneth%20O.%20Abandoning%20objectives%3A%20Evolution%20through%20the%20search%20for%20novelty%20alone%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lehman%2C%20Joel%20Stanley%2C%20Kenneth%20O.%20Abandoning%20objectives%3A%20Evolution%20through%20the%20search%20for%20novelty%20alone%202011"
+        },
+        {
+            "id": "Ostrovski_et+al_2017_a",
+            "entry": "Georg Ostrovski, Marc G Bellemare, Aaron van den Oord, and Remi Munos. Count-based exploration with neural density models. arXiv preprint arXiv:1703.01310, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01310"
+        },
+        {
+            "id": "Oudeyer_2009_a",
+            "entry": "Pierre-Yves Oudeyer and Frederic Kaplan. What is intrinsic motivation? a typology of computational approaches. Frontiers in neurorobotics, 1:6, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frederic%20What%20is%20intrinsic%20motivation%3F%20a%20typology%20of%20computational%20approaches%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frederic%20What%20is%20intrinsic%20motivation%3F%20a%20typology%20of%20computational%20approaches%202009"
+        },
+        {
+            "id": "Oudeyer_et+al_2007_a",
+            "entry": "Pierre-Yves Oudeyer, Frederic Kaplan, and Verena V Hafner. Intrinsic motivation systems for autonomous mental development. IEEE transactions on evolutionary computation, 11(2):265\u2013286, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frederic%20Hafner%2C%20Verena%20V.%20Intrinsic%20motivation%20systems%20for%20autonomous%20mental%20development%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frederic%20Hafner%2C%20Verena%20V.%20Intrinsic%20motivation%20systems%20for%20autonomous%20mental%20development%202007"
+        },
+        {
+            "id": "Pathak_et+al_0000_a",
+            "entry": "Deepak Pathak, Pulkit Agrawal, Alexei A Efros, and Trevor Darrell. Curiosity-driven exploration by self-supervised prediction. In International Conference on Machine Learning (ICML), volume 2017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pathak%2C%20Deepak%20Agrawal%2C%20Pulkit%20Efros%2C%20Alexei%20A.%20Darrell%2C%20Trevor%20Curiosity-driven%20exploration%20by%20self-supervised%20prediction"
+        },
+        {
+            "id": "Pere_et+al_2018_a",
+            "entry": "Alexandre Pere, Sebastien Forestier, Olivier Sigaud, and Pierre-Yves Oudeyer. Unsupervised learning of goal spaces for intrinsically motivated goal exploration. arXiv preprint arXiv:1803.00781, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00781"
+        },
+        {
+            "id": "Pritzel_et+al_2017_a",
+            "entry": "Alexander Pritzel, Benigno Uria, Sriram Srinivasan, Adria Puigdomenech, Oriol Vinyals, Demis Hassabis, Daan Wierstra, and Charles Blundell. Neural episodic control. arXiv preprint arXiv:1703.01988, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.01988"
+        },
+        {
+            "id": "Savinov_et+al_2018_a",
+            "entry": "Nikolay Savinov, Alexey Dosovitskiy, and Vladlen Koltun. Semi-parametric topological memory for navigation. arXiv preprint arXiv:1803.00653, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.00653"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. Highdimensional continuous control using generalized advantage estimation. arXiv preprint arXiv:1506.02438, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02438"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1707.06347"
+        },
+        {
+            "id": "Sermanet_et+al_2017_a",
+            "entry": "Pierre Sermanet, Corey Lynch, Yevgen Chebotar, Jasmine Hsu, Eric Jang, Stefan Schaal, and Sergey Levine. Time-contrastive networks: Self-supervised learning from video. arXiv preprint arXiv:1704.06888, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.06888"
+        },
+        {
+            "id": "Stadie_et+al_2015_a",
+            "entry": "Bradly C Stadie, Sergey Levine, and Pieter Abbeel. Incentivizing exploration in reinforcement learning with deep predictive models. arXiv preprint arXiv:1507.00814, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.00814"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "Haoran Tang, Rein Houthooft, Davis Foote, Adam Stooke, OpenAI Xi Chen, Yan Duan, John Schulman, Filip DeTurck, and Pieter Abbeel. # exploration: A study of count-based exploration for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2753\u2013 2762, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Haoran%20Houthooft%2C%20Rein%20Foote%2C%20Davis%20Stooke%2C%20Adam%20%23%20exploration%3A%20A%20study%20of%20count-based%20exploration%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Haoran%20Houthooft%2C%20Rein%20Foote%2C%20Davis%20Stooke%2C%20Adam%20%23%20exploration%3A%20A%20study%20of%20count-based%20exploration%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Todorov_et+al_2012_a",
+            "entry": "Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In Intelligent Robots and Systems (IROS), 2012 IEEE/RSJ International Conference on, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Todorov%2C%20Emanuel%20Erez%2C%20Tom%20Tassa%2C%20Yuval%20Mujoco%3A%20A%20physics%20engine%20for%20model-based%20control%202012"
+        },
+        {
+            "id": "Zagoruyko_2015_a",
+            "entry": "Sergey Zagoruyko and Nikos Komodakis. Learning to compare image patches via convolutional neural networks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 4353\u20134361, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zagoruyko%2C%20Sergey%20Komodakis%2C%20Nikos%20Learning%20to%20compare%20image%20patches%20via%20convolutional%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zagoruyko%2C%20Sergey%20Komodakis%2C%20Nikos%20Learning%20to%20compare%20image%20patches%20via%20convolutional%20neural%20networks%202015"
+        }
+    ]
+}

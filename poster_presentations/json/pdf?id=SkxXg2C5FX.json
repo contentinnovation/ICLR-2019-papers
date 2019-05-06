@@ -1,0 +1,518 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DON\u2019T SETTLE FOR AVERAGE, GO FOR THE MAX: FUZZY SETS AND MAX-POOLED WORD VECTORS",
+        "author": "Vitalii Zhelezniak, Aleksandar Savkov, April Shen, Francesco Moramarco, Jack Flann & Nils Y. Hammerla Babylon Health {vitali.zhelezniak, sasho.savkov, firstname.lastname} @babylonhealth.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkxXg2C5FX"
+        },
+        "abstract": "Recent literature suggests that averaged word vectors followed by simple postprocessing outperform many deep learning methods on semantic textual similarity tasks. Furthermore, when averaged word vectors are trained supervised on large corpora of paraphrases, they achieve state-of-the-art results on standard STS benchmarks. Inspired by these insights, we push the limits of word embeddings even further. We propose a novel fuzzy bag-of-words (FBoW) representation for text that contains all the words in the vocabulary simultaneously but with different degrees of membership, which are derived from similarities between word vectors. We show that max-pooled word vectors are only a special case of fuzzy BoW and should be compared via fuzzy Jaccard index rather than cosine similarity. Finally, we propose DynaMax, a completely unsupervised and non-parametric similarity measure that dynamically extracts and max-pools good features depending on the sentence pair. This method is both efficient and easy to implement, yet outperforms current baselines on STS tasks by a large margin and is even competitive with supervised word vectors trained to directly optimise cosine similarity."
+    },
+    "keywords": [
+        {
+            "term": "word embedding",
+            "url": "https://en.wikipedia.org/wiki/word_embedding"
+        },
+        {
+            "term": "cosine similarity",
+            "url": "https://en.wikipedia.org/wiki/cosine_similarity"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "natural language processing",
+            "url": "https://en.wikipedia.org/wiki/natural_language_processing"
+        },
+        {
+            "term": "Principal Component Analysis",
+            "url": "https://en.wikipedia.org/wiki/Principal_Component_Analysis"
+        },
+        {
+            "term": "natural language",
+            "url": "https://en.wikipedia.org/wiki/natural_language"
+        },
+        {
+            "term": "pleistocene",
+            "url": "https://en.wikipedia.org/wiki/pleistocene"
+        },
+        {
+            "term": "information retrieval",
+            "url": "https://en.wikipedia.org/wiki/information_retrieval"
+        },
+        {
+            "term": "word vector",
+            "url": "https://en.wikipedia.org/wiki/word_vector"
+        },
+        {
+            "term": "Vector Space Model",
+            "url": "https://en.wikipedia.org/wiki/Vector_Space_Model"
+        }
+    ],
+    "abbreviations": {
+        "FBoW": "fuzzy bag-of-words",
+        "ML": "machine learning",
+        "NLP": "natural language processing",
+        "IR": "information retrieval",
+        "SIF": "Smooth Inverse Frequency",
+        "PCA": "Principal Component Analysis",
+        "STS": "Semantic Textual Similarity",
+        "BCa": "bias-corrected and accelerated",
+        "SSMs": "set similarity measures",
+        "FSoW": "fuzzy set-of-words",
+        "VSM": "Vector Space Model",
+        "nBoW": "normalised bags-of-words",
+        "WMD": "Word Mover\u2019s Distance",
+        "EMD": "Earth Mover\u2019s Distance"
+    },
+    "highlights": [
+        "Natural languages are able to encode sentences with similar meanings using very different vocabulary and grammatical constructs, which makes determining the semantic similarity between pieces of text a challenge",
+        "When word vectors are trained unsupervised, this simple representation combined with the fuzzy Jaccard index is already a stronger baseline for semantic textual similarity than the averaged word vector with cosine similarity, as we will see in Section 4",
+        "From the linear-algebraic point of view, fuzzy BoW is really the same as projecting word embeddings on a subspace of Rd spanned by the rows of U , followed by max-pooling of the features extracted by this projection",
+        "We show that max-pooled word vectors are a special case of fuzzy bag-of-words, which implies that they should be compared via the fuzzy Jaccard index rather than the more standard cosine similarity",
+        "We present a simple and novel algorithm, DynaMax, which corresponds to projecting word vectors onto a subspace dynamically generated by the given sentences before max-pooling over the features",
+        "DynaMax outperforms averaged word vectors compared with cosine similarity on every benchmark Semantic Textual Similarity task when word vectors are trained unsupervised"
+    ],
+    "key_statements": [
+        "Natural languages are able to encode sentences with similar meanings using very different vocabulary and grammatical constructs, which makes determining the semantic similarity between pieces of text a challenge",
+        "BoW was largely eclipsed by representations learned through neural networks, ranging from shallow (Le & Mikolov, 2014; <a class=\"ref-link\" id=\"cHill_et+al_2016_a\" href=\"#rHill_et+al_2016_a\">Hill et al, 2016</a>) to recurrent (<a class=\"ref-link\" id=\"cKiros_et+al_2015_a\" href=\"#rKiros_et+al_2015_a\">Kiros et al, 2015</a>; <a class=\"ref-link\" id=\"cConneau_et+al_2017_a\" href=\"#rConneau_et+al_2017_a\">Conneau et al, 2017</a>; <a class=\"ref-link\" id=\"cSubramanian_et+al_2018_a\" href=\"#rSubramanian_et+al_2018_a\">Subramanian et al, 2018a</a>), recursive (<a class=\"ref-link\" id=\"cSocher_et+al_2013_a\" href=\"#rSocher_et+al_2013_a\">Socher et al, 2013</a>; Tai et al, 2015), convolutional (<a class=\"ref-link\" id=\"cKalchbrenner_et+al_2014_a\" href=\"#rKalchbrenner_et+al_2014_a\">Kalchbrenner et al, 2014</a>; <a class=\"ref-link\" id=\"cKim_2014_a\" href=\"#rKim_2014_a\">Kim, 2014</a>), self-attentive (<a class=\"ref-link\" id=\"cVaswani_et+al_2017_a\" href=\"#rVaswani_et+al_2017_a\">Vaswani et al, 2017</a>; <a class=\"ref-link\" id=\"cCer_et+al_2018_a\" href=\"#rCer_et+al_2018_a\">Cer et al, 2018a</a>) and hybrid architectures (<a class=\"ref-link\" id=\"cGan_et+al_2017_a\" href=\"#rGan_et+al_2017_a\">Gan et al, 2017</a>; <a class=\"ref-link\" id=\"cTang_et+al_2017_a\" href=\"#rTang_et+al_2017_a\">Tang et al, 2017</a>; <a class=\"ref-link\" id=\"cZhelezniak_et+al_2018_a\" href=\"#rZhelezniak_et+al_2018_a\">Zhelezniak et al, 2018</a>)",
+        "We propose a novel fuzzy bag-of-words (FBoW) representation for text",
+        "Unlike classical BoW, fuzzy BoW contains all the words in the vocabulary simultaneously but with different degrees of membership, which are derived from similarities between word vectors",
+        "We show that max-pooled word vectors are a special case of fuzzy BoW",
+        "Since max-pooled vectors are just a special case of fuzzy BoW, we show that the fuzzy Jaccard index is a more suitable alternative to cosine similarity for comparing these representations",
+        "We propose DynaMax, a completely unsupervised and non-parametric similarity measure that dynamically extracts and max-pools good features depending on the sentence pair",
+        "We found that recent literature on Semantic Textual Similarity tends to apply unspecified or inappropriate parametric tests, or leave out significance analysis altogether in the majority of cases",
+        "We considered the universe and the word embedding matrix to be the same, i.e. U = W",
+        "When word vectors are trained unsupervised, this simple representation combined with the fuzzy Jaccard index is already a stronger baseline for semantic textual similarity than the averaged word vector with cosine similarity, as we will see in Section 4",
+        "From the linear-algebraic point of view, fuzzy BoW is really the same as projecting word embeddings on a subspace of Rd spanned by the rows of U , followed by max-pooling of the features extracted by this projection",
+        "DynaMax shows the best performance across all tasks, possibly thanks to its superior ability to extract and max-pool good features from word vectors",
+        "To strengthen our empirical findings, we provide ablation studies for DynaMax in Appendix C, showing that the different components of the algorithm each contribute to its strong performance",
+        "We show that max-pooled word vectors are a special case of fuzzy bag-of-words, which implies that they should be compared via the fuzzy Jaccard index rather than the more standard cosine similarity",
+        "We present a simple and novel algorithm, DynaMax, which corresponds to projecting word vectors onto a subspace dynamically generated by the given sentences before max-pooling over the features",
+        "DynaMax outperforms averaged word vectors compared with cosine similarity on every benchmark Semantic Textual Similarity task when word vectors are trained unsupervised"
+    ],
+    "summary": [
+        "Natural languages are able to encode sentences with similar meanings using very different vocabulary and grammatical constructs, which makes determining the semantic similarity between pieces of text a challenge.",
+        "Since max-pooled vectors are just a special case of fuzzy BoW, we show that the fuzzy Jaccard index is a more suitable alternative to cosine similarity for comparing these representations.",
+        "DynaMax outperforms averaged word vector with cosine similarity on every benchmark STS task when word vectors are trained unsupervised.",
+        "It\u2019s very tempting to just sum or average over all \u03bc(i), i.e. But we remember: in fuzzy set theory the union of the membership vectors is realised by the element-wise max-pooling.",
+        "From this we see that max-pooled word vectors are only a special case of fuzzy BoW.",
+        "When word vectors are trained unsupervised, this simple representation combined with the fuzzy Jaccard index is already a stronger baseline for semantic textual similarity than the averaged word vector with cosine similarity, as we will see in Section 4.",
+        "The fuzzy Jaccard index works for max-pooled word vectors but completely fails for averaged word vectors.",
+        "From the linear-algebraic point of view, fuzzy BoW is really the same as projecting word embeddings on a subspace of Rd spanned by the rows of U , followed by max-pooling of the features extracted by this projection.",
+        "This supports our derivation of max-pooled vectors as a special case of fuzzy BoW, which should be compared via fuzzy set similarity measures and not cosine similarity.",
+        "DynaMax shows the best performance across all tasks, possibly thanks to its superior ability to extract and max-pool good features from word vectors.",
+        "In this work we combine word embeddings with classic BoW representations using fuzzy set theory.",
+        "We show that max-pooled word vectors are a special case of FBoW, which implies that they should be compared via the fuzzy Jaccard index rather than the more standard cosine similarity.",
+        "We present a simple and novel algorithm, DynaMax, which corresponds to projecting word vectors onto a subspace dynamically generated by the given sentences before max-pooling over the features.",
+        "DynaMax outperforms averaged word vectors compared with cosine similarity on every benchmark STS task when word vectors are trained unsupervised.",
+        "These methods are not limited to NLP and word embeddings, but can be used in any setting where one needs to compute similarity between sets of elements that have rich vector representations.",
+        "It even performs comparably to supervised vectors that directly optimise cosine similarity between paraphrases, despite being completely unrelated to that objective"
+    ],
+    "headline": "We propose a novel fuzzy bag-of-words representation for text that contains all the words in the vocabulary simultaneously but with different degrees of membership, which are derived from similarities between word vectors",
+    "reference_links": [
+        {
+            "id": "Agirre_2015_a",
+            "entry": "Eneko Agirre. SemEval-2015 Task 2: Semantic Textual Similarity, English, Spanish and Pilot on Interpretability. SemEval2015, (SemEval):252\u2013263, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agirre%2C%20Eneko%20SemEval-2015%20Task%202%3A%20Semantic%20Textual%20Similarity%2C%20English%2C%20Spanish%20and%20Pilot%20on%20Interpretability%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agirre%2C%20Eneko%20SemEval-2015%20Task%202%3A%20Semantic%20Textual%20Similarity%2C%20English%2C%20Spanish%20and%20Pilot%20on%20Interpretability%202015"
+        },
+        {
+            "id": "Agirre_et+al_2012_a",
+            "entry": "Eneko Agirre, Daniel Cer, Mona Diab, and Aitor Gonzalez-Agirre. SemEval-2012 Task 6: A Pilot on Semantic Textual Similarity. Proc. 6th Int. Work. Semant. Eval. (SemEval 2012), conjunction with First Jt. Conf. Lex. Comput. Semant. (* SEM 2012), (3):385\u2013393, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agirre%2C%20Eneko%20Cer%2C%20Daniel%20Diab%2C%20Mona%20Gonzalez-Agirre%2C%20Aitor%20SemEval-2012%20Task%206%3A%20A%20Pilot%20on%20Semantic%20Textual%20Similarity.%20Proc%202012-06-03",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agirre%2C%20Eneko%20Cer%2C%20Daniel%20Diab%2C%20Mona%20Gonzalez-Agirre%2C%20Aitor%20SemEval-2012%20Task%206%3A%20A%20Pilot%20on%20Semantic%20Textual%20Similarity.%20Proc%202012-06-03"
+        },
+        {
+            "id": "Agirre_et+al_2013_a",
+            "entry": "Eneko Agirre, Daniel Cer, Mona Diab, Aitor Gonzalez-Agirre, and Weiwei Guo. SEM 2013 shared task: Semantic Textual Similarity. Second Jt. Conf. Lex. Comput. Semant. (*SEM 2013), 1:32\u201343, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agirre%2C%20Eneko%20Cer%2C%20Daniel%20Diab%2C%20Mona%20Gonzalez-Agirre%2C%20Aitor%20shared%20task%3A%20Semantic%20Textual%20Similarity%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agirre%2C%20Eneko%20Cer%2C%20Daniel%20Diab%2C%20Mona%20Gonzalez-Agirre%2C%20Aitor%20shared%20task%3A%20Semantic%20Textual%20Similarity%202013"
+        },
+        {
+            "id": "Agirre_et+al_2014_a",
+            "entry": "Eneko Agirre, Carmen Banea, Claire Cardie, Daniel Cer, Mona Diab, Aitor Gonzalez-Agirre, Weiwei Guo, Rada Mihalcea, German Rigau, and Janyce Wiebe. SemEval-2014 Task 10: Multilingual Semantic Textual Similarity. Proc. 8th Int. Work. Semant. Eval. (SemEval 2014), (SemEval):81\u201391, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agirre%2C%20Eneko%20Banea%2C%20Carmen%20Cardie%2C%20Claire%20Cer%2C%20Daniel%20SemEval-2014%20Task%2010%3A%20Multilingual%20Semantic%20Textual%20Similarity%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agirre%2C%20Eneko%20Banea%2C%20Carmen%20Cardie%2C%20Claire%20Cer%2C%20Daniel%20SemEval-2014%20Task%2010%3A%20Multilingual%20Semantic%20Textual%20Similarity%202014"
+        },
+        {
+            "id": "Agirre_et+al_2016_a",
+            "entry": "Eneko Agirre, Carmen Banea, Daniel Cer, Mona Diab, Aitor Gonzalez-Agirre, Rada Mihalcea, German Rigau, and Janyce Wiebe. SemEval-2016 Task 1: Semantic Textual Similarity, Monolingual and Cross-Lingual Evaluation. Proc. 10th Int. Work. Semant. Eval., pp. 497\u2013511, 2016. URL http://aclweb.org/anthology/S16-1081.",
+            "url": "http://aclweb.org/anthology/S16-1081",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agirre%2C%20Eneko%20Banea%2C%20Carmen%20Cer%2C%20Daniel%20Diab%2C%20Mona%20SemEval-2016%20Task%201%3A%20Semantic%20Textual%20Similarity%2C%20Monolingual%20and%20Cross-Lingual%20Evaluation%202016"
+        },
+        {
+            "id": "Arora_et+al_2017_a",
+            "entry": "Sanjeev Arora, Yingyu Liang, and Tengyu Ma. A Simple but Tough-to-Beat Baseline for Sentence Embeddings. Int. Conf. Learn. Represent., pp. 1\u201314, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20Simple%20but%20Tough-to-Beat%20Baseline%20for%20Sentence%20Embeddings%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arora%2C%20Sanjeev%20Liang%2C%20Yingyu%20Ma%2C%20Tengyu%20A%20Simple%20but%20Tough-to-Beat%20Baseline%20for%20Sentence%20Embeddings%202017"
+        },
+        {
+            "id": "Bojanowski_et+al_2016_a",
+            "entry": "Piotr Bojanowski, Edouard Grave, Armand Joulin, and Tomas Mikolov. Enriching Word Vectors with Subword Information. jul 2016. URL http://arxiv.org/abs/1607.04606.",
+            "url": "http://arxiv.org/abs/1607.04606",
+            "arxiv_url": "https://arxiv.org/pdf/1607.04606"
+        },
+        {
+            "id": "Cer_et+al_2017_a",
+            "entry": "Daniel Cer, Mona Diab, Eneko Agirre, Inigo Lopez-Gazpio, and Lucia Specia. SemEval-2017 Task 1: Semantic Textual Similarity - Multilingual and Cross-lingual Focused Evaluation. Proc. 11th Int. Work. Semant. Eval., pp. 1\u201314, jul 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cer%2C%20Daniel%20Diab%2C%20Mona%20Agirre%2C%20Eneko%20Lopez-Gazpio%2C%20Inigo%20SemEval-2017%20Task%201%3A%20Semantic%20Textual%20Similarity%20-%20Multilingual%20and%20Cross-lingual%20Focused%20Evaluation%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cer%2C%20Daniel%20Diab%2C%20Mona%20Agirre%2C%20Eneko%20Lopez-Gazpio%2C%20Inigo%20SemEval-2017%20Task%201%3A%20Semantic%20Textual%20Similarity%20-%20Multilingual%20and%20Cross-lingual%20Focused%20Evaluation%202017-07"
+        },
+        {
+            "id": "Cer_et+al_2018_a",
+            "entry": "Daniel Cer, Yinfei Yang, Sheng-Yi Kong, Nan Hua, Nicole Limtiaco, Rhomni St John, Noah Constant, Mario Guajardo-Cespedes, Steve Yuan, Chris Tar, Yun-Hsuan Sung, Brian Strope, and Ray Kurzweil. Universal Sentence Encoder. 2018b. URL https://arxiv.org/pdf/1803.11175.pdf.",
+            "url": "https://arxiv.org/pdf/1803.11175.pdf",
+            "arxiv_url": "https://arxiv.org/pdf/1803.11175"
+        },
+        {
+            "id": "Cer_et+al_2018_b",
+            "entry": "Daniel Cer, Yinfei Yang, Sheng-yi Kong, Nan Hua, Nicole Limtiaco, Rhomni St. John, Noah Constant, Mario Guajardo-Cespedes, Steve Yuan, Chris Tar, Yun-Hsuan Sung, Brian Strope, and Ray Kurzweil. Universal sentence encoder. CoRR, abs/1803.11175, 2018a. URL http://arxiv.org/abs/1803.11175.",
+            "url": "http://arxiv.org/abs/1803.11175",
+            "arxiv_url": "https://arxiv.org/pdf/1803.11175"
+        },
+        {
+            "id": "Collobert_et+al_2011_a",
+            "entry": "Ronan Collobert, Jason Weston, Leon Bottou, Michael Karlen, Koray Kavukcuoglu, and Pavel Kuksa. Natural language processing (almost) from scratch. Journal of Machine Learning Research, 12 (Aug):2493\u20132537, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Collobert%2C%20Ronan%20Weston%2C%20Jason%20Bottou%2C%20Leon%20Karlen%2C%20Michael%20Natural%20language%20processing%20%28almost%29%20from%20scratch%202011-08-12",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Collobert%2C%20Ronan%20Weston%2C%20Jason%20Bottou%2C%20Leon%20Karlen%2C%20Michael%20Natural%20language%20processing%20%28almost%29%20from%20scratch%202011-08-12"
+        },
+        {
+            "id": "Conneau_2018_a",
+            "entry": "Alexis Conneau and Douwe Kiela. Senteval: An evaluation toolkit for universal sentence representations. arXiv preprint arXiv:1803.05449, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.05449"
+        },
+        {
+            "id": "Conneau_et+al_2017_a",
+            "entry": "Alexis Conneau, Douwe Kiela, Holger Schwenk, Loic Barrault, and Antoine Bordes. Supervised Learning of Universal Sentence Representations from Natural Language Inference Data. may 2017. URL http://arxiv.org/abs/1705.02364.",
+            "url": "http://arxiv.org/abs/1705.02364",
+            "arxiv_url": "https://arxiv.org/pdf/1705.02364"
+        },
+        {
+            "id": "Boom_et+al_2016_a",
+            "entry": "Cedric De Boom, Steven Van Canneyt, Thomas Demeester, and Bart Dhoedt. Representation learning for very short texts using weighted word embedding aggregation. Pattern Recogn. Lett., 80(C):150\u2013156, September 2016. ISSN 0167-8655. doi: 10.1016/j.patrec.2016.06.012. URL https://doi.org/10.1016/j.patrec.2016.06.012.",
+            "crossref": "https://dx.doi.org/10.1016/j.patrec.2016.06.012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1016/j.patrec.2016.06.012"
+        },
+        {
+            "id": "Dice_1945_a",
+            "entry": "Lee R. Dice. Measures of the amount of ecologic association between species. Ecology, 26(3): 297\u2013302, 1945. ISSN 1939-9170. doi: 10.2307/1932409. URL http://dx.doi.org/10.2307/1932409.",
+            "crossref": "https://dx.doi.org/10.2307/1932409",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.2307/1932409"
+        },
+        {
+            "id": "Dubois_2017_a",
+            "entry": "Sebastien Dubois. Learning effective embeddings from medical notes. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dubois%2C%20Sebastien%20Learning%20effective%20embeddings%20from%20medical%20notes%202017"
+        },
+        {
+            "id": "Efron_1994_a",
+            "entry": "B. Efron and R.J. Tibshirani. An Introduction to the Bootstrap. Chapman & Hall/CRC Monographs on Statistics & Applied Probability. Taylor & Francis, 1994. ISBN 9780412042317. URL https://books.google.co.uk/books?id=gLlpIUxRntoC.",
+            "url": "https://books.google.co.uk/books?id=gLlpIUxRntoC"
+        },
+        {
+            "id": "Efron_1987_a",
+            "entry": "Bradley Efron. Better bootstrap confidence intervals. Journal of the American Statistical Association, 82(397):171\u2013185, mar 1987. doi: 10.1080/01621459.1987.10478410. URL https://doi.org/10.1080/01621459.1987.10478410.",
+            "crossref": "https://dx.doi.org/10.1080/01621459.1987.10478410",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1080/01621459.1987.10478410"
+        },
+        {
+            "id": "Ethayarajh_2018_a",
+            "entry": "Kawin Ethayarajh. Unsupervised random walk sentence embeddings: A strong but simple baseline. In Proceedings of The Third Workshop on Representation Learning for NLP, pp. 91\u2013100. Association for Computational Linguistics, 2018. URL http://aclweb.org/anthology/W18-3012.",
+            "url": "http://aclweb.org/anthology/W18-3012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ethayarajh%2C%20Kawin%20Unsupervised%20random%20walk%20sentence%20embeddings%3A%20A%20strong%20but%20simple%20baseline%202018"
+        },
+        {
+            "id": "Gan_et+al_2017_a",
+            "entry": "Zhe Gan, Yunchen Pu, Ricardo Henao, Chunyuan Li, Xiaodong He, and Lawrence Carin. Learning generic sentence representations using convolutional neural networks. In Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing, pp. 2390\u20132400. Association for Computational Linguistics, 2017. URL http://aclweb.org/anthology/D17-1254.",
+            "url": "http://aclweb.org/anthology/D17-1254",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gan%2C%20Zhe%20Pu%2C%20Yunchen%20Henao%2C%20Ricardo%20Li%2C%20Chunyuan%20Learning%20generic%20sentence%20representations%20using%20convolutional%20neural%20networks%202017"
+        },
+        {
+            "id": "Harris_1954_a",
+            "entry": "Zellig Harris. Distributional structure. Word, 10(23):146\u2013162, 1954.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harris%2C%20Zellig%20Distributional%20structure%201954",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Harris%2C%20Zellig%20Distributional%20structure%201954"
+        },
+        {
+            "id": "Hill_et+al_2016_a",
+            "entry": "Felix Hill, Kyunghyun Cho, and Anna Korhonen. Learning Distributed Representations of Sentences from Unlabelled Data. feb 2016. URL http://arxiv.org/abs/1602.03483.",
+            "url": "http://arxiv.org/abs/1602.03483",
+            "arxiv_url": "https://arxiv.org/pdf/1602.03483"
+        },
+        {
+            "id": "Hittner_et+al_2003_a",
+            "entry": "James B. Hittner, Kim May, and N. CLAYTON Silver. A monte carlo evaluation of tests for comparing dependent correlations. The Journal of General Psychology, 130(2):149\u2013168, apr 2003. doi: 10. 1080/00221300309601282. URL https://doi.org/10.1080/00221300309601282.",
+            "crossref": "https://dx.doi.org/10.1080/00221300309601282",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1080/00221300309601282"
+        },
+        {
+            "id": "Jaccard_0000_a",
+            "entry": "Paul Jaccard. Etude de la distribution florale dans une portion des alpes et du jura. 37:547\u2013579, 01 1901.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jaccard%2C%20Paul%20Etude%20de%20la%20distribution%20florale%20dans%20une%20portion%20des%20alpes%20et%20du%20jura",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jaccard%2C%20Paul%20Etude%20de%20la%20distribution%20florale%20dans%20une%20portion%20des%20alpes%20et%20du%20jura"
+        },
+        {
+            "id": "Jimenez_et+al_2010_a",
+            "entry": "Sergio Jimenez, Fabio Gonzalez, and Alexander Gelbukh. Text comparison using soft cardinality. In Edgar Chavez and Stefano Lonardi (eds.), String Processing and Information Retrieval, pp. 297\u2013302, Berlin, Heidelberg, 2010. Springer Berlin Heidelberg. ISBN 978-3-642-16321-0.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jimenez%2C%20Sergio%20Gonzalez%2C%20Fabio%20Gelbukh%2C%20Alexander%20Text%20comparison%20using%20soft%20cardinality%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jimenez%2C%20Sergio%20Gonzalez%2C%20Fabio%20Gelbukh%2C%20Alexander%20Text%20comparison%20using%20soft%20cardinality%202010"
+        },
+        {
+            "id": "Jimenez_et+al_2012_a",
+            "entry": "Sergio Jimenez, Claudia Becerra, and Alexander Gelbukh. Soft cardinality: A parameterized similarity function for text comparison. In Proceedings of the First Joint Conference on Lexical and Computational Semantics - Volume 1: Proceedings of the Main Conference and the Shared Task, and Volume 2: Proceedings of the Sixth International Workshop on Semantic Evaluation, SemEval \u201912, pp. 449\u2013453, Stroudsburg, PA, USA, 2012. Association for Computational Linguistics. URL http://dl.acm.org/citation.cfm?id=2387636.2387709.",
+            "url": "http://dl.acm.org/citation.cfm?id=2387636.2387709",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jimenez%2C%20Sergio%20Becerra%2C%20Claudia%20Gelbukh%2C%20Alexander%20Soft%20cardinality%3A%20A%20parameterized%20similarity%20function%20for%20text%20comparison%202012"
+        },
+        {
+            "id": "Jimenez_et+al_2013_a",
+            "entry": "Sergio Jimenez, Claudia Jeanneth Becerra, and Alexander F. Gelbukh. Softcardinality-core: Improving text overlap with distributional measures for semantic textual similarity. In *SEM@NAACLHLT, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jimenez%2C%20Sergio%20Becerra%2C%20Claudia%20Jeanneth%20Gelbukh%2C%20Alexander%20F.%20Softcardinality-core%3A%20Improving%20text%20overlap%20with%20distributional%20measures%20for%20semantic%20textual%20similarity%202013"
+        },
+        {
+            "id": "Jimenez_et+al_2014_a",
+            "entry": "Sergio Jimenez, George Duenas, Julia Baquero, and Alexander F. Gelbukh. Unal-nlp: Combining soft cardinality features for semantic textual similarity, relatedness and entailment. In SemEval@COLING, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jimenez%2C%20Sergio%20Duenas%2C%20George%20Baquero%2C%20Julia%20Gelbukh%2C%20Alexander%20F.%20Unal-nlp%3A%20Combining%20soft%20cardinality%20features%20for%20semantic%20textual%20similarity%2C%20relatedness%20and%20entailment%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jimenez%2C%20Sergio%20Duenas%2C%20George%20Baquero%2C%20Julia%20Gelbukh%2C%20Alexander%20F.%20Unal-nlp%3A%20Combining%20soft%20cardinality%20features%20for%20semantic%20textual%20similarity%2C%20relatedness%20and%20entailment%202014"
+        },
+        {
+            "id": "Jimenez_et+al_2015_a",
+            "entry": "Sergio Jimenez, Fabio A. Gonzalez, and Alexander Gelbukh. Soft cardinality in semantic text processing: Experience of the SemEval international competitions. Polibits, 51:63\u201372, jan 2015. doi: 10.17562/pb-51-9. URL https://doi.org/10.17562/pb-51-9.",
+            "crossref": "https://dx.doi.org/10.17562/pb-51-9",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.17562/pb-51-9"
+        },
+        {
+            "id": "Joulin_et+al_2017_a",
+            "entry": "Armand Joulin, Edouard Grave, Piotr Bojanowski, and Tomas Mikolov. Bag of Tricks for Efficient Text Classification. In Proc. 15th Conf. Eur. Chapter Assoc. Comput. Linguist. Vol. 2, Short Pap., pp. 427\u2013431, Stroudsburg, PA, USA, jul 2017. Association for Computational Linguistics. URL http://arxiv.org/abs/1607.01759.",
+            "url": "http://arxiv.org/abs/1607.01759",
+            "arxiv_url": "https://arxiv.org/pdf/1607.01759"
+        },
+        {
+            "id": "Kalchbrenner_et+al_2014_a",
+            "entry": "Nal Kalchbrenner, Edward Grefenstette, and Phil Blunsom. A Convolutional Neural Network for Modelling Sentences. In Proc. 52nd Annu. Meet. Assoc. Comput. Linguist. (Volume 1 Long Pap., pp. 655\u2013665, Stroudsburg, PA, USA, apr 2014. Association for Computational Linguistics. URL http://arxiv.org/abs/1404.2188.",
+            "url": "http://arxiv.org/abs/1404.2188",
+            "arxiv_url": "https://arxiv.org/pdf/1404.2188"
+        },
+        {
+            "id": "Kenter_2015_a",
+            "entry": "Tom Kenter and Maarten de Rijke. Short text similarity with word embeddings. In Proceedings of the 24th ACM International on Conference on Information and Knowledge Management, CIKM \u201915, pp. 1411\u20131420, New York, NY, USA, 2015. ACM. ISBN 978-1-4503-3794-6. doi: 10.1145/2806416.2806475. URL http://doi.acm.org/10.1145/2806416.2806475.",
+            "crossref": "https://dx.doi.org/10.1145/2806416.2806475",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/2806416.2806475"
+        },
+        {
+            "id": "Kim_2014_a",
+            "entry": "Yoon Kim. Convolutional neural networks for sentence classification. EMNLP, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Yoon%20Convolutional%20neural%20networks%20for%20sentence%20classification%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Yoon%20Convolutional%20neural%20networks%20for%20sentence%20classification%202014"
+        },
+        {
+            "id": "Kiros_et+al_2015_a",
+            "entry": "Ryan Kiros, Yukun Zhu, Ruslan Salakhutdinov, Richard S. Zemel, Antonio Torralba, Raquel Urtasun, and Sanja Fidler. Skip-Thought Vectors. jun 2015. URL http://arxiv.org/abs/1506.06726.",
+            "url": "http://arxiv.org/abs/1506.06726",
+            "arxiv_url": "https://arxiv.org/pdf/1506.06726"
+        },
+        {
+            "id": "Klir_et+al_1997_a",
+            "entry": "George J. Klir, Ute St. Clair, and Bo Yuan. Fuzzy Set Theory: Foundations and Applications. Prentice-Hall, Inc., Upper Saddle River, NJ, USA, 1997. ISBN 0-13-341058-7.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klir%2C%20George%20J.%20Clair%2C%20Ute%20St%20Yuan%2C%20Bo%20Fuzzy%20Set%20Theory%3A%20Foundations%20and%20Applications%201997"
+        },
+        {
+            "id": "Kusner_et+al_2015_a",
+            "entry": "Matt J. Kusner, Yu Sun, Nicholas I. Kolkin, and Kilian Q. Weinberger. From word embeddings to document distances. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning, volume 37 of ICML\u201915, pp. 957\u2013966. JMLR.org, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kusner%2C%20Matt%20J.%20Sun%2C%20Yu%20Kolkin%2C%20Nicholas%20I.%20Weinberger%2C%20Kilian%20Q.%20From%20word%20embeddings%20to%20document%20distances%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kusner%2C%20Matt%20J.%20Sun%2C%20Yu%20Kolkin%2C%20Nicholas%20I.%20Weinberger%2C%20Kilian%20Q.%20From%20word%20embeddings%20to%20document%20distances%202015"
+        },
+        {
+            "id": "Quoc_2014_a",
+            "entry": "Quoc V. Le and Tomas Mikolov. Distributed Representations of Sentences and Documents. 32, 2014. URL http://arxiv.org/abs/1405.4053.",
+            "url": "http://arxiv.org/abs/1405.4053",
+            "arxiv_url": "https://arxiv.org/pdf/1405.4053"
+        },
+        {
+            "id": "Manning_et+al_2008_a",
+            "entry": "Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schutze. Introduction to Information Retrieval. Cambridge University Press, New York, NY, USA, 2008. ISBN 0521865719, 9780521865715.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Manning%2C%20Christopher%20D.%20Raghavan%2C%20Prabhakar%20Schutze%2C%20Hinrich%20Introduction%20to%20Information%20Retrieval%202008"
+        },
+        {
+            "id": "Mikolov_et+al_2013_a",
+            "entry": "Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. Efficient Estimation of Word Representations in Vector Space. pp. 1\u201312, jan 2013a. URL http://arxiv.org/abs/1301.3781.",
+            "url": "http://arxiv.org/abs/1301.3781",
+            "arxiv_url": "https://arxiv.org/pdf/1301.3781"
+        },
+        {
+            "id": "Mikolov_et+al_2013_b",
+            "entry": "Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean. Distributed Representations of Words and Phrases and their Compositionality. pp. 1\u20139, oct 2013b. URL http://arxiv.org/abs/1310.4546.",
+            "url": "http://arxiv.org/abs/1310.4546",
+            "arxiv_url": "https://arxiv.org/pdf/1310.4546"
+        },
+        {
+            "id": "Mikolov_et+al_0000_a",
+            "entry": "Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig. Linguistic regularities in continuous space word representations. In HLTNAACL, pp. 746\u2013751, 2013c.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mikolov%2C%20Tomas%20Yih%2C%20Wen-tau%20Zweig%2C%20Geoffrey%20Linguistic%20regularities%20in%20continuous%20space%20word%20representations",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mikolov%2C%20Tomas%20Yih%2C%20Wen-tau%20Zweig%2C%20Geoffrey%20Linguistic%20regularities%20in%20continuous%20space%20word%20representations"
+        },
+        {
+            "id": "Jiaqi_2018_a",
+            "entry": "Jiaqi Mu and Pramod Viswanath. All-but-the-top: Simple and effective postprocessing for word representations. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=HkuGJ3kCb.",
+            "url": "https://openreview.net/forum?id=HkuGJ3kCb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jiaqi%20Mu%20and%20Pramod%20Viswanath%20Allbutthetop%20Simple%20and%20effective%20postprocessing%20for%20word%20representations%20In%20International%20Conference%20on%20Learning%20Representations%202018%20URL%20httpsopenreviewnetforumidHkuGJ3kCb"
+        },
+        {
+            "id": "Ochiai_1957_a",
+            "entry": "A. Ochiai. Zoogeographic studies on the solenoid fishes found in japan and its neighbouring regions. Bull Jpn Soc Fish Sci., 22(9):526\u2013530, 1957.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ochiai%2C%20A.%20Zoogeographic%20studies%20on%20the%20solenoid%20fishes%20found%20in%20japan%20and%20its%20neighbouring%20regions%201957",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ochiai%2C%20A.%20Zoogeographic%20studies%20on%20the%20solenoid%20fishes%20found%20in%20japan%20and%20its%20neighbouring%20regions%201957"
+        },
+        {
+            "id": "Otsuka_1936_a",
+            "entry": "Yanosuke Otsuka. The faunal character of the japanese pleistocene marine mollusca, as evidence of the climate having become colder during the pleistocene in japan. Bulletin of the Biogeographical Society of Japan (in Japanese), 6(16):165\u2013170, 1936.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Otsuka%2C%20Yanosuke%20The%20faunal%20character%20of%20the%20japanese%20pleistocene%20marine%20mollusca%2C%20as%20evidence%20of%20the%20climate%20having%20become%20colder%20during%20the%20pleistocene%20in%20japan%201936",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Otsuka%2C%20Yanosuke%20The%20faunal%20character%20of%20the%20japanese%20pleistocene%20marine%20mollusca%2C%20as%20evidence%20of%20the%20climate%20having%20become%20colder%20during%20the%20pleistocene%20in%20japan%201936"
+        },
+        {
+            "id": "Pennington_et+al_2014_a",
+            "entry": "Jeffrey Pennington, Richard Socher, and Christopher Manning. Glove: Global Vectors for Word Representation. In Proc. 2014 Conf. Empir. Methods Nat. Lang. Process., pp. 1532\u20131543, Stroudsburg, PA, USA, 2014. Association for Computational Linguistics.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20Glove%3A%20Global%20Vectors%20for%20Word%20Representation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pennington%2C%20Jeffrey%20Socher%2C%20Richard%20Manning%2C%20Christopher%20Glove%3A%20Global%20Vectors%20for%20Word%20Representation%202014"
+        },
+        {
+            "id": "Perone_et+al_2018_a",
+            "entry": "Christian S Perone, Roberto Silveira, and Thomas S Paula. Evaluation of sentence embeddings in downstream and linguistic probing tasks. arXiv preprint arXiv:1806.06259, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.06259"
+        },
+        {
+            "id": "Peters_et+al_2018_a",
+            "entry": "Matthew E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, and Luke Zettlemoyer. Deep contextualized word representations. In Proc. of NAACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peters%2C%20Matthew%20E.%20Neumann%2C%20Mark%20Iyyer%2C%20Mohit%20Gardner%2C%20Matt%20Deep%20contextualized%20word%20representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peters%2C%20Matthew%20E.%20Neumann%2C%20Mark%20Iyyer%2C%20Mohit%20Gardner%2C%20Matt%20Deep%20contextualized%20word%20representations%202018"
+        },
+        {
+            "id": "Gerald_1975_a",
+            "entry": "Gerald Salton, A. Wong, and C. S. Yang. A vector space model for automatic indexing. Commun. ACM, 18(11):613\u2013620, November 1975.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gerald%20Salton%2C%20A.Wong%20Yang%2C%20C.S.%20A%20vector%20space%20model%20for%20automatic%20indexing%201975-11",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gerald%20Salton%2C%20A.Wong%20Yang%2C%20C.S.%20A%20vector%20space%20model%20for%20automatic%20indexing%201975-11"
+        },
+        {
+            "id": "Schakel_2015_a",
+            "entry": "Adriaan M. J. Schakel and Benjamin J Wilson. Measuring Word Significance using Distributed Representations of Words. aug 2015. URL http://arxiv.org/abs/1508.02297.",
+            "url": "http://arxiv.org/abs/1508.02297",
+            "arxiv_url": "https://arxiv.org/pdf/1508.02297"
+        },
+        {
+            "id": "Shen_et+al_2018_a",
+            "entry": "Dinghan Shen, Guoyin Wang, Wenlin Wang, Martin Renqiang Min, Qinliang Su, Yizhe Zhang, Chunyuan Li, Ricardo Henao, and Lawrence Carin. Baseline needs more love: On simple wordembedding-based models and associated pooling mechanisms. ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shen%2C%20Dinghan%20Wang%2C%20Guoyin%20Wang%2C%20Wenlin%20Min%2C%20Martin%20Renqiang%20Baseline%20needs%20more%20love%3A%20On%20simple%20wordembedding-based%20models%20and%20associated%20pooling%20mechanisms%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shen%2C%20Dinghan%20Wang%2C%20Guoyin%20Wang%2C%20Wenlin%20Min%2C%20Martin%20Renqiang%20Baseline%20needs%20more%20love%3A%20On%20simple%20wordembedding-based%20models%20and%20associated%20pooling%20mechanisms%202018"
+        },
+        {
+            "id": "Sidorov_et+al_2014_a",
+            "entry": "Grigori Sidorov, Alexander F. Gelbukh, Helena Gomez-Adorno, and David Pinto. Soft similarity and soft cosine measure: Similarity of features in vector space model. Computacion y Sistemas, 18 (3), 2014. URL http://cys.cic.ipn.mx/ojs/index.php/CyS/article/view/2043.",
+            "url": "http://cys.cic.ipn.mx/ojs/index.php/CyS/article/view/2043",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sidorov%2C%20Grigori%20Gelbukh%2C%20Alexander%20F.%20Gomez-Adorno%2C%20Helena%20Pinto%2C%20David%20Soft%20similarity%20and%20soft%20cosine%20measure%3A%20Similarity%20of%20features%20in%20vector%20space%20model%202014"
+        },
+        {
+            "id": "Socher_et+al_2013_a",
+            "entry": "Richard Socher, Alex Perelygin, Jean Y. Wu, Jason Chuang, Christopher D. Manning, Andrew Y. Ng, and Christopher Potts. Recursive deep models for semantic compositionality over a sentiment treebank. In In Proceedings of EMNLP, pp. 1631\u20131642, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Socher%2C%20Richard%20Perelygin%2C%20Alex%20Wu%2C%20Jean%20Y.%20Chuang%2C%20Jason%20Recursive%20deep%20models%20for%20semantic%20compositionality%20over%20a%20sentiment%20treebank%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Socher%2C%20Richard%20Perelygin%2C%20Alex%20Wu%2C%20Jean%20Y.%20Chuang%2C%20Jason%20Recursive%20deep%20models%20for%20semantic%20compositionality%20over%20a%20sentiment%20treebank%202013"
+        },
+        {
+            "id": "S_1948_a",
+            "entry": "T. S\u00f8rensen. A method of establishing groups of equal amplitude in plant sociology based on similarity of species and its application to analyses of the vegetation on Danish commons. Biol. Skr., 5:1\u201334, 1948.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%C3%B8rensen%2C%20T.%20A%20method%20of%20establishing%20groups%20of%20equal%20amplitude%20in%20plant%20sociology%20based%20on%20similarity%20of%20species%20and%20its%20application%20to%20analyses%20of%20the%20vegetation%20on%20Danish%20commons%201948",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%C3%B8rensen%2C%20T.%20A%20method%20of%20establishing%20groups%20of%20equal%20amplitude%20in%20plant%20sociology%20based%20on%20similarity%20of%20species%20and%20its%20application%20to%20analyses%20of%20the%20vegetation%20on%20Danish%20commons%201948"
+        },
+        {
+            "id": "Subramanian_et+al_2018_a",
+            "entry": "Sandeep Subramanian, Adam Trischler, Yoshua Bengio, and Christopher J Pal. Learning general purpose distributed sentence representations via large scale multi-task learning. In International Conference on Learning Representations, 2018a. URL https://openreview.net/forum?id=B18WgG-CZ.",
+            "url": "https://openreview.net/forum?id=B18WgG-CZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Subramanian%2C%20Sandeep%20Trischler%2C%20Adam%20Bengio%2C%20Yoshua%20Pal%2C%20Christopher%20J.%20Learning%20general%20purpose%20distributed%20sentence%20representations%20via%20large%20scale%20multi-task%20learning%202018"
+        },
+        {
+            "id": "Subramanian_et+al_0000_a",
+            "entry": "Sandeep Subramanian, Adam Trischler, Yoshua Bengio, and Christopher J Pal. Learning general purpose distributed sentence representations via large scale multi-task learning. arXiv preprint arXiv:1804.00079, 2018b.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.00079"
+        },
+        {
+            "id": "Tai_et+al_0000_a",
+            "entry": "Kai Sheng Tai, Richard Socher, and Christopher D Manning. Improved Semantic Representations From Tree-Structured Long Short-Term Memory Networks. feb 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tai%2C%20Kai%20Sheng%20Socher%2C%20Richard%20Manning%2C%20Christopher%20D.%20Improved%20Semantic%20Representations%20From%20Tree-Structured%20Long%20Short-Term%20Memory%20Networks"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "Shuai Tang, Hailin Jin, Chen Fang, Zhaowen Wang, and Virginia R. de Sa. Exploring asymmetric encoder-decoder structure for context-based sentence representation learning. CoRR, abs/1710.10380, 2017. URL http://arxiv.org/abs/1710.10380.",
+            "url": "http://arxiv.org/abs/1710.10380",
+            "arxiv_url": "https://arxiv.org/pdf/1710.10380"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention Is All You Need. jun 2017. URL http://arxiv.org/abs/1706.03762.",
+            "url": "http://arxiv.org/abs/1706.03762",
+            "arxiv_url": "https://arxiv.org/pdf/1706.03762"
+        },
+        {
+            "id": "Wieting_2018_a",
+            "entry": "John Wieting and Kevin Gimpel. Pushing the limits of paraphrastic sentence embeddings with millions of machine translations. ACL, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wieting%2C%20John%20Gimpel%2C%20Kevin%20Pushing%20the%20limits%20of%20paraphrastic%20sentence%20embeddings%20with%20millions%20of%20machine%20translations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wieting%2C%20John%20Gimpel%2C%20Kevin%20Pushing%20the%20limits%20of%20paraphrastic%20sentence%20embeddings%20with%20millions%20of%20machine%20translations%202018"
+        },
+        {
+            "id": "Wieting_et+al_2015_a",
+            "entry": "John Wieting, Mohit Bansal, Kevin Gimpel, Karen Livescu, and Dan Roth. From paraphrase database to compositional paraphrase model and back. TACL, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wieting%2C%20John%20Bansal%2C%20Mohit%20Gimpel%2C%20Kevin%20Livescu%2C%20Karen%20From%20paraphrase%20database%20to%20compositional%20paraphrase%20model%20and%20back%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wieting%2C%20John%20Bansal%2C%20Mohit%20Gimpel%2C%20Kevin%20Livescu%2C%20Karen%20From%20paraphrase%20database%20to%20compositional%20paraphrase%20model%20and%20back%202015"
+        },
+        {
+            "id": "Wieting_et+al_2016_a",
+            "entry": "John Wieting, Mohit Bansal, Kevin Gimpel, and Karen Livescu. Towards Universal Paraphrastic Sentence Embeddings. pp. 1\u201317, nov 2016. URL http://arxiv.org/abs/1511.08198.",
+            "url": "http://arxiv.org/abs/1511.08198",
+            "arxiv_url": "https://arxiv.org/pdf/1511.08198"
+        },
+        {
+            "id": "Wilcox_2009_a",
+            "entry": "Rand R. Wilcox. Comparing pearson correlations: Dealing with heteroscedasticity and nonnormality. Communications in Statistics - Simulation and Computation, 38:2220\u20132234, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wilcox%2C%20Rand%20R.%20Comparing%20pearson%20correlations%3A%20Dealing%20with%20heteroscedasticity%20and%20nonnormality%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wilcox%2C%20Rand%20R.%20Comparing%20pearson%20correlations%3A%20Dealing%20with%20heteroscedasticity%20and%20nonnormality%202009"
+        },
+        {
+            "id": "Wilcox_2008_a",
+            "entry": "Rand R. Wilcox and Tian Tian. Comparing dependent correlations. The Journal of General Psychology, 135(1):105\u2013112, jan 2008. doi: 10.3200/genp.135.1.105-112. URL https://doi.org/10.3200/genp.135.1.105-112.",
+            "crossref": "https://dx.doi.org/10.3200/genp.135.1.105-112",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.3200/genp.135.1.105-112"
+        },
+        {
+            "id": "Zadeh_1996_a",
+            "entry": "Lotfi Asker Zadeh. Fuzzy Sets, Fuzzy Logic, and Fuzzy Systems: Selected Papers by Lotfi A. Zadeh. World Scientific Publishing Co., Inc., River Edge, NJ, USA, 1996. ISBN 9810224214.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zadeh%2C%20Lotfi%20Asker%20Fuzzy%20Sets%2C%20Fuzzy%20Logic%2C%20and%20Fuzzy%20Systems%3A%20Selected%20Papers%20by%20Lotfi%20A%201996"
+        },
+        {
+            "id": "Zeman_et+al_2017_a",
+            "entry": "Daniel Zeman, Martin Popel, Milan Straka, Jan Hajic, Joakim Nivre, Filip Ginter, Juhani Luotolahti, Sampo Pyysalo, Slav Petrov, Martin Potthast, et al. Conll 2017 shared task: multilingual parsing from raw text to universal dependencies. Proceedings of the CoNLL 2017 Shared Task: Multilingual Parsing from Raw Text to Universal Dependencies, pp. 1\u201319, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Daniel%20Zeman%20Martin%20Popel%20Milan%20Straka%20Jan%20Hajic%20Joakim%20Nivre%20Filip%20Ginter%20Juhani%20Luotolahti%20Sampo%20Pyysalo%20Slav%20Petrov%20Martin%20Potthast%20et%20al%20Conll%202017%20shared%20task%20multilingual%20parsing%20from%20raw%20text%20to%20universal%20dependencies%20Proceedings%20of%20the%20CoNLL%202017%20Shared%20Task%20Multilingual%20Parsing%20from%20Raw%20Text%20to%20Universal%20Dependencies%20pp%20119%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Daniel%20Zeman%20Martin%20Popel%20Milan%20Straka%20Jan%20Hajic%20Joakim%20Nivre%20Filip%20Ginter%20Juhani%20Luotolahti%20Sampo%20Pyysalo%20Slav%20Petrov%20Martin%20Potthast%20et%20al%20Conll%202017%20shared%20task%20multilingual%20parsing%20from%20raw%20text%20to%20universal%20dependencies%20Proceedings%20of%20the%20CoNLL%202017%20Shared%20Task%20Multilingual%20Parsing%20from%20Raw%20Text%20to%20Universal%20Dependencies%20pp%20119%202017"
+        },
+        {
+            "id": "Zhao_2017_a",
+            "entry": "Rui Zhao and Kezhi Mao. Fuzzy bag-of-words model for document representation. IEEE Transactions on Fuzzy Systems, pp. 1\u20131, 2017. doi: 10.1109/tfuzz.2017.2690222. URL https://doi.org/10.1109/tfuzz.2017.2690222.",
+            "crossref": "https://dx.doi.org/10.1109/tfuzz.2017.2690222",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/tfuzz.2017.2690222"
+        },
+        {
+            "id": "Zhelezniak_et+al_2018_a",
+            "entry": "Vitalii Zhelezniak, Dan Busbridge, April Shen, Samuel L. Smith, and Nils Y. Hammerla. Decoding decoders: Finding optimal representation spaces for unsupervised similarity tasks, 2018. URL https://openreview.net/forum?id=Byd-EfWCb.",
+            "url": "https://openreview.net/forum?id=Byd-EfWCb"
+        },
+        {
+            "id": "Zhu_et+al_2015_a",
+            "entry": "Yukun Zhu, Ryan Kiros, Richard Zemel, Ruslan Salakhutdinov, Raquel Urtasun, Antonio Torralba, and Sanja Fidler. Aligning Books and Movies: Towards Story-like Visual Explanations by Watching Movies and Reading Books. Proc. IEEE Int. Conf. Comput. Vis., 2015 Inter:19\u201327, jun 2015. URL http://arxiv.org/abs/1506.06724.",
+            "url": "http://arxiv.org/abs/1506.06724",
+            "arxiv_url": "https://arxiv.org/pdf/1506.06724"
+        }
+    ]
+}

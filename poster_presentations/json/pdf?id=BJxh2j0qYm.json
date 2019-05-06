@@ -1,0 +1,348 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "Dynamic Channel Pruning: Feature Boosting and Suppression",
+        "author": "Xitong Gao,\u2217 Yiren Zhao, Lukasz Dudziak, Robert Mullins, Cheng-zhong Xu, 1 Shenzhen Institutes of Advanced Technology, Shenzhen, China 2,4 University of Cambridge, Cambridge, UK 5 University of Macau, Macau, China 1 xt.gao@siat.ac.cn, 2 yaz,@cam.ac.uk",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJxh2j0qYm"
+        },
+        "abstract": "Making deep convolutional neural networks more accurate typically comes at the cost of increased computational and memory resources. In this paper, we reduce this cost by exploiting the fact that the importance of features computed by convolutional layers is highly input-dependent, and propose feature boosting and suppression (FBS), a new method to predictively amplify salient convolutional channels and skip unimportant ones at run-time. FBS introduces small auxiliary connections to existing convolutional layers. In contrast to channel pruning methods which permanently remove channels, it preserves the full network structures and accelerates convolution by dynamically skipping unimportant input and output channels. FBS-augmented networks are trained with conventional stochastic gradient descent, making it readily available for many state-of-the-art CNNs. We compare FBS to a range of existing channel pruning and dynamic execution schemes and demonstrate large improvements on ImageNet classification. Experiments show that FBS can respectively provide 5\u00d7 and 2\u00d7 savings in compute on VGG-16 and ResNet-18, both with less than 0.6% top-5 accuracy loss."
+    },
+    "keywords": [
+        {
+            "term": "recurrent neural network",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_network"
+        },
+        {
+            "term": "deep convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_convolutional_neural_network"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "convolutional layer",
+            "url": "https://en.wikipedia.org/wiki/convolutional_layer"
+        },
+        {
+            "term": "convolutional neural network",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_network"
+        },
+        {
+            "term": "dynamic execution",
+            "url": "https://en.wikipedia.org/wiki/dynamic_execution"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "batch normalization",
+            "url": "https://en.wikipedia.org/wiki/batch_normalization"
+        }
+    ],
+    "abbreviations": {
+        "FBS": "Feature Boosting and Suppression",
+        "CNNs": "convolutional neural networks",
+        "SGD": "stochastic gradient descent",
+        "DNNs": "deep neural networks",
+        "RNN": "recurrent neural network",
+        "BN": "batch normalization",
+        "MACs": "multiply-accumulate operations",
+        "NS": "Network Slimming"
+    },
+    "highlights": [
+        "State-of-the-art vision and image-based tasks such as image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\">Simonyan & Zisserman, 2015</a></a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a>), object detection (<a class=\"ref-link\" id=\"cRen_et+al_2017_a\" href=\"#rRen_et+al_2017_a\"><a class=\"ref-link\" id=\"cRen_et+al_2017_a\" href=\"#rRen_et+al_2017_a\">Ren et al, 2017</a></a>; <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a></a>) and segmentation (<a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\">Long et al, 2015</a></a>) are all built upon deep convolutional neural networks (CNNs)",
+        "We proposed feature boosting and suppression that helps convolutional neural networks to achieve significant reductions in the compute required while maintaining high accuracies",
+        "Feature Boosting and Suppression fully preserves the capabilities of convolutional neural networks and predictively boosts important channels to help the accelerated models retain high accuracies",
+        "We demonstrated that Feature Boosting and Suppression achieves around 2\u00d7 and 5\u00d7 savings in computation respectively on ResNet-18 and VGG-16 within 0.6% loss of top-5 accuracy",
+        "Under the same performance constraints, the accuracy gained by Feature Boosting and Suppression surpasses all recent structured pruning and dynamic execution methods examined in this paper",
+        "It can serve as an off-the-shelf technique for accelerating many popular convolutional neural networks networks and the fine-tuning process is unified in the traditional stochastic gradient descent which requires no algorithmic changes in training"
+    ],
+    "key_statements": [
+        "State-of-the-art vision and image-based tasks such as image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\">Simonyan & Zisserman, 2015</a></a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a>), object detection (<a class=\"ref-link\" id=\"cRen_et+al_2017_a\" href=\"#rRen_et+al_2017_a\"><a class=\"ref-link\" id=\"cRen_et+al_2017_a\" href=\"#rRen_et+al_2017_a\">Ren et al, 2017</a></a>; <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a></a>) and segmentation (<a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\">Long et al, 2015</a></a>) are all built upon deep convolutional neural networks (CNNs)",
+        "Despite the fact that channel pruning may drastically shrink model size, without careful design, computational resources cannot be effectively reduced in a convolutional neural networks without a detrimental impact on its accuracy",
+        "We propose feature boosting and suppression (FBS) to dynamically amplify and suppress output channels computed by the convolutional layer",
+        "Empirical results show that under the same speed-ups, Feature Boosting and Suppression can produce models with validation accuracies surpassing all other channel pruning and dynamic conditional execution methods examined in the paper.\n5.426 3.297 3.076 2.938 3.409 3.309 3.298 3.171 low response\n0.051 0.052 0.066 0.069 -0.229 -0.218 -0.168 -0.161 (c) The distribution of maxi-",
+        "It is notable that the baseline accuracies for Feature Boosting and Suppression refer to a network that has been augmented with the auxiliary layers featuring Feature Boosting and Suppression but suppress no channels, i.e. d = 1",
+        "We proposed feature boosting and suppression that helps convolutional neural networks to achieve significant reductions in the compute required while maintaining high accuracies",
+        "Feature Boosting and Suppression fully preserves the capabilities of convolutional neural networks and predictively boosts important channels to help the accelerated models retain high accuracies",
+        "We demonstrated that Feature Boosting and Suppression achieves around 2\u00d7 and 5\u00d7 savings in computation respectively on ResNet-18 and VGG-16 within 0.6% loss of top-5 accuracy",
+        "Under the same performance constraints, the accuracy gained by Feature Boosting and Suppression surpasses all recent structured pruning and dynamic execution methods examined in this paper",
+        "It can serve as an off-the-shelf technique for accelerating many popular convolutional neural networks networks and the fine-tuning process is unified in the traditional stochastic gradient descent which requires no algorithmic changes in training"
+    ],
+    "summary": [
+        "State-of-the-art vision and image-based tasks such as image classification (<a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\"><a class=\"ref-link\" id=\"cKrizhevsky_et+al_2012_a\" href=\"#rKrizhevsky_et+al_2012_a\">Krizhevsky et al, 2012</a></a>; <a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\">Simonyan & Zisserman, 2015</a></a></a>; <a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a></a>), object detection (<a class=\"ref-link\" id=\"cRen_et+al_2017_a\" href=\"#rRen_et+al_2017_a\"><a class=\"ref-link\" id=\"cRen_et+al_2017_a\" href=\"#rRen_et+al_2017_a\">Ren et al, 2017</a></a>; <a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\"><a class=\"ref-link\" id=\"cHuang_et+al_2017_a\" href=\"#rHuang_et+al_2017_a\">Huang et al, 2017</a></a>) and segmentation (<a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\"><a class=\"ref-link\" id=\"cLong_et+al_2015_a\" href=\"#rLong_et+al_2015_a\">Long et al, 2015</a></a>) are all built upon deep convolutional neural networks (CNNs).",
+        "Instead of reducing model size at the cost of accuracy with pruning, we can accelerate convolution by selectively computing only a subset of channels predicted to be important at run-time, while considering the sparse input from the preceding convolution layer.",
+        "We propose feature boosting and suppression (FBS) to dynamically amplify and suppress output channels computed by the convolutional layer.",
+        "The valves use features from the previous layer to predict the saliency of output channels.",
+        "Empirical results show that under the same speed-ups, FBS can produce models with validation accuracies surpassing all other channel pruning and dynamic conditional execution methods examined in the paper.",
+        "Instead of using the constant BN scaling factors \u03b3l, we predict channel importance and dynamically amplify or suppress channels with a parametric function \u03c0 dependent on the output from the previous layer xl\u22121.",
+        "For ILSVRC2012, we augment two popular CNN variants, ResNet-18 (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\"><a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a></a>) and VGG-16 (<a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\"><a class=\"ref-link\" id=\"cSimonyan_2015_a\" href=\"#rSimonyan_2015_a\">Simonyan & Zisserman, 2015</a></a>), and provide detailed accuracy/MACs trade-off comparison against recent structured pruning and dynamic execution methods.",
+        "It is notable that even though we specified a universal density d, FBS learned to adjust its dynamicity across all layers, and prune different ratios of channels from the convolutional layers.",
+        "It is notable that the baseline accuracies for FBS refer to a network that has been augmented with the auxiliary layers featuring FBS but suppress no channels, i.e. d = 1.",
+        "We found that this method brings immediate accuracy improvements, an increase of 1.73% in top-1 and 0.46% in top-5 accuracies, to the baseline network, which is in line with our observation on M-CifarNet. In Table 2, we compare different structured pruning and dynamic execution methods to FBS for VGG-16.",
+        "Soft Filter Pruning (<a class=\"ref-link\" id=\"cHe_et+al_2018_a\" href=\"#rHe_et+al_2018_a\">He et al, 2018a</a>) Network Slimming (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al (2017</a></a>), our implementation) Discrimination-aware Channel Pruning (<a class=\"ref-link\" id=\"cZhuang_et+al_2018_a\" href=\"#rZhuang_et+al_2018_a\">Zhuang et al, 2018</a>) Low-cost Collaborative Layers (<a class=\"ref-link\" id=\"cDong_et+al_2017_a\" href=\"#rDong_et+al_2017_a\">Dong et al, 2017</a>) Channel Gating Neural Networks (<a class=\"ref-link\" id=\"cHua_et+al_2018_a\" href=\"#rHua_et+al_2018_a\">Hua et al, 2018</a>) Feature Boosting and Suppression (FBS)",
+        "Filter Pruning (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al (2017</a>), reproduced by <a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al (2017</a>)) Perforated CNNs (<a class=\"ref-link\" id=\"cFigurnov_et+al_2016_a\" href=\"#rFigurnov_et+al_2016_a\">Figurnov et al, 2016</a>) Network Slimming (<a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\"><a class=\"ref-link\" id=\"cLiu_et+al_2017_a\" href=\"#rLiu_et+al_2017_a\">Liu et al (2017</a></a>), our implementation) Runtime Neural Pruning (<a class=\"ref-link\" id=\"cLin_et+al_2017_a\" href=\"#rLin_et+al_2017_a\">Lin et al, 2017</a>) Channel Pruning (<a class=\"ref-link\" id=\"cHe_et+al_2017_a\" href=\"#rHe_et+al_2017_a\">He et al, 2017</a>) AutoML for Model Compression (He et al, 2018b) ThiNet-Conv (<a class=\"ref-link\" id=\"cLuo_et+al_2017_a\" href=\"#rLuo_et+al_2017_a\">Luo et al, 2017</a>) Feature Boosting and Suppression (FBS)",
+        "FBS fully preserves the capabilities of CNNs and predictively boosts important channels to help the accelerated models retain high accuracies.",
+        "The implementation of FBS and the optimized networks are fully open source and released to the public1"
+    ],
+    "headline": "We reduce this cost by exploiting the fact that the importance of features computed by convolutional layers is highly input-dependent, and propose feature boosting and suppression, a new method to predictively amplify salient convolutional channels and skip unimportant ones at run-time",
+    "reference_links": [
+        {
+            "id": "Almahairi_et+al_2016_a",
+            "entry": "Amjad Almahairi, Nicolas Ballas, Tim Cooijmans, Yin Zheng, Hugo Larochelle, and Aaron Courville. Dynamic capacity networks. In Proceedings of the 33rd International Conference on International Conference on Machine Learning (ICML), pp. 2549\u20132558, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Almahairi%2C%20Amjad%20Ballas%2C%20Nicolas%20Cooijmans%2C%20Tim%20Zheng%2C%20Yin%20Dynamic%20capacity%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Almahairi%2C%20Amjad%20Ballas%2C%20Nicolas%20Cooijmans%2C%20Tim%20Zheng%2C%20Yin%20Dynamic%20capacity%20networks%202016"
+        },
+        {
+            "id": "Alvarez_2016_a",
+            "entry": "Jose M Alvarez and Mathieu Salzmann. Learning the number of neurons in deep networks. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett (eds.), Advances in Neural Information Processing Systems (NIPS), pp. 2270\u20132278. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez%2C%20Jose%20M.%20Salzmann%2C%20Mathieu%20Learning%20the%20number%20of%20neurons%20in%20deep%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alvarez%2C%20Jose%20M.%20Salzmann%2C%20Mathieu%20Learning%20the%20number%20of%20neurons%20in%20deep%20networks%202016"
+        },
+        {
+            "id": "Bolukbasi_et+al_2017_a",
+            "entry": "Tolga Bolukbasi, Joseph Wang, Ofer Dekel, and Venkatesh Saligrama. Adaptive neural networks for efficient inference. In Proceedings of the 34th International Conference on Machine Learning (ICML), pp. 527\u2013536, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bolukbasi%2C%20Tolga%20Wang%2C%20Joseph%20Dekel%2C%20Ofer%20Saligrama%2C%20Venkatesh%20Adaptive%20neural%20networks%20for%20efficient%20inference%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bolukbasi%2C%20Tolga%20Wang%2C%20Joseph%20Dekel%2C%20Ofer%20Saligrama%2C%20Venkatesh%20Adaptive%20neural%20networks%20for%20efficient%20inference%202017"
+        },
+        {
+            "id": "Deng_et+al_2009_a",
+            "entry": "J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei. ImageNet: A large-scale hierarchical image database. In IEEE Conference on Computer Vision and Pattern Recognition, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20J.%20Dong%2C%20W.%20Socher%2C%20R.%20Li%2C%20L.-J.%20ImageNet%3A%20A%20large-scale%20hierarchical%20image%20database%202009"
+        },
+        {
+            "id": "Dong_et+al_2017_a",
+            "entry": "Xuanyi Dong, Junshi Huang, Yi Yang, and Shuicheng Yan. More is less: A more complicated network with less inference complexity. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dong%2C%20Xuanyi%20Huang%2C%20Junshi%20Yang%2C%20Yi%20Yan%2C%20Shuicheng%20More%20is%20less%3A%20A%20more%20complicated%20network%20with%20less%20inference%20complexity%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dong%2C%20Xuanyi%20Huang%2C%20Junshi%20Yang%2C%20Yi%20Yan%2C%20Shuicheng%20More%20is%20less%3A%20A%20more%20complicated%20network%20with%20less%20inference%20complexity%202017-07"
+        },
+        {
+            "id": "Figurnov_et+al_2017_a",
+            "entry": "Michael Figurnov, Maxwell D. Collins, Yukun Zhu, Li Zhang, Jonathan Huang, Dmitry Vetrov, and Ruslan Salakhutdinov. Spatially adaptive computation time for residual networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Figurnov%2C%20Michael%20Collins%2C%20Maxwell%20D.%20Zhu%2C%20Yukun%20Zhang%2C%20Li%20Spatially%20adaptive%20computation%20time%20for%20residual%20networks%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Figurnov%2C%20Michael%20Collins%2C%20Maxwell%20D.%20Zhu%2C%20Yukun%20Zhang%2C%20Li%20Spatially%20adaptive%20computation%20time%20for%20residual%20networks%202017-07"
+        },
+        {
+            "id": "Figurnov_et+al_2016_a",
+            "entry": "Mikhail Figurnov, Aizhan Ibraimova, Dmitry P Vetrov, and Pushmeet Kohli. PerforatedCNNs: Acceleration through elimination of redundant convolutions. In Advances in Neural Information Processing Systems (NIPS), pp. 947\u2013955, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Figurnov%2C%20Mikhail%20Ibraimova%2C%20Aizhan%20Vetrov%2C%20Dmitry%20P.%20Kohli%2C%20Pushmeet%20PerforatedCNNs%3A%20Acceleration%20through%20elimination%20of%20redundant%20convolutions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Figurnov%2C%20Mikhail%20Ibraimova%2C%20Aizhan%20Vetrov%2C%20Dmitry%20P.%20Kohli%2C%20Pushmeet%20PerforatedCNNs%3A%20Acceleration%20through%20elimination%20of%20redundant%20convolutions%202016"
+        },
+        {
+            "id": "Guo_et+al_2016_a",
+            "entry": "Yiwen Guo, Anbang Yao, and Yurong Chen. Dynamic network surgery for efficient DNNs. In Advances in Neural Information Processing Systems (NIPS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Yiwen%20Yao%2C%20Anbang%20Chen%2C%20Yurong%20Dynamic%20network%20surgery%20for%20efficient%20DNNs%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Yiwen%20Yao%2C%20Anbang%20Chen%2C%20Yurong%20Dynamic%20network%20surgery%20for%20efficient%20DNNs%202016"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Song Han, Xingyu Liu, Huizi Mao, Jing Pu, Ardavan Pedram, Mark A Horowitz, and William J Dally. Eie: efficient inference engine on compressed deep neural network. In Computer Architecture (ISCA), 2016 ACM/IEEE 43rd Annual International Symposium on, pp. 243\u2013254. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20Eie%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Han%2C%20Song%20Liu%2C%20Xingyu%20Mao%2C%20Huizi%20Pu%2C%20Jing%20Eie%3A%20efficient%20inference%20engine%20on%20compressed%20deep%20neural%20network%202016"
+        },
+        {
+            "id": "Hassibi_et+al_1994_a",
+            "entry": "Babak Hassibi, David G. Stork, and Gregory Wolff. Optimal brain surgeon: Extensions and performance comparisons. In J. D. Cowan, G. Tesauro, and J. Alspector (eds.), Advances in Neural Information Processing Systems (NIPS), pp. 263\u2013270. 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hassibi%2C%20Babak%20Stork%2C%20David%20G.%20Wolff%2C%20Gregory%20Optimal%20brain%20surgeon%3A%20Extensions%20and%20performance%20comparisons%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hassibi%2C%20Babak%20Stork%2C%20David%20G.%20Wolff%2C%20Gregory%20Optimal%20brain%20surgeon%3A%20Extensions%20and%20performance%20comparisons%201994"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the 2015 IEEE International Conference on Computer Vision (ICCV), ICCV \u201915, pp. 1026\u2013 1034, Washington, DC, USA, 2015. IEEE Computer Society. ISBN 978-1-4673-8391-2. doi: 10.1109/ICCV.2015.123.",
+            "crossref": "https://dx.doi.org/10.1109/ICCV.2015.123",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/ICCV.2015.123"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "He_et+al_2018_a",
+            "entry": "Yang He, Guoliang Kang, Xuanyi Dong, Yanwei Fu, and Yi Yang. Soft filter pruning for accelerating deep convolutional neural networks. In International Joint Conference on Artificial Intelligence (IJCAI), pp. 2234\u20132240, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yang%20Kang%2C%20Guoliang%20Dong%2C%20Xuanyi%20Fu%2C%20Yanwei%20Soft%20filter%20pruning%20for%20accelerating%20deep%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yang%20Kang%2C%20Guoliang%20Dong%2C%20Xuanyi%20Fu%2C%20Yanwei%20Soft%20filter%20pruning%20for%20accelerating%20deep%20convolutional%20neural%20networks%202018"
+        },
+        {
+            "id": "He_et+al_2017_a",
+            "entry": "Yihui He, Xiangyu Zhang, and Jian Sun. Channel pruning for accelerating very deep neural networks. IEEE International Conference on Computer Vision (ICCV), pp. 1398\u20131406, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Zhang%2C%20Xiangyu%20Sun%2C%20Jian%20Channel%20pruning%20for%20accelerating%20very%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "He_et+al_0000_b",
+            "entry": "Yihui He, Ji Lin, Zhijian Liu, Hanrui Wang, Li-Jia Li, and Song Han. AMC: AutoML for model compression and acceleration on mobile devices. In Proceedings of the European Conference on Computer Vision (ECCV), pp. 784\u2013800, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Yihui%20Lin%2C%20Ji%20Liu%2C%20Zhijian%20Wang%2C%20Hanrui%20AMC%3A%20AutoML%20for%20model%20compression%20and%20acceleration%20on%20mobile%20devices",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Yihui%20Lin%2C%20Ji%20Liu%2C%20Zhijian%20Wang%2C%20Hanrui%20AMC%3A%20AutoML%20for%20model%20compression%20and%20acceleration%20on%20mobile%20devices"
+        },
+        {
+            "id": "Hua_et+al_2018_a",
+            "entry": "Weizhe Hua, Christopher De Sa, Zhiru Zhang, and G. Edward Suh. Channel gating neural networks. CoRR, abs/1805.12549, 2018. URL http://arxiv.org/abs/1805.12549.",
+            "url": "http://arxiv.org/abs/1805.12549",
+            "arxiv_url": "https://arxiv.org/pdf/1805.12549"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "J. Huang, V. Rathod, C. Sun, M. Zhu, A. Korattikara, A. Fathi, I. Fischer, Z. Wojna, Y. Song, S. Guadarrama, and K. Murphy. Speed/accuracy trade-offs for modern convolutional object detectors. In 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3296\u20133297, July 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20J.%20Rathod%2C%20V.%20Sun%2C%20C.%20Zhu%2C%20M.%20Speed/accuracy%20trade-offs%20for%20modern%20convolutional%20object%20detectors%202017-07",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20J.%20Rathod%2C%20V.%20Sun%2C%20C.%20Zhu%2C%20M.%20Speed/accuracy%20trade-offs%20for%20modern%20convolutional%20object%20detectors%202017-07"
+        },
+        {
+            "id": "Huang_et+al_2018_a",
+            "entry": "Qiangui Huang, Kevin Zhou, Suya You, and Ulrich Neumann. Learning to prune filters in convolutional neural networks. In IEEE Winter Conference on Computer Vision. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Qiangui%20Zhou%2C%20Kevin%20You%2C%20Suya%20Neumann%2C%20Ulrich%20Learning%20to%20prune%20filters%20in%20convolutional%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Qiangui%20Zhou%2C%20Kevin%20You%2C%20Suya%20Neumann%2C%20Ulrich%20Learning%20to%20prune%20filters%20in%20convolutional%20neural%20networks%202018"
+        },
+        {
+            "id": "Sergey_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Proceedings of the 32Nd International Conference on International Conference on Machine Learning (ICML), pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032Nd%20International%20Conference%20on%20International%20Conference%20on%20Machine%20Learning%20ICML%20pp%20448456%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sergey%20Ioffe%20and%20Christian%20Szegedy%20Batch%20normalization%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%20In%20Proceedings%20of%20the%2032Nd%20International%20Conference%20on%20International%20Conference%20on%20Machine%20Learning%20ICML%20pp%20448456%202015"
+        },
+        {
+            "id": "Krizhevsky_et+al_2012_a",
+            "entry": "Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems (NIPS). 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krizhevsky%2C%20Alex%20Sutskever%2C%20Ilya%20Hinton%2C%20Geoffrey%20E.%20Imagenet%20classification%20with%20deep%20convolutional%20neural%20networks%202012"
+        },
+        {
+            "id": "Krizhevsky_et+al_2014_a",
+            "entry": "Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. The CIFAR-10 and CIFAR-100 datasets. http://www.cs.toronto.edu/kriz/cifar.html, 2014.",
+            "url": "http://www.cs.toronto.edu/kriz/cifar.html"
+        },
+        {
+            "id": "Lecun_et+al_1990_a",
+            "entry": "Yann LeCun, John S. Denker, and Sara A. Solla. Optimal brain damage. In Advances in Neural Information Processing Systems (NIPS), pp. 598\u2013605. 1990.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Denker%2C%20John%20S.%20Solla%2C%20Sara%20A.%20Optimal%20brain%20damage%201990",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Denker%2C%20John%20S.%20Solla%2C%20Sara%20A.%20Optimal%20brain%20damage%201990"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. Pruning filters for efficient convnets. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Hao%20Kadav%2C%20Asim%20Durdanovic%2C%20Igor%20Samet%2C%20Hanan%20Pruning%20filters%20for%20efficient%20convnets%202017"
+        },
+        {
+            "id": "Lin_et+al_2017_a",
+            "entry": "Ji Lin, Yongming Rao, Jiwen Lu, and Jie Zhou. Runtime neural pruning. In Advances in Neural Information Processing Systems (NIPS), pp. 2181\u20132191. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Ji%20Rao%2C%20Yongming%20Lu%2C%20Jiwen%20Zhou%2C%20Jie%20Runtime%20neural%20pruning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Ji%20Rao%2C%20Yongming%20Lu%2C%20Jiwen%20Zhou%2C%20Jie%20Runtime%20neural%20pruning%202017"
+        },
+        {
+            "id": "Liu_2018_a",
+            "entry": "Lanlan Liu and Jia Deng. Dynamic deep neural networks: Optimizing accuracy-efficiency trade-offs by selective execution. 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Lanlan%20Deng%2C%20Jia%20Dynamic%20deep%20neural%20networks%3A%20Optimizing%20accuracy-efficiency%20trade-offs%20by%20selective%20execution%202018"
+        },
+        {
+            "id": "Liu_et+al_2017_a",
+            "entry": "Zhuang Liu, Jianguo Li, Zhiqiang Shen, Gao Huang, Shoumeng Yan, and Changshui Zhang. Learning efficient convolutional networks through network slimming. In International Conference on Computer Vision (ICCV), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Zhuang%20Li%2C%20Jianguo%20Shen%2C%20Zhiqiang%20Huang%2C%20Gao%20Learning%20efficient%20convolutional%20networks%20through%20network%20slimming%202017"
+        },
+        {
+            "id": "Long_et+al_2015_a",
+            "entry": "J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 3431\u20133440, June 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Long%2C%20J.%20Shelhamer%2C%20E.%20Darrell%2C%20T.%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Long%2C%20J.%20Shelhamer%2C%20E.%20Darrell%2C%20T.%20Fully%20convolutional%20networks%20for%20semantic%20segmentation%202015-06"
+        },
+        {
+            "id": "Luo_et+al_2017_a",
+            "entry": "Jian-Hao Luo, Jianxin Wu, and Weiyao Lin. ThiNet: A filter level pruning method for deep neural network compression. In ICCV, pp. 5058\u20135066, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Luo%2C%20Jian-Hao%20Wu%2C%20Jianxin%20Lin%2C%20Weiyao%20ThiNet%3A%20A%20filter%20level%20pruning%20method%20for%20deep%20neural%20network%20compression%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Luo%2C%20Jian-Hao%20Wu%2C%20Jianxin%20Lin%2C%20Weiyao%20ThiNet%3A%20A%20filter%20level%20pruning%20method%20for%20deep%20neural%20network%20compression%202017"
+        },
+        {
+            "id": "Odena_et+al_2017_a",
+            "entry": "Augustus Odena, Dieterich Lawson, and Christopher Olah. Changing model behavior at test-time using reinforcement learning. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Odena%2C%20Augustus%20Lawson%2C%20Dieterich%20Olah%2C%20Christopher%20Changing%20model%20behavior%20at%20test-time%20using%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Parashar_et+al_2017_a",
+            "entry": "Angshuman Parashar, Minsoo Rhu, Anurag Mukkara, Antonio Puglielli, Rangharajan Venkatesan, Brucek Khailany, Joel Emer, Stephen W Keckler, and William J Dally. Scnn: An accelerator for compressed-sparse convolutional neural networks. In ACM SIGARCH Computer Architecture News, volume 45, pp. 27\u201340. ACM, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parashar%2C%20Angshuman%20Rhu%2C%20Minsoo%20Mukkara%2C%20Anurag%20Puglielli%2C%20Antonio%20Scnn%3A%20An%20accelerator%20for%20compressed-sparse%20convolutional%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parashar%2C%20Angshuman%20Rhu%2C%20Minsoo%20Mukkara%2C%20Anurag%20Puglielli%2C%20Antonio%20Scnn%3A%20An%20accelerator%20for%20compressed-sparse%20convolutional%20neural%20networks%202017"
+        },
+        {
+            "id": "Ren_et+al_2018_a",
+            "entry": "Mengye Ren, Andrei Pokrovsky, Bin Yang, and Raquel Urtasun. SBNet: Sparse blocks network for fast inference. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20Mengye%20Pokrovsky%2C%20Andrei%20Yang%2C%20Bin%20Urtasun%2C%20Raquel%20SBNet%3A%20Sparse%20blocks%20network%20for%20fast%20inference%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20Mengye%20Pokrovsky%2C%20Andrei%20Yang%2C%20Bin%20Urtasun%2C%20Raquel%20SBNet%3A%20Sparse%20blocks%20network%20for%20fast%20inference%202018-06"
+        },
+        {
+            "id": "Ren_et+al_2017_a",
+            "entry": "S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. IEEE Transactions on Pattern Analysis and Machine Intelligence, 39(6):1137\u20131149, June 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ren%2C%20S.%20He%2C%20K.%20Girshick%2C%20R.%20Sun%2C%20J.%20Faster%20R-CNN%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202017-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ren%2C%20S.%20He%2C%20K.%20Girshick%2C%20R.%20Sun%2C%20J.%20Faster%20R-CNN%3A%20Towards%20real-time%20object%20detection%20with%20region%20proposal%20networks%202017-06"
+        },
+        {
+            "id": "Shazeer_et+al_2017_a",
+            "entry": "Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-ofexperts layer. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shazeer%2C%20Noam%20Mirhoseini%2C%20Azalia%20Maziarz%2C%20Krzysztof%20Davis%2C%20Andy%20Outrageously%20large%20neural%20networks%3A%20The%20sparsely-gated%20mixture-ofexperts%20layer%202017"
+        },
+        {
+            "id": "Simonyan_2015_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Simonyan%2C%20Karen%20Zisserman%2C%20Andrew%20Very%20deep%20convolutional%20networks%20for%20large-scale%20image%20recognition%202015"
+        },
+        {
+            "id": "Srivastava_et+al_2015_a",
+            "entry": "Rupesh Kumar Srivastava, Jonathan Masci, Faustino J. Gomez, and Jurgen Schmidhuber. Understanding locally competitive networks. In International Conference on Learning Representations (ICLR), 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srivastava%2C%20Rupesh%20Kumar%20Masci%2C%20Jonathan%20Gomez%2C%20Faustino%20J.%20Schmidhuber%2C%20Jurgen%20Understanding%20locally%20competitive%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srivastava%2C%20Rupesh%20Kumar%20Masci%2C%20Jonathan%20Gomez%2C%20Faustino%20J.%20Schmidhuber%2C%20Jurgen%20Understanding%20locally%20competitive%20networks%202015"
+        },
+        {
+            "id": "Wen_et+al_2016_a",
+            "entry": "Wei Wen, Chunpeng Wu, Yandan Wang, Yiran Chen, and Hai Li. Learning structured sparsity in deep neural networks. In Advances in Neural Information Processing Systems (NIPS), pp. 2074\u20132082. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wen%2C%20Wei%20Wu%2C%20Chunpeng%20Wang%2C%20Yandan%20Chen%2C%20Yiran%20Learning%20structured%20sparsity%20in%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Zuxuan Wu, Tushar Nagarajan, Abhishek Kumar, Steven Rennie, Larry S. Davis, Kristen Grauman, and Rogerio Feris. BlockDrop: Dynamic inference paths in residual networks. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Zuxuan%20Nagarajan%2C%20Tushar%20Kumar%2C%20Abhishek%20Rennie%2C%20Steven%20BlockDrop%3A%20Dynamic%20inference%20paths%20in%20residual%20networks%202018-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Zuxuan%20Nagarajan%2C%20Tushar%20Kumar%2C%20Abhishek%20Rennie%2C%20Steven%20BlockDrop%3A%20Dynamic%20inference%20paths%20in%20residual%20networks%202018-06"
+        },
+        {
+            "id": "Ye_et+al_2018_a",
+            "entry": "Jianbo Ye, Xin Lu, Zhe L. Lin, and James Z. Wang. Rethinking the smaller-norm-lessinformative assumption in channel pruning of convolution layers. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ye%2C%20Jianbo%20Lu%2C%20Xin%20Lin%2C%20Zhe%20L.%20Wang%2C%20James%20Z.%20Rethinking%20the%20smaller-norm-lessinformative%20assumption%20in%20channel%20pruning%20of%20convolution%20layers%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ye%2C%20Jianbo%20Lu%2C%20Xin%20Lin%2C%20Zhe%20L.%20Wang%2C%20James%20Z.%20Rethinking%20the%20smaller-norm-lessinformative%20assumption%20in%20channel%20pruning%20of%20convolution%20layers%202018"
+        },
+        {
+            "id": "Zhao_et+al_2018_a",
+            "entry": "Yiren Zhao, Xitong Gao, Robert Mullins, and Chengzhong Xu. Mayo: A framework for autogenerating hardware friendly deep neural networks. In Proceedings of 2nd International Workshop on Embedded and Mobile Deep Learning, EMDL \u201918. ACM, 2018. doi: 10.1145/ 3212725.3212726. URL http://doi.acm.org/10.1145/3212725.3212726.",
+            "crossref": "https://dx.doi.org/10.1145/3212725.3212726",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1145/3212725.3212726"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Hao Zhou, Jose M. Alvarez, and Fatih Porikli. Less is more: Towards compact cnns. In Bastian Leibe, Jiri Matas, Nicu Sebe, and Max Welling (eds.), Computer Vision \u2013 ECCV 2016, pp. 662\u2013677, Cham, 2016. Springer International Publishing. ISBN 978-3-31946493-0.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Hao%20Alvarez%2C%20Jose%20M.%20Porikli%2C%20Fatih%20Less%20is%20more%3A%20Towards%20compact%20cnns%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Hao%20Alvarez%2C%20Jose%20M.%20Porikli%2C%20Fatih%20Less%20is%20more%3A%20Towards%20compact%20cnns%202016"
+        },
+        {
+            "id": "Zhuang_et+al_2018_a",
+            "entry": "Zhuangwei Zhuang, Mingkui Tan, Bohan Zhuang, Jing Liu, Yong Guo, Qingyao Wu, Junzhou Huang, and Jinhui Zhu. Discrimination-aware channel pruning for deep neural networks. In Advances in Neural Information Processing Systems (NIPS). 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhuang%2C%20Zhuangwei%20Tan%2C%20Mingkui%20Zhuang%2C%20Bohan%20Liu%2C%20Jing%20Discrimination-aware%20channel%20pruning%20for%20deep%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhuang%2C%20Zhuangwei%20Tan%2C%20Mingkui%20Zhuang%2C%20Bohan%20Liu%2C%20Jing%20Discrimination-aware%20channel%20pruning%20for%20deep%20neural%20networks%202018"
+        },
+        {
+            "id": "We_2017_a",
+            "entry": "We trained M-CifarNet (see Appendix A) with a 0.01 learning rate and a 256 batch size. We reduced the learning rate by a factor of 10\u00d7 for every 100 epochs. To compare FBS against NS fairly, every model with a new target MACs budget were consecutively initialized with the previous model, and trained for a maximum of 300 epochs, which is enough for all models to converge to the best obtainable accuracies. For NS, we follow Liu et al. (2017) and start training with an 1-norm sparsity regularization weighted by 10\u22125 on the BN scaling factors. We then prune at 150 epochs and fine-tune the resulting network without the sparsity regularization.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20trained%20MCifarNet%20see%20Appendix%20A%20with%20a%20001%20learning%20rate%20and%20a%20256%20batch%20size%20We%20reduced%20the%20learning%20rate%20by%20a%20factor%20of%2010%20for%20every%20100%20epochs%20To%20compare%20FBS%20against%20NS%20fairly%20every%20model%20with%20a%20new%20target%20MACs%20budget%20were%20consecutively%20initialized%20with%20the%20previous%20model%20and%20trained%20for%20a%20maximum%20of%20300%20epochs%20which%20is%20enough%20for%20all%20models%20to%20converge%20to%20the%20best%20obtainable%20accuracies%20For%20NS%20we%20follow%20Liu%20et%20al%202017%20and%20start%20training%20with%20an%201norm%20sparsity%20regularization%20weighted%20by%20105%20on%20the%20BN%20scaling%20factors%20We%20then%20prune%20at%20150%20epochs%20and%20finetune%20the%20resulting%20network%20without%20the%20sparsity%20regularization",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20trained%20MCifarNet%20see%20Appendix%20A%20with%20a%20001%20learning%20rate%20and%20a%20256%20batch%20size%20We%20reduced%20the%20learning%20rate%20by%20a%20factor%20of%2010%20for%20every%20100%20epochs%20To%20compare%20FBS%20against%20NS%20fairly%20every%20model%20with%20a%20new%20target%20MACs%20budget%20were%20consecutively%20initialized%20with%20the%20previous%20model%20and%20trained%20for%20a%20maximum%20of%20300%20epochs%20which%20is%20enough%20for%20all%20models%20to%20converge%20to%20the%20best%20obtainable%20accuracies%20For%20NS%20we%20follow%20Liu%20et%20al%202017%20and%20start%20training%20with%20an%201norm%20sparsity%20regularization%20weighted%20by%20105%20on%20the%20BN%20scaling%20factors%20We%20then%20prune%20at%20150%20epochs%20and%20finetune%20the%20resulting%20network%20without%20the%20sparsity%20regularization"
+        },
+        {
+            "id": "We_2012_a",
+            "entry": "We additionally employed image augmentation procedures from Krizhevsky et al. (2012) to preprocess each training example. Each CIFAR-10 example was randomly horizontal flipped and slightly perturbed in the brightness, saturation and hue.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20additionally%20employed%20image%20augmentation%20procedures%20from%20Krizhevsky%20et%20al%202012%20to%20preprocess%20each%20training%20example%20Each%20CIFAR10%20example%20was%20randomly%20horizontal%20flipped%20and%20slightly%20perturbed%20in%20the%20brightness%20saturation%20and%20hue",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20additionally%20employed%20image%20augmentation%20procedures%20from%20Krizhevsky%20et%20al%202012%20to%20preprocess%20each%20training%20example%20Each%20CIFAR10%20example%20was%20randomly%20horizontal%20flipped%20and%20slightly%20perturbed%20in%20the%20brightness%20saturation%20and%20hue"
+        }
+    ]
+}

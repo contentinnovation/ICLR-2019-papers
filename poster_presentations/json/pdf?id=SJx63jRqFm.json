@@ -1,0 +1,371 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DIVERSITY IS ALL YOU NEED: LEARNING SKILLS WITHOUT A REWARD FUNCTION",
+        "author": "Benjamin Eysenbach",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SJx63jRqFm"
+        },
+        "abstract": "Intelligent creatures can explore their environments and learn useful skills without supervision. In this paper, we propose \u201cDiversity is All You Need\u201d(DIAYN), a method for learning useful skills without a reward function. Our proposed method learns skills by maximizing an information theoretic objective using a maximum entropy policy. On a variety of simulated robotic tasks, we show that this simple objective results in the unsupervised emergence of diverse skills, such as walking and jumping. In a number of reinforcement learning benchmark environments, our method is able to learn a skill that solves the benchmark task despite never receiving the true task reward. We show how pretrained skills can provide a good parameter initialization for downstream tasks, and can be composed hierarchically to solve complex, sparse reward tasks. Our results suggest that unsupervised discovery of skills can serve as an effective pretraining mechanism for overcoming challenges of exploration and data efficiency in reinforcement learning."
+    },
+    "keywords": [
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "reward function",
+            "url": "https://en.wikipedia.org/wiki/reward_function"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Intrinsic motivation",
+            "url": "https://en.wikipedia.org/wiki/Intrinsic_motivation"
+        }
+    ],
+    "abbreviations": {
+        "RL": "reinforcement learning",
+        "SAC": "soft actor critic",
+        "VIC": "Variational Intrinsic Control",
+        "VIME": "Variational Information Maximizing Exploration"
+    },
+    "highlights": [
+        "Deep reinforcement learning (RL) has been demonstrated to effectively learn a wide range of rewarddriven skills, including playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\">Mnih et al, 2013</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>), controlling robots (<a class=\"ref-link\" id=\"cGu_et+al_2017_a\" href=\"#rGu_et+al_2017_a\"><a class=\"ref-link\" id=\"cGu_et+al_2017_a\" href=\"#rGu_et+al_2017_a\">Gu et al, 2017</a></a>; Schulman et al, 2015b), and navigating complex environments (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMirowski_et+al_2016_a\" href=\"#rMirowski_et+al_2016_a\"><a class=\"ref-link\" id=\"cMirowski_et+al_2016_a\" href=\"#rMirowski_et+al_2016_a\">Mirowski et al, 2016</a></a>)",
+        "We present DIAYN, a method for learning skills without reward functions",
+        "We show that DIAYN learns diverse skills for complex tasks, often solving benchmark tasks with one of the learned skills without receiving any task reward",
+        "We further proposed methods for using the learned skills (1) to quickly adapt to a new task, (2) to solve complex tasks via hierarchical reinforcement learning, and (3) to imitate an expert",
+        "DIAYN could be combined with methods for augmenting the observation space and reward function",
+        "The skills produced by DIAYN might be used by game designers to allow players to control complex robots and by artists to animate characters"
+    ],
+    "key_statements": [
+        "Deep reinforcement learning (RL) has been demonstrated to effectively learn a wide range of rewarddriven skills, including playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\">Mnih et al, 2013</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>), controlling robots (<a class=\"ref-link\" id=\"cGu_et+al_2017_a\" href=\"#rGu_et+al_2017_a\"><a class=\"ref-link\" id=\"cGu_et+al_2017_a\" href=\"#rGu_et+al_2017_a\">Gu et al, 2017</a></a>; Schulman et al, 2015b), and navigating complex environments (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMirowski_et+al_2016_a\" href=\"#rMirowski_et+al_2016_a\"><a class=\"ref-link\" id=\"cMirowski_et+al_2016_a\" href=\"#rMirowski_et+al_2016_a\">Mirowski et al, 2016</a></a>)",
+        "Environments with sparse rewards effectively have no reward until the agent randomly reaches a goal state",
+        "Skills discovered without reward can serve as primitives for hierarchical reinforcement learning, effectively shortening the episode length",
+        "We show how a simple objective based on mutual information can enable reinforcement learning agents to autonomously discover such skills",
+        "We propose a method for learning diverse skills with deep reinforcement learning in the absence of any rewards",
+        "Our method maximizes the mutual information between states and skills, which can be interpreted as maximizing the empowerment of a hierarchical agent whose action space is the set of skills",
+        "We study the skills learned by DIAYN on tasks of increasing complexity, ranging from point navigation (2 dimensions) to ant locomotion (111 dimensions)",
+        "While DIAYN learns skills without a reward function, as an outside observer, can we evaluate the skills throughout training to understand the training dynamics",
+        "While DIAYN favors skills that do not overlap, our method is not limited to learning skills that visit entirely disjoint sets of states",
+        "We evaluated DIAYN and Variational Intrinsic Control on the half-cheetah environment, and plotting the effective number of skills) throughout",
+        "Akin to the use of pre-trained models in computer vision, we propose that DIAYN can serve as unsupervised pre-training for more sample-efficient finetuning of task-specific policies",
+        "The critic networks learned during pretraining corresponds to the pseudo-reward from the discriminator (Eq 3) and not the true task reward, we found empirically that the pseudo-reward was close to the true task reward for the best skill, and initializing the critic in addition to the actor further sped up learning",
+        "We propose a simple extension to DIAYN for hierarchical reinforcement learning, and find that simple algorithm outperforms competitive baselines on two challenging tasks",
+        "Note that even the best random seed from Variational Information Maximizing Exploration significantly under-performs DIAYN. This is not surprising: whereas DIAYN learns a set of skills that effectively partition the state space, Variational Information Maximizing Exploration attempts to learn a single policy that visits many states",
+        "Figure 8 shows how DIAYN outperforms state of the art on-policy reinforcement learning (TRPO (<a class=\"ref-link\" id=\"cSchulman_et+al_2015_a\" href=\"#rSchulman_et+al_2015_a\">Schulman et al, 2015a</a>)), off-policy reinforcement learning (SAC (<a class=\"ref-link\" id=\"cHaarnoja_et+al_2018_a\" href=\"#rHaarnoja_et+al_2018_a\">Haarnoja et al, 2018</a>)), and exploration bonuses (VIME). This experiment suggests that unsupervised skill learning provides an effective mechanism for combating challenges of exploration and sparse rewards in reinforcement learning",
+        "While we found that DIAYN does scale to tasks with more than 100 dimensions, we can use a simple modification to bias DIAYN towards discovering particular types of skills",
+        "We qualitatively evaluate this approach to imitation learning on half cheetah",
+        "We present DIAYN, a method for learning skills without reward functions",
+        "We show that DIAYN learns diverse skills for complex tasks, often solving benchmark tasks with one of the learned skills without receiving any task reward",
+        "We further proposed methods for using the learned skills (1) to quickly adapt to a new task, (2) to solve complex tasks via hierarchical reinforcement learning, and (3) to imitate an expert",
+        "DIAYN could be combined with methods for augmenting the observation space and reward function",
+        "The skills produced by DIAYN might be used by game designers to allow players to control complex robots and by artists to animate characters"
+    ],
+    "summary": [
+        "Deep reinforcement learning (RL) has been demonstrated to effectively learn a wide range of rewarddriven skills, including playing games (<a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\"><a class=\"ref-link\" id=\"cMnih_et+al_2013_a\" href=\"#rMnih_et+al_2013_a\">Mnih et al, 2013</a></a>; <a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\"><a class=\"ref-link\" id=\"cSilver_et+al_2016_a\" href=\"#rSilver_et+al_2016_a\">Silver et al, 2016</a></a>), controlling robots (<a class=\"ref-link\" id=\"cGu_et+al_2017_a\" href=\"#rGu_et+al_2017_a\"><a class=\"ref-link\" id=\"cGu_et+al_2017_a\" href=\"#rGu_et+al_2017_a\">Gu et al, 2017</a></a>; Schulman et al, 2015b), and navigating complex environments (<a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\"><a class=\"ref-link\" id=\"cZhu_et+al_2017_a\" href=\"#rZhu_et+al_2017_a\">Zhu et al, 2017</a></a>; <a class=\"ref-link\" id=\"cMirowski_et+al_2016_a\" href=\"#rMirowski_et+al_2016_a\"><a class=\"ref-link\" id=\"cMirowski_et+al_2016_a\" href=\"#rMirowski_et+al_2016_a\">Mirowski et al, 2016</a></a>).",
+        "We propose a method for learning useful skills without any rewards.",
+        "Our method maximizes the mutual information between states and skills, which can be interpreted as maximizing the empowerment of a hierarchical agent whose action space is the set of skills.",
+        "Set skill reward rt = log q\u03c6(z | st+1) \u2212 log p(z) Update policy (\u03b8) to maximize rt with SAC.",
+        "While this prior work uses diversity maximization to obtain better solutions, we aim to acquire complex skills with minimal supervision to improve efficiency and as a stepping stone for imitation learning and hierarchical RL.",
+        "We show that our method scales to more complex tasks, likely because of algorithmic design choices, such as our use of an off-policy RL algorithm and conditioning the discriminator on individual states.",
+        "The aim of the unsupervised stage is to learn skills that eventually will make it easier to maximize the task reward in the supervised stage.",
+        "Does discriminating on single states restrict DIAYN to learn skills that visit disjoint sets of states?",
+        "While DIAYN favors skills that do not overlap, our method is not limited to learning skills that visit entirely disjoint sets of states.",
+        "Can we use learned skills to directly maximize the task reward?",
+        "To use the discovered skills for hierarchical RL, we learn a meta-controller whose actions are to choose which skill to execute for the k steps (100 for ant navigation, 10 for cheetah hurdle).",
+        "This is not surprising: whereas DIAYN learns a set of skills that effectively partition the state space, VIME attempts to learn a single policy that visits many states.",
+        "This experiment suggests that unsupervised skill learning provides an effective mechanism for combating challenges of exploration and sparse rewards in RL.",
+        "The \u201cDIAYN+prior\u201d result in Figure 8 shows how incorporating this prior knowledge can aid DIAYN in discovering useful skills and boost performance on the hierarchical task.",
+        "Aside from maximizing reward with finetuning and hierarchical RL, we can use learned skills to follow expert demonstrations.",
+        "We further proposed methods for using the learned skills (1) to quickly adapt to a new task, (2) to solve complex tasks via hierarchical RL, and (3) to imitate an expert.",
+        "As a rule of thumb, DIAYN may make learning a task easier by replacing the task\u2019s complex action space with a set of useful skills.",
+        "The skills produced by DIAYN might be used by game designers to allow players to control complex robots and by artists to animate characters"
+    ],
+    "headline": "On a variety of simulated robotic tasks, we show that this simple objective results in the unsupervised emergence of diverse skills, such as walking and jumping",
+    "reference_links": [
+        {
+            "id": "Achiam_et+al_2017_a",
+            "entry": "Joshua Achiam, Harrison Edwards, Dario Amodei, and Pieter Abbeel. Variational autoencoding learning of options by reinforcement. NIPS Deep Reinforcement Learning Symposium, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Achiam%2C%20Joshua%20Edwards%2C%20Harrison%20Amodei%2C%20Dario%20Abbeel%2C%20Pieter%20Variational%20autoencoding%20learning%20of%20options%20by%20reinforcement%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Achiam%2C%20Joshua%20Edwards%2C%20Harrison%20Amodei%2C%20Dario%20Abbeel%2C%20Pieter%20Variational%20autoencoding%20learning%20of%20options%20by%20reinforcement%202017"
+        },
+        {
+            "id": "Agakov_2004_a",
+            "entry": "David Barber Felix Agakov. The im algorithm: a variational approach to information maximization. Advances in Neural Information Processing Systems, 16:201, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Agakov%2C%20David%20Barber%20Felix%20The%20im%20algorithm%3A%20a%20variational%20approach%20to%20information%20maximization%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Agakov%2C%20David%20Barber%20Felix%20The%20im%20algorithm%3A%20a%20variational%20approach%20to%20information%20maximization%202004"
+        },
+        {
+            "id": "Bacon_et+al_2017_a",
+            "entry": "Pierre-Luc Bacon, Jean Harb, and Doina Precup. The option-critic architecture. In AAAI, pp. 1726\u20131734, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bacon%2C%20Pierre-Luc%20Harb%2C%20Jean%20Precup%2C%20Doina%20The%20option-critic%20architecture%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bacon%2C%20Pierre-Luc%20Harb%2C%20Jean%20Precup%2C%20Doina%20The%20option-critic%20architecture%202017"
+        },
+        {
+            "id": "Baranes_2013_a",
+            "entry": "Adrien Baranes and Pierre-Yves Oudeyer. Active learning of inverse models with intrinsically motivated goal exploration in robots. Robotics and Autonomous Systems, 61(1):49\u201373, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baranes%2C%20Adrien%20Oudeyer%2C%20Pierre-Yves%20Active%20learning%20of%20inverse%20models%20with%20intrinsically%20motivated%20goal%20exploration%20in%20robots%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baranes%2C%20Adrien%20Oudeyer%2C%20Pierre-Yves%20Active%20learning%20of%20inverse%20models%20with%20intrinsically%20motivated%20goal%20exploration%20in%20robots%202013"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In Advances in Neural Information Processing Systems, pp. 1471\u20131479, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bishop_2016_a",
+            "entry": "Christopher M Bishop. Pattern Recognition and Machine Learning. Springer-Verlag New York, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Christopher%20M.%20Pattern%20Recognition%20and%20Machine%20Learning%202016"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym. arXiv preprint arXiv:1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Christiano_et+al_2017_a",
+            "entry": "Paul F Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. Deep reinforcement learning from human preferences. In Advances in Neural Information Processing Systems, pp. 4302\u20134310, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christiano%2C%20Paul%20F.%20Leike%2C%20Jan%20Brown%2C%20Tom%20Martic%2C%20Miljan%20Deep%20reinforcement%20learning%20from%20human%20preferences%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christiano%2C%20Paul%20F.%20Leike%2C%20Jan%20Brown%2C%20Tom%20Martic%2C%20Miljan%20Deep%20reinforcement%20learning%20from%20human%20preferences%202017"
+        },
+        {
+            "id": "Dayan_1993_a",
+            "entry": "Peter Dayan and Geoffrey E Hinton. Feudal reinforcement learning. In Advances in neural information processing systems, pp. 271\u2013278, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Feudal%20reinforcement%20learning%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dayan%2C%20Peter%20Hinton%2C%20Geoffrey%20E.%20Feudal%20reinforcement%20learning%201993"
+        },
+        {
+            "id": "Duan_et+al_2016_a",
+            "entry": "Yan Duan, Xi Chen, Rein Houthooft, John Schulman, and Pieter Abbeel. Benchmarking deep reinforcement learning for continuous control. In International Conference on Machine Learning, pp. 1329\u20131338, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duan%2C%20Yan%20Chen%2C%20Xi%20Houthooft%2C%20Rein%20Schulman%2C%20John%20Benchmarking%20deep%20reinforcement%20learning%20for%20continuous%20control%202016"
+        },
+        {
+            "id": "Florensa_et+al_2017_a",
+            "entry": "Carlos Florensa, Yan Duan, and Pieter Abbeel. Stochastic neural networks for hierarchical reinforcement learning. arXiv preprint arXiv:1704.03012, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03012"
+        },
+        {
+            "id": "Frans_et+al_2017_a",
+            "entry": "Kevin Frans, Jonathan Ho, Xi Chen, Pieter Abbeel, and John Schulman. Meta learning shared hierarchies. arXiv preprint arXiv:1710.09767, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.09767"
+        },
+        {
+            "id": "Fu_et+al_2017_a",
+            "entry": "Justin Fu, John Co-Reyes, and Sergey Levine. Ex2: Exploration with exemplar models for deep reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2574\u20132584, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fu%2C%20Justin%20Co-Reyes%2C%20John%20Levine%2C%20Sergey%20Ex2%3A%20Exploration%20with%20exemplar%20models%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Gregor_et+al_2016_a",
+            "entry": "Karol Gregor, Danilo Jimenez Rezende, and Daan Wierstra. Variational intrinsic control. arXiv preprint arXiv:1611.07507, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.07507"
+        },
+        {
+            "id": "Gu_et+al_2017_a",
+            "entry": "Shixiang Gu, Ethan Holly, Timothy Lillicrap, and Sergey Levine. Deep reinforcement learning for robotic manipulation with asynchronous off-policy updates. In Robotics and Automation (ICRA), 2017 IEEE International Conference on, pp. 3389\u20133396. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gu%2C%20Shixiang%20Holly%2C%20Ethan%20Lillicrap%2C%20Timothy%20Levine%2C%20Sergey%20Deep%20reinforcement%20learning%20for%20robotic%20manipulation%20with%20asynchronous%20off-policy%20updates%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gu%2C%20Shixiang%20Holly%2C%20Ethan%20Lillicrap%2C%20Timothy%20Levine%2C%20Sergey%20Deep%20reinforcement%20learning%20for%20robotic%20manipulation%20with%20asynchronous%20off-policy%20updates%202017"
+        },
+        {
+            "id": "Haarnoja_et+al_2017_a",
+            "entry": "Tuomas Haarnoja, Haoran Tang, Pieter Abbeel, and Sergey Levine. Reinforcement learning with deep energybased policies. arXiv preprint arXiv:1702.08165, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1702.08165"
+        },
+        {
+            "id": "Haarnoja_et+al_2018_a",
+            "entry": "Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine. Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor. arXiv preprint arXiv:1801.01290, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01290"
+        },
+        {
+            "id": "Hadfield-Menell_et+al_2017_a",
+            "entry": "Dylan Hadfield-Menell, Smitha Milli, Pieter Abbeel, Stuart J Russell, and Anca Dragan. Inverse reward design. In Advances in Neural Information Processing Systems, pp. 6768\u20136777, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dylan%20HadfieldMenell%20Smitha%20Milli%20Pieter%20Abbeel%20Stuart%20J%20Russell%20and%20Anca%20Dragan%20Inverse%20reward%20design%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2067686777%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dylan%20HadfieldMenell%20Smitha%20Milli%20Pieter%20Abbeel%20Stuart%20J%20Russell%20and%20Anca%20Dragan%20Inverse%20reward%20design%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2067686777%202017"
+        },
+        {
+            "id": "Hausman_et+al_2018_a",
+            "entry": "Karol Hausman, Jost Tobias Springenberg, Ziyu Wang, Nicolas Heess, and Martin Riedmiller. Learning an embedding space for transferable robot skills. International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=rk07ZXZRb.",
+            "url": "https://openreview.net/forum?id=rk07ZXZRb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hausman%2C%20Karol%20Springenberg%2C%20Jost%20Tobias%20Wang%2C%20Ziyu%20Heess%2C%20Nicolas%20Learning%20an%20embedding%20space%20for%20transferable%20robot%20skills%202018"
+        },
+        {
+            "id": "Heess_et+al_2016_a",
+            "entry": "Nicolas Heess, Greg Wayne, Yuval Tassa, Timothy Lillicrap, Martin Riedmiller, and David Silver. Learning and transfer of modulated locomotor controllers. arXiv preprint arXiv:1610.05182, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.05182"
+        },
+        {
+            "id": "Henderson_et+al_2017_a",
+            "entry": "Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, and David Meger. Deep reinforcement learning that matters. arXiv preprint arXiv:1709.06560, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.06560"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances in Neural Information Processing Systems, pp. 1109\u20131117, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Duan%2C%20Yan%20Schulman%2C%20John%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Jung_et+al_2011_a",
+            "entry": "Tobias Jung, Daniel Polani, and Peter Stone. Empowerment for continuous agent\u2014environment systems. Adaptive Behavior, 19(1):16\u201339, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jung%2C%20Tobias%20Polani%2C%20Daniel%20Stone%2C%20Peter%20Empowerment%20for%20continuous%20agent%E2%80%94environment%20systems%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jung%2C%20Tobias%20Polani%2C%20Daniel%20Stone%2C%20Peter%20Empowerment%20for%20continuous%20agent%E2%80%94environment%20systems%202011"
+        },
+        {
+            "id": "Krishnan_et+al_2017_a",
+            "entry": "Sanjay Krishnan, Roy Fox, Ion Stoica, and Ken Goldberg. Ddco: Discovery of deep continuous options for robot learning from demonstrations. In Conference on Robot Learning, pp. 418\u2013437, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krishnan%2C%20Sanjay%20Fox%2C%20Roy%20Stoica%2C%20Ion%20Goldberg%2C%20Ken%20Ddco%3A%20Discovery%20of%20deep%20continuous%20options%20for%20robot%20learning%20from%20demonstrations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Krishnan%2C%20Sanjay%20Fox%2C%20Roy%20Stoica%2C%20Ion%20Goldberg%2C%20Ken%20Ddco%3A%20Discovery%20of%20deep%20continuous%20options%20for%20robot%20learning%20from%20demonstrations%202017"
+        },
+        {
+            "id": "Lehman_2011_a",
+            "entry": "Joel Lehman and Kenneth O Stanley. Abandoning objectives: Evolution through the search for novelty alone. Evolutionary computation, 19(2):189\u2013223, 2011a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehman%2C%20Joel%20Stanley%2C%20Kenneth%20O.%20Abandoning%20objectives%3A%20Evolution%20through%20the%20search%20for%20novelty%20alone%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lehman%2C%20Joel%20Stanley%2C%20Kenneth%20O.%20Abandoning%20objectives%3A%20Evolution%20through%20the%20search%20for%20novelty%20alone%202011"
+        },
+        {
+            "id": "Lehman_2011_b",
+            "entry": "Joel Lehman and Kenneth O Stanley. Evolving a diversity of virtual creatures through novelty search and local competition. In Proceedings of the 13th annual conference on Genetic and evolutionary computation, pp. 211\u2013218. ACM, 2011b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lehman%2C%20Joel%20Stanley%2C%20Kenneth%20O.%20Evolving%20a%20diversity%20of%20virtual%20creatures%20through%20novelty%20search%20and%20local%20competition%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lehman%2C%20Joel%20Stanley%2C%20Kenneth%20O.%20Evolving%20a%20diversity%20of%20virtual%20creatures%20through%20novelty%20search%20and%20local%20competition%202011"
+        },
+        {
+            "id": "Merton_1968_a",
+            "entry": "Robert K Merton. The matthew effect in science: The reward and communication systems of science are considered. Science, 159(3810):56\u201363, 1968.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Merton%2C%20Robert%20K.%20The%20matthew%20effect%20in%20science%3A%20The%20reward%20and%20communication%20systems%20of%20science%20are%20considered%201968",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Merton%2C%20Robert%20K.%20The%20matthew%20effect%20in%20science%3A%20The%20reward%20and%20communication%20systems%20of%20science%20are%20considered%201968"
+        },
+        {
+            "id": "Mirowski_et+al_2016_a",
+            "entry": "Piotr Mirowski, Razvan Pascanu, Fabio Viola, Hubert Soyer, Andrew J Ballard, Andrea Banino, Misha Denil, Ross Goroshin, Laurent Sifre, Koray Kavukcuoglu, et al. Learning to navigate in complex environments. arXiv preprint arXiv:1611.03673, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.03673"
+        },
+        {
+            "id": "Mnih_et+al_2013_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. Playing atari with deep reinforcement learning. arXiv preprint arXiv:1312.5602, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.5602"
+        },
+        {
+            "id": "Mohamed_2015_a",
+            "entry": "Shakir Mohamed and Danilo Jimenez Rezende. Variational information maximisation for intrinsically motivated reinforcement learning. In Advances in neural information processing systems, pp. 2125\u20132133, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mohamed%2C%20Shakir%20Rezende%2C%20Danilo%20Jimenez%20Variational%20information%20maximisation%20for%20intrinsically%20motivated%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mohamed%2C%20Shakir%20Rezende%2C%20Danilo%20Jimenez%20Variational%20information%20maximisation%20for%20intrinsically%20motivated%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Mouret_2009_a",
+            "entry": "Jean-Baptiste Mouret and St\u00e9phane Doncieux. Overcoming the bootstrap problem in evolutionary robotics using behavioral diversity. In Evolutionary Computation, 2009. CEC\u201909. IEEE Congress on, pp. 1161\u20131168. IEEE, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=JeanBaptiste%20Mouret%20and%20St%C3%A9phane%20Doncieux%20Overcoming%20the%20bootstrap%20problem%20in%20evolutionary%20robotics%20using%20behavioral%20diversity%20In%20Evolutionary%20Computation%202009%20CEC09%20IEEE%20Congress%20on%20pp%2011611168%20IEEE%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=JeanBaptiste%20Mouret%20and%20St%C3%A9phane%20Doncieux%20Overcoming%20the%20bootstrap%20problem%20in%20evolutionary%20robotics%20using%20behavioral%20diversity%20In%20Evolutionary%20Computation%202009%20CEC09%20IEEE%20Congress%20on%20pp%2011611168%20IEEE%202009"
+        },
+        {
+            "id": "Murphy_2012_a",
+            "entry": "Kevin P Murphy. Machine Learning: A Probabilistic Perspective. MIT Press, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murphy%2C%20Kevin%20P.%20Machine%20Learning%3A%20A%20Probabilistic%20Perspective%202012"
+        },
+        {
+            "id": "Nachum_et+al_2017_a",
+            "entry": "Ofir Nachum, Mohammad Norouzi, Kelvin Xu, and Dale Schuurmans. Bridging the gap between value and policy based reinforcement learning. In Advances in Neural Information Processing Systems, pp. 2772\u20132782, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nachum%2C%20Ofir%20Norouzi%2C%20Mohammad%20Xu%2C%20Kelvin%20Schuurmans%2C%20Dale%20Bridging%20the%20gap%20between%20value%20and%20policy%20based%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Oudeyer_et+al_2007_a",
+            "entry": "Pierre-Yves Oudeyer, Frdric Kaplan, and Verena V Hafner. Intrinsic motivation systems for autonomous mental development. IEEE transactions on evolutionary computation, 11(2):265\u2013286, 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frdric%20Hafner%2C%20Verena%20V.%20Intrinsic%20motivation%20systems%20for%20autonomous%20mental%20development%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oudeyer%2C%20Pierre-Yves%20Kaplan%2C%20Frdric%20Hafner%2C%20Verena%20V.%20Intrinsic%20motivation%20systems%20for%20autonomous%20mental%20development%202007"
+        },
+        {
+            "id": "Pathak_et+al_2017_a",
+            "entry": "Deepak Pathak, Pulkit Agrawal, Alexei A Efros, and Trevor Darrell. Curiosity-driven exploration by selfsupervised prediction. arXiv preprint arXiv:1705.05363, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.05363"
+        },
+        {
+            "id": "Pong_et+al_2018_a",
+            "entry": "Vitchyr Pong, Shixiang Gu, Murtaza Dalal, and Sergey Levine. Temporal difference models: Model-free deep rl for model-based control. arXiv preprint arXiv:1802.09081, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.09081"
+        },
+        {
+            "id": "Pugh_et+al_2016_a",
+            "entry": "Justin K Pugh, Lisa B Soros, and Kenneth O Stanley. Quality diversity: A new frontier for evolutionary computation. Frontiers in Robotics and AI, 3:40, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pugh%2C%20Justin%20K.%20Soros%2C%20Lisa%20B.%20Stanley%2C%20Kenneth%20O.%20Quality%20diversity%3A%20A%20new%20frontier%20for%20evolutionary%20computation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pugh%2C%20Justin%20K.%20Soros%2C%20Lisa%20B.%20Stanley%2C%20Kenneth%20O.%20Quality%20diversity%3A%20A%20new%20frontier%20for%20evolutionary%20computation%202016"
+        },
+        {
+            "id": "Ryan_2000_a",
+            "entry": "Richard M Ryan and Edward L Deci. Intrinsic and extrinsic motivations: Classic definitions and new directions. Contemporary educational psychology, 25(1):54\u201367, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ryan%2C%20Richard%20M.%20Deci%2C%20Edward%20L.%20Intrinsic%20and%20extrinsic%20motivations%3A%20Classic%20definitions%20and%20new%20directions%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ryan%2C%20Richard%20M.%20Deci%2C%20Edward%20L.%20Intrinsic%20and%20extrinsic%20motivations%3A%20Classic%20definitions%20and%20new%20directions%202000"
+        },
+        {
+            "id": "Schmidhuber_2010_a",
+            "entry": "J\u00fcrgen Schmidhuber. Formal theory of creativity, fun, and intrinsic motivation. IEEE Transactions on Autonomous Mental Development, 2(3):230\u2013247, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20J%C3%BCrgen%20Formal%20theory%20of%20creativity%2C%20fun%2C%20and%20intrinsic%20motivation%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20J%C3%BCrgen%20Formal%20theory%20of%20creativity%2C%20fun%2C%20and%20intrinsic%20motivation%202010"
+        },
+        {
+            "id": "Schulman_et+al_2015_a",
+            "entry": "John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International Conference on Machine Learning, pp. 1889\u20131897, 2015a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulman%2C%20John%20Levine%2C%20Sergey%20Abbeel%2C%20Pieter%20Jordan%2C%20Michael%20Trust%20region%20policy%20optimization%202015"
+        },
+        {
+            "id": "Schulman_et+al_0000_a",
+            "entry": "John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. High-dimensional continuous control using generalized advantage estimation. arXiv preprint arXiv:1506.02438, 2015b.",
+            "arxiv_url": "https://arxiv.org/pdf/1506.02438"
+        },
+        {
+            "id": "Schulman_et+al_2017_a",
+            "entry": "John Schulman, Pieter Abbeel, and Xi Chen. Equivalence between policy gradients and soft q-learning. arXiv preprint arXiv:1704.06440, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.06440"
+        },
+        {
+            "id": "Shazeer_et+al_2017_a",
+            "entry": "Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-of-experts layer. arXiv preprint arXiv:1701.06538, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.06538"
+        },
+        {
+            "id": "Silver_et+al_2016_a",
+            "entry": "David Silver, Aja Huang, Chris J Maddison, Arthur Guez, Laurent Sifre, George Van Den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda Panneershelvam, Marc Lanctot, et al. Mastering the game of go with deep neural networks and tree search. nature, 529(7587):484\u2013489, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Huang%2C%20Aja%20Maddison%2C%20Chris%20J.%20Guez%2C%20Arthur%20Mastering%20the%20game%20of%20go%20with%20deep%20neural%20networks%20and%20tree%20search%202016"
+        },
+        {
+            "id": "Stanley_2002_a",
+            "entry": "Kenneth O Stanley and Risto Miikkulainen. Evolving neural networks through augmenting topologies. Evolutionary computation, 10(2):99\u2013127, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Stanley%2C%20Kenneth%20O.%20Miikkulainen%2C%20Risto%20Evolving%20neural%20networks%20through%20augmenting%20topologies%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Stanley%2C%20Kenneth%20O.%20Miikkulainen%2C%20Risto%20Evolving%20neural%20networks%20through%20augmenting%20topologies%202002"
+        },
+        {
+            "id": "Such_et+al_2017_a",
+            "entry": "Felipe Petroski Such, Vashisht Madhavan, Edoardo Conti, Joel Lehman, Kenneth O Stanley, and Jeff Clune. Deep neuroevolution: Genetic algorithms are a competitive alternative for training deep neural networks for reinforcement learning. arXiv preprint arXiv:1712.06567, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.06567"
+        },
+        {
+            "id": "Sukhbaatar_et+al_2017_a",
+            "entry": "Sainbayar Sukhbaatar, Zeming Lin, Ilya Kostrikov, Gabriel Synnaeve, Arthur Szlam, and Rob Fergus. Intrinsic motivation and automatic curricula via asymmetric self-play. arXiv preprint arXiv:1703.05407, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.05407"
+        },
+        {
+            "id": "Woolley_2011_a",
+            "entry": "Brian G Woolley and Kenneth O Stanley. On the deleterious effects of a priori objectives on evolution and representation. In Proceedings of the 13th annual conference on Genetic and evolutionary computation, pp. 957\u2013964. ACM, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Woolley%2C%20Brian%20G.%20Stanley%2C%20Kenneth%20O.%20On%20the%20deleterious%20effects%20of%20a%20priori%20objectives%20on%20evolution%20and%20representation%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Woolley%2C%20Brian%20G.%20Stanley%2C%20Kenneth%20O.%20On%20the%20deleterious%20effects%20of%20a%20priori%20objectives%20on%20evolution%20and%20representation%202011"
+        },
+        {
+            "id": "Zhu_et+al_2017_a",
+            "entry": "Yuke Zhu, Roozbeh Mottaghi, Eric Kolve, Joseph J Lim, Abhinav Gupta, Li Fei-Fei, and Ali Farhadi. Targetdriven visual navigation in indoor scenes using deep reinforcement learning. In Robotics and Automation (ICRA), 2017 IEEE International Conference on, pp. 3357\u20133364. IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Yuke%20Mottaghi%2C%20Roozbeh%20Kolve%2C%20Eric%20Lim%2C%20Joseph%20J.%20Targetdriven%20visual%20navigation%20in%20indoor%20scenes%20using%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Yuke%20Mottaghi%2C%20Roozbeh%20Kolve%2C%20Eric%20Lim%2C%20Joseph%20J.%20Targetdriven%20visual%20navigation%20in%20indoor%20scenes%20using%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Chicago_2008_a",
+            "entry": "Chicago, IL, USA, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chicago%20IL%20USA%202008"
+        }
+    ]
+}

@@ -1,0 +1,308 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "ATTENTION, LEARN TO SOLVE ROUTING PROBLEMS!",
+        "author": "Wouter Kool University of Amsterdam ORTEC w.w.m.kool@uva.nl",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=ByxBFsRqYm"
+        },
+        "abstract": "The recently presented idea to learn heuristics for combinatorial optimization problems is promising as it can save costly development. However, to push this idea towards practical implementation, we need better models and better ways of training. We contribute in both directions: we propose a model based on attention layers with benefits over the Pointer Network and we show how to train this model using REINFORCE with a simple baseline based on a deterministic greedy rollout, which we find is more efficient than using a value function. We significantly improve over recent learned heuristics for the Travelling Salesman Problem (TSP), getting close to optimal results for problems up to 100 nodes. With the same hyperparameters, we learn strong heuristics for two variants of the Vehicle Routing Problem (VRP), the Orienteering Problem (OP) and (a stochastic variant of) the Prize Collecting TSP (PCTSP), outperforming a wide range of baselines and getting results close to highly optimized and specialized algorithms."
+    },
+    "keywords": [
+        {
+            "term": "Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Neural_Networks"
+        },
+        {
+            "term": "Reinforcement Learning",
+            "url": "https://en.wikipedia.org/wiki/Reinforcement_Learning"
+        },
+        {
+            "term": "heuristics",
+            "url": "https://en.wikipedia.org/wiki/heuristics"
+        },
+        {
+            "term": "Genetic Algorithm",
+            "url": "https://en.wikipedia.org/wiki/Genetic_Algorithm"
+        },
+        {
+            "term": "salesman problem",
+            "url": "https://en.wikipedia.org/wiki/salesman_problem"
+        },
+        {
+            "term": "Travelling Salesman Problem",
+            "url": "https://en.wikipedia.org/wiki/Travelling_Salesman_Problem"
+        },
+        {
+            "term": "LSTM",
+            "url": "https://en.wikipedia.org/wiki/LSTM"
+        },
+        {
+            "term": "optimization problem",
+            "url": "https://en.wikipedia.org/wiki/optimization_problem"
+        },
+        {
+            "term": "batch normalization",
+            "url": "https://en.wikipedia.org/wiki/batch_normalization"
+        }
+    ],
+    "abbreviations": {
+        "TSP": "Travelling Salesman Problem",
+        "VRP": "Vehicle Routing Problem",
+        "OP": "Orienteering Problem",
+        "PCTSP": "Prize Collecting TSP",
+        "DNNs": "Deep Neural Networks",
+        "RL": "Reinforcement Learning",
+        "NNs": "Neural Networks",
+        "PN": "Pointer Network",
+        "mTSP": "multiple TSP",
+        "MHA": "multi-head attention",
+        "BN": "batch normalization",
+        "AM": "Attention Model",
+        "CVRP": "Capacitated VRP",
+        "SDVRP": "Split Delivery VRP",
+        "GA": "Genetic Algorithm",
+        "ILS": "Iterated Local Search",
+        "SPCTSP": "Stochastic variant of the PCTSP"
+    },
+    "highlights": [
+        "Our attention based encoder-decoder model defines a stochastic policy p(\u03c0|s) for selecting a solution \u03c0 given a problem instance s",
+        "We found training to be stable and results to be robust against different seeds, where only in one case (PCTSP with n = 20) we had to restart training with a different seed because the run diverged",
+        "In this work we have introduced a model and training method which both contribute to significantly improved results on learned heuristics for Travelling Salesman Problem and learned strong heuristics for multiple routing problems, which are traditionally solved by problem-specific approaches",
+        "We believe that our method is a powerful starting point for learning heuristics for other combinatorial optimization problems defined on graphs, if their solutions can be described as sequential decisions",
+        "Operational constraints often lead to many variants of problems for which no good heuristics are available such that the ability to learn heuristics could be of great practical value",
+        "The multi-head attention mechanism can be seen as a message passing algorithm that allows nodes to communicate relevant information over different channels, such that the node embeddings from the encoder can learn to include valuable information about the node in the context of the graph"
+    ],
+    "key_statements": [
+        "Our attention based encoder-decoder model defines a stochastic policy p(\u03c0|s) for selecting a solution \u03c0 given a problem instance s",
+        "We focus on routing problems: an important class of practical combinatorial optimization problems",
+        "Each sublayer adds a skip-connection (<a class=\"ref-link\" id=\"cHe_et+al_2016_a\" href=\"#rHe_et+al_2016_a\">He et al, 2016</a>) and batch normalization (BN) (<a class=\"ref-link\" id=\"cIoffe_2015_a\" href=\"#rIoffe_2015_a\">Ioffe & Szegedy, 2015</a>)): hi = batch normalization hi( \u22121) + MHAi h1( \u22121), . . . , hn( \u22121)",
+        "We propose to use a rollout baseline in a way that is similar to self-critical training by <a class=\"ref-link\" id=\"cRennie_et+al_2017_a\" href=\"#rRennie_et+al_2017_a\">Rennie et al (2017</a>), but with periodic updates of the baseline policy",
+        "We focus on routing problems: we consider the Travelling Salesman Problem, two variants of the Vehicle Routing Problem, the Orienteering Problem and the (Stochastic) Prize Collecting Travelling Salesman Problem",
+        "We found training to be stable and results to be robust against different seeds, where only in one case (PCTSP with n = 20) we had to restart training with a different seed because the run diverged",
+        "Travelling Salesman Problem (TSP) For the Travelling Salesman Problem, we report optimal results by Gurobi, as well as by Concorde (<a class=\"ref-link\" id=\"cApplegate_et+al_2006_a\" href=\"#rApplegate_et+al_2006_a\">Applegate et al, 2006</a>) and LKH3 (<a class=\"ref-link\" id=\"cHelsgaun_2017_a\" href=\"#rHelsgaun_2017_a\">Helsgaun, 2017</a>), a state-of-the-art heuristic solver that empirically finds optimal solutions in time comparable to Gurobi",
+        "In this work we have introduced a model and training method which both contribute to significantly improved results on learned heuristics for Travelling Salesman Problem and learned strong heuristics for multiple routing problems, which are traditionally solved by problem-specific approaches",
+        "We believe that our method is a powerful starting point for learning heuristics for other combinatorial optimization problems defined on graphs, if their solutions can be described as sequential decisions",
+        "Operational constraints often lead to many variants of problems for which no good heuristics are available such that the ability to learn heuristics could be of great practical value",
+        "By using attention instead of recurrence (LSTMs) we introduce invariance to the input order of the nodes, increasing learning efficiency",
+        "The multi-head attention mechanism can be seen as a message passing algorithm that allows nodes to communicate relevant information over different channels, such that the node embeddings from the encoder can learn to include valuable information about the node in the context of the graph"
+    ],
+    "summary": [
+        "Our attention based encoder-decoder model defines a stochastic policy p(\u03c0|s) for selecting a solution \u03c0 given a problem instance s.",
+        "For the Attention Model (AM), we adjust the input, mask, decoder context and objective function for each problem and train on problem instances of n = 20, 50 and 100 nodes.",
+        "In Table 1 we do not report running times for the results which were reported by others as they are not directly comparable but we note that in general our model and implementation is fast: for instance <a class=\"ref-link\" id=\"cBello_et+al_2016_a\" href=\"#rBello_et+al_2016_a\">Bello et al (2016</a>) report 10.3s for sampling 1280 TSP solutions (K80 GPU) which we do in less than one second.",
+        "Travelling Salesman Problem (TSP) For the TSP, we report optimal results by Gurobi, as well as by Concorde (<a class=\"ref-link\" id=\"cApplegate_et+al_2006_a\" href=\"#rApplegate_et+al_2006_a\">Applegate et al, 2006</a>) and LKH3 (<a class=\"ref-link\" id=\"cHelsgaun_2017_a\" href=\"#rHelsgaun_2017_a\">Helsgaun, 2017</a>), a state-of-the-art heuristic solver that empirically finds optimal solutions in time comparable to Gurobi.",
+        "The Attention Model does not find better solutions than OR Tools with 60s of local search, it finds almost good results in significantly less time.",
+        "Since our model constructs a tour one node at the time, we only need to use the real prizes to compute the remaining prize constraint.",
+        "This clearly illus- Figure 3: Held-out validation set optimality trates how the improvement we obtain is the result gap as a function of the number of epochs for of both the AM and the rollout baseline: the AM the Attention Model (AM) and Pointer Netoutperforms the PN using any baseline and the roll- work (PN) with different baselines.",
+        "In this work we have introduced a model and training method which both contribute to significantly improved results on learned heuristics for TSP and learned strong heuristics for multiple routing problems, which are traditionally solved by problem-specific approaches.",
+        "We believe that our method is a powerful starting point for learning heuristics for other combinatorial optimization problems defined on graphs, if their solutions can be described as sequential decisions.",
+        "By using attention instead of recurrence (LSTMs) we introduce invariance to the input order of the nodes, increasing learning efficiency.",
+        "The multi-head attention mechanism can be seen as a message passing algorithm that allows nodes to communicate relevant information over different channels, such that the node embeddings from the encoder can learn to include valuable information about the node in the context of the graph."
+    ],
+    "headline": "We contribute in both directions: we propose a model based on attention layers with benefits over the Pointer Network and we show how to train this model using REINFORCE with a simple baseline based on a deterministic greedy rollout, which we find is more efficient than using a value function",
+    "reference_links": [
+        {
+            "id": "Applegate_et+al_2006_a",
+            "entry": "David Applegate, Robert Bixby, Vasek Chvatal, and William Cook. Concorde TSP solver, 2006. URL http://www.math.uwaterloo.ca/tsp/concorde/m.",
+            "url": "http://www.math.uwaterloo.ca/tsp/concorde/m",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=David%20Applegate%20Robert%20Bixby%20Vasek%20Chvatal%20and%20William%20Cook%20Concorde%20TSP%20solver%202006%20URL%20httpwwwmathuwaterloocatspconcordem"
+        },
+        {
+            "id": "Ba_et+al_2016_a",
+            "entry": "Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization. arXiv preprint arXiv:1607.06450, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1607.06450"
+        },
+        {
+            "id": "Bal_et+al_2016_a",
+            "entry": "Henri Bal, Dick Epema, Cees de Laat, Rob van Nieuwpoort, John Romein, Frank Seinstra, Cees Snoek, and Harry Wijshoff. A medium-scale distributed system for computer science research: Infrastructure for the long term. Computer, (5):54\u201363, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bal%2C%20Henri%20Epema%2C%20Dick%20de%20Laat%2C%20Cees%20van%20Nieuwpoort%2C%20Rob%20A%20medium-scale%20distributed%20system%20for%20computer%20science%20research%202016"
+        },
+        {
+            "id": "Balas_1989_a",
+            "entry": "Egon Balas. The prize collecting traveling salesman problem. Networks, 19(6):621\u2013636, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Balas%2C%20Egon%20The%20prize%20collecting%20traveling%20salesman%20problem%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Balas%2C%20Egon%20The%20prize%20collecting%20traveling%20salesman%20problem%201989"
+        },
+        {
+            "id": "Bello_et+al_2016_a",
+            "entry": "Irwan Bello, Hieu Pham, Quoc V Le, Mohammad Norouzi, and Samy Bengio. Neural combinatorial optimization with reinforcement learning. arXiv preprint arXiv:1611.09940, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.09940"
+        },
+        {
+            "id": "Dai_et+al_2017_a",
+            "entry": "Hanjun Dai, Elias B Khalil, Yuyu Zhang, Bistra Dilkina, and Le Song. Learning combinatorial optimization algorithms over graphs. In Advances in Neural Information Processing Systems 30, pp. 6348\u20136358, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Hanjun%20Khalil%2C%20Elias%20B.%20Zhang%2C%20Yuyu%20Dilkina%2C%20Bistra%20Learning%20combinatorial%20optimization%20algorithms%20over%20graphs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Hanjun%20Khalil%2C%20Elias%20B.%20Zhang%2C%20Yuyu%20Dilkina%2C%20Bistra%20Learning%20combinatorial%20optimization%20algorithms%20over%20graphs%202017"
+        },
+        {
+            "id": "Ene_et+al_2018_a",
+            "entry": "Alina Ene, Viswanath Nagarajan, and Rishi Saket. Approximation algorithms for stochastic kTSP. In 37th IARCS Annual Conference on Foundations of Software Technology and Theoretical Computer Science, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ene%2C%20Alina%20Nagarajan%2C%20Viswanath%20Saket%2C%20Rishi%20Approximation%20algorithms%20for%20stochastic%20kTSP%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ene%2C%20Alina%20Nagarajan%2C%20Viswanath%20Saket%2C%20Rishi%20Approximation%20algorithms%20for%20stochastic%20kTSP%202018"
+        },
+        {
+            "id": "Fischetti_et+al_1998_a",
+            "entry": "Matteo Fischetti, Juan Jose Salazar Gonzalez, and Paolo Toth. Solving the orienteering problem through branch-and-cut. INFORMS Journal on Computing, 10(2):133\u2013148, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fischetti%2C%20Matteo%20Gonzalez%2C%20Juan%20Jose%20Salazar%20Toth%2C%20Paolo%20Solving%20the%20orienteering%20problem%20through%20branch-and-cut%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fischetti%2C%20Matteo%20Gonzalez%2C%20Juan%20Jose%20Salazar%20Toth%2C%20Paolo%20Solving%20the%20orienteering%20problem%20through%20branch-and-cut%201998"
+        },
+        {
+            "id": "Garey_1979_a",
+            "entry": "Michael R Garey and David S Johnson. Computers and intractability: A guide to the theory of npcompleteness (series of books in the mathematical sciences), ed. Computers and Intractability, pp. 340, 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Garey%2C%20Michael%20R.%20Johnson%2C%20David%20S.%20Computers%20and%20intractability%3A%20A%20guide%20to%20the%20theory%20of%20npcompleteness%20%28series%20of%20books%20in%20the%20mathematical%20sciences%29%201979"
+        },
+        {
+            "id": "Glasserman_1992_a",
+            "entry": "Paul Glasserman and David D Yao. Some guidelines and guarantees for common random numbers. Management Science, 38(6):884\u2013908, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glasserman%2C%20Paul%20Yao%2C%20David%20D.%20Some%20guidelines%20and%20guarantees%20for%20common%20random%20numbers%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glasserman%2C%20Paul%20Yao%2C%20David%20D.%20Some%20guidelines%20and%20guarantees%20for%20common%20random%20numbers%201992"
+        },
+        {
+            "id": "Golden_et+al_1987_a",
+            "entry": "Bruce L Golden, Larry Levy, and Rakesh Vohra. The orienteering problem. Naval Research Logistics (NRL), 34(3):307\u2013318, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Golden%2C%20Bruce%20L.%20Levy%2C%20Larry%20Vohra%2C%20Rakesh%20The%20orienteering%20problem%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Golden%2C%20Bruce%20L.%20Levy%2C%20Larry%20Vohra%2C%20Rakesh%20The%20orienteering%20problem%201987"
+        },
+        {
+            "id": "Gurobi_2018_a",
+            "entry": "Gurobi Optimization, LLC. Gurobi optimizer reference manual, 2018. URL http://www.gurobi.com.",
+            "url": "http://www.gurobi.com"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Helsgaun_2017_a",
+            "entry": "Keld Helsgaun. An extension of the Lin-Kernighan-Helsgaun TSP solver for constrained traveling salesman and vehicle routing problems: Technical report. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Helsgaun%2C%20Keld%20An%20extension%20of%20the%20Lin-Kernighan-Helsgaun%20TSP%20solver%20for%20constrained%20traveling%20salesman%20and%20vehicle%20routing%20problems%3A%20Technical%20report%202017"
+        },
+        {
+            "id": "Hinton_et+al_2015_a",
+            "entry": "Geoffrey Hinton, Oriol Vinyals, and Jeffrey Dean. Distilling the knowledge in a neural network. In NIPS Deep Learning and Representation Learning Workshop, 2015. URL http://arxiv.org/abs/1503.02531.",
+            "url": "http://arxiv.org/abs/1503.02531",
+            "arxiv_url": "https://arxiv.org/pdf/1503.02531"
+        },
+        {
+            "id": "Hopfield_1985_a",
+            "entry": "John J Hopfield and David W Tank. \u201cNeural\u201d computation of decisions in optimization problems. Biological cybernetics, 52(3):141\u2013152, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hopfield%2C%20John%20J.%20Tank%2C%20David%20W.%20%E2%80%9CNeural%E2%80%9D%20computation%20of%20decisions%20in%20optimization%20problems%201985",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hopfield%2C%20John%20J.%20Tank%2C%20David%20W.%20%E2%80%9CNeural%E2%80%9D%20computation%20of%20decisions%20in%20optimization%20problems%201985"
+        },
+        {
+            "id": "Ioffe_2015_a",
+            "entry": "Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning, pp. 448\u2013456, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ioffe%2C%20Sergey%20Szegedy%2C%20Christian%20Batch%20normalization%3A%20Accelerating%20deep%20network%20training%20by%20reducing%20internal%20covariate%20shift%202015"
+        },
+        {
+            "id": "Kaempfer_2018_a",
+            "entry": "Yoav Kaempfer and Lior Wolf. Learning the multiple traveling salesmen problem with permutation invariant pooling networks. arXiv preprint arXiv:1803.09621, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.09621"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kobeaga_et+al_2018_a",
+            "entry": "Gorka Kobeaga, Mar\u0131a Merino, and Jose A Lozano. An efficient evolutionary algorithm for the orienteering problem. Computers & Operations Research, 90:42\u201359, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kobeaga%2C%20Gorka%20Merino%2C%20Mar%C4%B1a%20Lozano%2C%20Jose%20A.%20An%20efficient%20evolutionary%20algorithm%20for%20the%20orienteering%20problem%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kobeaga%2C%20Gorka%20Merino%2C%20Mar%C4%B1a%20Lozano%2C%20Jose%20A.%20An%20efficient%20evolutionary%20algorithm%20for%20the%20orienteering%20problem%202018"
+        },
+        {
+            "id": "Lecun_et+al_2015_a",
+            "entry": "Yann LeCun, Yoshua Bengio, and Geoffrey Hinton. Deep learning. Nature, 521(7553):436, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bengio%2C%20Yoshua%20Hinton%2C%20Geoffrey%20Deep%20learning%202015"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Nazari_et+al_2018_a",
+            "entry": "MohammadReza Nazari, Afshin Oroojlooy, Lawrence Snyder, and Martin Takac. Reinforcement learning for solving the vehicle routing problem. In Advances in Neural Information Processing Systems, pp. 9860\u20139870, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nazari%2C%20MohammadReza%20Oroojlooy%2C%20Afshin%20Snyder%2C%20Lawrence%20Takac%2C%20Martin%20Reinforcement%20learning%20for%20solving%20the%20vehicle%20routing%20problem%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nazari%2C%20MohammadReza%20Oroojlooy%2C%20Afshin%20Snyder%2C%20Lawrence%20Takac%2C%20Martin%20Reinforcement%20learning%20for%20solving%20the%20vehicle%20routing%20problem%202018"
+        },
+        {
+            "id": "Nowak_et+al_2017_a",
+            "entry": "Alex Nowak, Soledad Villar, Afonso S Bandeira, and Joan Bruna. A note on learning algorithms for quadratic assignment with graph neural networks. arXiv preprint arXiv:1706.07450, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07450"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in PyTorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20Adam%20Gross%2C%20Sam%20Chintala%2C%20Soumith%20Chanan%2C%20Gregory%20Automatic%20differentiation%20in%20PyTorch%202017"
+        },
+        {
+            "id": "Rennie_et+al_2017_a",
+            "entry": "Steven J Rennie, Etienne Marcheret, Youssef Mroueh, Jerret Ross, and Vaibhava Goel. Self-critical sequence training for image captioning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 7008\u20137024, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rennie%2C%20Steven%20J.%20Marcheret%2C%20Etienne%20Mroueh%2C%20Youssef%20Ross%2C%20Jerret%20Self-critical%20sequence%20training%20for%20image%20captioning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rennie%2C%20Steven%20J.%20Marcheret%2C%20Etienne%20Mroueh%2C%20Youssef%20Ross%2C%20Jerret%20Self-critical%20sequence%20training%20for%20image%20captioning%202017"
+        },
+        {
+            "id": "Silver_et+al_2017_a",
+            "entry": "David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, et al. Mastering the game of go without human knowledge. Nature, 550(7676):354, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Silver%2C%20David%20Schrittwieser%2C%20Julian%20Simonyan%2C%20Karen%20Antonoglou%2C%20Ioannis%20Mastering%20the%20game%20of%20go%20without%20human%20knowledge%202017"
+        },
+        {
+            "id": "Smith_1999_a",
+            "entry": "Kate A Smith. Neural networks for combinatorial optimization: a review of more than a decade of research. INFORMS Journal on Computing, 11(1):15\u201334, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smith%2C%20Kate%20A.%20Neural%20networks%20for%20combinatorial%20optimization%3A%20a%20review%20of%20more%20than%20a%20decade%20of%20research%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smith%2C%20Kate%20A.%20Neural%20networks%20for%20combinatorial%20optimization%3A%20a%20review%20of%20more%20than%20a%20decade%20of%20research%201999"
+        },
+        {
+            "id": "Toth_2014_a",
+            "entry": "Paolo Toth and Daniele Vigo. Vehicle routing: problems, methods, and applications. SIAM, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Toth%2C%20Paolo%20Vigo%2C%20Daniele%20Vehicle%20routing%3A%20problems%2C%20methods%2C%20and%20applications%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Toth%2C%20Paolo%20Vigo%2C%20Daniele%20Vehicle%20routing%3A%20problems%2C%20methods%2C%20and%20applications%202014"
+        },
+        {
+            "id": "Tsiligirides_1984_a",
+            "entry": "Theodore Tsiligirides. Heuristic methods applied to orienteering. Journal of the Operational Research Society, 35(9):797\u2013809, 1984.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tsiligirides%2C%20Theodore%20Heuristic%20methods%20applied%20to%20orienteering%201984",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tsiligirides%2C%20Theodore%20Heuristic%20methods%20applied%20to%20orienteering%201984"
+        },
+        {
+            "id": "Vansteenwegen_et+al_2011_a",
+            "entry": "Pieter Vansteenwegen, Wouter Souffriau, and Dirk Van Oudheusden. The orienteering problem: A survey. European Journal of Operational Research, 209(1):1\u201310, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vansteenwegen%2C%20Pieter%20Souffriau%2C%20Wouter%20Oudheusden%2C%20Dirk%20Van%20The%20orienteering%20problem%3A%20A%20survey%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vansteenwegen%2C%20Pieter%20Souffriau%2C%20Wouter%20Oudheusden%2C%20Dirk%20Van%20The%20orienteering%20problem%3A%20A%20survey%202011"
+        },
+        {
+            "id": "Vaswani_et+al_2017_a",
+            "entry": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, \u0141ukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems, pp. 5998\u20136008, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashish%20Vaswani%20Noam%20Shazeer%20Niki%20Parmar%20Jakob%20Uszkoreit%20Llion%20Jones%20Aidan%20N%20Gomez%20%C5%81ukasz%20Kaiser%20and%20Illia%20Polosukhin%20Attention%20is%20all%20you%20need%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20pp%2059986008%202017"
+        },
+        {
+            "id": "Velickovic_et+al_2018_a",
+            "entry": "Petar Velickovic, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Li, and Yoshua Bengio. Graph attention networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Petar%20Velickovic%20Guillem%20Cucurull%20Arantxa%20Casanova%20Adriana%20Romero%20Pietro%20Li%20and%20Yoshua%20Bengio%20Graph%20attention%20networks%20In%20International%20Conference%20on%20Learning%20Representations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Petar%20Velickovic%20Guillem%20Cucurull%20Arantxa%20Casanova%20Adriana%20Romero%20Pietro%20Li%20and%20Yoshua%20Bengio%20Graph%20attention%20networks%20In%20International%20Conference%20on%20Learning%20Representations%202018"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Oriol Vinyals, Meire Fortunato, and Navdeep Jaitly. Pointer networks. In Advances in Neural",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Oriol%20Vinyals%20Meire%20Fortunato%20and%20Navdeep%20Jaitly%20Pointer%20networks%20In%20Advances%20in%20Neural",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Oriol%20Vinyals%20Meire%20Fortunato%20and%20Navdeep%20Jaitly%20Pointer%20networks%20In%20Advances%20in%20Neural"
+        },
+        {
+            "id": "Vinyals_2015_a",
+            "entry": "Information Processing Systems, pp. 2692\u20132700, 2015. Oriol Vinyals, Samy Bengio, and Manjunath Kudlur. Order matters: Sequence to sequence for sets. In International Conference on Learning Representations, 2016. Ronald J Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 8(3-4):229\u2013256, 1992. David H Wolpert and William G Macready. No free lunch theorems for optimization. IEEE transactions on evolutionary computation, 1(1):67\u201382, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Samy%20Bengio%20Kudlur%2C%20Manjunath%20Order%20matters%3A%20Sequence%20to%20sequence%20for%20sets%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Samy%20Bengio%20Kudlur%2C%20Manjunath%20Order%20matters%3A%20Sequence%20to%20sequence%20for%20sets%202015"
+        }
+    ]
+}

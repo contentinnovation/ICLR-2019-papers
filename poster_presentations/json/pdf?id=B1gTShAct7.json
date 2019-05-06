@@ -1,0 +1,533 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO LEARN WITHOUT FORGETTING BY MAXIMIZING TRANSFER AND MINIMIZING INTERFERENCE",
+        "author": "Matthew Riemer, Ignacio Cases, Robert Ajemian, Miao Liu, Irina Rish, Yuhai Tu, and Gerald Tesauro",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=B1gTShAct7"
+        },
+        "abstract": "Lack of performance when it comes to continual learning over non-stationary distributions of data remains a major challenge in scaling neural network learning to more human realistic settings. In this work we propose a new conceptualization of the continual learning problem in terms of a temporally symmetric trade-off between transfer and interference that can be optimized by enforcing gradient alignment across examples. We then propose a new algorithm, Meta-Experience Replay (MER), that directly exploits this view by combining experience replay with optimization based meta-learning. This method learns parameters that make interference based on future gradients less likely and transfer based on future gradients more likely.1 We conduct experiments across continual lifelong supervised learning benchmarks and non-stationary reinforcement learning environments demonstrating that our approach consistently outperforms recently proposed baselines for continual learning. Our experiments show that the gap between the performance of MER and baseline algorithms grows both as the environment gets more non-stationary and as the fraction of the total experiences stored gets smaller."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        }
+    ],
+    "abbreviations": {
+        "MER": "Meta-Experience Replay",
+        "MAML": "Model Agnostic Meta-Learning",
+        "FOMAML": "first-order MAML",
+        "EWC": "Elastic Weight Consolidation",
+        "GEM": "Gradient Episodic Memory",
+        "RA": "retained accuracy",
+        "LA": "learning accuracy",
+        "BTI": "backward transfer and interference",
+        "ER": "experience replay"
+    },
+    "highlights": [
+        "We address this by implementing an experience replay module that augments online learning so that we can approximately optimize xc, yc \u2190 Bi[j] \u03b8iW,j \u2190 SGD end for over the stationary distribution of all examples seen so far",
+        "Prioritizing the current example: the variant of experience replay we explore differs from offline learning in that the current example has a special role ensuring that it is always interleaved with the examples sampled from the replay buffer",
+        "We provide algorithms further detailing how experience replay is used in this work in Appendix G",
+        "We have demonstrated that Meta-Experience Replay regularizes the objective of experience replay so that gradients on incoming examples are more likely to have transfer and less likely to have interference with respect to past examples",
+        "Techniques for continual learning have been largely driven by different conceptualizations of the fundamental problem encountered by neural networks",
+        "We hope that the transfer-interference tradeoff can be a useful problem view for future work to exploit with Meta-Experience Replay as a first successful example.\n6Code available at https://github.com/mattriemer/mer"
+    ],
+    "key_statements": [
+        "We address this by implementing an experience replay module that augments online learning so that we can approximately optimize xc, yc \u2190 Bi[j] \u03b8iW,j \u2190 SGD end for over the stationary distribution of all examples seen so far",
+        "Stability and plasticity. These techniques focus on balancing limited weight sharing with some mechanism to ensure fast learning (Li & Hoiem, 2016; <a class=\"ref-link\" id=\"cRiemer_et+al_2016_a\" href=\"#rRiemer_et+al_2016_a\">Riemer et al, 2016a</a>; <a class=\"ref-link\" id=\"cLopez-Paz_2017_a\" href=\"#rLopez-Paz_2017_a\">Lopez-Paz & Ranzato, 2017</a>; <a class=\"ref-link\" id=\"cRosenbaum_et+al_2018_a\" href=\"#rRosenbaum_et+al_2018_a\">Rosenbaum et al, 2018</a>; <a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al, 2018</a>; Serraet al., 2018)",
+        "Stability and plasticity. These techniques focus on balancing limited weight sharing with some mechanism to ensure fast learning (Li & Hoiem, 2016; <a class=\"ref-link\" id=\"cRiemer_et+al_2016_a\" href=\"#rRiemer_et+al_2016_a\">Riemer et al, 2016a</a>; <a class=\"ref-link\" id=\"cLopez-Paz_2017_a\" href=\"#rLopez-Paz_2017_a\">Lopez-Paz & Ranzato, 2017</a>; <a class=\"ref-link\" id=\"cRosenbaum_et+al_2018_a\" href=\"#rRosenbaum_et+al_2018_a\">Rosenbaum et al, 2018</a>; <a class=\"ref-link\" id=\"cLee_et+al_2018_a\" href=\"#rLee_et+al_2018_a\">Lee et al, 2018</a>; Serraet al., 2018). We extend this view by noting that for continual learning over an unbounded number of distributions, we need to consider weight sharing and the stability-plasticity trade-off in both the forward and backward directions in time (Figure 1A)",
+        "In past work, ad hoc changes have been made to the dynamics of weight sharing based on current learning and past learning without formulating a consistent theory about the optimal weight sharing dynamics",
+        "This new view of the problem leads to a natural meta-learning (<a class=\"ref-link\" id=\"cSchmidhuber_1987_a\" href=\"#rSchmidhuber_1987_a\">Schmidhuber, 1987</a>) perspective on continual learning: we would like to learn to modify our learning to affect the dynamics of transfer and interference in a general sense",
+        "We propose a novel meta-experience replay (MER) algorithm that combines experience replay with optimization based meta-learning as a first step towards modeling this perspective",
+        "The first problem is that continual learning deals with learning over a non-stationary stream of data. We address this by implementing an experience replay module that augments online learning so that we can approximately optimize xc, yc \u2190 Bi[j] \u03b8iW,j \u2190 SGD end for over the stationary distribution of all examples seen so far",
+        "Prioritizing the current example: the variant of experience replay we explore differs from offline learning in that the current example has a special role ensuring that it is always interleaved with the examples sampled from the replay buffer",
+        "We provide algorithms further detailing how experience replay is used in this work in Appendix G",
+        "The Meta-Experience Replay algorithm: Meta-Experience Replay maintains an experience replay style memory M with reservoir sampling and at each time step draws s batches including k \u2212 1 random samples from the buffer to be trained alongside the current example",
+        "We found that for a fixed number of examples drawn from M , we consistently performed better converting to a long list of individual samples than we did using proper batches as in <a class=\"ref-link\" id=\"cNichol_2018_b\" href=\"#rNichol_2018_b\">Nichol & Schulman (2018</a>) for few shot learning",
+        "Unique properties: In the end, our approach amounts to a quite easy to implement and computationally efficient extension of SGD, which is applied to an experience replay buffer by leveraging the machinery of past work on optimization based meta-learning",
+        "In order to reveal more characteristics of the learning behavior, we report the learning accuracy (LA) which is the average accuracy for each task directly after it is learned",
+        "We report the backward transfer and interference (BTI) as the average change in accuracy from when a task is learned to the end of training",
+        "We found that the optimization based on the buffer was significantly less effective and less reliable as the quadratic program fails for many hyperparameter values that lead to non-positive definite matrices",
+        "We find that Meta-Experience Replay strikes the best balance of computational efficiency and performance even when using algorithm 1 for Meta-Experience Replay which performs more computation than algorithm 7",
+        "Question 4 Can Meta-Experience Replay improve a DQN with experience replay in continual reinforcement learning settings? We considered the evaluation of Meta-Experience Replay in a continual reinforcement learning setting where the environment is highly non-stationary",
+        "We have demonstrated that Meta-Experience Replay regularizes the objective of experience replay so that gradients on incoming examples are more likely to have transfer and less likely to have interference with respect to past examples",
+        "Techniques for continual learning have been largely driven by different conceptualizations of the fundamental problem encountered by neural networks",
+        "We hope that the transfer-interference tradeoff can be a useful problem view for future work to exploit with Meta-Experience Replay as a first successful example.\n6Code available at https://github.com/mattriemer/mer"
+    ],
+    "summary": [
+        "We address this by implementing an experience replay module that augments online learning so that we can approximately optimize xc, yc \u2190 Bi[j] \u03b8iW,j \u2190 SGD end for over the stationary distribution of all examples seen so far.",
+        "The MER learning objective: In this work, we modify the Reptile algorithm to properly integrate it with an experience replay module, facilitating continual learning while maximizing transfer and minimizing interference.",
+        "As we describe in more detail during the derivation in Appendix I, achieving the Reptile objective in an online setting where examples are provided sequentially is non-trivial and is in part only achievable because of our sampling strategies for both the buffer and batch.",
+        "Following our remarks about experience replay from the prior section, this allows us to optimize for the following objective in a continual learning setting using our proposed MER algorithm: s \u03b8",
+        "The MER algorithm: MER maintains an experience replay style memory M with reservoir sampling and at each time step draws s batches including k \u2212 1 random samples from the buffer to be trained alongside the current example.",
+        "Unique properties: In the end, our approach amounts to a quite easy to implement and computationally efficient extension of SGD, which is applied to an experience replay buffer by leveraging the machinery of past work on optimization based meta-learning.",
+        "Past work on experience replay only focused on stabilizing learning by approximating stationary conditions without altering model parameters to change the dynamics of transfer and interference.",
+        "We follow the standard benchmark setting from <a class=\"ref-link\" id=\"cLopez-Paz_2017_a\" href=\"#rLopez-Paz_2017_a\">Lopez-Paz & Ranzato (2017</a>) using a modest memory buffer of size 5120 to learn 1000 sampled examples across each of 20 tasks.",
+        "We considered the evaluation of MER in a continual reinforcement learning setting where the environment is highly non-stationary.",
+        "We would like to directly verify that MER achieves our motivation in equation 7 and results in significant changes in the distribution of gradient dot products between new incoming examples and past examples over the course of learning when compared to experience replay (ER) from algorithm",
+        "Exploiting this perspective, we have in turn developed a new algorithm Meta-Experience Replay (MER) that is well suited for application to general purpose continual learning problems.",
+        "We have demonstrated that MER regularizes the objective of experience replay so that gradients on incoming examples are more likely to have transfer and less likely to have interference with respect to past examples.",
+        "We hope that the transfer-interference tradeoff can be a useful problem view for future work to exploit with MER as a first successful example"
+    ],
+    "headline": "In this work we propose a new conceptualization of the continual learning problem in terms of a temporally symmetric trade-off between transfer and interference that can be optimized by enforcing gradient alignment across examples",
+    "reference_links": [
+        {
+            "id": "Ajemian_et+al_2013_a",
+            "entry": "Robert Ajemian, Alessandro DAusilio, Helene Moorman, and Emilio Bizzi. A theory for how sensorimotor skills are learned and retained in noisy and nonstationary neural circuits. Proceedings of the National Academy of Sciences, 110(52):E5078\u2013E5087, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ajemian%2C%20Robert%20DAusilio%2C%20Alessandro%20Moorman%2C%20Helene%20Bizzi%2C%20Emilio%20A%20theory%20for%20how%20sensorimotor%20skills%20are%20learned%20and%20retained%20in%20noisy%20and%20nonstationary%20neural%20circuits%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ajemian%2C%20Robert%20DAusilio%2C%20Alessandro%20Moorman%2C%20Helene%20Bizzi%2C%20Emilio%20A%20theory%20for%20how%20sensorimotor%20skills%20are%20learned%20and%20retained%20in%20noisy%20and%20nonstationary%20neural%20circuits%202013"
+        },
+        {
+            "id": "Al-Shedivat_et+al_2018_a",
+            "entry": "Maruan Al-Shedivat, Trapit Bansal, Yuri Burda, Ilya Sutskever, Igor Mordatch, and Pieter Abbeel. Continuous adaptation via meta-learning in nonstationary and competitive environments. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Al-Shedivat%2C%20Maruan%20Bansal%2C%20Trapit%20Burda%2C%20Yuri%20Sutskever%2C%20Ilya%20Continuous%20adaptation%20via%20meta-learning%20in%20nonstationary%20and%20competitive%20environments%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Al-Shedivat%2C%20Maruan%20Bansal%2C%20Trapit%20Burda%2C%20Yuri%20Sutskever%2C%20Ilya%20Continuous%20adaptation%20via%20meta-learning%20in%20nonstationary%20and%20competitive%20environments%202018"
+        },
+        {
+            "id": "Aljundi_et+al_2017_a",
+            "entry": "Rahaf Aljundi, Jay Chakravarty, and Tinne Tuytelaars. Expert gate: Lifelong learning with a network of experts. In Proceedings CVPR 2017, pp. 3366\u20133375, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aljundi%2C%20Rahaf%20Chakravarty%2C%20Jay%20Tuytelaars%2C%20Tinne%20Expert%20gate%3A%20Lifelong%20learning%20with%20a%20network%20of%20experts%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aljundi%2C%20Rahaf%20Chakravarty%2C%20Jay%20Tuytelaars%2C%20Tinne%20Expert%20gate%3A%20Lifelong%20learning%20with%20a%20network%20of%20experts%202017"
+        },
+        {
+            "id": "Ans_1997_a",
+            "entry": "Bernard Ans and Stephane Rousset. Avoiding catastrophic forgetting by coupling two reverberating neural networks. Comptes Rendus de l\u2019Academie des Sciences-Series III-Sciences de la Vie, 320 (12):989\u2013997, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ans%2C%20Bernard%20Rousset%2C%20Stephane%20Avoiding%20catastrophic%20forgetting%20by%20coupling%20two%20reverberating%20neural%20networks.%20Comptes%20Rendus%20de%20l%E2%80%99Academie%20des%20Sciences-Series%20III-Sciences%201997"
+        },
+        {
+            "id": "Bacon_et+al_2017_a",
+            "entry": "Pierre-Luc Bacon, Jean Harb, and Doina Precup. The option-critic architecture. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bacon%2C%20Pierre-Luc%20Harb%2C%20Jean%20Precup%2C%20Doina%20The%20option-critic%20architecture%202017"
+        },
+        {
+            "id": "Bengio_et+al_2015_a",
+            "entry": "Emmanuel Bengio, Pierre-Luc Bacon, Joelle Pineau, and Doina Precup. Conditional computation in neural networks for faster models. arXiv preprint arXiv:1511.06297, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1511.06297"
+        },
+        {
+            "id": "Carpenter_1987_a",
+            "entry": "Gail A Carpenter and Stephen Grossberg. A massively parallel architecture for a self-organizing neural pattern recognition machine. Computer vision, graphics, and image processing, 37(1): 54\u2013115, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carpenter%2C%20Gail%20A.%20Grossberg%2C%20Stephen%20A%20massively%20parallel%20architecture%20for%20a%20self-organizing%20neural%20pattern%20recognition%20machine%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carpenter%2C%20Gail%20A.%20Grossberg%2C%20Stephen%20A%20massively%20parallel%20architecture%20for%20a%20self-organizing%20neural%20pattern%20recognition%20machine%201987"
+        },
+        {
+            "id": "Caruana_1997_a",
+            "entry": "Rich Caruana. Multitask learning. Machine Learning, 28(1):41\u201375, 1997. doi: 10.1023/A: 1007379606734. URL http://dx.doi.org/10.1023/A:1007379606734.",
+            "crossref": "https://dx.doi.org/10.1023/A",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1023/A"
+        },
+        {
+            "id": "Chaudhry_et+al_2018_a",
+            "entry": "Arslan Chaudhry, Puneet K Dokania, Thalaiyasingam Ajanthan, and Philip HS Torr. Riemannian walk for incremental learning: Understanding forgetting and intransigence. arXiv preprint arXiv:1801.10112, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.10112"
+        },
+        {
+            "id": "Fernando_et+al_2017_a",
+            "entry": "Chrisantha Fernando, Dylan Banarse, Charles Blundell, Yori Zwols, David Ha, Andrei A Rusu, Alexander Pritzel, and Daan Wierstra. Pathnet: Evolution channels gradient descent in super neural networks. arXiv preprint arXiv:1701.08734, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.08734"
+        },
+        {
+            "id": "Finn_2017_a",
+            "entry": "Chelsea Finn and Sergey Levine. Meta-learning and universality: Deep representations and gradient descent can approximate any learning algorithm. arXiv preprint arXiv:1710.11622, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.11622"
+        },
+        {
+            "id": "Finn_et+al_2017_b",
+            "entry": "Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. arXiv preprint arXiv:1703.03400, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.03400"
+        },
+        {
+            "id": "French_0000_a",
+            "entry": "Robert M. French. Using semi-distributed representations to overcome catastrophic forgetting in connectionist networks. In In Proceedings of the 13th Annual Cognitive Science Society Conference, pp. 173\u2013178.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=French%2C%20Robert%20M.%20Using%20semi-distributed%20representations%20to%20overcome%20catastrophic%20forgetting%20in%20connectionist%20networks",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=French%2C%20Robert%20M.%20Using%20semi-distributed%20representations%20to%20overcome%20catastrophic%20forgetting%20in%20connectionist%20networks"
+        },
+        {
+            "id": "French_1999_a",
+            "entry": "Robert M French. Catastrophic forgetting in connectionist networks. Trends in cognitive sciences, 3(4):128\u2013135, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=French%2C%20Robert%20M.%20Catastrophic%20forgetting%20in%20connectionist%20networks%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=French%2C%20Robert%20M.%20Catastrophic%20forgetting%20in%20connectionist%20networks%201999"
+        },
+        {
+            "id": "Fusi_et+al_2005_a",
+            "entry": "Stefano Fusi, Patrick J Drew, and Larry F Abbott. Cascade models of synaptically stored memories. Neuron, 45(4):599\u2013611, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fusi%2C%20Stefano%20Drew%2C%20Patrick%20J.%20Abbott%2C%20Larry%20F.%20Cascade%20models%20of%20synaptically%20stored%20memories%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fusi%2C%20Stefano%20Drew%2C%20Patrick%20J.%20Abbott%2C%20Larry%20F.%20Cascade%20models%20of%20synaptically%20stored%20memories%202005"
+        },
+        {
+            "id": "Goodrich_2015_a",
+            "entry": "Benjamin Frederick Goodrich. Neuron clustering for mitigating catastrophic forgetting in supervised and reinforcement learning. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodrich%2C%20Benjamin%20Frederick%20Neuron%20clustering%20for%20mitigating%20catastrophic%20forgetting%20in%20supervised%20and%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Hinton_et+al_2012_a",
+            "entry": "Geoffrey Hinton, Nitish Srivastava, and Kevin Swersky. Neural networks for machine learning lecture 6a overview of mini-batch gradient descent. 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20Srivastava%2C%20Nitish%20Swersky%2C%20Kevin%20Neural%20networks%20for%20machine%20learning%20lecture%206a%20overview%20of%20mini-batch%20gradient%20descent%202012"
+        },
+        {
+            "id": "Hinton_1987_a",
+            "entry": "Geoffrey E Hinton and David C Plaut. Using fast weights to deblur old memories. 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hinton%2C%20Geoffrey%20E.%20Plaut%2C%20David%20C.%20Using%20fast%20weights%20to%20deblur%20old%20memories%201987"
+        },
+        {
+            "id": "Jacobs_et+al_1991_a",
+            "entry": "Robert A Jacobs, Michael I Jordan, Steven J Nowlan, and Geoffrey E Hinton. Adaptive mixtures of local experts. Neural computation, 3(1):79\u201387, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jacobs%2C%20Robert%20A.%20Jordan%2C%20Michael%20I.%20Nowlan%2C%20Steven%20J.%20Hinton%2C%20Geoffrey%20E.%20Adaptive%20mixtures%20of%20local%20experts%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jacobs%2C%20Robert%20A.%20Jordan%2C%20Michael%20I.%20Nowlan%2C%20Steven%20J.%20Hinton%2C%20Geoffrey%20E.%20Adaptive%20mixtures%20of%20local%20experts%201991"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Kirkpatrick_et+al_2016_a",
+            "entry": "James Kirkpatrick, Razvan Pascanu, Neil Rabinowitz, Joel Veness, Guillaume Desjardins, Andrei A Rusu, Kieran Milan, John Quan, Tiago Ramalho, Agnieszka Grabska-Barwinska, et al. Overcoming catastrophic forgetting in neural networks. Proceedings of the National Academy of Sciences, pp. 201611835, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kirkpatrick%2C%20James%20Pascanu%2C%20Razvan%20Rabinowitz%2C%20Neil%20Veness%2C%20Joel%20Overcoming%20catastrophic%20forgetting%20in%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kirkpatrick%2C%20James%20Pascanu%2C%20Razvan%20Rabinowitz%2C%20Neil%20Veness%2C%20Joel%20Overcoming%20catastrophic%20forgetting%20in%20neural%20networks%202016"
+        },
+        {
+            "id": "Lahiri_2013_a",
+            "entry": "Subhaneil Lahiri and Surya Ganguli. A memory frontier for complex synapses. In Advances in neural information processing systems, pp. 1034\u20131042, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lahiri%2C%20Subhaneil%20Ganguli%2C%20Surya%20A%20memory%20frontier%20for%20complex%20synapses%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lahiri%2C%20Subhaneil%20Ganguli%2C%20Surya%20A%20memory%20frontier%20for%20complex%20synapses%202013"
+        },
+        {
+            "id": "Lake_et+al_2011_a",
+            "entry": "Brenden Lake, Ruslan Salakhutdinov, Jason Gross, and Joshua Tenenbaum. One shot learning of simple visual concepts. In Proceedings of the Cognitive Science Society, volume 33, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lake%2C%20Brenden%20Salakhutdinov%2C%20Ruslan%20Gross%2C%20Jason%20Tenenbaum%2C%20Joshua%20One%20shot%20learning%20of%20simple%20visual%20concepts%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lake%2C%20Brenden%20Salakhutdinov%2C%20Ruslan%20Gross%2C%20Jason%20Tenenbaum%2C%20Joshua%20One%20shot%20learning%20of%20simple%20visual%20concepts%202011"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Jeongtae Lee, Jaehong Yun, Sungju Hwang, and Eunho Yang. Lifelong learning with dynamically expandable networks. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Jeongtae%20Yun%2C%20Jaehong%20Hwang%2C%20Sungju%20Yang%2C%20Eunho%20Lifelong%20learning%20with%20dynamically%20expandable%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Jeongtae%20Yun%2C%20Jaehong%20Hwang%2C%20Sungju%20Yang%2C%20Eunho%20Lifelong%20learning%20with%20dynamically%20expandable%20networks%202018"
+        },
+        {
+            "id": "Lee_et+al_2017_a",
+            "entry": "Sang-Woo Lee, Jin-Hwa Kim, Jaehyun Jun, Jung-Woo Ha, and Byoung-Tak Zhang. Overcoming catastrophic forgetting by incremental moment matching. In Advances in Neural Information Processing Systems, pp. 4652\u20134662, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Sang-Woo%20Kim%2C%20Jin-Hwa%20Jun%2C%20Jaehyun%20Ha%2C%20Jung-Woo%20Overcoming%20catastrophic%20forgetting%20by%20incremental%20moment%20matching%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Sang-Woo%20Kim%2C%20Jin-Hwa%20Jun%2C%20Jaehyun%20Ha%2C%20Jung-Woo%20Overcoming%20catastrophic%20forgetting%20by%20incremental%20moment%20matching%202017"
+        },
+        {
+            "id": "Lin_1992_a",
+            "entry": "Long-Ji Lin. Self-improving reactive agents based on reinforcement learning, planning and teaching. Machine learning, 8(3-4):293\u2013321, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Long-Ji%20Self-improving%20reactive%20agents%20based%20on%20reinforcement%20learning%2C%20planning%20and%20teaching%201992",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Long-Ji%20Self-improving%20reactive%20agents%20based%20on%20reinforcement%20learning%2C%20planning%20and%20teaching%201992"
+        },
+        {
+            "id": "Lopez-Paz_2017_a",
+            "entry": "David Lopez-Paz and Marc\u2019Aurelio Ranzato. Gradient episodic memory for continuum learning. NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lopez-Paz%2C%20David%20Ranzato%2C%20Marc%E2%80%99Aurelio%20Gradient%20episodic%20memory%20for%20continuum%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lopez-Paz%2C%20David%20Ranzato%2C%20Marc%E2%80%99Aurelio%20Gradient%20episodic%20memory%20for%20continuum%20learning%202017"
+        },
+        {
+            "id": "Mankowitz_et+al_2018_a",
+            "entry": "Daniel J Mankowitz, Timothy A Mann, Pierre-Luc Bacon, Doina Precup, and Shie Mannor. Learning robust options. arXiv preprint arXiv:1802.03236, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03236"
+        },
+        {
+            "id": "Mcclelland_et+al_1995_a",
+            "entry": "James L McClelland, Bruce L McNaughton, and Randall C O\u2019reilly. Why there are complementary learning systems in the hippocampus and neocortex: insights from the successes and failures of connectionist models of learning and memory. Psychological review, 102(3):419, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McClelland%2C%20James%20L.%20McNaughton%2C%20Bruce%20L.%20O%E2%80%99reilly%2C%20Randall%20C.%20Why%20there%20are%20complementary%20learning%20systems%20in%20the%20hippocampus%20and%20neocortex%3A%20insights%20from%20the%20successes%20and%20failures%20of%20connectionist%20models%20of%20learning%20and%20memory%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McClelland%2C%20James%20L.%20McNaughton%2C%20Bruce%20L.%20O%E2%80%99reilly%2C%20Randall%20C.%20Why%20there%20are%20complementary%20learning%20systems%20in%20the%20hippocampus%20and%20neocortex%3A%20insights%20from%20the%20successes%20and%20failures%20of%20connectionist%20models%20of%20learning%20and%20memory%201995"
+        },
+        {
+            "id": "Mccloskey_1989_a",
+            "entry": "Michael McCloskey and Neal J Cohen. Catastrophic interference in connectionist networks: The sequential learning problem. Psychology of learning and motivation, 24:109\u2013165, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McCloskey%2C%20Michael%20Cohen%2C%20Neal%20J.%20Catastrophic%20interference%20in%20connectionist%20networks%3A%20The%20sequential%20learning%20problem%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McCloskey%2C%20Michael%20Cohen%2C%20Neal%20J.%20Catastrophic%20interference%20in%20connectionist%20networks%3A%20The%20sequential%20learning%20problem%201989"
+        },
+        {
+            "id": "Misra_et+al_2016_a",
+            "entry": "Ishan Misra, Abhinav Shrivastava, Abhinav Gupta, and Martial Hebert. Cross-stitch networks for multi-task learning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 3994\u20134003, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Misra%2C%20Ishan%20Shrivastava%2C%20Abhinav%20Gupta%2C%20Abhinav%20Hebert%2C%20Martial%20Cross-stitch%20networks%20for%20multi-task%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Misra%2C%20Ishan%20Shrivastava%2C%20Abhinav%20Gupta%2C%20Abhinav%20Hebert%2C%20Martial%20Cross-stitch%20networks%20for%20multi-task%20learning%202016"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A Rusu, Joel Veness, Marc G Bellemare, Alex Graves, Martin Riedmiller, Andreas K Fidjeland, Georg Ostrovski, et al. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Murre_1992_a",
+            "entry": "Jacob MJ Murre. Learning and categorization in modular neural networks. Lawrence Erlbaum Associates, Inc, 1992.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murre%2C%20Jacob%20M.J.%20Learning%20and%20categorization%20in%20modular%20neural%20networks%201992"
+        },
+        {
+            "id": "Nichol_2018_a",
+            "entry": "Alex Nichol and John Schulman. Reptile: a scalable metalearning algorithm. arXiv preprint arXiv:1803.02999, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1803.02999"
+        },
+        {
+            "id": "Ravi_2016_a",
+            "entry": "Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ravi%2C%20Sachin%20Larochelle%2C%20Hugo%20Optimization%20as%20a%20model%20for%20few-shot%20learning%202016"
+        },
+        {
+            "id": "Rebuffi_et+al_2017_a",
+            "entry": "Sylvestre-Alvise Rebuffi, Alexander Kolesnikov, and Christoph H Lampert. icarl: Incremental classifier and representation learning. CVPR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rebuffi%2C%20Sylvestre-Alvise%20Kolesnikov%2C%20Alexander%20Lampert%2C%20Christoph%20H.%20icarl%3A%20Incremental%20classifier%20and%20representation%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rebuffi%2C%20Sylvestre-Alvise%20Kolesnikov%2C%20Alexander%20Lampert%2C%20Christoph%20H.%20icarl%3A%20Incremental%20classifier%20and%20representation%20learning%202017"
+        },
+        {
+            "id": "Riemer_et+al_2015_a",
+            "entry": "Matthew Riemer, Sophia Krasikov, and Harini Srinivasan. A deep learning and knowledge transfer based architecture for social media user characteristic determination. In Proceedings of the third International Workshop on Natural Language Processing for Social Media, pp. 39\u201347, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Riemer%2C%20Matthew%20Krasikov%2C%20Sophia%20Srinivasan%2C%20Harini%20A%20deep%20learning%20and%20knowledge%20transfer%20based%20architecture%20for%20social%20media%20user%20characteristic%20determination%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Riemer%2C%20Matthew%20Krasikov%2C%20Sophia%20Srinivasan%2C%20Harini%20A%20deep%20learning%20and%20knowledge%20transfer%20based%20architecture%20for%20social%20media%20user%20characteristic%20determination%202015"
+        },
+        {
+            "id": "Riemer_et+al_0000_a",
+            "entry": "Matthew Riemer, Elham Khabiri, and Richard Goodwin. Representation stability as a regularizer for improved text analytics transfer learning. arXiv preprint arXiv:1704.03617, 2016a.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.03617"
+        },
+        {
+            "id": "Riemer_et+al_2016_a",
+            "entry": "Matthew Riemer, Aditya Vempaty, Flavio Calmon, Fenno Heath, Richard Hull, and Elham Khabiri. Correcting forecasts with multifactor neural attention. In International Conference on Machine Learning, pp. 3010\u20133019, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Riemer%2C%20Matthew%20Vempaty%2C%20Aditya%20Calmon%2C%20Flavio%20Heath%2C%20Fenno%20Correcting%20forecasts%20with%20multifactor%20neural%20attention%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Riemer%2C%20Matthew%20Vempaty%2C%20Aditya%20Calmon%2C%20Flavio%20Heath%2C%20Fenno%20Correcting%20forecasts%20with%20multifactor%20neural%20attention%202016"
+        },
+        {
+            "id": "Riemer_et+al_2017_a",
+            "entry": "Matthew Riemer, Michele Franceschini, Djallel Bouneffouf, and Tim Klinger. Generative knowledge distillation for general purpose function compression. NIPS 2017 Workshop on Teaching Machines, Robots, and Humans, 5:30, 2017a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Riemer%2C%20Matthew%20Franceschini%2C%20Michele%20Bouneffouf%2C%20Djallel%20Klinger%2C%20Tim%20Generative%20knowledge%20distillation%20for%20general%20purpose%20function%20compression%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Riemer%2C%20Matthew%20Franceschini%2C%20Michele%20Bouneffouf%2C%20Djallel%20Klinger%2C%20Tim%20Generative%20knowledge%20distillation%20for%20general%20purpose%20function%20compression%202017"
+        },
+        {
+            "id": "Riemer_et+al_0000_b",
+            "entry": "Matthew Riemer, Tim Klinger, Michele Franceschini, and Djallel Bouneffouf. Scalable recollections for continual lifelong learning. arXiv preprint arXiv:1711.06761, 2017b.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.06761"
+        },
+        {
+            "id": "Riemer_et+al_2018_a",
+            "entry": "Matthew Riemer, Miao Liu, and Gerald Tesauro. Learning abstract options. NIPS, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Riemer%2C%20Matthew%20Liu%2C%20Miao%20Tesauro%2C%20Gerald%20Learning%20abstract%20options%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Riemer%2C%20Matthew%20Liu%2C%20Miao%20Tesauro%2C%20Gerald%20Learning%20abstract%20options%202018"
+        },
+        {
+            "id": "Ring_1994_a",
+            "entry": "Mark Bishop Ring. Continual learning in reinforcement environments. PhD thesis, University of Texas at Austin Austin, Texas 78712, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ring%2C%20Mark%20Bishop%20Continual%20learning%20in%20reinforcement%20environments%201994"
+        },
+        {
+            "id": "Robins_1995_a",
+            "entry": "Anthony Robins. Catastrophic forgetting, rehearsal and pseudorehearsal. Connection Science, 7(2): 123\u2013146, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Robins%2C%20Anthony%20Catastrophic%20forgetting%2C%20rehearsal%20and%20pseudorehearsal%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Robins%2C%20Anthony%20Catastrophic%20forgetting%2C%20rehearsal%20and%20pseudorehearsal%201995"
+        },
+        {
+            "id": "Rosenbaum_et+al_2018_a",
+            "entry": "Clemens Rosenbaum, Tim Klinger, and Matthew Riemer. Routing networks: Adaptive selection of non-linear functions for multi-task learning. ICLR, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rosenbaum%2C%20Clemens%20Klinger%2C%20Tim%20Riemer%2C%20Matthew%20Routing%20networks%3A%20Adaptive%20selection%20of%20non-linear%20functions%20for%20multi-task%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rosenbaum%2C%20Clemens%20Klinger%2C%20Tim%20Riemer%2C%20Matthew%20Routing%20networks%3A%20Adaptive%20selection%20of%20non-linear%20functions%20for%20multi-task%20learning%202018"
+        },
+        {
+            "id": "Santoro_et+al_2016_a",
+            "entry": "Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Metalearning with memory-augmented neural networks. In International conference on machine learning, pp. 1842\u20131850, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Santoro%2C%20Adam%20Bartunov%2C%20Sergey%20Botvinick%2C%20Matthew%20Wierstra%2C%20Daan%20Metalearning%20with%20memory-augmented%20neural%20networks%202016"
+        },
+        {
+            "id": "Schmidhuber_1987_a",
+            "entry": "Jurgen Schmidhuber. Evolutionary principles in self-referential learning, or on learning how to learn: the meta-meta-... hook. PhD thesis, Technische Universitat Munchen, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Evolutionary%20principles%20in%20self-referential%20learning%2C%20or%20on%20learning%20how%20to%20learn%3A%20the%20meta-meta-%201987"
+        },
+        {
+            "id": "Schmidhuber_2004_a",
+            "entry": "Jurgen Schmidhuber. Optimal ordered problem solver. Machine Learning, 54(3):211\u2013254, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Optimal%20ordered%20problem%20solver%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20Optimal%20ordered%20problem%20solver%202004"
+        },
+        {
+            "id": "Schmidhuber_2013_a",
+            "entry": "Jurgen Schmidhuber. Powerplay: Training an increasingly general problem solver by continually searching for the simplest still unsolvable problem. Frontiers in psychology, 4:313, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schmidhuber%2C%20Jurgen%20Powerplay%3A%20Training%20an%20increasingly%20general%20problem%20solver%20by%20continually%20searching%20for%20the%20simplest%20still%20unsolvable%20problem%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schmidhuber%2C%20Jurgen%20Powerplay%3A%20Training%20an%20increasingly%20general%20problem%20solver%20by%20continually%20searching%20for%20the%20simplest%20still%20unsolvable%20problem%202013"
+        },
+        {
+            "id": "Serra_et+al_2018_a",
+            "entry": "Joan Serra, D\u0131dac Sur\u0131s, Marius Miron, and Alexandros Karatzoglou. Overcoming catastrophic forgetting with hard attention to the task. arXiv preprint arXiv:1801.01423, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.01423"
+        },
+        {
+            "id": "Shazeer_et+al_2017_a",
+            "entry": "Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean. Outrageously large neural networks: The sparsely-gated mixture-of-experts layer. arXiv preprint arXiv:1701.06538, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1701.06538"
+        },
+        {
+            "id": "Tasfi_2016_a",
+            "entry": "Norman Tasfi. Pygame learning environment. PyGame-Learning-Environment, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tasfi%2C%20Norman%20Pygame%20learning%20environment%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tasfi%2C%20Norman%20Pygame%20learning%20environment%202016"
+        },
+        {
+            "id": "_0000_a",
+            "entry": "https://github.com/ntasfi/",
+            "url": "https://github.com/ntasfi/"
+        },
+        {
+            "id": "Thrun_1994_a",
+            "entry": "Sebastian Thrun. Lifelong learning perspective for mobile robot control. In Proceedings of the IEEE/RSJ/GI International Conference on Intelligent Robots and Systems, volume 1, pp. 23\u201330, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thrun%2C%20Sebastian%20Lifelong%20learning%20perspective%20for%20mobile%20robot%20control%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thrun%2C%20Sebastian%20Lifelong%20learning%20perspective%20for%20mobile%20robot%20control%201994"
+        },
+        {
+            "id": "Thrun_1996_a",
+            "entry": "Sebastian Thrun. Is learning the n-th thing any easier than learning the first? Advances in neural information processing systems, pp. 640\u2013646, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thrun%2C%20Sebastian%20Is%20learning%20the%20n-th%20thing%20any%20easier%20than%20learning%20the%20first%3F%20Advances%20in%20neural%20information%20processing%20systems%201996"
+        },
+        {
+            "id": "Vinyals_et+al_2016_a",
+            "entry": "Oriol Vinyals, Charles Blundell, Tim Lillicrap, Daan Wierstra, et al. Matching networks for one shot learning. In Advances in Neural Information Processing Systems, pp. 3630\u20133638, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vinyals%2C%20Oriol%20Blundell%2C%20Charles%20Lillicrap%2C%20Tim%20Wierstra%2C%20Daan%20Matching%20networks%20for%20one%20shot%20learning%202016"
+        },
+        {
+            "id": "Vitter_1985_a",
+            "entry": "Jeffrey S Vitter. Random sampling with a reservoir. ACM Transactions on Mathematical Software (TOMS), 11(1):37\u201357, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vitter%2C%20Jeffrey%20S.%20Random%20sampling%20with%20a%20reservoir%201985",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vitter%2C%20Jeffrey%20S.%20Random%20sampling%20with%20a%20reservoir%201985"
+        },
+        {
+            "id": "Yang_2017_a",
+            "entry": "Yongxin Yang and Timothy Hospedales. Deep multi-task representation learning: A tensor factorisation approach. ICLR, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Yongxin%20Hospedales%2C%20Timothy%20Deep%20multi-task%20representation%20learning%3A%20A%20tensor%20factorisation%20approach%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Yongxin%20Hospedales%2C%20Timothy%20Deep%20multi-task%20representation%20learning%3A%20A%20tensor%20factorisation%20approach%202017"
+        },
+        {
+            "id": "Zenke_et+al_2017_a",
+            "entry": "Friedemann Zenke, Ben Poole, and Surya Ganguli. Continual learning through synaptic intelligence. In International Conference on Machine Learning, pp. 3987\u20133995, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zenke%2C%20Friedemann%20Poole%2C%20Ben%20Ganguli%2C%20Surya%20Continual%20learning%20through%20synaptic%20intelligence%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zenke%2C%20Friedemann%20Poole%2C%20Ben%20Ganguli%2C%20Surya%20Continual%20learning%20through%20synaptic%20intelligence%202017"
+        },
+        {
+            "id": "Zhang_2017_a",
+            "entry": "Shangtong Zhang and Richard S Sutton. A deeper look at experience replay. arXiv preprint arXiv:1712.01275, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.01275"
+        },
+        {
+            "id": "In_2017_b",
+            "entry": "In this work, we define continual learning as online learning from a non-stationary input data stream, with a specific type of non-stationarity as defined below. Namely, we follow a commonly used setting to define non-stationary conditions for continual learning, dubbed locally i.i.d by Lopez-Paz & Ranzato (2017), where the agent learns over a sequence of separate stationary distributions one after another. We call the individual stationary distributions tasks, where each task tk is an online supervised learning problem associated with its own data probability distribution Pk(x, y). Namely, we are given a (potentially infinite) sequence (x1, y1, t1),..., (xi, yi, ti),..., (xi+j, yi+j, ti+j )",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20this%20work%20we%20define%20continual%20learning%20as%20online%20learning%20from%20a%20nonstationary%20input%20data%20stream%20with%20a%20specific%20type%20of%20nonstationarity%20as%20defined%20below%20Namely%20we%20follow%20a%20commonly%20used%20setting%20to%20define%20nonstationary%20conditions%20for%20continual%20learning%20dubbed%20locally%20iid%20by%20LopezPaz%20%20Ranzato%202017%20where%20the%20agent%20learns%20over%20a%20sequence%20of%20separate%20stationary%20distributions%20one%20after%20another%20We%20call%20the%20individual%20stationary%20distributions%20tasks%20where%20each%20task%20tk%20is%20an%20online%20supervised%20learning%20problem%20associated%20with%20its%20own%20data%20probability%20distribution%20Pkx%20y%20Namely%20we%20are%20given%20a%20potentially%20infinite%20sequence%20x1%20y1%20t1%20xi%20yi%20ti%20xij%20yij%20tij"
+        },
+        {
+            "id": "While_2018_a",
+            "entry": "While many continual learning methods assume the task descriptors tk are available to a learner, we are interested in developing approaches which do not have to rely on such information and can learn continuously without explicit announcement of the task change. Borrowing terminology from Chaudhry et al. (2018), we explore the single-headed setting in most of our experiments, which keeps learning a common function f\u03b8 across changing tasks. In contrast, multi-headed learning, which we consider for our Omniglot experiments, involves a separate final classification layer for each task. This makes more sense in case of Omniglot dataset, where the number of classes for each task varies considerably from task to task. We should also note that for Omniglot we consider a setting that is locally i.i.d. at the class level rather than the task level.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=While%20many%20continual%20learning%20methods%20assume%20the%20task%20descriptors%20tk%20are%20available%20to%20a%20learner%20we%20are%20interested%20in%20developing%20approaches%20which%20do%20not%20have%20to%20rely%20on%20such%20information%20and%20can%20learn%20continuously%20without%20explicit%20announcement%20of%20the%20task%20change%20Borrowing%20terminology%20from%20Chaudhry%20et%20al%202018%20we%20explore%20the%20singleheaded%20setting%20in%20most%20of%20our%20experiments%20which%20keeps%20learning%20a%20common%20function%20f%CE%B8%20across%20changing%20tasks%20In%20contrast%20multiheaded%20learning%20which%20we%20consider%20for%20our%20Omniglot%20experiments%20involves%20a%20separate%20final%20classification%20layer%20for%20each%20task%20This%20makes%20more%20sense%20in%20case%20of%20Omniglot%20dataset%20where%20the%20number%20of%20classes%20for%20each%20task%20varies%20considerably%20from%20task%20to%20task%20We%20should%20also%20note%20that%20for%20Omniglot%20we%20consider%20a%20setting%20that%20is%20locally%20iid%20at%20the%20class%20level%20rather%20than%20the%20task%20level",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=While%20many%20continual%20learning%20methods%20assume%20the%20task%20descriptors%20tk%20are%20available%20to%20a%20learner%20we%20are%20interested%20in%20developing%20approaches%20which%20do%20not%20have%20to%20rely%20on%20such%20information%20and%20can%20learn%20continuously%20without%20explicit%20announcement%20of%20the%20task%20change%20Borrowing%20terminology%20from%20Chaudhry%20et%20al%202018%20we%20explore%20the%20singleheaded%20setting%20in%20most%20of%20our%20experiments%20which%20keeps%20learning%20a%20common%20function%20f%CE%B8%20across%20changing%20tasks%20In%20contrast%20multiheaded%20learning%20which%20we%20consider%20for%20our%20Omniglot%20experiments%20involves%20a%20separate%20final%20classification%20layer%20for%20each%20task%20This%20makes%20more%20sense%20in%20case%20of%20Omniglot%20dataset%20where%20the%20number%20of%20classes%20for%20each%20task%20varies%20considerably%20from%20task%20to%20task%20We%20should%20also%20note%20that%20for%20Omniglot%20we%20consider%20a%20setting%20that%20is%20locally%20iid%20at%20the%20class%20level%20rather%20than%20the%20task%20level"
+        },
+        {
+            "id": "With_2017_a",
+            "entry": "With regard to the continual learning setting specifically, other recent work has explored similar operational measures of transfer and interference. For example, the notions of Forward Transfer and Backward Transfer were explored in Lopez-Paz & Ranzato (2017). However, the approach of that work, GEM, was primarily concerned with solving the classic stability-plasticity dilemma (Carpenter & Grossberg, 1987) at a specific instance of time. Adjustments to gradients on the current data are made in an ad hoc manner solving a quadratic program separately for each example.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=With%20regard%20to%20the%20continual%20learning%20setting%20specifically%20other%20recent%20work%20has%20explored%20similar%20operational%20measures%20of%20transfer%20and%20interference%20For%20example%20the%20notions%20of%20Forward%20Transfer%20and%20Backward%20Transfer%20were%20explored%20in%20LopezPaz%20%20Ranzato%202017%20However%20the%20approach%20of%20that%20work%20GEM%20was%20primarily%20concerned%20with%20solving%20the%20classic%20stabilityplasticity%20dilemma%20Carpenter%20%20Grossberg%201987%20at%20a%20specific%20instance%20of%20time%20Adjustments%20to%20gradients%20on%20the%20current%20data%20are%20made%20in%20an%20ad%20hoc%20manner%20solving%20a%20quadratic%20program%20separately%20for%20each%20example",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=With%20regard%20to%20the%20continual%20learning%20setting%20specifically%20other%20recent%20work%20has%20explored%20similar%20operational%20measures%20of%20transfer%20and%20interference%20For%20example%20the%20notions%20of%20Forward%20Transfer%20and%20Backward%20Transfer%20were%20explored%20in%20LopezPaz%20%20Ranzato%202017%20However%20the%20approach%20of%20that%20work%20GEM%20was%20primarily%20concerned%20with%20solving%20the%20classic%20stabilityplasticity%20dilemma%20Carpenter%20%20Grossberg%201987%20at%20a%20specific%20instance%20of%20time%20Adjustments%20to%20gradients%20on%20the%20current%20data%20are%20made%20in%20an%20ad%20hoc%20manner%20solving%20a%20quadratic%20program%20separately%20for%20each%20example"
+        },
+        {
+            "id": "In_2018_b",
+            "entry": "In our work we try to learn a generalizable theory about weight sharing that can learn to influence the distribution of gradients not just in the past and present, but in the future as well. Additionally, in Chaudhry et al. (2018) similar ideas were explored with operational measures of intransigence (the inability to learn new data) and forgetting (the loss of previous performance). These measures are also intimately related to the stability-plasticity dilemma as intransigence is high when plasticity is low and forgetting is high when stability is low. The major distinction in the transfer-interference trade-off proposed in this work is that we aim to learn the optimal weight sharing scheme to optimize for the stability-plasticity dilemma with the hope that our learning about weight sharing will improve the stability and efficacy of learning on unseen data as well.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20our%20work%20we%20try%20to%20learn%20a%20generalizable%20theory%20about%20weight%20sharing%20that%20can%20learn%20to%20influence%20the%20distribution%20of%20gradients%20not%20just%20in%20the%20past%20and%20present%20but%20in%20the%20future%20as%20well%20Additionally%20in%20Chaudhry%20et%20al%202018%20similar%20ideas%20were%20explored%20with%20operational%20measures%20of%20intransigence%20the%20inability%20to%20learn%20new%20data%20and%20forgetting%20the%20loss%20of%20previous%20performance%20These%20measures%20are%20also%20intimately%20related%20to%20the%20stabilityplasticity%20dilemma%20as%20intransigence%20is%20high%20when%20plasticity%20is%20low%20and%20forgetting%20is%20high%20when%20stability%20is%20low%20The%20major%20distinction%20in%20the%20transferinterference%20tradeoff%20proposed%20in%20this%20work%20is%20that%20we%20aim%20to%20learn%20the%20optimal%20weight%20sharing%20scheme%20to%20optimize%20for%20the%20stabilityplasticity%20dilemma%20with%20the%20hope%20that%20our%20learning%20about%20weight%20sharing%20will%20improve%20the%20stability%20and%20efficacy%20of%20learning%20on%20unseen%20data%20as%20well",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20our%20work%20we%20try%20to%20learn%20a%20generalizable%20theory%20about%20weight%20sharing%20that%20can%20learn%20to%20influence%20the%20distribution%20of%20gradients%20not%20just%20in%20the%20past%20and%20present%20but%20in%20the%20future%20as%20well%20Additionally%20in%20Chaudhry%20et%20al%202018%20similar%20ideas%20were%20explored%20with%20operational%20measures%20of%20intransigence%20the%20inability%20to%20learn%20new%20data%20and%20forgetting%20the%20loss%20of%20previous%20performance%20These%20measures%20are%20also%20intimately%20related%20to%20the%20stabilityplasticity%20dilemma%20as%20intransigence%20is%20high%20when%20plasticity%20is%20low%20and%20forgetting%20is%20high%20when%20stability%20is%20low%20The%20major%20distinction%20in%20the%20transferinterference%20tradeoff%20proposed%20in%20this%20work%20is%20that%20we%20aim%20to%20learn%20the%20optimal%20weight%20sharing%20scheme%20to%20optimize%20for%20the%20stabilityplasticity%20dilemma%20with%20the%20hope%20that%20our%20learning%20about%20weight%20sharing%20will%20improve%20the%20stability%20and%20efficacy%20of%20learning%20on%20unseen%20data%20as%20well"
+        },
+        {
+            "id": "Another_2004_a",
+            "entry": "Another relevant work is the POWERPLAY framework (Schmidhuber, 2004; 2013) which is a method for asymptotically optimal curriculum learning that by definition cannot forget previously learned skills. POWERPLAY also uses environment-independent replay of behavioral traces to avoid forgetting previous skills. However, POWERPLAY is orthogonal to our work as we consider a different setting where the agent cannot directly control the new tasks that will be encountered in the environment and thus must instead learn to adapt and react to non-stationarity conditions.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Another%20relevant%20work%20is%20the%20POWERPLAY%20framework%20Schmidhuber%202004%202013%20which%20is%20a%20method%20for%20asymptotically%20optimal%20curriculum%20learning%20that%20by%20definition%20cannot%20forget%20previously%20learned%20skills%20POWERPLAY%20also%20uses%20environmentindependent%20replay%20of%20behavioral%20traces%20to%20avoid%20forgetting%20previous%20skills%20However%20POWERPLAY%20is%20orthogonal%20to%20our%20work%20as%20we%20consider%20a%20different%20setting%20where%20the%20agent%20cannot%20directly%20control%20the%20new%20tasks%20that%20will%20be%20encountered%20in%20the%20environment%20and%20thus%20must%20instead%20learn%20to%20adapt%20and%20react%20to%20nonstationarity%20conditions",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Another%20relevant%20work%20is%20the%20POWERPLAY%20framework%20Schmidhuber%202004%202013%20which%20is%20a%20method%20for%20asymptotically%20optimal%20curriculum%20learning%20that%20by%20definition%20cannot%20forget%20previously%20learned%20skills%20POWERPLAY%20also%20uses%20environmentindependent%20replay%20of%20behavioral%20traces%20to%20avoid%20forgetting%20previous%20skills%20However%20POWERPLAY%20is%20orthogonal%20to%20our%20work%20as%20we%20consider%20a%20different%20setting%20where%20the%20agent%20cannot%20directly%20control%20the%20new%20tasks%20that%20will%20be%20encountered%20in%20the%20environment%20and%20thus%20must%20instead%20learn%20to%20adapt%20and%20react%20to%20nonstationarity%20conditions"
+        },
+        {
+            "id": "In_2016_a",
+            "entry": "In contrast to past work on meta-learning for few shot learning (Santoro et al., 2016; Vinyals et al., 2016; Ravi & Larochelle, 2016; Finn et al., 2017) and reinforcement learning across successive tasks (Al-Shedivat et al., 2018), we are not only trying to improve the speed of learning on new data, but also trying to do it in a way that preserves knowledge of past data and generalizes to future data. While past work has considered learning to influence gradient angles, so that there is more alignment and thus faster learning within a task, we focus on a setting where we would like to influence gradient angles from all tasks at all points in time.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20contrast%20to%20past%20work%20on%20metalearning%20for%20few%20shot%20learning%20Santoro%20et%20al%202016%20Vinyals%20et%20al%202016%20Ravi%20%20Larochelle%202016%20Finn%20et%20al%202017%20and%20reinforcement%20learning%20across%20successive%20tasks%20AlShedivat%20et%20al%202018%20we%20are%20not%20only%20trying%20to%20improve%20the%20speed%20of%20learning%20on%20new%20data%20but%20also%20trying%20to%20do%20it%20in%20a%20way%20that%20preserves%20knowledge%20of%20past%20data%20and%20generalizes%20to%20future%20data%20While%20past%20work%20has%20considered%20learning%20to%20influence%20gradient%20angles%20so%20that%20there%20is%20more%20alignment%20and%20thus%20faster%20learning%20within%20a%20task%20we%20focus%20on%20a%20setting%20where%20we%20would%20like%20to%20influence%20gradient%20angles%20from%20all%20tasks%20at%20all%20points%20in%20time",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20contrast%20to%20past%20work%20on%20metalearning%20for%20few%20shot%20learning%20Santoro%20et%20al%202016%20Vinyals%20et%20al%202016%20Ravi%20%20Larochelle%202016%20Finn%20et%20al%202017%20and%20reinforcement%20learning%20across%20successive%20tasks%20AlShedivat%20et%20al%202018%20we%20are%20not%20only%20trying%20to%20improve%20the%20speed%20of%20learning%20on%20new%20data%20but%20also%20trying%20to%20do%20it%20in%20a%20way%20that%20preserves%20knowledge%20of%20past%20data%20and%20generalizes%20to%20future%20data%20While%20past%20work%20has%20considered%20learning%20to%20influence%20gradient%20angles%20so%20that%20there%20is%20more%20alignment%20and%20thus%20faster%20learning%20within%20a%20task%20we%20focus%20on%20a%20setting%20where%20we%20would%20like%20to%20influence%20gradient%20angles%20from%20all%20tasks%20at%20all%20points%20in%20time"
+        },
+        {
+            "id": "As_2016_b",
+            "entry": "As our model aims to influence the dynamics of weight sharing, it bears conceptual similarity to mixtures of experts (Jacobs et al., 1991) style models for lifelong and multi-task learning (Misra et al., 2016; Riemer et al., 2016b; Aljundi et al., 2017; Fernando et al., 2017; Shazeer et al., 2017; Rosenbaum et al., 2018). MER implicitly affects the dynamics of weight sharing, but it is possible that combining it with mixtures of experts models could further amplify the ability for the model to control these dynamics. This is potentially an interesting avenue for future work.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=As%20our%20model%20aims%20to%20influence%20the%20dynamics%20of%20weight%20sharing%20it%20bears%20conceptual%20similarity%20to%20mixtures%20of%20experts%20Jacobs%20et%20al%201991%20style%20models%20for%20lifelong%20and%20multitask%20learning%20Misra%20et%20al%202016%20Riemer%20et%20al%202016b%20Aljundi%20et%20al%202017%20Fernando%20et%20al%202017%20Shazeer%20et%20al%202017%20Rosenbaum%20et%20al%202018%20MER%20implicitly%20affects%20the%20dynamics%20of%20weight%20sharing%20but%20it%20is%20possible%20that%20combining%20it%20with%20mixtures%20of%20experts%20models%20could%20further%20amplify%20the%20ability%20for%20the%20model%20to%20control%20these%20dynamics%20This%20is%20potentially%20an%20interesting%20avenue%20for%20future%20work",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=As%20our%20model%20aims%20to%20influence%20the%20dynamics%20of%20weight%20sharing%20it%20bears%20conceptual%20similarity%20to%20mixtures%20of%20experts%20Jacobs%20et%20al%201991%20style%20models%20for%20lifelong%20and%20multitask%20learning%20Misra%20et%20al%202016%20Riemer%20et%20al%202016b%20Aljundi%20et%20al%202017%20Fernando%20et%20al%202017%20Shazeer%20et%20al%202017%20Rosenbaum%20et%20al%202018%20MER%20implicitly%20affects%20the%20dynamics%20of%20weight%20sharing%20but%20it%20is%20possible%20that%20combining%20it%20with%20mixtures%20of%20experts%20models%20could%20further%20amplify%20the%20ability%20for%20the%20model%20to%20control%20these%20dynamics%20This%20is%20potentially%20an%20interesting%20avenue%20for%20future%20work"
+        },
+        {
+            "id": "The_2018_c",
+            "entry": "The options framework has also been considered as a solution to a similar continual RL setting to the one we explore (Mankowitz et al., 2018). Options formalize the notion of temporally abstraction actions in RL. Interestingly, generic architectures designed for shallow (Bacon et al., 2017) or deep (Riemer et al., 2018) hierarchies of options in essence learn very complex patterns of weight sharing over time. The option hierarchies constitute an explicit mechanism of controlling the extent of weight sharing for continual learning, allowing for orthogonalization of weights relating to different skills. In contrast, our work explores a method of implicitly optimizing weight sharing for continual learning that improves the efficacy of experience replay. MER should be simple to implement in concert with options based methods and combining the two is an interesting direction for future work.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20options%20framework%20has%20also%20been%20considered%20as%20a%20solution%20to%20a%20similar%20continual%20RL%20setting%20to%20the%20one%20we%20explore%20Mankowitz%20et%20al%202018%20Options%20formalize%20the%20notion%20of%20temporally%20abstraction%20actions%20in%20RL%20Interestingly%20generic%20architectures%20designed%20for%20shallow%20Bacon%20et%20al%202017%20or%20deep%20Riemer%20et%20al%202018%20hierarchies%20of%20options%20in%20essence%20learn%20very%20complex%20patterns%20of%20weight%20sharing%20over%20time%20The%20option%20hierarchies%20constitute%20an%20explicit%20mechanism%20of%20controlling%20the%20extent%20of%20weight%20sharing%20for%20continual%20learning%20allowing%20for%20orthogonalization%20of%20weights%20relating%20to%20different%20skills%20In%20contrast%20our%20work%20explores%20a%20method%20of%20implicitly%20optimizing%20weight%20sharing%20for%20continual%20learning%20that%20improves%20the%20efficacy%20of%20experience%20replay%20MER%20should%20be%20simple%20to%20implement%20in%20concert%20with%20options%20based%20methods%20and%20combining%20the%20two%20is%20an%20interesting%20direction%20for%20future%20work",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=The%20options%20framework%20has%20also%20been%20considered%20as%20a%20solution%20to%20a%20similar%20continual%20RL%20setting%20to%20the%20one%20we%20explore%20Mankowitz%20et%20al%202018%20Options%20formalize%20the%20notion%20of%20temporally%20abstraction%20actions%20in%20RL%20Interestingly%20generic%20architectures%20designed%20for%20shallow%20Bacon%20et%20al%202017%20or%20deep%20Riemer%20et%20al%202018%20hierarchies%20of%20options%20in%20essence%20learn%20very%20complex%20patterns%20of%20weight%20sharing%20over%20time%20The%20option%20hierarchies%20constitute%20an%20explicit%20mechanism%20of%20controlling%20the%20extent%20of%20weight%20sharing%20for%20continual%20learning%20allowing%20for%20orthogonalization%20of%20weights%20relating%20to%20different%20skills%20In%20contrast%20our%20work%20explores%20a%20method%20of%20implicitly%20optimizing%20weight%20sharing%20for%20continual%20learning%20that%20improves%20the%20efficacy%20of%20experience%20replay%20MER%20should%20be%20simple%20to%20implement%20in%20concert%20with%20options%20based%20methods%20and%20combining%20the%20two%20is%20an%20interesting%20direction%20for%20future%20work"
+        },
+        {
+            "id": "In_2015_a",
+            "entry": "In this section we would like to generalize our interpretation of a large set of different weight sharing schemes including (Riemer et al., 2015; Bengio et al., 2015; Rosenbaum et al., 2018; Serraet al., 2018) and how the concept of weight sharing impacts the dynamics of transfer (equation 1) and interference (equation 2). We will assume that we have a total parameter space \u03b8 that can be used by our network at any point in time. However, it is not a requirement that all parameters are actually used at all points in time. So, we can consider two specific instances in time. One where we receive data point (x1, y1) and leverage parameters \u03b81.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=In%20this%20section%20we%20would%20like%20to%20generalize%20our%20interpretation%20of%20a%20large%20set%20of%20different%20weight%20sharing%20schemes%20including%20Riemer%20et%20al%202015%20Bengio%20et%20al%202015%20Rosenbaum%20et%20al%202018%20Serraet%20al%202018%20and%20how%20the%20concept%20of%20weight%20sharing%20impacts%20the%20dynamics%20of%20transfer%20equation%201%20and%20interference%20equation%202%20We%20will%20assume%20that%20we%20have%20a%20total%20parameter%20space%20%CE%B8%20that%20can%20be%20used%20by%20our%20network%20at%20any%20point%20in%20time%20However%20it%20is%20not%20a%20requirement%20that%20all%20parameters%20are%20actually%20used%20at%20all%20points%20in%20time%20So%20we%20can%20consider%20two%20specific%20instances%20in%20time%20One%20where%20we%20receive%20data%20point%20x1%20y1%20and%20leverage%20parameters%20%CE%B81",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=In%20this%20section%20we%20would%20like%20to%20generalize%20our%20interpretation%20of%20a%20large%20set%20of%20different%20weight%20sharing%20schemes%20including%20Riemer%20et%20al%202015%20Bengio%20et%20al%202015%20Rosenbaum%20et%20al%202018%20Serraet%20al%202018%20and%20how%20the%20concept%20of%20weight%20sharing%20impacts%20the%20dynamics%20of%20transfer%20equation%201%20and%20interference%20equation%202%20We%20will%20assume%20that%20we%20have%20a%20total%20parameter%20space%20%CE%B8%20that%20can%20be%20used%20by%20our%20network%20at%20any%20point%20in%20time%20However%20it%20is%20not%20a%20requirement%20that%20all%20parameters%20are%20actually%20used%20at%20all%20points%20in%20time%20So%20we%20can%20consider%20two%20specific%20instances%20in%20time%20One%20where%20we%20receive%20data%20point%20x1%20y1%20and%20leverage%20parameters%20%CE%B81"
+        },
+        {
+            "id": "0",
+            "entry": "0. On the positive side, this means that our solution has no potential for interference between the examples. On the other hand, there is no potential for transfer either. On the other extreme, we can imagine that \u03b81 = \u03b82. In this case, the potential for both transfer and interference is maximized as gradients with respect to every parameter have the possibility of a non-zero dot product with each other. Independent: originally reported in (Lopez-Paz & Ranzato, 2017) is the performance of an independent predictor per task which has the same architecture but with less hidden units proportional to the number of tasks. The independent predictor can be initialized randomly or clone the last trained predictor depending on what leads to better performance.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=On%20the%20positive%20side%20this%20means%20that%20our%20solution%20has%20no%20potential%20for%20interference%20between%20the%20examples%20On%20the%20other%20hand%20there%20is%20no%20potential%20for%20transfer%20either%20On%20the%20other%20extreme%20we%20can%20imagine%20that%20%CE%B81%20%20%CE%B82%20In%20this%20case%20the%20potential%20for%20both%20transfer%20and%20interference%20is%20maximized%20as%20gradients%20with%20respect%20to%20every%20parameter%20have%20the%20possibility%20of%20a%20nonzero%20dot%20product%20with%20each%20other%20Independent%20originally%20reported%20in%20LopezPaz%20%20Ranzato%202017%20is%20the%20performance%20of%20an%20independent%20predictor%20per%20task%20which%20has%20the%20same%20architecture%20but%20with%20less%20hidden%20units%20proportional%20to%20the%20number%20of%20tasks%20The%20independent%20predictor%20can%20be%20initialized%20randomly%20or%20clone%20the%20last%20trained%20predictor%20depending%20on%20what%20leads%20to%20better%20performance"
+        },
+        {
+            "id": "EWC:_2017_b",
+            "entry": "EWC: Elastic Weight Consolidation (EWC) (Kirkpatrick et al., 2017) is an algorithm that modifies online learning where the loss is regularized to avoid catastrophic forgetting by considering the importance of parameters in the model as measured by their fisher information. EWC follows the catastrophic forgetting view of the continual learning problem by promoting less sharing of parameters for new learning that were deemed to be important for performance on old memories. We utilize the code provided by Lopez-Paz & Ranzato (2017) in our experiments. The only difference in our setting is that we provide the model one example at a time to test true continual learning rather than providing a batch of 10 examples at a time.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=EWC%20Elastic%20Weight%20Consolidation%20EWC%20Kirkpatrick%20et%20al%202017%20is%20an%20algorithm%20that%20modifies%20online%20learning%20where%20the%20loss%20is%20regularized%20to%20avoid%20catastrophic%20forgetting%20by%20considering%20the%20importance%20of%20parameters%20in%20the%20model%20as%20measured%20by%20their%20fisher%20information%20EWC%20follows%20the%20catastrophic%20forgetting%20view%20of%20the%20continual%20learning%20problem%20by%20promoting%20less%20sharing%20of%20parameters%20for%20new%20learning%20that%20were%20deemed%20to%20be%20important%20for%20performance%20on%20old%20memories%20We%20utilize%20the%20code%20provided%20by%20LopezPaz%20%20Ranzato%202017%20in%20our%20experiments%20The%20only%20difference%20in%20our%20setting%20is%20that%20we%20provide%20the%20model%20one%20example%20at%20a%20time%20to%20test%20true%20continual%20learning%20rather%20than%20providing%20a%20batch%20of%2010%20examples%20at%20a%20time",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=EWC%20Elastic%20Weight%20Consolidation%20EWC%20Kirkpatrick%20et%20al%202017%20is%20an%20algorithm%20that%20modifies%20online%20learning%20where%20the%20loss%20is%20regularized%20to%20avoid%20catastrophic%20forgetting%20by%20considering%20the%20importance%20of%20parameters%20in%20the%20model%20as%20measured%20by%20their%20fisher%20information%20EWC%20follows%20the%20catastrophic%20forgetting%20view%20of%20the%20continual%20learning%20problem%20by%20promoting%20less%20sharing%20of%20parameters%20for%20new%20learning%20that%20were%20deemed%20to%20be%20important%20for%20performance%20on%20old%20memories%20We%20utilize%20the%20code%20provided%20by%20LopezPaz%20%20Ranzato%202017%20in%20our%20experiments%20The%20only%20difference%20in%20our%20setting%20is%20that%20we%20provide%20the%20model%20one%20example%20at%20a%20time%20to%20test%20true%20continual%20learning%20rather%20than%20providing%20a%20batch%20of%2010%20examples%20at%20a%20time"
+        },
+        {
+            "id": "We_2018_d",
+            "entry": "We detail the standard Reptile algorithm from (Nichol & Schulman, 2018) in algorithm 2. The sample function randomly samples s batches of size k from dataset D. The SGD function applies min-batch stochastic gradient descent over a batch of data given a set of current parameters and learning rate.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20detail%20the%20standard%20Reptile%20algorithm%20from%20Nichol%20%20Schulman%202018%20in%20algorithm%202%20The%20sample%20function%20randomly%20samples%20s%20batches%20of%20size%20k%20from%20dataset%20D%20The%20SGD%20function%20applies%20minbatch%20stochastic%20gradient%20descent%20over%20a%20batch%20of%20data%20given%20a%20set%20of%20current%20parameters%20and%20learning%20rate"
+        },
+        {
+            "id": "Vitter_1985_b",
+            "entry": "Vitter (1985) (algorithm 3). Reservoir sampling solves the problem of keeping some limited number",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vitter%20Reservoir%20sampling%20solves%20the%20problem%20of%20keeping%20some%201985"
+        },
+        {
+            "id": "We_2017_c",
+            "entry": "We detail the our variant of the experience replay in algorithm 4. This procedure closely follows recent enhancements discussed in Zhang & Sutton (2017); Riemer et al. (2017b;a) The sample function randomly samples k \u2212 1 examples from the memory buffer M and interleaves them with the current example to form a single size k batch. The SGD function applies mini-batch stochastic gradient descent over a batch of data given a set of current parameters and learning rate.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20detail%20the%20our%20variant%20of%20the%20experience%20replay%20in%20algorithm%204%20This%20procedure%20closely%20follows%20recent%20enhancements%20discussed%20in%20Zhang%20%20Sutton%202017%20Riemer%20et%20al%202017ba%20The%20sample%20function%20randomly%20samples%20k%20%201%20examples%20from%20the%20memory%20buffer%20M%20and%20interleaves%20them%20with%20the%20current%20example%20to%20form%20a%20single%20size%20k%20batch%20The%20SGD%20function%20applies%20minibatch%20stochastic%20gradient%20descent%20over%20a%20batch%20of%20data%20given%20a%20set%20of%20current%20parameters%20and%20learning%20rate",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20detail%20the%20our%20variant%20of%20the%20experience%20replay%20in%20algorithm%204%20This%20procedure%20closely%20follows%20recent%20enhancements%20discussed%20in%20Zhang%20%20Sutton%202017%20Riemer%20et%20al%202017ba%20The%20sample%20function%20randomly%20samples%20k%20%201%20examples%20from%20the%20memory%20buffer%20M%20and%20interleaves%20them%20with%20the%20current%20example%20to%20form%20a%20single%20size%20k%20batch%20The%20SGD%20function%20applies%20minibatch%20stochastic%20gradient%20descent%20over%20a%20batch%20of%20data%20given%20a%20set%20of%20current%20parameters%20and%20learning%20rate"
+        },
+        {
+            "id": "We_2018_d",
+            "entry": "We would like to derive what objective Meta-Experience Replay (algorithm 1) approximates and show that it is approximately the same objective from algorithms 6 and 7. We follow conventions from Nichol & Schulman (2018) and first demonstrate what happens to the effective gradients computed by the algorithm in the most trivial case. As in Nichol & Schulman (2018), this allows us to extrapolate an effective gradient that is a function of the number of steps taken. We can then consider the effective loss function that results in this gradient. Before we begin, let us define the following terms from Nichol & Schulman (2018): gi",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20would%20like%20to%20derive%20what%20objective%20MetaExperience%20Replay%20algorithm%201%20approximates%20and%20show%20that%20it%20is%20approximately%20the%20same%20objective%20from%20algorithms%206%20and%207%20We%20follow%20conventions%20from%20Nichol%20%20Schulman%202018%20and%20first%20demonstrate%20what%20happens%20to%20the%20effective%20gradients%20computed%20by%20the%20algorithm%20in%20the%20most%20trivial%20case%20As%20in%20Nichol%20%20Schulman%202018%20this%20allows%20us%20to%20extrapolate%20an%20effective%20gradient%20that%20is%20a%20function%20of%20the%20number%20of%20steps%20taken%20We%20can%20then%20consider%20the%20effective%20loss%20function%20that%20results%20in%20this%20gradient%20Before%20we%20begin%20let%20us%20define%20the%20following%20terms%20from%20Nichol%20%20Schulman%202018%20gi",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20would%20like%20to%20derive%20what%20objective%20MetaExperience%20Replay%20algorithm%201%20approximates%20and%20show%20that%20it%20is%20approximately%20the%20same%20objective%20from%20algorithms%206%20and%207%20We%20follow%20conventions%20from%20Nichol%20%20Schulman%202018%20and%20first%20demonstrate%20what%20happens%20to%20the%20effective%20gradients%20computed%20by%20the%20algorithm%20in%20the%20most%20trivial%20case%20As%20in%20Nichol%20%20Schulman%202018%20this%20allows%20us%20to%20extrapolate%20an%20effective%20gradient%20that%20is%20a%20function%20of%20the%20number%20of%20steps%20taken%20We%20can%20then%20consider%20the%20effective%20loss%20function%20that%20results%20in%20this%20gradient%20Before%20we%20begin%20let%20us%20define%20the%20following%20terms%20from%20Nichol%20%20Schulman%202018%20gi"
+        },
+        {
+            "id": "Nichol_2018_b",
+            "entry": "In Nichol & Schulman (2018) they consider the effective gradient across one loop of reptile with size k = 2. As we have both an outer loop of Reptile applied across batches and an inner loop applied within the batch to consider, we start with a setting where the number of batches s = 2 and the number of examples per batch k = 2. Let\u2019s recall from the original paper that the gradients of Reptile with k = 2 was: gReptile,k=2,s=1 = g0 + g1 = g0 + g1 \u2212 \u03b1H1g0 + O(\u03b12)",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nichol%2C%20In%20Schulman%20they%20consider%20the%20effective%20gradient%20across%20one%20loop%20of%20reptile%20with%20size%20k%20%3D%202.%20As%20we%20have%20both%20an%20outer%20loop%20of%20Reptile%20applied%20across%20batches%20and%20an%20inner%20loop%20applied%20within%20the%20batch%20to%20consider%2C%20we%20start%20with%20a%20setting%20where%20the%20number%20of%20batches%20s%20%3D%202%20and%20the%20number%20of%20examples%20per%20batch%20k%20%3D%202.%20Let%E2%80%99s%20recall%20from%20the%20original%20paper%20that%20the%20gradients%20of%20Reptile%20with%20k%20%3D%202%20was%3A%20gReptile%2C%20k%3D2%2C%20s%3D1%20%3D%20g0%20%2B%20g1%20%3D%20g0%20%2B%20g1%20%E2%88%92%20%CE%B1H1g0%20%2B%20O%28%CE%B12%29%202018"
+        },
+        {
+            "id": "It_2018_e",
+            "entry": "It was noted in (Nichol & Schulman, 2018) that the following equality holds if the examples and order are random: E[H 1 g0 ]",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=It%20was%20noted%20in%20Nichol%20%20Schulman%202018%20that%20the%20following%20equality%20holds%20if%20the%20examples%20and%20order%20are%20random%20EH%201%20g0",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=It%20was%20noted%20in%20Nichol%20%20Schulman%202018%20that%20the%20following%20equality%20holds%20if%20the%20examples%20and%20order%20are%20random%20EH%201%20g0"
+        },
+        {
+            "id": "For_2017_d",
+            "entry": "For the supervised continual learning benchmarks leveraging MNIST Rotations and MNIST Permutations, following conventions, we use a two layer MLP architecture for all models with 100 hidden units in each layer. We also model our hyperparameter search after Lopez-Paz & Ranzato (2017) while providing statistics for each model across 5 random seeds.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20the%20supervised%20continual%20learning%20benchmarks%20leveraging%20MNIST%20Rotations%20and%20MNIST%20Permutations%20following%20conventions%20we%20use%20a%20two%20layer%20MLP%20architecture%20for%20all%20models%20with%20100%20hidden%20units%20in%20each%20layer%20We%20also%20model%20our%20hyperparameter%20search%20after%20LopezPaz%20%20Ranzato%202017%20while%20providing%20statistics%20for%20each%20model%20across%205%20random%20seeds",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=For%20the%20supervised%20continual%20learning%20benchmarks%20leveraging%20MNIST%20Rotations%20and%20MNIST%20Permutations%20following%20conventions%20we%20use%20a%20two%20layer%20MLP%20architecture%20for%20all%20models%20with%20100%20hidden%20units%20in%20each%20layer%20We%20also%20model%20our%20hyperparameter%20search%20after%20LopezPaz%20%20Ranzato%202017%20while%20providing%20statistics%20for%20each%20model%20across%205%20random%20seeds"
+        },
+        {
+            "id": "Omniglot_2016_a",
+            "entry": "For Omniglot, following Vinyals et al. (2016) we scale the images to 28x28 and use an architecture that consists of a stack of 4 modules before a fully connected softmax layer. Each module includes a 3x3 convolution with 64 filters, a ReLU non-linearity and 2x2 max-pooling.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Omniglot%2C%20For%20following%20Vinyals%20we%20scale%20the%20images%20to%2028x28%20and%20use%20an%20architecture%20that%20consists%20of%20a%20stack%20of%204%20modules%20before%20a%20fully%20connected%20softmax%20layer.%20Each%20module%20includes%20a%203x3%20convolution%20with%2064%20filters%2C%20a%20ReLU%20non-linearity%20and%202x2%20max-pooling%202016"
+        }
+    ]
+}

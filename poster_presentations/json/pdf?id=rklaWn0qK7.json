@@ -1,0 +1,235 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING NEURAL PDE SOLVERS WITH CONVERGENCE GUARANTEES",
+        "author": "Jun-Ting Hsieh, Stanford junting@stanford.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rklaWn0qK7"
+        },
+        "abstract": "Partial differential equations (PDEs) are widely used across the physical and computational sciences. Decades of research and engineering went into designing fast iterative solution methods. Existing solvers are general purpose, but may be sub-optimal for specific classes of problems. In contrast to existing hand-crafted solutions, we propose an approach to learn a fast iterative solver tailored to a specific domain. We achieve this goal by learning to modify the updates of an existing solver using a deep neural network. Crucially, our approach is proven to preserve strong correctness and convergence guarantees. After training on a single geometry, our model generalizes to a wide variety of geometries and boundary conditions, and achieves 2-3 times speedup compared to state-of-the-art solvers."
+    },
+    "keywords": [
+        {
+            "term": "geometries",
+            "url": "https://en.wikipedia.org/wiki/geometries"
+        },
+        {
+            "term": "iterative solver",
+            "url": "https://en.wikipedia.org/wiki/iterative_solver"
+        },
+        {
+            "term": "Partial differential",
+            "url": "https://en.wikipedia.org/wiki/Partial_differential"
+        },
+        {
+            "term": "physics",
+            "url": "https://en.wikipedia.org/wiki/physics"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "boundary condition",
+            "url": "https://en.wikipedia.org/wiki/boundary_condition"
+        },
+        {
+            "term": "monte carlo",
+            "url": "https://en.wikipedia.org/wiki/monte_carlo"
+        },
+        {
+            "term": "differential equation",
+            "url": "https://en.wikipedia.org/wiki/differential_equation"
+        },
+        {
+            "term": "Partial differential equations",
+            "url": "https://en.wikipedia.org/wiki/Partial_differential_equations"
+        }
+    ],
+    "abbreviations": {
+        "PDEs": "Partial differential equations"
+    },
+    "highlights": [
+        "Partial differential equations (PDEs) are ubiquitous tools for modeling physical phenomena, such as heat, electrostatics, and quantum mechanics",
+        "Our approach provides: (i) theoretical guarantees of convergence to the correct stationary solution, faster convergence than existing solvers, and generalizes to geometries and boundary conditions very different from the ones seen at training time",
+        "Our method achieves a 2-3\u00d7 speedup on number of multiplyadd operations when compared to standard iterative solvers, even on domains that are significantly different from our training set",
+        "For a discretized Partial differential equations problem (A, G, f, b, n) and given a standard iterative solver \u03a8, our goal is to improve upon \u03a8 and learn a solver \u03a6 that has (1) correct fixed point and (2) fast convergence on the class of problems of interest",
+        "We presented a method to learn an iterative solver for Partial differential equations that improves on an existing standard solver",
+        "We show that our model, trained on simple domains, can generalize to different grid sizes, geometries and boundary conditions"
+    ],
+    "key_statements": [
+        "Partial differential equations (PDEs) are ubiquitous tools for modeling physical phenomena, such as heat, electrostatics, and quantum mechanics",
+        "Partial differential equations are solved with hand-crafted approaches that iteratively update and improve a candidate solution until convergence",
+        "Decades of research and engineering went into designing update rules with fast convergence properties",
+        "High performing update rules could be too complex to design by hand",
+        "For Markov chain Monte Carlo, learned proposal distributions lead to orders of magnitude speedups compared to handdesigned ones (<a class=\"ref-link\" id=\"cSong_et+al_2017_a\" href=\"#rSong_et+al_2017_a\">Song et al, 2017</a>; <a class=\"ref-link\" id=\"cLevy_et+al_2017_a\" href=\"#rLevy_et+al_2017_a\">Levy et al, 2017</a>)",
+        "Our approach provides: (i) theoretical guarantees of convergence to the correct stationary solution, faster convergence than existing solvers, and generalizes to geometries and boundary conditions very different from the ones seen at training time",
+        "Our method achieves a 2-3\u00d7 speedup on number of multiplyadd operations when compared to standard iterative solvers, even on domains that are significantly different from our training set",
+        "Many Partial differential equations fall into this framework",
+        "To ensure a unique solution we provide additional equations, called \u201cboundary conditions\u201d",
+        "The Jacobi method has very slow convergence rate (LeVeque, 2007). This is evident from the update rule, where the value at each grid point is only influenced by its immediate neighbors",
+        "For a discretized Partial differential equations problem (A, G, f, b, n) and given a standard iterative solver \u03a8, our goal is to improve upon \u03a8 and learn a solver \u03a6 that has (1) correct fixed point and (2) fast convergence on the class of problems of interest",
+        "We previously showed that Jacobi iterator Eq(8,9) have this property for the Poisson Partial differential equations class",
+        "We evaluate our method on the 2D Poisson equation with Dirichlet boundary conditions, \u22072 u = f",
+        "A lot of these Partial differential equations are nonlinear and may not have a standard linear iterative solver, which is a limitation to our current method since our model must be built on top of an existing linear solver to ensure correctness",
+        "We presented a method to learn an iterative solver for Partial differential equations that improves on an existing standard solver",
+        "We show that our model, trained on simple domains, can generalize to different grid sizes, geometries and boundary conditions"
+    ],
+    "summary": [
+        "Partial differential equations (PDEs) are ubiquitous tools for modeling physical phenomena, such as heat, electrostatics, and quantum mechanics.",
+        "Our approach provides: (i) theoretical guarantees of convergence to the correct stationary solution, faster convergence than existing solvers, and generalizes to geometries and boundary conditions very different from the ones seen at training time.",
+        "Our method achieves a 2-3\u00d7 speedup on number of multiplyadd operations when compared to standard iterative solvers, even on domains that are significantly different from our training set.",
+        "Both convergence and fixed point conditions from Definition 1 are satisfied: Jacobi iterator Eq(8,9) is valid for any Poisson PDE problem.",
+        "For a discretized PDE problem (A, G, f, b, n) and given a standard iterative solver \u03a8, our goal is to improve upon \u03a8 and learn a solver \u03a6 that has (1) correct fixed point and (2) fast convergence on the class of problems of interest.",
+        "For a fixed PDE problem class A, let \u03a8 be a standard linear iterative solver known to be valid.",
+        "Generalization to different G and n has to be empirically verified: in our experiments, our learned iterator converges to the correct solution for a variety of grid sizes n and geometries G, even though it was only trained on one grid size and geometry.",
+        "There exist several iterative solvers for the Poisson equation, including Jacobi, Gauss-Seidel, conjugate-gradient, and multigrid methods.",
+        "Our goal is to train a model on simple domains where the ground truth solutions can be obtained, and evaluate its performance on different geometries and boundary conditions.",
+        "For training, we select the simplest Laplace equation, \u22072 u = 0, on a square domain with boundary conditions such that each side is a random fixed value.",
+        "The experiment results show that our model not only converges but converges faster than the standard solver, even though it is only trained on a smaller square domain.",
+        "To the best of our knowledge, previous works used deep networks to directly generate the solution; they have no correctness guarantees and are not generalizable to arbitrary grid sizes and boundary conditions.",
+        "A lot of these PDEs are nonlinear and may not have a standard linear iterative solver, which is a limitation to our current method since our model must be built on top of an existing linear solver to ensure correctness.",
+        "We show that our model, trained on simple domains, can generalize to different grid sizes, geometries and boundary conditions.",
+        "It converges correctly and achieves significant speedups compared to standard solvers, including highly optimized ones implemented in FEniCS"
+    ],
+    "headline": "In contrast to existing hand-crafted solutions, we propose an approach to learn a fast iterative solver tailored to a specific domain",
+    "reference_links": [
+        {
+            "id": "Aln_et+al_2015_a",
+            "entry": "Martin S Aln\u00e6s, Jan Blechta, Johan Hake, August Johansson, Benjamin Kehlet, Anders Logg, Chris Richardson, Johannes Ring, Marie E Rognes, and Garth N Wells. The fenics project version 1.5. Archive of Numerical Software, 3(100):9\u201323, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Aln%C3%A6s%2C%20Martin%20S.%20Blechta%2C%20Jan%20Hake%2C%20Johan%20Johansson%2C%20August%20The%20fenics%20project%20version%201.5%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Aln%C3%A6s%2C%20Martin%20S.%20Blechta%2C%20Jan%20Hake%2C%20Johan%20Johansson%2C%20August%20The%20fenics%20project%20version%201.5%202015"
+        },
+        {
+            "id": "Andrychowicz_et+al_2016_a",
+            "entry": "Marcin Andrychowicz, Misha Denil, Sergio Gomez, Matthew W Hoffman, David Pfau, Tom Schaul, Brendan Shillingford, and Nando De Freitas. Learning to learn by gradient descent by gradient descent. In Advances in Neural Information Processing Systems, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Andrychowicz%2C%20Marcin%20Denil%2C%20Misha%20Gomez%2C%20Sergio%20Hoffman%2C%20Matthew%20W.%20Learning%20to%20learn%20by%20gradient%20descent%20by%20gradient%20descent%202016"
+        },
+        {
+            "id": "Arora_et+al_2018_a",
+            "entry": "Sanjeev Arora, Nadav Cohen, and Elad Hazan. On the optimization of deep networks: Implicit acceleration by overparameterization. arXiv preprint arXiv:1802.06509, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06509"
+        },
+        {
+            "id": "Chu_2017_a",
+            "entry": "Mengyu Chu and Nils Thuerey. Data-driven synthesis of smoke flows with cnn-based feature descriptors. ACM Transactions on Graphics (TOG), 36(4):69, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chu%2C%20Mengyu%20Thuerey%2C%20Nils%20Data-driven%20synthesis%20of%20smoke%20flows%20with%20cnn-based%20feature%20descriptors%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chu%2C%20Mengyu%20Thuerey%2C%20Nils%20Data-driven%20synthesis%20of%20smoke%20flows%20with%20cnn-based%20feature%20descriptors%202017"
+        },
+        {
+            "id": "Eismann_et+al_2018_a",
+            "entry": "Stephan Eismann, Daniel Levy, Rui Shu, Stefan Bartzsch, and Stefano Ermon. Bayesian optimization and attribute adjustment. In Proc. 34th Conference on Uncertainty in Artificial Intelligence, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Eismann%2C%20Stephan%20Levy%2C%20Daniel%20Shu%2C%20Rui%20Bartzsch%2C%20Stefan%20Bayesian%20optimization%20and%20attribute%20adjustment%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Eismann%2C%20Stephan%20Levy%2C%20Daniel%20Shu%2C%20Rui%20Bartzsch%2C%20Stefan%20Bayesian%20optimization%20and%20attribute%20adjustment%202018"
+        },
+        {
+            "id": "Farimani_et+al_2017_a",
+            "entry": "Amir Barati Farimani, Joseph Gomes, and Vijay S Pande. Deep learning the physics of transport phenomena. arXiv preprint arXiv:1709.02432, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.02432"
+        },
+        {
+            "id": "Frankel_1950_a",
+            "entry": "Stanley P Frankel. Convergence rates of iterative treatments of partial differential equations. Mathematical Tables and Other Aids to Computation, 4(30):65\u201375, 1950.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Frankel%2C%20Stanley%20P.%20Convergence%20rates%20of%20iterative%20treatments%20of%20partial%20differential%20equations.%20Mathematical%20Tables%20and%20Other%20Aids%20to%201950",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Frankel%2C%20Stanley%20P.%20Convergence%20rates%20of%20iterative%20treatments%20of%20partial%20differential%20equations.%20Mathematical%20Tables%20and%20Other%20Aids%20to%201950"
+        },
+        {
+            "id": "Guo_et+al_2016_a",
+            "entry": "Xiaoxiao Guo, Wei Li, and Francesco Iorio. Convolutional neural networks for steady flow approximation. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 481\u2013490, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guo%2C%20Xiaoxiao%20Li%2C%20Wei%20Iorio%2C%20Francesco%20Convolutional%20neural%20networks%20for%20steady%20flow%20approximation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guo%2C%20Xiaoxiao%20Li%2C%20Wei%20Iorio%2C%20Francesco%20Convolutional%20neural%20networks%20for%20steady%20flow%20approximation%202016"
+        },
+        {
+            "id": "Tim_2018_a",
+            "entry": "Tim Kraska, Alex Beutel, Ed H Chi, Jeffrey Dean, and Neoklis Polyzotis. The case for learned index structures. In Proceedings of the 2018 International Conference on Management of Data, pp. 489\u2013504. ACM, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tim%20Kraska%20Alex%20Beutel%20Ed%20H%20Chi%20Jeffrey%20Dean%20and%20Neoklis%20Polyzotis%20The%20case%20for%20learned%20index%20structures%20In%20Proceedings%20of%20the%202018%20International%20Conference%20on%20Management%20of%20Data%20pp%20489504%20ACM%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tim%20Kraska%20Alex%20Beutel%20Ed%20H%20Chi%20Jeffrey%20Dean%20and%20Neoklis%20Polyzotis%20The%20case%20for%20learned%20index%20structures%20In%20Proceedings%20of%20the%202018%20International%20Conference%20on%20Management%20of%20Data%20pp%20489504%20ACM%202018"
+        },
+        {
+            "id": "Kutz_2017_a",
+            "entry": "J Nathan Kutz. Deep learning in fluid dynamics. Journal of Fluid Mechanics, 814:1\u20134, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kutz%2C%20J.Nathan%20Deep%20learning%20in%20fluid%20dynamics%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kutz%2C%20J.Nathan%20Deep%20learning%20in%20fluid%20dynamics%202017"
+        },
+        {
+            "id": "Levy_et+al_2017_a",
+            "entry": "Daniel Levy, Matthew D Hoffman, and Jascha Sohl-Dickstein. Generalizing hamiltonian monte carlo with neural networks. arXiv preprint arXiv:1711.09268, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.09268"
+        },
+        {
+            "id": "Logg_et+al_2012_a",
+            "entry": "Anders Logg, Kent-Andre Mardal, and Garth Wells. Automated solution of differential equations by the finite element method: The FEniCS book. Springer, 2012. ISBN 978-3-642-23098-1. doi: 10.1007/978-3-642-23099-8.",
+            "crossref": "https://dx.doi.org/10.1007/978-3-642-23099-8"
+        },
+        {
+            "id": "Mills_et+al_2017_a",
+            "entry": "Kyle Mills, Michael Spanner, and Isaac Tamblyn. Deep learning and the schrodinger equation. Physical Review A, 96(4):042113, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mills%2C%20Kyle%20Spanner%2C%20Michael%20Tamblyn%2C%20Isaac%20Deep%20learning%20and%20the%20schrodinger%20equation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mills%2C%20Kyle%20Spanner%2C%20Michael%20Tamblyn%2C%20Isaac%20Deep%20learning%20and%20the%20schrodinger%20equation%202017"
+        },
+        {
+            "id": "Olver_2008_a",
+            "entry": "Peter J Olver. Numerical solution of ordinary differential equations. Numerical Analysis Lecture Notes, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Olver%2C%20Peter%20J.%20Numerical%20solution%20of%20ordinary%20differential%20equations.%20Numerical%20Analysis%20Lecture%20Notes%202008"
+        },
+        {
+            "id": "Sharma_et+al_2018_a",
+            "entry": "Rishi Sharma, Amir Barati Farimani, Joe Gomes, Peter Eastman, and Vijay Pande. Weaklysupervised deep learning of heat transport via physics informed loss. arXiv preprint arXiv:1807.11374, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.11374"
+        },
+        {
+            "id": "Singh_et+al_2017_a",
+            "entry": "Anand Pratap Singh, Shivaji Medida, and Karthik Duraisamy. Machine-learning-augmented predictive modeling of turbulent separated flows over airfoils. AIAA Journal, pp. 2215\u20132227, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Singh%2C%20Anand%20Pratap%20Medida%2C%20Shivaji%20Duraisamy%2C%20Karthik%20Machine-learning-augmented%20predictive%20modeling%20of%20turbulent%20separated%20flows%20over%20airfoils%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Singh%2C%20Anand%20Pratap%20Medida%2C%20Shivaji%20Duraisamy%2C%20Karthik%20Machine-learning-augmented%20predictive%20modeling%20of%20turbulent%20separated%20flows%20over%20airfoils%202017"
+        },
+        {
+            "id": "Sirignano_2018_a",
+            "entry": "Justin Sirignano and Konstantinos Spiliopoulos. Dgm: A deep learning algorithm for solving partial differential equations. Journal of Computational Physics, 375:1339\u20131364, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sirignano%2C%20Justin%20Spiliopoulos%2C%20Konstantinos%20Dgm%3A%20A%20deep%20learning%20algorithm%20for%20solving%20partial%20differential%20equations%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sirignano%2C%20Justin%20Spiliopoulos%2C%20Konstantinos%20Dgm%3A%20A%20deep%20learning%20algorithm%20for%20solving%20partial%20differential%20equations%202018"
+        },
+        {
+            "id": "Song_et+al_2017_a",
+            "entry": "Jiaming Song, Shengjia Zhao, and Stefano Ermon. A-nice-mc: Adversarial training for mcmc. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Song%2C%20Jiaming%20Zhao%2C%20Shengjia%20Ermon%2C%20Stefano%20A-nice-mc%3A%20Adversarial%20training%20for%20mcmc%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Song%2C%20Jiaming%20Zhao%2C%20Shengjia%20Ermon%2C%20Stefano%20A-nice-mc%3A%20Adversarial%20training%20for%20mcmc%202017"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "Wei Tang, Tao Shan, Xunwang Dang, Maokun Li, Fan Yang, Shenheng Xu, and Ji Wu. Study on a poisson\u2019s equation solver based on deep learning technique. In IEEE Electrical Design of Advanced Packaging and Systems Symposium (EDAPS). IEEE, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Wei%20Shan%2C%20Tao%20Dang%2C%20Xunwang%20Li%2C%20Maokun%20Study%20on%20a%20poisson%E2%80%99s%20equation%20solver%20based%20on%20deep%20learning%20technique%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Wei%20Shan%2C%20Tao%20Dang%2C%20Xunwang%20Li%2C%20Maokun%20Study%20on%20a%20poisson%E2%80%99s%20equation%20solver%20based%20on%20deep%20learning%20technique%202017"
+        },
+        {
+            "id": "Tompson_et+al_2017_a",
+            "entry": "Jonathan Tompson, Kristofer Schlachter, Pablo Sprechmann, and Ken Perlin. Accelerating eulerian fluid simulation with convolutional networks. In International Conference on Machine Learning, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tompson%2C%20Jonathan%20Schlachter%2C%20Kristofer%20Sprechmann%2C%20Pablo%20Perlin%2C%20Ken%20Accelerating%20eulerian%20fluid%20simulation%20with%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tompson%2C%20Jonathan%20Schlachter%2C%20Kristofer%20Sprechmann%2C%20Pablo%20Perlin%2C%20Ken%20Accelerating%20eulerian%20fluid%20simulation%20with%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Yang_et+al_2016_a",
+            "entry": "Cheng Yang, Xubo Yang, and Xiangyun Xiao. Data-driven projection method in fluid simulation. Computer Animation and Virtual Worlds, 27(3-4):415\u2013424, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yang%2C%20Cheng%20Yang%2C%20Xubo%20Xiao%2C%20Xiangyun%20Data-driven%20projection%20method%20in%20fluid%20simulation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yang%2C%20Cheng%20Yang%2C%20Xubo%20Xiao%2C%20Xiangyun%20Data-driven%20projection%20method%20in%20fluid%20simulation%202016"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Zhongyang Zhang, Ling Zhang, Ze Sun, Nicholas Erickson, Ryan From, and Jun Fan. Solving poisson\u2019s equation using deep learning in particle simulation of pn junction. arXiv preprint arXiv:1810.10192, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.10192"
+        },
+        {
+            "id": "Since_) < 1,_a",
+            "entry": "Since \u03c1(T ) < 1, we know T k \u2192 0 as k \u2192 \u221e (LeVeque, 2007), which means the error ek \u2192 0.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Since%20%CF%81T%20%20%201%20we%20know%20T%20k%20%200%20as%20k%20%20%20LeVeque%202007%20which%20means%20the%20error%20ek%20%200",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Since%20%CF%81T%20%20%201%20we%20know%20T%20k%20%200%20as%20k%20%20%20LeVeque%202007%20which%20means%20the%20error%20ek%20%200"
+        },
+        {
+            "id": "Any_1950_a",
+            "entry": "For any matrix T, the spectral radius is bounded by the spectral norm: \u03c1(T ) \u2264 T 2, and the equality holds if T is symmetric. Since (I \u2212 A) is a symmetric matrix, \u03c1(I \u2212 A) = I \u2212 A 2. It has been proven that \u03c1(I \u2212 A) < 1 (Frankel, 1950). Moreover, G 2 = 1.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=For%20any%20matrix%20T%20the%20spectral%20radius%20is%20bounded%20by%20the%20spectral%20norm%20%CF%81T%20%20%20T%202%20and%20the%20equality%20holds%20if%20T%20is%20symmetric%20Since%20I%20%20A%20is%20a%20symmetric%20matrix%20%CF%81I%20%20A%20%20I%20%20A%202%20It%20has%20been%20proven%20that%20%CF%81I%20%20A%20%201%20Frankel%201950%20Moreover%20G%202%20%201"
+        }
+    ]
+}

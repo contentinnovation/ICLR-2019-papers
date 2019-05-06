@@ -1,0 +1,249 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "On the relation between the sharpest directions of DNN loss and the SGD step length",
+        "author": "Stanis\u0142aw Jastrz\u0119bski, Zachary Kenton, Nicolas Ballas, Asja Fischer, Yoshua Bengio, and Amos Storkey",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SkgEaj05t7"
+        },
+        "abstract": "Stochastic Gradient Descent (SGD) based training of neural networks with a large learning rate or a small batch-size typically ends in well-generalizing, flat regions of the weight space, as indicated by small eigenvalues of the Hessian of the training loss. However, the curvature along the SGD trajectory is poorly understood. An empirical investigation shows that initially SGD visits increasingly sharp regions, reaching a maximum sharpness determined by both the learning rate and the batch-size of SGD. When studying the SGD dynamics in relation to the sharpest directions in this initial phase, we find that the SGD step is large compared to the curvature and commonly fails to minimize the loss along the sharpest directions. Furthermore, using a reduced learning rate along these directions can improve training speed while leading to both sharper and better generalizing solutions compared to vanilla SGD. In summary, our analysis of the dynamics of SGD in the subspace of the sharpest directions shows that they influence the regions that SGD steers to (where larger learning rate or smaller batch size result in wider regions visited), the overall training speed, and the generalization ability of the final model."
+    },
+    "keywords": [
+        {
+            "term": "dynamics",
+            "url": "https://en.wikipedia.org/wiki/dynamics"
+        },
+        {
+            "term": "learning rate",
+            "url": "https://en.wikipedia.org/wiki/learning_rate"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        }
+    ],
+    "abbreviations": {
+        "SGD": "Stochastic Gradient Descent",
+        "DNNs": "Deep Neural Networks",
+        "LSTM": "Long Short Term Memory"
+    },
+    "highlights": [
+        "Deep Neural Networks (DNNs) are often massively over-parameterized (Zhang et al, 2016), yet show state-of-the-art generalization performance on a wide variety of tasks when trained with Stochastic Gradient Descent (SGD)",
+        "We highlight that Stochastic Gradient Descent steers from the beginning towards increasingly sharp regions until some maximum is reached; at this peak the Stochastic Gradient Descent step length is large compared to the curvature along the sharpest directions",
+        "The somewhat puzzling empirical correlation between the endpoint curvature and its generalization properties reached in the training of Deep Neural Networks motivated our study",
+        "Our main contribution is exposing the relation between Stochastic Gradient Descent dynamics and the sharpest directions, and investigating its importance for training",
+        "Stochastic Gradient Descent steers from the beginning towards increasingly sharp regions of the loss surface, up to a level dependent on the learning rate and the batch-size",
+        "The Stochastic Gradient Descent step is large compared to the curvature along the sharpest directions, and highly aligned with them"
+    ],
+    "key_statements": [
+        "Deep Neural Networks (DNNs) are often massively over-parameterized (Zhang et al, 2016), yet show state-of-the-art generalization performance on a wide variety of tasks when trained with Stochastic Gradient Descent (SGD)",
+        "While understanding the generalization capability of Deep Neural Networks remains an open challenge, it has been hypothesized that Stochastic Gradient Descent acts as an implicit regularizer, limiting the complexity of the found solution (<a class=\"ref-link\" id=\"cPoggio_et+al_2017_a\" href=\"#rPoggio_et+al_2017_a\">Poggio et al, 2017</a>; <a class=\"ref-link\" id=\"cAdvani_2017_a\" href=\"#rAdvani_2017_a\">Advani and Saxe, 2017</a>; <a class=\"ref-link\" id=\"cWilson_et+al_2017_a\" href=\"#rWilson_et+al_2017_a\">Wilson et al, 2017</a>; Jastrz\u0119bski et al, 2017)",
+        "Our work aims at understanding the interaction between Stochastic Gradient Descent and the sharpest directions of the loss surface, i.e. those corresponding to the largest eigenvalues of the Hessian",
+        "To further understand this phenomenon, we study the dynamics of Stochastic Gradient Descent in relation to the sharpest directions in Sec. 3.2 and Sec. 3.3",
+        "In most cases we find this variant optimizes faster and leads to a sharper region, which generalizes the same or better compared to vanilla Stochastic Gradient Descent with the same learning rate",
+        "We investigate the training of VGG-11 (<a class=\"ref-link\" id=\"cSimonyan_2014_a\" href=\"#rSimonyan_2014_a\">Simonyan and Zisserman, 2014</a>) on the CIFAR-10 dataset and of a bidirectional Long Short Term Memory (LSTM) model, with added dropout regularization of 0.1) on the Penn Tree Bank\n1That is considering gi =< g, ei > ei for different i, where g is the gradient and ei is the ith normalized eigenvector corresponding to the ith largest eigenvalue of the Hessian.\n2In Resnet-32 we omit Batch-Normalization layers due to their interaction with the loss surface curvature (<a class=\"ref-link\" id=\"cBjorck_et+al_2018_a\" href=\"#rBjorck_et+al_2018_a\">Bjorck et al, 2018</a>) and use initialization scaled by the depth of the network (<a class=\"ref-link\" id=\"cTaki_2017_a\" href=\"#rTaki_2017_a\">Taki, 2017</a>)",
+        "We study the eigenvalues of the Hessian of the training loss along the Stochastic Gradient Descent optimization trajectory, and the Stochastic Gradient Descent dynamics in the subspace corresponding to the largest eigenvalues",
+        "We highlight that Stochastic Gradient Descent steers from the beginning towards increasingly sharp regions until some maximum is reached; at this peak the Stochastic Gradient Descent step length is large compared to the curvature along the sharpest directions",
+        "Summary. These results show that the learning rate and batch size not only influence the Stochastic Gradient Descent endpoint maximum curvature, but impact the whole Stochastic Gradient Descent trajectory",
+        "A high learning rate or a small batch size limits the maximum spectral norm along the path found by Stochastic Gradient Descent from the beginning of training",
+        "Stochastic Gradient Descent dynamics are largely coupled with the shape of the loss surface in the sharpest direction, in the sense that when projected onto the sharpest direction, the typical step taken by Stochastic Gradient Descent is too large compared to curvature to enable it to reduce loss",
+        "We evaluate L(\u03b8(t) + ke1\u2206\u03b81(t)), where \u03b8(t) is the current parameter vector, and k is an interpolation parameter. For both SimpleCNN and Resnet-32 models, we observe that the loss on the scale of \u2206\u03b81(t) starts to show a bowl-like structure in the largest eigenvalue direction after six epochs. This further corroborates the previous result that Stochastic Gradient Descent step length is large compared to curvature in the sharpest direction",
+        "We will study a related variant of Stochastic Gradient Descent throughout the training .\n4 Optimizing faster while finding a good sharp region. In this final section we study how the convergence speed of Stochastic Gradient Descent and the generalization of the resulting model depend on the dynamics along the sharpest directions",
+        "We have investigated what happens if Stochastic Gradient Descent uses a reduced learning rate along the sharpest directions",
+        "In contrast we show that from the beginning of training Stochastic Gradient Descent visits regions in which Stochastic Gradient Descent step is too large compared to curvature",
+        "The somewhat puzzling empirical correlation between the endpoint curvature and its generalization properties reached in the training of Deep Neural Networks motivated our study",
+        "Our main contribution is exposing the relation between Stochastic Gradient Descent dynamics and the sharpest directions, and investigating its importance for training",
+        "Stochastic Gradient Descent steers from the beginning towards increasingly sharp regions of the loss surface, up to a level dependent on the learning rate and the batch-size",
+        "The Stochastic Gradient Descent step is large compared to the curvature along the sharpest directions, and highly aligned with them",
+        "Our experiments suggest that understanding the behavior of optimization along the sharpest directions is a promising avenue for studying generalization properties of neural networks"
+    ],
+    "summary": [
+        "Deep Neural Networks (DNNs) are often massively over-parameterized (Zhang et al, 2016), yet show state-of-the-art generalization performance on a wide variety of tasks when trained with Stochastic Gradient Descent (SGD).",
+        "Our work aims at understanding the interaction between SGD and the sharpest directions of the loss surface, i.e. those corresponding to the largest eigenvalues of the Hessian.",
+        "We highlight that SGD steers from the beginning towards increasingly sharp regions until some maximum is reached; at this peak the SGD step length is large compared to the curvature along the sharpest directions.",
+        "We first investigate the training loss curvature in the sharpest directions, along the training trajectory for both the SimpleCNN and Resnet-32 models.",
+        "In the case of Resnet-32 we can clearly see that the magnitude of the largest eigenvalues of the Hessian grows initially, which is followed by a sharp drop in accuracy suggesting instability of the optimization, see Fig. 3.",
+        "Fig. 4 shows the evolution of the two largest eigenvalues of the Hessian during training of the SimpleCNN and Resnet-32 on CIFAR-10, and an LSTM on PTB, for different values of \u03b7 and S.",
+        "These results show that the learning rate and batch size not only influence the SGD endpoint maximum curvature, but impact the whole SGD trajectory.",
+        "A high learning rate or a small batch size limits the maximum spectral norm along the path found by SGD from the beginning of training.",
+        "We study the same SimpleCNN and Resnet-32 models as in the previous experiment in the first 6 epochs of training with SGD with \u03b7=0.01 and S = 128.",
+        "This is consistent with the observation that learning rate and batch-size limit the maximum spectral norm of the Hessian.",
+        "For both SimpleCNN and Resnet-32 models, we observe that the loss on the scale of \u2206\u03b81(t) starts to show a bowl-like structure in the largest eigenvalue direction after six epochs.",
+        "In this final section we study how the convergence speed of SGD and the generalization of the resulting model depend on the dynamics along the sharpest directions.",
+        "Baseline SGD using the same learning rate reached 86.4% test accuracy with the Frobenius norm of the Hessian ||H||F = 272 (86.6% with ||H||F = 191 on SimpleCNN).",
+        "NSGD is capable of optimizing faster and finding good generalizing sharp minima, i.e. regions of the loss surface at the convergence which are sharper compared to those found by vanilla SGD using the same low learning rate, while exhibiting better generalization performance.",
+        "SGD steers from the beginning towards increasingly sharp regions of the loss surface, up to a level dependent on the learning rate and the batch-size.",
+        "Results such as those showing the impact of the SGD step length on the regions visited may help design novel optimizers tailor-fit to neural networks"
+    ],
+    "headline": "When studying the Stochastic Gradient Descent dynamics in relation to the sharpest directions in this initial phase, we find that the Stochastic Gradient Descent step is large compared to the curvature and commonly fails to minimize the loss along the sharpest directions",
+    "reference_links": [
+        {
+            "id": "Advani_2017_a",
+            "entry": "Madhu S Advani and Andrew M Saxe. High-dimensional dynamics of generalization error in neural networks. arXiv preprint arXiv:1710.03667, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1710.03667"
+        },
+        {
+            "id": "Bjorck_et+al_2018_a",
+            "entry": "J. Bjorck, C. Gomes, and B. Selman. Understanding Batch Normalization. ArXiv e-prints, May 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bjorck%2C%20J.%20Gomes%2C%20C.%20Selman%2C%20B.%20Understanding%20Batch%20Normalization.%20ArXiv%20e-prints%202018-05"
+        },
+        {
+            "id": "Chaudhari_2017_a",
+            "entry": "P. Chaudhari and S. Soatto. Stochastic gradient descent performs variational inference, converges to limit cycles for deep networks. ArXiv e-prints, October 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chaudhari%2C%20P.%20Soatto%2C%20S.%20Stochastic%20gradient%20descent%20performs%20variational%20inference%2C%20converges%20to%20limit%20cycles%20for%20deep%20networks.%20ArXiv%20e-prints%202017-10"
+        },
+        {
+            "id": "Chollet_2015_a",
+            "entry": "Fran\u00e7ois Chollet et al. Keras. https://github.com/keras-team/keras, 2015.",
+            "url": "https://github.com/keras-team/keras"
+        },
+        {
+            "id": "Dauphin_et+al_2014_a",
+            "entry": "Yann Dauphin, Razvan Pascanu, \u00c7aglar G\u00fcl\u00e7ehre, Kyunghyun Cho, Surya Ganguli, and Yoshua Bengio. Identifying and attacking the saddle point problem in high-dimensional non-convex optimization. CoRR, abs/1406.2572, 2014. URL http://arxiv.org/abs/1406.2572.",
+            "url": "http://arxiv.org/abs/1406.2572",
+            "arxiv_url": "https://arxiv.org/pdf/1406.2572"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "Laurent Dinh, Razvan Pascanu, Samy Bengio, and Yoshua Bengio. Sharp minima can generalize for deep nets. arXiv preprint arXiv:1703.04933, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1703.04933"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "I. J. Goodfellow, O. Vinyals, and A. M. Saxe. Qualitatively characterizing neural network optimization problems. ArXiv e-prints, December 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20I.J.%20Vinyals%2C%20O.%20Saxe%2C%20A.M.%20Qualitatively%20characterizing%20neural%20network%20optimization%20problems.%20ArXiv%20e-prints%202014-12"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Doll\u00e1r, Ross B. Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch SGD: training imagenet in 1 hour. CoRR, abs/1706.02677, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Flat minima. Neural Computation, 9(1):1\u201342, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Flat%20minima%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Flat%20minima%201997"
+        },
+        {
+            "id": "Jastrz_et+al_2017_a",
+            "entry": "Stanis\u0142aw Jastrz\u0119bski, Zachary Kenton, Devansh Arpit, Nicolas Ballas, Asja Fischer, Yoshua Bengio, and Amos Storkey. Three factors influencing minima in sgd. arXiv preprint arXiv:1711.04623, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1711.04623"
+        },
+        {
+            "id": "Keskar_et+al_2016_a",
+            "entry": "N.S.= Keskar, D. Mudigere, J. Nocedal, M. Smelyanskiy, and P. T. P. Tang. On Large-Batch Training for Deep Learning: Generalization Gap and Sharp Minima. ArXiv e-prints, September 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Keskar%2C%20N.S.%3D%20Mudigere%2C%20D.%20Nocedal%2C%20J.%20Smelyanskiy%2C%20M.%20On%20Large-Batch%20Training%20for%20Deep%20Learning%3A%20Generalization%20Gap%20and%20Sharp%20Minima.%20ArXiv%20e-prints%202016-09"
+        },
+        {
+            "id": "Krizhevsky_et+al_0000_a",
+            "entry": "Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. Cifar-10 (canadian institute for advanced research). URL http://www.cs.toronto.edu/~kriz/cifar.html.",
+            "url": "http://www.cs.toronto.edu/~kriz/cifar.html"
+        },
+        {
+            "id": "Lanczos_1950_a",
+            "entry": "Cornelius Lanczos. An iteration method for the solution of the eigenvalue problem of linear differential and integral operators. J. Res. Natl. Bur. Stand. B, 45:255\u2013282, 1950. doi: 10.6028/jres.045.026.",
+            "crossref": "https://dx.doi.org/10.6028/jres.045.026",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.6028/jres.045.026"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, L\u00e9on Bottou, Genevieve B. Orr, and Klaus-Robert M\u00fcller. Efficient backprop. In Neural Networks: Tricks of the Trade, This Book is an Outgrowth of a 1996 NIPS Workshop, pages 9\u201350, London, UK, UK, 1998. Springer-Verlag. ISBN 3-540-65311-2. URL http://dl.acm.org/citation.cfm?id=645754.668382.",
+            "url": "http://dl.acm.org/citation.cfm?id=645754.668382"
+        },
+        {
+            "id": "Maas_et+al_2011_a",
+            "entry": "Andrew L. Maas, Raymond E. Daly, Peter T. Pham, Dan Huang, Andrew Y. Ng, and Christopher Potts. Learning word vectors for sentiment analysis. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies - Volume 1, HLT \u201911, pages 142\u2013150, Stroudsburg, PA, USA, 2011. Association for Computational Linguistics. ISBN 978-1-932432-87-9. URL http://dl.acm.org/citation.cfm?id=2002472.2002491.",
+            "url": "http://dl.acm.org/citation.cfm?id=2002472.2002491",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Maas%2C%20Andrew%20L.%20Daly%2C%20Raymond%20E.%20Pham%2C%20Peter%20T.%20Huang%2C%20Dan%20Learning%20word%20vectors%20for%20sentiment%20analysis%202011"
+        },
+        {
+            "id": "Murata_et+al_1994_a",
+            "entry": "Noboru Murata, Shuji Yoshizawa, and Shun ichi Amari. Network information criteriondetermining the number of hidden units for an artificial neural network model. IEEE transactions on neural networks, 5 6:865\u201372, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murata%2C%20Noboru%20Yoshizawa%2C%20Shuji%20ichi%20Amari%2C%20Shun%20Network%20information%20criteriondetermining%20the%20number%20of%20hidden%20units%20for%20an%20artificial%20neural%20network%20model%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Murata%2C%20Noboru%20Yoshizawa%2C%20Shuji%20ichi%20Amari%2C%20Shun%20Network%20information%20criteriondetermining%20the%20number%20of%20hidden%20units%20for%20an%20artificial%20neural%20network%20model%201994"
+        },
+        {
+            "id": "Neyshabur_et+al_2017_a",
+            "entry": "Behnam Neyshabur, Srinadh Bhojanapalli, David McAllester, and Nathan Srebro. Exploring generalization in deep learning. CoRR, abs/1706.08947, 2017. URL http://arxiv.org/abs/1706.08947.",
+            "url": "http://arxiv.org/abs/1706.08947",
+            "arxiv_url": "https://arxiv.org/pdf/1706.08947"
+        },
+        {
+            "id": "Poggio_et+al_2017_a",
+            "entry": "Tomaso Poggio, Kenji Kawaguchi, Qianli Liao, Brando Miranda, Lorenzo Rosasco, Xavier Boix, Jack Hidary, and Hrushikesh Mhaskar. Theory of deep learning iii: explaining the non-overfitting puzzle. arXiv preprint arXiv:1801.00173, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1801.00173"
+        },
+        {
+            "id": "Sagun_et+al_2016_a",
+            "entry": "Levent Sagun, L\u00e9on Bottou, and Yann LeCun. Singularity of the hessian in deep learning. arXiv preprint arXiv:1611.07476, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.07476"
+        },
+        {
+            "id": "Sagun_et+al_2017_a",
+            "entry": "Levent Sagun, Utku Evci, V Ugur Guney, Yann Dauphin, and Leon Bottou. Empirical analysis of the hessian of over-parametrized neural networks. arXiv preprint arXiv:1706.04454, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.04454"
+        },
+        {
+            "id": "Simonyan_2014_a",
+            "entry": "Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. CoRR, abs/1409.1556, 2014. URL http://arxiv.org/abs/1409.1556.",
+            "url": "http://arxiv.org/abs/1409.1556",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "Taki_2017_a",
+            "entry": "Masato Taki. Deep residual networks and weight initialization. CoRR, abs/1709.02956, 2017. URL http://arxiv.org/abs/1709.02956.",
+            "url": "http://arxiv.org/abs/1709.02956",
+            "arxiv_url": "https://arxiv.org/pdf/1709.02956"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "H. Wang, N. Keskar, C. Xiong, and R. Socher. Identifying Generalization Properties in Neural Networks. ArXiv e-prints, September 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=H%20Wang%20N%20Keskar%20C%20Xiong%20and%20R%20Socher%20Identifying%20Generalization%20Properties%20in%20Neural%20Networks%20ArXiv%20eprints%20September%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=H%20Wang%20N%20Keskar%20C%20Xiong%20and%20R%20Socher%20Identifying%20Generalization%20Properties%20in%20Neural%20Networks%20ArXiv%20eprints%20September%202018"
+        },
+        {
+            "id": "Wen_et+al_2018_a",
+            "entry": "W. Wen, Y. Wang, F. Yan, C. Xu, C. Wu, Y. Chen, and H. Li. SmoothOut: Smoothing Out Sharp Minima to Improve Generalization in Deep Learning. ArXiv e-prints, May 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wen%2C%20W.%20Wang%2C%20Y.%20Yan%2C%20F.%20Xu%2C%20C.%20SmoothOut%3A%20Smoothing%20Out%20Sharp%20Minima%20to%20Improve%20Generalization%20in%20Deep%20Learning.%20ArXiv%20e-prints%202018-05"
+        },
+        {
+            "id": "Wilson_et+al_2017_a",
+            "entry": "Ashia C Wilson, Rebecca Roelofs, Mitchell Stern, Nathan Srebro, and Benjamin Recht. The marginal value of adaptive gradient methods in machine learning. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nathan%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ashia%20C%20Wilson%20Rebecca%20Roelofs%20Mitchell%20Stern%20Nathan%20Srebro%20and%20Benjamin%20Recht%20The%20marginal%20value%20of%20adaptive%20gradient%20methods%20in%20machine%20learning%202017"
+        },
+        {
+            "id": "Xiao_et+al_2017_a",
+            "entry": "H. Xiao, K. Rasul, and R. Vollgraf. Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms. ArXiv e-prints, August 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20H.%20Rasul%2C%20K.%20Vollgraf%2C%20R.%20Fashion-MNIST%3A%20a%20Novel%20Image%20Dataset%20for%20Benchmarking%20Machine%20Learning%20Algorithms.%20ArXiv%20e-prints%202017-08"
+        },
+        {
+            "id": "Xing_et+al_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 C. Xing, D. Arpit, C. Tsirigotis, and Y. Bengio. A Walk with SGD. ArXiv e-prints, February",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xing%2C%20C.%20Arpit%2C%20D.%20Tsirigotis%2C%20C.%20Bengio%2C%20Y.%20Published%20as%20a%20conference%20paper%20at%20ICLR%202019-02",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xing%2C%20C.%20Arpit%2C%20D.%20Tsirigotis%2C%20C.%20Bengio%2C%20Y.%20Published%20as%20a%20conference%20paper%20at%20ICLR%202019-02"
+        },
+        {
+            "id": "Yao_et+al_2014_a",
+            "entry": "2018. Zhewei Yao, Amir Gholami, Qi Lei, Kurt Keutzer, and Michael W Mahoney. Hessianbased analysis of large batch training and robustness to adversaries. arXiv preprint arXiv:1802.08241, 2018. Wojciech Zaremba, Ilya Sutskever, and Oriol Vinyals. Recurrent neural network regularization, 2014. URL https://arxiv.org/abs/1409.2329. Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization.arXiv preprint arXiv:1611.03530, 2016.",
+            "url": "https://arxiv.org/abs/1409.2329",
+            "arxiv_url": "https://arxiv.org/pdf/1802.08241"
+        },
+        {
+            "id": "Zhu_et+al_2018_a",
+            "entry": "Z. Zhu, J. Wu, B. Yu, L. Wu, and J. Ma. The Regularization Effects of Anisotropic Noise in Stochastic Gradient Descent. ArXiv e-prints, February 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Z.%20Wu%2C%20J.%20Yu%2C%20B.%20Wu%2C%20L.%20The%20Regularization%20Effects%20of%20Anisotropic%20Noise%20in%20Stochastic%20Gradient%20Descent.%20ArXiv%20e-prints%202018-02"
+        },
+        {
+            "id": "First_2018_a",
+            "entry": "First, we show that the instability in the early phase of full-batch training is partially solved through use of Batch-Normalization layers, consistent with the results reported by Bjorck et al. (2018); results are shown in Fig. 9.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=First%20we%20show%20that%20the%20instability%20in%20the%20early%20phase%20of%20full-batch%20training%20is%20partially%20solved%20through%20use%20of%20Batch-Normalization%20layers%2C%20consistent%20with%20the%20results%20reported%20by%20Bjorck%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=First%20we%20show%20that%20the%20instability%20in%20the%20early%20phase%20of%20full-batch%20training%20is%20partially%20solved%20through%20use%20of%20Batch-Normalization%20layers%2C%20consistent%20with%20the%20results%20reported%20by%20Bjorck%202018"
+        }
+    ]
+}

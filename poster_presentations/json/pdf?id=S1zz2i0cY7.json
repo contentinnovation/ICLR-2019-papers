@@ -1,0 +1,214 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "INTEGER NETWORKS FOR DATA COMPRESSION WITH LATENT-VARIABLE MODELS",
+        "author": "Johannes Ball\u00e9, Nick Johnston & David Minnen Google Mountain View, CA 94043, USA {jballe,nickj,dminnen}@google.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=S1zz2i0cY7"
+        },
+        "abstract": "We consider the problem of using variational latent-variable models for data compression. For such models to produce a compressed binary sequence, which is the universal data representation in a digital world, the latent representation needs to be subjected to entropy coding. Range coding as an entropy coding technique is optimal, but it can fail catastrophically if the computation of the prior differs even slightly between the sending and the receiving side. Unfortunately, this is a common scenario when floating point math is used and the sender and receiver operate on different hardware or software platforms, as numerical round-off is often platform dependent. We propose using integer networks as a universal solution to this problem, and demonstrate that they enable reliable cross-platform encoding and decoding of images using variational models."
+    },
+    "keywords": [
+        {
+            "term": "latent variable model",
+            "url": "https://en.wikipedia.org/wiki/latent_variable_model"
+        },
+        {
+            "term": "physical channel",
+            "url": "https://en.wikipedia.org/wiki/physical_channel"
+        },
+        {
+            "term": "vector quantization",
+            "url": "https://en.wikipedia.org/wiki/vector_quantization"
+        },
+        {
+            "term": "artificial neural networks",
+            "url": "https://en.wikipedia.org/wiki/artificial_neural_networks"
+        }
+    ],
+    "abbreviations": {
+        "ANNs": "artificial neural networks",
+        "VQ": "vector quantization"
+    },
+    "highlights": [
+        "The task of information transmission in today\u2019s world is largely divided into two separate endeavors: source coding, or the representation of data as sequences of bits, and channel coding, representing sequences of bits as analog signals on imperfect, physical channels such as radio waves (<a class=\"ref-link\" id=\"cCover_2006_a\" href=\"#rCover_2006_a\">Cover and Thomas, 2006</a>). This decoupling has substantial benefits, as the binary representations of arbitrary data can be seamlessly transmitted over arbitrary physical channels by only changing the underlying channel code, rather than having to design a new code for every possible combination of data source and physical channel",
+        "The universal representation of any compressed data today is the binary channel, a representation which consists of a variable number of binary symbols, each with probability",
+        "The binary channel is a severe restriction compared to the richness of latent representations defined by many variational latent-variable models in the literature (e.g., <a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma and Welling, 2014</a>; S\u00f8nderby et al, 2016; van den <a class=\"ref-link\" id=\"cOord_et+al_2017_a\" href=\"#rOord_et+al_2017_a\">Oord et al, 2017</a>), and in particular models targeted at data compression (Theis et al, 2017; \u00c1g\u00fastsson et al, 2017; Ball\u00e9 et al, 2018)",
+        "Variational latent-variable models such as VAEs (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma and Welling, 2014</a>) consist of an encoder model distribution e(y | x) bringing the data x into a latent representation y, and a decoder model distribution d(x | y), which represents the data likelihood conditioned on the latents",
+        "There is a large body of recent research considering quantization of artificial neural networks mostly targeted at image recognition applications"
+    ],
+    "key_statements": [
+        "The task of information transmission in today\u2019s world is largely divided into two separate endeavors: source coding, or the representation of data as sequences of bits, and channel coding, representing sequences of bits as analog signals on imperfect, physical channels such as radio waves (<a class=\"ref-link\" id=\"cCover_2006_a\" href=\"#rCover_2006_a\">Cover and Thomas, 2006</a>). This decoupling has substantial benefits, as the binary representations of arbitrary data can be seamlessly transmitted over arbitrary physical channels by only changing the underlying channel code, rather than having to design a new code for every possible combination of data source and physical channel",
+        "The universal representation of any compressed data today is the binary channel, a representation which consists of a variable number of binary symbols, each with probability",
+        "The binary channel is a severe restriction compared to the richness of latent representations defined by many variational latent-variable models in the literature (e.g., <a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma and Welling, 2014</a>; S\u00f8nderby et al, 2016; van den <a class=\"ref-link\" id=\"cOord_et+al_2017_a\" href=\"#rOord_et+al_2017_a\">Oord et al, 2017</a>), and in particular models targeted at data compression (Theis et al, 2017; \u00c1g\u00fastsson et al, 2017; Ball\u00e9 et al, 2018)",
+        "Variational latent-variable models such as VAEs (<a class=\"ref-link\" id=\"cKingma_2014_a\" href=\"#rKingma_2014_a\">Kingma and Welling, 2014</a>) consist of an encoder model distribution e(y | x) bringing the data x into a latent representation y, and a decoder model distribution d(x | y), which represents the data likelihood conditioned on the latents",
+        "Enable use of powerful learned variational models for real-world data compression, we propose to use integer arithmetic in these artificial neural networks, as floating-point arithmetic cannot presently be made deterministic across arbitrary platforms",
+        "There is a large body of recent research considering quantization of artificial neural networks mostly targeted at image recognition applications"
+    ],
+    "summary": [
+        "The task of information transmission in today\u2019s world is largely divided into two separate endeavors: source coding, or the representation of data as sequences of bits, and channel coding, representing sequences of bits as analog signals on imperfect, physical channels such as radio waves (<a class=\"ref-link\" id=\"cCover_2006_a\" href=\"#rCover_2006_a\"><a class=\"ref-link\" id=\"cCover_2006_a\" href=\"#rCover_2006_a\">Cover and Thomas, 2006</a></a>).",
+        "To effectively accumulate small gradient signals, we train the networks entirely using floating point computations, rounded to integers after every computational operation, while the backpropagation is done with full floating point precision.",
+        "We propose here to compute g deterministically using an integer network, discretizing the parameters \u03b8 to a reasonable accuracy.",
+        "Consider the prior used in the image compression model proposed by Ball\u00e9 et al (2018), which is a modified Gaussian with scale parameters conditioned on another latent variable: p(y | z) =",
+        "We precompute all possible values of p as a function of yi and \u03b8i and form a lookup table, while g is implemented with integer arithmetic.",
+        "Since arg max can be evaluated deterministically in a platform-independent way, and evaluating a softmax function with rounded inputs is feasible, integer networks can be combined with these models without additional modifications.",
+        "As a remedy for the instabilities, we propose the following trick: We use (17) during training, but define the last layer of g without a nonlinearity and with floating point division, such that the representation is e(y",
+        "This way, the representation is computed deterministically during evaluation, while during training, the marginal still resembles a smooth function, such that no regularization of the prior is necessary.",
+        "In order to assess the efficacy of integer networks to enable platform-independent compression and decompression, we re-implemented the image compression model described in Ball\u00e9 et al (2018), ReLU (128) QReLU (128) QReLU (256) 2.5",
+        "It should be noted that the decreased accuracy of integer arithmetic generally leads to a lower approximation capacity than with floating point networks.",
+        "Wu et al (2018) and others have used quantization during training as well as inference, to reduce computation on gradients as well as activations, and Baluja et al (2018) use non-uniform quantization to remove floating point computation, replacing it completely with integer offsets into an integer lookup table.",
+        "As illustrated in Ball\u00e9 (2018) and in figure 3, this class of models is much more sensitive to reductions of capacity, both in terms of network size and the expressive power of the activation function.",
+        "As illustrated in figure 1 and table 1, small floating point inconsistencies in variational latent-variable models can have disastrous effects when we use range coding to employ the models for data compression across different hardware or software platforms."
+    ],
+    "headline": "We propose using integer networks as a universal solution to this problem, and demonstrate that they enable reliable cross-platform encoding and decoding of images using variational models",
+    "reference_links": [
+        {
+            "id": "G_2017_a",
+            "entry": "\u00c1g\u00fastsson, Eir\u00edkur \u00de\u00f3r et al. (2017). \u201cSoft-to-Hard Vector Quantization for End-to-End Learning Compressible Representations\u201d. In: Advances in Neural Information Processing Systems 30, pp. 1141\u20131151.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=%C3%81g%C3%BAstsson%2C%20Eir%C3%ADkur%20%C3%9E%C3%B3r%20Soft-to-Hard%20Vector%20Quantization%20for%20End-to-End%20Learning%20Compressible%20Representations%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=%C3%81g%C3%BAstsson%2C%20Eir%C3%ADkur%20%C3%9E%C3%B3r%20Soft-to-Hard%20Vector%20Quantization%20for%20End-to-End%20Learning%20Compressible%20Representations%202017"
+        },
+        {
+            "id": "Alemi_2018_a",
+            "entry": "Alemi, Alexander A. et al. (2018). \u201cFixing a Broken ELBO\u201d. In: arXiv e-prints. arXiv: 1711. 00464.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alemi%2C%20Alexander%20A.%20%E2%80%9CFixing%20a%20Broken%20ELBO%E2%80%9D.%20In%3A%20arXiv%20e-prints%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alemi%2C%20Alexander%20A.%20%E2%80%9CFixing%20a%20Broken%20ELBO%E2%80%9D.%20In%3A%20arXiv%20e-prints%202018"
+        },
+        {
+            "id": "Asuni_2014_a",
+            "entry": "Asuni, N. and A. Giachetti (2014). \u201cTESTIMAGES: A large-scale archive for testing visual devices and basic image processing algorithms\u201d. In: Proc. of STAG: Smart Tools and Apps for Graphics. DOI: 10.2312/stag.20141242.",
+            "crossref": "https://dx.doi.org/10.2312/stag.20141242",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.2312/stag.20141242"
+        },
+        {
+            "id": "Ball_2018_a",
+            "entry": "Ball\u00e9, Johannes (2018). \u201cEfficient Nonlinear Transforms for Lossy Image Compression\u201d. In: Picture Coding Symposium (PCS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ball%C3%A9%2C%20Johannes%20Efficient%20Nonlinear%20Transforms%20for%20Lossy%20Image%20Compression%202018"
+        },
+        {
+            "id": "Ball_2018_b",
+            "entry": "Ball\u00e9, Johannes et al. (2018). \u201cVariational image compression with a scale hyperprior\u201d. In: Proc. of 6th Int. Conf. on Learning Representations. URL: https://openreview.net/forum?id=rkcQFMZRb.",
+            "url": "https://openreview.net/forum?id=rkcQFMZRb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ball%C3%A9%2C%20Johannes%20Variational%20image%20compression%20with%20a%20scale%20hyperprior%202018"
+        },
+        {
+            "id": "Baluja_2018_a",
+            "entry": "Baluja, Shumeet et al. (2018). \u201cNo Multiplication? No Floating Point? No Problem! Training Networks for Efficient Inference\u201d. In: arXiv e-prints. arXiv: 1809.09244.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.09244"
+        },
+        {
+            "id": "CLIC:_2018_a",
+            "entry": "CLIC: Challenge on Learned Image Compression (2018). Mobile and Professional Datasets. URL: http://www.compression.cc/2018/challenge.",
+            "url": "http://www.compression.cc/2018/challenge",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=CLIC%20Challenge%20on%20Learned%20Image%20Compression%202018%20Mobile%20and%20Professional%20Datasets%20URL%20httpwwwcompressioncc2018challenge"
+        },
+        {
+            "id": "Courbariaux_2015_a",
+            "entry": "Courbariaux, Matthieu, Jean-Pierre David, and Yoshua Bengio (2015). \u201cTraining deep neural networks with low precision multiplications\u201d. In: arXiv e-prints. Presented as a workshop contribution at the 3rd Int. Conf. on Learning Representations. arXiv: 1412.7024.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.7024"
+        },
+        {
+            "id": "Cover_2006_a",
+            "entry": "Cover, Thomas M. and Joy A. Thomas (2006). Elements of Information Theory. 2nd ed. Wiley.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cover%2C%20Thomas%20M.%20A%2C%20Joy%20Elements%20of%20Information%20Theory%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cover%2C%20Thomas%20M.%20A%2C%20Joy%20Elements%20of%20Information%20Theory%202006"
+        },
+        {
+            "id": "Denton_2014_a",
+            "entry": "Denton, Emily et al. (2014). \u201cExploiting Linear Structure Within Convolutional Networks for Efficient Evaluation\u201d. In: Advances in Neural Information Processing Systems 27, pp. 1269\u20131277.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Denton%2C%20Emily%20Exploiting%20Linear%20Structure%20Within%20Convolutional%20Networks%20for%20Efficient%20Evaluation%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Denton%2C%20Emily%20Exploiting%20Linear%20Structure%20Within%20Convolutional%20Networks%20for%20Efficient%20Evaluation%202014"
+        },
+        {
+            "id": "Han_et+al_2016_a",
+            "entry": "Han, Song, Huizi Mao, and William J. Dally (2016). \u201cDeep Compression: Compressing Deep Neural Network with Pruning, Trained Quantization and Huffman Coding\u201d. In: arXiv e-prints. Presented at the 4th Int. Conf. on Learning Representations. arXiv: 1510.00149.",
+            "arxiv_url": "https://arxiv.org/pdf/1510.00149"
+        },
+        {
+            "id": "Higgins_2017_a",
+            "entry": "Higgins, Irina et al. (2017). \u201c\u03b2-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework\u201d. In: Proc. of 5th Int. Conf. on Learning Representations. URL: https://openreview.net/forum?id=Sy2fzU9gl.",
+            "url": "https://openreview.net/forum?id=Sy2fzU9gl",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Higgins%2C%20Irina%20%CE%B2-VAE%3A%20Learning%20Basic%20Visual%20Concepts%20with%20a%20Constrained%20Variational%20Framework%202017"
+        },
+        {
+            "id": "Hubara_2016_a",
+            "entry": "Hubara, Itay et al. (2016). \u201cBinarized Neural Networks\u201d. In: Advances in Neural Information Processing Systems 29, pp. 4107\u20134115.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hubara%2C%20Itay%20Binarized%20Neural%20Networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hubara%2C%20Itay%20Binarized%20Neural%20Networks%202016"
+        },
+        {
+            "id": "Jang_et+al_2017_a",
+            "entry": "Jang, Eric, Shixiang Gu, and Ben Poole (2017). \u201cCategorical Reparameterization with GumbelSoftmax\u201d. In: Proc. of 5th Int. Conf. on Learning Representations. URL: https://openreview.net/forum?id=rkE3y85ee.",
+            "url": "https://openreview.net/forum?id=rkE3y85ee"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Kingma, Diederik P. and Max Welling (2014). \u201cAuto-Encoding Variational Bayes\u201d. In: arXiv eprints. Presented at the 2nd Int. Conf. on Learning Representations. arXiv: 1312.6114.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6114"
+        },
+        {
+            "id": "Klopp_2018_a",
+            "entry": "Klopp, Jan P. et al. (2018). \u201cLearning a Code-Space Predictor by Exploiting Intra-ImageDependencies\u201d. In: Proc. of 29th British Machine Vision Conference.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Klopp%2C%20Jan%20P.%20Learning%20a%20Code-Space%20Predictor%20by%20Exploiting%20Intra-ImageDependencies%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Klopp%2C%20Jan%20P.%20Learning%20a%20Code-Space%20Predictor%20by%20Exploiting%20Intra-ImageDependencies%202018"
+        },
+        {
+            "id": "Kodak_1993_a",
+            "entry": "Kodak, Eastman (1993). Kodak Lossless True Color Image Suite (PhotoCD PCD0992). URL: http://r0k.us/graphics/kodak/.",
+            "url": "http://r0k.us/graphics/kodak/"
+        },
+        {
+            "id": "Marpe_et+al_2003_a",
+            "entry": "Marpe, Detlev, Heiko Schwarz, and Thomas Wiegand (2003). \u201cContext-Based Adaptive Binary Arithmetic Coding in the H.264/AVC Video Compression Standard\u201d. In: IEEE Transactions on Circuits and Systems for Video Technology 13.7. DOI: 10.1109/TCSVT.2003.815173.",
+            "crossref": "https://dx.doi.org/10.1109/TCSVT.2003.815173",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TCSVT.2003.815173"
+        },
+        {
+            "id": "Minnen_et+al_2018_a",
+            "entry": "Minnen, David, Johannes Ball\u00e9, and George Toderici (2018). \u201cJoint Autoregressive and Hierarchical Priors for Learned Image Compression\u201d. In: Advances in Neural Information Processing Systems 31, pp. 10771\u201310780.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Minnen%2C%20David%20Ball%C3%A9%2C%20Johannes%20Toderici%2C%20George%20Joint%20Autoregressive%20and%20Hierarchical%20Priors%20for%20Learned%20Image%20Compression%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Minnen%2C%20David%20Ball%C3%A9%2C%20Johannes%20Toderici%2C%20George%20Joint%20Autoregressive%20and%20Hierarchical%20Priors%20for%20Learned%20Image%20Compression%202018"
+        },
+        {
+            "id": "Oord_et+al_2017_a",
+            "entry": "Oord, A\u00e4ron van den, Oriol Vinyals, and Koray Kavukcuoglu (2017). \u201cNeural Discrete Representation Learning\u201d. In: Advances in Neural Information Processing Systems 30, pp. 6306\u20136315.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Oord%2C%20A%C3%A4ron%20van%20den%20Vinyals%2C%20Oriol%20Kavukcuoglu%2C%20Koray%20Neural%20Discrete%20Representation%20Learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Oord%2C%20A%C3%A4ron%20van%20den%20Vinyals%2C%20Oriol%20Kavukcuoglu%2C%20Koray%20Neural%20Discrete%20Representation%20Learning%202017"
+        },
+        {
+            "id": "Rastegari_2016_a",
+            "entry": "Rastegari, Mohammad et al. (2016). \u201cXNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks\u201d. In: ECCV 2016. Lecture Notes in Computer Science. Vol. 9908. DOI: 10.1007/978-3-319-46493-0_32.",
+            "crossref": "https://dx.doi.org/10.1007/978-3-319-46493-0_32",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1007/978-3-319-46493-0_32"
+        },
+        {
+            "id": "Rissanen_1981_a",
+            "entry": "Rissanen, Jorma and Glen G. Langdon Jr. (1981). \u201cUniversal modeling and coding\u201d. In: IEEE Transactions on Information Theory 27.1. DOI: 10.1109/TIT.1981.1056282.",
+            "crossref": "https://dx.doi.org/10.1109/TIT.1981.1056282",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TIT.1981.1056282"
+        },
+        {
+            "id": "Shannon_1948_a",
+            "entry": "Shannon, Claude E. (1948). \u201cA Mathematical Theory of Communication\u201d. In: The Bell System Technical Journal 27.3. DOI: 10.1002/j.1538-7305.1948.tb01338.x.",
+            "crossref": "https://dx.doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "id": "S_2016_a",
+            "entry": "S\u00f8nderby, Casper Kaae et al. (2016). \u201cLadder variational autoencoders\u201d. In: Advances in Neural Information Processing Systems 29, pp. 3738\u20133746.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%C3%B8nderby%2C%20Casper%20Kaae%20Ladder%20variational%20autoencoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%C3%B8nderby%2C%20Casper%20Kaae%20Ladder%20variational%20autoencoders%202016"
+        },
+        {
+            "id": "Theis_2017_a",
+            "entry": "Theis, Lucas et al. (2017). \u201cLossy Image Compression with Compressive Autoencoders\u201d. In: Proc. of 5th Int. Conf. on Learning Representations. URL: https://openreview.net/forum?id=rJiNwv9gg.",
+            "url": "https://openreview.net/forum?id=rJiNwv9gg"
+        },
+        {
+            "id": "Wu_2018_a",
+            "entry": "Wu, Shuang et al. (2018). \u201cTraining and Inference with Integers in Deep Neural Networks\u201d. In: Proc. of 6th Int. Conf. on Learning Representations. URL: https://openreview.net/forum?id=HJGXzmspb.",
+            "url": "https://openreview.net/forum?id=HJGXzmspb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Shuang%20Training%20and%20Inference%20with%20Integers%20in%20Deep%20Neural%20Networks%202018"
+        }
+    ]
+}

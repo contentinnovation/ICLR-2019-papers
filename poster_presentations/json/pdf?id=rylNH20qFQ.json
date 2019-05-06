@@ -1,0 +1,364 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "LEARNING TO INFER AND EXECUTE 3D SHAPE PROGRAMS",
+        "author": "Yonglong Tian, Andrew Luo, Xingyuan Sun, Kevin Ellis, William T. Freeman, Joshua B. Tenenbaum, & Jiajun Wu, \u2020Massachusetts Institute of Technology \u2021Princeton University \u2217Google Research {yonglong,aluo,ellisk,billf,jbt,jiajunwu}@mit.edu xs,@princeton.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=rylNH20qFQ"
+        },
+        "abstract": "Human perception of 3D shapes goes beyond reconstructing them as a set of points or a composition of geometric primitives: we also effortlessly understand higherlevel shape structure such as the repetition and reflective symmetry of object parts. In contrast, recent advances in 3D shape sensing focus more on low-level geometry but less on these higher-level relationships. In this paper, we propose 3D shape programs, integrating bottom-up recognition systems with top-down, symbolic program structure to capture both low-level geometry and high-level structural priors for 3D shapes. Because there are no annotations of shape programs for real shapes, we develop neural modules that not only learn to infer 3D shape programs from raw, unannotated shapes, but also to execute these programs for shape reconstruction. After initial bootstrapping, our end-to-end differentiable model learns 3D shape programs by reconstructing shapes in a self-supervised manner. Experiments demonstrate that our model accurately infers and executes 3D shape programs for highly complex shapes from various categories. It can also be integrated with an image-to-shape module to infer 3D shape programs directly from an RGB image, leading to 3D shape reconstructions that are both more accurate and more physically plausible."
+    },
+    "keywords": [
+        {
+            "term": "geometry",
+            "url": "https://en.wikipedia.org/wiki/geometry"
+        },
+        {
+            "term": "low level",
+            "url": "https://en.wikipedia.org/wiki/low_level"
+        },
+        {
+            "term": "graphics",
+            "url": "https://en.wikipedia.org/wiki/graphics"
+        },
+        {
+            "term": "smooth surface",
+            "url": "https://en.wikipedia.org/wiki/smooth_surface"
+        },
+        {
+            "term": "synthesis",
+            "url": "https://en.wikipedia.org/wiki/synthesis"
+        },
+        {
+            "term": "high level",
+            "url": "https://en.wikipedia.org/wiki/high_level"
+        },
+        {
+            "term": "domain-specific language",
+            "url": "https://en.wikipedia.org/wiki/domain-specific_language"
+        },
+        {
+            "term": "sharp edge",
+            "url": "https://en.wikipedia.org/wiki/Sharp_Edge"
+        }
+    ],
+    "abbreviations": {
+        "DSL": "domain-specific language",
+        "NPI": "Neural Program Interpreters",
+        "GA": "guided adaptation",
+        "CD": "Chamfer distance",
+        "EMD": "Earth Mover\u2019s distance"
+    },
+    "highlights": [
+        "Given the table in Figure 1, humans are able to instantly recognize its parts and regularities: there exist sharp edges, smooth surfaces, a table top that is a perfect circle, and two lower, square layers",
+        "We propose to learn a shape program executor that reconstructs a 3D shape from a shape program",
+        "We further extend our model by integrating with an image-to-shape reconstruction module, so it directly infers a 3D shape program from a color image",
+        "We extend the idea of inverse procedural graphics to 3-D voxel representations, and show how this idea can apply to large data sets like ShapeNet",
+        "We have introduced 3D shape programs as a new shape representation",
+        "We have proposed a model for inferring shape programs, which combines a neural program synthesizer and a neural"
+    ],
+    "key_statements": [
+        "Given the table in Figure 1, humans are able to instantly recognize its parts and regularities: there exist sharp edges, smooth surfaces, a table top that is a perfect circle, and two lower, square layers",
+        "We propose to learn a shape program executor that reconstructs a 3D shape from a shape program",
+        "We further extend our model by integrating with an image-to-shape reconstruction module, so it directly infers a 3D shape program from a color image",
+        "We extend the idea of inverse procedural graphics to 3-D voxel representations, and show how this idea can apply to large data sets like ShapeNet",
+        "We propose to learn a neural program executor, an approximate but differentiable graphics engine, which generates a shape from a program",
+        "We further demonstrate that with guided adaptation, our program generator can be transferred to other unseen categories",
+        "We have introduced 3D shape programs as a new shape representation",
+        "We have proposed a model for inferring shape programs, which combines a neural program synthesizer and a neural"
+    ],
+    "summary": [
+        "Given the table in Figure 1, humans are able to instantly recognize its parts and regularities: there exist sharp edges, smooth surfaces, a table top that is a perfect circle, and two lower, square layers.",
+        "With the learned neural program executor, our model learns to explain input shapes without ground truth program annotations.",
+        "We demonstrate that the inference model, the executor, and the programs they recover all achieve good performance on ShapeNet, learning to explain and reconstruct complex shapes.",
+        "The neural program executor takes these programs as input and generates the corresponding 3D shapes.",
+        "We propose to learn a neural program executor, an approximate but differentiable graphics engine, which generates a shape from a program.",
+        "Our use of a neural, differentiable executor enables gradient-based fine-tuning of the program synthesizer on unannotated shapes, which allows the model to generalize effectively to novel shapes outside training categories.",
+        "We decompose the problem by learning an executor that executes programs at the block level, e.g., either a single drawing statement or a compound statements.",
+        "With the learned differentiable neural program executor, we can adapt our model to other datasets such as ShapeNet, where program-level supervision is not available.",
+        "We execute the predicted program by the learned neural program executor and compute the reconstruction loss between the generated shape and the input.",
+        "We present program generation and shape reconstruction results on three datasets: our synthetic dataset, ShapeNet (<a class=\"ref-link\" id=\"cChang_et+al_2015_a\" href=\"#rChang_et+al_2015_a\">Chang et al, 2015</a>), and Pix3D (<a class=\"ref-link\" id=\"cSun_et+al_2018_b\" href=\"#rSun_et+al_2018_b\">Sun et al, 2018b</a>).",
+        "After our model generates programs from input shapes, we execute these programs with a graphics engine and measure the reconstruction quality.",
+        "The initial programs for pre-training can be very simple: e.g., 10 simple table templates (Fig. A1) are sufficient to initialize the model, which later achieves good performance under execution-guided adaptation.",
+        "Figure 5 shows some program generation and shape reconstruction results for tables and chairs, respectively.",
+        "Our model is able to extract more meaningful programs and reconstruct the input shape reasonably well.",
+        "While our program generator is pre-trained only on synthetic chairs and tables, generalization on other shape categories is desirable.",
+        "Table 4 suggests the pre-trained model performs poorly for these unseen shapes but its performance improves with this unsupervised guided adaptation.",
+        "We separately train a MarrNet (Wu et al, 2017) model for chairs and tables on ShapeNet, and reconstruct 3D shapes from 2D images on the Pix3D dataset.",
+        "Experiments on ShapeNet show that our model successfully explains shapes as programs and generalizes to shapes outside training categories."
+    ],
+    "headline": "We propose 3D shape programs, integrating bottom-up recognition systems with top-down, symbolic program structure to capture both low-level geometry and high-level structural priors for 3D shapes",
+    "reference_links": [
+        {
+            "id": "Balog_et+al_2017_a",
+            "entry": "Matej Balog, Alexander L Gaunt, Marc Brockschmidt, Sebastian Nowozin, and Daniel Tarlow. Deepcoder: Learning to write programs. In ICLR, 2017. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Balog%2C%20Matej%20Gaunt%2C%20Alexander%20L.%20Brockschmidt%2C%20Marc%20Nowozin%2C%20Sebastian%20Deepcoder%3A%20Learning%20to%20write%20programs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Balog%2C%20Matej%20Gaunt%2C%20Alexander%20L.%20Brockschmidt%2C%20Marc%20Nowozin%2C%20Sebastian%20Deepcoder%3A%20Learning%20to%20write%20programs%202017"
+        },
+        {
+            "id": "Barrow_et+al_1977_a",
+            "entry": "Harry G Barrow, Jay M Tenenbaum, Robert C Bolles, and Helen C Wolf. Parametric correspondence and chamfer matching: Two new techniques for image matching. In IJCAI, 1977. 6",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Barrow%2C%20Harry%20G.%20Tenenbaum%2C%20Jay%20M.%20Bolles%2C%20Robert%20C.%20Wolf%2C%20Helen%20C.%20Parametric%20correspondence%20and%20chamfer%20matching%3A%20Two%20new%20techniques%20for%20image%20matching%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Barrow%2C%20Harry%20G.%20Tenenbaum%2C%20Jay%20M.%20Bolles%2C%20Robert%20C.%20Wolf%2C%20Helen%20C.%20Parametric%20correspondence%20and%20chamfer%20matching%3A%20Two%20new%20techniques%20for%20image%20matching%201977"
+        },
+        {
+            "id": "Biederman_1987_a",
+            "entry": "Irving Biederman. Recognition-by-components: a theory of human image understanding. Psychol. Rev., 94(2):115, 1987. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Biederman%2C%20Irving%20Recognition-by-components%3A%20a%20theory%20of%20human%20image%20understanding%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Biederman%2C%20Irving%20Recognition-by-components%3A%20a%20theory%20of%20human%20image%20understanding%201987"
+        },
+        {
+            "id": "Binford_1971_a",
+            "entry": "Thomas O Binford. Visual perception by computer. Invited talk at IEEE Conf. on Systems and Control, 1971. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Binford%2C%20Thomas%20O.%20Visual%20perception%20by%20computer%201971",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Binford%2C%20Thomas%20O.%20Visual%20perception%20by%20computer%201971"
+        },
+        {
+            "id": "Bosnjak_et+al_2017_a",
+            "entry": "Matko Bosnjak, Tim Rocktaschel, Jason Naradowsky, and Sebastian Riedel. Programming with a differentiable forth interpreter. In ICML, 2017. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bosnjak%2C%20Matko%20Rocktaschel%2C%20Tim%20Naradowsky%2C%20Jason%20Riedel%2C%20Sebastian%20Programming%20with%20a%20differentiable%20forth%20interpreter%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bosnjak%2C%20Matko%20Rocktaschel%2C%20Tim%20Naradowsky%2C%20Jason%20Riedel%2C%20Sebastian%20Programming%20with%20a%20differentiable%20forth%20interpreter%202017"
+        },
+        {
+            "id": "Cai_et+al_2017_a",
+            "entry": "Jonathon Cai, Richard Shin, and Dawn Song. Making neural programming architectures generalize via recursion. In ICLR, 2017. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cai%2C%20Jonathon%20Shin%2C%20Richard%20Song%2C%20Dawn%20Making%20neural%20programming%20architectures%20generalize%20via%20recursion%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cai%2C%20Jonathon%20Shin%2C%20Richard%20Song%2C%20Dawn%20Making%20neural%20programming%20architectures%20generalize%20via%20recursion%202017"
+        },
+        {
+            "id": "Chang_et+al_2015_a",
+            "entry": "Angel X Chang, Thomas Funkhouser, Leonidas Guibas, Pat Hanrahan, Qixing Huang, Zimo Li, Silvio Savarese, Manolis Savva, Shuran Song, Hao Su, Jianxiong Xiao, Li Yi, and Fisher Yu. Shapenet: An information-rich 3d model repository. arXiv:1512.03012, 2015. 1, 6",
+            "arxiv_url": "https://arxiv.org/pdf/1512.03012"
+        },
+        {
+            "id": "Chaudhuri_et+al_2011_a",
+            "entry": "Siddhartha Chaudhuri, Evangelos Kalogerakis, Leonidas Guibas, and Vladlen Koltun. Probabilistic reasoning for assembly-based 3d modeling. ACM TOG, 30(4):35, 2011. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chaudhuri%2C%20Siddhartha%20Kalogerakis%2C%20Evangelos%20Guibas%2C%20Leonidas%20Koltun%2C%20Vladlen%20Probabilistic%20reasoning%20for%20assembly-based%203d%20modeling%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chaudhuri%2C%20Siddhartha%20Kalogerakis%2C%20Evangelos%20Guibas%2C%20Leonidas%20Koltun%2C%20Vladlen%20Probabilistic%20reasoning%20for%20assembly-based%203d%20modeling%202011"
+        },
+        {
+            "id": "Clavera_et+al_2018_a",
+            "entry": "Ignasi Clavera, Anusha Nagabandi, Ronald S Fearing, Pieter Abbeel, Sergey Levine, and Chelsea Finn. Learning to adapt: Meta-learning for model-based control. arXiv:1803.11347, 2018. 3",
+            "arxiv_url": "https://arxiv.org/pdf/1803.11347"
+        },
+        {
+            "id": "Moura_0000_a",
+            "entry": "Leonardo De Moura and Nikolaj Bj\u00f8rner. Z3: An efficient smt solver. In TACAS, 2008. 10",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moura%2C%20Leonardo%20De%20Bj%C3%B8rner%2C%20Nikolaj%20Z3%3A%20An%20efficient%20smt%20solver"
+        },
+        {
+            "id": "Devlin_et+al_2017_a",
+            "entry": "Jacob Devlin, Jonathan Uesato, Surya Bhupatiraju, Rishabh Singh, Abdel-rahman Mohamed, and Pushmeet Kohli. Robustfill: Neural program learning under noisy i/o. In ICML, 2017. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20i/o%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Devlin%2C%20Jacob%20Uesato%2C%20Jonathan%20Bhupatiraju%2C%20Surya%20Singh%2C%20Rishabh%20Robustfill%3A%20Neural%20program%20learning%20under%20noisy%20i/o%202017"
+        },
+        {
+            "id": "Dilks_et+al_2011_a",
+            "entry": "Daniel D Dilks, Joshua B Julian, Jonas Kubilius, Elizabeth S Spelke, and Nancy Kanwisher. Mirrorimage sensitivity and invariance in object and scene processing pathways. J. Neurosci., 31(31): 11305\u201311312, 2011. 1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dilks%2C%20Daniel%20D.%20Julian%2C%20Joshua%20B.%20Kubilius%2C%20Jonas%20Spelke%2C%20Elizabeth%20S.%20Mirrorimage%20sensitivity%20and%20invariance%20in%20object%20and%20scene%20processing%20pathways%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dilks%2C%20Daniel%20D.%20Julian%2C%20Joshua%20B.%20Kubilius%2C%20Jonas%20Spelke%2C%20Elizabeth%20S.%20Mirrorimage%20sensitivity%20and%20invariance%20in%20object%20and%20scene%20processing%20pathways%202011"
+        },
+        {
+            "id": "Ellis_et+al_2015_a",
+            "entry": "Kevin Ellis, Armando Solar-Lezama, and Josh Tenenbaum. Unsupervised learning by program synthesis. In NeurIPS, 2015. 3, 10",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ellis%2C%20Kevin%20Solar-Lezama%2C%20Armando%20Tenenbaum%2C%20Josh%20Unsupervised%20learning%20by%20program%20synthesis%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ellis%2C%20Kevin%20Solar-Lezama%2C%20Armando%20Tenenbaum%2C%20Josh%20Unsupervised%20learning%20by%20program%20synthesis%202015"
+        },
+        {
+            "id": "Ellis_et+al_2018_a",
+            "entry": "Kevin Ellis, Daniel Ritchie, Armando Solar-Lezama, and Joshua B Tenenbaum. Learning to infer graphics programs from hand-drawn imatges. In NeurIPS, 2018. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ellis%2C%20Kevin%20Ritchie%2C%20Daniel%20Solar-Lezama%2C%20Armando%20Tenenbaum%2C%20Joshua%20B.%20Learning%20to%20infer%20graphics%20programs%20from%20hand-drawn%20imatges%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ellis%2C%20Kevin%20Ritchie%2C%20Daniel%20Solar-Lezama%2C%20Armando%20Tenenbaum%2C%20Joshua%20B.%20Learning%20to%20infer%20graphics%20programs%20from%20hand-drawn%20imatges%202018"
+        },
+        {
+            "id": "Fleuret_et+al_2011_a",
+            "entry": "Francois Fleuret, Ting Li, Charles Dubout, Emma K Wampler, Steven Yantis, and Donald Geman. Comparing machines and humans on a visual categorization test. PNAS, 108(43):17621\u201317625, 2011. 4",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fleuret%2C%20Francois%20Li%2C%20Ting%20Dubout%2C%20Charles%20Wampler%2C%20Emma%20K.%20Comparing%20machines%20and%20humans%20on%20a%20visual%20categorization%20test%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fleuret%2C%20Francois%20Li%2C%20Ting%20Dubout%2C%20Charles%20Wampler%2C%20Emma%20K.%20Comparing%20machines%20and%20humans%20on%20a%20visual%20categorization%20test%202011"
+        },
+        {
+            "id": "Gaunt_et+al_2016_a",
+            "entry": "Alexander L Gaunt, Marc Brockschmidt, Rishabh Singh, Nate Kushman, Pushmeet Kohli, Jonathan Taylor, and Daniel Tarlow. Terpret: A probabilistic programming language for program induction. arXiv preprint arXiv:1608.04428, 2016. 3",
+            "arxiv_url": "https://arxiv.org/pdf/1608.04428"
+        },
+        {
+            "id": "Johnson_et+al_2017_a",
+            "entry": "Justin Johnson, Bharath Hariharan, Laurens van der Maaten, Judy Hoffman, Li Fei-Fei, C Lawrence Zitnick, and Ross Girshick. Inferring and executing programs for visual reasoning. In ICCV, 2017. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Hoffman%2C%20Judy%20Inferring%20and%20executing%20programs%20for%20visual%20reasoning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Johnson%2C%20Justin%20Hariharan%2C%20Bharath%20van%20der%20Maaten%2C%20Laurens%20Hoffman%2C%20Judy%20Inferring%20and%20executing%20programs%20for%20visual%20reasoning%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015. 6",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Koffka_2013_a",
+            "entry": "Kurt Koffka. Principles of Gestalt psychology. Routledge, 2013. 1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Koffka%2C%20Kurt%20Principles%20of%20Gestalt%20psychology%202013"
+        },
+        {
+            "id": "Kulkarni_et+al_2015_a",
+            "entry": "Tejas D Kulkarni, Pushmeet Kohli, Joshua B Tenenbaum, and Vikash Mansinghka. Picture: A probabilistic programming language for scene perception. In CVPR, 2015a. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulkarni%2C%20Tejas%20D.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Joshua%20B.%20Mansinghka%2C%20Vikash%20Picture%3A%20A%20probabilistic%20programming%20language%20for%20scene%20perception%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulkarni%2C%20Tejas%20D.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Joshua%20B.%20Mansinghka%2C%20Vikash%20Picture%3A%20A%20probabilistic%20programming%20language%20for%20scene%20perception%202015"
+        },
+        {
+            "id": "Kulkarni_et+al_2015_b",
+            "entry": "Tejas D Kulkarni, William F Whitney, Pushmeet Kohli, and Josh Tenenbaum. Deep convolutional inverse graphics network. In NeurIPS, 2015b. 10",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kulkarni%2C%20Tejas%20D.%20Whitney%2C%20William%20F.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Josh%20Deep%20convolutional%20inverse%20graphics%20network%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kulkarni%2C%20Tejas%20D.%20Whitney%2C%20William%20F.%20Kohli%2C%20Pushmeet%20Tenenbaum%2C%20Josh%20Deep%20convolutional%20inverse%20graphics%20network%202015"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Jun Li, Kai Xu, Siddhartha Chaudhuri, Ersin Yumer, Hao Zhang, and Leonidas Guibas. Grass: Generative recursive autoencoders for shape structures. In SIGGRAPH, 2017. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Jun%20Xu%2C%20Kai%20Chaudhuri%2C%20Siddhartha%20Yumer%2C%20Ersin%20Grass%3A%20Generative%20recursive%20autoencoders%20for%20shape%20structures%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Jun%20Xu%2C%20Kai%20Chaudhuri%2C%20Siddhartha%20Yumer%2C%20Ersin%20Grass%3A%20Generative%20recursive%20autoencoders%20for%20shape%20structures%202017"
+        },
+        {
+            "id": "Liu_et+al_2019_a",
+            "entry": "Yunchao Liu, Zheng Wu, Daniel Ritchie, William T Freeman, Joshua B Tenenbaum, and Jiajun Wu. Learning to describe scenes with programs. In ICLR, 2019. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Yunchao%20Wu%2C%20Zheng%20Ritchie%2C%20Daniel%20Freeman%2C%20William%20T.%20Learning%20to%20describe%20scenes%20with%20programs%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Yunchao%20Wu%2C%20Zheng%20Ritchie%2C%20Daniel%20Freeman%2C%20William%20T.%20Learning%20to%20describe%20scenes%20with%20programs%202019"
+        },
+        {
+            "id": "Liu_et+al_2018_a",
+            "entry": "Zhijian Liu, William T Freeman, Joshua B Tenenbaum, and Jiajun Wu. Physical primitive decomposition. In ECCV, 2018. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Zhijian%20Freeman%2C%20William%20T.%20Tenenbaum%2C%20Joshua%20B.%20Wu%2C%20Jiajun%20Physical%20primitive%20decomposition%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Zhijian%20Freeman%2C%20William%20T.%20Tenenbaum%2C%20Joshua%20B.%20Wu%2C%20Jiajun%20Physical%20primitive%20decomposition%202018"
+        },
+        {
+            "id": "Mitra_et+al_2013_a",
+            "entry": "Niloy Mitra, Michael Wand, Hao Richard Zhang, Daniel Cohen-Or, Vladimir Kim, and Qi-Xing Huang. Structure-aware shape processing. In SIGGRAPH Asia Courses, 2013. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mitra%2C%20Niloy%20Wand%2C%20Michael%20Zhang%2C%20Hao%20Richard%20Cohen-Or%2C%20Daniel%20and%20Qi-Xing%20Huang.%20Structure-aware%20shape%20processing%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mitra%2C%20Niloy%20Wand%2C%20Michael%20Zhang%2C%20Hao%20Richard%20Cohen-Or%2C%20Daniel%20and%20Qi-Xing%20Huang.%20Structure-aware%20shape%20processing%202013"
+        },
+        {
+            "id": "Nishida_et+al_2016_a",
+            "entry": "Gen Nishida, Ignacio Garcia-Dorado, Daniel G Aliaga, Bedrich Benes, and Adrien Bousseau. Interactive sketching of urban procedural models. ACM TOG, 35(4):130, 2016. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nishida%20Garcia-Dorado%2C%20Ignacio%20Aliaga%2C%20Daniel%20G.%20Benes%2C%20Bedrich%20Interactive%20sketching%20of%20urban%20procedural%20models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nishida%20Garcia-Dorado%2C%20Ignacio%20Aliaga%2C%20Daniel%20G.%20Benes%2C%20Bedrich%20Interactive%20sketching%20of%20urban%20procedural%20models%202016"
+        },
+        {
+            "id": "Nishida_et+al_2018_a",
+            "entry": "Gen Nishida, Adrien Bousseau, and Daniel G Aliaga. Procedural modeling of a building from a single image. CGF, 37(2):415\u2013429, 2018. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nishida%20Bousseau%2C%20Adrien%20Aliaga%2C%20Daniel%20G.%20Procedural%20modeling%20of%20a%20building%20from%20a%20single%20image%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nishida%20Bousseau%2C%20Adrien%20Aliaga%2C%20Daniel%20G.%20Procedural%20modeling%20of%20a%20building%20from%20a%20single%20image%202018"
+        },
+        {
+            "id": "Parisotto_et+al_2017_a",
+            "entry": "Emilio Parisotto, Abdel-rahman Mohamed, Rishabh Singh, Lihong Li, Dengyong Zhou, and Pushmeet Kohli. Neuro-symbolic program synthesis. In ICLR, 2017. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parisotto%2C%20Emilio%20Mohamed%2C%20Abdel-rahman%20Singh%2C%20Rishabh%20Li%2C%20Lihong%20Neuro-symbolic%20program%20synthesis%202017"
+        },
+        {
+            "id": "Qi_et+al_2017_a",
+            "entry": "Charles R Qi, Li Yi, Hao Su, and Leonidas J Guibas. Pointnet++: Deep hierarchical feature learning on point sets in a metric space. In NeurIPS, 2017. 1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qi%2C%20Charles%20R.%20Yi%2C%20Li%20Su%2C%20Hao%20Guibas%2C%20Leonidas%20J.%20Pointnet%2B%2B%3A%20Deep%20hierarchical%20feature%20learning%20on%20point%20sets%20in%20a%20metric%20space%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qi%2C%20Charles%20R.%20Yi%2C%20Li%20Su%2C%20Hao%20Guibas%2C%20Leonidas%20J.%20Pointnet%2B%2B%3A%20Deep%20hierarchical%20feature%20learning%20on%20point%20sets%20in%20a%20metric%20space%202017"
+        },
+        {
+            "id": "Reed_2016_a",
+            "entry": "Scott Reed and Nando De Freitas. Neural programmer-interpreters. In ICLR, 2016. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scott%20Reed%20and%20Nando%20De%20Freitas%20Neural%20programmerinterpreters%20In%20ICLR%202016%203",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scott%20Reed%20and%20Nando%20De%20Freitas%20Neural%20programmerinterpreters%20In%20ICLR%202016%203"
+        },
+        {
+            "id": "Ritchie_et+al_2016_a",
+            "entry": "Daniel Ritchie, Anna Thomas, Pat Hanrahan, and Noah Goodman. Neurally-guided procedural models: Amortized inference for procedural graphics programs using neural networks. In NeurIPS, 2016. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ritchie%2C%20Daniel%20Thomas%2C%20Anna%20Hanrahan%2C%20Pat%20Goodman%2C%20Noah%20Neurally-guided%20procedural%20models%3A%20Amortized%20inference%20for%20procedural%20graphics%20programs%20using%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ritchie%2C%20Daniel%20Thomas%2C%20Anna%20Hanrahan%2C%20Pat%20Goodman%2C%20Noah%20Neurally-guided%20procedural%20models%3A%20Amortized%20inference%20for%20procedural%20graphics%20programs%20using%20neural%20networks%202016"
+        },
+        {
+            "id": "Roberts_1963_a",
+            "entry": "Lawrence G Roberts. Machine perception of three-dimensional solids. PhD thesis, Massachusetts Institute of Technology, 1963. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Roberts%2C%20Lawrence%20G.%20Machine%20perception%20of%20three-dimensional%20solids%201963"
+        },
+        {
+            "id": "Rubner_et+al_2000_a",
+            "entry": "Yossi Rubner, Carlo Tomasi, and Leonidas J Guibas. The earth mover\u2019s distance as a metric for image retrieval. IJCV, 40(2):99\u2013121, 2000. 6",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rubner%2C%20Yossi%20Tomasi%2C%20Carlo%20Guibas%2C%20Leonidas%20J.%20The%20earth%20mover%E2%80%99s%20distance%20as%20a%20metric%20for%20image%20retrieval%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rubner%2C%20Yossi%20Tomasi%2C%20Carlo%20Guibas%2C%20Leonidas%20J.%20The%20earth%20mover%E2%80%99s%20distance%20as%20a%20metric%20for%20image%20retrieval%202000"
+        },
+        {
+            "id": "Schulz_et+al_2017_a",
+            "entry": "Adriana Schulz, Ariel Shamir, Ilya Baran, David IW Levin, Pitchaya Sitthi-Amorn, and Wojciech Matusik. Retrieval on parametric shape collections. ACM TOG, 36(1):11, 2017. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schulz%2C%20Adriana%20Shamir%2C%20Ariel%20Baran%2C%20Ilya%20Levin%2C%20David%20I.W.%20Retrieval%20on%20parametric%20shape%20collections%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schulz%2C%20Adriana%20Shamir%2C%20Ariel%20Baran%2C%20Ilya%20Levin%2C%20David%20I.W.%20Retrieval%20on%20parametric%20shape%20collections%202017"
+        },
+        {
+            "id": "Sharma_et+al_2018_a",
+            "entry": "Gopal Sharma, Rishabh Goyal, Difan Liu, Evangelos Kalogerakis, and Subhransu Maji. Csgnet: Neural shape parser for constructive solid geometry. In CVPR, 2018. 1, 2, 6",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sharma%2C%20Gopal%20Goyal%2C%20Rishabh%20Liu%2C%20Difan%20Kalogerakis%2C%20Evangelos%20Csgnet%3A%20Neural%20shape%20parser%20for%20constructive%20solid%20geometry%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sharma%2C%20Gopal%20Goyal%2C%20Rishabh%20Liu%2C%20Difan%20Kalogerakis%2C%20Evangelos%20Csgnet%3A%20Neural%20shape%20parser%20for%20constructive%20solid%20geometry%202018"
+        },
+        {
+            "id": "St_et+al_2010_a",
+            "entry": "Ondrej St\u2019ava, Bedrich Benes, Radomir Mech, Daniel G Aliaga, and Peter Kristof. Inverse procedural modeling by automatic generation of l-systems. CGF, 29(2):665\u2013674, 2010. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=St%E2%80%99ava%2C%20Ondrej%20Benes%2C%20Bedrich%20Mech%2C%20Radomir%20Aliaga%2C%20Daniel%20G.%20Inverse%20procedural%20modeling%20by%20automatic%20generation%20of%20l-systems%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=St%E2%80%99ava%2C%20Ondrej%20Benes%2C%20Bedrich%20Mech%2C%20Radomir%20Aliaga%2C%20Daniel%20G.%20Inverse%20procedural%20modeling%20by%20automatic%20generation%20of%20l-systems%202010"
+        },
+        {
+            "id": "Sun_et+al_2018_a",
+            "entry": "Shao-Hua Sun, Hyeonwoo Noh, Sriram Somasundaram, and Joseph Lim. Neural program synthesis from diverse demonstration videos. In ICML, 2018a. 3",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Shao-Hua%20Noh%2C%20Hyeonwoo%20Somasundaram%2C%20Sriram%20Lim%2C%20Joseph%20Neural%20program%20synthesis%20from%20diverse%20demonstration%20videos%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sun%2C%20Shao-Hua%20Noh%2C%20Hyeonwoo%20Somasundaram%2C%20Sriram%20Lim%2C%20Joseph%20Neural%20program%20synthesis%20from%20diverse%20demonstration%20videos%202018"
+        },
+        {
+            "id": "Sun_et+al_2018_b",
+            "entry": "Xingyuan Sun, Jiajun Wu, Xiuming Zhang, Zhoutong Zhang, Chengkai Zhang, Tianfan Xue, Joshua B Tenenbaum, and William T Freeman. Pix3d: Dataset and methods for single-image 3d shape modeling. In CVPR, 2018b. 6",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sun%2C%20Xingyuan%20Wu%2C%20Jiajun%20Zhang%2C%20Xiuming%20Zhang%2C%20Zhoutong%20Pix3d%3A%20Dataset%20and%20methods%20for%20single-image%203d%20shape%20modeling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sun%2C%20Xingyuan%20Wu%2C%20Jiajun%20Zhang%2C%20Xiuming%20Zhang%2C%20Zhoutong%20Pix3d%3A%20Dataset%20and%20methods%20for%20single-image%203d%20shape%20modeling%202018"
+        },
+        {
+            "id": "Tulsiani_et+al_2017_a",
+            "entry": "Shubham Tulsiani, Hao Su, Leonidas J Guibas, Alexei A Efros, and Jitendra Malik. Learning shape abstractions by assembling volumetric primitives. In CVPR, 2017. 1, 2, 6, 7, 8",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tulsiani%2C%20Shubham%20Su%2C%20Hao%20Guibas%2C%20Leonidas%20J.%20Efros%2C%20Alexei%20A.%20Learning%20shape%20abstractions%20by%20assembling%20volumetric%20primitives%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tulsiani%2C%20Shubham%20Su%2C%20Hao%20Guibas%2C%20Leonidas%20J.%20Efros%2C%20Alexei%20A.%20Learning%20shape%20abstractions%20by%20assembling%20volumetric%20primitives%202017"
+        },
+        {
+            "id": "Van_et+al_2015_a",
+            "entry": "Anton van den Hengel, Chris Russell, Anthony Dick, John Bastian, Daniel Pooley, Lachlan Fleming, and Lourdes Agapito. Part-based modelling of compound scenes from images. In CVPR, 2015. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Hengel%2C%20Anton%20Russell%2C%20Chris%20Dick%2C%20Anthony%20Bastian%2C%20John%20Part-based%20modelling%20of%20compound%20scenes%20from%20images%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Hengel%2C%20Anton%20Russell%2C%20Chris%20Dick%2C%20Anthony%20Bastian%2C%20John%20Part-based%20modelling%20of%20compound%20scenes%20from%20images%202015"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Nanyang Wang, Yinda Zhang, Zhuwen Li, Yanwei Fu, Wei Liu, and Yu-Gang Jiang. Pixel2mesh: Generating 3d mesh models from single rgb images. In ECCV, 2018. 1",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Nanyang%20Zhang%2C%20Yinda%20Li%2C%20Zhuwen%20Fu%2C%20Yanwei%20Pixel2mesh%3A%20Generating%203d%20mesh%20models%20from%20single%20rgb%20images%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Nanyang%20Zhang%2C%20Yinda%20Li%2C%20Zhuwen%20Fu%2C%20Yanwei%20Pixel2mesh%3A%20Generating%203d%20mesh%20models%20from%20single%20rgb%20images%202018"
+        },
+        {
+            "id": "Published_2019_a",
+            "entry": "Published as a conference paper at ICLR 2019 Jiajun Wu, Yifan Wang, Tianfan Xue, Xingyuan Sun, William T Freeman, and Joshua B Tenenbaum.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Jiajun%20Wu%20Yifan%20Wang%20Tianfan%20Xue%20Xingyuan%20Sun%20William%20T%20Freeman%20and%20Joshua%20B%20Tenenbaum",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Published%20as%20a%20conference%20paper%20at%20ICLR%202019%20Jiajun%20Wu%20Yifan%20Wang%20Tianfan%20Xue%20Xingyuan%20Sun%20William%20T%20Freeman%20and%20Joshua%20B%20Tenenbaum"
+        },
+        {
+            "id": "MarrNet:_2017_a",
+            "entry": "MarrNet: 3D Shape Reconstruction via 2.5D Sketches. In NeurIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=MarrNet%203D%20Shape%20Reconstruction%20via%2025D%20Sketches%20In%20NeurIPS%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=MarrNet%203D%20Shape%20Reconstruction%20via%2025D%20Sketches%20In%20NeurIPS%202017"
+        },
+        {
+            "id": "Xiao_2015_a",
+            "entry": "Xiao. 3d shapenets: A deep representation for volumetric shapes. In CVPR, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%203d%20shapenets%3A%20A%20deep%20representation%20for%20volumetric%20shapes%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiao%203d%20shapenets%3A%20A%20deep%20representation%20for%20volumetric%20shapes%202015"
+        },
+        {
+            "id": "1",
+            "entry": "1 Chenyang Zhu, Kai Xu, Siddhartha Chaudhuri, Renjiao Yi, and Hao Zhang. Scores: Shape composition with recursive substructure priors. In SIGGRAPH Asia, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhu%2C%20Chenyang%20Xu%2C%20Kai%20Chaudhuri%2C%20Siddhartha%20Yi%2C%20Renjiao%20Scores%3A%20Shape%20composition%20with%20recursive%20substructure%20priors%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhu%2C%20Chenyang%20Xu%2C%20Kai%20Chaudhuri%2C%20Siddhartha%20Yi%2C%20Renjiao%20Scores%3A%20Shape%20composition%20with%20recursive%20substructure%20priors%202018"
+        },
+        {
+            "id": "2",
+            "entry": "2 Chuhang Zou, Ersin Yumer, Jimei Yang, Duygu Ceylan, and Derek Hoiem. 3d-prnn: Generating shape primitives with recurrent neural networks. In ICCV, 2017. 2",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zou%2C%20Chuhang%20Yumer%2C%20Ersin%20Yang%2C%20Jimei%20Ceylan%2C%20Duygu%203d-prnn%3A%20Generating%20shape%20primitives%20with%20recurrent%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zou%2C%20Chuhang%20Yumer%2C%20Ersin%20Yang%2C%20Jimei%20Ceylan%2C%20Duygu%203d-prnn%3A%20Generating%20shape%20primitives%20with%20recurrent%20neural%20networks%202017"
+        }
+    ]
+}

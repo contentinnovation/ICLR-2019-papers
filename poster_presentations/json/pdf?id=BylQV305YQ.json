@@ -1,0 +1,401 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TOWARD UNDERSTANDING THE IMPACT OF STALENESS IN DISTRIBUTED MACHINE LEARNING",
+        "author": "Wei Dai, Yi Zhou, Nanqing Dong\u00a7, Hao Zhang\u00a7, Eric P. Xing\u00a7 \u2217Apple Inc, \u2020Duke University, and \u00a7Petuum Inc daviddai@apple.com, yi.zhou610@duke.edu {nanqing.dong, hao.zhang, eric.xing}@petuum.com",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BylQV305YQ"
+        },
+        "abstract": "Most distributed machine learning (ML) systems store a copy of the model parameters locally on each machine to minimize network communication. In practice, in order to reduce synchronization waiting time, these copies of the model are not necessarily updated in lock-step, and can become stale. Despite much development in large-scale ML, the effect of staleness on the learning efficiency is inconclusive, mainly because it is challenging to control or monitor the staleness in complex distributed environments. In this work, we study the convergence behaviors of a wide array of ML models and algorithms under delayed updates. Our extensive experiments reveal the rich diversity of the effects of staleness on the convergence of ML algorithms and offer insights into seemingly contradictory reports in the literature. The empirical findings also inspire a new convergence analysis of SGD in non-conve\u221ax optimization under staleness, matching the best-known convergence rate of O(1/ T )."
+    },
+    "keywords": [
+        {
+            "term": "Latent Dirichlet Allocation",
+            "url": "https://en.wikipedia.org/wiki/Latent_Dirichlet_Allocation"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "recurrent neural networks",
+            "url": "https://en.wikipedia.org/wiki/recurrent_neural_networks"
+        },
+        {
+            "term": "Convolutional Neural Networks",
+            "url": "https://en.wikipedia.org/wiki/Convolutional_Neural_Network"
+        },
+        {
+            "term": "stochastic gradient descent",
+            "url": "https://en.wikipedia.org/wiki/stochastic_gradient_descent"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "analytics",
+            "url": "https://en.wikipedia.org/wiki/analytics"
+        },
+        {
+            "term": "Matrix factorization",
+            "url": "https://en.wikipedia.org/wiki/Matrix_factorization"
+        },
+        {
+            "term": "stochastic optimization",
+            "url": "https://en.wikipedia.org/wiki/stochastic_optimization"
+        }
+    ],
+    "abbreviations": {
+        "ML": "machine learning",
+        "CNNs": "Convolutional Neural Networks",
+        "RNNs": "recurrent neural networks",
+        "DNNs": "Deep Neural Networks",
+        "MLR": "Multiclass Logistic Regression",
+        "MF": "Matrix factorization",
+        "LDA": "Latent Dirichlet Allocation",
+        "VAEs": "Variational Autoencoders",
+        "SGD": "stochastic gradient descent",
+        "ReLU": "rectified linear units",
+        "VAE": "Variational Autoencoder"
+    },
+    "highlights": [
+        "With the advent of big data and complex models, there is a growing body of works on scaling machine learning under synchronous and non-synchronous1 distributed execution (<a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al, 2012</a></a></a>; <a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>; Li et al, 2014a)",
+        "<a class=\"ref-link\" id=\"cChilimbi_et+al_2014_a\" href=\"#rChilimbi_et+al_2014_a\">Chilimbi et al (2014</a>); <a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al (2012</a>) show that fully asynchronous systems achieve high scalability and model quality, but others argue that synchronous training converges faster (<a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a>; <a class=\"ref-link\" id=\"cCui_et+al_2016_a\" href=\"#rCui_et+al_2016_a\">Cui et al, 2016</a>)",
+        "We study the impact of staleness on a diverse set of models: Convolutional Neural Networks (CNNs), recurrent neural networks (RNNs), Deep Neural Networks (DNNs), multi-class Logistic Regression (MLR), Matrix Factorization (MF), Latent Dirichlet Allocation (LDA), and Variational Autoencoders (VAEs)",
+        "We optimize Matrix factorization via stochastic gradient descent, and measure model quality by training loss defined by the objective function above",
+        "Our finding is consistent with the fact that, to our knowledge, all existing successful cases applying non-synchronous training to deep neural networks use stochastic gradient descent (<a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al, 2012</a>; <a class=\"ref-link\" id=\"cChilimbi_et+al_2014_a\" href=\"#rChilimbi_et+al_2014_a\">Chilimbi et al, 2014</a>)",
+        "We focus on the challenging asynchronous stochastic gradient descent (Async-stochastic gradient descent) case, which characterizes the neural network models, among others"
+    ],
+    "key_statements": [
+        "With the advent of big data and complex models, there is a growing body of works on scaling machine learning under synchronous and non-synchronous1 distributed execution (<a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al, 2012</a></a></a>; <a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>; Li et al, 2014a)",
+        "<a class=\"ref-link\" id=\"cChilimbi_et+al_2014_a\" href=\"#rChilimbi_et+al_2014_a\">Chilimbi et al (2014</a>); <a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al (2012</a>) show that fully asynchronous systems achieve high scalability and model quality, but others argue that synchronous training converges faster (<a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a>; <a class=\"ref-link\" id=\"cCui_et+al_2016_a\" href=\"#rCui_et+al_2016_a\">Cui et al, 2016</a>)",
+        "We study the impact of staleness on a diverse set of models: Convolutional Neural Networks (CNNs), recurrent neural networks (RNNs), Deep Neural Networks (DNNs), multi-class Logistic Regression (MLR), Matrix Factorization (MF), Latent Dirichlet Allocation (LDA), and Variational Autoencoders (VAEs)",
+        "We optimize Matrix factorization via stochastic gradient descent, and measure model quality by training loss defined by the objective function above",
+        "Our finding is consistent with the fact that, to our knowledge, all existing successful cases applying non-synchronous training to deep neural networks use stochastic gradient descent (<a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al, 2012</a>; <a class=\"ref-link\" id=\"cChilimbi_et+al_2014_a\" href=\"#rChilimbi_et+al_2014_a\">Chilimbi et al, 2014</a>)",
+        "We focus on the challenging asynchronous stochastic gradient descent (Async-stochastic gradient descent) case, which characterizes the neural network models, among others"
+    ],
+    "summary": [
+        "With the advent of big data and complex models, there is a growing body of works on scaling machine learning under synchronous and non-synchronous1 distributed execution (<a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al, 2012</a></a></a>; <a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\"><a class=\"ref-link\" id=\"cGoyal_et+al_2017_a\" href=\"#rGoyal_et+al_2017_a\">Goyal et al, 2017</a></a>; Li et al, 2014a).",
+        "By allowing various workers to use stale versions of the model that do not always reflect the latest updates, non-synchronous systems can exhibit lower statistical efficiency (<a class=\"ref-link\" id=\"cChen_et+al_2016_a\" href=\"#rChen_et+al_2016_a\">Chen et al, 2016</a>; <a class=\"ref-link\" id=\"cCui_et+al_2016_a\" href=\"#rCui_et+al_2016_a\">Cui et al, 2016</a>).",
+        "We optimize MF via SGD, and measure model quality by training loss defined by the objective function above.",
+        "Fig. 1 shows the number of batches needed to reach the desired model quality for CNNs and DNNs/MLR with varying network depths and different staleness (s = 0, ..., 16).",
+        "Fig. 1(b)(d) show that convergence under higher level of staleness requires more batches to be processed in order to reach the same model quality.",
+        "This holds true for SGD, Adam, Momentum, RMSProp, Adagrad (Fig. 1), and other optimization schemes, and generalizes to other numbers of workers5.",
+        "Fig. 2(d)(e)(f) reveals that while staleness generally increases the number of batches needed to reach the target test accuracy, the increase can be higher for certain algorithms, such as Momentum.",
+        "Our finding is consistent with the fact that, to our knowledge, all existing successful cases applying non-synchronous training to deep neural networks use SGD (<a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\"><a class=\"ref-link\" id=\"cDean_et+al_2012_a\" href=\"#rDean_et+al_2012_a\">Dean et al, 2012</a></a>; <a class=\"ref-link\" id=\"cChilimbi_et+al_2014_a\" href=\"#rChilimbi_et+al_2014_a\">Chilimbi et al, 2014</a>).",
+        "Fig. 3(c)(d) show the convergence curves of LDA with different staleness levels for two settings varying on the number of workers and topics.",
+        "Unlike the convergence curves for SGD-based algorithms, the convergence curves of Gibbs sampling are highly smooth, even under high staleness and a large number of workers.",
+        "5ResNet8 takes more batches to reach the same model quality than deeper networks in Fig. 1(a) because, with SGD, ResNet8\u2019s final test accuracy is about 73% in our setting, while ResNet20\u2019s final test accuracy is close to 75%.",
+        "Deeper ResNet can reach the same model accuracy in the earlier part of the optimization path, resulting in lower number of batches in Fig. 1(a).",
+        "When the convergence time is normalized by the non-stale (s=0) value in Fig. 1(b), we observe the impact of staleness is higher on deeper models.",
+        "Even though neural network\u2019s loss function is non-convex, recent studies showed strong evidences that SGD in practical neural network training encourage positive gradient coherence (<a class=\"ref-link\" id=\"cLi_et+al_2017_a\" href=\"#rLi_et+al_2017_a\">Li et al, 2017</a>; <a class=\"ref-link\" id=\"cLorch_2016_a\" href=\"#rLorch_2016_a\">Lorch, 2016</a>).",
+        "(c) The number of batches to reach 71% test accuracy on CIFAR10 for ResNet8-32 using 8 workers and SGD under geometric delay distribution.",
+        "11Low gradient coherence during the early part of optimization is consistent with the common heuristics to use fewer workers at the beginning in asynchronous training."
+    ],
+    "headline": "We study the convergence behaviors of a wide array of machine learning models and algorithms under delayed updates",
+    "reference_links": [
+        {
+            "id": "Ahmed_et+al_2012_a",
+            "entry": "Amr Ahmed, Mohamed Aly, Joseph Gonzalez, Shravan Narayanamurthy, and Alexander J. Smola. Scalable inference in latent variable models. In WSDM, pp. 123\u2013132, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ahmed%2C%20Amr%20Aly%2C%20Mohamed%20Gonzalez%2C%20Joseph%20Narayanamurthy%2C%20Shravan%20Scalable%20inference%20in%20latent%20variable%20models%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ahmed%2C%20Amr%20Aly%2C%20Mohamed%20Gonzalez%2C%20Joseph%20Narayanamurthy%2C%20Shravan%20Scalable%20inference%20in%20latent%20variable%20models%202012"
+        },
+        {
+            "id": "Chen_et+al_2016_a",
+            "entry": "Jianmin Chen, Rajat Monga, Samy Bengio, and Rafal Jozefowicz. Revisiting distributed synchronous SGD. ArXiv: 1604.00981, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.00981"
+        },
+        {
+            "id": "Chilimbi_et+al_2014_a",
+            "entry": "Trishul Chilimbi, Yutaka Suzue, Johnson Apacible, and Karthik Kalyanaraman. Project adam: Building an efficient and scalable deep learning training system. In Proc. USENIX Symposium on Operating Systems Design and Implementation (OSDI), pp. 571\u2013582, Broomfield, CO, October 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chilimbi%2C%20Trishul%20Suzue%2C%20Yutaka%20Apacible%2C%20Johnson%20Kalyanaraman%2C%20Karthik%20Project%20adam%3A%20Building%20an%20efficient%20and%20scalable%20deep%20learning%20training%20system%202014-10",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chilimbi%2C%20Trishul%20Suzue%2C%20Yutaka%20Apacible%2C%20Johnson%20Kalyanaraman%2C%20Karthik%20Project%20adam%3A%20Building%20an%20efficient%20and%20scalable%20deep%20learning%20training%20system%202014-10"
+        },
+        {
+            "id": "Coates_et+al_2013_a",
+            "entry": "Adam Coates, Brody Huval, Tao Wang, David Wu, Bryan Catanzaro, and Ng Andrew. Deep learning with cots hpc systems. In Proc. International Conference on Machine Learning (ICML), pp. 1337\u20131345, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Coates%2C%20Adam%20Huval%2C%20Brody%20Wang%2C%20Tao%20Wu%2C%20David%20Deep%20learning%20with%20cots%20hpc%20systems%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Coates%2C%20Adam%20Huval%2C%20Brody%20Wang%2C%20Tao%20Wu%2C%20David%20Deep%20learning%20with%20cots%20hpc%20systems%202013"
+        },
+        {
+            "id": "Cui_et+al_2014_a",
+            "entry": "Henggang Cui, James Cipar, Qirong Ho, Jin Kyu Kim, Seunghak Lee, Abhimanu Kumar, Jinliang Wei, Wei Dai, Gregory R. Ganger, Phillip B. Gibbons, Garth A. Gibson, and Eric P. Xing. Exploiting bounded staleness to speed up big data analytics. In 2014 USENIX Annual Technical Conference (USENIX ATC 14), pp. 37\u201348, Philadelphia, PA, June 2014. USENIX Association.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cui%2C%20Henggang%20Cipar%2C%20James%20Ho%2C%20Qirong%20Kim%2C%20Jin%20Kyu%20Exploiting%20bounded%20staleness%20to%20speed%20up%20big%20data%20analytics%202014-06",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cui%2C%20Henggang%20Cipar%2C%20James%20Ho%2C%20Qirong%20Kim%2C%20Jin%20Kyu%20Exploiting%20bounded%20staleness%20to%20speed%20up%20big%20data%20analytics%202014-06"
+        },
+        {
+            "id": "Cui_et+al_2016_a",
+            "entry": "Henggang Cui, Hao Zhang, Gregory R Ganger, Phillip B Gibbons, and Eric P Xing. Geeps: Scalable deep learning on distributed gpus with a gpu-specialized parameter server. In Proceedings of the Eleventh European Conference on Computer Systems, pp. 4. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cui%2C%20Henggang%20Zhang%2C%20Hao%20Ganger%2C%20Gregory%20R.%20Gibbons%2C%20Phillip%20B.%20and%20Eric%20P%20Xing.%20Geeps%3A%20Scalable%20deep%20learning%20on%20distributed%20gpus%20with%20a%20gpu-specialized%20parameter%20server%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cui%2C%20Henggang%20Zhang%2C%20Hao%20Ganger%2C%20Gregory%20R.%20Gibbons%2C%20Phillip%20B.%20and%20Eric%20P%20Xing.%20Geeps%3A%20Scalable%20deep%20learning%20on%20distributed%20gpus%20with%20a%20gpu-specialized%20parameter%20server%202016"
+        },
+        {
+            "id": "Dai_et+al_2013_a",
+            "entry": "Wei Dai, Jinliang Wei, Xun Zheng, Jin Kyu Kim, Seunghak Lee, Junming Yin, Qirong Ho, and Eric P Xing. Petuum: A framework for iterative-convergent distributed ml. arXiv preprint arXiv:1312.7651, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.7651"
+        },
+        {
+            "id": "Dai_et+al_2015_a",
+            "entry": "Wei Dai, Abhimanu Kumar, Jinliang Wei, Qirong Ho, Garth Gibson, and Eric P. Xing. Analysis of high-performance distributed ml at scale through parameter server consistency models. In Proceedings of the 29th AAAI Conference on Artificial Intelligence, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dai%2C%20Wei%20Kumar%2C%20Abhimanu%20Wei%2C%20Jinliang%20Ho%2C%20Qirong%20Analysis%20of%20high-performance%20distributed%20ml%20at%20scale%20through%20parameter%20server%20consistency%20models%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dai%2C%20Wei%20Kumar%2C%20Abhimanu%20Wei%2C%20Jinliang%20Ho%2C%20Qirong%20Analysis%20of%20high-performance%20distributed%20ml%20at%20scale%20through%20parameter%20server%20consistency%20models%202015"
+        },
+        {
+            "id": "Dean_et+al_2012_a",
+            "entry": "Jeffrey Dean, Greg Corrado, Rajat Monga, Kai Chen, Matthieu Devin, Mark Mao, Andrew Senior, Paul Tucker, Ke Yang, Quoc V Le, et al. Large scale distributed deep networks. In Advances in Neural Information Processing Systems, pp. 1223\u20131231, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dean%2C%20Jeffrey%20Corrado%2C%20Greg%20Monga%2C%20Rajat%20Chen%2C%20Kai%20Large%20scale%20distributed%20deep%20networks%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dean%2C%20Jeffrey%20Corrado%2C%20Greg%20Monga%2C%20Rajat%20Chen%2C%20Kai%20Large%20scale%20distributed%20deep%20networks%202012"
+        },
+        {
+            "id": "Duchi_et+al_2011_a",
+            "entry": "John Duchi, Elad Hazan, and Yoram Singer. Adaptive subgradient methods for online learning and stochastic optimization. The Journal of Machine Learning Research, 12:2121\u20132159, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Duchi%2C%20John%20Hazan%2C%20Elad%20Singer%2C%20Yoram%20Adaptive%20subgradient%20methods%20for%20online%20learning%20and%20stochastic%20optimization%202011"
+        },
+        {
+            "id": "Glorot_2010_a",
+            "entry": "Xavier Glorot and Yoshua Bengio. Understanding the difficulty of training deep feedforward neural networks. In Proc. International Conference on Artificial Intelligence and Statistics (AISTATS), pp. 249\u2013256, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bengio%2C%20Yoshua%20Understanding%20the%20difficulty%20of%20training%20deep%20feedforward%20neural%20networks%202010"
+        },
+        {
+            "id": "Goyal_et+al_2017_a",
+            "entry": "Priya Goyal, Piotr Doll\u00e1r, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch SGD: training imagenet in 1 hour. ArXiv: 1706.02677, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.02677"
+        },
+        {
+            "id": "Griffiths_2004_a",
+            "entry": "Thomas L. Griffiths and Mark Steyvers. Finding scientific topics. PNAS, 101(suppl. 1):5228\u20135235, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Griffiths%2C%20Thomas%20L.%20Steyvers%2C%20Mark%20Finding%20scientific%20topics%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Griffiths%2C%20Thomas%20L.%20Steyvers%2C%20Mark%20Finding%20scientific%20topics%202004"
+        },
+        {
+            "id": "Hadjis_et+al_2016_a",
+            "entry": "Stefan Hadjis, Ce Zhang, Ioannis Mitliagkas, Dan Iter, and Christopher R\u00e9. Omnivore: An optimizer for multi-device deep learning on cpus and gpus. arXiv preprint arXiv:1606.04487, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.04487"
+        },
+        {
+            "id": "Harper_2016_a",
+            "entry": "F Maxwell Harper and Joseph A Konstan. The movielens datasets: History and context. ACM Transactions on Interactive Intelligent Systems (TiiS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Harper%2C%20F.Maxwell%20Konstan%2C%20Joseph%20A.%20The%20movielens%20datasets%3A%20History%20and%20context%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Harper%2C%20F.Maxwell%20Konstan%2C%20Joseph%20A.%20The%20movielens%20datasets%3A%20History%20and%20context%202016"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Hinton_2012_a",
+            "entry": "Geoffrey Hinton. Neural networks for machine learning. http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf, 2012.",
+            "url": "http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf"
+        },
+        {
+            "id": "Ho_et+al_2013_a",
+            "entry": "Qirong Ho, James Cipar, Henggang Cui, Seunghak Lee, Jin Kyu Kim, Phillip B. Gibbons, Garth A. Gibson, Greg Ganger, and Eric Xing. More effective distributed ml via a stale synchronous parallel parameter server. In Advances in Neural Information Processing Systems (NIPS) 26, pp. 1223\u20131231. 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ho%2C%20Qirong%20Cipar%2C%20James%20Cui%2C%20Henggang%20Lee%2C%20Seunghak%20and%20Eric%20Xing.%20More%20effective%20distributed%20ml%20via%20a%20stale%20synchronous%20parallel%20parameter%20server%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ho%2C%20Qirong%20Cipar%2C%20James%20Cui%2C%20Henggang%20Lee%2C%20Seunghak%20and%20Eric%20Xing.%20More%20effective%20distributed%20ml%20via%20a%20stale%20synchronous%20parallel%20parameter%20server%202013"
+        },
+        {
+            "id": "Hochreiter_1997_a",
+            "entry": "Sepp Hochreiter and J\u00fcrgen Schmidhuber. Long short-term memory. Neural computation, 9(8): 1735\u20131780, 1997.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hochreiter%2C%20Sepp%20Schmidhuber%2C%20J%C3%BCrgen%20Long%20short-term%20memory%201997"
+        },
+        {
+            "id": "Huo_et+al_2018_a",
+            "entry": "Zhouyuan Huo, Bin Gu, and Heng Huang. Training neural networks using features replay. arXiv preprint arXiv:1807.04511, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1807.04511"
+        },
+        {
+            "id": "Jordan_2013_a",
+            "entry": "Michael I Jordan et al. On statistics, computation and scalability. Bernoulli, 19(4):1378\u20131390, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jordan%2C%20Michael%20I.%20On%20statistics%2C%20computation%20and%20scalability%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jordan%2C%20Michael%20I.%20On%20statistics%2C%20computation%20and%20scalability%202013"
+        },
+        {
+            "id": "Keskar_et+al_2016_a",
+            "entry": "Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, and Ping Tak Peter Tang. On large-batch training for deep learning: Generalization gap and sharp minima. ArXiv: 1609.04836, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1609.04836"
+        },
+        {
+            "id": "Kim_et+al_2016_a",
+            "entry": "Jin Kyu Kim, Qirong Ho, Seunghak Lee, Xun Zheng, Wei Dai, Garth A Gibson, and Eric P Xing. Strads: a distributed framework for scheduled model parallel machine learning. In Proceedings of the Eleventh European Conference on Computer Systems, pp. 5. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kim%2C%20Jin%20Kyu%20Ho%2C%20Qirong%20Lee%2C%20Seunghak%20Zheng%2C%20Xun%20Garth%20A%20Gibson%2C%20and%20Eric%20P%20Xing.%20Strads%3A%20a%20distributed%20framework%20for%20scheduled%20model%20parallel%20machine%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kim%2C%20Jin%20Kyu%20Ho%2C%20Qirong%20Lee%2C%20Seunghak%20Zheng%2C%20Xun%20Garth%20A%20Gibson%2C%20and%20Eric%20P%20Xing.%20Strads%3A%20a%20distributed%20framework%20for%20scheduled%20model%20parallel%20machine%20learning%202016"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Kumar_2014_a",
+            "entry": "Abhimanu Kumar, Alex Beutel, Qirong Ho, and Eric P Xing. Fugue: Slow-worker-agnostic distributed learning for big models on big data. In Proceedings of the Seventeenth International Conference on Artificial Intelligence and Statistics, pp. 531\u2013539, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kumar%2C%20Abhimanu%20Beutel%2C%20Alex%20Qirong%20Ho%2C%20and%20Eric%20P%20Xing.%20Fugue%3A%20Slow-worker-agnostic%20distributed%20learning%20for%20big%20models%20on%20big%20data%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kumar%2C%20Abhimanu%20Beutel%2C%20Alex%20Qirong%20Ho%2C%20and%20Eric%20P%20Xing.%20Fugue%3A%20Slow-worker-agnostic%20distributed%20learning%20for%20big%20models%20on%20big%20data%202014"
+        },
+        {
+            "id": "Langford_et+al_2009_a",
+            "entry": "John Langford, Alexander J Smola, and Martin Zinkevich. Slow learners are fast. In Advances in Neural Information Processing Systems, pp. 2331\u20132339, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Langford%2C%20John%20Smola%2C%20Alexander%20J.%20Zinkevich%2C%20Martin%20Slow%20learners%20are%20fast%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Langford%2C%20John%20Smola%2C%20Alexander%20J.%20Zinkevich%2C%20Martin%20Slow%20learners%20are%20fast%202009"
+        },
+        {
+            "id": "Lecun_1998_a",
+            "entry": "Yann LeCun. The mnist database of handwritten digits. http://yann.lecun.com/exdb/mnist/, 1998.",
+            "url": "http://yann.lecun.com/exdb/mnist/"
+        },
+        {
+            "id": "Li_et+al_2017_a",
+            "entry": "Hao Li, Zheng Xu, Gavin Taylor, and Tom Goldstein. Visualizing the loss landscape of neural nets. arXiv preprint arXiv:1712.09913, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.09913"
+        },
+        {
+            "id": "Li_et+al_0000_a",
+            "entry": "Mu Li, David G Andersen, Jun Woo Park, Alexander J Smola, Amr Ahmed, Vanja Josifovski, James Long, Eugene J Shekita, and Bor-Yiing Su. Scaling distributed machine learning with the parameter server. In OSDI, volume 14, pp. 583\u2013598, 2014a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Mu%20Andersen%2C%20David%20G.%20Park%2C%20Jun%20Woo%20Smola%2C%20Alexander%20J.%20Scaling%20distributed%20machine%20learning%20with%20the%20parameter%20server",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Mu%20Andersen%2C%20David%20G.%20Park%2C%20Jun%20Woo%20Smola%2C%20Alexander%20J.%20Scaling%20distributed%20machine%20learning%20with%20the%20parameter%20server"
+        },
+        {
+            "id": "Li_et+al_0000_b",
+            "entry": "Mu Li, David G Andersen, Alex J Smola, and Kai Yu. Communication efficient distributed machine learning with the parameter server. In Proc. Advances in Neural Information Processing Systems (NIPS), pp. 19\u201327, 2014b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Mu%20Andersen%2C%20David%20G.%20Smola%2C%20Alex%20J.%20Yu%2C%20Kai%20Communication%20efficient%20distributed%20machine%20learning%20with%20the%20parameter%20server",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Mu%20Andersen%2C%20David%20G.%20Smola%2C%20Alex%20J.%20Yu%2C%20Kai%20Communication%20efficient%20distributed%20machine%20learning%20with%20the%20parameter%20server"
+        },
+        {
+            "id": "Lian_et+al_2015_a",
+            "entry": "Xiangru Lian, Yijun Huang, Yuncheng Li, and Ji Liu. Asynchronous parallel stochastic gradient for nonconvex optimization. In Advances in Neural Information Processing Systems, pp. 2737\u20132745, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lian%2C%20Xiangru%20Huang%2C%20Yijun%20Li%2C%20Yuncheng%20Liu%2C%20Ji%20Asynchronous%20parallel%20stochastic%20gradient%20for%20nonconvex%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lian%2C%20Xiangru%20Huang%2C%20Yijun%20Li%2C%20Yuncheng%20Liu%2C%20Ji%20Asynchronous%20parallel%20stochastic%20gradient%20for%20nonconvex%20optimization%202015"
+        },
+        {
+            "id": "Lorch_2016_a",
+            "entry": "Eliana Lorch. Visualizing deep network training trajectories with pca. In The 33rd International Conference on Machine Learning JMLR volume, volume 48, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lorch%2C%20Eliana%20Visualizing%20deep%20network%20training%20trajectories%20with%20pca%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lorch%2C%20Eliana%20Visualizing%20deep%20network%20training%20trajectories%20with%20pca%202016"
+        },
+        {
+            "id": "Low_et+al_2012_a",
+            "entry": "Yucheng Low, Joseph Gonzalez, Aapo Kyrola, Danny Bickson, Carlos Guestrin, and Joseph M. Hellerstein. Distributed graphlab: A framework for machine learning and data mining in the cloud. PVLDB, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Low%2C%20Yucheng%20Gonzalez%2C%20Joseph%20Kyrola%2C%20Aapo%20Bickson%2C%20Danny%20Distributed%20graphlab%3A%20A%20framework%20for%20machine%20learning%20and%20data%20mining%20in%20the%20cloud%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Low%2C%20Yucheng%20Gonzalez%2C%20Joseph%20Kyrola%2C%20Aapo%20Bickson%2C%20Danny%20Distributed%20graphlab%3A%20A%20framework%20for%20machine%20learning%20and%20data%20mining%20in%20the%20cloud%202012"
+        },
+        {
+            "id": "Marcus_et+al_1993_a",
+            "entry": "Mitchell P Marcus, Mary Ann Marcinkiewicz, and Beatrice Santorini. Building a large annotated corpus of english: The penn treebank. Computational linguistics, 19(2):313\u2013330, 1993.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Marcus%2C%20Mitchell%20P.%20Marcinkiewicz%2C%20Mary%20Ann%20Santorini%2C%20Beatrice%20Building%20a%20large%20annotated%20corpus%20of%20english%3A%20The%20penn%20treebank%201993"
+        },
+        {
+            "id": "Masters_2018_a",
+            "entry": "Dominic Masters and Carlo Luschi. Revisiting small batch training for deep neural networks. ArXiv: 1804.07612, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1804.07612"
+        },
+        {
+            "id": "Mcmahan_2014_a",
+            "entry": "Brendan McMahan and Matthew Streeter. Delay-tolerant algorithms for asynchronous distributed online learning. In Advances in Neural Information Processing Systems, pp. 2915\u20132923, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=McMahan%2C%20Brendan%20Streeter%2C%20Matthew%20Delay-tolerant%20algorithms%20for%20asynchronous%20distributed%20online%20learning%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=McMahan%2C%20Brendan%20Streeter%2C%20Matthew%20Delay-tolerant%20algorithms%20for%20asynchronous%20distributed%20online%20learning%202014"
+        },
+        {
+            "id": "Mitliagkas_et+al_2016_a",
+            "entry": "Ioannis Mitliagkas, Ce Zhang, Stefan Hadjis, and Christopher R\u00e9. Asynchrony begets momentum, with an application to deep learning. In Communication, Control, and Computing (Allerton), 2016 54th Annual Allerton Conference on, pp. 997\u20131004. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mitliagkas%2C%20Ioannis%20Zhang%2C%20Ce%20Hadjis%2C%20Stefan%20R%C3%A9%2C%20Christopher%20Asynchrony%20begets%20momentum%2C%20with%20an%20application%20to%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mitliagkas%2C%20Ioannis%20Zhang%2C%20Ce%20Hadjis%2C%20Stefan%20R%C3%A9%2C%20Christopher%20Asynchrony%20begets%20momentum%2C%20with%20an%20application%20to%20deep%20learning%202016"
+        },
+        {
+            "id": "Nair_2010_a",
+            "entry": "Vinod Nair and Geoffrey E Hinton. Rectified linear units improve restricted boltzmann machines. In Proceedings of the 27th International Conference on International Conference on Machine Learning, pp. 807\u2013814, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Vinod%20Hinton%2C%20Geoffrey%20E.%20Rectified%20linear%20units%20improve%20restricted%20boltzmann%20machines%202010"
+        },
+        {
+            "id": "Neiswanger_2013_a",
+            "entry": "Willie Neiswanger, Chong Wang, and Eric Xing. Asymptotically exact, embarrassingly parallel mcmc. arXiv preprint arXiv:1311.4780, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1311.4780"
+        },
+        {
+            "id": "Qian_1999_a",
+            "entry": "Ning Qian. On the momentum term in gradient descent learning algorithms. Neural Networks, 12(1): 145\u2013151, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Qian%2C%20Ning%20On%20the%20momentum%20term%20in%20gradient%20descent%20learning%20algorithms%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Qian%2C%20Ning%20On%20the%20momentum%20term%20in%20gradient%20descent%20learning%20algorithms%201999"
+        },
+        {
+            "id": "Recht_et+al_2011_a",
+            "entry": "Benjamin Recht, Christopher Re, Stephen J. Wright, and Feng Niu. Hogwild: A lock-free approach to parallelizing stochastic gradient descent. In NIPS, pp. 693\u2013701, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Recht%2C%20Benjamin%20Re%2C%20Christopher%20Wright%2C%20Stephen%20J.%20Niu%2C%20Feng%20Hogwild%3A%20A%20lock-free%20approach%20to%20parallelizing%20stochastic%20gradient%20descent%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Recht%2C%20Benjamin%20Re%2C%20Christopher%20Wright%2C%20Stephen%20J.%20Niu%2C%20Feng%20Hogwild%3A%20A%20lock-free%20approach%20to%20parallelizing%20stochastic%20gradient%20descent%202011"
+        },
+        {
+            "id": "Rennie_20_a",
+            "entry": "Jason Rennie. 20 newsgroups. http://qwone.com/jason/20Newsgroups/.",
+            "url": "http://qwone.com/jason/20Newsgroups/"
+        },
+        {
+            "id": "Scott_et+al_2016_a",
+            "entry": "Steven L Scott, Alexander W Blocker, Fernando V Bonassi, Hugh A Chipman, Edward I George, and Robert E McCulloch. Bayes and big data: The consensus monte carlo algorithm. International Journal of Management Science and Engineering Management, 11(2):78\u201388, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Scott%2C%20Steven%20L.%20Blocker%2C%20Alexander%20W.%20Bonassi%2C%20Fernando%20V.%20Chipman%2C%20Hugh%20A.%20Bayes%20and%20big%20data%3A%20The%20consensus%20monte%20carlo%20algorithm%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Scott%2C%20Steven%20L.%20Blocker%2C%20Alexander%20W.%20Bonassi%2C%20Fernando%20V.%20Chipman%2C%20Hugh%20A.%20Bayes%20and%20big%20data%3A%20The%20consensus%20monte%20carlo%20algorithm%202016"
+        },
+        {
+            "id": "Smola_2010_a",
+            "entry": "Alexander Smola and Shravan Narayanamurthy. An architecture for parallel topic models. Proc. VLDB Endow., 3(1-2):703\u2013710, September 2010. ISSN 2150-8097.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Smola%2C%20Alexander%20Narayanamurthy%2C%20Shravan%20An%20architecture%20for%20parallel%20topic%20models%202010-09",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Smola%2C%20Alexander%20Narayanamurthy%2C%20Shravan%20An%20architecture%20for%20parallel%20topic%20models%202010-09"
+        },
+        {
+            "id": "Wei_et+al_2015_a",
+            "entry": "Jinliang Wei, Wei Dai, Aurick Qiao, Qirong Ho, Henggang Cui, Gregory R Ganger, Phillip B Gibbons, Garth A Gibson, and Eric P Xing. Managed communication and consistency for fast data-parallel iterative analytics. In Proceedings of the Sixth ACM Symposium on Cloud Computing, pp. 381\u2013394. ACM, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wei%2C%20Jinliang%20Dai%2C%20Wei%20Qiao%2C%20Aurick%20Ho%2C%20Qirong%20Garth%20A%20Gibson%2C%20and%20Eric%20P%20Xing.%20Managed%20communication%20and%20consistency%20for%20fast%20data-parallel%20iterative%20analytics%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wei%2C%20Jinliang%20Dai%2C%20Wei%20Qiao%2C%20Aurick%20Ho%2C%20Qirong%20Garth%20A%20Gibson%2C%20and%20Eric%20P%20Xing.%20Managed%20communication%20and%20consistency%20for%20fast%20data-parallel%20iterative%20analytics%202015"
+        },
+        {
+            "id": "Xing_et+al_2015_a",
+            "entry": "E.P. Xing, Q. Ho, W. Dai, Jin-Kyu Kim, J. Wei, S. Lee, X. Zheng, P. Xie, A. Kumar, and Y. Yu. Petuum: A new platform for distributed machine learning on big data. Big Data, IEEE Transactions on, PP(99):1\u20131, 2015. doi: 10.1109/TBDATA.2015.2472014.",
+            "crossref": "https://dx.doi.org/10.1109/TBDATA.2015.2472014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=https%3A//dx.doi.org/10.1109/TBDATA.2015.2472014"
+        },
+        {
+            "id": "Yuan_et+al_2015_a",
+            "entry": "Jinhui Yuan, Fei Gao, Qirong Ho, Wei Dai, Jinliang Wei, Xun Zheng, Eric Po Xing, Tie-Yan Liu, and Wei-Ying Ma. Lightlda: Big topic models on modest computer clusters. In Proceedings of the 24th International Conference on World Wide Web, pp. 1351\u20131361. ACM, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yuan%2C%20Jinhui%20Gao%2C%20Fei%20Ho%2C%20Qirong%20Dai%2C%20Wei%20Xun%20Zheng%2C%20Eric%20Po%20Xing%2C%20Tie-Yan%20Liu%2C%20and%20Wei-Ying%20Ma.%20Lightlda%3A%20Big%20topic%20models%20on%20modest%20computer%20clusters%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yuan%2C%20Jinhui%20Gao%2C%20Fei%20Ho%2C%20Qirong%20Dai%2C%20Wei%20Xun%20Zheng%2C%20Eric%20Po%20Xing%2C%20Tie-Yan%20Liu%2C%20and%20Wei-Ying%20Ma.%20Lightlda%3A%20Big%20topic%20models%20on%20modest%20computer%20clusters%202015"
+        },
+        {
+            "id": "Yun_et+al_2013_a",
+            "entry": "Hyokun Yun, Hsiang-Fu Yu, Cho-Jui Hsieh, SVN Vishwanathan, and Inderjit Dhillon. NOMAD: Non-locking, stochastic multi-machine algorithm for asynchronous and decentralized matrix completion. ArXiv: 1312.0193, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.0193"
+        },
+        {
+            "id": "Zhang_2014_a",
+            "entry": "Ruiliang Zhang and James T. Kwok. Asynchronous distributed admm for consensus optimization. In ICML, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Ruiliang%20Kwok%2C%20James%20T.%20Asynchronous%20distributed%20admm%20for%20consensus%20optimization%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Ruiliang%20Kwok%2C%20James%20T.%20Asynchronous%20distributed%20admm%20for%20consensus%20optimization%202014"
+        },
+        {
+            "id": "Zhou_et+al_2016_a",
+            "entry": "Yi Zhou, Yaoliang Yu, Wei Dai, Yingbin Liang, and Eric P. Xing. On convergence of model parallel proximal gradient algorithm for stale synchronous parallel system. In The 19th International Conference on Artificial Intelligence and Statistics (AISTATS), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Yi%20Yu%2C%20Yaoliang%20Dai%2C%20Wei%20Liang%2C%20Yingbin%20Xing.%20On%20convergence%20of%20model%20parallel%20proximal%20gradient%20algorithm%20for%20stale%20synchronous%20parallel%20system%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Yi%20Yu%2C%20Yaoliang%20Dai%2C%20Wei%20Liang%2C%20Yingbin%20Xing.%20On%20convergence%20of%20model%20parallel%20proximal%20gradient%20algorithm%20for%20stale%20synchronous%20parallel%20system%202016"
+        },
+        {
+            "id": "Zhou_et+al_2018_a",
+            "entry": "Yi Zhou, Yingbin Liang, Yaoliang Yu, Wei Dai, and Eric P. Xing. Distributed proximal gradient algorithm for partially asynchronous computer clusters. Journal of Machine Learning Research, 19(19):1\u201332, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Yi%20Liang%2C%20Yingbin%20Yu%2C%20Yaoliang%20Dai%2C%20Wei%20Distributed%20proximal%20gradient%20algorithm%20for%20partially%20asynchronous%20computer%20clusters%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Yi%20Liang%2C%20Yingbin%20Yu%2C%20Yaoliang%20Dai%2C%20Wei%20Distributed%20proximal%20gradient%20algorithm%20for%20partially%20asynchronous%20computer%20clusters%202018"
+        }
+    ]
+}

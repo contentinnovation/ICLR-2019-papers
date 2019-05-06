@@ -1,0 +1,428 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "TOWARDS ROBUST, LOCALLY LINEAR DEEP NET-",
+        "author": "Guang-He Lee, David Alvarez-Melis & Tommi S. Jaakkola Computer Science and Artificial Intelligence Lab MIT {guanghe,davidam,tommi}@csail.mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=SylCrnCcFX"
+        },
+        "abstract": "Deep networks realize complex mappings that are often understood by their locally linear behavior at or around points of interest. For example, we use the derivative of the mapping with respect to its inputs for sensitivity analysis, or to explain (obtain coordinate relevance for) a prediction. One key challenge is that such derivatives are themselves inherently unstable. In this paper, we propose a new learning problem to encourage deep networks to have stable derivatives over larger regions. While the problem is challenging in general, we focus on networks with piecewise linear activation functions. Our algorithm consists of an inference step that identifies a region around a point where linear approximation is provably stable, and an optimization step to expand such regions. We propose a novel relaxation to scale the algorithm to realistic models. We illustrate our method with residual and recurrent networks on image and sequence datasets.1"
+    },
+    "keywords": [
+        {
+            "term": "convolutional neural networks",
+            "url": "https://en.wikipedia.org/wiki/convolutional_neural_networks"
+        },
+        {
+            "term": "deep learning",
+            "url": "https://en.wikipedia.org/wiki/deep_learning"
+        },
+        {
+            "term": "deep network",
+            "url": "https://en.wikipedia.org/wiki/deep_network"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "support vector machines",
+            "url": "https://en.wikipedia.org/wiki/support_vector_machines"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        }
+    ],
+    "abbreviations": {
+        "SVM": "support vector machines",
+        "CNN": "convolutional neural networks",
+        "TSVM": "transductive/semi-supervised SVM",
+        "ROLL": "RObust Local Linearity",
+        "scoRNN": "scaled Cayley orthogonal RNN"
+    },
+    "highlights": [
+        "Complex mappings are often characterized by their derivatives at points of interest",
+        "The associated local linearization is frequently used to obtain explanations for model predictions (<a class=\"ref-link\" id=\"cBaehrens_et+al_2010_a\" href=\"#rBaehrens_et+al_2010_a\">Baehrens et al, 2010</a>; <a class=\"ref-link\" id=\"cSimonyan_et+al_2013_a\" href=\"#rSimonyan_et+al_2013_a\">Simonyan et al, 2013</a>; <a class=\"ref-link\" id=\"cSundararajan_et+al_2017_a\" href=\"#rSundararajan_et+al_2017_a\">Sundararajan et al, 2017</a>; <a class=\"ref-link\" id=\"cSmilkov_et+al_2017_a\" href=\"#rSmilkov_et+al_2017_a\">Smilkov et al, 2017</a>); explicit first-order local approximations (<a class=\"ref-link\" id=\"cRifai_et+al_2012_a\" href=\"#rRifai_et+al_2012_a\">Rifai et al, 2012</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a>; <a class=\"ref-link\" id=\"cWang_2016_a\" href=\"#rWang_2016_a\">Wang & Liu, 2016</a>; <a class=\"ref-link\" id=\"cKoh_2017_a\" href=\"#rKoh_2017_a\">Koh & Liang, 2017</a>; <a class=\"ref-link\" id=\"cAlvarez-Melis_2018_b\" href=\"#rAlvarez-Melis_2018_b\">Alvarez-Melis & Jaakkola, 2018b</a>); or used to guide learning through regularization of functional classes controlled by derivatives (<a class=\"ref-link\" id=\"cGulrajani_et+al_2017_a\" href=\"#rGulrajani_et+al_2017_a\">Gulrajani et al, 2017</a>; <a class=\"ref-link\" id=\"cBellemare_et+al_2017_a\" href=\"#rBellemare_et+al_2017_a\">Bellemare et al, 2017</a>; <a class=\"ref-link\" id=\"cMroueh_et+al_2018_a\" href=\"#rMroueh_et+al_2018_a\">Mroueh et al, 2018</a>)",
+        "We argue that counting the number of linear regions on the whole space does not capture the structure of data manifold, and we propose to certify the number of complete linear regions (#CLR) of f\u03b8 among the data points Dx, which turns out to be efficient to compute given a mild condition",
+        "Since a linear region is shaped by a set of neurons that are \u201cclose\u201d to a given a point, a noticeable problem of Eq (7) is that it only focuses on the \u201cclosest\u201d neuron, making it hard to scale the effect to large networks",
+        "This paper introduces a new learning problem to endow deep learning models with robust local linearity",
+        "We focus on piecewise linear networks and solve the problem based on a margin principle similar to support vector machines"
+    ],
+    "key_statements": [
+        "Complex mappings are often characterized by their derivatives at points of interest",
+        "The associated local linearization is frequently used to obtain explanations for model predictions (<a class=\"ref-link\" id=\"cBaehrens_et+al_2010_a\" href=\"#rBaehrens_et+al_2010_a\">Baehrens et al, 2010</a>; <a class=\"ref-link\" id=\"cSimonyan_et+al_2013_a\" href=\"#rSimonyan_et+al_2013_a\">Simonyan et al, 2013</a>; <a class=\"ref-link\" id=\"cSundararajan_et+al_2017_a\" href=\"#rSundararajan_et+al_2017_a\">Sundararajan et al, 2017</a>; <a class=\"ref-link\" id=\"cSmilkov_et+al_2017_a\" href=\"#rSmilkov_et+al_2017_a\">Smilkov et al, 2017</a>); explicit first-order local approximations (<a class=\"ref-link\" id=\"cRifai_et+al_2012_a\" href=\"#rRifai_et+al_2012_a\">Rifai et al, 2012</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a>; <a class=\"ref-link\" id=\"cWang_2016_a\" href=\"#rWang_2016_a\">Wang & Liu, 2016</a>; <a class=\"ref-link\" id=\"cKoh_2017_a\" href=\"#rKoh_2017_a\">Koh & Liang, 2017</a>; <a class=\"ref-link\" id=\"cAlvarez-Melis_2018_b\" href=\"#rAlvarez-Melis_2018_b\">Alvarez-Melis & Jaakkola, 2018b</a>); or used to guide learning through regularization of functional classes controlled by derivatives (<a class=\"ref-link\" id=\"cGulrajani_et+al_2017_a\" href=\"#rGulrajani_et+al_2017_a\">Gulrajani et al, 2017</a>; <a class=\"ref-link\" id=\"cBellemare_et+al_2017_a\" href=\"#rBellemare_et+al_2017_a\">Bellemare et al, 2017</a>; <a class=\"ref-link\" id=\"cMroueh_et+al_2018_a\" href=\"#rMroueh_et+al_2018_a\">Mroueh et al, 2018</a>)",
+        "We focus on deep networks with piecewise linear activations to make the problem tractable",
+        "The resulting objective is, rigid and non-smooth, and we further relax the learning problem in a manner resembling support vector machines (SVM) (<a class=\"ref-link\" id=\"cVapnik_1995_a\" href=\"#rVapnik_1995_a\">Vapnik, 1995</a>; Cortes & <a class=\"ref-link\" id=\"cVapnik_1995_a\" href=\"#rVapnik_1995_a\">Vapnik, 1995</a>). Both the inference and learning problems in our setting require evaluating the gradient of each neuron with respect to the inputs, which poses a significant computational challenge",
+        "We focus in this paper on neural networks with piecewise linear activation functions, such as ReLU (<a class=\"ref-link\" id=\"cGlorot_et+al_2011_a\" href=\"#rGlorot_et+al_2011_a\">Glorot et al, 2011</a>) and its variants (Maas et al, 2013; <a class=\"ref-link\" id=\"cHe_et+al_2015_a\" href=\"#rHe_et+al_2015_a\">He et al, 2015</a>; <a class=\"ref-link\" id=\"cArjovsky_et+al_2016_a\" href=\"#rArjovsky_et+al_2016_a\">Arjovsky et al, 2016</a>)",
+        "In contrast to quantifying the number of linear regions as a measure of complexity, we focus on the local linear regions, and try to expand them via learning",
+        "We focus on the piecewise linear property of neural networks represented by f\u03b8(x), and leverage a generic loss function L, y) to fold such nonlinear mechanism",
+        "We argue that counting the number of linear regions on the whole space does not capture the structure of data manifold, and we propose to certify the number of complete linear regions (#CLR) of f\u03b8 among the data points Dx, which turns out to be efficient to compute given a mild condition",
+        "Since a linear region is shaped by a set of neurons that are \u201cclose\u201d to a given a point, a noticeable problem of Eq (7) is that it only focuses on the \u201cclosest\u201d neuron, making it hard to scale the effect to large networks",
+        "We propose an unbiased estimator of the RObust Local Linearity loss in Eq (9) when I(x, \u03b3) = I",
+        "We turn to a samplebased approach to evaluate the stability of the gradients f\u03b8(x)y for the ground-truth label in a local region with a goal to reveal the stability across different linear regions",
+        "This paper introduces a new learning problem to endow deep learning models with robust local linearity",
+        "We focus on piecewise linear networks and solve the problem based on a margin principle similar to support vector machines"
+    ],
+    "summary": [
+        "Complex mappings are often characterized by their derivatives at points of interest.",
+        "Both the inference and learning problems in our setting require evaluating the gradient of each neuron with respect to the inputs, which poses a significant computational challenge.",
+        "Inference algorithms that identify input regions of neural networks, with piecewise linear activation functions, that are provably stable.",
+        "The feasible set corresponding to an activation pattern in the input space is a natural region where derivatives are provably stable.",
+        "We call the feasible set induced by an activation pattern (<a class=\"ref-link\" id=\"cSerra_et+al_2018_a\" href=\"#rSerra_et+al_2018_a\">Serra et al, 2018</a>) a linear region, and a maximal connected subset of the input space subject to the same derivatives of the network (<a class=\"ref-link\" id=\"cMontufar_et+al_2014_a\" href=\"#rMontufar_et+al_2014_a\">Montufar et al, 2014</a>) a complete linear region.",
+        "We develop a smooth relaxation of the p margin and novel perturbation algorithms, which scale the computation to realistic networks, for gradient stability.",
+        "Since a linear region is shaped by a set of neurons that are \u201cclose\u201d to a given a point, a noticeable problem of Eq (7) is that it only focuses on the \u201cclosest\u201d neuron, making it hard to scale the effect to large networks.",
+        "The generalized loss is our final objective for learning RObust Local Linearity (ROLL) and is written as: \u03bb min \u03b8 (x,y)\u2208D",
+        "The proposed algorithms can be used on all the deep learning models with affine transformations and piecewise linear activation functions by enumerating every neuron that will be imposed an ReLU-like activation function as zji .",
+        "We provide an initial step towards doing so in the Appendix E, but we suggest to use an average-pooling or convolution with large strides instead, since they do not induce extra linear constraints as maxpooling and do not in general yield significant difference in performance (<a class=\"ref-link\" id=\"cSpringenberg_et+al_2014_a\" href=\"#rSpringenberg_et+al_2014_a\">Springenberg et al, 2014</a>).",
+        "With the same/1% inferior ACC, our approach leads to a model with about 4/20 times larger margins among the percentiles on testing data, compared to the vanilla loss.",
+        "Evaluation Measures: Due to high input dimensionality (D \u2248 270K), computing the certificatesx,1, \u02c6x,2 is computationally challenging without a cluster of GPUs. we turn to a samplebased approach to evaluate the stability of the gradients f\u03b8(x)y for the ground-truth label in a local region with a goal to reveal the stability across different linear regions.",
+        "Out of 1024 examined examples x, only 40 and 42 gradient-distorted images change prediction labels in the ROLL and vanilla model, respectively.",
+        "The proposed ROLL loss expands regions with provably stable derivatives, and further generalize the stable gradient property across linear regions."
+    ],
+    "headline": "We propose a new learning problem to encourage deep networks to have stable derivatives over larger regions",
+    "reference_links": [
+        {
+            "id": "Alvarez-Melis_2018_a",
+            "entry": "David Alvarez-Melis and Tommi S. Jaakkola. On the robustness of interpretability methods. 2018 ICML Workshop on Human Interpretability in Machine Learning (WHI 2018), 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez-Melis%2C%20David%20Jaakkola%2C%20Tommi%20S.%20On%20the%20robustness%20of%20interpretability%20methods%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alvarez-Melis%2C%20David%20Jaakkola%2C%20Tommi%20S.%20On%20the%20robustness%20of%20interpretability%20methods%202018"
+        },
+        {
+            "id": "Alvarez-Melis_2018_b",
+            "entry": "David Alvarez-Melis and Tommi S. Jaakkola. Towards robust interpretability with self-explaining neural networks. In Advances in Neural Information Processing Systems, pp. 7786\u20137795, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Alvarez-Melis%2C%20David%20Jaakkola%2C%20Tommi%20S.%20Towards%20robust%20interpretability%20with%20self-explaining%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Alvarez-Melis%2C%20David%20Jaakkola%2C%20Tommi%20S.%20Towards%20robust%20interpretability%20with%20self-explaining%20neural%20networks%202018"
+        },
+        {
+            "id": "Arjovsky_et+al_2016_a",
+            "entry": "Martin Arjovsky, Amar Shah, and Yoshua Bengio. Unitary evolution recurrent neural networks. In Proceedings of the International Conference on Machine Learning, pp. 1120\u20131128, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Arjovsky%2C%20Martin%20Shah%2C%20Amar%20Bengio%2C%20Yoshua%20Unitary%20evolution%20recurrent%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Arjovsky%2C%20Martin%20Shah%2C%20Amar%20Bengio%2C%20Yoshua%20Unitary%20evolution%20recurrent%20neural%20networks%202016"
+        },
+        {
+            "id": "Baehrens_et+al_2010_a",
+            "entry": "David Baehrens, Timon Schroeter, Stefan Harmeling, Motoaki Kawanabe, Katja Hansen, and KlausRobert MAzller. How to explain individual classification decisions. Journal of Machine Learning Research, 11(Jun):1803\u20131831, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baehrens%2C%20David%20Schroeter%2C%20Timon%20Harmeling%2C%20Stefan%20Kawanabe%2C%20Motoaki%20How%20to%20explain%20individual%20classification%20decisions%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baehrens%2C%20David%20Schroeter%2C%20Timon%20Harmeling%2C%20Stefan%20Kawanabe%2C%20Motoaki%20How%20to%20explain%20individual%20classification%20decisions%202010"
+        },
+        {
+            "id": "Balestriero_2018_a",
+            "entry": "Randall Balestriero and Richard Baraniuk. Mad max: Affine spline insights into deep learning. arXiv preprint arXiv:1805.06576v5, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1805.06576v5"
+        },
+        {
+            "id": "Bellemare_et+al_2017_a",
+            "entry": "Marc G Bellemare, Ivo Danihelka, Will Dabney, Shakir Mohamed, Balaji Lakshminarayanan, Stephan Hoyer, and Remi Munos. The cramer distance as a solution to biased wasserstein gradients. arXiv preprint arXiv:1705.10743, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1705.10743"
+        },
+        {
+            "id": "Bennett_1999_a",
+            "entry": "Kristin P Bennett and Ayhan Demiriz. Semi-supervised support vector machines. In Advances in Neural Information processing systems, pp. 368\u2013374, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bennett%2C%20Kristin%20P.%20Demiriz%2C%20Ayhan%20Semi-supervised%20support%20vector%20machines%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bennett%2C%20Kristin%20P.%20Demiriz%2C%20Ayhan%20Semi-supervised%20support%20vector%20machines%201999"
+        },
+        {
+            "id": "Cortes_1995_a",
+            "entry": "Corinna Cortes and Vladimir Vapnik. Support-vector networks. Machine learning, 20(3):273\u2013297, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Cortes%2C%20Corinna%20Vapnik%2C%20Vladimir%20Support-vector%20networks%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Cortes%2C%20Corinna%20Vapnik%2C%20Vladimir%20Support-vector%20networks%201995"
+        },
+        {
+            "id": "Croce_et+al_2019_a",
+            "entry": "Francesco Croce, Maksym Andriushchenko, and Matthias Hein. Provable robustness of relu networks via maximization of linear regions. Proceedings of the 22nd International Conference on Artificial Intelligence and Statistics, 2019. URL https://arxiv.org/abs/1810.07481.",
+            "url": "https://arxiv.org/abs/1810.07481",
+            "arxiv_url": "https://arxiv.org/pdf/1810.07481"
+        },
+        {
+            "id": "Deng_et+al_0000_a",
+            "entry": "Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei. Imagenet: A large-scale hierarchical image database. In Proceedings of the IEEE international conference on computer vision, pp. 248\u2013255.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Deng%2C%20Jia%20Dong%2C%20Wei%20Socher%2C%20Richard%20Li%2C%20Li-Jia%20Imagenet%3A%20A%20large-scale%20hierarchical%20image%20database"
+        },
+        {
+            "id": "Dheeru_2017_a",
+            "entry": "Dua Dheeru and Efi Karra Taniskidou. UCI machine learning repository, 2017. URL http://archive.ics.uci.edu/ml.",
+            "url": "http://archive.ics.uci.edu/ml"
+        },
+        {
+            "id": "Elsayed_et+al_2018_a",
+            "entry": "Gamaleldin Elsayed, Dilip Krishnan, Hossein Mobahi, Kevin Regan, and Samy Bengio. Large margin deep networks for classification. In Advances in Neural Information Processing Systems, pp. 850\u2013860, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elsayed%2C%20Gamaleldin%20Krishnan%2C%20Dilip%20Mobahi%2C%20Hossein%20Regan%2C%20Kevin%20Large%20margin%20deep%20networks%20for%20classification%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elsayed%2C%20Gamaleldin%20Krishnan%2C%20Dilip%20Mobahi%2C%20Hossein%20Regan%2C%20Kevin%20Large%20margin%20deep%20networks%20for%20classification%202018"
+        },
+        {
+            "id": "Fischetti_2017_a",
+            "entry": "Matteo Fischetti and Jason Jo. Deep neural networks as 0-1 mixed integer linear programs: A feasibility study. arXiv preprint arXiv:1712.06174, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.06174"
+        },
+        {
+            "id": "Ghorbani_et+al_2019_a",
+            "entry": "Amirata Ghorbani, Abubakar Abid, and James Zou. Interpretation of neural networks is fragile. Proceedings of the AAAI Conference on Artificial Intelligence, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ghorbani%2C%20Amirata%20Abid%2C%20Abubakar%20Zou%2C%20James%20Interpretation%20of%20neural%20networks%20is%20fragile%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ghorbani%2C%20Amirata%20Abid%2C%20Abubakar%20Zou%2C%20James%20Interpretation%20of%20neural%20networks%20is%20fragile%202019"
+        },
+        {
+            "id": "Glorot_et+al_2011_a",
+            "entry": "Xavier Glorot, Antoine Bordes, and Yoshua Bengio. Deep sparse rectifier neural networks. In Proceedings of the fourteenth international conference on artificial intelligence and statistics, pp. 315\u2013323, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Glorot%2C%20Xavier%20Bordes%2C%20Antoine%20Bengio%2C%20Yoshua%20Deep%20sparse%20rectifier%20neural%20networks%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Glorot%2C%20Xavier%20Bordes%2C%20Antoine%20Bengio%2C%20Yoshua%20Deep%20sparse%20rectifier%20neural%20networks%202011"
+        },
+        {
+            "id": "Goodfellow_et+al_2013_a",
+            "entry": "Ian Goodfellow, David Warde-Farley, Mehdi Mirza, Aaron Courville, and Yoshua Bengio. Maxout networks. In Proceedings of the 30th International Conference on Machine Learning, volume 28 of Proceedings of Machine Learning Research, pp. 1319\u20131327, Atlanta, Georgia, USA, 17\u2013 19 Jun 2013. PMLR. URL http://proceedings.mlr.press/v28/goodfellow13.html.",
+            "url": "http://proceedings.mlr.press/v28/goodfellow13.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Warde-Farley%2C%20David%20Mirza%2C%20Mehdi%20Courville%2C%20Aaron%20Maxout%20networks%202013-06-17"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "Ian Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. In International Conference on Learning Representations, 2015. URL http://arxiv.org/abs/1412.6572.",
+            "url": "http://arxiv.org/abs/1412.6572",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6572"
+        },
+        {
+            "id": "Griffin_et+al_2007_a",
+            "entry": "Gregory Griffin, Alex Holub, and Pietro Perona. Caltech-256 object category dataset. 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Griffin%2C%20Gregory%20Holub%2C%20Alex%20Perona%2C%20Pietro%20Caltech-256%20object%20category%20dataset%202007"
+        },
+        {
+            "id": "Gulrajani_et+al_2017_a",
+            "entry": "Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of wasserstein gans. In Advances in Neural Information Processing Systems, pp. 5767\u20135777, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gulrajani%2C%20Ishaan%20Ahmed%2C%20Faruk%20Arjovsky%2C%20Martin%20Dumoulin%2C%20Vincent%20Improved%20training%20of%20wasserstein%20gans%202017"
+        },
+        {
+            "id": "He_et+al_2015_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In Proceedings of the IEEE international conference on computer vision, pp. 1026\u20131034, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Delving%20deep%20into%20rectifiers%3A%20Surpassing%20human-level%20performance%20on%20imagenet%20classification%202015"
+        },
+        {
+            "id": "He_et+al_2016_a",
+            "entry": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770\u2013778, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=He%2C%20Kaiming%20Zhang%2C%20Xiangyu%20Ren%2C%20Shaoqing%20Sun%2C%20Jian%20Deep%20residual%20learning%20for%20image%20recognition%202016"
+        },
+        {
+            "id": "Helfrich_et+al_2018_a",
+            "entry": "Kyle Helfrich, Devin Willmott, and Qiang Ye. Orthogonal recurrent neural networks with scaled cayley transform. Proceedings of the International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Helfrich%2C%20Kyle%20Willmott%2C%20Devin%20Ye%2C%20Qiang%20Orthogonal%20recurrent%20neural%20networks%20with%20scaled%20cayley%20transform%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Helfrich%2C%20Kyle%20Willmott%2C%20Devin%20Ye%2C%20Qiang%20Orthogonal%20recurrent%20neural%20networks%20with%20scaled%20cayley%20transform%202018"
+        },
+        {
+            "id": "Huang_et+al_2017_a",
+            "entry": "Gao Huang, Zhuang Liu, Laurens Van Der Maaten, and Kilian Q Weinberger. Densely connected convolutional networks. In Proceedings of the IEEE international conference on computer vision, volume 1, pp. 3, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Huang%2C%20Gao%20Liu%2C%20Zhuang%20Maaten%2C%20Laurens%20Van%20Der%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Huang%2C%20Gao%20Liu%2C%20Zhuang%20Maaten%2C%20Laurens%20Van%20Der%20Weinberger%2C%20Kilian%20Q.%20Densely%20connected%20convolutional%20networks%202017"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations, 2015. URL https://arxiv.org/abs/1412.6980.",
+            "url": "https://arxiv.org/abs/1412.6980",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Koh_2017_a",
+            "entry": "Pang Wei Koh and Percy Liang. Understanding black-box predictions via influence functions. In Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, pp. 1885\u20131894, International Convention Centre, Sydney, Australia, 06\u201311 Aug 2017. PMLR. URL http://proceedings.mlr.press/v70/koh17a.html.",
+            "url": "http://proceedings.mlr.press/v70/koh17a.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Koh%2C%20Pang%20Wei%20Liang%2C%20Percy%20Understanding%20black-box%20predictions%20via%20influence%20functions%202017-08"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lomuscio_2017_a",
+            "entry": "Alessio Lomuscio and Lalit Maganti. An approach to reachability analysis for feed-forward relu neural networks. arXiv preprint arXiv:1706.07351, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.07351"
+        },
+        {
+            "id": "Maas_2013_a",
+            "entry": "Andrew L Maas, Awni Y Hannun, and Andrew Y Ng. Rectifier nonlinearities improve neural network acoustic models. volume 30, pp. 3, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Maas%2C%20Andrew%20L.%20Hannun%2C%20Awni%20Y.%20and%20Andrew%20Y%20Ng.%20Rectifier%20nonlinearities%20improve%20neural%20network%20acoustic%20models%202013"
+        },
+        {
+            "id": "Madry_et+al_2018_a",
+            "entry": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu. Towards deep learning models resistant to adversarial attacks. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=rJzIBfZAb.",
+            "url": "https://openreview.net/forum?id=rJzIBfZAb",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Madry%2C%20Aleksander%20Makelov%2C%20Aleksandar%20Schmidt%2C%20Ludwig%20Tsipras%2C%20Dimitris%20Towards%20deep%20learning%20models%20resistant%20to%20adversarial%20attacks%202018"
+        },
+        {
+            "id": "Mirman_et+al_2018_a",
+            "entry": "Matthew Mirman, Timon Gehr, and Martin Vechev. Differentiable abstract interpretation for provably robust neural networks. In International Conference on Machine Learning, pp. 3575\u20133583, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mirman%2C%20Matthew%20Gehr%2C%20Timon%20Vechev%2C%20Martin%20Differentiable%20abstract%20interpretation%20for%20provably%20robust%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mirman%2C%20Matthew%20Gehr%2C%20Timon%20Vechev%2C%20Martin%20Differentiable%20abstract%20interpretation%20for%20provably%20robust%20neural%20networks%202018"
+        },
+        {
+            "id": "Montufar_2017_a",
+            "entry": "Guido Montufar. Notes on the number of linear regions of deep neural networks. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Montufar%2C%20Guido%20Notes%20on%20the%20number%20of%20linear%20regions%20of%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Montufar_et+al_2014_a",
+            "entry": "Guido F Montufar, Razvan Pascanu, Kyunghyun Cho, and Yoshua Bengio. On the number of linear regions of deep neural networks. In Advances in neural information processing systems, pp. 2924\u20132932, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Montufar%2C%20Guido%20F.%20Pascanu%2C%20Razvan%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20On%20the%20number%20of%20linear%20regions%20of%20deep%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Montufar%2C%20Guido%20F.%20Pascanu%2C%20Razvan%20Cho%2C%20Kyunghyun%20Bengio%2C%20Yoshua%20On%20the%20number%20of%20linear%20regions%20of%20deep%20neural%20networks%202014"
+        },
+        {
+            "id": "Mroueh_et+al_2018_a",
+            "entry": "Youssef Mroueh, Chun-Liang Li, Tom Sercu, Anant Raj, and Yu Cheng. Sobolev GAN. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=SJA7xfb0b.",
+            "url": "https://openreview.net/forum?id=SJA7xfb0b",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Youssef%20Mroueh%20ChunLiang%20Li%20Tom%20Sercu%20Anant%20Raj%20and%20Yu%20Cheng%20Sobolev%20GAN%20In%20International%20Conference%20on%20Learning%20Representations%202018%20URL%20httpsopenreviewnetforumidSJA7xfb0b"
+        },
+        {
+            "id": "Papernot_et+al_2016_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Somesh Jha, Matt Fredrikson, Z Berkay Celik, and Ananthram Swami. The limitations of deep learning in adversarial settings. In 2016 IEEE European Symposium on Security and Privacy (EuroS&P), pp. 372\u2013387. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Jha%2C%20Somesh%20Matt%20Fredrikson%2C%20Z.Berkay%20Celik%20The%20limitations%20of%20deep%20learning%20in%20adversarial%20settings%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Jha%2C%20Somesh%20Matt%20Fredrikson%2C%20Z.Berkay%20Celik%20The%20limitations%20of%20deep%20learning%20in%20adversarial%20settings%202016"
+        },
+        {
+            "id": "Paszke_et+al_2017_a",
+            "entry": "Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer. Automatic differentiation in pytorch. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Paszke%2C%20Adam%20Gross%2C%20Sam%20Chintala%2C%20Soumith%20Chanan%2C%20Gregory%20Automatic%20differentiation%20in%20pytorch%202017"
+        },
+        {
+            "id": "Raghu_et+al_2017_a",
+            "entry": "Maithra Raghu, Ben Poole, Jon Kleinberg, Surya Ganguli, and Jascha Sohl Dickstein. On the expressive power of deep neural networks. In Proceedings of the 34th International Conference on Machine Learning-Volume 70, pp. 2847\u20132854. JMLR. org, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghu%2C%20Maithra%20Poole%2C%20Ben%20Kleinberg%2C%20Jon%20Ganguli%2C%20Surya%20On%20the%20expressive%20power%20of%20deep%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghu%2C%20Maithra%20Poole%2C%20Ben%20Kleinberg%2C%20Jon%20Ganguli%2C%20Surya%20On%20the%20expressive%20power%20of%20deep%20neural%20networks%202017"
+        },
+        {
+            "id": "Reddi_et+al_2018_a",
+            "entry": "Sashank J. Reddi, Satyen Kale, and Sanjiv Kumar. On the convergence of adam and beyond. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=ryQu7f-RZ.",
+            "url": "https://openreview.net/forum?id=ryQu7f-RZ",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Reddi%2C%20Sashank%20J.%20Kale%2C%20Satyen%20Kumar%2C%20Sanjiv%20On%20the%20convergence%20of%20adam%20and%20beyond%202018"
+        },
+        {
+            "id": "Rifai_et+al_2012_a",
+            "entry": "Salah Rifai, Yoshua Bengio, Yann Dauphin, and Pascal Vincent. A generative process for sampling contractive auto-encoders. Proceedings of the 29th International Conference on Machine Learning, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rifai%2C%20Salah%20Bengio%2C%20Yoshua%20Dauphin%2C%20Yann%20Vincent%2C%20Pascal%20A%20generative%20process%20for%20sampling%20contractive%20auto-encoders%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rifai%2C%20Salah%20Bengio%2C%20Yoshua%20Dauphin%2C%20Yann%20Vincent%2C%20Pascal%20A%20generative%20process%20for%20sampling%20contractive%20auto-encoders%202012"
+        },
+        {
+            "id": "Serra_et+al_2018_a",
+            "entry": "Thiago Serra, Christian Tjandraatmadja, and Srikumar Ramalingam. Bounding and counting linear regions of deep neural networks. In Proceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pp. 4558\u20134566. PMLR, 10\u2013 15 Jul 2018. URL http://proceedings.mlr.press/v80/serra18b.html.",
+            "url": "http://proceedings.mlr.press/v80/serra18b.html",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Serra%2C%20Thiago%20Tjandraatmadja%2C%20Christian%20Ramalingam%2C%20Srikumar%20Bounding%20and%20counting%20linear%20regions%20of%20deep%20neural%20networks%202018-07"
+        },
+        {
+            "id": "Simonyan_et+al_2013_a",
+            "entry": "Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside convolutional networks: Visualising image classification models and saliency maps. arXiv preprint arXiv:1312.6034, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6034"
+        },
+        {
+            "id": "Sinha_et+al_2018_a",
+            "entry": "Aman Sinha, Hongseok Namkoong, and John Duchi. Certifying some distributional robustness with principled adversarial training. In International Conference on Learning Representations, 2018. URL https://openreview.net/forum?id=Hk6kPgZA-.",
+            "url": "https://openreview.net/forum?id=Hk6kPgZA-",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sinha%2C%20Aman%20Namkoong%2C%20Hongseok%20Duchi%2C%20John%20Certifying%20some%20distributional%20robustness%20with%20principled%20adversarial%20training%202018"
+        },
+        {
+            "id": "Smilkov_et+al_2017_a",
+            "entry": "Daniel Smilkov, Nikhil Thorat, Been Kim, Fernanda Viegas, and Martin Wattenberg. Smoothgrad: removing noise by adding noise. arXiv preprint arXiv:1706.03825, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.03825"
+        },
+        {
+            "id": "Springenberg_et+al_2014_a",
+            "entry": "Jost Tobias Springenberg, Alexey Dosovitskiy, Thomas Brox, and Martin Riedmiller. Striving for simplicity: The all convolutional net. arXiv preprint arXiv:1412.6806, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6806"
+        },
+        {
+            "id": "Sundararajan_et+al_2017_a",
+            "entry": "Mukund Sundararajan, Ankur Taly, and Qiqi Yan. Axiomatic attribution for deep networks. In Proceedings of the 34th International Conference on Machine Learning-Volume 70, pp. 3319\u2013 3328. JMLR. org, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sundararajan%2C%20Mukund%20Taly%2C%20Ankur%20Yan%2C%20Qiqi%20Axiomatic%20attribution%20for%20deep%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sundararajan%2C%20Mukund%20Taly%2C%20Ankur%20Yan%2C%20Qiqi%20Axiomatic%20attribution%20for%20deep%20networks%202017"
+        },
+        {
+            "id": "Vapnik_1995_a",
+            "entry": "Vladimir N. Vapnik. Estimation of dependences based on empirical data. 1982. NY: Springer-Verlag, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vladimir%20N%20Vapnik%20Estimation%20of%20dependences%20based%20on%20empirical%20data%201982%20NY%20SpringerVerlag%201995"
+        },
+        {
+            "id": "Vapnik_1977_a",
+            "entry": "Vladimir N. Vapnik and A. Sterin. On structural risk minimization or overall risk in a problem of pattern recognition. Automation and Remote Control, 10(3):14951503, 1977.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Vapnik%2C%20Vladimir%20N.%20Sterin%2C%20A.%20On%20structural%20risk%20minimization%20or%20overall%20risk%20in%20a%20problem%20of%20pattern%20recognition%201977",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Vapnik%2C%20Vladimir%20N.%20Sterin%2C%20A.%20On%20structural%20risk%20minimization%20or%20overall%20risk%20in%20a%20problem%20of%20pattern%20recognition%201977"
+        },
+        {
+            "id": "Wang_2016_a",
+            "entry": "Dilin Wang and Qiang Liu. Learning to draw samples: With application to amortized mle for generative adversarial learning. arXiv preprint arXiv:1611.01722, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01722"
+        },
+        {
+            "id": "Weng_et+al_2018_a",
+            "entry": "Tsui-Wei Weng, Huan Zhang, Hongge Chen, Zhao Song, Cho-Jui Hsieh, Duane Boning, Inderjit S Dhillon, and Luca Daniel. Towards fast computation of certified robustness for relu networks. Proceedings of the International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Weng%2C%20Tsui-Wei%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Song%2C%20Zhao%20Towards%20fast%20computation%20of%20certified%20robustness%20for%20relu%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Weng%2C%20Tsui-Wei%20Zhang%2C%20Huan%20Chen%2C%20Hongge%20Song%2C%20Zhao%20Towards%20fast%20computation%20of%20certified%20robustness%20for%20relu%20networks%202018"
+        },
+        {
+            "id": "Whitley_1994_a",
+            "entry": "Darrell Whitley. A genetic algorithm tutorial. Statistics and computing, 4(2):65\u201385, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Whitley%2C%20Darrell%20A%20genetic%20algorithm%20tutorial%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Whitley%2C%20Darrell%20A%20genetic%20algorithm%20tutorial%201994"
+        },
+        {
+            "id": "Wong_2018_a",
+            "entry": "Eric Wong and Zico Kolter. Provable defenses against adversarial examples via the convex outer adversarial polytope. In Proceedings of the International Conference on Machine Learning, pp. 5283\u20135292, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Kolter%2C%20Zico%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Kolter%2C%20Zico%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018"
+        },
+        {
+            "id": "Wong_et+al_2018_b",
+            "entry": "Eric Wong, Frank Schmidt, Jan Hendrik Metzen, and J Zico Kolter. Scaling provable adversarial defenses. In Advances in Neural Information Processing Systems, pp. 8410\u20138419, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018"
+        },
+        {
+            "id": "Yan_et+al_2018_a",
+            "entry": "Ziang Yan, Yiwen Guo, and Changshui Zhang. Deep defense: Training dnns with improved adversarial robustness. In Advances in Neural Information Processing Systems, pp. 417\u2013426, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yan%2C%20Ziang%20Guo%2C%20Yiwen%20Zhang%2C%20Changshui%20Deep%20defense%3A%20Training%20dnns%20with%20improved%20adversarial%20robustness%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yan%2C%20Ziang%20Guo%2C%20Yiwen%20Zhang%2C%20Changshui%20Deep%20defense%3A%20Training%20dnns%20with%20improved%20adversarial%20robustness%202018"
+        },
+        {
+            "id": "Zhang_et+al_2017_a",
+            "entry": "Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. International Conference on Learning Representations, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhang%2C%20Chiyuan%20Bengio%2C%20Samy%20Hardt%2C%20Moritz%20Recht%2C%20Benjamin%20Understanding%20deep%20learning%20requires%20rethinking%20generalization%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhang%2C%20Chiyuan%20Bengio%2C%20Samy%20Hardt%2C%20Moritz%20Recht%2C%20Benjamin%20Understanding%20deep%20learning%20requires%20rethinking%20generalization%202017"
+        },
+        {
+            "id": "The_2015_a",
+            "entry": "The FC model consists of M = 4 fully-connected hidden layers, where each hidden layer has 100 neurons. The input dimension D is 2 and the output dimension L is 1. The loss function L(f\u03b8(x), y) is sigmoid cross entropy. We train the model for 5000 epochs with Adam (Kingma & Ba, 2015) optimizer, and select the model among epochs based on the training loss. We fix C = 5, and increase \u03bb \u2208 {10\u22122,..., 102} for both the distance regularization and relaxed regularization problems until the resulting classifier is not perfect. The tuned \u03bb in both cases are 1.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=The%20FC%20model%20consists%20of%20M%20%204%20fullyconnected%20hidden%20layers%20where%20each%20hidden%20layer%20has%20100%20neurons%20The%20input%20dimension%20D%20is%202%20and%20the%20output%20dimension%20L%20is%201%20The%20loss%20function%20Lf%CE%B8x%20y%20is%20sigmoid%20cross%20entropy%20We%20train%20the%20model%20for%205000%20epochs%20with%20Adam%20Kingma%20%20Ba%202015%20optimizer%20and%20select%20the%20model%20among%20epochs%20based%20on%20the%20training%20loss%20We%20fix%20C%20%205%20and%20increase%20%CE%BB%20%20102%20102%20for%20both%20the%20distance%20regularization%20and%20relaxed%20regularization%20problems%20until%20the%20resulting%20classifier%20is%20not%20perfect%20The%20tuned%20%CE%BB%20in%20both%20cases%20are%201"
+        },
+        {
+            "id": "We_2018_a",
+            "entry": "We compute the exact ROLL loss during training (i.e., approximate learning is not used). The representation is learned with a single layer scoRNN, where the state embedding from the last timestamp for each sequence is treated as the representation along with a fully-connected layer to produce a prediction as f\u03b8(x). We use LeakyReLU as the activation functions in scoRNN. The dimension of hidden neurons in scoRNN is set to 512. The loss function L(f\u03b8(x), y) is a cross-entropy loss with soft-max performed on f\u03b8(x). We use AMSGrad optimizer (Reddi et al., 2018). The learning rate is 0.001, and the batch size is 32 (sequences).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20compute%20the%20exact%20ROLL%20loss%20during%20training%20ie%20approximate%20learning%20is%20not%20used%20The%20representation%20is%20learned%20with%20a%20single%20layer%20scoRNN%20where%20the%20state%20embedding%20from%20the%20last%20timestamp%20for%20each%20sequence%20is%20treated%20as%20the%20representation%20along%20with%20a%20fullyconnected%20layer%20to%20produce%20a%20prediction%20as%20f%CE%B8x%20We%20use%20LeakyReLU%20as%20the%20activation%20functions%20in%20scoRNN%20The%20dimension%20of%20hidden%20neurons%20in%20scoRNN%20is%20set%20to%20512%20The%20loss%20function%20Lf%CE%B8x%20y%20is%20a%20crossentropy%20loss%20with%20softmax%20performed%20on%20f%CE%B8x%20We%20use%20AMSGrad%20optimizer%20Reddi%20et%20al%202018%20The%20learning%20rate%20is%200001%20and%20the%20batch%20size%20is%2032%20sequences"
+        },
+        {
+            "id": "We_3)._b",
+            "entry": "We download the pre-trained ResNet-18 (He et al., 2016) from PyTorch (Paszke et al., 2017), and we revise the model architecture as follows: 1) we replace the max-pooling after the first convolutional layer with average-pooling to reduce the number of linear constraints (because max-pooling induces additional linear constraints on activation pattern, while average-pooling does not), and 2) we enlarge the receptive field of the last pooling layer such that the output will be 512 dimension, since ResNet-18 is originally used for smaller images in ImageNet data (most implementations use 224 \u00d7 224 \u00d7 3 dimensional images for ImageNet while our data has even higher dimension 299 \u00d7 299 \u00d7 3).",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20download%20the%20pretrained%20ResNet18%20He%20et%20al%202016%20from%20PyTorch%20Paszke%20et%20al%202017%20and%20we%20revise%20the%20model%20architecture%20as%20follows%201%20we%20replace%20the%20maxpooling%20after%20the%20first%20convolutional%20layer%20with%20averagepooling%20to%20reduce%20the%20number%20of%20linear%20constraints%20because%20maxpooling%20induces%20additional%20linear%20constraints%20on%20activation%20pattern%20while%20averagepooling%20does%20not%20and%202%20we%20enlarge%20the%20receptive%20field%20of%20the%20last%20pooling%20layer%20such%20that%20the%20output%20will%20be%20512%20dimension%20since%20ResNet18%20is%20originally%20used%20for%20smaller%20images%20in%20ImageNet%20data%20most%20implementations%20use%20224%20%20224%20%203%20dimensional%20images%20for%20ImageNet%20while%20our%20data%20has%20even%20higher%20dimension%20299%20%20299%20%203"
+        },
+        {
+            "id": "We_1994_a",
+            "entry": "We implement a genetic algorithm (GA) (Whitley, 1994) with 4800 populations P and 30 epochs. Initially, we first uniformly sample 4800 samples (called chromosome in GA literature) in the domain B,\u221e(x) \u2229 X for P. In each epoch, 1. \u2200c \u2208 P, we evaluate the 1 distance of its gradient from that of the target x:",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20implement%20a%20genetic%20algorithm%20GA%20Whitley%201994%20with%204800%20populations%20P%20and%2030%20epochs%20Initially%20we%20first%20uniformly%20sample%204800%20samples%20called%20chromosome%20in%20GA%20literature%20in%20the%20domain%20Bx%20%20X%20for%20P%20In%20each%20epoch%201%20c%20%20P%20we%20evaluate%20the%201%20distance%20of%20its%20gradient%20from%20that%20of%20the%20target%20x",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20implement%20a%20genetic%20algorithm%20GA%20Whitley%201994%20with%204800%20populations%20P%20and%2030%20epochs%20Initially%20we%20first%20uniformly%20sample%204800%20samples%20called%20chromosome%20in%20GA%20literature%20in%20the%20domain%20Bx%20%20X%20for%20P%20In%20each%20epoch%201%20c%20%20P%20we%20evaluate%20the%201%20distance%20of%20its%20gradient%20from%20that%20of%20the%20target%20x"
+        },
+        {
+            "id": "We_2017_a",
+            "entry": "We follow a common implementation in the literature (Smilkov et al., 2017; Sundararajan et al., 2017) to visualize gradients and integrated gradients by the following procedure: 1. Aggregating derivatives in each channel by summation.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20follow%20a%20common%20implementation%20in%20the%20literature%20Smilkov%20et%20al%202017%20Sundararajan%20et%20al%202017%20to%20visualize%20gradients%20and%20integrated%20gradients%20by%20the%20following%20procedure%201%20Aggregating%20derivatives%20in%20each%20channel%20by%20summation",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20follow%20a%20common%20implementation%20in%20the%20literature%20Smilkov%20et%20al%202017%20Sundararajan%20et%20al%202017%20to%20visualize%20gradients%20and%20integrated%20gradients%20by%20the%20following%20procedure%201%20Aggregating%20derivatives%20in%20each%20channel%20by%20summation"
+        },
+        {
+            "id": "2",
+            "entry": "2. Taking absolute value of aggregated derivatives.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Taking%20absolute%20value%20of%20aggregated%20derivatives"
+        },
+        {
+            "id": "3",
+            "entry": "3. Normalizing the aggregated derivatives by the 99th percentile 4. Clipping all the values above 1. ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Normalizing%20the%20aggregated%20derivatives%20by%20the%2099th%20percentile%204%20Clipping%20all%20the%20values%20above%201"
+        }
+    ]
+}

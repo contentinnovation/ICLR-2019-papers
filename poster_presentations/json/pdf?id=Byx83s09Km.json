@@ -1,0 +1,393 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "INFORMATION-DIRECTED EXPLORATION FOR DEEP REINFORCEMENT LEARNING",
+        "author": "Nikolay Nikolov, Imperial College London, ETH Zurich nikolay.nikolov,@imperial.ac.uk",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=Byx83s09Km"
+        },
+        "abstract": "Efficient exploration remains a major challenge for reinforcement learning. One reason is that the variability of the returns often depends on the current state and action, and is therefore heteroscedastic. Classical exploration strategies such as upper confidence bound algorithms and Thompson sampling fail to appropriately account for heteroscedasticity, even in the bandit setting. Motivated by recent findings that address this issue in bandits, we propose to use Information-Directed Sampling (IDS) for exploration in reinforcement learning. As our main contribution, we build on recent advances in distributional reinforcement learning and propose a novel, tractable approximation of IDS for deep Q-learning. The resulting exploration strategy explicitly accounts for both parametric uncertainty and heteroscedastic observation noise. We evaluate our method on Atari games and demonstrate a significant improvement over alternative approaches."
+    },
+    "keywords": [
+        {
+            "term": "Temporal Difference",
+            "url": "https://en.wikipedia.org/wiki/Temporal_Difference"
+        },
+        {
+            "term": "intrinsic motivation",
+            "url": "https://en.wikipedia.org/wiki/intrinsic_motivation"
+        },
+        {
+            "term": "deep reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/deep_reinforcement_learning"
+        },
+        {
+            "term": "Markov Decision Processes",
+            "url": "https://en.wikipedia.org/wiki/Markov_Decision_Processes"
+        },
+        {
+            "term": "reinforcement learning",
+            "url": "https://en.wikipedia.org/wiki/reinforcement_learning"
+        },
+        {
+            "term": "Thompson sampling",
+            "url": "https://en.wikipedia.org/wiki/Thompson_sampling"
+        }
+    ],
+    "abbreviations": {
+        "IDS": "Information-Directed Sampling",
+        "RL": "Reinforcement Learning",
+        "UCB": "upper confidence bound",
+        "TS": "Thompson sampling",
+        "MDPs": "Markov Decision Processes",
+        "TD": "Temporal Difference",
+        "ALE": "Arcade Learning Environment",
+        "DDPG": "Deep Deterministic Policy Gradient"
+    },
+    "highlights": [
+        "In Reinforcement Learning (RL), an agent seeks to maximize the cumulative rewards obtained from interactions with an unknown environment",
+        "Examples include upper confidence bound (UCB) (<a class=\"ref-link\" id=\"cAuer_et+al_2002_a\" href=\"#rAuer_et+al_2002_a\">Auer et al, 2002</a>) and Thompson sampling (TS) (<a class=\"ref-link\" id=\"cThompson_1933_a\" href=\"#rThompson_1933_a\">Thompson, 1933</a>). These have been extended to practical exploration algorithms for large state-spaces and shown to improve performance (<a class=\"ref-link\" id=\"cOsband_et+al_2016_a\" href=\"#rOsband_et+al_2016_a\">Osband et al, 2016a</a>; <a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>; O\u2019Donoghue et al, 2018; <a class=\"ref-link\" id=\"cFortunato_et+al_2018_a\" href=\"#rFortunato_et+al_2018_a\">Fortunato et al, 2018</a>). These methods assume that the observation noise distribution is independent of the evaluation point, while in practice heteroscedastic observation noise is omnipresent in Reinforcement Learning",
+        "Our method is based on Information-Directed Sampling (IDS), which can explicitly account for parametric uncertainty and heteroscedasticity in the return distribution",
+        "We extended the idea of frequentist Information-Directed Sampling to a practical Reinforcement Learning exploration algorithm that can account for heteroscedastic noise",
+        "We identified several sources of heteroscedasticity in Reinforcement Learning and demonstrated the importance of accounting for heteroscedastic noise for efficient exploration",
+        "Our evaluation results demonstrated that to the bandit setting, Information-Directed Sampling has the potential to outperform alternative strategies such as Thompson sampling in Reinforcement Learning"
+    ],
+    "key_statements": [
+        "In Reinforcement Learning (RL), an agent seeks to maximize the cumulative rewards obtained from interactions with an unknown environment",
+        "Given only knowledge based on previously observed trajectories, the agent faces the exploration-exploitation dilemma: Should the agent take actions that maximize rewards based on its current knowledge or instead investigate poorly understood states and actions to potentially improve future performance",
+        "The theoretical Reinforcement Learning literature offers a variety of statistically-efficient methods that are based on a measure of uncertainty in the agent\u2019s model",
+        "Examples include upper confidence bound (UCB) (<a class=\"ref-link\" id=\"cAuer_et+al_2002_a\" href=\"#rAuer_et+al_2002_a\">Auer et al, 2002</a>) and Thompson sampling (TS) (<a class=\"ref-link\" id=\"cThompson_1933_a\" href=\"#rThompson_1933_a\">Thompson, 1933</a>). These have been extended to practical exploration algorithms for large state-spaces and shown to improve performance (<a class=\"ref-link\" id=\"cOsband_et+al_2016_a\" href=\"#rOsband_et+al_2016_a\">Osband et al, 2016a</a>; <a class=\"ref-link\" id=\"cChen_et+al_2017_a\" href=\"#rChen_et+al_2017_a\">Chen et al, 2017</a>; O\u2019Donoghue et al, 2018; <a class=\"ref-link\" id=\"cFortunato_et+al_2018_a\" href=\"#rFortunato_et+al_2018_a\">Fortunato et al, 2018</a>). These methods assume that the observation noise distribution is independent of the evaluation point, while in practice heteroscedastic observation noise is omnipresent in Reinforcement Learning",
+        "The return distribution typically depends on a sequence of interactions and, potentially, on hidden states or inherently heteroscedastic reward observations",
+        "We propose to use Information-Directed Sampling (IDS) (<a class=\"ref-link\" id=\"cRusso_2014_a\" href=\"#rRusso_2014_a\">Russo & Van Roy, 2014</a>; <a class=\"ref-link\" id=\"cKirschner_2018_a\" href=\"#rKirschner_2018_a\">Kirschner & Krause, 2018</a>) for efficient exploration in Reinforcement Learning",
+        "Through the choice of an appropriate information-gain function, Information-Directed Sampling is able to account for parametric uncertainty and heteroscedastic observation noise during exploration",
+        "We propose a novel, tractable Reinforcement Learning algorithm based on the Information-Directed Sampling principle",
+        "Our method is based on Information-Directed Sampling (IDS), which can explicitly account for parametric uncertainty and heteroscedasticity in the return distribution",
+        "In Reinforcement Learning, heteroscedasticity means that the variance of the return distribution Z depends on the state and action",
+        "While in the bandit setting we track one-step rewards, in Reinforcement Learning we focus on learning from returns from complete trajectories",
+        "We provide experimental results on 55 of the Atari 2600 games from the Arcade Learning Environment (ALE) (<a class=\"ref-link\" id=\"cBellemare_et+al_2013_a\" href=\"#rBellemare_et+al_2013_a\">Bellemare et al, 2013</a>), simulated via the OpenAI gym interface (<a class=\"ref-link\" id=\"cBrockman_et+al_2016_a\" href=\"#rBrockman_et+al_2016_a\">Brockman et al, 2016</a>)",
+        "We experimented with a QRDQN-Information-Directed Sampling version, which uses QR-DQN instead of C51 to estimate Z(s, a) and noticed that our method can benefit from better approximation of the return distribution",
+        "We extended the idea of frequentist Information-Directed Sampling to a practical Reinforcement Learning exploration algorithm that can account for heteroscedastic noise",
+        "We identified several sources of heteroscedasticity in Reinforcement Learning and demonstrated the importance of accounting for heteroscedastic noise for efficient exploration",
+        "Our evaluation results demonstrated that to the bandit setting, Information-Directed Sampling has the potential to outperform alternative strategies such as Thompson sampling in Reinforcement Learning",
+        "As indicated by <a class=\"ref-link\" id=\"cRusso_2014_a\" href=\"#rRusso_2014_a\">Russo & Van Roy (2014</a>), Information-Directed Sampling should be seen as a design principle rather than a specific algorithm, and alternative information gain functions are an important direction for future research"
+    ],
+    "summary": [
+        "In Reinforcement Learning (RL), an agent seeks to maximize the cumulative rewards obtained from interactions with an unknown environment.",
+        "We propose to use Information-Directed Sampling (IDS) (<a class=\"ref-link\" id=\"cRusso_2014_a\" href=\"#rRusso_2014_a\">Russo & Van Roy, 2014</a>; <a class=\"ref-link\" id=\"cKirschner_2018_a\" href=\"#rKirschner_2018_a\"><a class=\"ref-link\" id=\"cKirschner_2018_a\" href=\"#rKirschner_2018_a\">Kirschner & Krause, 2018</a></a>) for efficient exploration in RL.",
+        "Through the choice of an appropriate information-gain function, IDS is able to account for parametric uncertainty and heteroscedastic observation noise during exploration.",
+        "We combine recent advances in distributional RL (<a class=\"ref-link\" id=\"cBellemare_et+al_2017_a\" href=\"#rBellemare_et+al_2017_a\">Bellemare et al, 2017</a>; <a class=\"ref-link\" id=\"cDabney_et+al_2018_b\" href=\"#rDabney_et+al_2018_b\">Dabney et al, 2018b</a>) and approximate parameter uncertainty methods in order to develop both homoscedastic and heteroscedastic variants of an agent that is similar to DQN (<a class=\"ref-link\" id=\"cMnih_et+al_2015_a\" href=\"#rMnih_et+al_2015_a\">Mnih et al, 2015</a>), but uses informationdirected exploration.",
+        "Implicit Quantile Networks (IQN) (<a class=\"ref-link\" id=\"cDabney_et+al_2018_a\" href=\"#rDabney_et+al_2018_a\">Dabney et al, 2018a</a>) instead use a risksensitive policy based on a return distribution learned via quantile regression and outperform both C51 and QR-DQN on Atari-57.",
+        "Our method is based on Information-Directed Sampling (IDS), which can explicitly account for parametric uncertainty and heteroscedasticity in the return distribution.",
+        "In RL, heteroscedasticity means that the variance of the return distribution Z depends on the state and action.",
+        "IDS uses a conservative regret estimate \u2206\u02c6 t(a) = maxa \u2208A ut(a ) \u2212 lt(a), where [lt(a), ut(a)] is a confidence interval which contains the true expected reward E[R(a)] with high probability.",
+        "The only missing component to use the IDS strategy in eq (5) is to compute the information gain function It. In particular, we use It(a) = log 1 + \u03c3t(a)2/\u03c1(a)2 based on the discussion in (<a class=\"ref-link\" id=\"cKirschner_2018_a\" href=\"#rKirschner_2018_a\"><a class=\"ref-link\" id=\"cKirschner_2018_a\" href=\"#rKirschner_2018_a\">Kirschner & Krause, 2018</a></a>).",
+        "Our method can account for deep exploration, since both the parametric uncertainty \u03c3(s, a)2 and the intrinsic uncertainty \u03c1(s, a)2 estimates in the information gain are extended beyond a single time step and propagate information over sequences of states.",
+        "We experimented with a QRDQN-IDS version, which uses QR-DQN instead of C51 to estimate Z(s, a) and noticed that our method can benefit from better approximation of the return distribution.",
+        "We extended the idea of frequentist Information-Directed Sampling to a practical RL exploration algorithm that can account for heteroscedastic noise.",
+        "Our method suggests a new way to use the return distribution in combination with parametric uncertainty for efficient deep exploration and demonstrates substantial gains on Atari games.",
+        "Developing a computationally efficient approximation of the randomized IDS version, which minimizes the regret-information ratio over the set of stochastic policies, is another idea to investigate.",
+        "As indicated by <a class=\"ref-link\" id=\"cRusso_2014_a\" href=\"#rRusso_2014_a\">Russo & Van Roy (2014</a>), IDS should be seen as a design principle rather than a specific algorithm, and alternative information gain functions are an important direction for future research.",
+        "Our evaluation results demonstrated that to the bandit setting, IDS has the potential to outperform alternative strategies such as TS in RL"
+    ],
+    "headline": "Motivated by recent findings that address this issue in bandits, we propose to use Information-Directed Sampling for exploration in reinforcement learning",
+    "reference_links": [
+        {
+            "id": "Auer_et+al_2002_a",
+            "entry": "Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem. Machine Learning, 47(2):235\u2013256, 2002.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Auer%2C%20Peter%20Cesa-Bianchi%2C%20Nicolo%20Fischer%2C%20Paul%20Finite-time%20analysis%20of%20the%20multiarmed%20bandit%20problem%202002",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Auer%2C%20Peter%20Cesa-Bianchi%2C%20Nicolo%20Fischer%2C%20Paul%20Finite-time%20analysis%20of%20the%20multiarmed%20bandit%20problem%202002"
+        },
+        {
+            "id": "Azizzadenesheli_et+al_2018_a",
+            "entry": "Kamyar Azizzadenesheli, Emma Brunskill, and Animashree Anandkumar. Efficient exploration through bayesian deep q-networks. arXiv, abs/1802.04412, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.04412"
+        },
+        {
+            "id": "Bellemare_et+al_2013_a",
+            "entry": "M. G. Bellemare, Y. Naddaf, J. Veness, and M. Bowling. The arcade learning environment: An evaluation platform for general agents. Journal of Artificial Intelligence Research, 47:253\u2013279, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20M.G.%20Naddaf%2C%20Y.%20Veness%2C%20J.%20Bowling%2C%20M.%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20M.G.%20Naddaf%2C%20Y.%20Veness%2C%20J.%20Bowling%2C%20M.%20The%20arcade%20learning%20environment%3A%20An%20evaluation%20platform%20for%20general%20agents%202013"
+        },
+        {
+            "id": "Bellemare_et+al_2016_a",
+            "entry": "Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In Advances in Neural Information Processing Systems 29, pp. 1471\u20131479. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20Srinivasan%2C%20Sriram%20Ostrovski%2C%20Georg%20Schaul%2C%20Tom%20Unifying%20count-based%20exploration%20and%20intrinsic%20motivation%202016"
+        },
+        {
+            "id": "Bellemare_et+al_2017_a",
+            "entry": "Marc G. Bellemare, Will Dabney, and Remi Munos. A distributional perspective on reinforcement learning. In Proc. of the International Conference on Machine Learning, volume 70, pp. 449\u2013458, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellemare%2C%20Marc%20G.%20Dabney%2C%20Will%20Munos%2C%20Remi%20A%20distributional%20perspective%20on%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bellemare%2C%20Marc%20G.%20Dabney%2C%20Will%20Munos%2C%20Remi%20A%20distributional%20perspective%20on%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Bellman_1957_a",
+            "entry": "Richard Bellman. Dynamic Programming. Princeton University Press, 1st edition, 1957.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bellman%2C%20Richard%20Dynamic%20Programming%201957"
+        },
+        {
+            "id": "Blundell_et+al_2015_a",
+            "entry": "Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural networks. In Proc. of the International Conference on Machine Learning, volume 37, pp. 1613\u20131622, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blundell%2C%20Charles%20Cornebise%2C%20Julien%20Kavukcuoglu%2C%20Koray%20Wierstra%2C%20Daan%20Weight%20uncertainty%20in%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blundell%2C%20Charles%20Cornebise%2C%20Julien%20Kavukcuoglu%2C%20Koray%20Wierstra%2C%20Daan%20Weight%20uncertainty%20in%20neural%20networks%202015"
+        },
+        {
+            "id": "Brockman_et+al_2016_a",
+            "entry": "Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. Openai gym. arXiv, abs/1606.01540, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1606.01540"
+        },
+        {
+            "id": "Bubeck_2012_a",
+            "entry": "Sebastien Bubeck and Nicolo Cesa-Bianchi. Regret analysis of stochastic and nonstochastic multiarmed bandit problems. Foundations and Trends in Machine Learning, 5(1):1\u2013122, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bubeck%2C%20Sebastien%20Cesa-Bianchi%2C%20Nicolo%20Regret%20analysis%20of%20stochastic%20and%20nonstochastic%20multiarmed%20bandit%20problems%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bubeck%2C%20Sebastien%20Cesa-Bianchi%2C%20Nicolo%20Regret%20analysis%20of%20stochastic%20and%20nonstochastic%20multiarmed%20bandit%20problems%202012"
+        },
+        {
+            "id": "Chapelle_2011_a",
+            "entry": "Olivier Chapelle and Lihong Li. An empirical evaluation of thompson sampling. In Advances in Neural Information Processing Systems 24, pp. 2249\u20132257. 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Chapelle%2C%20Olivier%20Li%2C%20Lihong%20An%20empirical%20evaluation%20of%20thompson%20sampling%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Chapelle%2C%20Olivier%20Li%2C%20Lihong%20An%20empirical%20evaluation%20of%20thompson%20sampling%202011"
+        },
+        {
+            "id": "Chen_et+al_2017_a",
+            "entry": "Richard Y. Chen, Szymon Sidor, Pieter Abbeel, and John Schulman. UCB and infogain exploration via q-ensembles. arXiv, abs/1706.01502, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1706.01502"
+        },
+        {
+            "id": "Dabney_et+al_2018_a",
+            "entry": "Will Dabney, Georg Ostrovski, David Silver, and Remi Munos. Implicit quantile networks for distributional reinforcement learning. In Proc. of the International Conference on Machine Learning, volume 80, pp. 1096\u20131105, 2018a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dabney%2C%20Will%20Ostrovski%2C%20Georg%20Silver%2C%20David%20Munos%2C%20Remi%20Implicit%20quantile%20networks%20for%20distributional%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dabney%2C%20Will%20Ostrovski%2C%20Georg%20Silver%2C%20David%20Munos%2C%20Remi%20Implicit%20quantile%20networks%20for%20distributional%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Dabney_et+al_2018_b",
+            "entry": "Will Dabney, Mark Rowland, Marc Bellemare, and Remi Munos. Distributional reinforcement learning with quantile regression. In Proc. of the AAAI Conference on Artificial Intelligence, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dabney%2C%20Will%20Rowland%2C%20Mark%20Bellemare%2C%20Marc%20Munos%2C%20Remi%20Distributional%20reinforcement%20learning%20with%20quantile%20regression%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dabney%2C%20Will%20Rowland%2C%20Mark%20Bellemare%2C%20Marc%20Munos%2C%20Remi%20Distributional%20reinforcement%20learning%20with%20quantile%20regression%202018"
+        },
+        {
+            "id": "Dilokthanakul_2018_a",
+            "entry": "Nat Dilokthanakul and Murray Shanahan. Deep reinforcement learning with risk-seeking exploration. In From Animals to Animats 15, pp. 201\u2013211. Springer International Publishing, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dilokthanakul%2C%20Nat%20Shanahan%2C%20Murray%20Deep%20reinforcement%20learning%20with%20risk-seeking%20exploration.%20In%20From%20Animals%20to%20Animats%2015%202018"
+        },
+        {
+            "id": "Efron_1979_a",
+            "entry": "Bradley Efron. Bootstrap methods: Another look at the jackknife. The Annals of Statistics, 7(1): 1\u201326, 1979.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Efron%2C%20Bradley%20Bootstrap%20methods%3A%20Another%20look%20at%20the%20jackknife%201979",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Efron%2C%20Bradley%20Bootstrap%20methods%3A%20Another%20look%20at%20the%20jackknife%201979"
+        },
+        {
+            "id": "Fortunato_et+al_2018_a",
+            "entry": "Meire Fortunato, Mohammad Gheshlaghi Azar, Bilal Piot, Jacob Menick, Matteo Hessel, Ian Osband, Alex Graves, Volodymyr Mnih, Remi Munos, Demis Hassabis, Olivier Pietquin, Charles Blundell, and Shane Legg. Noisy networks for exploration. In Proc. of the International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Fortunato%2C%20Meire%20Azar%2C%20Mohammad%20Gheshlaghi%20Piot%2C%20Bilal%20Menick%2C%20Jacob%20Noisy%20networks%20for%20exploration%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Fortunato%2C%20Meire%20Azar%2C%20Mohammad%20Gheshlaghi%20Piot%2C%20Bilal%20Menick%2C%20Jacob%20Noisy%20networks%20for%20exploration%202018"
+        },
+        {
+            "id": "Gal_2016_a",
+            "entry": "Yarin Gal and Zoubin Ghahramani. Dropout as a bayesian approximation: Representing model uncertainty in deep learning. In Proc. of the International Conference on Machine Learning, volume 48, pp. 1050\u20131059, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gal%2C%20Yarin%20Ghahramani%2C%20Zoubin%20Dropout%20as%20a%20bayesian%20approximation%3A%20Representing%20model%20uncertainty%20in%20deep%20learning%202016"
+        },
+        {
+            "id": "Hastie_et+al_2001_a",
+            "entry": "Trevor Hastie, Robert Tibshirani, and Jerome Friedman. The Elements of Statistical Learning. Springer New York Inc., 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hastie%2C%20Trevor%20Tibshirani%2C%20Robert%20Friedman%2C%20Jerome%20The%20Elements%20of%20Statistical%20Learning%202001"
+        },
+        {
+            "id": "Houthooft_et+al_2016_a",
+            "entry": "Rein Houthooft, Xi Chen, Xi Chen, Yan Duan, John Schulman, Filip De Turck, and Pieter Abbeel. Vime: Variational information maximizing exploration. In Advances In Neural Information Processing Systems 29, pp. 1109\u20131117. 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Chen%2C%20Xi%20Duan%2C%20Yan%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Houthooft%2C%20Rein%20Chen%2C%20Xi%20Chen%2C%20Xi%20Duan%2C%20Yan%20Vime%3A%20Variational%20information%20maximizing%20exploration%202016"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Kirschner_2018_a",
+            "entry": "Johannes Kirschner and Andreas Krause. Information directed sampling and bandits with heteroscedastic noise. In Proc. International Conference on Learning Theory (COLT), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kirschner%2C%20Johannes%20Krause%2C%20Andreas%20Information%20directed%20sampling%20and%20bandits%20with%20heteroscedastic%20noise%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kirschner%2C%20Johannes%20Krause%2C%20Andreas%20Information%20directed%20sampling%20and%20bandits%20with%20heteroscedastic%20noise%202018"
+        },
+        {
+            "id": "Lai_1985_a",
+            "entry": "Tze Leung Lai and Herbert Robbins. Asymptotically efficient adaptive allocation rules. Advances in Applied Mathematics, 6(1):4 \u2013 22, 1985.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lai%2C%20Tze%20Leung%20Robbins%2C%20Herbert%20Asymptotically%20efficient%20adaptive%20allocation%20rules%201985",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lai%2C%20Tze%20Leung%20Robbins%2C%20Herbert%20Asymptotically%20efficient%20adaptive%20allocation%20rules%201985"
+        },
+        {
+            "id": "Lattimore_2018_a",
+            "entry": "Tor Lattimore and Csaba Szepesvari. Bandit Algorithms. Cambridge University Press, draft edition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lattimore%2C%20Tor%20Szepesvari%2C%20Csaba%20Bandit%20Algorithms%202018"
+        },
+        {
+            "id": "Lillicrap_et+al_2016_a",
+            "entry": "Timothy P. Lillicrap, Jonathan J. Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. Continuous control with deep reinforcement learning. In Proc. of the International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lillicrap%2C%20Timothy%20P.%20Hunt%2C%20Jonathan%20J.%20Pritzel%2C%20Alexander%20Heess%2C%20Nicolas%20Continuous%20control%20with%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lillicrap%2C%20Timothy%20P.%20Hunt%2C%20Jonathan%20J.%20Pritzel%2C%20Alexander%20Heess%2C%20Nicolas%20Continuous%20control%20with%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Mandt_et+al_2016_a",
+            "entry": "Stephan Mandt, Matthew Hoffman, and David Blei. A variational analysis of stochastic gradient algorithms. In Proc. of the International Conference on Machine Learning, volume 48, pp. 354\u2013 363, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mandt%2C%20Stephan%20Hoffman%2C%20Matthew%20Blei%2C%20David%20A%20variational%20analysis%20of%20stochastic%20gradient%20algorithms%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mandt%2C%20Stephan%20Hoffman%2C%20Matthew%20Blei%2C%20David%20A%20variational%20analysis%20of%20stochastic%20gradient%20algorithms%202016"
+        },
+        {
+            "id": "Mnih_et+al_2015_a",
+            "entry": "Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin A. Riedmiller, Andreas Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg, and Demis Hassabis. Human-level control through deep reinforcement learning. Nature, 518(7540):529\u2013533, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mnih%2C%20Volodymyr%20Kavukcuoglu%2C%20Koray%20Silver%2C%20David%20Rusu%2C%20Andrei%20A.%20Human-level%20control%20through%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Moerland_et+al_2017_a",
+            "entry": "Thomas M. Moerland, Joost Broekens, and Catholijn M. Jonker. Efficient exploration with double uncertain value networks. Symposium on Deep Reinforcement Learning, NIPS, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Moerland%2C%20Thomas%20M.%20Broekens%2C%20Joost%20Jonker%2C%20Catholijn%20M.%20Efficient%20exploration%20with%20double%20uncertain%20value%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Moerland%2C%20Thomas%20M.%20Broekens%2C%20Joost%20Jonker%2C%20Catholijn%20M.%20Efficient%20exploration%20with%20double%20uncertain%20value%20networks%202017"
+        },
+        {
+            "id": "Moerland_et+al_2018_a",
+            "entry": "Thomas M. Moerland, Joost Broekens, and Catholijn M. Jonker. The potential of the return distribution for exploration in rl. arXiv, abs/1806.04242, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.04242"
+        },
+        {
+            "id": "Monahan_1982_a",
+            "entry": "George E. Monahan. A survey of partially observable markov decision processes: Theory, models, and algorithms. Management Science, 28(1):1\u201316, 1982.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Monahan%2C%20George%20E.%20A%20survey%20of%20partially%20observable%20markov%20decision%20processes%3A%20Theory%2C%20models%2C%20and%20algorithms%201982",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Monahan%2C%20George%20E.%20A%20survey%20of%20partially%20observable%20markov%20decision%20processes%3A%20Theory%2C%20models%2C%20and%20algorithms%201982"
+        },
+        {
+            "id": "Murphy_2012_a",
+            "entry": "Kevin P. Murphy. Machine Learning: A Probabilistic Perspective. The MIT Press, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murphy%2C%20Kevin%20P.%20Machine%20Learning%3A%20A%20Probabilistic%20Perspective%202012"
+        },
+        {
+            "id": "Nair_et+al_2015_a",
+            "entry": "Arun Nair, Praveen Srinivasan, Sam Blackwell, Cagdas Alcicek, Rory Fearon, Alessandro De Maria, Vedavyas Panneershelvam, Mustafa Suleyman, Charles Beattie, Stig Petersen, Shane Legg, Volodymyr Mnih, Koray Kavukcuoglu, and David Silver. Massively parallel methods for deep reinforcement learning. ICML Workshop on Deep Learning, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nair%2C%20Arun%20Srinivasan%2C%20Praveen%20Blackwell%2C%20Sam%20Alcicek%2C%20Cagdas%20Massively%20parallel%20methods%20for%20deep%20reinforcement%20learning%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nair%2C%20Arun%20Srinivasan%2C%20Praveen%20Blackwell%2C%20Sam%20Alcicek%2C%20Cagdas%20Massively%20parallel%20methods%20for%20deep%20reinforcement%20learning%202015"
+        },
+        {
+            "id": "Neal_1995_a",
+            "entry": "Radford M. Neal. Bayesian Learning for Neural Networks. PhD thesis, University of Toronto, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Neal%2C%20Radford%20M.%20Bayesian%20Learning%20for%20Neural%20Networks%201995"
+        },
+        {
+            "id": "O_et+al_2018_a",
+            "entry": "Brendan O\u2019Donoghue, Ian Osband, Remi Munos, and Vlad Mnih. The uncertainty Bellman equation and exploration. In Proc. of the International Conference on Machine Learning, volume 80, pp. 3839\u20133848, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=O%E2%80%99Donoghue%2C%20Brendan%20Osband%2C%20Ian%20Munos%2C%20Remi%20Mnih%2C%20Vlad%20The%20uncertainty%20Bellman%20equation%20and%20exploration%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=O%E2%80%99Donoghue%2C%20Brendan%20Osband%2C%20Ian%20Munos%2C%20Remi%20Mnih%2C%20Vlad%20The%20uncertainty%20Bellman%20equation%20and%20exploration%202018"
+        },
+        {
+            "id": "Osband_et+al_2016_a",
+            "entry": "Ian Osband, Charles Blundell, Alexander Pritzel, and Benjamin Van Roy. Deep exploration via bootstrapped dqn. In Advances in Neural Information Processing Systems 29, pp. 4026\u20134034. 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Blundell%2C%20Charles%20Pritzel%2C%20Alexander%20Roy%2C%20Benjamin%20Van%20Deep%20exploration%20via%20bootstrapped%20dqn%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Blundell%2C%20Charles%20Pritzel%2C%20Alexander%20Roy%2C%20Benjamin%20Van%20Deep%20exploration%20via%20bootstrapped%20dqn%202016"
+        },
+        {
+            "id": "Osband_et+al_2016_b",
+            "entry": "Ian Osband, Benjamin Van Roy, and Zheng Wen. Generalization and exploration via randomized value functions. In Proc. of the International Conference on Machine Learning, volume 48, pp. 2377\u20132386, 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Osband%2C%20Ian%20Roy%2C%20Benjamin%20Van%20Wen%2C%20Zheng%20Generalization%20and%20exploration%20via%20randomized%20value%20functions%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Osband%2C%20Ian%20Roy%2C%20Benjamin%20Van%20Wen%2C%20Zheng%20Generalization%20and%20exploration%20via%20randomized%20value%20functions%202016"
+        },
+        {
+            "id": "Plappert_et+al_2018_a",
+            "entry": "Matthias Plappert, Rein Houthooft, Prafulla Dhariwal, Szymon Sidor, Richard Y. Chen, Xi Chen, Tamim Asfour, Pieter Abbeel, and Marcin Andrychowicz. Parameter space noise for exploration. In Proc. of the International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Plappert%2C%20Matthias%20Houthooft%2C%20Rein%20Dhariwal%2C%20Prafulla%20Sidor%2C%20Szymon%20Parameter%20space%20noise%20for%20exploration%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Plappert%2C%20Matthias%20Houthooft%2C%20Rein%20Dhariwal%2C%20Prafulla%20Sidor%2C%20Szymon%20Parameter%20space%20noise%20for%20exploration%202018"
+        },
+        {
+            "id": "Riquelme_et+al_2018_a",
+            "entry": "Carlos Riquelme, George Tucker, and Jasper Snoek. Deep bayesian bandits showdown: An empirical comparison of bayesian deep networks for thompson sampling. In Proc. of the International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Riquelme%2C%20Carlos%20Tucker%2C%20George%20Snoek%2C%20Jasper%20Deep%20bayesian%20bandits%20showdown%3A%20An%20empirical%20comparison%20of%20bayesian%20deep%20networks%20for%20thompson%20sampling%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Riquelme%2C%20Carlos%20Tucker%2C%20George%20Snoek%2C%20Jasper%20Deep%20bayesian%20bandits%20showdown%3A%20An%20empirical%20comparison%20of%20bayesian%20deep%20networks%20for%20thompson%20sampling%202018"
+        },
+        {
+            "id": "Russo_2014_a",
+            "entry": "Daniel Russo and Benjamin Van Roy. Learning to optimize via information-directed sampling. In Advances in Neural Information Processing Systems 27, pp. 1583\u20131591. 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Russo%2C%20Daniel%20Roy%2C%20Benjamin%20Van%20Learning%20to%20optimize%20via%20information-directed%20sampling%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Russo%2C%20Daniel%20Roy%2C%20Benjamin%20Van%20Learning%20to%20optimize%20via%20information-directed%20sampling%202014"
+        },
+        {
+            "id": "Schaul_et+al_2016_a",
+            "entry": "Tom Schaul, John Quan, Ioannis Antonoglou, and David Silver. Prioritized experience replay. In Proc. of the International Conference on Learning Representations, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schaul%2C%20Tom%20Quan%2C%20John%20Antonoglou%2C%20Ioannis%20Silver%2C%20David%20Prioritized%20experience%20replay%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schaul%2C%20Tom%20Quan%2C%20John%20Antonoglou%2C%20Ioannis%20Silver%2C%20David%20Prioritized%20experience%20replay%202016"
+        },
+        {
+            "id": "Schmidhuber_2010_a",
+            "entry": "Jurgen Schmidhuber. Formal theory of creativity, fun, and intrinsic motivation (1990\u20132010). IEEE Transactions on Autonomous Mental Development, 2(3):230\u2013247, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jurgen%20Schmidhuber%20Formal%20theory%20of%20creativity%20fun%20and%20intrinsic%20motivation%2019902010%20IEEE%20Transactions%20on%20Autonomous%20Mental%20Development%2023230247%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jurgen%20Schmidhuber%20Formal%20theory%20of%20creativity%20fun%20and%20intrinsic%20motivation%2019902010%20IEEE%20Transactions%20on%20Autonomous%20Mental%20Development%2023230247%202010"
+        },
+        {
+            "id": "Snoek_et+al_2015_a",
+            "entry": "Jasper Snoek, Oren Rippel, Kevin Swersky, Ryan Kiros, Nadathur Satish, Narayanan Sundaram, Md. Mostofa Ali Patwary, Prabhat, and Ryan P. Adams. Scalable bayesian optimization using deep neural networks. In Proc. of the International Conference on Machine Learning, volume 37, pp. 2171\u20132180, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Snoek%2C%20Jasper%20Rippel%2C%20Oren%20Swersky%2C%20Kevin%20Kiros%2C%20Ryan%20Scalable%20bayesian%20optimization%20using%20deep%20neural%20networks%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Snoek%2C%20Jasper%20Rippel%2C%20Oren%20Swersky%2C%20Kevin%20Kiros%2C%20Ryan%20Scalable%20bayesian%20optimization%20using%20deep%20neural%20networks%202015"
+        },
+        {
+            "id": "Srinivas_et+al_2010_a",
+            "entry": "Niranjan Srinivas, Andreas Krause, Sham Kakade, and Matthias Seeger. Gaussian process optimization in the bandit setting: No regret and experimental design. In Proc. of the International Conference on Machine Learning, pp. 1015\u20131022, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Srinivas%2C%20Niranjan%20Krause%2C%20Andreas%20Kakade%2C%20Sham%20Seeger%2C%20Matthias%20Gaussian%20process%20optimization%20in%20the%20bandit%20setting%3A%20No%20regret%20and%20experimental%20design%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Srinivas%2C%20Niranjan%20Krause%2C%20Andreas%20Kakade%2C%20Sham%20Seeger%2C%20Matthias%20Gaussian%20process%20optimization%20in%20the%20bandit%20setting%3A%20No%20regret%20and%20experimental%20design%202010"
+        },
+        {
+            "id": "Stadie_et+al_2015_a",
+            "entry": "Bradly C. Stadie, Sergey Levine, and Pieter Abbeel. Incentivizing exploration in reinforcement learning with deep predictive models. arXiv, abs/1507.00814, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1507.00814"
+        },
+        {
+            "id": "Sutton_1998_a",
+            "entry": "Richard S. Sutton and Andrew G. Barto. Introduction to Reinforcement Learning. MIT Press, 1st edition, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sutton%2C%20Richard%20S.%20Barto%2C%20Andrew%20G.%20Introduction%20to%20Reinforcement%20Learning%201998"
+        },
+        {
+            "id": "Tang_et+al_2017_a",
+            "entry": "Haoran Tang, Rein Houthooft, Davis Foote, Adam Stooke, OpenAI Xi Chen, Yan Duan, John Schulman, Filip DeTurck, and Pieter Abbeel. #exploration: A study of count-based exploration for deep reinforcement learning. In Advances in Neural Information Processing Systems 30, pp. 2753\u20132762. 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Haoran%20Houthooft%2C%20Rein%20Foote%2C%20Davis%20Stooke%2C%20Adam%20%23exploration%3A%20A%20study%20of%20count-based%20exploration%20for%20deep%20reinforcement%20learning%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Haoran%20Houthooft%2C%20Rein%20Foote%2C%20Davis%20Stooke%2C%20Adam%20%23exploration%3A%20A%20study%20of%20count-based%20exploration%20for%20deep%20reinforcement%20learning%202017"
+        },
+        {
+            "id": "Tang_2018_a",
+            "entry": "Yunhao Tang and Shipra Agrawal. Exploration by distributional reinforcement learning. In Proc. of the International Joint Conference on Artificial Intelligence, pp. 2710\u20132716, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tang%2C%20Yunhao%20Agrawal%2C%20Shipra%20Exploration%20by%20distributional%20reinforcement%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tang%2C%20Yunhao%20Agrawal%2C%20Shipra%20Exploration%20by%20distributional%20reinforcement%20learning%202018"
+        },
+        {
+            "id": "Thompson_1933_a",
+            "entry": "William R. Thompson. On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. Biometrika, 25(3-4):285\u2013294, 1933.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Thompson%2C%20William%20R.%20On%20the%20likelihood%20that%20one%20unknown%20probability%20exceeds%20another%20in%20view%20of%20the%20evidence%20of%20two%20samples%201933",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Thompson%2C%20William%20R.%20On%20the%20likelihood%20that%20one%20unknown%20probability%20exceeds%20another%20in%20view%20of%20the%20evidence%20of%20two%20samples%201933"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "Hado van Hasselt, Arthur Guez, and David Silver. Deep reinforcement learning with double qlearning. In Proc. of the AAAI Conference on Artificial Intelligence, pp. 2094\u20132100, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20Hasselt%2C%20Hado%20Guez%2C%20Arthur%20Silver%2C%20David%20Deep%20reinforcement%20learning%20with%20double%20qlearning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20Hasselt%2C%20Hado%20Guez%2C%20Arthur%20Silver%2C%20David%20Deep%20reinforcement%20learning%20with%20double%20qlearning%202016"
+        },
+        {
+            "id": "Wang_et+al_2016_a",
+            "entry": "Ziyu Wang, Tom Schaul, Matteo Hessel, Hado Hasselt, Marc Lanctot, and Nando Freitas. Dueling network architectures for deep reinforcement learning. In Proc. of the International Conference on Machine Learning, volume 48, pp. 1995\u20132003, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Ziyu%20Schaul%2C%20Tom%20Hessel%2C%20Matteo%20Hasselt%2C%20Hado%20Dueling%20network%20architectures%20for%20deep%20reinforcement%20learning%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Ziyu%20Schaul%2C%20Tom%20Hessel%2C%20Matteo%20Hasselt%2C%20Hado%20Dueling%20network%20architectures%20for%20deep%20reinforcement%20learning%202016"
+        },
+        {
+            "id": "Watkins_1989_a",
+            "entry": "Christopher J. C. H. Watkins. Learning from Delayed Rewards. PhD thesis, King\u2019s College, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Watkins%2C%20Christopher%20J.C.H.%20Learning%20from%20Delayed%20Rewards%201989"
+        },
+        {
+            "id": "Welling_2011_a",
+            "entry": "Max Welling and Yee Whye Teh. Bayesian learning via stochastic gradient langevin dynamics. In Proc. of the International Conference on Machine Learning, pp. 681\u2013688, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Welling%2C%20Max%20Teh%2C%20Yee%20Whye%20Bayesian%20learning%20via%20stochastic%20gradient%20langevin%20dynamics%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Welling%2C%20Max%20Teh%2C%20Yee%20Whye%20Bayesian%20learning%20via%20stochastic%20gradient%20langevin%20dynamics%202011"
+        },
+        {
+            "id": "Zanette_2017_a",
+            "entry": "Andrea Zanette and Rahul Sarkar. Information directed reinforcement learning. Technical report, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zanette%2C%20Andrea%20Sarkar%2C%20Rahul%20Information%20directed%20reinforcement%20learning%202017"
+        }
+    ]
+}

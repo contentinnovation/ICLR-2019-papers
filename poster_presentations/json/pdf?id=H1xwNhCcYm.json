@@ -1,0 +1,315 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "DO DEEP GENERATIVE MODELS KNOW WHAT THEY DON\u2019T KNOW?",
+        "author": "Eric Nalisnick,\u2020 Akihiro Matsukawa, Yee Whye Teh, Dilan Gorur, Balaji Lakshminarayanan, DeepMind",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=H1xwNhCcYm"
+        },
+        "abstract": "A neural network deployed in the wild may be asked to make predictions for inputs that were drawn from a different distribution than that of the training data. A plethora of work has demonstrated that it is easy to find or synthesize inputs for which a neural network is highly confident yet wrong. Generative models are widely viewed to be robust to such mistaken confidence as modeling the density of the input features can be used to detect novel, out-of-distribution inputs. In this paper we challenge this assumption. We find that the density learned by flow-based models, VAEs, and PixelCNNs cannot distinguish images of common objects such as dogs, trucks, and horses (i.e. CIFAR-10) from those of house numbers (i.e. SVHN), assigning a higher likelihood to the latter when the model is trained on the former. Moreover, we find evidence of this phenomenon when pairing several popular image data sets: FashionMNIST vs MNIST, CelebA vs SVHN, ImageNet vs CIFAR-10 / CIFAR-100 / SVHN. To investigate this curious behavior, we focus analysis on flow-based generative models in particular since they are trained and evaluated via the exact marginal likelihood. We find such behavior persists even when we restrict the flows to constant-volume transformations. These transformations admit some theoretical analysis, and we show that the difference in likelihoods can be explained by the location and variances of the data and the model curvature. Our results caution against using the density estimates from deep generative models to identify inputs similar to the training distribution until their behavior for out-of-distribution inputs is better understood."
+    },
+    "keywords": [
+        {
+            "term": "CIFAR-10",
+            "url": "https://en.wikipedia.org/wiki/CIFAR-10"
+        },
+        {
+            "term": "k-nearest neighbors",
+            "url": "https://en.wikipedia.org/wiki/k-nearest_neighbors"
+        },
+        {
+            "term": "generative model",
+            "url": "https://en.wikipedia.org/wiki/generative_model"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "KNOW",
+            "url": "https://en.wikipedia.org/wiki/KNOW"
+        },
+        {
+            "term": "constant volume",
+            "url": "https://en.wikipedia.org/wiki/constant_volume"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "panel discussion",
+            "url": "https://en.wikipedia.org/wiki/panel_discussion"
+        },
+        {
+            "term": "Kullback\u2013Leibler divergence",
+            "url": "https://en.wikipedia.org/wiki/Kullback_Leibler_divergence"
+        }
+    ],
+    "abbreviations": {
+        "AABI": "Approximate Bayesian Inference",
+        "KLD": "Kullback\u2013Leibler divergence",
+        "ACLs": "affine coupling layers",
+        "NVP": "non-volume preserving",
+        "VP": "volume preserving",
+        "kNNs": "k-nearest neighbors"
+    },
+    "highlights": [
+        "Deep learning has achieved impressive success in applications for which the goal is to model a conditional distribution p(y|x), with y being a label and x the features",
+        "We investigate if modern deep generative models can be used for anomaly detection, as suggested by <a class=\"ref-link\" id=\"cBishop_1994_a\" href=\"#rBishop_1994_a\">Bishop (1994</a>) and the Approximate Bayesian Inference pannel (<a class=\"ref-link\" id=\"cBlei_et+al_2017_a\" href=\"#rBlei_et+al_2017_a\">Blei et al, 2017</a>), expecting a well-calibrated model to assign higher density to the training data than to some other data set",
+        "We find this to not be the case: when trained on CIFAR-10 (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky & Hinton, 2009</a>), VAEs, autoregressive models, and flow-based generative models all assign a higher density to SVHN (<a class=\"ref-link\" id=\"cNetzer_et+al_2011_a\" href=\"#rNetzer_et+al_2011_a\">Netzer et al, 2011</a>) than to the training data. We find this observation to be quite problematic and unintuitive since SVHN\u2019s digit images are so visually distinct from the dogs, horses, trucks, boats, etc. found in CIFAR-10. This phenomenon is not restricted to CIFAR-10 vs SVHN, and we report similar findings for models trained on CelebA and ImageNet",
+        "The results we present in Equation 6 do not apply to Choi & Jang (2018)\u2019s models since they use scaling operations in their affine coupling layers, making them non-volume preserving",
+        "We have shown that comparing the likelihoods of deep generative models alone cannot identify the training set or inputs like it",
+        "Our analysis in Section 5 shows that the CIFAR-10 vs SVHN phenomenon would persist for any constant-volume Glow no matter the parameter values nor the choice of latent density"
+    ],
+    "key_statements": [
+        "Deep learning has achieved impressive success in applications for which the goal is to model a conditional distribution p(y|x), with y being a label and x the features",
+        "<a class=\"ref-link\" id=\"cLouizos_2017_a\" href=\"#rLouizos_2017_a\">Louizos & Welling (2017</a>) show that rotating an MNIST digit can make a neural network predict another class with high confidence",
+        "The intuition is that the discriminative model p(y|x) likely did not observe enough samples in that region to make a reliable decision for those inputs. This idea has been proposed by various papers, cf. (<a class=\"ref-link\" id=\"cBishop_1994_a\" href=\"#rBishop_1994_a\">Bishop, 1994</a>), and as recently as in the panel discussion at Advances in Approximate Bayesian Inference (AABI) 2017 (<a class=\"ref-link\" id=\"cBlei_et+al_2017_a\" href=\"#rBlei_et+al_2017_a\">Blei et al, 2017</a>)",
+        "We investigate if modern deep generative models can be used for anomaly detection, as suggested by <a class=\"ref-link\" id=\"cBishop_1994_a\" href=\"#rBishop_1994_a\">Bishop (1994</a>) and the Approximate Bayesian Inference pannel (<a class=\"ref-link\" id=\"cBlei_et+al_2017_a\" href=\"#rBlei_et+al_2017_a\">Blei et al, 2017</a>), expecting a well-calibrated model to assign higher density to the training data than to some other data set",
+        "We find this to not be the case: when trained on CIFAR-10 (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky & Hinton, 2009</a>), VAEs, autoregressive models, and flow-based generative models all assign a higher density to SVHN (<a class=\"ref-link\" id=\"cNetzer_et+al_2011_a\" href=\"#rNetzer_et+al_2011_a\">Netzer et al, 2011</a>) than to the training data. We find this observation to be quite problematic and unintuitive since SVHN\u2019s digit images are so visually distinct from the dogs, horses, trucks, boats, etc. found in CIFAR-10",
+        "We find this to not be the case: when trained on CIFAR-10 (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky & Hinton, 2009</a>), VAEs, autoregressive models, and flow-based generative models all assign a higher density to SVHN (<a class=\"ref-link\" id=\"cNetzer_et+al_2011_a\" href=\"#rNetzer_et+al_2011_a\">Netzer et al, 2011</a>) than to the training data. We find this observation to be quite problematic and unintuitive since SVHN\u2019s digit images are so visually distinct from the dogs, horses, trucks, boats, etc. found in CIFAR-10. This phenomenon is not restricted to CIFAR-10 vs SVHN, and we report similar findings for models trained on CelebA and ImageNet",
+        "As our focus is on generative models, let the collection of all observations be denoted by X = {xn}nN=1 with x representing a vector containing all features and, if present, labels",
+        "Given the impressive advances of deep generative models, we sought to test their ability to quantify when an input comes from a different distribution than that of the training set",
+        "CIFAR-10 does not have a higher likelihood under a Glow trained on SVHN; see Figure 6 in Appendix B\n1Although we use a smaller model, it still produces good samples, which can be seen in Figure 13 of the Appendix, and competitive BPD (CIFAR-10: 3.46 for ours vs 3.35 for theirs).\n2See <a class=\"ref-link\" id=\"cTheis_et+al_2016_a\" href=\"#rTheis_et+al_2016_a\">Theis et al (2016</a>, Section 3.1) for the definitions of log-likelihood and bits-per-dimension",
+        "We report results only for Glow, but we observed the same behavior for RNVP transforms (<a class=\"ref-link\" id=\"cDinh_et+al_2017_a\" href=\"#rDinh_et+al_2017_a\">Dinh et al, 2017</a>)",
+        "We report the constituent log p(z) and log |\u2202f\u03c6/\u2202x| terms for non-volume preserving-Glow in Figure 4, showing histograms for log p(z) in subfigure (a) and for log |\u2202f\u03c6/\u2202x| in subfigure (b)",
+        "We see nearly identical results: SVHN is still assigned a higher likelihood than the CIFAR-10 training data.\n5 SECOND ORDER ANALYSIS",
+        "For SVHN and CIFAR-10 in particular, we find this assumption to hold; see Figure 5 (a) for the empirical means of each dimension of CIFAR-10 and SVHN",
+        "We use the expression in Equation 5 to analyze the behavior of CV-Glow on CIFAR-10 vs SVHN, seeing if the difference in likelihoods can be explained by the model curvature and data\u2019s second moment",
+        "We show in Figure 5 (b) that doing exactly this improves the likelihood of both CIFAR-10 and SVHN",
+        "The results we present in Equation 6 do not apply to Choi & Jang (2018)\u2019s models since they use scaling operations in their affine coupling layers, making them non-volume preserving",
+        "We have shown that comparing the likelihoods of deep generative models alone cannot identify the training set or inputs like it",
+        "We urge caution when using these models with outof-training-distribution inputs or in unprotected user-facing systems",
+        "Our analysis in Section 5 shows that the CIFAR-10 vs SVHN phenomenon would persist for any constant-volume Glow no matter the parameter values nor the choice of latent density"
+    ],
+    "summary": [
+        "Deep learning has achieved impressive success in applications for which the goal is to model a conditional distribution p(y|x), with y being a label and x the features.",
+        "Given the impressive advances of deep generative models, we sought to test their ability to quantify when an input comes from a different distribution than that of the training set.",
+        "Samples from the Glow models trained on each data set are shown in Figure 13 in the Appendix.",
+        "Subfigures (c) and (d) of Figure 2 show additional results for CelebA and ImageNet. When trained on CelebA, Glow assigns a higher likelihood to SVHN, a data set the model has never seen before.",
+        "CIFAR-10 does not have a higher likelihood under a Glow trained on SVHN; see Figure 6 in Appendix B",
+        "Figure 3 reports the same histograms as above for these models, showing the distribution of log p(x) evaluations for FashionMNIST vs MNIST (a, b) and CIFAR-10 vs SVHN (c, d).",
+        "While we observed the out-of-distribution phenomenon for PixelCNN, VAE, and Glow, we narrow our investigation to just the class of invertible generative models.",
+        "Subfigure (c) shows a histogram of the log p(x) evaluations, just as shown before in Figure 2, and we see that SVHN still achieves a higher likelihood than the CIFAR-10 training set.",
+        "We opted for this approach, training five Glow models independently and averaging their likelihoods to evaluate test data.",
+        "We see nearly identical results: SVHN is still assigned a higher likelihood than the CIFAR-10 training data.",
+        "For a given generative model p(x; \u03b8), the adversarial distribution q will have a higher likelihood than the training data\u2019s if Eq[log p(x; \u03b8)] \u2212 Ep\u2217 [log p(x; \u03b8)] > 0.",
+        "We use the expression in Equation 5 to analyze the behavior of CV-Glow on CIFAR-10 vs SVHN, seeing if the difference in likelihoods can be explained by the model curvature and data\u2019s second moment.",
+        "We expect SVHN and the CIFARs to have a higher likelihood than ImageNet on an ImageNet-trained model, which is exactly what we observe in Figure 2 (d).",
+        "We have shown that comparing the likelihoods of deep generative models alone cannot identify the training set or inputs like it.",
+        "Our analysis in Section 5 shows that the CIFAR-10 vs SVHN phenomenon would persist for any constant-volume Glow no matter the parameter values nor the choice of latent density.",
+        "Deep generative models can detect out-of-distribution inputs when using alternative metrics (Choi & Jang, 2018) and modified training procedures (<a class=\"ref-link\" id=\"cHendrycks_et+al_2019_a\" href=\"#rHendrycks_et+al_2019_a\">Hendrycks et al, 2019</a>)."
+    ],
+    "headline": "We find that the density learned by flow-based models, VAEs, and PixelCNNs cannot distinguish images of common objects such as dogs, trucks, and horses from those of house numbers, assigning a higher likelihood to the latter when the model is trained on the former",
+    "reference_links": [
+        {
+            "id": "Bishop_1994_a",
+            "entry": "Christopher M Bishop. Novelty Detection and Neural Network Validation. IEE Proceedings-Vision, Image and Signal processing, 141(4):217\u2013222, 1994.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christopher%20M%20Bishop%20Novelty%20Detection%20and%20Neural%20Network%20Validation%20IEE%20ProceedingsVision%20Image%20and%20Signal%20processing%201414217222%201994",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christopher%20M%20Bishop%20Novelty%20Detection%20and%20Neural%20Network%20Validation%20IEE%20ProceedingsVision%20Image%20and%20Signal%20processing%201414217222%201994"
+        },
+        {
+            "id": "Bishop_1995_a",
+            "entry": "Christopher M Bishop. Training with Noise is Equivalent to Tikhonov Regularization. Neural Computation, 7(1):108\u2013116, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bishop%2C%20Christopher%20M.%20Training%20with%20Noise%20is%20Equivalent%20to%20Tikhonov%20Regularization%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bishop%2C%20Christopher%20M.%20Training%20with%20Noise%20is%20Equivalent%20to%20Tikhonov%20Regularization%201995"
+        },
+        {
+            "id": "Blei_et+al_2017_a",
+            "entry": "David Blei, Katherine Heller, Tim Salimans, Max Welling, and Zoubin Ghahramani. Panel Discussion. Advances in Approximate Bayesian Inference, December 2017. URL https://youtu.be/x1UByHT60mQ?t=46m2s. NeurIPS Workshop.",
+            "url": "https://youtu.be/x1UByHT60mQ?t=46m2s"
+        },
+        {
+            "id": "Hyunsun_2018_a",
+            "entry": "Hyunsun Choi and Eric Jang. Generative Ensembles for Robust Anomaly Detection. ArXiv e-Print arXiv:1810.01392, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.01392"
+        },
+        {
+            "id": "Dinh_et+al_2015_a",
+            "entry": "Laurent Dinh, David Krueger, and Yoshua Bengio. NICE: Non-Linear Independent Components Estimation. ICLR Workshop Track, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dinh%2C%20Laurent%20Krueger%2C%20David%20Bengio%2C%20Yoshua%20NICE%3A%20Non-Linear%20Independent%20Components%20Estimation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20Laurent%20Krueger%2C%20David%20Bengio%2C%20Yoshua%20NICE%3A%20Non-Linear%20Independent%20Components%20Estimation%202015"
+        },
+        {
+            "id": "Dinh_et+al_2017_a",
+            "entry": "Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio. Density Estimation Using Real NVP. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dinh%2C%20Laurent%20Sohl-Dickstein%2C%20Jascha%20Bengio%2C%20Samy%20Density%20Estimation%20Using%20Real%20NVP%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dinh%2C%20Laurent%20Sohl-Dickstein%2C%20Jascha%20Bengio%2C%20Samy%20Density%20Estimation%20Using%20Real%20NVP%202017"
+        },
+        {
+            "id": "Girosi_et+al_1995_a",
+            "entry": "Federico Girosi, Michael Jones, and Tomaso Poggio. Regularization Theory and Neural Networks Architectures. Neural Computation, 7(2):219\u2013269, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Girosi%2C%20Federico%20Jones%2C%20Michael%20Poggio%2C%20Tomaso%20Regularization%20Theory%20and%20Neural%20Networks%20Architectures%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Girosi%2C%20Federico%20Jones%2C%20Michael%20Poggio%2C%20Tomaso%20Regularization%20Theory%20and%20Neural%20Networks%20Architectures%201995"
+        },
+        {
+            "id": "Goodfellow_et+al_2014_a",
+            "entry": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, A\u00e4ron Courville, and Yoshua Bengio. Generative Adversarial Nets. In Advances in Neural Information Processing Systems (NeurIPS), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20A%C3%A4ron%20Courville%20and%20Yoshua%20Bengio%20Generative%20Adversarial%20Nets%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20NeurIPS%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ian%20Goodfellow%20Jean%20PougetAbadie%20Mehdi%20Mirza%20Bing%20Xu%20David%20WardeFarley%20Sherjil%20Ozair%20A%C3%A4ron%20Courville%20and%20Yoshua%20Bengio%20Generative%20Adversarial%20Nets%20In%20Advances%20in%20Neural%20Information%20Processing%20Systems%20NeurIPS%202014"
+        },
+        {
+            "id": "Hendrycks_2017_a",
+            "entry": "Dan Hendrycks and Kevin Gimpel. A Baseline for Detecting Misclassified and Out-of-Distribution Examples in Neural Networks. In International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hendrycks%2C%20Dan%20Gimpel%2C%20Kevin%20A%20Baseline%20for%20Detecting%20Misclassified%20and%20Out-of-Distribution%20Examples%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hendrycks%2C%20Dan%20Gimpel%2C%20Kevin%20A%20Baseline%20for%20Detecting%20Misclassified%20and%20Out-of-Distribution%20Examples%202017"
+        },
+        {
+            "id": "Hendrycks_et+al_2019_a",
+            "entry": "Dan Hendrycks, Mantas Mazeika, and Thomas Dietterich. Deep Anomaly Detection with Outlier Exposure. In International Conference on Learning Representations (ICLR), 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hendrycks%2C%20Dan%20Mazeika%2C%20Mantas%20Dietterich%2C%20Thomas%20Deep%20Anomaly%20Detection%20with%20Outlier%20Exposure%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hendrycks%2C%20Dan%20Mazeika%2C%20Mantas%20Dietterich%2C%20Thomas%20Deep%20Anomaly%20Detection%20with%20Outlier%20Exposure%202019"
+        },
+        {
+            "id": "Herbei_2006_a",
+            "entry": "Radu Herbei and Marten H Wegkamp. Classification with Reject Option. Canadian Journal of Statistics, 34(4):709\u2013721, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Herbei%2C%20Radu%20Wegkamp%2C%20Marten%20H.%20Classification%20with%20Reject%20Option%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Herbei%2C%20Radu%20Wegkamp%2C%20Marten%20H.%20Classification%20with%20Reject%20Option%202006"
+        },
+        {
+            "id": "Kingma_2018_a",
+            "entry": "Diederik P. Kingma and Prafulla Dhariwal. Glow: Generative Flow with Invertible 1x1 Convolutions. In Advances in Neural Information Processing Systems (NeurIPS), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Dhariwal%2C%20Prafulla%20Glow%3A%20Generative%20Flow%20with%20Invertible%201x1%20Convolutions%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Dhariwal%2C%20Prafulla%20Glow%3A%20Generative%20Flow%20with%20Invertible%201x1%20Convolutions%202018"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Max Welling. Auto-Encoding Variational Bayes. International Conference on Learning Representations (ICLR), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-Encoding%20Variational%20Bayes%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Welling%2C%20Max%20Auto-Encoding%20Variational%20Bayes%202014"
+        },
+        {
+            "id": "Kos_et+al_2018_a",
+            "entry": "Jernej Kos, Ian Fischer, and Dawn Song. Adversarial Examples for Generative Models. In 2018 IEEE Security and Privacy Workshops (SPW), pp. 36\u201342. IEEE, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kos%2C%20Jernej%20Fischer%2C%20Ian%20Song%2C%20Dawn%20Adversarial%20Examples%20for%20Generative%20Models%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kos%2C%20Jernej%20Fischer%2C%20Ian%20Song%2C%20Dawn%20Adversarial%20Examples%20for%20Generative%20Models%202018"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning Multiple Layers of Features from Tiny Images. Technical report, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20Multiple%20Layers%20of%20Features%20from%20Tiny%20Images%202009"
+        },
+        {
+            "id": "Lakshminarayanan_et+al_2017_a",
+            "entry": "Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and Scalable Predictive Uncertainty Estimation Using Deep Ensembles. In Advances in Neural Information Processing Systems (NeurIPS), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lakshminarayanan%2C%20Balaji%20Pritzel%2C%20Alexander%20Blundell%2C%20Charles%20Simple%20and%20Scalable%20Predictive%20Uncertainty%20Estimation%20Using%20Deep%20Ensembles%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lakshminarayanan%2C%20Balaji%20Pritzel%2C%20Alexander%20Blundell%2C%20Charles%20Simple%20and%20Scalable%20Predictive%20Uncertainty%20Estimation%20Using%20Deep%20Ensembles%202017"
+        },
+        {
+            "id": "Lee_et+al_2018_a",
+            "entry": "Kimin Lee, Honglak Lee, Kibok Lee, and Jinwoo Shin. Training Confidence-Calibrated Classifiers for Detecting Out-of-Distribution Samples. In International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Kimin%20Lee%2C%20Honglak%20Lee%2C%20Kibok%20Shin%2C%20Jinwoo%20Training%20Confidence-Calibrated%20Classifiers%20for%20Detecting%20Out-of-Distribution%20Samples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Kimin%20Lee%2C%20Honglak%20Lee%2C%20Kibok%20Shin%2C%20Jinwoo%20Training%20Confidence-Calibrated%20Classifiers%20for%20Detecting%20Out-of-Distribution%20Samples%202018"
+        },
+        {
+            "id": "Liang_et+al_2018_a",
+            "entry": "Shiyu Liang, Yixuan Li, and R Srikant. Enhancing the Reliability of Out-of-Distribution Image Detection in Neural Networks. International Conference on Learning Representations (ICLR), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liang%2C%20Shiyu%20Li%2C%20Yixuan%20Srikant%2C%20R.%20Enhancing%20the%20Reliability%20of%20Out-of-Distribution%20Image%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liang%2C%20Shiyu%20Li%2C%20Yixuan%20Srikant%2C%20R.%20Enhancing%20the%20Reliability%20of%20Out-of-Distribution%20Image%202018"
+        },
+        {
+            "id": "Louizos_2017_a",
+            "entry": "Christos Louizos and Max Welling. Multiplicative Normalizing Flows for Variational Bayesian Neural Networks. In Proceedings of the 34th International Conference on Machine Learning (ICML), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Louizos%2C%20Christos%20Welling%2C%20Max%20Multiplicative%20Normalizing%20Flows%20for%20Variational%20Bayesian%20Neural%20Networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Louizos%2C%20Christos%20Welling%2C%20Max%20Multiplicative%20Normalizing%20Flows%20for%20Variational%20Bayesian%20Neural%20Networks%202017"
+        },
+        {
+            "id": "Netzer_et+al_2011_a",
+            "entry": "Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading Digits in Natural Images with Unsupervised Feature Learning. In NeurIPS Workshop on Deep Learning and Unsupervised Feature Learning, 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20Digits%20in%20Natural%20Images%20with%20Unsupervised%20Feature%20Learning%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Netzer%2C%20Yuval%20Wang%2C%20Tao%20Coates%2C%20Adam%20Bissacco%2C%20Alessandro%20Reading%20Digits%20in%20Natural%20Images%20with%20Unsupervised%20Feature%20Learning%202011"
+        },
+        {
+            "id": "Rezende_et+al_2014_a",
+            "entry": "Danilo Rezende, Shakir Mohamed, and Daan Wierstra. Stochastic Backpropagation and Approximate Inference in Deep Generative Models. In Proceedings of the 31st International Conference on Machine Learning (ICML), pp. 1278\u20131286, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rezende%2C%20Danilo%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20Backpropagation%20and%20Approximate%20Inference%20in%20Deep%20Generative%20Models%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rezende%2C%20Danilo%20Mohamed%2C%20Shakir%20Wierstra%2C%20Daan%20Stochastic%20Backpropagation%20and%20Approximate%20Inference%20in%20Deep%20Generative%20Models%202014"
+        },
+        {
+            "id": "Rifai_et+al_2011_a",
+            "entry": "Salah Rifai, Pascal Vincent, Xavier Muller, Xavier Glorot, and Yoshua Bengio. Contractive AutoEncoders: Explicit Invariance During Feature Extraction. In Proceedings of the 28th International Conference on Machine Learning (ICML), 2011.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Rifai%2C%20Salah%20Vincent%2C%20Pascal%20Muller%2C%20Xavier%20Glorot%2C%20Xavier%20Contractive%20AutoEncoders%3A%20Explicit%20Invariance%20During%20Feature%20Extraction%202011",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Rifai%2C%20Salah%20Vincent%2C%20Pascal%20Muller%2C%20Xavier%20Glorot%2C%20Xavier%20Contractive%20AutoEncoders%3A%20Explicit%20Invariance%20During%20Feature%20Extraction%202011"
+        },
+        {
+            "id": "Rosca_et+al_2018_a",
+            "entry": "Mihaela Rosca, Balaji Lakshminarayanan, and Shakir Mohamed. Distribution matching in variational inference. ArXiv e-Print arXiv:1802.06847, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.06847"
+        },
+        {
+            "id": "Shafaei_et+al_2018_a",
+            "entry": "Alireza Shafaei, Mark Schmidt, and James J Little. Does Your Model Know the Digit 6 Is Not a Cat? A Less Biased Evaluation of \u201cOutlier\" Detectors. ArXiv e-Print arXiv:1809.04729, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1809.04729"
+        },
+        {
+            "id": "V_2018_a",
+            "entry": "V\u00edt \u0160kv\u00e1ra, Tom\u00e1\u0161 Pevny, and V\u00e1clav \u0160m\u00eddl. Are Generative Deep Models for Novelty Detection Truly Better? KDD Workshop on Outlier Detection De-Constructed (ODD v5.0), 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=V%C3%ADt%20%C5%A0kv%C3%A1ra%2C%20Tom%C3%A1%C5%A1%20Pevny%20%C5%A0m%C3%ADdl%2C%20V%C3%A1clav%20Are%20Generative%20Deep%20Models%20for%20Novelty%20Detection%20Truly%20Better%3F%20KDD%20Workshop%20on%20Outlier%20Detection%20De-Constructed%202018"
+        },
+        {
+            "id": "S_et+al_2017_a",
+            "entry": "Casper Kaae S\u00f8nderby, Jose Caballero, Lucas Theis, Wenzhe Shi, and Ferenc Husz\u00e1r. Amortised MAP Inference for Image Super-Resolution. International Conference on Learning Representations (ICLR), 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=S%C3%B8nderby%2C%20Casper%20Kaae%20Caballero%2C%20Jose%20Theis%2C%20Lucas%20Shi%2C%20Wenzhe%20Amortised%20MAP%20Inference%20for%20Image%20Super-Resolution%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=S%C3%B8nderby%2C%20Casper%20Kaae%20Caballero%2C%20Jose%20Theis%2C%20Lucas%20Shi%2C%20Wenzhe%20Amortised%20MAP%20Inference%20for%20Image%20Super-Resolution%202017"
+        },
+        {
+            "id": "Szegedy_et+al_2014_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing Properties of Neural Networks. International Conference on Learning Representations (ICLR), 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Christian%20Szegedy%20Wojciech%20Zaremba%20Ilya%20Sutskever%20Joan%20Bruna%20Dumitru%20Erhan%20Ian%20Goodfellow%20and%20Rob%20Fergus%20Intriguing%20Properties%20of%20Neural%20Networks%20International%20Conference%20on%20Learning%20Representations%20ICLR%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Christian%20Szegedy%20Wojciech%20Zaremba%20Ilya%20Sutskever%20Joan%20Bruna%20Dumitru%20Erhan%20Ian%20Goodfellow%20and%20Rob%20Fergus%20Intriguing%20Properties%20of%20Neural%20Networks%20International%20Conference%20on%20Learning%20Representations%20ICLR%202014"
+        },
+        {
+            "id": "Szummer_2003_a",
+            "entry": "Martin Szummer and Tommi S Jaakkola. Information Regularization with Partially Labeled Data. In Advances in Neural Information Processing Systems (NeurIPS), 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szummer%2C%20Martin%20Jaakkola%2C%20Tommi%20S.%20Information%20Regularization%20with%20Partially%20Labeled%20Data%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szummer%2C%20Martin%20Jaakkola%2C%20Tommi%20S.%20Information%20Regularization%20with%20Partially%20Labeled%20Data%202003"
+        },
+        {
+            "id": "Tabacof_et+al_2016_a",
+            "entry": "Pedro Tabacof, Julia Tavares, and Eduardo Valle. Adversarial Images for Variational Autoencoders. ArXiv e-Print, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tabacof%2C%20Pedro%20Tavares%2C%20Julia%20Valle%2C%20Eduardo%20Adversarial%20Images%20for%20Variational%20Autoencoders.%20ArXiv%20e-Print%202016"
+        },
+        {
+            "id": "Tabak_2013_a",
+            "entry": "EG Tabak and Cristina V Turner. A Family of Nonparametric Density Estimation Algorithms. Communications on Pure and Applied Mathematics, 66(2):145\u2013164, 2013.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tabak%2C%20E.G.%20Turner%2C%20Cristina%20V.%20A%20Family%20of%20Nonparametric%20Density%20Estimation%20Algorithms%202013",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tabak%2C%20E.G.%20Turner%2C%20Cristina%20V.%20A%20Family%20of%20Nonparametric%20Density%20Estimation%20Algorithms%202013"
+        },
+        {
+            "id": "Theis_et+al_2016_a",
+            "entry": "Lucas Theis, A\u00e4ron van den Oord, and Matthias Bethge. A Note on the Evaluation of Generative Models. In International Conference on Learning Representations (ICLR), 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Theis%2C%20Lucas%20van%20den%20Oord%2C%20A%C3%A4ron%20Bethge%2C%20Matthias%20A%20Note%20on%20the%20Evaluation%20of%20Generative%20Models%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Theis%2C%20Lucas%20van%20den%20Oord%2C%20A%C3%A4ron%20Bethge%2C%20Matthias%20A%20Note%20on%20the%20Evaluation%20of%20Generative%20Models%202016"
+        },
+        {
+            "id": "Van_et+al_2016_a",
+            "entry": "A\u00e4ron van den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol Vinyals, Alex Graves, Nal Kalchbrenner, Andrew Senior, and Koray Kavukcuoglu. Wavenet: A Generative Model for Raw Audio. ArXiv e-Print, 2016a.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20A%C3%A4ron%20Dieleman%2C%20Sander%20Zen%2C%20Heiga%20Simonyan%2C%20Karen%20Wavenet%3A%20A%20Generative%20Model%20for%20Raw%20Audio.%20ArXiv%20e-Print%202016"
+        },
+        {
+            "id": "Van_et+al_2016_b",
+            "entry": "A\u00e4ron van den Oord, Nal Kalchbrenner, Lasse Espeholt, Oriol Vinyals, Alex Graves, et al. Conditional image generation with pixel CNN decoders. In Advances in Neural Information Processing Systems (NeurIPS), 2016b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20A%C3%A4ron%20Kalchbrenner%2C%20Nal%20Espeholt%2C%20Lasse%20Vinyals%2C%20Oriol%20Conditional%20image%20generation%20with%20pixel%20CNN%20decoders%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Oord%2C%20A%C3%A4ron%20Kalchbrenner%2C%20Nal%20Espeholt%2C%20Lasse%20Vinyals%2C%20Oriol%20Conditional%20image%20generation%20with%20pixel%20CNN%20decoders%202016"
+        },
+        {
+            "id": "Van_et+al_2018_a",
+            "entry": "Aaron van den Oord, Yazhe Li, Igor Babuschkin, Karen Simonyan, Oriol Vinyals, Koray Kavukcuoglu, George van den Driessche, Edward Lockhart, Luis Cobo, Florian Stimberg, Norman Casagrande, Dominik Grewe, Seb Noury, Sander Dieleman, Erich Elsen, Nal Kalchbrenner, Heiga Zen, Alex Graves, Helen King, Tom Walters, Dan Belov, and Demis Hassabis. Parallel WaveNet: Fast high-fidelity speech synthesis. In Proceedings of the 35th International Conference on Machine Learning (ICML), pp. 3918\u20133926, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20den%20Oord%2C%20Aaron%20Li%2C%20Yazhe%20Babuschkin%2C%20Igor%20Simonyan%2C%20Karen%20Parallel%20WaveNet%3A%20Fast%20high-fidelity%20speech%20synthesis%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20den%20Oord%2C%20Aaron%20Li%2C%20Yazhe%20Babuschkin%2C%20Igor%20Simonyan%2C%20Karen%20Parallel%20WaveNet%3A%20Fast%20high-fidelity%20speech%20synthesis%202018"
+        },
+        {
+            "id": "We_2018_b",
+            "entry": "We refer to (Rosca et al., 2018, Appendix K) for additional details on the VAEs used in our CIFAR experiments. We used the CIFAR configurations without modification. For FashionMNIST, we used the encoder given in Table 4 of (Rosca et al., 2018, Appendix K, Table 4) and a decoder composed of one linear layer with 7 \u2217 7 \u2217 64 hidden units, followed by a reshape and three transposed convolutions of feature sizes 32, 32, 256 and strides 2, 2, 1. Weights were initialized with a normal distribution with variance 0.02. We trained for 200K steps using the RMSProp optimizer, with a constant learning rate of 1e \u2212 4.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=We%20refer%20to%20Rosca%20et%20al%202018%20Appendix%20K%20for%20additional%20details%20on%20the%20VAEs%20used%20in%20our%20CIFAR%20experiments%20We%20used%20the%20CIFAR%20configurations%20without%20modification%20For%20FashionMNIST%20we%20used%20the%20encoder%20given%20in%20Table%204%20of%20Rosca%20et%20al%202018%20Appendix%20K%20Table%204%20and%20a%20decoder%20composed%20of%20one%20linear%20layer%20with%207%20%207%20%2064%20hidden%20units%20followed%20by%20a%20reshape%20and%20three%20transposed%20convolutions%20of%20feature%20sizes%2032%2032%20256%20and%20strides%202%202%201%20Weights%20were%20initialized%20with%20a%20normal%20distribution%20with%20variance%20002%20We%20trained%20for%20200K%20steps%20using%20the%20RMSProp%20optimizer%20with%20a%20constant%20learning%20rate%20of%201e%20%204",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=We%20refer%20to%20Rosca%20et%20al%202018%20Appendix%20K%20for%20additional%20details%20on%20the%20VAEs%20used%20in%20our%20CIFAR%20experiments%20We%20used%20the%20CIFAR%20configurations%20without%20modification%20For%20FashionMNIST%20we%20used%20the%20encoder%20given%20in%20Table%204%20of%20Rosca%20et%20al%202018%20Appendix%20K%20Table%204%20and%20a%20decoder%20composed%20of%20one%20linear%20layer%20with%207%20%207%20%2064%20hidden%20units%20followed%20by%20a%20reshape%20and%20three%20transposed%20convolutions%20of%20feature%20sizes%2032%2032%20256%20and%20strides%202%202%201%20Weights%20were%20initialized%20with%20a%20normal%20distribution%20with%20variance%20002%20We%20trained%20for%20200K%20steps%20using%20the%20RMSProp%20optimizer%20with%20a%20constant%20learning%20rate%20of%201e%20%204"
+        },
+        {
+            "id": "0",
+            "entry": "0.0000 log p(X) 10000 9000 8000 7000 6000 5000 4000 3000 2000 (b) Train on SVHN, Test on CIFAR-10",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=log%20pX%2010000%209000%208000%207000%206000%205000%204000%203000%202000%20b%20Train%20on%20SVHN%20Test%20on%20CIFAR10"
+        }
+    ]
+}

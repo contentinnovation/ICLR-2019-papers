@@ -1,0 +1,272 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "COST-SENSITIVE ROBUSTNESS AGAINST ADVERSARIAL EXAMPLES",
+        "author": "Xiao Zhang Department of Computer Science University of Virginia xz7bc@virginia.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BygANhA9tQ"
+        },
+        "abstract": "Several recent works have developed methods for training classifiers that are certifiably robust against norm-bounded adversarial perturbations. These methods assume that all the adversarial transformations are equally important, which is seldom the case in real-world applications. We advocate for cost-sensitive robustness as the criteria for measuring the classifier\u2019s performance for tasks where some adversarial transformation are more important than others. We encode the potential harm of each adversarial transformation in a cost matrix, and propose a general objective function to adapt the robust training method of <a class=\"ref-link\" id=\"cWong_2018_a\" href=\"#rWong_2018_a\">Wong & Kolter (2018</a>) to optimize for cost-sensitive robustness. Our experiments on simple MNIST and CIFAR10 models with a variety of cost matrices show that the proposed approach can produce models with substantially reduced cost-sensitive robust error, while maintaining classification accuracy."
+    },
+    "keywords": [
+        {
+            "term": "training method",
+            "url": "https://en.wikipedia.org/wiki/training_method"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "MNIST",
+            "url": "https://en.wikipedia.org/wiki/MNIST"
+        },
+        {
+            "term": "rectified linear unit",
+            "url": "https://en.wikipedia.org/wiki/rectified_linear_unit"
+        }
+    ],
+    "abbreviations": {
+        "DNNs": "deep neural networks",
+        "ReLU": "rectified linear unit"
+    },
+    "highlights": [
+        "Despite the exceptional performance of deep neural networks (DNNs) on various machine learning tasks such as malware detection (<a class=\"ref-link\" id=\"cSaxe_2015_a\" href=\"#rSaxe_2015_a\"><a class=\"ref-link\" id=\"cSaxe_2015_a\" href=\"#rSaxe_2015_a\">Saxe & Berlin, 2015</a></a>), face recognition (<a class=\"ref-link\" id=\"cParkhi_et+al_2015_a\" href=\"#rParkhi_et+al_2015_a\"><a class=\"ref-link\" id=\"cParkhi_et+al_2015_a\" href=\"#rParkhi_et+al_2015_a\">Parkhi et al, 2015</a></a>) and autonomous driving (<a class=\"ref-link\" id=\"cBojarski_et+al_2016_a\" href=\"#rBojarski_et+al_2016_a\"><a class=\"ref-link\" id=\"cBojarski_et+al_2016_a\" href=\"#rBojarski_et+al_2016_a\">Bojarski et al, 2016</a></a>), recent studies (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a></a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a></a>) have shown that deep learning models are vulnerable to misclassifying inputs, known as adversarial examples, that are crafted with targeted but visually-imperceptible perturbations",
+        "By encoding the consequences of different adversarial transformations into a cost matrix, we introduce the notion of cost-sensitive robustness (Section 3.1) as a metric to assess the expected performance of a classifier when facing adversarial examples",
+        "By focusing on overall robustness, previous robustness training methods expend a large fraction of the capacity of the network on unimportant transformations",
+        "We argue that for most scenarios, the actual harm caused by an adversarial transformation often varies depending on the seed and target class, so robust training methods should be designed to account for these differences",
+        "By incorporating a cost matrix into the training objective, we develop a general method for producing a cost-sensitive robust classifier",
+        "Our experimental results show that our cost-sensitive training method works across a variety of different types of cost matrices, so we believe it can be generalized to other cost matrix scenarios that would be found in realistic applications"
+    ],
+    "key_statements": [
+        "Despite the exceptional performance of deep neural networks (DNNs) on various machine learning tasks such as malware detection (<a class=\"ref-link\" id=\"cSaxe_2015_a\" href=\"#rSaxe_2015_a\"><a class=\"ref-link\" id=\"cSaxe_2015_a\" href=\"#rSaxe_2015_a\">Saxe & Berlin, 2015</a></a>), face recognition (<a class=\"ref-link\" id=\"cParkhi_et+al_2015_a\" href=\"#rParkhi_et+al_2015_a\"><a class=\"ref-link\" id=\"cParkhi_et+al_2015_a\" href=\"#rParkhi_et+al_2015_a\">Parkhi et al, 2015</a></a>) and autonomous driving (<a class=\"ref-link\" id=\"cBojarski_et+al_2016_a\" href=\"#rBojarski_et+al_2016_a\"><a class=\"ref-link\" id=\"cBojarski_et+al_2016_a\" href=\"#rBojarski_et+al_2016_a\">Bojarski et al, 2016</a></a>), recent studies (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a></a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a></a>) have shown that deep learning models are vulnerable to misclassifying inputs, known as adversarial examples, that are crafted with targeted but visually-imperceptible perturbations",
+        "While several defense mechanisms have been proposed and empirically demonstrated to be successful against existing particular attacks (<a class=\"ref-link\" id=\"cPapernot_et+al_2016_a\" href=\"#rPapernot_et+al_2016_a\">Papernot et al, 2016</a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a>), new attacks (<a class=\"ref-link\" id=\"cCarlini_2017_a\" href=\"#rCarlini_2017_a\">Carlini & Wagner, 2017</a>; <a class=\"ref-link\" id=\"cTramer_et+al_2018_a\" href=\"#rTramer_et+al_2018_a\">Tramer et al, 2018</a>; <a class=\"ref-link\" id=\"cAthalye_et+al_2018_a\" href=\"#rAthalye_et+al_2018_a\">Athalye et al, 2018</a>) are repeatedly found that circumvent such defenses. To end this arm race, recent works (<a class=\"ref-link\" id=\"cWong_2018_a\" href=\"#rWong_2018_a\">Wong & Kolter, 2018</a>; <a class=\"ref-link\" id=\"cRaghunathan_et+al_2018_a\" href=\"#rRaghunathan_et+al_2018_a\">Raghunathan et al, 2018</a>; Wong et al, 2018; <a class=\"ref-link\" id=\"cWang_et+al_2018_a\" href=\"#rWang_et+al_2018_a\">Wang et al, 2018</a>) propose methods to certify examples to be robust against some specific norm-bounded adversarial perturbations for given inputs and to train models to optimize for certifiable robustness",
+        "By encoding the consequences of different adversarial transformations into a cost matrix, we introduce the notion of cost-sensitive robustness (Section 3.1) as a metric to assess the expected performance of a classifier when facing adversarial examples",
+        "We evaluate the performance of our cost-sensitive robustness training method on models for two benchmark image classification datasets: MNIST (<a class=\"ref-link\" id=\"cLecun_et+al_2010_a\" href=\"#rLecun_et+al_2010_a\">LeCun et al, 2010</a>) and CIFAR10 (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky & Hinton, 2009</a>)",
+        "By focusing on overall robustness, previous robustness training methods expend a large fraction of the capacity of the network on unimportant transformations",
+        "We argue that for most scenarios, the actual harm caused by an adversarial transformation often varies depending on the seed and target class, so robust training methods should be designed to account for these differences",
+        "By incorporating a cost matrix into the training objective, we develop a general method for producing a cost-sensitive robust classifier",
+        "Our experimental results show that our cost-sensitive training method works across a variety of different types of cost matrices, so we believe it can be generalized to other cost matrix scenarios that would be found in realistic applications"
+    ],
+    "summary": [
+        "Despite the exceptional performance of deep neural networks (DNNs) on various machine learning tasks such as malware detection (<a class=\"ref-link\" id=\"cSaxe_2015_a\" href=\"#rSaxe_2015_a\"><a class=\"ref-link\" id=\"cSaxe_2015_a\" href=\"#rSaxe_2015_a\">Saxe & Berlin, 2015</a></a>), face recognition (<a class=\"ref-link\" id=\"cParkhi_et+al_2015_a\" href=\"#rParkhi_et+al_2015_a\"><a class=\"ref-link\" id=\"cParkhi_et+al_2015_a\" href=\"#rParkhi_et+al_2015_a\">Parkhi et al, 2015</a></a>) and autonomous driving (<a class=\"ref-link\" id=\"cBojarski_et+al_2016_a\" href=\"#rBojarski_et+al_2016_a\"><a class=\"ref-link\" id=\"cBojarski_et+al_2016_a\" href=\"#rBojarski_et+al_2016_a\">Bojarski et al, 2016</a></a>), recent studies (<a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\"><a class=\"ref-link\" id=\"cSzegedy_et+al_2014_a\" href=\"#rSzegedy_et+al_2014_a\">Szegedy et al, 2014</a></a>; <a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\"><a class=\"ref-link\" id=\"cGoodfellow_et+al_2015_a\" href=\"#rGoodfellow_et+al_2015_a\">Goodfellow et al, 2015</a></a></a>) have shown that deep learning models are vulnerable to misclassifying inputs, known as adversarial examples, that are crafted with targeted but visually-imperceptible perturbations.",
+        "The proposed method incorporates the specified cost matrix into the training objective function, which encourages stronger robustness guarantees on cost-sensitive class transformations, while maintaining the overall classification accuracy on the original inputs.",
+        "We provide a brief introduction on related topics, including neural network classifiers, adversarial examples, defenses with certified robustness, and cost-sensitive learning.",
+        "Our work provides a practical training method that hardens neural network classifiers with certified cost-sensitive robustness against adversarial perturbations.",
+        "According to the guaranteed lower bound, J x0, g\u03b8 on Equation 2.6 and inspired by the cost-sensitive CE loss (<a class=\"ref-link\" id=\"cKhan_et+al_2018_a\" href=\"#rKhan_et+al_2018_a\">Khan et al, 2018</a>), we propose the following robust optimization with respect to a neural network classifier f\u03b8: minimize \u03b8N",
+        "We evaluate the performance of our cost-sensitive robustness training method on models for two benchmark image classification datasets: MNIST (<a class=\"ref-link\" id=\"cLecun_et+al_2010_a\" href=\"#rLecun_et+al_2010_a\">LeCun et al, 2010</a>) and CIFAR10 (<a class=\"ref-link\" id=\"cKrizhevsky_2009_a\" href=\"#rKrizhevsky_2009_a\">Krizhevsky & Hinton, 2009</a>).",
+        "Our model achieves a substantial improvement on the cost-sensitive robustness compared with the baseline model on all of the considered tasks, with no significant increases in normal classification error.",
+        "Our classifier reduces the number of cost-sensitive adversarial examples from 198 to 12 on the single target task with digit 1 as the target class.",
+        "We tune \u03b1 for the cost-sensitive robust model on the training MNIST dataset via cross validation, and set all the other parameters the same as in the binary case.",
+        "Compared with the model trained for overall robustness (Figure 1(b)), our trained classifier achieves stronger robustness guarantees on the adversarial transformations that induce costs, especially for those with larger costs.",
+        "We train the cost-sensitive robust classifier on 80% randomly-selected training examples, and tune the regularization parameter \u03b1 according to the performance on the remaining examples as validation dataset.",
+        "Figure 5 show the overall classification and cost-sensitive robust error of our best trained model, compared with the baseline model, on the MNIST single seed task with digit 9 and CIFAR single seed task with dog as the seed class of concern, as we vary the maximum \u221e perturbation distance.",
+        "Under all the considered attack models, the proposed classifier achieves better cost-sensitive adversarial robustness than the baseline, while maintaining similar classification accuracy on original data points.",
+        "We argue that for most scenarios, the actual harm caused by an adversarial transformation often varies depending on the seed and target class, so robust training methods should be designed to account for these differences.",
+        "Our experimental results show that our cost-sensitive training method works across a variety of different types of cost matrices, so we believe it can be generalized to other cost matrix scenarios that would be found in realistic applications"
+    ],
+    "headline": "We argue that overall robustness may not be the appropriate criteria for measuring system performance in security-sensitive applications, since only certain kinds of adversarial misclassifications pose meaningful threats that provide value for potential adversaries",
+    "reference_links": [
+        {
+            "id": "Asif_et+al_2015_a",
+            "entry": "Kaiser Asif, Wei Xing, Sima Behpour, and Brian D Ziebart. Adversarial cost-sensitive classification. In 31st Conference on Uncertainty in Artificial Intelligence, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Asif%2C%20Kaiser%20Xing%2C%20Wei%20Behpour%2C%20Sima%20Ziebart%2C%20Brian%20D.%20Adversarial%20cost-sensitive%20classification%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Asif%2C%20Kaiser%20Xing%2C%20Wei%20Behpour%2C%20Sima%20Ziebart%2C%20Brian%20D.%20Adversarial%20cost-sensitive%20classification%202015"
+        },
+        {
+            "id": "Athalye_et+al_2018_a",
+            "entry": "Anish Athalye, Nicholas Carlini, and David Wagner. Obfuscated gradients give a false sense of security: Circumventing defenses to adversarial examples. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Athalye%2C%20Anish%20Carlini%2C%20Nicholas%20Wagner%2C%20David%20Obfuscated%20gradients%20give%20a%20false%20sense%20of%20security%3A%20Circumventing%20defenses%20to%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Bojarski_et+al_2016_a",
+            "entry": "Mariusz Bojarski, Davide Del Testa, Daniel Dworakowski, Bernhard Firner, Beat Flepp, Prasoon Goyal, Lawrence D. Jackel, Mathew Monfort, Urs Muller, Jiakai Zhang, Xin Zhang, Jake Zhao, and Karol Zieba. End to end learning for self-driving cars. arXiv preprint arXiv:1604.07316, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1604.07316"
+        },
+        {
+            "id": "Carlini_2017_a",
+            "entry": "Nicholas Carlini and David Wagner. Towards evaluating the robustness of neural networks. In IEEE Symposium on Security and Privacy, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Carlini%2C%20Nicholas%20Wagner%2C%20David%20Towards%20evaluating%20the%20robustness%20of%20neural%20networks%202017"
+        },
+        {
+            "id": "Dalvi_et+al_2004_a",
+            "entry": "Nilesh Dalvi, Pedro Domingos, Sumit Sanghai, Deepak Verma, et al. Adversarial classification. In 10th ACM SIGKDD Conference on Knowledge Discovery and Data Mining, 2004.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dalvi%2C%20Nilesh%20Domingos%2C%20Pedro%20Sanghai%2C%20Sumit%20Verma%2C%20Deepak%20Adversarial%20classification%202004",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dalvi%2C%20Nilesh%20Domingos%2C%20Pedro%20Sanghai%2C%20Sumit%20Verma%2C%20Deepak%20Adversarial%20classification%202004"
+        },
+        {
+            "id": "Domingos_1999_a",
+            "entry": "Pedro Domingos. Metacost: A general method for making classifiers cost-sensitive. In Fifth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Domingos%2C%20Pedro%20Metacost%3A%20A%20general%20method%20for%20making%20classifiers%20cost-sensitive%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Domingos%2C%20Pedro%20Metacost%3A%20A%20general%20method%20for%20making%20classifiers%20cost-sensitive%201999"
+        },
+        {
+            "id": "Dreossi_2018_a",
+            "entry": "Tommaso Dreossi, Somesh Jha, and Sanjit A Seshia. Semantic adversarial deep learning. In International Conference on Computer Aided Verification, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Dreossi%2C%20Tommaso%20Jha%2C%20Somesh%20and%20Sanjit%20A%20Seshia.%20Semantic%20adversarial%20deep%20learning%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Dreossi%2C%20Tommaso%20Jha%2C%20Somesh%20and%20Sanjit%20A%20Seshia.%20Semantic%20adversarial%20deep%20learning%202018"
+        },
+        {
+            "id": "Elkan_2001_a",
+            "entry": "Charles Elkan. The foundations of cost-sensitive learning. In International Joint Conference on Artificial Intelligence, 2001.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elkan%2C%20Charles%20The%20foundations%20of%20cost-sensitive%20learning%202001",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Elkan%2C%20Charles%20The%20foundations%20of%20cost-sensitive%20learning%202001"
+        },
+        {
+            "id": "Engstrom_et+al_2017_a",
+            "entry": "Logan Engstrom, Dimitris Tsipras, Ludwig Schmidt, and Aleksander Madry. A rotation and a translation suffice: Fooling CNNs with simple transformations. arXiv preprint arXiv:1712.02779, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1712.02779"
+        },
+        {
+            "id": "Goodfellow_et+al_2015_a",
+            "entry": "Ian Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing adversarial examples. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Goodfellow%2C%20Ian%20Shlens%2C%20Jonathon%20Szegedy%2C%20Christian%20Explaining%20and%20harnessing%20adversarial%20examples%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Goodfellow%2C%20Ian%20Shlens%2C%20Jonathon%20Szegedy%2C%20Christian%20Explaining%20and%20harnessing%20adversarial%20examples%202015"
+        },
+        {
+            "id": "Hein_2017_a",
+            "entry": "Matthias Hein and Maksym Andriushchenko. Formal guarantees on the robustness of a classifier against adversarial manipulation. In Advances in Neural Information Processing Systems, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hein%2C%20Matthias%20Andriushchenko%2C%20Maksym%20Formal%20guarantees%20on%20the%20robustness%20of%20a%20classifier%20against%20adversarial%20manipulation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hein%2C%20Matthias%20Andriushchenko%2C%20Maksym%20Formal%20guarantees%20on%20the%20robustness%20of%20a%20classifier%20against%20adversarial%20manipulation%202017"
+        },
+        {
+            "id": "Kanbak_et+al_2018_a",
+            "entry": "Can Kanbak, Seyed-Mohsen Moosavi-Dezfooli, and Pascal Frossard. Geometric robustness of deep networks: analysis and improvement. In Computer Vision and Pattern Recognition, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kanbak%2C%20Can%20Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Frossard%2C%20Pascal%20Geometric%20robustness%20of%20deep%20networks%3A%20analysis%20and%20improvement%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kanbak%2C%20Can%20Moosavi-Dezfooli%2C%20Seyed-Mohsen%20Frossard%2C%20Pascal%20Geometric%20robustness%20of%20deep%20networks%3A%20analysis%20and%20improvement%202018"
+        },
+        {
+            "id": "Khan_et+al_2018_a",
+            "entry": "Salman H Khan, Munawar Hayat, Mohammed Bennamoun, Ferdous A Sohel, and Roberto Togneri. Cost-sensitive learning of deep feature representations from imbalanced data. IEEE Transactions on Neural Networks and Learning Systems, 29(8):3573\u20133587, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Khan%2C%20Salman%20H.%20Hayat%2C%20Munawar%20Bennamoun%2C%20Mohammed%20Sohel%2C%20Ferdous%20A.%20Cost-sensitive%20learning%20of%20deep%20feature%20representations%20from%20imbalanced%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Khan%2C%20Salman%20H.%20Hayat%2C%20Munawar%20Bennamoun%2C%20Mohammed%20Sohel%2C%20Ferdous%20A.%20Cost-sensitive%20learning%20of%20deep%20feature%20representations%20from%20imbalanced%20data%202018"
+        },
+        {
+            "id": "Kingma_2015_a",
+            "entry": "Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kingma%2C%20Diederik%20P.%20Ba%2C%20Jimmy%20Adam%3A%20A%20method%20for%20stochastic%20optimization%202015"
+        },
+        {
+            "id": "Krizhevsky_2009_a",
+            "entry": "Alex Krizhevsky and Geoffrey Hinton. Learning multiple layers of features from tiny images. Technical report, University of Toronto, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Krizhevsky%2C%20Alex%20Hinton%2C%20Geoffrey%20Learning%20multiple%20layers%20of%20features%20from%20tiny%20images%202009"
+        },
+        {
+            "id": "Kukar_1998_a",
+            "entry": "Matjaz Kukar and Igor Kononenko. Cost-sensitive learning with neural networks. In 13th European Conference on Artificial Intelligence, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kukar%2C%20Matjaz%20Kononenko%2C%20Igor%20Cost-sensitive%20learning%20with%20neural%20networks%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kukar%2C%20Matjaz%20Kononenko%2C%20Igor%20Cost-sensitive%20learning%20with%20neural%20networks%201998"
+        },
+        {
+            "id": "Lecun_et+al_1998_a",
+            "entry": "Yann LeCun, Leon Bottou, Yoshua Bengio, and Patrick Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278\u20132324, 1998.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=LeCun%2C%20Yann%20Bottou%2C%20Leon%20Bengio%2C%20Yoshua%20Haffner%2C%20Patrick%20Gradient-based%20learning%20applied%20to%20document%20recognition%201998"
+        },
+        {
+            "id": "Lecun_et+al_2010_a",
+            "entry": "Yann LeCun, Corinna Cortes, and CJ Burges. MNIST handwritten digit database. http://yann.lecun.com/exdb/mnist, 2010.",
+            "url": "http://yann.lecun.com/exdb/mnist"
+        },
+        {
+            "id": "Liu_2006_a",
+            "entry": "Xu-Ying Liu and Zhi-Hua Zhou. The influence of class imbalance on cost-sensitive learning: An empirical study. In Sixth International Conference on Data Mining, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Liu%2C%20Xu-Ying%20Zhou%2C%20Zhi-Hua%20The%20influence%20of%20class%20imbalance%20on%20cost-sensitive%20learning%3A%20An%20empirical%20study%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Liu%2C%20Xu-Ying%20Zhou%2C%20Zhi-Hua%20The%20influence%20of%20class%20imbalance%20on%20cost-sensitive%20learning%3A%20An%20empirical%20study%202006"
+        },
+        {
+            "id": "Van_2008_a",
+            "entry": "Laurens van der Maaten and Geoffrey Hinton. Visualizing data using t-SNE. Journal of Machine Learning Research, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-SNE%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=van%20der%20Maaten%2C%20Laurens%20Hinton%2C%20Geoffrey%20Visualizing%20data%20using%20t-SNE%202008"
+        },
+        {
+            "id": "Mahloujifar_et+al_2019_a",
+            "entry": "Saeed Mahloujifar, Dimitrios I Diochnos, and Mohammad Mahmoody. The curse of concentration in robust learning: Evasion and poisoning attacks from concentration of measure. In AAAI Conference on Artificial Intelligence, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Mahloujifar%2C%20Saeed%20Diochnos%2C%20Dimitrios%20I.%20Mahmoody%2C%20Mohammad%20The%20curse%20of%20concentration%20in%20robust%20learning%3A%20Evasion%20and%20poisoning%20attacks%20from%20concentration%20of%20measure%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Mahloujifar%2C%20Saeed%20Diochnos%2C%20Dimitrios%20I.%20Mahmoody%2C%20Mohammad%20The%20curse%20of%20concentration%20in%20robust%20learning%3A%20Evasion%20and%20poisoning%20attacks%20from%20concentration%20of%20measure%202019"
+        },
+        {
+            "id": "Papernot_et+al_2016_a",
+            "entry": "Nicolas Papernot, Patrick McDaniel, Xi Wu, Somesh Jha, and Ananthram Swami. Distillation as a defense to adversarial perturbations against deep neural networks. In IEEE Symposium on Security and Privacy, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Papernot%2C%20Nicolas%20McDaniel%2C%20Patrick%20Wu%2C%20Xi%20Jha%2C%20Somesh%20Distillation%20as%20a%20defense%20to%20adversarial%20perturbations%20against%20deep%20neural%20networks%202016"
+        },
+        {
+            "id": "Parkhi_et+al_2015_a",
+            "entry": "Omkar M Parkhi, Andrea Vedaldi, and Andrew Zisserman. Deep face recognition. In British Machine Vision Conference, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parkhi%2C%20Omkar%20M.%20Vedaldi%2C%20Andrea%20Zisserman%2C%20Andrew%20Deep%20face%20recognition%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parkhi%2C%20Omkar%20M.%20Vedaldi%2C%20Andrea%20Zisserman%2C%20Andrew%20Deep%20face%20recognition%202015"
+        },
+        {
+            "id": "Raghunathan_et+al_2018_a",
+            "entry": "Aditi Raghunathan, Jacob Steinhardt, and Percy Liang. Certified defenses against adversarial examples. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Raghunathan%2C%20Aditi%20Steinhardt%2C%20Jacob%20Liang%2C%20Percy%20Certified%20defenses%20against%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Raghunathan%2C%20Aditi%20Steinhardt%2C%20Jacob%20Liang%2C%20Percy%20Certified%20defenses%20against%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Saxe_2015_a",
+            "entry": "Joshua Saxe and Konstantin Berlin. Deep neural network based malware detection using two dimensional binary program features. In 10th International Conference on Malicious and Unwanted Software, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Saxe%2C%20Joshua%20Berlin%2C%20Konstantin%20Deep%20neural%20network%20based%20malware%20detection%20using%20two%20dimensional%20binary%20program%20features%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Saxe%2C%20Joshua%20Berlin%2C%20Konstantin%20Deep%20neural%20network%20based%20malware%20detection%20using%20two%20dimensional%20binary%20program%20features%202015"
+        },
+        {
+            "id": "Sharif_et+al_2018_a",
+            "entry": "Mahmood Sharif, Lujo Bauer, and Michael K Reiter. On the suitability of lp-norms for creating and preventing adversarial examples. In CVPR Workshop on Bright and Dark Sides of Computer Vision: Challenges and Opportunities for Privacy and Security, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Sharif%2C%20Mahmood%20Bauer%2C%20Lujo%20Reiter%2C%20Michael%20K.%20On%20the%20suitability%20of%20lp-norms%20for%20creating%20and%20preventing%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Sharif%2C%20Mahmood%20Bauer%2C%20Lujo%20Reiter%2C%20Michael%20K.%20On%20the%20suitability%20of%20lp-norms%20for%20creating%20and%20preventing%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Szegedy_et+al_2014_a",
+            "entry": "Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob Fergus. Intriguing properties of neural networks. In International Conference on Learning Representations, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Szegedy%2C%20Christian%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20Bruna%2C%20Joan%20Intriguing%20properties%20of%20neural%20networks%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Szegedy%2C%20Christian%20Zaremba%2C%20Wojciech%20Sutskever%2C%20Ilya%20Bruna%2C%20Joan%20Intriguing%20properties%20of%20neural%20networks%202014"
+        },
+        {
+            "id": "Tramer_et+al_2018_a",
+            "entry": "Florian Tramer, Alexey Kurakin, Nicolas Papernot, Ian Goodfellow, Dan Boneh, and Patrick McDaniel. Ensemble adversarial training: Attacks and defenses. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tramer%2C%20Florian%20Kurakin%2C%20Alexey%20Papernot%2C%20Nicolas%20Goodfellow%2C%20Ian%20Ensemble%20adversarial%20training%3A%20Attacks%20and%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tramer%2C%20Florian%20Kurakin%2C%20Alexey%20Papernot%2C%20Nicolas%20Goodfellow%2C%20Ian%20Ensemble%20adversarial%20training%3A%20Attacks%20and%20defenses%202018"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Shiqi Wang, Kexin Pei, Justin Whitehouse, Junfeng Yang, and Suman Jana. Formal security analysis of neural networks using symbolic intervals. In USENIX Security Symposium, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wang%2C%20Shiqi%20Pei%2C%20Kexin%20Whitehouse%2C%20Justin%20Yang%2C%20Junfeng%20Formal%20security%20analysis%20of%20neural%20networks%20using%20symbolic%20intervals%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wang%2C%20Shiqi%20Pei%2C%20Kexin%20Whitehouse%2C%20Justin%20Yang%2C%20Junfeng%20Formal%20security%20analysis%20of%20neural%20networks%20using%20symbolic%20intervals%202018"
+        },
+        {
+            "id": "Wong_2018_a",
+            "entry": "Eric Wong and Zico Kolter. Provable defenses against adversarial examples via the convex outer adversarial polytope. In International Conference on Machine Learning, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Kolter%2C%20Zico%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Kolter%2C%20Zico%20Provable%20defenses%20against%20adversarial%20examples%20via%20the%20convex%20outer%20adversarial%20polytope%202018"
+        },
+        {
+            "id": "Wong_et+al_2018_b",
+            "entry": "Eric Wong, Frank Schmidt, Jan Hendrik Metzen, and J Zico Kolter. Scaling provable adversarial defenses. In Conference on Neural Information Processing Systems, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wong%2C%20Eric%20Schmidt%2C%20Frank%20Metzen%2C%20Jan%20Hendrik%20Kolter%2C%20J.Zico%20Scaling%20provable%20adversarial%20defenses%202018"
+        },
+        {
+            "id": "Xiao_et+al_2018_a",
+            "entry": "Chaowei Xiao, Jun-Yan Zhu, Bo Li, Warren He, Mingyan Liu, and Dawn Song. Spatially transformed adversarial examples. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Xiao%2C%20Chaowei%20Zhu%2C%20Jun-Yan%20Li%2C%20Bo%20He%2C%20Warren%20Spatially%20transformed%20adversarial%20examples%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Xiao%2C%20Chaowei%20Zhu%2C%20Jun-Yan%20Li%2C%20Bo%20He%2C%20Warren%20Spatially%20transformed%20adversarial%20examples%202018"
+        },
+        {
+            "id": "Zadrozny_et+al_2003_a",
+            "entry": "Bianca Zadrozny, John Langford, and Naoki Abe. Cost-sensitive learning by cost-proportionate example weighting. In Third IEEE International Conference on Data Mining, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zadrozny%2C%20Bianca%20Langford%2C%20John%20Abe%2C%20Naoki%20Cost-sensitive%20learning%20by%20cost-proportionate%20example%20weighting%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zadrozny%2C%20Bianca%20Langford%2C%20John%20Abe%2C%20Naoki%20Cost-sensitive%20learning%20by%20cost-proportionate%20example%20weighting%202003"
+        },
+        {
+            "id": "Zhou_2010_a",
+            "entry": "Zhi-Hua Zhou and Xu-Ying Liu. On multi-class cost-sensitive learning. Computational Intelligence, 26(3):232\u2013257, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhou%2C%20Zhi-Hua%20Liu%2C%20Xu-Ying%20On%20multi-class%20cost-sensitive%20learning%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhou%2C%20Zhi-Hua%20Liu%2C%20Xu-Ying%20On%20multi-class%20cost-sensitive%20learning%202010"
+        }
+    ]
+}

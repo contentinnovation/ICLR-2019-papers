@@ -1,0 +1,316 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "EFFICIENTLY TESTING LOCAL OPTIMALITY AND ESCAPING SADDLES FOR RELU NETWORKS",
+        "author": "Chulhee Yun, Suvrit Sra & Ali Jadbabaie Massachusetts Institute of Technology Cambridge, MA 02139, USA {chulheey,suvrit,jadbabai}@mit.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=HylTXn0qYX"
+        },
+        "abstract": "We provide a theoretical algorithm for checking local optimality and escaping saddles at nondifferentiable points of empirical risks of two-layer ReLU networks. Our algorithm receives any parameter value and returns: local minimum, secondorder stationary point, or a strict descent direction. The presence of M data points on the nondifferentiability of the ReLU divides the parameter space into at most 2M regions, which makes analysis difficult. By exploiting polyhedral geometry, we reduce the total computation down to one convex quadratic program (QP) for each hidden node, O(M ) (in)equality tests, and one (or a few) nonconvex QP. For the last QP, we show that our specific problem can be solved efficiently, in spite of nonconvexity. In the benign case, we solve one equality constrained QP, and we prove that projected gradient descent solves it exponentially fast. In the bad case, we have to solve a few more inequality constrained QPs, but we prove that the time complexity is exponential only in the number of inequality constraints. Our experiments show that either benign case or bad case with very few inequality constraints occurs, implying that our algorithm is efficient in most cases."
+    },
+    "keywords": [
+        {
+            "term": "descent direction",
+            "url": "https://en.wikipedia.org/wiki/descent_direction"
+        },
+        {
+            "term": "deep neural network",
+            "url": "https://en.wikipedia.org/wiki/deep_neural_network"
+        },
+        {
+            "term": "gradient descent",
+            "url": "https://en.wikipedia.org/wiki/gradient_descent"
+        },
+        {
+            "term": "inequality constraint",
+            "url": "https://en.wikipedia.org/wiki/inequality_constraint"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "linear programs",
+            "url": "https://en.wikipedia.org/wiki/linear_programs"
+        },
+        {
+            "term": "quadratic program",
+            "url": "https://en.wikipedia.org/wiki/quadratic_program"
+        },
+        {
+            "term": "local optimality",
+            "url": "https://en.wikipedia.org/wiki/local_optimality"
+        }
+    ],
+    "abbreviations": {
+        "QP": "quadratic program",
+        "SOSP": "second-order stationary point",
+        "LPs": "linear programs",
+        "ECQP": "equality constrained QP",
+        "ICQPs": "inequality constrained QPs",
+        "FOSP": "first-order stationary point",
+        "PGD": "projected gradient descent"
+    },
+    "highlights": [
+        "Empirical success of deep neural networks has sparked great interest in the theory of deep models",
+        "The biggest mystery is that deep neural networks are successfully trained by gradient-based algorithms despite their nonconvexity",
+        "With the following two lemmas, we show that the termination conditions can be efficiently tested for equality constrained QP and inequality constrained QPs",
+        "We prove that our inequality constrained QPs can be solved in O(p3 + L32L) time, which implies that as long as the number of flat extreme rays is small, the problem can still be solved in polynomial time in p",
+        "Through 280 runs, we observed that there are surprisingly many boundary data points (M ) in general, but usually there are zero or very few flat extreme rays (L). This observation suggests two important messages: (1) many local minima are on nondifferentiable points, which is the reason why our analysis is meaningful; (2) luckily, L is usually very small, so we only need to solve equality constrained QP (L = 0) or inequality constrained QPs with very small number of inequality constraints, which are solved efficiently (Lemmas 3 and 4)",
+        "The last quadratic program is equality constrained, which can be efficiently solved with projected gradient descent"
+    ],
+    "key_statements": [
+        "Empirical success of deep neural networks has sparked great interest in the theory of deep models",
+        "The biggest mystery is that deep neural networks are successfully trained by gradient-based algorithms despite their nonconvexity",
+        "The plotted function does not exactly match the definition of empirical risk we study in this paper, the figures help us understand that the empirical risk is continuous but piecewise differentiable, with affine hyperplanes on which the function is nondifferentiable",
+        "Despite NP-hardness of general quadratic program (<a class=\"ref-link\" id=\"cPardalos_1991_a\" href=\"#rPardalos_1991_a\">Pardalos & Vavasis, 1991</a>), we prove that the specific form of quadratic program in our algorithm are still tractable in most cases",
+        "In case of inequality constrained QPs, it takes O(p3 + L32L) time to solve the quadratic program, where L is the number of boundary data points that have flat extreme rays (L \u2264 M )",
+        "With the following two lemmas, we show that the termination conditions can be efficiently tested for equality constrained QP and inequality constrained QPs",
+        "We prove that our inequality constrained QPs can be solved in O(p3 + L32L) time, which implies that as long as the number of flat extreme rays is small, the problem can still be solved in polynomial time in p",
+        "Through 280 runs, we observed that there are surprisingly many boundary data points (M ) in general, but usually there are zero or very few flat extreme rays (L). This observation suggests two important messages: (1) many local minima are on nondifferentiable points, which is the reason why our analysis is meaningful; (2) luckily, L is usually very small, so we only need to solve equality constrained QP (L = 0) or inequality constrained QPs with very small number of inequality constraints, which are solved efficiently (Lemmas 3 and 4)",
+        "Despite difficulty raised by boundary data points dividing the parameter space into 2M regions, we reduced the computation to dh convex quadratic program, O(M ) equality/inequality tests, and one nonconvex quadratic program",
+        "The last quadratic program is equality constrained, which can be efficiently solved with projected gradient descent"
+    ],
+    "summary": [
+        "Empirical success of deep neural networks has sparked great interest in the theory of deep models.",
+        "We provide a theoretical algorithm that tests second-order stationarity for any point of the loss surface.",
+        "Due to the constraint g(z, \u03b7)T \u03b7 = 0, the second-order test requires solving constrained nonconvex QPs. In case where there is no flat extreme ray, we need to solve only one equality constrained QP (ECQP).",
+        "In case of ICQPs, it takes O(p3 + L32L) time to solve the QP, where L is the number of boundary data points that have flat extreme rays (L \u2264 M ).",
+        "Extreme rays of a pointed polyhedral cone in Rdx+1 are computed from dx linearly independent active constraints.",
+        "If the inequality holds with equality, it means this is a flat extreme ray, and it needs to be checked in second-order test, so we save this extreme ray for future use.",
+        "Presence of flat extreme rays introduce inequality constraints in the QP that we solve in the second-order test.",
+        "Given its input {\u03c3i,k}k\u2208[dh],i\u2208Bk , it defines fixed \u201cJacobian\u201d matrices Ji for all data points and equality/inequality constraints for boundary data points, and solves the QP of the following form: minimize\u03b7 subject to i\u2207",
+        "After running Adam, for each k \u2208 [dh], we counted the number of approximate boundary data points satisfying |[W1xi + b1]k| < 10\u22125, which gives an estimate of Mk. for these points, we solved the QP (2) using L-BFGS-B (<a class=\"ref-link\" id=\"cByrd_et+al_1995_a\" href=\"#rByrd_et+al_1995_a\">Byrd et al, 1995</a>), to check if the terminated points are FOSPs. We could see that the optimal values of (2) are close to zero (\u2264 10\u22126 typically, \u2264 10\u22123 for largest problems).",
+        "Through 280 runs, we observed that there are surprisingly many boundary data points (M ) in general, but usually there are zero or very few flat extreme rays (L).",
+        "This observation suggests two important messages: (1) many local minima are on nondifferentiable points, which is the reason why our analysis is meaningful; (2) luckily, L is usually very small, so we only need to solve ECQPs (L = 0) or ICQPs with very small number of inequality constraints, which are solved efficiently (Lemmas 3 and 4).",
+        "We provided a theoretical algorithm that tests second-order stationarity and escapes saddle points, for any points of empirical risk of shallow ReLU-like networks.",
+        "Despite difficulty raised by boundary data points dividing the parameter space into 2M regions, we reduced the computation to dh convex QPs, O(M ) equality/inequality tests, and one nonconvex QP."
+    ],
+    "headline": "We provide a theoretical algorithm for checking local optimality and escaping saddles at nondifferentiable points of empirical risks of two-layer ReLU networks",
+    "reference_links": [
+        {
+            "id": "Allen-Zhu_et+al_2018_a",
+            "entry": "Zeyuan Allen-Zhu, Yuanzhi Li, and Zhao Song. A convergence theory for deep learning via overparameterization. arXiv preprint arXiv:1811.03962, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1811.03962"
+        },
+        {
+            "id": "Baldi_1989_a",
+            "entry": "Pierre Baldi and Kurt Hornik. Neural networks and principal component analysis: Learning from examples without local minima. Neural networks, 2(1):53\u201358, 1989.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baldi%2C%20Pierre%20Hornik%2C%20Kurt%20Neural%20networks%20and%20principal%20component%20analysis%3A%20Learning%20from%20examples%20without%20local%20minima%201989",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baldi%2C%20Pierre%20Hornik%2C%20Kurt%20Neural%20networks%20and%20principal%20component%20analysis%3A%20Learning%20from%20examples%20without%20local%20minima%201989"
+        },
+        {
+            "id": "Blum_1988_a",
+            "entry": "Avrim Blum and Ronald L Rivest. Training a 3-node neural network is NP-complete. In Proceedings of the 1st International Conference on Neural Information Processing Systems, pp. 494\u2013501. MIT Press, 1988.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Blum%2C%20Avrim%20Rivest%2C%20Ronald%20L.%20Training%20a%203-node%20neural%20network%20is%20NP-complete%201988",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Blum%2C%20Avrim%20Rivest%2C%20Ronald%20L.%20Training%20a%203-node%20neural%20network%20is%20NP-complete%201988"
+        },
+        {
+            "id": "Borwein_2010_a",
+            "entry": "Jonathan Borwein and Adrian S Lewis. Convex analysis and nonlinear optimization: theory and examples. Springer Science & Business Media, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Borwein%2C%20Jonathan%20Lewis%2C%20Adrian%20S.%20Convex%20analysis%20and%20nonlinear%20optimization%3A%20theory%20and%20examples%202010"
+        },
+        {
+            "id": "Brutzkus_2017_a",
+            "entry": "Alon Brutzkus and Amir Globerson. Globally optimal gradient descent for a ConvNet with gaussian inputs. In International Conference on Machine Learning, pp. 605\u2013614, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brutzkus%2C%20Alon%20Globerson%2C%20Amir%20Globally%20optimal%20gradient%20descent%20for%20a%20ConvNet%20with%20gaussian%20inputs%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brutzkus%2C%20Alon%20Globerson%2C%20Amir%20Globally%20optimal%20gradient%20descent%20for%20a%20ConvNet%20with%20gaussian%20inputs%202017"
+        },
+        {
+            "id": "Brutzkus_et+al_2018_a",
+            "entry": "Alon Brutzkus, Amir Globerson, Eran Malach, and Shai Shalev-Shwartz. SGD learns overparameterized networks that provably generalize on linearly separable data. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Brutzkus%2C%20Alon%20Globerson%2C%20Amir%20Malach%2C%20Eran%20Shalev-Shwartz%2C%20Shai%20SGD%20learns%20overparameterized%20networks%20that%20provably%20generalize%20on%20linearly%20separable%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Brutzkus%2C%20Alon%20Globerson%2C%20Amir%20Malach%2C%20Eran%20Shalev-Shwartz%2C%20Shai%20SGD%20learns%20overparameterized%20networks%20that%20provably%20generalize%20on%20linearly%20separable%20data%202018"
+        },
+        {
+            "id": "Byrd_et+al_1995_a",
+            "entry": "Richard H Byrd, Peihuang Lu, Jorge Nocedal, and Ciyou Zhu. A limited memory algorithm for bound constrained optimization. SIAM Journal on Scientific Computing, 16(5):1190\u20131208, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Byrd%2C%20Richard%20H.%20Lu%2C%20Peihuang%20Nocedal%2C%20Jorge%20Zhu%2C%20Ciyou%20A%20limited%20memory%20algorithm%20for%20bound%20constrained%20optimization%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Byrd%2C%20Richard%20H.%20Lu%2C%20Peihuang%20Nocedal%2C%20Jorge%20Zhu%2C%20Ciyou%20A%20limited%20memory%20algorithm%20for%20bound%20constrained%20optimization%201995"
+        },
+        {
+            "id": "Carmon_et+al_2016_a",
+            "entry": "Yair Carmon, John C Duchi, Oliver Hinder, and Aaron Sidford. Accelerated methods for non-convex optimization. arXiv preprint arXiv:1611.00756, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.00756"
+        },
+        {
+            "id": "Clarke_et+al_2008_a",
+            "entry": "Francis H Clarke, Yuri S Ledyaev, Ronald J Stern, and Peter R Wolenski. Nonsmooth analysis and control theory, volume 178. Springer Science & Business Media, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Clarke%2C%20Francis%20H.%20Ledyaev%2C%20Yuri%20S.%20Stern%2C%20Ronald%20J.%20Wolenski%2C%20Peter%20R.%20Nonsmooth%20analysis%20and%20control%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Clarke%2C%20Francis%20H.%20Ledyaev%2C%20Yuri%20S.%20Stern%2C%20Ronald%20J.%20Wolenski%2C%20Peter%20R.%20Nonsmooth%20analysis%20and%20control%202008"
+        },
+        {
+            "id": "Du_et+al_0000_a",
+            "entry": "Simon S Du, Jason D Lee, Haochuan Li, Liwei Wang, and Xiyu Zhai. Gradient descent finds global minima of deep neural networks. arXiv preprint arXiv:1811.03804, 2018a.",
+            "arxiv_url": "https://arxiv.org/pdf/1811.03804"
+        },
+        {
+            "id": "Du_et+al_2018_a",
+            "entry": "Simon S Du, Jason D Lee, Yuandong Tian, Aarti Singh, and Barnabas Poczos. Gradient descent learns one-hidden-layer CNN: Dont be afraid of spurious local minima. In International Conference on Machine Learning, pp. 1338\u20131347, 2018b.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Du%2C%20Simon%20S.%20Lee%2C%20Jason%20D.%20Tian%2C%20Yuandong%20Singh%2C%20Aarti%20Gradient%20descent%20learns%20one-hidden-layer%20CNN%3A%20Dont%20be%20afraid%20of%20spurious%20local%20minima%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Du%2C%20Simon%20S.%20Lee%2C%20Jason%20D.%20Tian%2C%20Yuandong%20Singh%2C%20Aarti%20Gradient%20descent%20learns%20one-hidden-layer%20CNN%3A%20Dont%20be%20afraid%20of%20spurious%20local%20minima%202018"
+        },
+        {
+            "id": "Du_et+al_0000_b",
+            "entry": "Simon S Du, Xiyu Zhai, Barnabas Poczos, and Aarti Singh. Gradient descent provably optimizes over-parameterized neural networks. arXiv preprint arXiv:1810.02054, 2018c.",
+            "arxiv_url": "https://arxiv.org/pdf/1810.02054"
+        },
+        {
+            "id": "Hiriart-Urruty_2010_a",
+            "entry": "J-B Hiriart-Urruty and Alberto Seeger. A variational approach to copositive matrices. SIAM review, 52(4):593\u2013629, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hiriart-Urruty%2C%20J.-B.%20Seeger%2C%20Alberto%20A%20variational%20approach%20to%20copositive%20matrices%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Hiriart-Urruty%2C%20J.-B.%20Seeger%2C%20Alberto%20A%20variational%20approach%20to%20copositive%20matrices%202010"
+        },
+        {
+            "id": "Kawaguchi_2016_a",
+            "entry": "Kenji Kawaguchi. Deep learning without poor local minima. In Advances in Neural Information Processing Systems, pp. 586\u2013594, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kawaguchi%2C%20Kenji%20Deep%20learning%20without%20poor%20local%20minima%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kawaguchi%2C%20Kenji%20Deep%20learning%20without%20poor%20local%20minima%202016"
+        },
+        {
+            "id": "Kingma_2014_a",
+            "entry": "Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1412.6980"
+        },
+        {
+            "id": "Laurent_2018_a",
+            "entry": "Thomas Laurent and James Brecht. The multilinear structure of ReLU networks. In International Conference on Machine Learning, pp. 2914\u20132922, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Laurent%2C%20Thomas%20Brecht%2C%20James%20The%20multilinear%20structure%20of%20ReLU%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Laurent%2C%20Thomas%20Brecht%2C%20James%20The%20multilinear%20structure%20of%20ReLU%20networks%202018"
+        },
+        {
+            "id": "Lee_et+al_2016_a",
+            "entry": "Jason D Lee, Max Simchowitz, Michael I Jordan, and Benjamin Recht. Gradient descent only converges to minimizers. In Conference on Learning Theory, pp. 1246\u20131257, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lee%2C%20Jason%20D.%20Simchowitz%2C%20Max%20Jordan%2C%20Michael%20I.%20Recht%2C%20Benjamin%20Gradient%20descent%20only%20converges%20to%20minimizers%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lee%2C%20Jason%20D.%20Simchowitz%2C%20Max%20Jordan%2C%20Michael%20I.%20Recht%2C%20Benjamin%20Gradient%20descent%20only%20converges%20to%20minimizers%202016"
+        },
+        {
+            "id": "Li_2018_a",
+            "entry": "Yuanzhi Li and Yingyu Liang. Learning overparameterized neural networks via stochastic gradient descent on structured data. In Advances in Neural Information Processing Systems, pp. 8168\u2013 8177, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yuanzhi%20Liang%2C%20Yingyu%20Learning%20overparameterized%20neural%20networks%20via%20stochastic%20gradient%20descent%20on%20structured%20data%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yuanzhi%20Liang%2C%20Yingyu%20Learning%20overparameterized%20neural%20networks%20via%20stochastic%20gradient%20descent%20on%20structured%20data%202018"
+        },
+        {
+            "id": "Li_2017_a",
+            "entry": "Yuanzhi Li and Yang Yuan. Convergence analysis of two-layer neural networks with ReLU activation. In Advances in Neural Information Processing Systems, pp. 597\u2013607, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Li%2C%20Yuanzhi%20Yuan%2C%20Yang%20Convergence%20analysis%20of%20two-layer%20neural%20networks%20with%20ReLU%20activation%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Li%2C%20Yuanzhi%20Yuan%2C%20Yang%20Convergence%20analysis%20of%20two-layer%20neural%20networks%20with%20ReLU%20activation%202017"
+        },
+        {
+            "id": "Martin_1981_a",
+            "entry": "Duncan Henry Martin and David Harris Jacobson. Copositive matrices and definiteness of quadratic forms subject to homogeneous linear inequality constraints. Linear Algebra and its Applications, 35:227\u2013258, 1981.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Martin%2C%20Duncan%20Henry%20Jacobson%2C%20David%20Harris%20Copositive%20matrices%20and%20definiteness%20of%20quadratic%20forms%20subject%20to%20homogeneous%20linear%20inequality%20constraints%201981",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Martin%2C%20Duncan%20Henry%20Jacobson%2C%20David%20Harris%20Copositive%20matrices%20and%20definiteness%20of%20quadratic%20forms%20subject%20to%20homogeneous%20linear%20inequality%20constraints%201981"
+        },
+        {
+            "id": "Murty_1987_a",
+            "entry": "Katta G Murty and Santosh N Kabadi. Some NP-complete problems in quadratic and nonlinear programming. Mathematical programming, 39(2):117\u2013129, 1987.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Murty%2C%20Katta%20G.%20Kabadi%2C%20Santosh%20N.%20Some%20NP-complete%20problems%20in%20quadratic%20and%20nonlinear%20programming%201987",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Murty%2C%20Katta%20G.%20Kabadi%2C%20Santosh%20N.%20Some%20NP-complete%20problems%20in%20quadratic%20and%20nonlinear%20programming%201987"
+        },
+        {
+            "id": "Nguyen_2017_a",
+            "entry": "Quynh Nguyen and Matthias Hein. The loss surface of deep and wide neural networks. In Proceedings of the 34th International Conference on Machine Learning, volume 70, pp. 2603\u20132612, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20Quynh%20Hein%2C%20Matthias%20The%20loss%20surface%20of%20deep%20and%20wide%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Quynh%20Hein%2C%20Matthias%20The%20loss%20surface%20of%20deep%20and%20wide%20neural%20networks%202017"
+        },
+        {
+            "id": "Nguyen_2018_a",
+            "entry": "Quynh Nguyen and Matthias Hein. Optimization landscape and expressivity of deep CNNs. In International Conference on Machine Learning, pp. 3727\u20133736, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Nguyen%2C%20Quynh%20Hein%2C%20Matthias%20Optimization%20landscape%20and%20expressivity%20of%20deep%20CNNs%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Nguyen%2C%20Quynh%20Hein%2C%20Matthias%20Optimization%20landscape%20and%20expressivity%20of%20deep%20CNNs%202018"
+        },
+        {
+            "id": "Pardalos_1991_a",
+            "entry": "Panos M Pardalos and Stephen A Vavasis. Quadratic programming with one negative eigenvalue is NP-hard. Journal of Global Optimization, 1(1):15\u201322, 1991.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pardalos%2C%20Panos%20M.%20Vavasis%2C%20Stephen%20A.%20Quadratic%20programming%20with%20one%20negative%20eigenvalue%20is%20NP-hard%201991",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pardalos%2C%20Panos%20M.%20Vavasis%2C%20Stephen%20A.%20Quadratic%20programming%20with%20one%20negative%20eigenvalue%20is%20NP-hard%201991"
+        },
+        {
+            "id": "Reddi_et+al_2017_a",
+            "entry": "Sashank J Reddi, Manzil Zaheer, Suvrit Sra, Barnabas Poczos, Francis Bach, Ruslan Salakhutdinov, and Alexander J Smola. A generic approach for escaping saddle points. arXiv preprint arXiv:1709.01434, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1709.01434"
+        },
+        {
+            "id": "Safran_2018_a",
+            "entry": "Itay Safran and Ohad Shamir. Spurious local minima are common in two-layer ReLU neural networks. In International Conference on Machine Learning, pp. 4430\u20134438, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Safran%2C%20Itay%20Shamir%2C%20Ohad%20Spurious%20local%20minima%20are%20common%20in%20two-layer%20ReLU%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Safran%2C%20Itay%20Shamir%2C%20Ohad%20Spurious%20local%20minima%20are%20common%20in%20two-layer%20ReLU%20neural%20networks%202018"
+        },
+        {
+            "id": "Seeger_1999_a",
+            "entry": "Alberto Seeger. Eigenvalue analysis of equilibrium processes defined by linear complementarity conditions. Linear Algebra and its Applications, 292(1-3):1\u201314, 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Seeger%2C%20Alberto%20Eigenvalue%20analysis%20of%20equilibrium%20processes%20defined%20by%20linear%20complementarity%20conditions%201999",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Seeger%2C%20Alberto%20Eigenvalue%20analysis%20of%20equilibrium%20processes%20defined%20by%20linear%20complementarity%20conditions%201999"
+        },
+        {
+            "id": "Shamir_2018_a",
+            "entry": "Ohad Shamir. Are ResNets provably better than linear predictors? In Advances in Neural Information Processing Systems, pp. 505\u2013514, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Shamir%2C%20Ohad%20Are%20ResNets%20provably%20better%20than%20linear%20predictors%3F%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Shamir%2C%20Ohad%20Are%20ResNets%20provably%20better%20than%20linear%20predictors%3F%202018"
+        },
+        {
+            "id": "Soltanolkotabi_2007_a",
+            "entry": "Mahdi Soltanolkotabi. Learning ReLUs via gradient descent. In Advances in Neural Information Processing Systems, pp. 2007\u20132017, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Soltanolkotabi%2C%20Mahdi%20Learning%20ReLUs%20via%20gradient%20descent%202007",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Soltanolkotabi%2C%20Mahdi%20Learning%20ReLUs%20via%20gradient%20descent%202007"
+        },
+        {
+            "id": "Soudry_2016_a",
+            "entry": "Daniel Soudry and Yair Carmon. No bad local minima: Data independent training error guarantees for multilayer neural networks. arXiv preprint arXiv:1605.08361, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1605.08361"
+        },
+        {
+            "id": "Tian_2017_a",
+            "entry": "Yuandong Tian. An analytical formula of population gradient for two-layered ReLU network and its applications in convergence and critical point analysis. In International Conference on Machine Learning, pp. 3404\u20133413, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tian%2C%20Yuandong%20An%20analytical%20formula%20of%20population%20gradient%20for%20two-layered%20ReLU%20network%20and%20its%20applications%20in%20convergence%20and%20critical%20point%20analysis%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tian%2C%20Yuandong%20An%20analytical%20formula%20of%20population%20gradient%20for%20two-layered%20ReLU%20network%20and%20its%20applications%20in%20convergence%20and%20critical%20point%20analysis%202017"
+        },
+        {
+            "id": "Wang_et+al_2018_a",
+            "entry": "Gang Wang, Georgios B Giannakis, and Jie Chen. Learning ReLU networks on linearly separable data: Algorithm, optimality, and generalization. arXiv preprint arXiv:1808.04685, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1808.04685"
+        },
+        {
+            "id": "Wu_et+al_2018_a",
+            "entry": "Chenwei Wu, Jiajun Luo, and Jason D Lee. No spurious local minima in a two hidden unit ReLU network. In International Conference on Learning Representations Workshop, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Wu%2C%20Chenwei%20Luo%2C%20Jiajun%20Lee%2C%20Jason%20D.%20No%20spurious%20local%20minima%20in%20a%20two%20hidden%20unit%20ReLU%20network%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Wu%2C%20Chenwei%20Luo%2C%20Jiajun%20Lee%2C%20Jason%20D.%20No%20spurious%20local%20minima%20in%20a%20two%20hidden%20unit%20ReLU%20network%202018"
+        },
+        {
+            "id": "Yu_1995_a",
+            "entry": "Xiao-Hu Yu and Guo-An Chen. On the local minima free condition of backpropagation learning. IEEE Transactions on Neural Networks, 6(5):1300\u20131303, 1995.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yu%2C%20Xiao-Hu%20Chen%2C%20Guo-An%20On%20the%20local%20minima%20free%20condition%20of%20backpropagation%20learning%201995",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yu%2C%20Xiao-Hu%20Chen%2C%20Guo-An%20On%20the%20local%20minima%20free%20condition%20of%20backpropagation%20learning%201995"
+        },
+        {
+            "id": "Yun_et+al_2018_a",
+            "entry": "Chulhee Yun, Suvrit Sra, and Ali Jadbabaie. Global optimality conditions for deep neural networks. In International Conference on Learning Representations, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yun%2C%20Chulhee%20Sra%2C%20Suvrit%20Jadbabaie%2C%20Ali%20Global%20optimality%20conditions%20for%20deep%20neural%20networks%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yun%2C%20Chulhee%20Sra%2C%20Suvrit%20Jadbabaie%2C%20Ali%20Global%20optimality%20conditions%20for%20deep%20neural%20networks%202018"
+        },
+        {
+            "id": "Yun_et+al_2019_a",
+            "entry": "Chulhee Yun, Suvrit Sra, and Ali Jadbabaie. Small nonlinearities in activation functions create bad local minima in neural networks. In International Conference on Learning Representations, 2019.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yun%2C%20Chulhee%20Sra%2C%20Suvrit%20Jadbabaie%2C%20Ali%20Small%20nonlinearities%20in%20activation%20functions%20create%20bad%20local%20minima%20in%20neural%20networks%202019",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yun%2C%20Chulhee%20Sra%2C%20Suvrit%20Jadbabaie%2C%20Ali%20Small%20nonlinearities%20in%20activation%20functions%20create%20bad%20local%20minima%20in%20neural%20networks%202019"
+        },
+        {
+            "id": "Zhang_et+al_2018_a",
+            "entry": "Xiao Zhang, Yaodong Yu, Lingxiao Wang, and Quanquan Gu. Learning one-hidden-layer ReLU networks via gradient descent. arXiv preprint arXiv:1806.07808, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1806.07808"
+        },
+        {
+            "id": "Zhong_et+al_2017_a",
+            "entry": "Kai Zhong, Zhao Song, Prateek Jain, Peter L Bartlett, and Inderjit S Dhillon. Recovery guarantees for one-hidden-layer neural networks. In International Conference on Machine Learning, pp. 4140\u20134149, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Zhong%2C%20Kai%20Song%2C%20Zhao%20Jain%2C%20Prateek%20Bartlett%2C%20Peter%20L.%20Recovery%20guarantees%20for%20one-hidden-layer%20neural%20networks%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Zhong%2C%20Kai%20Song%2C%20Zhao%20Jain%2C%20Prateek%20Bartlett%2C%20Peter%20L.%20Recovery%20guarantees%20for%20one-hidden-layer%20neural%20networks%202017"
+        },
+        {
+            "id": "Zhou_et+al_2018_a",
+            "entry": "Published as a conference paper at ICLR 2019 Yi Zhou and Yingbin Liang. Critical points of neural networks: Analytical forms and landscape properties. In International Conference on Learning Representations, 2018. Yi Zhou, Junjie Yang, Huishuai Zhang, Yingbin Liang, and Vahid Tarokh. SGD converges to global minimum in deep learning via star-convex path. In International Conference on Learning Representations, 2019. Difan Zou, Yuan Cao, Dongruo Zhou, and Quanquan Gu. Stochastic gradient descent optimizes over-parameterized deep ReLU networks. arXiv preprint arXiv:1811.08888, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1811.08888"
+        }
+    ]
+}

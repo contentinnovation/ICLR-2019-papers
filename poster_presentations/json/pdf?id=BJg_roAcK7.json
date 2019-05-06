@@ -1,0 +1,276 @@
+{
+    "filename": "pdf.pdf",
+    "metadata": {
+        "title": "INVASE: INSTANCE-WISE VARIABLE SELECTION USING NEURAL NETWORKS",
+        "author": "Jinsung Yoon Department of Electrical and Computer Engineering UCLA, California, USA jsyoon0823@g.ucla.edu",
+        "date": 2019,
+        "identifiers": {
+            "url": "https://openreview.net/pdf?id=BJg_roAcK7"
+        },
+        "abstract": "The advent of big data brings with it data with more and more dimensions and thus a growing need to be able to efficiently select which features to use for a variety of problems. While global feature selection has been a well-studied problem for quite some time, only recently has the paradigm of instance-wise feature selection been developed. In this paper, we propose a new instance-wise feature selection method, which we term INVASE. INVASE consists of 3 neural networks, a selector network, a predictor network and a baseline network which are used to train the selector network using the actor-critic methodology. Using this methodology, INVASE is capable of flexibly discovering feature subsets of a different size for each instance, which is a key limitation of existing state-of-the-art methods. We demonstrate through a mixture of synthetic and real data experiments that INVASE significantly outperforms state-of-the-art benchmarks."
+    },
+    "keywords": [
+        {
+            "term": "false discovery rate",
+            "url": "https://en.wikipedia.org/wiki/false_discovery_rate"
+        },
+        {
+            "term": "heart failure",
+            "url": "https://en.wikipedia.org/wiki/heart_failure"
+        },
+        {
+            "term": "high dimensional",
+            "url": "https://en.wikipedia.org/wiki/high_dimensional"
+        },
+        {
+            "term": "machine learning",
+            "url": "https://en.wikipedia.org/wiki/machine_learning"
+        },
+        {
+            "term": "variable selection",
+            "url": "https://en.wikipedia.org/wiki/variable_selection"
+        },
+        {
+            "term": "true positive rate",
+            "url": "https://en.wikipedia.org/wiki/true_positive_rate"
+        },
+        {
+            "term": "neural network",
+            "url": "https://en.wikipedia.org/wiki/neural_network"
+        },
+        {
+            "term": "predictive model",
+            "url": "https://en.wikipedia.org/wiki/predictive_model"
+        }
+    ],
+    "abbreviations": {
+        "SCFS": "Sequential Correlation Feature Selection",
+        "TPR": "true positive rate",
+        "FDR": "false discovery rate",
+        "w/o FS": "without any feature selections",
+        "ONR": "of Naval Research"
+    },
+    "highlights": [
+        "High-dimensional data is becoming more readily available, and it brings with it a growing need to be able to efficiently select which features to use for a variety of problems",
+        "It is well known that using too many variables with too few samples can lead to overfitting, which can significantly hinder the performance of predictive models",
+        "In this paper we propose a novel instance-wise feature selection method, INVASE (INstance-wise VAriable SElection), which attempts to learn which subset of the features is relevant for each sample, allowing us to display the minimal information required to explain each prediction and to reduce overfitting of predictive models",
+        "We show significant improvements over the state-of-the-art in both synthetic data and real-word data in terms of true positive rates, false discovery rates, and show better predictive performance with respect to several prediction metrics",
+        "In Table 2 we report the group specific false discovery rate and true positive rate on Syn4 and Syn5 when setting k = 3, 4, 5, where Group 1 refers to samples with X11 < 0 and Group 2 to samples with X11 \u2265 0",
+        "We cannot use true positive rate and false discovery rate to evaluate the performance on real data"
+    ],
+    "key_statements": [
+        "High-dimensional data is becoming more readily available, and it brings with it a growing need to be able to efficiently select which features to use for a variety of problems",
+        "It is well known that using too many variables with too few samples can lead to overfitting, which can significantly hinder the performance of predictive models",
+        "In this paper we propose a novel instance-wise feature selection method, INVASE (INstance-wise VAriable SElection), which attempts to learn which subset of the features is relevant for each sample, allowing us to display the minimal information required to explain each prediction and to reduce overfitting of predictive models",
+        "We show significant improvements over the state-of-the-art in both synthetic data and real-word data in terms of true positive rates, false discovery rates, and show better predictive performance with respect to several prediction metrics",
+        "The results for Syn4, Syn5 and Syn6 demonstrate that INVASE is capable of detecting a different number of relevant features for each sample when necessary - the performance improvement over L2X is greater in Syn4 and Syn5 than Syn6",
+        "In Table 2 we report the group specific false discovery rate and true positive rate on Syn4 and Syn5 when setting k = 3, 4, 5, where Group 1 refers to samples with X11 < 0 and Group 2 to samples with X11 \u2265 0",
+        "We cannot use true positive rate and false discovery rate to evaluate the performance on real data"
+    ],
+    "summary": [
+        "High-dimensional data is becoming more readily available, and it brings with it a growing need to be able to efficiently select which features to use for a variety of problems.",
+        "Understanding which features are most relevant to an outcome or to a model output is an important first step in improving predictions and interpretability and many works exist that tackle feature selection on a global level.",
+        "Instance-wise feature selection methods such as [4; 27] instead try to discover the features that are relevant for each sample.",
+        "We propose a novel instance-wise feature selection method which we term INVASE.",
+        "Our model is capable of discovering a different number of relevant variables for each sample which is a key limitation in existing instance-wise approaches.",
+        "These global selection methods are not capable of learning sample-specific relevance.",
+        "The actor-critic methodology used in our model has no such limitations and so we are able to flexibly select a different number of relevant variables for each sample and instead induce sparsity using an l0 penalty term.",
+        "For each method we try to find the top k relevant features for each sample, note, that k is not given as an input to INVASE.",
+        "The poor performance of some global feature selection methods in Syn1, Syn2 and Syn3 is due to the non-linearity of the relationship between features and labels, further details can be found in the Appendix.",
+        "The results for Syn4, Syn5 and Syn6 demonstrate that INVASE is capable of detecting a different number of relevant features for each sample when necessary - the performance improvement over L2X is greater in Syn4 and Syn5 than Syn6.",
+        "For k = 3 in Syn4, we see that INVASE and L2X have comparable FDR in Group 1, since the total number of relevant features for each sample is 3 (X1, X2, X11).",
+        "We first perform feature selection and train a 3-layer fully connected network with Batch Normalization [<a class=\"ref-link\" id=\"c12\" href=\"#r12\">12</a>] in every layer to perform predictions on top of the data.",
+        "Even though we include Batch Normalization to avoid overfitting, with a small number of samples and high number of dimensions, the 3-layer fully connected network still suffers from overfitting as demonstrated by the significant difference in performance between w/o FS and with Global.",
+        "The first experiment we carried out was to create semi-synthetic datasets by using the labelling procedures Syn1-6 from above but with the features coming from real data.",
+        "Evaluating the performance of feature selection methods on real data is difficult, since ground truth relevance is often not known."
+    ],
+    "headline": "We propose a new instance-wise feature selection method, which we term INVASE",
+    "reference_links": [
+        {
+            "id": "1",
+            "entry": "[1] Sebastian Bach, Alexander Binder, Gregoire Montavon, Frederick Klauschen, Klaus-Robert Muller, and Wojciech Samek. On pixel-wise explanations for non-linear classifier decisions by layer-wise relevance propagation. PloS one, 10(7):e0130140, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Bach%2C%20Sebastian%20Binder%2C%20Alexander%20Montavon%2C%20Gregoire%20Klauschen%2C%20Frederick%20On%20pixel-wise%20explanations%20for%20non-linear%20classifier%20decisions%20by%20layer-wise%20relevance%20propagation%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Bach%2C%20Sebastian%20Binder%2C%20Alexander%20Montavon%2C%20Gregoire%20Klauschen%2C%20Frederick%20On%20pixel-wise%20explanations%20for%20non-linear%20classifier%20decisions%20by%20layer-wise%20relevance%20propagation%202015"
+        },
+        {
+            "id": "2",
+            "entry": "[2] David Baehrens, Timon Schroeter, Stefan Harmeling, Motoaki Kawanabe, Katja Hansen, and Klaus-Robert MAzller. How to explain individual classification decisions. Journal of Machine Learning Research, 11(Jun):1803\u20131831, 2010.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Baehrens%2C%20David%20Schroeter%2C%20Timon%20Harmeling%2C%20Stefan%20Kawanabe%2C%20Motoaki%20and%20Klaus-Robert%20MAzller.%20How%20to%20explain%20individual%20classification%20decisions%202010",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Baehrens%2C%20David%20Schroeter%2C%20Timon%20Harmeling%2C%20Stefan%20Kawanabe%2C%20Motoaki%20and%20Klaus-Robert%20MAzller.%20How%20to%20explain%20individual%20classification%20decisions%202010"
+        },
+        {
+            "id": "3",
+            "entry": "[3] Emmanuel Candes, Yingying Fan, Lucas Janson, and Jinchi Lv. Panning for gold: Model-free knockoffs for high-dimensional controlled variable selection. arXiv preprint arXiv:1610.02351, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1610.02351"
+        },
+        {
+            "id": "4",
+            "entry": "[4] Jianbo Chen, Le Song, Martin J Wainwright, and Michael I Jordan. Learning to explain: An information-theoretic perspective on model interpretation. arXiv preprint arXiv:1802.07814, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.07814"
+        },
+        {
+            "id": "5",
+            "entry": "[5] Anupam Datta, Shayak Sen, and Yair Zick. Algorithmic transparency via quantitative input influence: Theory and experiments with learning systems. In Security and Privacy (SP), 2016 IEEE Symposium on, pp. 598\u2013617. IEEE, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Datta%2C%20Anupam%20Sen%2C%20Shayak%20Zick%2C%20Yair%20Algorithmic%20transparency%20via%20quantitative%20input%20influence%3A%20Theory%20and%20experiments%20with%20learning%20systems%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Datta%2C%20Anupam%20Sen%2C%20Shayak%20Zick%2C%20Yair%20Algorithmic%20transparency%20via%20quantitative%20input%20influence%3A%20Theory%20and%20experiments%20with%20learning%20systems%202016"
+        },
+        {
+            "id": "6",
+            "entry": "[6] Jeremy Elson, John JD Douceur, Jon Howell, and Jared Saul. Asirra: a captcha that exploits interest-aligned manual image categorization. 2007.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Elson%2C%20Jeremy%20Douceur%2C%20John%20J.D.%20Howell%2C%20Jon%20Saul%2C%20Jared%20Asirra%3A%20a%20captcha%20that%20exploits%20interest-aligned%20manual%20image%20categorization%202007"
+        },
+        {
+            "id": "7",
+            "entry": "[7] Pierre Geurts, Damien Ernst, and Louis Wehenkel. Extremely randomized trees. Machine learning, 63(1):3\u201342, 2006.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Geurts%2C%20Pierre%20Ernst%2C%20Damien%20Wehenkel%2C%20Louis%20Extremely%20randomized%20trees%202006",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Geurts%2C%20Pierre%20Ernst%2C%20Damien%20Wehenkel%2C%20Louis%20Extremely%20randomized%20trees%202006"
+        },
+        {
+            "id": "8",
+            "entry": "[8] John K Gohagan, Philip C Prorok, Richard B Hayes, and Barnett-S Kramer. The prostate, lung, colorectal and ovarian (plco) cancer screening trial of the national cancer institute: history, organization, and status. Controlled clinical trials, 21(6):251S\u2013272S, 2000.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Gohagan%2C%20John%20K.%20Prorok%2C%20Philip%20C.%20Hayes%2C%20Richard%20B.%20Kramer%2C%20Barnett-S.%20The%20prostate%2C%20lung%2C%20colorectal%20and%20ovarian%20%28plco%29%20cancer%20screening%20trial%20of%20the%20national%20cancer%20institute%3A%20history%2C%20organization%2C%20and%20status%202000",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Gohagan%2C%20John%20K.%20Prorok%2C%20Philip%20C.%20Hayes%2C%20Richard%20B.%20Kramer%2C%20Barnett-S.%20The%20prostate%2C%20lung%2C%20colorectal%20and%20ovarian%20%28plco%29%20cancer%20screening%20trial%20of%20the%20national%20cancer%20institute%3A%20history%2C%20organization%2C%20and%20status%202000"
+        },
+        {
+            "id": "9",
+            "entry": "[9] Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Deep Learning. MIT Press, 2016. http://www.deeplearningbook.org.",
+            "url": "http://www.deeplearningbook.org"
+        },
+        {
+            "id": "10",
+            "entry": "[10] Isabelle Guyon and Andre Elisseeff. An introduction to variable and feature selection. Journal of machine learning research, 3(Mar):1157\u20131182, 2003.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Guyon%2C%20Isabelle%20Elisseeff%2C%20Andre%20An%20introduction%20to%20variable%20and%20feature%20selection%202003",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Guyon%2C%20Isabelle%20Elisseeff%2C%20Andre%20An%20introduction%20to%20variable%20and%20feature%20selection%202003"
+        },
+        {
+            "id": "11",
+            "entry": "[11] Mark Andrew Hall. Correlation-based feature selection for machine learning. 1999.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Hall%2C%20Mark%20Andrew%20Correlation-based%20feature%20selection%20for%20machine%20learning%201999"
+        },
+        {
+            "id": "12",
+            "entry": "[12] Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.",
+            "arxiv_url": "https://arxiv.org/pdf/1502.03167"
+        },
+        {
+            "id": "13",
+            "entry": "[13] Eric Jang, Shixiang Gu, and Ben Poole. Categorical reparameterization with gumbel-softmax. arXiv preprint arXiv:1611.01144, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.01144"
+        },
+        {
+            "id": "14",
+            "entry": "[14] David P Kao, James D Lewsey, Inder S Anand, Barry M Massie, Michael R Zile, Peter E Carson, Robert S McKelvie, Michel Komajda, John JV McMurray, and JoAnn Lindenfeld. Characterization of subgroups of heart failure patients with preserved ejection fraction with possible implications for prognosis and treatment response. European journal of heart failure, 17(9):925\u2013935, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kao%2C%20David%20P.%20Lewsey%2C%20James%20D.%20Anand%2C%20Inder%20S.%20Massie%2C%20Barry%20M.%20Characterization%20of%20subgroups%20of%20heart%20failure%20patients%20with%20preserved%20ejection%20fraction%20with%20possible%20implications%20for%20prognosis%20and%20treatment%20response%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kao%2C%20David%20P.%20Lewsey%2C%20James%20D.%20Anand%2C%20Inder%20S.%20Massie%2C%20Barry%20M.%20Characterization%20of%20subgroups%20of%20heart%20failure%20patients%20with%20preserved%20ejection%20fraction%20with%20possible%20implications%20for%20prognosis%20and%20treatment%20response%202015"
+        },
+        {
+            "id": "15",
+            "entry": "[15] Pieter-Jan Kindermans, Kristof Schutt, Klaus-Robert Muller, and Sven Dahne. Investigating the influence of noise and distractors on the interpretation of neural networks. arXiv preprint arXiv:1611.07270, 2016.",
+            "arxiv_url": "https://arxiv.org/pdf/1611.07270"
+        },
+        {
+            "id": "16",
+            "entry": "[16] Kenji Kira and Larry A Rendell. A practical approach to feature selection. In Machine Learning Proceedings 1992, pp. 249\u2013256.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Kenji%20Kira%20and%20Larry%20A%20Rendell%20A%20practical%20approach%20to%20feature%20selection%20In%20Machine%20Learning%20Proceedings%201992%20pp%20249256",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Kenji%20Kira%20and%20Larry%20A%20Rendell%20A%20practical%20approach%20to%20feature%20selection%20In%20Machine%20Learning%20Proceedings%201992%20pp%20249256"
+        },
+        {
+            "id": "17",
+            "entry": "[17] Yaojin Lin, Qinghua Hu, Jinghua Liu, and Jie Duan. Multi-label feature selection based on max-dependency and min-redundancy. Neurocomputing, 168:92\u2013103, 2015.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lin%2C%20Yaojin%20Hu%2C%20Qinghua%20Liu%2C%20Jinghua%20Duan%2C%20Jie%20Multi-label%20feature%20selection%20based%20on%20max-dependency%20and%20min-redundancy%202015",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lin%2C%20Yaojin%20Hu%2C%20Qinghua%20Liu%2C%20Jinghua%20Duan%2C%20Jie%20Multi-label%20feature%20selection%20based%20on%20max-dependency%20and%20min-redundancy%202015"
+        },
+        {
+            "id": "18",
+            "entry": "[18] Scott M Lundberg and Su-In Lee. A unified approach to interpreting model predictions. In Advances in Neural Information Processing Systems, pp. 4765\u20134774, 2017.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Lundberg%2C%20Scott%20M.%20Lee%2C%20Su-In%20A%20unified%20approach%20to%20interpreting%20model%20predictions%202017",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Lundberg%2C%20Scott%20M.%20Lee%2C%20Su-In%20A%20unified%20approach%20to%20interpreting%20model%20predictions%202017"
+        },
+        {
+            "id": "19",
+            "entry": "[19] Scott M Lundberg, Gabriel G Erion, and Su-In Lee. Consistent individualized feature attribution for tree ensembles. arXiv preprint arXiv:1802.03888, 2018.",
+            "arxiv_url": "https://arxiv.org/pdf/1802.03888"
+        },
+        {
+            "id": "20",
+            "entry": "[20] Omkar M Parkhi, Andrea Vedaldi, Andrew Zisserman, and CV Jawahar. Cats and dogs. In Computer Vision and Pattern Recognition (CVPR), 2012 IEEE Conference on, pp. 3498\u20133505. IEEE, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Parkhi%2C%20Omkar%20M.%20Vedaldi%2C%20Andrea%20Zisserman%2C%20Andrew%20Jawahar%2C%20C.V.%20Cats%20and%20dogs%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Parkhi%2C%20Omkar%20M.%20Vedaldi%2C%20Andrea%20Zisserman%2C%20Andrew%20Jawahar%2C%20C.V.%20Cats%20and%20dogs%202012"
+        },
+        {
+            "id": "21",
+            "entry": "[21] Hanchuan Peng, Fuhui Long, and Chris Ding. Feature selection based on mutual information criteria of max-dependency, max-relevance, and min-redundancy. IEEE Transactions on pattern analysis and machine intelligence, 27(8):1226\u20131238, 2005.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Peng%2C%20Hanchuan%20Long%2C%20Fuhui%20Ding%2C%20Chris%20Feature%20selection%20based%20on%20mutual%20information%20criteria%20of%20max-dependency%2C%20max-relevance%2C%20and%20min-redundancy%202005",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Peng%2C%20Hanchuan%20Long%2C%20Fuhui%20Ding%2C%20Chris%20Feature%20selection%20based%20on%20mutual%20information%20criteria%20of%20max-dependency%2C%20max-relevance%2C%20and%20min-redundancy%202005"
+        },
+        {
+            "id": "22",
+            "entry": "[22] Jan Peters and Stefan Schaal. Natural actor-critic. Neurocomputing, 71(7-9):1180\u20131190, 2008.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Jan%20Peters%20and%20Stefan%20Schaal%20Natural%20actorcritic%20Neurocomputing%20717911801190%202008",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Jan%20Peters%20and%20Stefan%20Schaal%20Natural%20actorcritic%20Neurocomputing%20717911801190%202008"
+        },
+        {
+            "id": "23",
+            "entry": "[23] Stuart J Pocock, Cono A Ariti, John JV McMurray, Aldo Maggioni, Lars K\u00f8ber, Iain B Squire, Karl Swedberg, Joanna Dobson, Katrina K Poppe, Gillian A Whalley, et al. Predicting survival in heart failure: a risk score based on 39 372 patients from 30 studies. European heart journal, 34(19):1404\u20131413, 2012.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Pocock%2C%20Stuart%20J.%20Ariti%2C%20Cono%20A.%20McMurray%2C%20John%20J.V.%20Maggioni%2C%20Aldo%20Predicting%20survival%20in%20heart%20failure%3A%20a%20risk%20score%20based%20on%2039%20372%20patients%20from%2030%20studies%202012",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Pocock%2C%20Stuart%20J.%20Ariti%2C%20Cono%20A.%20McMurray%2C%20John%20J.V.%20Maggioni%2C%20Aldo%20Predicting%20survival%20in%20heart%20failure%3A%20a%20risk%20score%20based%20on%2039%20372%20patients%20from%2030%20studies%202012"
+        },
+        {
+            "id": "24",
+            "entry": "[24] Marco Tulio Ribeiro, Sameer Singh, and Carlos Guestrin. Why should i trust you?: Explaining the predictions of any classifier. In Proceedings of the 22nd ACM SIGKDD international conference on knowledge discovery and data mining, pp. 1135\u20131144. ACM, 2016.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ribeiro%2C%20Marco%20Tulio%20Singh%2C%20Sameer%20Guestrin%2C%20Carlos%20Why%20should%20i%20trust%20you%3F%3A%20Explaining%20the%20predictions%20of%20any%20classifier%202016",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ribeiro%2C%20Marco%20Tulio%20Singh%2C%20Sameer%20Guestrin%2C%20Carlos%20Why%20should%20i%20trust%20you%3F%3A%20Explaining%20the%20predictions%20of%20any%20classifier%202016"
+        },
+        {
+            "id": "25",
+            "entry": "[25] Olaf Ronneberger, Philipp Fischer, and Thomas Brox. U-net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computer-assisted intervention, pp. 234\u2013241.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Ronneberger%2C%20Olaf%20Fischer%2C%20Philipp%20Brox%2C%20Thomas%20U-net%3A%20Convolutional%20networks%20for%20biomedical%20image%20segmentation",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Ronneberger%2C%20Olaf%20Fischer%2C%20Philipp%20Brox%2C%20Thomas%20U-net%3A%20Convolutional%20networks%20for%20biomedical%20image%20segmentation"
+        },
+        {
+            "id": "26",
+            "entry": "[26] Fritz H Schroder, Jonas Hugosson, Monique J Roobol, Teuvo LJ Tammela, Stefano Ciatto, Vera Nelen, Maciej Kwiatkowski, Marcos Lujan, Hans Lilja, Marco Zappa, et al. Screening and prostate-cancer mortality in a randomized european study. New England Journal of Medicine, 360(13):1320\u20131328, 2009.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Schroder%2C%20Fritz%20H.%20Hugosson%2C%20Jonas%20Roobol%2C%20Monique%20J.%20Tammela%2C%20Teuvo%20L.J.%20Screening%20and%20prostate-cancer%20mortality%20in%20a%20randomized%20european%20study%202009",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Schroder%2C%20Fritz%20H.%20Hugosson%2C%20Jonas%20Roobol%2C%20Monique%20J.%20Tammela%2C%20Teuvo%20L.J.%20Screening%20and%20prostate-cancer%20mortality%20in%20a%20randomized%20european%20study%202009"
+        },
+        {
+            "id": "27",
+            "entry": "[27] Avanti Shrikumar, Peyton Greenside, and Anshul Kundaje. Learning important features through propagating activation differences. arXiv preprint arXiv:1704.02685, 2017.",
+            "arxiv_url": "https://arxiv.org/pdf/1704.02685"
+        },
+        {
+            "id": "28",
+            "entry": "[28] Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014.",
+            "arxiv_url": "https://arxiv.org/pdf/1409.1556"
+        },
+        {
+            "id": "29",
+            "entry": "[29] Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside convolutional networks: Visualising image classification models and saliency maps. arXiv preprint arXiv:1312.6034, 2013.",
+            "arxiv_url": "https://arxiv.org/pdf/1312.6034"
+        },
+        {
+            "id": "30",
+            "entry": "[30] Erik Strumbelj and Igor Kononenko. Explaining prediction models and individual predictions with feature contributions. Knowledge and information systems, 41(3):647\u2013665, 2014.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Strumbelj%2C%20Erik%20Kononenko%2C%20Igor%20Explaining%20prediction%20models%20and%20individual%20predictions%20with%20feature%20contributions%202014",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Strumbelj%2C%20Erik%20Kononenko%2C%20Igor%20Explaining%20prediction%20models%20and%20individual%20predictions%20with%20feature%20contributions%202014"
+        },
+        {
+            "id": "31",
+            "entry": "[31] Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society. Series B (Methodological), pp. 267\u2013288, 1996.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201996",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Tibshirani%2C%20Robert%20Regression%20shrinkage%20and%20selection%20via%20the%20lasso%201996"
+        },
+        {
+            "id": "32",
+            "entry": "[32] Jinsung Yoon, William R Zame, Amitava Banerjee, Martin Cadeiras, Ahmed M Alaa, and Mihaela van der Schaar. Personalized survival predictions via trees of predictors: An application to cardiac transplantation. PloS one, 13(3):e0194985, 2018.",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yoon%2C%20Jinsung%20Zame%2C%20William%20R.%20Banerjee%2C%20Amitava%20Cadeiras%2C%20Martin%20Personalized%20survival%20predictions%20via%20trees%20of%20predictors%3A%20An%20application%20to%20cardiac%20transplantation%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yoon%2C%20Jinsung%20Zame%2C%20William%20R.%20Banerjee%2C%20Amitava%20Cadeiras%2C%20Martin%20Personalized%20survival%20predictions%20via%20trees%20of%20predictors%3A%20An%20application%20to%20cardiac%20transplantation%202018"
+        },
+        {
+            "id": "33",
+            "entry": "[33] Jinsung Yoon, William R Zame, and Mihaela van der Schaar. Tops: Ensemble learning with trees of predictors. IEEE Transactions on Signal Processing, 66(8):2141\u20132152, 2018. ",
+            "scholar_url": "https://scholar.google.co.uk/scholar?q=Yoon%2C%20Jinsung%20Zame%2C%20William%20R.%20van%20der%20Schaar%2C%20Mihaela%20Tops%3A%20Ensemble%20learning%20with%20trees%20of%20predictors%202018",
+            "oa_query": "https://api.scholarcy.com/oa_version?query=Yoon%2C%20Jinsung%20Zame%2C%20William%20R.%20van%20der%20Schaar%2C%20Mihaela%20Tops%3A%20Ensemble%20learning%20with%20trees%20of%20predictors%202018"
+        }
+    ]
+}
